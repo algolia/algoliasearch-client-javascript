@@ -29,27 +29,34 @@ public class RetryStrategy {
       public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         Iterator<StatefulHost> hostsIter = getTryableHosts(
-            request.method().equals("GET") ? CallType.READ : CallType.WRITE)
-            .iterator();
+          request.method().equals("GET") ? CallType.READ : CallType.WRITE
+        )
+          .iterator();
         while (hostsIter.hasNext()) {
           StatefulHost currentHost = hostsIter.next();
 
           // Building the request URL
           HttpUrl newUrl = request
-              .url()
-              .newBuilder()
-              .scheme(currentHost.getScheme())
-              .host(currentHost.getHost())
-              .build();
+            .url()
+            .newBuilder()
+            .scheme(currentHost.getScheme())
+            .host(currentHost.getHost())
+            .build();
           request = request.newBuilder().url(newUrl).build();
 
           // Computing timeout with the retry count
           chain.withConnectTimeout(
-              chain.connectTimeoutMillis() + currentHost.getRetryCount() * 1000,
-              TimeUnit.MILLISECONDS);
+            chain.connectTimeoutMillis() + currentHost.getRetryCount() * 1000,
+            TimeUnit.MILLISECONDS
+          );
 
           try {
-            System.out.println("MAKING REQUEST TO " + newUrl + " try: " + currentHost.getRetryCount());
+            System.out.println(
+              "MAKING REQUEST TO " +
+              newUrl +
+              " try: " +
+              currentHost.getRetryCount()
+            );
             Response response = chain.proceed(request);
             currentHost.setLastUse(Utils.nowUTC());
             // no timeout
@@ -80,7 +87,6 @@ public class RetryStrategy {
         throw new AlgoliaRetryException("All hosts are unreachable");
       }
     };
-
   }
 
   /**
@@ -100,18 +106,20 @@ public class RetryStrategy {
   List<StatefulHost> getTryableHosts(CallType callType) {
     synchronized (this) {
       resetExpiredHosts();
-      if (hosts
+      if (
+        hosts
           .stream()
-          .anyMatch(h -> h.isUp() && h.getAccept().contains(callType))) {
+          .anyMatch(h -> h.isUp() && h.getAccept().contains(callType))
+      ) {
         return hosts
-            .stream()
-            .filter(h -> h.isUp() && h.getAccept().contains(callType))
-            .collect(Collectors.toList());
+          .stream()
+          .filter(h -> h.isUp() && h.getAccept().contains(callType))
+          .collect(Collectors.toList());
       } else {
         for (StatefulHost host : hosts
-            .stream()
-            .filter(h -> h.getAccept().contains(callType))
-            .collect(Collectors.toList())) {
+          .stream()
+          .filter(h -> h.getAccept().contains(callType))
+          .collect(Collectors.toList())) {
           reset(host);
         }
 
@@ -133,8 +141,8 @@ public class RetryStrategy {
   private void resetExpiredHosts() {
     for (StatefulHost host : hosts) {
       long lastUse = Duration
-          .between(Utils.nowUTC(), host.getLastUse())
-          .getSeconds();
+        .between(Utils.nowUTC(), host.getLastUse())
+        .getSeconds();
       if (!host.isUp() && Math.abs(lastUse) > 5 * 60) {
         reset(host);
       }

@@ -1,5 +1,6 @@
 package com.algolia;
 
+import com.algolia.exceptions.AlgoliaRuntimeException;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public interface ApiCallback<T> {
    * @param responseHeaders Headers of the response if available, otherwise it would be null
    */
   void onFailure(
-    ApiException e,
+    AlgoliaRuntimeException e,
     int statusCode,
     Map<String, List<String>> responseHeaders
   );

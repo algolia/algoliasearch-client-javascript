@@ -2,28 +2,82 @@ package com.algolia.search;
 
 import com.algolia.ApiCallback;
 import com.algolia.ApiClient;
-import com.algolia.ApiException;
 import com.algolia.ApiResponse;
 import com.algolia.Pair;
+import com.algolia.exceptions.*;
 import com.algolia.model.search.*;
 import com.algolia.utils.*;
 import com.algolia.utils.echo.*;
+import com.algolia.utils.retry.CallType;
+import com.algolia.utils.retry.StatefulHost;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import okhttp3.Call;
 
 public class SearchApi extends ApiClient {
 
   public SearchApi(String appId, String apiKey) {
-    super(appId, apiKey, new HttpRequester());
+    super(appId, apiKey, new HttpRequester(getDefaultHosts(appId)));
   }
 
   public SearchApi(String appId, String apiKey, Requester requester) {
     super(appId, apiKey, requester);
+  }
+
+  private static List<StatefulHost> getDefaultHosts(String appId) {
+    List<StatefulHost> hosts = new ArrayList<StatefulHost>();
+    hosts.add(
+      new StatefulHost(
+        appId + "-dsn.algolia.net",
+        "https",
+        EnumSet.of(CallType.READ)
+      )
+    );
+    hosts.add(
+      new StatefulHost(
+        appId + ".algolia.net",
+        "https",
+        EnumSet.of(CallType.WRITE)
+      )
+    );
+
+    List<StatefulHost> commonHosts = new ArrayList<StatefulHost>();
+    hosts.add(
+      new StatefulHost(
+        appId + "-1.algolianet.net",
+        "https",
+        EnumSet.of(CallType.READ, CallType.WRITE)
+      )
+    );
+    hosts.add(
+      new StatefulHost(
+        appId + "-2.algolianet.net",
+        "https",
+        EnumSet.of(CallType.READ, CallType.WRITE)
+      )
+    );
+    hosts.add(
+      new StatefulHost(
+        appId + "-3.algolianet.net",
+        "https",
+        EnumSet.of(CallType.READ, CallType.WRITE)
+      )
+    );
+
+    Collections.shuffle(commonHosts, new Random());
+
+    return Stream
+      .concat(hosts.stream(), commonHosts.stream())
+      .collect(Collectors.toList());
   }
 
   /**
@@ -31,12 +85,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call addApiKeyCall(
     ApiKey apiKey,
     final ApiCallback<AddApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = apiKey;
 
     // create path and map variables
@@ -61,10 +115,10 @@ public class SearchApi extends ApiClient {
   private Call addApiKeyValidateBeforeCall(
     ApiKey apiKey,
     final ApiCallback<AddApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'apiKey' is set
     if (apiKey == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'apiKey' when calling addApiKey(Async)"
       );
     }
@@ -77,10 +131,11 @@ public class SearchApi extends ApiClient {
    *
    * @param apiKey (required)
    * @return AddApiKeyResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public AddApiKeyResponse addApiKey(ApiKey apiKey) throws ApiException {
+  public AddApiKeyResponse addApiKey(ApiKey apiKey)
+    throws AlgoliaRuntimeException {
     Call req = addApiKeyValidateBeforeCall(apiKey, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.AddApiKey(((CallEcho) req).request());
@@ -97,12 +152,13 @@ public class SearchApi extends ApiClient {
    * @param apiKey (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call addApiKeyAsync(
     ApiKey apiKey,
     final ApiCallback<AddApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = addApiKeyValidateBeforeCall(apiKey, _callback);
     Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -114,14 +170,14 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call addOrUpdateObjectCall(
     String indexName,
     String objectID,
     Object body,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = body;
 
     // create path and map variables
@@ -156,24 +212,24 @@ public class SearchApi extends ApiClient {
     String objectID,
     Object body,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling addOrUpdateObject(Async)"
       );
     }
 
     // verify the required parameter 'objectID' is set
     if (objectID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'objectID' when calling addOrUpdateObject(Async)"
       );
     }
 
     // verify the required parameter 'body' is set
     if (body == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'body' when calling addOrUpdateObject(Async)"
       );
     }
@@ -189,14 +245,14 @@ public class SearchApi extends ApiClient {
    * @param objectID Unique identifier of an object. (required)
    * @param body The Algolia object. (required)
    * @return UpdatedAtWithObjectIdResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtWithObjectIdResponse addOrUpdateObject(
     String indexName,
     String objectID,
     Object body
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = addOrUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
@@ -225,14 +281,15 @@ public class SearchApi extends ApiClient {
    * @param body The Algolia object. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call addOrUpdateObjectAsync(
     String indexName,
     String objectID,
     Object body,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = addOrUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
@@ -250,12 +307,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call appendSourceCall(
     Source source,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = source;
 
     // create path and map variables
@@ -280,10 +337,10 @@ public class SearchApi extends ApiClient {
   private Call appendSourceValidateBeforeCall(
     Source source,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'source' is set
     if (source == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'source' when calling appendSource(Async)"
       );
     }
@@ -296,10 +353,11 @@ public class SearchApi extends ApiClient {
    *
    * @param source The source to add. (required)
    * @return CreatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public CreatedAtResponse appendSource(Source source) throws ApiException {
+  public CreatedAtResponse appendSource(Source source)
+    throws AlgoliaRuntimeException {
     Call req = appendSourceValidateBeforeCall(source, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.AppendSource(
@@ -318,12 +376,13 @@ public class SearchApi extends ApiClient {
    * @param source The source to add. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call appendSourceAsync(
     Source source,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = appendSourceValidateBeforeCall(source, _callback);
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -335,13 +394,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call assignUserIdCall(
     String xAlgoliaUserID,
     AssignUserIdParams assignUserIdParams,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = assignUserIdParams;
 
     // create path and map variables
@@ -373,17 +432,17 @@ public class SearchApi extends ApiClient {
     String xAlgoliaUserID,
     AssignUserIdParams assignUserIdParams,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'xAlgoliaUserID' is set
     if (xAlgoliaUserID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'xAlgoliaUserID' when calling assignUserId(Async)"
       );
     }
 
     // verify the required parameter 'assignUserIdParams' is set
     if (assignUserIdParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'assignUserIdParams' when calling assignUserId(Async)"
       );
     }
@@ -400,13 +459,13 @@ public class SearchApi extends ApiClient {
    * @param xAlgoliaUserID userID to assign. (required)
    * @param assignUserIdParams (required)
    * @return CreatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public CreatedAtResponse assignUserId(
     String xAlgoliaUserID,
     AssignUserIdParams assignUserIdParams
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = assignUserIdValidateBeforeCall(
       xAlgoliaUserID,
       assignUserIdParams,
@@ -433,13 +492,14 @@ public class SearchApi extends ApiClient {
    * @param assignUserIdParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call assignUserIdAsync(
     String xAlgoliaUserID,
     AssignUserIdParams assignUserIdParams,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = assignUserIdValidateBeforeCall(
       xAlgoliaUserID,
       assignUserIdParams,
@@ -455,13 +515,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call batchCall(
     String indexName,
     BatchWriteParams batchWriteParams,
     final ApiCallback<BatchResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = batchWriteParams;
 
     // create path and map variables
@@ -491,17 +551,17 @@ public class SearchApi extends ApiClient {
     String indexName,
     BatchWriteParams batchWriteParams,
     final ApiCallback<BatchResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling batch(Async)"
       );
     }
 
     // verify the required parameter 'batchWriteParams' is set
     if (batchWriteParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'batchWriteParams' when calling batch(Async)"
       );
     }
@@ -515,13 +575,13 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param batchWriteParams (required)
    * @return BatchResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public BatchResponse batch(
     String indexName,
     BatchWriteParams batchWriteParams
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = batchValidateBeforeCall(indexName, batchWriteParams, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.Batch(((CallEcho) req).request());
@@ -539,13 +599,14 @@ public class SearchApi extends ApiClient {
    * @param batchWriteParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call batchAsync(
     String indexName,
     BatchWriteParams batchWriteParams,
     final ApiCallback<BatchResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = batchValidateBeforeCall(indexName, batchWriteParams, _callback);
     Type returnType = new TypeToken<BatchResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -557,13 +618,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call batchAssignUserIdsCall(
     String xAlgoliaUserID,
     BatchAssignUserIdsParams batchAssignUserIdsParams,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = batchAssignUserIdsParams;
 
     // create path and map variables
@@ -595,17 +656,17 @@ public class SearchApi extends ApiClient {
     String xAlgoliaUserID,
     BatchAssignUserIdsParams batchAssignUserIdsParams,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'xAlgoliaUserID' is set
     if (xAlgoliaUserID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'xAlgoliaUserID' when calling batchAssignUserIds(Async)"
       );
     }
 
     // verify the required parameter 'batchAssignUserIdsParams' is set
     if (batchAssignUserIdsParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'batchAssignUserIdsParams' when calling" +
         " batchAssignUserIds(Async)"
       );
@@ -626,13 +687,13 @@ public class SearchApi extends ApiClient {
    * @param xAlgoliaUserID userID to assign. (required)
    * @param batchAssignUserIdsParams (required)
    * @return CreatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public CreatedAtResponse batchAssignUserIds(
     String xAlgoliaUserID,
     BatchAssignUserIdsParams batchAssignUserIdsParams
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = batchAssignUserIdsValidateBeforeCall(
       xAlgoliaUserID,
       batchAssignUserIdsParams,
@@ -658,13 +719,14 @@ public class SearchApi extends ApiClient {
    * @param batchAssignUserIdsParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call batchAssignUserIdsAsync(
     String xAlgoliaUserID,
     BatchAssignUserIdsParams batchAssignUserIdsParams,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = batchAssignUserIdsValidateBeforeCall(
       xAlgoliaUserID,
       batchAssignUserIdsParams,
@@ -680,13 +742,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call batchDictionaryEntriesCall(
     DictionaryType dictionaryName,
     BatchDictionaryEntriesParams batchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = batchDictionaryEntriesParams;
 
     // create path and map variables
@@ -716,10 +778,10 @@ public class SearchApi extends ApiClient {
     DictionaryType dictionaryName,
     BatchDictionaryEntriesParams batchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'dictionaryName' is set
     if (dictionaryName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'dictionaryName' when calling" +
         " batchDictionaryEntries(Async)"
       );
@@ -727,7 +789,7 @@ public class SearchApi extends ApiClient {
 
     // verify the required parameter 'batchDictionaryEntriesParams' is set
     if (batchDictionaryEntriesParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'batchDictionaryEntriesParams' when calling" +
         " batchDictionaryEntries(Async)"
       );
@@ -746,13 +808,13 @@ public class SearchApi extends ApiClient {
    * @param dictionaryName The dictionary to search in. (required)
    * @param batchDictionaryEntriesParams (required)
    * @return UpdatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtResponse batchDictionaryEntries(
     DictionaryType dictionaryName,
     BatchDictionaryEntriesParams batchDictionaryEntriesParams
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = batchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
       batchDictionaryEntriesParams,
@@ -776,13 +838,14 @@ public class SearchApi extends ApiClient {
    * @param batchDictionaryEntriesParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call batchDictionaryEntriesAsync(
     DictionaryType dictionaryName,
     BatchDictionaryEntriesParams batchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = batchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
       batchDictionaryEntriesParams,
@@ -798,7 +861,7 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call batchRulesCall(
     String indexName,
@@ -806,7 +869,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     Boolean clearExistingRules,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = rule;
 
     // create path and map variables
@@ -850,17 +913,17 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     Boolean clearExistingRules,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling batchRules(Async)"
       );
     }
 
     // verify the required parameter 'rule' is set
     if (rule == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'rule' when calling batchRules(Async)"
       );
     }
@@ -884,15 +947,15 @@ public class SearchApi extends ApiClient {
    * @param clearExistingRules When true, existing Rules are cleared before adding this batch. When
    *     false, existing Rules are kept. (optional)
    * @return UpdatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtResponse batchRules(
     String indexName,
     List<Rule> rule,
     Boolean forwardToReplicas,
     Boolean clearExistingRules
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = batchRulesValidateBeforeCall(
       indexName,
       rule,
@@ -910,7 +973,7 @@ public class SearchApi extends ApiClient {
   }
 
   public UpdatedAtResponse batchRules(String indexName, List<Rule> rule)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     return this.batchRules(indexName, rule, null, null);
   }
 
@@ -925,7 +988,8 @@ public class SearchApi extends ApiClient {
    *     false, existing Rules are kept. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call batchRulesAsync(
     String indexName,
@@ -933,7 +997,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     Boolean clearExistingRules,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = batchRulesValidateBeforeCall(
       indexName,
       rule,
@@ -951,13 +1015,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call browseCall(
     String indexName,
     BrowseRequest browseRequest,
     final ApiCallback<BrowseResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = browseRequest;
 
     // create path and map variables
@@ -987,10 +1051,10 @@ public class SearchApi extends ApiClient {
     String indexName,
     BrowseRequest browseRequest,
     final ApiCallback<BrowseResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling browse(Async)"
       );
     }
@@ -1009,11 +1073,11 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param browseRequest (optional)
    * @return BrowseResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public BrowseResponse browse(String indexName, BrowseRequest browseRequest)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = browseValidateBeforeCall(indexName, browseRequest, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.Browse(((CallEcho) req).request());
@@ -1024,7 +1088,8 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public BrowseResponse browse(String indexName) throws ApiException {
+  public BrowseResponse browse(String indexName)
+    throws AlgoliaRuntimeException {
     return this.browse(indexName, null);
   }
 
@@ -1041,13 +1106,14 @@ public class SearchApi extends ApiClient {
    * @param browseRequest (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call browseAsync(
     String indexName,
     BrowseRequest browseRequest,
     final ApiCallback<BrowseResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = browseValidateBeforeCall(indexName, browseRequest, _callback);
     Type returnType = new TypeToken<BrowseResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -1059,13 +1125,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call clearAllSynonymsCall(
     String indexName,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1101,10 +1167,10 @@ public class SearchApi extends ApiClient {
     String indexName,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling clearAllSynonyms(Async)"
       );
     }
@@ -1119,13 +1185,13 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @return UpdatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtResponse clearAllSynonyms(
     String indexName,
     Boolean forwardToReplicas
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = clearAllSynonymsValidateBeforeCall(
       indexName,
       forwardToReplicas,
@@ -1143,7 +1209,7 @@ public class SearchApi extends ApiClient {
   }
 
   public UpdatedAtResponse clearAllSynonyms(String indexName)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     return this.clearAllSynonyms(indexName, null);
   }
 
@@ -1155,13 +1221,14 @@ public class SearchApi extends ApiClient {
    *     indexName. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call clearAllSynonymsAsync(
     String indexName,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = clearAllSynonymsValidateBeforeCall(
       indexName,
       forwardToReplicas,
@@ -1177,12 +1244,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call clearObjectsCall(
     String indexName,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1211,10 +1278,10 @@ public class SearchApi extends ApiClient {
   private Call clearObjectsValidateBeforeCall(
     String indexName,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling clearObjects(Async)"
       );
     }
@@ -1227,10 +1294,11 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @return UpdatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public UpdatedAtResponse clearObjects(String indexName) throws ApiException {
+  public UpdatedAtResponse clearObjects(String indexName)
+    throws AlgoliaRuntimeException {
     Call req = clearObjectsValidateBeforeCall(indexName, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.ClearObjects(
@@ -1250,12 +1318,13 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call clearObjectsAsync(
     String indexName,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = clearObjectsValidateBeforeCall(indexName, _callback);
     Type returnType = new TypeToken<UpdatedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -1267,13 +1336,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call clearRulesCall(
     String indexName,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1309,10 +1378,10 @@ public class SearchApi extends ApiClient {
     String indexName,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling clearRules(Async)"
       );
     }
@@ -1327,13 +1396,13 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @return UpdatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtResponse clearRules(
     String indexName,
     Boolean forwardToReplicas
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = clearRulesValidateBeforeCall(indexName, forwardToReplicas, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.ClearRules(((CallEcho) req).request());
@@ -1344,7 +1413,8 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public UpdatedAtResponse clearRules(String indexName) throws ApiException {
+  public UpdatedAtResponse clearRules(String indexName)
+    throws AlgoliaRuntimeException {
     return this.clearRules(indexName, null);
   }
 
@@ -1356,13 +1426,14 @@ public class SearchApi extends ApiClient {
    *     indexName. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call clearRulesAsync(
     String indexName,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = clearRulesValidateBeforeCall(
       indexName,
       forwardToReplicas,
@@ -1378,14 +1449,14 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call delCall(
     String path,
     String parameters,
     Object body,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = body;
 
     // create path and map variables
@@ -1420,10 +1491,10 @@ public class SearchApi extends ApiClient {
     String parameters,
     Object body,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'path' is set
     if (path == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'path' when calling del(Async)"
       );
     }
@@ -1440,11 +1511,11 @@ public class SearchApi extends ApiClient {
    *     query made with this API key. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @return Object
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public Object del(String path, String parameters, Object body)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = delValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.Del(((CallEcho) req).request());
@@ -1455,7 +1526,7 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public Object del(String path) throws ApiException {
+  public Object del(String path) throws AlgoliaRuntimeException {
     return this.del(path, null, null);
   }
 
@@ -1469,14 +1540,15 @@ public class SearchApi extends ApiClient {
    * @param body The parameters to send with the custom request. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call delAsync(
     String path,
     String parameters,
     Object body,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = delValidateBeforeCall(path, parameters, body, _callback);
     Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -1488,12 +1560,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call deleteApiKeyCall(
     String key,
     final ApiCallback<DeleteApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1522,10 +1594,10 @@ public class SearchApi extends ApiClient {
   private Call deleteApiKeyValidateBeforeCall(
     String key,
     final ApiCallback<DeleteApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'key' is set
     if (key == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'key' when calling deleteApiKey(Async)"
       );
     }
@@ -1538,10 +1610,11 @@ public class SearchApi extends ApiClient {
    *
    * @param key API Key string. (required)
    * @return DeleteApiKeyResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public DeleteApiKeyResponse deleteApiKey(String key) throws ApiException {
+  public DeleteApiKeyResponse deleteApiKey(String key)
+    throws AlgoliaRuntimeException {
     Call req = deleteApiKeyValidateBeforeCall(key, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.DeleteApiKey(
@@ -1560,12 +1633,13 @@ public class SearchApi extends ApiClient {
    * @param key API Key string. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call deleteApiKeyAsync(
     String key,
     final ApiCallback<DeleteApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = deleteApiKeyValidateBeforeCall(key, _callback);
     Type returnType = new TypeToken<DeleteApiKeyResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -1577,13 +1651,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call deleteByCall(
     String indexName,
     SearchParams searchParams,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = searchParams;
 
     // create path and map variables
@@ -1613,17 +1687,17 @@ public class SearchApi extends ApiClient {
     String indexName,
     SearchParams searchParams,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling deleteBy(Async)"
       );
     }
 
     // verify the required parameter 'searchParams' is set
     if (searchParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'searchParams' when calling deleteBy(Async)"
       );
     }
@@ -1639,13 +1713,13 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
    * @return DeletedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public DeletedAtResponse deleteBy(
     String indexName,
     SearchParams searchParams
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = deleteByValidateBeforeCall(indexName, searchParams, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.DeleteBy(((CallEcho) req).request());
@@ -1665,13 +1739,14 @@ public class SearchApi extends ApiClient {
    * @param searchParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call deleteByAsync(
     String indexName,
     SearchParams searchParams,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = deleteByValidateBeforeCall(indexName, searchParams, _callback);
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -1683,12 +1758,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call deleteIndexCall(
     String indexName,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1717,10 +1792,10 @@ public class SearchApi extends ApiClient {
   private Call deleteIndexValidateBeforeCall(
     String indexName,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling deleteIndex(Async)"
       );
     }
@@ -1733,10 +1808,11 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @return DeletedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public DeletedAtResponse deleteIndex(String indexName) throws ApiException {
+  public DeletedAtResponse deleteIndex(String indexName)
+    throws AlgoliaRuntimeException {
     Call req = deleteIndexValidateBeforeCall(indexName, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.DeleteIndex(
@@ -1755,12 +1831,13 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call deleteIndexAsync(
     String indexName,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = deleteIndexValidateBeforeCall(indexName, _callback);
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -1772,13 +1849,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call deleteObjectCall(
     String indexName,
     String objectID,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1812,17 +1889,17 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling deleteObject(Async)"
       );
     }
 
     // verify the required parameter 'objectID' is set
     if (objectID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'objectID' when calling deleteObject(Async)"
       );
     }
@@ -1836,11 +1913,11 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
    * @return DeletedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public DeletedAtResponse deleteObject(String indexName, String objectID)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = deleteObjectValidateBeforeCall(indexName, objectID, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.DeleteObject(
@@ -1860,13 +1937,14 @@ public class SearchApi extends ApiClient {
    * @param objectID Unique identifier of an object. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call deleteObjectAsync(
     String indexName,
     String objectID,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = deleteObjectValidateBeforeCall(indexName, objectID, _callback);
     Type returnType = new TypeToken<DeletedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -1878,14 +1956,14 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call deleteRuleCall(
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -1926,17 +2004,17 @@ public class SearchApi extends ApiClient {
     String objectID,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling deleteRule(Async)"
       );
     }
 
     // verify the required parameter 'objectID' is set
     if (objectID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'objectID' when calling deleteRule(Async)"
       );
     }
@@ -1952,14 +2030,14 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @return UpdatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtResponse deleteRule(
     String indexName,
     String objectID,
     Boolean forwardToReplicas
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = deleteRuleValidateBeforeCall(
       indexName,
       objectID,
@@ -1976,7 +2054,7 @@ public class SearchApi extends ApiClient {
   }
 
   public UpdatedAtResponse deleteRule(String indexName, String objectID)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     return this.deleteRule(indexName, objectID, null);
   }
 
@@ -1989,14 +2067,15 @@ public class SearchApi extends ApiClient {
    *     indexName. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call deleteRuleAsync(
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = deleteRuleValidateBeforeCall(
       indexName,
       objectID,
@@ -2013,12 +2092,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call deleteSourceCall(
     String source,
     final ApiCallback<DeleteSourceResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2047,10 +2126,10 @@ public class SearchApi extends ApiClient {
   private Call deleteSourceValidateBeforeCall(
     String source,
     final ApiCallback<DeleteSourceResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'source' is set
     if (source == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'source' when calling deleteSource(Async)"
       );
     }
@@ -2063,10 +2142,11 @@ public class SearchApi extends ApiClient {
    *
    * @param source The IP range of the source. (required)
    * @return DeleteSourceResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public DeleteSourceResponse deleteSource(String source) throws ApiException {
+  public DeleteSourceResponse deleteSource(String source)
+    throws AlgoliaRuntimeException {
     Call req = deleteSourceValidateBeforeCall(source, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.DeleteSource(
@@ -2085,12 +2165,13 @@ public class SearchApi extends ApiClient {
    * @param source The IP range of the source. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call deleteSourceAsync(
     String source,
     final ApiCallback<DeleteSourceResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = deleteSourceValidateBeforeCall(source, _callback);
     Type returnType = new TypeToken<DeleteSourceResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -2102,14 +2183,14 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call deleteSynonymCall(
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2150,17 +2231,17 @@ public class SearchApi extends ApiClient {
     String objectID,
     Boolean forwardToReplicas,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling deleteSynonym(Async)"
       );
     }
 
     // verify the required parameter 'objectID' is set
     if (objectID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'objectID' when calling deleteSynonym(Async)"
       );
     }
@@ -2176,14 +2257,14 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @return DeletedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public DeletedAtResponse deleteSynonym(
     String indexName,
     String objectID,
     Boolean forwardToReplicas
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = deleteSynonymValidateBeforeCall(
       indexName,
       objectID,
@@ -2202,7 +2283,7 @@ public class SearchApi extends ApiClient {
   }
 
   public DeletedAtResponse deleteSynonym(String indexName, String objectID)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     return this.deleteSynonym(indexName, objectID, null);
   }
 
@@ -2215,14 +2296,15 @@ public class SearchApi extends ApiClient {
    *     indexName. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call deleteSynonymAsync(
     String indexName,
     String objectID,
     Boolean forwardToReplicas,
     final ApiCallback<DeletedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = deleteSynonymValidateBeforeCall(
       indexName,
       objectID,
@@ -2239,13 +2321,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getCall(
     String path,
     String parameters,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2279,10 +2361,10 @@ public class SearchApi extends ApiClient {
     String path,
     String parameters,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'path' is set
     if (path == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'path' when calling get(Async)"
       );
     }
@@ -2298,10 +2380,11 @@ public class SearchApi extends ApiClient {
    * @param parameters URL-encoded query string. Force some query parameters to be applied for each
    *     query made with this API key. (optional)
    * @return Object
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public Object get(String path, String parameters) throws ApiException {
+  public Object get(String path, String parameters)
+    throws AlgoliaRuntimeException {
     Call req = getValidateBeforeCall(path, parameters, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.Get(((CallEcho) req).request());
@@ -2312,7 +2395,7 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public Object get(String path) throws ApiException {
+  public Object get(String path) throws AlgoliaRuntimeException {
     return this.get(path, null);
   }
 
@@ -2325,13 +2408,14 @@ public class SearchApi extends ApiClient {
    *     query made with this API key. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getAsync(
     String path,
     String parameters,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getValidateBeforeCall(path, parameters, _callback);
     Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -2343,10 +2427,10 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getApiKeyCall(String key, final ApiCallback<Key> _callback)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2375,10 +2459,10 @@ public class SearchApi extends ApiClient {
   private Call getApiKeyValidateBeforeCall(
     String key,
     final ApiCallback<Key> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'key' is set
     if (key == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'key' when calling getApiKey(Async)"
       );
     }
@@ -2391,10 +2475,10 @@ public class SearchApi extends ApiClient {
    *
    * @param key API Key string. (required)
    * @return Key
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public Key getApiKey(String key) throws ApiException {
+  public Key getApiKey(String key) throws AlgoliaRuntimeException {
     Call req = getApiKeyValidateBeforeCall(key, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetApiKey(((CallEcho) req).request());
@@ -2411,10 +2495,11 @@ public class SearchApi extends ApiClient {
    * @param key API Key string. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getApiKeyAsync(String key, final ApiCallback<Key> _callback)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call call = getApiKeyValidateBeforeCall(key, _callback);
     Type returnType = new TypeToken<Key>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -2426,11 +2511,11 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getDictionaryLanguagesCall(
     final ApiCallback<Map<String, Languages>> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2454,7 +2539,7 @@ public class SearchApi extends ApiClient {
 
   private Call getDictionaryLanguagesValidateBeforeCall(
     final ApiCallback<Map<String, Languages>> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return getDictionaryLanguagesCall(_callback);
   }
 
@@ -2462,10 +2547,11 @@ public class SearchApi extends ApiClient {
    * List dictionaries supported per language.
    *
    * @return Map&lt;String, Languages&gt;
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public Map<String, Languages> getDictionaryLanguages() throws ApiException {
+  public Map<String, Languages> getDictionaryLanguages()
+    throws AlgoliaRuntimeException {
     Call req = getDictionaryLanguagesValidateBeforeCall(null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetDictionaryLanguages(
@@ -2483,11 +2569,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getDictionaryLanguagesAsync(
     final ApiCallback<Map<String, Languages>> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getDictionaryLanguagesValidateBeforeCall(_callback);
     Type returnType = new TypeToken<Map<String, Languages>>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -2499,11 +2586,11 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getDictionarySettingsCall(
     final ApiCallback<GetDictionarySettingsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2527,7 +2614,7 @@ public class SearchApi extends ApiClient {
 
   private Call getDictionarySettingsValidateBeforeCall(
     final ApiCallback<GetDictionarySettingsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return getDictionarySettingsCall(_callback);
   }
 
@@ -2535,11 +2622,11 @@ public class SearchApi extends ApiClient {
    * Retrieve dictionaries settings.
    *
    * @return GetDictionarySettingsResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public GetDictionarySettingsResponse getDictionarySettings()
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = getDictionarySettingsValidateBeforeCall(null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetDictionarySettings(
@@ -2559,11 +2646,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getDictionarySettingsAsync(
     final ApiCallback<GetDictionarySettingsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getDictionarySettingsValidateBeforeCall(_callback);
     Type returnType = new TypeToken<GetDictionarySettingsResponse>() {}
       .getType();
@@ -2576,7 +2664,7 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getLogsCall(
     Integer offset,
@@ -2584,7 +2672,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     LogType type,
     final ApiCallback<GetLogsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2628,7 +2716,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     LogType type,
     final ApiCallback<GetLogsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return getLogsCall(offset, length, indexName, type, _callback);
   }
 
@@ -2644,15 +2732,15 @@ public class SearchApi extends ApiClient {
    * @param type Type of log entries to retrieve. When omitted, all log entries are retrieved.
    *     (optional, default to all)
    * @return GetLogsResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public GetLogsResponse getLogs(
     Integer offset,
     Integer length,
     String indexName,
     LogType type
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = getLogsValidateBeforeCall(offset, length, indexName, type, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetLogs(((CallEcho) req).request());
@@ -2663,7 +2751,7 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public GetLogsResponse getLogs() throws ApiException {
+  public GetLogsResponse getLogs() throws AlgoliaRuntimeException {
     return this.getLogs(0, 10, null, LogType.ALL);
   }
 
@@ -2680,7 +2768,8 @@ public class SearchApi extends ApiClient {
    *     (optional, default to all)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getLogsAsync(
     Integer offset,
@@ -2688,7 +2777,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     LogType type,
     final ApiCallback<GetLogsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getLogsValidateBeforeCall(
       offset,
       length,
@@ -2706,14 +2795,14 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getObjectCall(
     String indexName,
     String objectID,
     List<String> attributesToRetrieve,
     final ApiCallback<Map<String, String>> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2754,17 +2843,17 @@ public class SearchApi extends ApiClient {
     String objectID,
     List<String> attributesToRetrieve,
     final ApiCallback<Map<String, String>> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling getObject(Async)"
       );
     }
 
     // verify the required parameter 'objectID' is set
     if (objectID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'objectID' when calling getObject(Async)"
       );
     }
@@ -2780,14 +2869,14 @@ public class SearchApi extends ApiClient {
    * @param attributesToRetrieve List of attributes to retrieve. If not specified, all retrievable
    *     attributes are returned. (optional)
    * @return Map&lt;String, String&gt;
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public Map<String, String> getObject(
     String indexName,
     String objectID,
     List<String> attributesToRetrieve
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = getObjectValidateBeforeCall(
       indexName,
       objectID,
@@ -2804,7 +2893,7 @@ public class SearchApi extends ApiClient {
   }
 
   public Map<String, String> getObject(String indexName, String objectID)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     return this.getObject(indexName, objectID, new ArrayList<>());
   }
 
@@ -2817,14 +2906,15 @@ public class SearchApi extends ApiClient {
    *     attributes are returned. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getObjectAsync(
     String indexName,
     String objectID,
     List<String> attributesToRetrieve,
     final ApiCallback<Map<String, String>> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getObjectValidateBeforeCall(
       indexName,
       objectID,
@@ -2841,12 +2931,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getObjectsCall(
     GetObjectsParams getObjectsParams,
     final ApiCallback<GetObjectsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = getObjectsParams;
 
     // create path and map variables
@@ -2871,10 +2961,10 @@ public class SearchApi extends ApiClient {
   private Call getObjectsValidateBeforeCall(
     GetObjectsParams getObjectsParams,
     final ApiCallback<GetObjectsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'getObjectsParams' is set
     if (getObjectsParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'getObjectsParams' when calling getObjects(Async)"
       );
     }
@@ -2887,11 +2977,11 @@ public class SearchApi extends ApiClient {
    *
    * @param getObjectsParams (required)
    * @return GetObjectsResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public GetObjectsResponse getObjects(GetObjectsParams getObjectsParams)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = getObjectsValidateBeforeCall(getObjectsParams, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetObjects(((CallEcho) req).request());
@@ -2909,12 +2999,13 @@ public class SearchApi extends ApiClient {
    * @param getObjectsParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getObjectsAsync(
     GetObjectsParams getObjectsParams,
     final ApiCallback<GetObjectsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getObjectsValidateBeforeCall(getObjectsParams, _callback);
     Type returnType = new TypeToken<GetObjectsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -2926,13 +3017,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getRuleCall(
     String indexName,
     String objectID,
     final ApiCallback<Rule> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -2966,17 +3057,17 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     final ApiCallback<Rule> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling getRule(Async)"
       );
     }
 
     // verify the required parameter 'objectID' is set
     if (objectID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'objectID' when calling getRule(Async)"
       );
     }
@@ -2990,10 +3081,11 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
    * @return Rule
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public Rule getRule(String indexName, String objectID) throws ApiException {
+  public Rule getRule(String indexName, String objectID)
+    throws AlgoliaRuntimeException {
     Call req = getRuleValidateBeforeCall(indexName, objectID, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetRule(((CallEcho) req).request());
@@ -3011,13 +3103,14 @@ public class SearchApi extends ApiClient {
    * @param objectID Unique identifier of an object. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getRuleAsync(
     String indexName,
     String objectID,
     final ApiCallback<Rule> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getRuleValidateBeforeCall(indexName, objectID, _callback);
     Type returnType = new TypeToken<Rule>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -3029,12 +3122,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getSettingsCall(
     String indexName,
     final ApiCallback<IndexSettings> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3063,10 +3156,10 @@ public class SearchApi extends ApiClient {
   private Call getSettingsValidateBeforeCall(
     String indexName,
     final ApiCallback<IndexSettings> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling getSettings(Async)"
       );
     }
@@ -3079,10 +3172,11 @@ public class SearchApi extends ApiClient {
    *
    * @param indexName The index in which to perform the request. (required)
    * @return IndexSettings
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public IndexSettings getSettings(String indexName) throws ApiException {
+  public IndexSettings getSettings(String indexName)
+    throws AlgoliaRuntimeException {
     Call req = getSettingsValidateBeforeCall(indexName, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetSettings(
@@ -3101,12 +3195,13 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getSettingsAsync(
     String indexName,
     final ApiCallback<IndexSettings> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getSettingsValidateBeforeCall(indexName, _callback);
     Type returnType = new TypeToken<IndexSettings>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -3118,10 +3213,10 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getSourcesCall(final ApiCallback<List<Source>> _callback)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3145,7 +3240,7 @@ public class SearchApi extends ApiClient {
 
   private Call getSourcesValidateBeforeCall(
     final ApiCallback<List<Source>> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return getSourcesCall(_callback);
   }
 
@@ -3153,10 +3248,10 @@ public class SearchApi extends ApiClient {
    * List all allowed sources.
    *
    * @return List&lt;Source&gt;
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public List<Source> getSources() throws ApiException {
+  public List<Source> getSources() throws AlgoliaRuntimeException {
     Call req = getSourcesValidateBeforeCall(null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetSources(((CallEcho) req).request());
@@ -3172,10 +3267,11 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getSourcesAsync(final ApiCallback<List<Source>> _callback)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call call = getSourcesValidateBeforeCall(_callback);
     Type returnType = new TypeToken<List<Source>>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -3187,13 +3283,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getSynonymCall(
     String indexName,
     String objectID,
     final ApiCallback<SynonymHit> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3227,17 +3323,17 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     final ApiCallback<SynonymHit> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling getSynonym(Async)"
       );
     }
 
     // verify the required parameter 'objectID' is set
     if (objectID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'objectID' when calling getSynonym(Async)"
       );
     }
@@ -3251,11 +3347,11 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param objectID Unique identifier of an object. (required)
    * @return SynonymHit
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public SynonymHit getSynonym(String indexName, String objectID)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = getSynonymValidateBeforeCall(indexName, objectID, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetSynonym(((CallEcho) req).request());
@@ -3273,13 +3369,14 @@ public class SearchApi extends ApiClient {
    * @param objectID Unique identifier of an object. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getSynonymAsync(
     String indexName,
     String objectID,
     final ApiCallback<SynonymHit> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getSynonymValidateBeforeCall(indexName, objectID, _callback);
     Type returnType = new TypeToken<SynonymHit>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -3291,13 +3388,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getTaskCall(
     String indexName,
     Integer taskID,
     final ApiCallback<GetTaskResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3331,17 +3428,17 @@ public class SearchApi extends ApiClient {
     String indexName,
     Integer taskID,
     final ApiCallback<GetTaskResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling getTask(Async)"
       );
     }
 
     // verify the required parameter 'taskID' is set
     if (taskID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'taskID' when calling getTask(Async)"
       );
     }
@@ -3355,11 +3452,11 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
    * @return GetTaskResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public GetTaskResponse getTask(String indexName, Integer taskID)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = getTaskValidateBeforeCall(indexName, taskID, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetTask(((CallEcho) req).request());
@@ -3377,13 +3474,14 @@ public class SearchApi extends ApiClient {
    * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getTaskAsync(
     String indexName,
     Integer taskID,
     final ApiCallback<GetTaskResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getTaskValidateBeforeCall(indexName, taskID, _callback);
     Type returnType = new TypeToken<GetTaskResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -3395,11 +3493,11 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getTopUserIdsCall(
     final ApiCallback<GetTopUserIdsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3423,7 +3521,7 @@ public class SearchApi extends ApiClient {
 
   private Call getTopUserIdsValidateBeforeCall(
     final ApiCallback<GetTopUserIdsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return getTopUserIdsCall(_callback);
   }
 
@@ -3434,10 +3532,10 @@ public class SearchApi extends ApiClient {
    * following array of userIDs and clusters.
    *
    * @return GetTopUserIdsResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public GetTopUserIdsResponse getTopUserIds() throws ApiException {
+  public GetTopUserIdsResponse getTopUserIds() throws AlgoliaRuntimeException {
     Call req = getTopUserIdsValidateBeforeCall(null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetTopUserIds(
@@ -3458,11 +3556,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getTopUserIdsAsync(
     final ApiCallback<GetTopUserIdsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getTopUserIdsValidateBeforeCall(_callback);
     Type returnType = new TypeToken<GetTopUserIdsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -3474,12 +3573,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call getUserIdCall(
     String userID,
     final ApiCallback<UserId> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3508,10 +3607,10 @@ public class SearchApi extends ApiClient {
   private Call getUserIdValidateBeforeCall(
     String userID,
     final ApiCallback<UserId> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'userID' is set
     if (userID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'userID' when calling getUserId(Async)"
       );
     }
@@ -3527,10 +3626,10 @@ public class SearchApi extends ApiClient {
    *
    * @param userID userID to assign. (required)
    * @return UserId
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public UserId getUserId(String userID) throws ApiException {
+  public UserId getUserId(String userID) throws AlgoliaRuntimeException {
     Call req = getUserIdValidateBeforeCall(userID, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.GetUserId(((CallEcho) req).request());
@@ -3550,12 +3649,13 @@ public class SearchApi extends ApiClient {
    * @param userID userID to assign. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call getUserIdAsync(
     String userID,
     final ApiCallback<UserId> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = getUserIdValidateBeforeCall(userID, _callback);
     Type returnType = new TypeToken<UserId>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -3567,12 +3667,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call hasPendingMappingsCall(
     Boolean getClusters,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3601,7 +3701,7 @@ public class SearchApi extends ApiClient {
   private Call hasPendingMappingsValidateBeforeCall(
     Boolean getClusters,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return hasPendingMappingsCall(getClusters, _callback);
   }
 
@@ -3614,11 +3714,11 @@ public class SearchApi extends ApiClient {
    *
    * @param getClusters Whether to get clusters or not. (optional)
    * @return CreatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public CreatedAtResponse hasPendingMappings(Boolean getClusters)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = hasPendingMappingsValidateBeforeCall(getClusters, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.HasPendingMappings(
@@ -3631,7 +3731,7 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public CreatedAtResponse hasPendingMappings() throws ApiException {
+  public CreatedAtResponse hasPendingMappings() throws AlgoliaRuntimeException {
     return this.hasPendingMappings(null);
   }
 
@@ -3645,12 +3745,13 @@ public class SearchApi extends ApiClient {
    * @param getClusters Whether to get clusters or not. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call hasPendingMappingsAsync(
     Boolean getClusters,
     final ApiCallback<CreatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = hasPendingMappingsValidateBeforeCall(getClusters, _callback);
     Type returnType = new TypeToken<CreatedAtResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -3662,11 +3763,11 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call listApiKeysCall(
     final ApiCallback<ListApiKeysResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3690,7 +3791,7 @@ public class SearchApi extends ApiClient {
 
   private Call listApiKeysValidateBeforeCall(
     final ApiCallback<ListApiKeysResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return listApiKeysCall(_callback);
   }
 
@@ -3698,10 +3799,10 @@ public class SearchApi extends ApiClient {
    * List API keys, along with their associated rights.
    *
    * @return ListApiKeysResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public ListApiKeysResponse listApiKeys() throws ApiException {
+  public ListApiKeysResponse listApiKeys() throws AlgoliaRuntimeException {
     Call req = listApiKeysValidateBeforeCall(null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.ListApiKeys(
@@ -3719,11 +3820,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call listApiKeysAsync(
     final ApiCallback<ListApiKeysResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = listApiKeysValidateBeforeCall(_callback);
     Type returnType = new TypeToken<ListApiKeysResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -3735,11 +3837,11 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call listClustersCall(
     final ApiCallback<ListClustersResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3763,7 +3865,7 @@ public class SearchApi extends ApiClient {
 
   private Call listClustersValidateBeforeCall(
     final ApiCallback<ListClustersResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return listClustersCall(_callback);
   }
 
@@ -3772,10 +3874,10 @@ public class SearchApi extends ApiClient {
    * response is 200 OK and contains the following clusters.
    *
    * @return ListClustersResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public ListClustersResponse listClusters() throws ApiException {
+  public ListClustersResponse listClusters() throws AlgoliaRuntimeException {
     Call req = listClustersValidateBeforeCall(null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.ListClusters(
@@ -3794,11 +3896,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call listClustersAsync(
     final ApiCallback<ListClustersResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = listClustersValidateBeforeCall(_callback);
     Type returnType = new TypeToken<ListClustersResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -3810,12 +3913,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call listIndicesCall(
     Integer page,
     final ApiCallback<ListIndicesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3844,7 +3947,7 @@ public class SearchApi extends ApiClient {
   private Call listIndicesValidateBeforeCall(
     Integer page,
     final ApiCallback<ListIndicesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return listIndicesCall(page, _callback);
   }
 
@@ -3855,10 +3958,11 @@ public class SearchApi extends ApiClient {
    *     page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
    *     (optional)
    * @return ListIndicesResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public ListIndicesResponse listIndices(Integer page) throws ApiException {
+  public ListIndicesResponse listIndices(Integer page)
+    throws AlgoliaRuntimeException {
     Call req = listIndicesValidateBeforeCall(page, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.ListIndices(
@@ -3871,7 +3975,7 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public ListIndicesResponse listIndices() throws ApiException {
+  public ListIndicesResponse listIndices() throws AlgoliaRuntimeException {
     return this.listIndices(null);
   }
 
@@ -3883,12 +3987,13 @@ public class SearchApi extends ApiClient {
    *     (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call listIndicesAsync(
     Integer page,
     final ApiCallback<ListIndicesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = listIndicesValidateBeforeCall(page, _callback);
     Type returnType = new TypeToken<ListIndicesResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -3900,13 +4005,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call listUserIdsCall(
     Integer page,
     Integer hitsPerPage,
     final ApiCallback<ListUserIdsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -3940,7 +4045,7 @@ public class SearchApi extends ApiClient {
     Integer page,
     Integer hitsPerPage,
     final ApiCallback<ListUserIdsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return listUserIdsCall(page, hitsPerPage, _callback);
   }
 
@@ -3955,11 +4060,11 @@ public class SearchApi extends ApiClient {
    *     (optional)
    * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
    * @return ListUserIdsResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public ListUserIdsResponse listUserIds(Integer page, Integer hitsPerPage)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = listUserIdsValidateBeforeCall(page, hitsPerPage, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.ListUserIds(
@@ -3972,7 +4077,7 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public ListUserIdsResponse listUserIds() throws ApiException {
+  public ListUserIdsResponse listUserIds() throws AlgoliaRuntimeException {
     return this.listUserIds(null, 100);
   }
 
@@ -3988,13 +4093,14 @@ public class SearchApi extends ApiClient {
    * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call listUserIdsAsync(
     Integer page,
     Integer hitsPerPage,
     final ApiCallback<ListUserIdsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = listUserIdsValidateBeforeCall(page, hitsPerPage, _callback);
     Type returnType = new TypeToken<ListUserIdsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -4006,12 +4112,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call multipleBatchCall(
     BatchParams batchParams,
     final ApiCallback<MultipleBatchResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = batchParams;
 
     // create path and map variables
@@ -4036,10 +4142,10 @@ public class SearchApi extends ApiClient {
   private Call multipleBatchValidateBeforeCall(
     BatchParams batchParams,
     final ApiCallback<MultipleBatchResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'batchParams' is set
     if (batchParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'batchParams' when calling multipleBatch(Async)"
       );
     }
@@ -4053,11 +4159,11 @@ public class SearchApi extends ApiClient {
    *
    * @param batchParams (required)
    * @return MultipleBatchResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public MultipleBatchResponse multipleBatch(BatchParams batchParams)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = multipleBatchValidateBeforeCall(batchParams, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.MultipleBatch(
@@ -4077,12 +4183,13 @@ public class SearchApi extends ApiClient {
    * @param batchParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call multipleBatchAsync(
     BatchParams batchParams,
     final ApiCallback<MultipleBatchResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = multipleBatchValidateBeforeCall(batchParams, _callback);
     Type returnType = new TypeToken<MultipleBatchResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -4094,12 +4201,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call multipleQueriesCall(
     MultipleQueriesParams multipleQueriesParams,
     final ApiCallback<MultipleQueriesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = multipleQueriesParams;
 
     // create path and map variables
@@ -4124,10 +4231,10 @@ public class SearchApi extends ApiClient {
   private Call multipleQueriesValidateBeforeCall(
     MultipleQueriesParams multipleQueriesParams,
     final ApiCallback<MultipleQueriesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'multipleQueriesParams' is set
     if (multipleQueriesParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'multipleQueriesParams' when calling" +
         " multipleQueries(Async)"
       );
@@ -4141,12 +4248,12 @@ public class SearchApi extends ApiClient {
    *
    * @param multipleQueriesParams (required)
    * @return MultipleQueriesResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public MultipleQueriesResponse multipleQueries(
     MultipleQueriesParams multipleQueriesParams
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = multipleQueriesValidateBeforeCall(multipleQueriesParams, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.MultipleQueries(
@@ -4165,12 +4272,13 @@ public class SearchApi extends ApiClient {
    * @param multipleQueriesParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call multipleQueriesAsync(
     MultipleQueriesParams multipleQueriesParams,
     final ApiCallback<MultipleQueriesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = multipleQueriesValidateBeforeCall(
       multipleQueriesParams,
       _callback
@@ -4185,13 +4293,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call operationIndexCall(
     String indexName,
     OperationIndexParams operationIndexParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = operationIndexParams;
 
     // create path and map variables
@@ -4221,17 +4329,17 @@ public class SearchApi extends ApiClient {
     String indexName,
     OperationIndexParams operationIndexParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling operationIndex(Async)"
       );
     }
 
     // verify the required parameter 'operationIndexParams' is set
     if (operationIndexParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'operationIndexParams' when calling" +
         " operationIndex(Async)"
       );
@@ -4246,13 +4354,13 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param operationIndexParams (required)
    * @return UpdatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtResponse operationIndex(
     String indexName,
     OperationIndexParams operationIndexParams
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = operationIndexValidateBeforeCall(
       indexName,
       operationIndexParams,
@@ -4276,13 +4384,14 @@ public class SearchApi extends ApiClient {
    * @param operationIndexParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call operationIndexAsync(
     String indexName,
     OperationIndexParams operationIndexParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = operationIndexValidateBeforeCall(
       indexName,
       operationIndexParams,
@@ -4298,7 +4407,7 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call partialUpdateObjectCall(
     String indexName,
@@ -4306,7 +4415,7 @@ public class SearchApi extends ApiClient {
     List<Map<String, AttributeOrBuiltInOperation>> attributeOrBuiltInOperation,
     Boolean createIfNotExists,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = attributeOrBuiltInOperation;
 
     // create path and map variables
@@ -4348,24 +4457,24 @@ public class SearchApi extends ApiClient {
     List<Map<String, AttributeOrBuiltInOperation>> attributeOrBuiltInOperation,
     Boolean createIfNotExists,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling partialUpdateObject(Async)"
       );
     }
 
     // verify the required parameter 'objectID' is set
     if (objectID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'objectID' when calling partialUpdateObject(Async)"
       );
     }
 
     // verify the required parameter 'attributeOrBuiltInOperation' is set
     if (attributeOrBuiltInOperation == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'attributeOrBuiltInOperation' when calling" +
         " partialUpdateObject(Async)"
       );
@@ -4392,15 +4501,15 @@ public class SearchApi extends ApiClient {
    * @param createIfNotExists Creates the record if it does not exist yet. (optional, default to
    *     true)
    * @return UpdatedAtWithObjectIdResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtWithObjectIdResponse partialUpdateObject(
     String indexName,
     String objectID,
     List<Map<String, AttributeOrBuiltInOperation>> attributeOrBuiltInOperation,
     Boolean createIfNotExists
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
@@ -4425,7 +4534,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     List<Map<String, AttributeOrBuiltInOperation>> attributeOrBuiltInOperation
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return this.partialUpdateObject(
         indexName,
         objectID,
@@ -4447,7 +4556,8 @@ public class SearchApi extends ApiClient {
    *     true)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call partialUpdateObjectAsync(
     String indexName,
@@ -4455,7 +4565,7 @@ public class SearchApi extends ApiClient {
     List<Map<String, AttributeOrBuiltInOperation>> attributeOrBuiltInOperation,
     Boolean createIfNotExists,
     final ApiCallback<UpdatedAtWithObjectIdResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = partialUpdateObjectValidateBeforeCall(
       indexName,
       objectID,
@@ -4474,14 +4584,14 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call postCall(
     String path,
     String parameters,
     Object body,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = body;
 
     // create path and map variables
@@ -4516,10 +4626,10 @@ public class SearchApi extends ApiClient {
     String parameters,
     Object body,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'path' is set
     if (path == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'path' when calling post(Async)"
       );
     }
@@ -4536,11 +4646,11 @@ public class SearchApi extends ApiClient {
    *     query made with this API key. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @return Object
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public Object post(String path, String parameters, Object body)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = postValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.Post(((CallEcho) req).request());
@@ -4551,7 +4661,7 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public Object post(String path) throws ApiException {
+  public Object post(String path) throws AlgoliaRuntimeException {
     return this.post(path, null, null);
   }
 
@@ -4565,14 +4675,15 @@ public class SearchApi extends ApiClient {
    * @param body The parameters to send with the custom request. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call postAsync(
     String path,
     String parameters,
     Object body,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = postValidateBeforeCall(path, parameters, body, _callback);
     Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -4584,14 +4695,14 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call putCall(
     String path,
     String parameters,
     Object body,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = body;
 
     // create path and map variables
@@ -4626,10 +4737,10 @@ public class SearchApi extends ApiClient {
     String parameters,
     Object body,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'path' is set
     if (path == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'path' when calling put(Async)"
       );
     }
@@ -4646,11 +4757,11 @@ public class SearchApi extends ApiClient {
    *     query made with this API key. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @return Object
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public Object put(String path, String parameters, Object body)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = putValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.Put(((CallEcho) req).request());
@@ -4661,7 +4772,7 @@ public class SearchApi extends ApiClient {
     return res.getData();
   }
 
-  public Object put(String path) throws ApiException {
+  public Object put(String path) throws AlgoliaRuntimeException {
     return this.put(path, null, null);
   }
 
@@ -4675,14 +4786,15 @@ public class SearchApi extends ApiClient {
    * @param body The parameters to send with the custom request. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call putAsync(
     String path,
     String parameters,
     Object body,
     final ApiCallback<Object> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = putValidateBeforeCall(path, parameters, body, _callback);
     Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -4694,12 +4806,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call removeUserIdCall(
     String userID,
     final ApiCallback<RemoveUserIdResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -4728,10 +4840,10 @@ public class SearchApi extends ApiClient {
   private Call removeUserIdValidateBeforeCall(
     String userID,
     final ApiCallback<RemoveUserIdResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'userID' is set
     if (userID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'userID' when calling removeUserId(Async)"
       );
     }
@@ -4745,10 +4857,11 @@ public class SearchApi extends ApiClient {
    *
    * @param userID userID to assign. (required)
    * @return RemoveUserIdResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public RemoveUserIdResponse removeUserId(String userID) throws ApiException {
+  public RemoveUserIdResponse removeUserId(String userID)
+    throws AlgoliaRuntimeException {
     Call req = removeUserIdValidateBeforeCall(userID, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.RemoveUserId(
@@ -4768,12 +4881,13 @@ public class SearchApi extends ApiClient {
    * @param userID userID to assign. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call removeUserIdAsync(
     String userID,
     final ApiCallback<RemoveUserIdResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = removeUserIdValidateBeforeCall(userID, _callback);
     Type returnType = new TypeToken<RemoveUserIdResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -4785,12 +4899,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call replaceSourcesCall(
     List<Source> source,
     final ApiCallback<ReplaceSourceResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = source;
 
     // create path and map variables
@@ -4815,10 +4929,10 @@ public class SearchApi extends ApiClient {
   private Call replaceSourcesValidateBeforeCall(
     List<Source> source,
     final ApiCallback<ReplaceSourceResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'source' is set
     if (source == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'source' when calling replaceSources(Async)"
       );
     }
@@ -4831,11 +4945,11 @@ public class SearchApi extends ApiClient {
    *
    * @param source The sources to allow. (required)
    * @return ReplaceSourceResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public ReplaceSourceResponse replaceSources(List<Source> source)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = replaceSourcesValidateBeforeCall(source, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.ReplaceSources(
@@ -4854,12 +4968,13 @@ public class SearchApi extends ApiClient {
    * @param source The sources to allow. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call replaceSourcesAsync(
     List<Source> source,
     final ApiCallback<ReplaceSourceResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = replaceSourcesValidateBeforeCall(source, _callback);
     Type returnType = new TypeToken<ReplaceSourceResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -4871,12 +4986,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call restoreApiKeyCall(
     String key,
     final ApiCallback<AddApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -4905,10 +5020,10 @@ public class SearchApi extends ApiClient {
   private Call restoreApiKeyValidateBeforeCall(
     String key,
     final ApiCallback<AddApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'key' is set
     if (key == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'key' when calling restoreApiKey(Async)"
       );
     }
@@ -4921,10 +5036,11 @@ public class SearchApi extends ApiClient {
    *
    * @param key API Key string. (required)
    * @return AddApiKeyResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
-  public AddApiKeyResponse restoreApiKey(String key) throws ApiException {
+  public AddApiKeyResponse restoreApiKey(String key)
+    throws AlgoliaRuntimeException {
     Call req = restoreApiKeyValidateBeforeCall(key, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.RestoreApiKey(
@@ -4943,12 +5059,13 @@ public class SearchApi extends ApiClient {
    * @param key API Key string. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call restoreApiKeyAsync(
     String key,
     final ApiCallback<AddApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = restoreApiKeyValidateBeforeCall(key, _callback);
     Type returnType = new TypeToken<AddApiKeyResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -4960,13 +5077,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call saveObjectCall(
     String indexName,
     Object body,
     final ApiCallback<SaveObjectResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = body;
 
     // create path and map variables
@@ -4996,17 +5113,17 @@ public class SearchApi extends ApiClient {
     String indexName,
     Object body,
     final ApiCallback<SaveObjectResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling saveObject(Async)"
       );
     }
 
     // verify the required parameter 'body' is set
     if (body == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'body' when calling saveObject(Async)"
       );
     }
@@ -5020,11 +5137,11 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param body The Algolia record. (required)
    * @return SaveObjectResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public SaveObjectResponse saveObject(String indexName, Object body)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = saveObjectValidateBeforeCall(indexName, body, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.SaveObject(((CallEcho) req).request());
@@ -5042,13 +5159,14 @@ public class SearchApi extends ApiClient {
    * @param body The Algolia record. (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call saveObjectAsync(
     String indexName,
     Object body,
     final ApiCallback<SaveObjectResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = saveObjectValidateBeforeCall(indexName, body, _callback);
     Type returnType = new TypeToken<SaveObjectResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -5060,7 +5178,7 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call saveRuleCall(
     String indexName,
@@ -5068,7 +5186,7 @@ public class SearchApi extends ApiClient {
     Rule rule,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedRuleResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = rule;
 
     // create path and map variables
@@ -5110,24 +5228,24 @@ public class SearchApi extends ApiClient {
     Rule rule,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedRuleResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling saveRule(Async)"
       );
     }
 
     // verify the required parameter 'objectID' is set
     if (objectID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'objectID' when calling saveRule(Async)"
       );
     }
 
     // verify the required parameter 'rule' is set
     if (rule == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'rule' when calling saveRule(Async)"
       );
     }
@@ -5150,15 +5268,15 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @return UpdatedRuleResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedRuleResponse saveRule(
     String indexName,
     String objectID,
     Rule rule,
     Boolean forwardToReplicas
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = saveRuleValidateBeforeCall(
       indexName,
       objectID,
@@ -5179,7 +5297,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     Rule rule
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return this.saveRule(indexName, objectID, rule, null);
   }
 
@@ -5193,7 +5311,8 @@ public class SearchApi extends ApiClient {
    *     indexName. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call saveRuleAsync(
     String indexName,
@@ -5201,7 +5320,7 @@ public class SearchApi extends ApiClient {
     Rule rule,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedRuleResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = saveRuleValidateBeforeCall(
       indexName,
       objectID,
@@ -5219,7 +5338,7 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call saveSynonymCall(
     String indexName,
@@ -5227,7 +5346,7 @@ public class SearchApi extends ApiClient {
     SynonymHit synonymHit,
     Boolean forwardToReplicas,
     final ApiCallback<SaveSynonymResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = synonymHit;
 
     // create path and map variables
@@ -5269,24 +5388,24 @@ public class SearchApi extends ApiClient {
     SynonymHit synonymHit,
     Boolean forwardToReplicas,
     final ApiCallback<SaveSynonymResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling saveSynonym(Async)"
       );
     }
 
     // verify the required parameter 'objectID' is set
     if (objectID == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'objectID' when calling saveSynonym(Async)"
       );
     }
 
     // verify the required parameter 'synonymHit' is set
     if (synonymHit == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'synonymHit' when calling saveSynonym(Async)"
       );
     }
@@ -5309,15 +5428,15 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @return SaveSynonymResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public SaveSynonymResponse saveSynonym(
     String indexName,
     String objectID,
     SynonymHit synonymHit,
     Boolean forwardToReplicas
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = saveSynonymValidateBeforeCall(
       indexName,
       objectID,
@@ -5340,7 +5459,7 @@ public class SearchApi extends ApiClient {
     String indexName,
     String objectID,
     SynonymHit synonymHit
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return this.saveSynonym(indexName, objectID, synonymHit, null);
   }
 
@@ -5355,7 +5474,8 @@ public class SearchApi extends ApiClient {
    *     indexName. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call saveSynonymAsync(
     String indexName,
@@ -5363,7 +5483,7 @@ public class SearchApi extends ApiClient {
     SynonymHit synonymHit,
     Boolean forwardToReplicas,
     final ApiCallback<SaveSynonymResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = saveSynonymValidateBeforeCall(
       indexName,
       objectID,
@@ -5381,7 +5501,7 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call saveSynonymsCall(
     String indexName,
@@ -5389,7 +5509,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     Boolean replaceExistingSynonyms,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = synonymHit;
 
     // create path and map variables
@@ -5433,17 +5553,17 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     Boolean replaceExistingSynonyms,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling saveSynonyms(Async)"
       );
     }
 
     // verify the required parameter 'synonymHit' is set
     if (synonymHit == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'synonymHit' when calling saveSynonyms(Async)"
       );
     }
@@ -5468,15 +5588,15 @@ public class SearchApi extends ApiClient {
    * @param replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this
    *     request. (optional)
    * @return UpdatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtResponse saveSynonyms(
     String indexName,
     List<SynonymHit> synonymHit,
     Boolean forwardToReplicas,
     Boolean replaceExistingSynonyms
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = saveSynonymsValidateBeforeCall(
       indexName,
       synonymHit,
@@ -5498,7 +5618,7 @@ public class SearchApi extends ApiClient {
   public UpdatedAtResponse saveSynonyms(
     String indexName,
     List<SynonymHit> synonymHit
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return this.saveSynonyms(indexName, synonymHit, null, null);
   }
 
@@ -5514,7 +5634,8 @@ public class SearchApi extends ApiClient {
    *     request. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call saveSynonymsAsync(
     String indexName,
@@ -5522,7 +5643,7 @@ public class SearchApi extends ApiClient {
     Boolean forwardToReplicas,
     Boolean replaceExistingSynonyms,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = saveSynonymsValidateBeforeCall(
       indexName,
       synonymHit,
@@ -5540,13 +5661,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call searchCall(
     String indexName,
     SearchParams searchParams,
     final ApiCallback<SearchResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = searchParams;
 
     // create path and map variables
@@ -5576,17 +5697,17 @@ public class SearchApi extends ApiClient {
     String indexName,
     SearchParams searchParams,
     final ApiCallback<SearchResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling search(Async)"
       );
     }
 
     // verify the required parameter 'searchParams' is set
     if (searchParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'searchParams' when calling search(Async)"
       );
     }
@@ -5600,11 +5721,11 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param searchParams (required)
    * @return SearchResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public SearchResponse search(String indexName, SearchParams searchParams)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = searchValidateBeforeCall(indexName, searchParams, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.Search(((CallEcho) req).request());
@@ -5622,13 +5743,14 @@ public class SearchApi extends ApiClient {
    * @param searchParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call searchAsync(
     String indexName,
     SearchParams searchParams,
     final ApiCallback<SearchResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = searchValidateBeforeCall(indexName, searchParams, _callback);
     Type returnType = new TypeToken<SearchResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -5640,13 +5762,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call searchDictionaryEntriesCall(
     DictionaryType dictionaryName,
     SearchDictionaryEntriesParams searchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = searchDictionaryEntriesParams;
 
     // create path and map variables
@@ -5676,10 +5798,10 @@ public class SearchApi extends ApiClient {
     DictionaryType dictionaryName,
     SearchDictionaryEntriesParams searchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'dictionaryName' is set
     if (dictionaryName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'dictionaryName' when calling" +
         " searchDictionaryEntries(Async)"
       );
@@ -5687,7 +5809,7 @@ public class SearchApi extends ApiClient {
 
     // verify the required parameter 'searchDictionaryEntriesParams' is set
     if (searchDictionaryEntriesParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'searchDictionaryEntriesParams' when calling" +
         " searchDictionaryEntries(Async)"
       );
@@ -5706,13 +5828,13 @@ public class SearchApi extends ApiClient {
    * @param dictionaryName The dictionary to search in. (required)
    * @param searchDictionaryEntriesParams (required)
    * @return UpdatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtResponse searchDictionaryEntries(
     DictionaryType dictionaryName,
     SearchDictionaryEntriesParams searchDictionaryEntriesParams
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = searchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
       searchDictionaryEntriesParams,
@@ -5736,13 +5858,14 @@ public class SearchApi extends ApiClient {
    * @param searchDictionaryEntriesParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call searchDictionaryEntriesAsync(
     DictionaryType dictionaryName,
     SearchDictionaryEntriesParams searchDictionaryEntriesParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = searchDictionaryEntriesValidateBeforeCall(
       dictionaryName,
       searchDictionaryEntriesParams,
@@ -5758,14 +5881,14 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call searchForFacetValuesCall(
     String indexName,
     String facetName,
     SearchForFacetValuesRequest searchForFacetValuesRequest,
     final ApiCallback<SearchForFacetValuesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = searchForFacetValuesRequest;
 
     // create path and map variables
@@ -5800,17 +5923,17 @@ public class SearchApi extends ApiClient {
     String facetName,
     SearchForFacetValuesRequest searchForFacetValuesRequest,
     final ApiCallback<SearchForFacetValuesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling searchForFacetValues(Async)"
       );
     }
 
     // verify the required parameter 'facetName' is set
     if (facetName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'facetName' when calling searchForFacetValues(Async)"
       );
     }
@@ -5831,14 +5954,14 @@ public class SearchApi extends ApiClient {
    * @param facetName The facet name. (required)
    * @param searchForFacetValuesRequest (optional)
    * @return SearchForFacetValuesResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public SearchForFacetValuesResponse searchForFacetValues(
     String indexName,
     String facetName,
     SearchForFacetValuesRequest searchForFacetValuesRequest
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = searchForFacetValuesValidateBeforeCall(
       indexName,
       facetName,
@@ -5861,7 +5984,7 @@ public class SearchApi extends ApiClient {
   public SearchForFacetValuesResponse searchForFacetValues(
     String indexName,
     String facetName
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return this.searchForFacetValues(indexName, facetName, null);
   }
 
@@ -5874,14 +5997,15 @@ public class SearchApi extends ApiClient {
    * @param searchForFacetValuesRequest (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call searchForFacetValuesAsync(
     String indexName,
     String facetName,
     SearchForFacetValuesRequest searchForFacetValuesRequest,
     final ApiCallback<SearchForFacetValuesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = searchForFacetValuesValidateBeforeCall(
       indexName,
       facetName,
@@ -5899,13 +6023,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call searchRulesCall(
     String indexName,
     SearchRulesParams searchRulesParams,
     final ApiCallback<SearchRulesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = searchRulesParams;
 
     // create path and map variables
@@ -5935,17 +6059,17 @@ public class SearchApi extends ApiClient {
     String indexName,
     SearchRulesParams searchRulesParams,
     final ApiCallback<SearchRulesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling searchRules(Async)"
       );
     }
 
     // verify the required parameter 'searchRulesParams' is set
     if (searchRulesParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'searchRulesParams' when calling searchRules(Async)"
       );
     }
@@ -5959,13 +6083,13 @@ public class SearchApi extends ApiClient {
    * @param indexName The index in which to perform the request. (required)
    * @param searchRulesParams (required)
    * @return SearchRulesResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public SearchRulesResponse searchRules(
     String indexName,
     SearchRulesParams searchRulesParams
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = searchRulesValidateBeforeCall(
       indexName,
       searchRulesParams,
@@ -5989,13 +6113,14 @@ public class SearchApi extends ApiClient {
    * @param searchRulesParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call searchRulesAsync(
     String indexName,
     SearchRulesParams searchRulesParams,
     final ApiCallback<SearchRulesResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = searchRulesValidateBeforeCall(
       indexName,
       searchRulesParams,
@@ -6011,7 +6136,7 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call searchSynonymsCall(
     String indexName,
@@ -6020,7 +6145,7 @@ public class SearchApi extends ApiClient {
     Integer page,
     Integer hitsPerPage,
     final ApiCallback<SearchSynonymsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
 
     // create path and map variables
@@ -6069,10 +6194,10 @@ public class SearchApi extends ApiClient {
     Integer page,
     Integer hitsPerPage,
     final ApiCallback<SearchSynonymsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling searchSynonyms(Async)"
       );
     }
@@ -6098,8 +6223,8 @@ public class SearchApi extends ApiClient {
    *     (optional, default to 0)
    * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
    * @return SearchSynonymsResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public SearchSynonymsResponse searchSynonyms(
     String indexName,
@@ -6107,7 +6232,7 @@ public class SearchApi extends ApiClient {
     SynonymType type,
     Integer page,
     Integer hitsPerPage
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = searchSynonymsValidateBeforeCall(
       indexName,
       query,
@@ -6128,7 +6253,7 @@ public class SearchApi extends ApiClient {
   }
 
   public SearchSynonymsResponse searchSynonyms(String indexName)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     return this.searchSynonyms(indexName, "", null, 0, 100);
   }
 
@@ -6144,7 +6269,8 @@ public class SearchApi extends ApiClient {
    * @param hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call searchSynonymsAsync(
     String indexName,
@@ -6153,7 +6279,7 @@ public class SearchApi extends ApiClient {
     Integer page,
     Integer hitsPerPage,
     final ApiCallback<SearchSynonymsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = searchSynonymsValidateBeforeCall(
       indexName,
       query,
@@ -6172,12 +6298,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call searchUserIdsCall(
     SearchUserIdsParams searchUserIdsParams,
     final ApiCallback<SearchUserIdsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = searchUserIdsParams;
 
     // create path and map variables
@@ -6202,10 +6328,10 @@ public class SearchApi extends ApiClient {
   private Call searchUserIdsValidateBeforeCall(
     SearchUserIdsParams searchUserIdsParams,
     final ApiCallback<SearchUserIdsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'searchUserIdsParams' is set
     if (searchUserIdsParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'searchUserIdsParams' when calling searchUserIds(Async)"
       );
     }
@@ -6224,12 +6350,12 @@ public class SearchApi extends ApiClient {
    *
    * @param searchUserIdsParams (required)
    * @return SearchUserIdsResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public SearchUserIdsResponse searchUserIds(
     SearchUserIdsParams searchUserIdsParams
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = searchUserIdsValidateBeforeCall(searchUserIdsParams, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.SearchUserIds(
@@ -6254,12 +6380,13 @@ public class SearchApi extends ApiClient {
    * @param searchUserIdsParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call searchUserIdsAsync(
     SearchUserIdsParams searchUserIdsParams,
     final ApiCallback<SearchUserIdsResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = searchUserIdsValidateBeforeCall(searchUserIdsParams, _callback);
     Type returnType = new TypeToken<SearchUserIdsResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
@@ -6271,12 +6398,12 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call setDictionarySettingsCall(
     DictionarySettingsParams dictionarySettingsParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = dictionarySettingsParams;
 
     // create path and map variables
@@ -6301,10 +6428,10 @@ public class SearchApi extends ApiClient {
   private Call setDictionarySettingsValidateBeforeCall(
     DictionarySettingsParams dictionarySettingsParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'dictionarySettingsParams' is set
     if (dictionarySettingsParams == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'dictionarySettingsParams' when calling" +
         " setDictionarySettings(Async)"
       );
@@ -6318,12 +6445,12 @@ public class SearchApi extends ApiClient {
    *
    * @param dictionarySettingsParams (required)
    * @return UpdatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtResponse setDictionarySettings(
     DictionarySettingsParams dictionarySettingsParams
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = setDictionarySettingsValidateBeforeCall(
       dictionarySettingsParams,
       null
@@ -6345,12 +6472,13 @@ public class SearchApi extends ApiClient {
    * @param dictionarySettingsParams (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call setDictionarySettingsAsync(
     DictionarySettingsParams dictionarySettingsParams,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = setDictionarySettingsValidateBeforeCall(
       dictionarySettingsParams,
       _callback
@@ -6365,14 +6493,14 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call setSettingsCall(
     String indexName,
     IndexSettings indexSettings,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = indexSettings;
 
     // create path and map variables
@@ -6409,17 +6537,17 @@ public class SearchApi extends ApiClient {
     IndexSettings indexSettings,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'indexName' is set
     if (indexName == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexName' when calling setSettings(Async)"
       );
     }
 
     // verify the required parameter 'indexSettings' is set
     if (indexSettings == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'indexSettings' when calling setSettings(Async)"
       );
     }
@@ -6441,14 +6569,14 @@ public class SearchApi extends ApiClient {
    * @param forwardToReplicas When true, changes are also propagated to replicas of the given
    *     indexName. (optional)
    * @return UpdatedAtResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdatedAtResponse setSettings(
     String indexName,
     IndexSettings indexSettings,
     Boolean forwardToReplicas
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call req = setSettingsValidateBeforeCall(
       indexName,
       indexSettings,
@@ -6469,7 +6597,7 @@ public class SearchApi extends ApiClient {
   public UpdatedAtResponse setSettings(
     String indexName,
     IndexSettings indexSettings
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     return this.setSettings(indexName, indexSettings, null);
   }
 
@@ -6484,14 +6612,15 @@ public class SearchApi extends ApiClient {
    *     indexName. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call setSettingsAsync(
     String indexName,
     IndexSettings indexSettings,
     Boolean forwardToReplicas,
     final ApiCallback<UpdatedAtResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = setSettingsValidateBeforeCall(
       indexName,
       indexSettings,
@@ -6508,13 +6637,13 @@ public class SearchApi extends ApiClient {
    *
    * @param _callback Callback for upload/download progress
    * @return Call to execute
-   * @throws ApiException If fail to serialize the request body object
+   * @throws AlgoliaRuntimeException If fail to serialize the request body object
    */
   private Call updateApiKeyCall(
     String key,
     ApiKey apiKey,
     final ApiCallback<UpdateApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Object bodyObj = apiKey;
 
     // create path and map variables
@@ -6544,17 +6673,17 @@ public class SearchApi extends ApiClient {
     String key,
     ApiKey apiKey,
     final ApiCallback<UpdateApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     // verify the required parameter 'key' is set
     if (key == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'key' when calling updateApiKey(Async)"
       );
     }
 
     // verify the required parameter 'apiKey' is set
     if (apiKey == null) {
-      throw new ApiException(
+      throw new AlgoliaRuntimeException(
         "Missing the required parameter 'apiKey' when calling updateApiKey(Async)"
       );
     }
@@ -6568,11 +6697,11 @@ public class SearchApi extends ApiClient {
    * @param key API Key string. (required)
    * @param apiKey (required)
    * @return UpdateApiKeyResponse
-   * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the
-   *     response body
+   * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
+   *     deserialize the response body
    */
   public UpdateApiKeyResponse updateApiKey(String key, ApiKey apiKey)
-    throws ApiException {
+    throws AlgoliaRuntimeException {
     Call req = updateApiKeyValidateBeforeCall(key, apiKey, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.UpdateApiKey(
@@ -6592,13 +6721,14 @@ public class SearchApi extends ApiClient {
    * @param apiKey (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
-   * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+   * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
+   *     body object
    */
   public Call updateApiKeyAsync(
     String key,
     ApiKey apiKey,
     final ApiCallback<UpdateApiKeyResponse> _callback
-  ) throws ApiException {
+  ) throws AlgoliaRuntimeException {
     Call call = updateApiKeyValidateBeforeCall(key, apiKey, _callback);
     Type returnType = new TypeToken<UpdateApiKeyResponse>() {}.getType();
     this.executeAsync(call, returnType, _callback);
