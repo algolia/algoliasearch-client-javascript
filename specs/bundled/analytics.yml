@@ -55,7 +55,7 @@ components:
         period to analyze.
       schema:
         type: string
-        example: 1999-09-19T00:00:00.000Z
+        example: 1999-09-19
         pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
     EndDate:
       in: query
@@ -65,7 +65,7 @@ components:
         period to analyze.
       schema:
         type: string
-        example: 2000-01-21T00:00:00.000Z
+        example: 2000-01-21
         pattern: ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
     OrderBy:
       in: query
