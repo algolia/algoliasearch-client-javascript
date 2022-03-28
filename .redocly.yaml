@@ -18,8 +18,8 @@ lint:
     no-ambiguous-paths: off # this is out of our scope.
     no-enum-type-mismatch: warn # keeping the warning since it only occur on one edge case
 
+    no-identical-paths: error
     tag-description: error
     parameter-description: error
     operation-description: error
-    operation-parameters-unique: error
     tags-alphabetical: error

@@ -104,7 +104,7 @@ async function buildSpec(
   });
 
   spinner.text = `linting '${client}' bundled spec`;
-  await run(`yarn specs:lint bundled/${client}.${outputFormat}`, { verbose });
+  await run(`yarn specs:fix bundled/${client}.${outputFormat}`, { verbose });
 
   if (hash) {
     spinner.text = `storing ${client} spec cache`;

@@ -37,7 +37,7 @@ runs:
 
     # Restore bundled specs: used during 'client' generation or pushing the 'codegen'
     - name: Restore built abtesting spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
         path: specs/bundled/abtesting.yml
@@ -49,7 +49,7 @@ runs:
           )}}
 
     - name: Restore built analytics spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
         path: specs/bundled/analytics.yml
@@ -61,7 +61,7 @@ runs:
           )}}
 
     - name: Restore built insights spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
         path: specs/bundled/insights.yml
@@ -73,7 +73,7 @@ runs:
           )}}
 
     - name: Restore built personalization spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
         path: specs/bundled/personalization.yml
@@ -85,7 +85,7 @@ runs:
           )}}
 
     - name: Restore built predict spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
         path: specs/bundled/predict.yml
@@ -97,7 +97,7 @@ runs:
           )}}
 
     - name: Restore built query-suggestions spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
         path: specs/bundled/query-suggestions.yml
@@ -109,7 +109,7 @@ runs:
           )}}
 
     - name: Restore built recommend spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
         path: specs/bundled/recommend.yml
@@ -121,7 +121,7 @@ runs:
           )}}
 
     - name: Restore built search spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
         path: specs/bundled/search.yml
@@ -133,7 +133,7 @@ runs:
           )}}
 
     - name: Restore built sources spec
-      if: ${{ inputs.job == 'client' || inputs.job == 'codegen' }}
+      if: ${{ inputs.job == 'cts' || inputs.job == 'client' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
         path: specs/bundled/sources.yml

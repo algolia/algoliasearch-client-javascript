@@ -35,7 +35,7 @@ function getSpecsForPlugin() {
     return {
       id: specFile.fileName,
       spec: specFile.path,
-      routePath: `/specs/${specFile.fileName}`,
+      route: `/specs/${specFile.fileName}`,
     };
   });
 }
