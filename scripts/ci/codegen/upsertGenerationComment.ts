@@ -6,8 +6,7 @@ import { OWNER, REPO } from '../../release/common';
 
 import commentText from './text';
 
-// this should be changed to the bot name once we have the logs
-const BOT_NAME = 'shortcuts';
+const BOT_NAME = 'algolia-bot';
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 const octokit = new Octokit({
   auth: `token ${process.env.GITHUB_TOKEN}`,
@@ -81,7 +80,6 @@ export async function upsertGenerationComment(trigger: Trigger): Promise<void> {
           res.data.filter(
             (comment) =>
               comment.user?.login === BOT_NAME &&
-              // this shouldn't be needed once we have a proper bot running
               (comment.body?.startsWith(commentText.codegen.header) ||
                 comment.body?.startsWith(commentText.noGen.header) ||
                 comment.body?.startsWith(commentText.notification.header))
