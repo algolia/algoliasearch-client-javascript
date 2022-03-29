@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
 import fsp from 'fs/promises';
+import path from 'path';
 
 import dotenv from 'dotenv';
 import execa from 'execa';
-import { emptyDir, copy } from 'fs-extra';
+import { copy, remove } from 'fs-extra';
 import semver from 'semver';
 import type { ReleaseType } from 'semver';
 
@@ -110,6 +111,14 @@ async function updateOpenApiTools(
   );
 }
 
+async function emptyDirExceptForDotGit(dir: string): Promise<void> {
+  for (const file of await fsp.readdir(dir)) {
+    if (file !== '.git') {
+      await remove(path.resolve(dir, file));
+    }
+  }
+}
+
 async function updateChangelog({
   lang,
   issueBody,
@@ -206,7 +215,7 @@ async function processRelease(): Promise<void> {
     });
 
     const clientPath = toAbsolutePath(getLanguageFolder(lang));
-    await emptyDir(tempGitDir);
+    await emptyDirExceptForDotGit(tempGitDir);
     await copy(clientPath, tempGitDir, { preserveTimestamps: true });
 
     await configureGitHubAuthor(tempGitDir);
