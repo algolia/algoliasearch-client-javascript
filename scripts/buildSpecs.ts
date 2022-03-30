@@ -1,9 +1,8 @@
 import fsp from 'fs/promises';
 
-import { hashElement } from 'folder-hash';
 import yaml from 'js-yaml';
 
-import { exists, run, toAbsolutePath } from './common';
+import { checkForCache, exists, run, toAbsolutePath } from './common';
 import { createSpinner } from './oraLog';
 import type { Spec } from './pre-gen/setHostsOptions';
 
@@ -53,30 +52,22 @@ async function buildSpec(
   let hash = '';
 
   if (useCache) {
-    const spinner = createSpinner(
-      `checking cache for '${client}'`,
+    const { cacheExists, hash: newCache } = await checkForCache(
+      {
+        job: `'${client}' specs`,
+        folder: toAbsolutePath('specs/'),
+        generatedFiles: [`bundled/${client}.yml`],
+        filesToCache: [client, 'common'],
+        cacheFile,
+      },
       verbose
-    ).start();
-    // check if file and cache exist
-    if (await exists(toAbsolutePath(`specs/bundled/${client}.yml`))) {
-      // compare with stored cache
-      const specHash = (await hashElement(toAbsolutePath(`specs/${client}`)))
-        .hash;
-      const commonHash = (await hashElement(toAbsolutePath(`specs/common`)))
-        .hash;
-      hash = `${specHash}-${commonHash}`;
-      if (await exists(cacheFile)) {
-        const storedHash = (await fsp.readFile(cacheFile)).toString();
-        if (storedHash === hash) {
-          spinner.succeed(
-            `skipped building ${client} spec because the files did not change`
-          );
-          return;
-        }
-      }
+    );
+
+    if (cacheExists) {
+      return;
     }
 
-    spinner.info(`cache not found for ${client}' spec`);
+    hash = newCache;
   }
 
   const spinner = createSpinner(`building ${client} spec`, verbose).start();
