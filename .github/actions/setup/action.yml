@@ -55,6 +55,8 @@ runs:
 
         echo "::set-output name=SCRIPTS_CHANGED::$(git diff --shortstat $origin..HEAD -- scripts | wc -l)"
 
+        echo "::set-output name=GENERATORS_CHANGED::$(git diff --shortstat $origin..HEAD -- generators | wc -l)"
+
         echo "::set-output name=JS_CLIENT_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-javascript | wc -l)"
         echo "::set-output name=JS_ALGOLIASEARCH_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-javascript/packages/algoliasearch clients/algoliasearch-client-javascript/packages/client-search clients/algoliasearch-client-javascript/packages/client-analytics clients/algoliasearch-client-javascript/packages/client-personalization | wc -l)"
         echo "::set-output name=JS_COMMON_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-javascript/packages/client-common clients/algoliasearch-client-javascript/packages/requester-browser-xhr clients/algoliasearch-client-javascript/packages/requester-node-http | wc -l)"
@@ -95,7 +97,7 @@ runs:
       id: js-matrix
       shell: bash
       run: |
-        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 || steps.diff.outputs.JS_COMMON_CHANGED > 0 }}
+        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.GENERATORS_CHANGED > 0 || steps.diff.outputs.JS_TEMPLATE_CHANGED > 0 || steps.diff.outputs.JS_COMMON_CHANGED > 0 }}
         algoliasearch_changed=${{ steps.diff.outputs.JS_ALGOLIASEARCH_CHANGED > 0 }}
         common_changed=${{ steps.diff.outputs.JS_COMMON_CHANGED > 0 }}
 
@@ -128,7 +130,7 @@ runs:
       id: java-matrix
       shell: bash
       run: |
-        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
+        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.GENERATORS_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
 
         matrix=$(./scripts/ci/create-client-matrix.sh java $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
 
@@ -149,7 +151,7 @@ runs:
       id: php-matrix
       shell: bash
       run: |
-        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.PHP_TEMPLATE_CHANGED > 0 }}
+        base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.GENERATORS_CHANGED > 0 || steps.diff.outputs.PHP_TEMPLATE_CHANGED > 0 }}
 
         matrix=$(./scripts/ci/create-client-matrix.sh php $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
 

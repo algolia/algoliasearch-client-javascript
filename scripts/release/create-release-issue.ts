@@ -6,13 +6,7 @@ import semver from 'semver';
 import { LANGUAGES, ROOT_ENV_PATH, run, getPackageVersion } from '../common';
 import type { Language } from '../types';
 
-import {
-  RELEASED_TAG,
-  MAIN_BRANCH,
-  OWNER,
-  REPO,
-  MAIN_GENERATOR,
-} from './common';
+import { RELEASED_TAG, MAIN_BRANCH, OWNER, REPO, MAIN_PACKAGE } from './common';
 import TEXT from './text';
 import type {
   Versions,
@@ -24,11 +18,11 @@ import type {
 dotenv.config({ path: ROOT_ENV_PATH });
 
 export function readVersions(): VersionsWithoutReleaseType {
-  return Object.keys(MAIN_GENERATOR).reduce((acc, lang) => {
+  return Object.keys(MAIN_PACKAGE).reduce((acc, lang) => {
     return {
       ...acc,
       [lang]: {
-        current: getPackageVersion(MAIN_GENERATOR[lang]),
+        current: getPackageVersion(MAIN_PACKAGE[lang]),
       },
     };
   }, {});

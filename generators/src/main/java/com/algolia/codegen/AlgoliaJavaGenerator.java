@@ -6,11 +6,12 @@ import org.openapitools.codegen.utils.ModelUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.util.*;
-import java.util.Map.Entry;
 import java.io.FileInputStream;
 import java.net.URL;
 
+import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.servers.Server;
 
 @SuppressWarnings("unchecked")
 public class AlgoliaJavaGenerator extends JavaClientCodegen {
@@ -91,6 +92,11 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public CodegenOperation fromOperation(String path, String httpMethod, Operation operation, List<Server> servers) {
+    return Utils.specifyCustomRequest(super.fromOperation(path, httpMethod, operation, servers));
   }
 
   /**

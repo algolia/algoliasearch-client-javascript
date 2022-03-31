@@ -4,7 +4,7 @@
     "version": "5.4.0",
     "generators": {
       "javascript-search": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -26,7 +26,7 @@
         }
       },
       "javascript-recommend": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -48,7 +48,7 @@
         }
       },
       "javascript-personalization": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -73,7 +73,7 @@
         }
       },
       "javascript-analytics": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -99,7 +99,7 @@
         }
       },
       "javascript-insights": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -125,7 +125,7 @@
         }
       },
       "javascript-abtesting": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -151,7 +151,7 @@
         }
       },
       "javascript-query-suggestions": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -176,7 +176,7 @@
         }
       },
       "javascript-sources": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -201,7 +201,7 @@
         }
       },
       "javascript-predict": {
-        "generatorName": "typescript-node",
+        "generatorName": "algolia-javascript",
         "templateDir": "#{cwd}/templates/javascript/",
         "config": "#{cwd}/openapitools.json",
         "apiPackage": "src",
@@ -246,7 +246,7 @@
         }
       },
       "php-search": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -265,7 +265,7 @@
         }
       },
       "php-recommend": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -284,7 +284,7 @@
         }
       },
       "php-personalization": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -307,7 +307,7 @@
         }
       },
       "php-analytics": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -331,7 +331,7 @@
         }
       },
       "php-insights": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -355,7 +355,7 @@
         }
       },
       "php-abtesting": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
@@ -379,7 +379,7 @@
         }
       },
       "php-query-suggestions": {
-        "generatorName": "php",
+        "generatorName": "algolia-php",
         "templateDir": "#{cwd}/templates/php/",
         "config": "#{cwd}/openapitools.json",
         "output": "#{cwd}/clients/algoliasearch-client-php",
