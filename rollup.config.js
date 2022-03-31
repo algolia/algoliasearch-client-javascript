@@ -183,7 +183,7 @@ packagesConfig.forEach((packageConfig) => {
 
   packageConfig.formats.forEach((format) => {
     // Avoid generating types multiple times.
-    let isTypesGenerated = false;
+    let areTypesGenerated = false;
     const output = bundlers[format];
     const isUmdBuild = format === 'umd-browser';
     const isEsmBrowserBuild = format === 'esm-browser';
@@ -244,12 +244,12 @@ packagesConfig.forEach((packageConfig) => {
         }),
         nodeResolve(),
         ts({
-          check: !isTypesGenerated,
+          check: !areTypesGenerated,
           tsconfig: path.resolve(clientPath, 'tsconfig.json'),
           tsconfigOverride: {
             compilerOptions: {
-              declaration: !isTypesGenerated,
-              declarationMap: !isTypesGenerated,
+              declaration: !areTypesGenerated,
+              declarationMap: !areTypesGenerated,
             },
           },
         }),
@@ -269,7 +269,7 @@ packagesConfig.forEach((packageConfig) => {
       },
     });
 
-    isTypesGenerated = true;
+    areTypesGenerated = true;
   });
 });
 

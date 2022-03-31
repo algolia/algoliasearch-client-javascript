@@ -38,15 +38,15 @@
     },
     {
       "path": "packages/client-common/dist/client-common.esm.node.js",
-      "maxSize": "3.80KB"
+      "maxSize": "5.25KB"
     },
     {
       "path": "packages/requester-browser-xhr/dist/requester-browser-xhr.esm.node.js",
-      "maxSize": "825B"
+      "maxSize": "900B"
     },
     {
       "path": "packages/requester-node-http/dist/requester-node-http.esm.node.js",
-      "maxSize": "1.10KB"
+      "maxSize": "1.15KB"
     }
   ]
 }
