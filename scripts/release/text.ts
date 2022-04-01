@@ -1,5 +1,3 @@
-const APPROVED = `Approved`;
-
 export default {
   header: `## Summary`,
 
@@ -33,10 +31,8 @@ export default {
   changelogDescription: `Update the following lines. Once merged, it will be reflected to \`changelogs/*.\``,
 
   approvalHeader: `## Approval`,
-  approved: APPROVED,
   approval: [
-    `To proceed this release, check the box below and close the issue.`,
-    `To skip this release, just close the issue.`,
-    `- [ ] ${APPROVED}`,
+    `To proceed this release, a team member must leave a comment "approved" in this issue.`,
+    `To skip this release, just close it.`,
   ].join('\n'),
 };

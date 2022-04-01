@@ -3,6 +3,7 @@
   "mainBranch": "main",
   "owner": "algolia",
   "repo": "api-clients-automation",
+  "teamSlug": "api-clients-automation",
   "targetBranch": {
     "javascript": "next",
     "php": "next",

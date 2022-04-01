@@ -23,9 +23,11 @@ import {
   RELEASED_TAG,
   OWNER,
   REPO,
+  TEAM_SLUG,
   getMarkdownSection,
   configureGitHubAuthor,
   cloneRepository,
+  getOctokit,
 } from './common';
 import TEXT from './text';
 import type {
@@ -50,14 +52,22 @@ const BEFORE_CLIENT_COMMIT: { [lang: string]: BeforeClientCommitCommand } = {
   },
 };
 
-function getIssueBody(): string {
-  return JSON.parse(
-    execa.sync('curl', [
-      '-H',
-      `Authorization: token ${process.env.GITHUB_TOKEN}`,
-      `https://api.github.com/repos/${OWNER}/${REPO}/issues/${process.env.EVENT_NUMBER}`,
-    ]).stdout
-  ).body;
+async function getIssueBody(): Promise<string> {
+  const octokit = getOctokit(process.env.GITHUB_TOKEN!);
+  const {
+    data: { body },
+  } = await octokit.rest.issues.get({
+    owner: OWNER,
+    repo: REPO,
+    issue_number: Number(process.env.EVENT_NUMBER),
+  });
+
+  if (!body) {
+    throw new Error(
+      `Unexpected \`body\` of the release issue: ${JSON.stringify(body)}`
+    );
+  }
+  return body;
 }
 
 function getDateStamp(): string {
@@ -154,6 +164,26 @@ async function updateChangelog({
   );
 }
 
+async function isAuthorizedRelease(): Promise<boolean> {
+  const octokit = getOctokit(process.env.GITHUB_TOKEN!);
+  const { data: members } = await octokit.rest.teams.listMembersInOrg({
+    org: OWNER,
+    team_slug: TEAM_SLUG,
+  });
+
+  const { data: comments } = await octokit.rest.issues.listComments({
+    owner: OWNER,
+    repo: REPO,
+    issue_number: Number(process.env.EVENT_NUMBER),
+  });
+
+  return comments.some(
+    (comment) =>
+      comment.body?.toLowerCase().trim() === 'approved' &&
+      members.find((member) => member.login === comment.user?.login)
+  );
+}
+
 async function processRelease(): Promise<void> {
   if (!process.env.GITHUB_TOKEN) {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
@@ -163,16 +193,13 @@ async function processRelease(): Promise<void> {
     throw new Error('Environment variable `EVENT_NUMBER` does not exist.');
   }
 
-  const issueBody = getIssueBody();
-
-  if (
-    !getMarkdownSection(issueBody, TEXT.approvalHeader)
-      .split('\n')
-      .find((line) => line.startsWith(`- [x] ${TEXT.approved}`))
-  ) {
-    throw new Error('The issue was not approved.');
+  if (!(await isAuthorizedRelease())) {
+    throw new Error(
+      'The issue was not approved.\nA team member must leave a comment "approved" in the release issue.'
+    );
   }
 
+  const issueBody = await getIssueBody();
   const versionsToRelease = getVersionsToRelease(issueBody);
 
   await updateOpenApiTools(versionsToRelease);

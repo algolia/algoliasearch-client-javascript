@@ -1,16 +1,12 @@
 /* eslint-disable no-console */
-import { Octokit } from '@octokit/rest';
-
 import { run } from '../../common';
-import { OWNER, REPO } from '../../release/common';
+import { getOctokit, OWNER, REPO } from '../../release/common';
 
 import commentText from './text';
 
 const BOT_NAME = 'algolia-bot';
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
-const octokit = new Octokit({
-  auth: `token ${process.env.GITHUB_TOKEN}`,
-});
+const octokit = getOctokit(process.env.GITHUB_TOKEN!);
 
 const args = process.argv.slice(2);
 const allowedTriggers = ['notification', 'codegen', 'noGen', 'cleanup'];
