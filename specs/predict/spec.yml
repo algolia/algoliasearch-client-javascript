@@ -16,7 +16,7 @@ security:
     apiKey: []
 tags:
   - name: predict
-    description: Predict API reference
+    description: Predict API reference.
 paths:
   # ######################
   # ### Custom request ###

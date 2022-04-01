@@ -81,7 +81,7 @@ security:
     apiKey: []
 tags:
   - name: insights
-    description: Insights API reference
+    description: Insights API reference.
 paths:
   /1{path}:
     get:

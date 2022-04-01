@@ -35,7 +35,7 @@ indice:
       description: Number of bytes of the index binary file.
     lastBuildTimeS:
       type: integer
-      description: Last build time
+      description: Last build time.
     numberOfPendingTask:
       type: integer
       description: Number of pending indexing operations. This value is deprecated and should not be used.

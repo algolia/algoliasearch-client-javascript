@@ -22,7 +22,7 @@ security:
     apiKey: []
 tags:
   - name: query-suggestions
-    description: Query Suggestions API reference
+    description: Query Suggestions API reference.
 paths:
   # ######################
   # ### Custom request ###

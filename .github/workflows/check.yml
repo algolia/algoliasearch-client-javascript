@@ -66,6 +66,9 @@ jobs:
       - name: Test scripts
         run: yarn scripts:test
 
+      - name: Test custom eslint plugin
+        run: yarn workspace eslint-plugin-automation-custom test
+
   specs:
     runs-on: ubuntu-20.04
     timeout-minutes: 10

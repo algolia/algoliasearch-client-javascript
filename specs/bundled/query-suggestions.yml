@@ -94,10 +94,10 @@ components:
       properties:
         query:
           type: string
-          description: The suggestion you would like to add
+          description: The suggestion you would like to add.
         count:
           type: integer
-          description: The measure of the suggestion relative popularity
+          description: The measure of the suggestion relative popularity.
     external:
       type: array
       items:
@@ -264,13 +264,13 @@ components:
           schema:
             $ref: '#/components/schemas/ErrorBase'
     StatusUnprocessableEntity:
-      description: Status unprocessable entity
+      description: Status unprocessable entity.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
     InternalError:
-      description: Internal error
+      description: Internal error.
       content:
         application/json:
           schema:
@@ -308,7 +308,7 @@ security:
     apiKey: []
 tags:
   - name: query-suggestions
-    description: Query Suggestions API reference
+    description: Query Suggestions API reference.
 paths:
   /1{path}:
     get:

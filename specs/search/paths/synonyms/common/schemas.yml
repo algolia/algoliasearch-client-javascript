@@ -41,7 +41,7 @@ synonymHit:
       description: List of query words that will match the token.
     _highlightResult:
       type: object
-      description: Highlighted results
+      description: Highlighted results.
       additionalProperties: false
       properties:
         type:

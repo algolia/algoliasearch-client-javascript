@@ -18,7 +18,7 @@ dictionaryLanguage:
   type: object
   additionalProperties: false
   nullable: true
-  description: Custom entries for a dictionary
+  description: Custom entries for a dictionary.
   properties:
     nbCustomEntires:
       description: "When nbCustomEntries is set to 0, the user didn't customize the dictionary. The dictionary is still supported with standard, Algolia-provided entries."

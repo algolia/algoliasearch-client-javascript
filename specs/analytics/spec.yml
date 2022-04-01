@@ -23,7 +23,7 @@ security:
     apiKey: []
 tags:
   - name: analytics
-    description: Analytics API reference
+    description: Analytics API reference.
 paths:
   # ######################
   # ### Custom request ###

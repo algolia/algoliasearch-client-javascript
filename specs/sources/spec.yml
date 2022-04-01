@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   title: Event & Records Connection API
-  description: API powering the ingestion of Events and Records
+  description: API powering the ingestion of Events and Records.
   version: 0.1.0
 components:
   securitySchemes:
@@ -22,7 +22,7 @@ security:
     apiKey: []
 tags:
   - name: sources
-    description: Sources API reference
+    description: Sources API reference.
 paths:
   # ######################
   # ### Custom request ###

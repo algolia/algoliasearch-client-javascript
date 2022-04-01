@@ -34,7 +34,7 @@ condition:
   properties:
     pattern:
       type: string
-      description: Query pattern syntax
+      description: Query pattern syntax.
     anchoring:
       $ref: '#/anchoring'
     alternatives:

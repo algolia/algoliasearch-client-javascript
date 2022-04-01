@@ -23,7 +23,7 @@ security:
     apiKey: []
 tags:
   - name: abtesting
-    description: abtesting API reference
+    description: abtesting API reference.
 paths:
   # ######################
   # ### Custom request ###

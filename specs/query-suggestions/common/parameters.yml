@@ -28,10 +28,10 @@ SourceIndexExternal:
   properties:
     query:
       type: string
-      description: The suggestion you would like to add
+      description: The suggestion you would like to add.
     count:
       type: integer
-      description: The measure of the suggestion relative popularity
+      description: The measure of the suggestion relative popularity.
 
 SourceIndices:
   type: array

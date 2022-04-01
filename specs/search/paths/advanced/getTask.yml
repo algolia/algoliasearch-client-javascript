@@ -6,7 +6,7 @@ get:
     - $ref: '../../../common/parameters.yml#/IndexName'
     - name: taskID
       in: path
-      description: Unique identifier of an task. Numeric value (up to 64bits)
+      description: Unique identifier of an task. Numeric value (up to 64bits).
       required: true
       schema:
         type: integer

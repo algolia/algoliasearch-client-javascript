@@ -35,7 +35,7 @@ security:
     apiKey: []
 tags:
   - name: search
-    description: Search API reference
+    description: Search API reference.
 paths:
   # ######################
   # ### Custom request ###

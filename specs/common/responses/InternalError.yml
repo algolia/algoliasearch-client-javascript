@@ -1,4 +1,4 @@
-description: Internal error
+description: Internal error.
 content:
   application/json:
     schema:

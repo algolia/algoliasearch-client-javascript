@@ -698,7 +698,7 @@ components:
       example: 20
     nbPages:
       type: integer
-      description: Number of pages available for the current query
+      description: Number of pages available for the current query.
       example: 1
     userData:
       type: object
@@ -737,12 +737,12 @@ components:
           description: Whether the facet count is exhaustive or approximate.
         exhaustiveNbHits:
           type: boolean
-          description: Indicate if the nbHits count was exhaustive or approximate
+          description: Indicate if the nbHits count was exhaustive or approximate.
         exhaustiveTypo:
           type: boolean
           description: >-
             Indicate if the typo-tolerence search was exhaustive or approximate
-            (only included when typo-tolerance is enabled)
+            (only included when typo-tolerance is enabled).
         facets:
           type: object
           additionalProperties:
@@ -795,7 +795,7 @@ components:
           type: integer
           description: >-
             The number of hits selected and sorted by the relevant sort
-            algorithm
+            algorithm.
           example: 20
         page:
           $ref: '#/components/schemas/page'
@@ -1175,7 +1175,7 @@ components:
           description: List of query words that will match the token.
         _highlightResult:
           type: object
-          description: Highlighted results
+          description: Highlighted results.
           additionalProperties: false
           properties:
             type:
@@ -1326,7 +1326,7 @@ components:
       properties:
         pattern:
           type: string
-          description: Query pattern syntax
+          description: Query pattern syntax.
         anchoring:
           $ref: '#/components/schemas/anchoring'
         alternatives:
@@ -1601,7 +1601,7 @@ components:
       type: object
       additionalProperties: false
       nullable: true
-      description: Custom entries for a dictionary
+      description: Custom entries for a dictionary.
       properties:
         nbCustomEntires:
           description: >-
@@ -1727,7 +1727,7 @@ components:
           description: Number of bytes of the index binary file.
         lastBuildTimeS:
           type: integer
-          description: Last build time
+          description: Last build time.
         numberOfPendingTask:
           type: integer
           description: >-
@@ -1889,7 +1889,7 @@ security:
     apiKey: []
 tags:
   - name: search
-    description: Search API reference
+    description: Search API reference.
 paths:
   /1{path}:
     get:
@@ -4138,7 +4138,7 @@ paths:
         - $ref: '#/components/parameters/IndexName'
         - name: taskID
           in: path
-          description: Unique identifier of an task. Numeric value (up to 64bits)
+          description: Unique identifier of an task. Numeric value (up to 64bits).
           required: true
           schema:
             type: integer

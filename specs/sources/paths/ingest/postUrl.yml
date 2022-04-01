@@ -23,7 +23,7 @@ post:
                 - csv
             uniqueIDColumn:
               type: string
-              description: The name of the column that hold the unique identifier
+              description: The name of the column that hold the unique identifier.
               example: objectID
             input:
               type: object
@@ -78,16 +78,16 @@ post:
               properties:
                 type:
                   type: string
-                  description: The product to target
+                  description: The product to target.
                   enum:
                     - search
                 indexName:
                   type: string
-                  description: The index name of the product
+                  description: The index name of the product.
                   example: my_index_name
                 operation:
                   type: string
-                  description: The type of operation to execute
+                  description: The type of operation to execute.
                   enum:
                     - replace
   responses:

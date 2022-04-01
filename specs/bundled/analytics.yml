@@ -442,7 +442,7 @@ security:
     apiKey: []
 tags:
   - name: analytics
-    description: Analytics API reference
+    description: Analytics API reference.
 paths:
   /1{path}:
     get:

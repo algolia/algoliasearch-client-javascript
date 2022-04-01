@@ -13,6 +13,7 @@ module.exports = {
     {
       files: ['*.yml'],
       parser: 'yaml-eslint-parser',
+      plugins: ["automation-custom"],
       rules: {
         '@typescript-eslint/naming-convention': 0,
         'yml/quotes': [
@@ -31,10 +32,14 @@ module.exports = {
           },
         ],
         'yml/require-string-key': 2,
-
-        // Should be removed once the specs are finished
-        'yml/no-empty-document': 0,
       },
+      overrides: [{
+        files: ['specs/**/*.yml'],
+        rules: {
+          "automation-custom/description-dot": "error",
+        }
+      }
+      ]
     },
   ],
 

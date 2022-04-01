@@ -89,7 +89,7 @@ security:
     apiKey: []
 tags:
   - name: predict
-    description: Predict API reference
+    description: Predict API reference.
 paths:
   /1{path}:
     get:
@@ -227,7 +227,7 @@ paths:
               properties:
                 modelsToRetrieve:
                   type: array
-                  description: List with model types for which to retrieve predictions
+                  description: List with model types for which to retrieve predictions.
                   items:
                     type: string
                     enum:
@@ -262,7 +262,7 @@ paths:
                     properties:
                       funnel_stage:
                         type: object
-                        description: Prediction for the **funnel_stage** model
+                        description: Prediction for the **funnel_stage** model.
                         properties:
                           value:
                             type: array
@@ -280,7 +280,7 @@ paths:
                             type: string
                       order_value:
                         type: object
-                        description: Prediction for the **order_value** model
+                        description: Prediction for the **order_value** model.
                         properties:
                           value:
                             type: number
@@ -289,7 +289,7 @@ paths:
                             type: string
                       affinities:
                         type: object
-                        description: Prediction for the **affinities** model
+                        description: Prediction for the **affinities** model.
                         properties:
                           value:
                             type: array
@@ -310,30 +310,30 @@ paths:
                   properties:
                     type: object
                     title: properties
-                    description: Properties for the user profile
+                    description: Properties for the user profile.
                     properties:
                       raw:
                         type: object
-                        description: Raw user properties (key-value pairs)
+                        description: Raw user properties (key-value pairs).
                       computed:
                         type: object
-                        description: Computed user properties (key-value pairs)
+                        description: Computed user properties (key-value pairs).
                       custom:
                         type: object
-                        description: Custom user properties (key-value pairs)
+                        description: Custom user properties (key-value pairs).
                   segments:
                     type: object
                     title: segments
-                    description: Segments that the user belongs to
+                    description: Segments that the user belongs to.
                     properties:
                       computed:
                         type: array
-                        description: List of computed segments IDs
+                        description: List of computed segments IDs.
                         items:
                           type: string
                       custom:
                         type: array
-                        description: List of custom segments IDs
+                        description: List of custom segments IDs.
                         items:
                           type: string
         '400':
