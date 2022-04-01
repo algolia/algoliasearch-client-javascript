@@ -48,7 +48,8 @@ const BEFORE_CLIENT_GENERATION: {
 
 const BEFORE_CLIENT_COMMIT: { [lang: string]: BeforeClientCommitCommand } = {
   javascript: async ({ dir }) => {
-    await run(`yarn`, { cwd: dir }); // generate `yarn.lock` file
+    // https://github.com/yarnpkg/berry/issues/2948
+    await run(`YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn`, { cwd: dir }); // generate `yarn.lock` file
   },
 };
 
