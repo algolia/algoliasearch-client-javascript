@@ -8,8 +8,6 @@ import globals from 'rollup-plugin-node-globals';
 import { terser } from 'rollup-plugin-terser';
 import ts from 'rollup-plugin-typescript2';
 
-import generatorConfig from '../../openapitools.json';
-
 // Retrieve package to build
 const client = process.env.CLIENT?.replace(
   '@experimental-api-clients-automation/',
@@ -47,18 +45,16 @@ function createBundlers({ output, clientPath }) {
 }
 
 function getAvailableClients() {
-  // We default `algoliasearch` as it's not a generated client, but an aggregation of
-  // multiple clients.
-  const availableClients = ['algoliasearch'];
-  const generators = Object.entries(
-    generatorConfig['generator-cli'].generators
-  );
+  const exception = new Set([
+    'client-common',
+    'requester-browser-xhr',
+    'requester-node-http',
+  ]);
 
-  for (const [name, options] of generators) {
-    if (name.startsWith('javascript')) {
-      availableClients.push(options.additionalProperties.buildFile);
-    }
-  }
+  // ['algoliasearch', 'client-abtesting', ... ]
+  const availableClients = fs
+    .readdirSync('packages/')
+    .filter((_client) => !exception.has(_client));
 
   return client === 'all'
     ? availableClients
