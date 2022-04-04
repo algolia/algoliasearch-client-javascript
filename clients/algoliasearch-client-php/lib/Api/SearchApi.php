@@ -1327,7 +1327,7 @@ class SearchApi
      * Check the current status of a given task.
      *
      * @param string $indexName The index in which to perform the request. (required)
-     * @param int $taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+     * @param int $taskID Unique identifier of an task. Numeric value (up to 64bits). (required)
      *
      * @return array<string, mixed>
      */

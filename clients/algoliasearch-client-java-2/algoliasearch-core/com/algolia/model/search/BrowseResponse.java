@@ -192,7 +192,7 @@ public class BrowseResponse {
   }
 
   /**
-   * Indicate if the nbHits count was exhaustive or approximate
+   * Indicate if the nbHits count was exhaustive or approximate.
    *
    * @return exhaustiveNbHits
    */
@@ -212,7 +212,7 @@ public class BrowseResponse {
 
   /**
    * Indicate if the typo-tolerence search was exhaustive or approximate (only included when
-   * typo-tolerance is enabled)
+   * typo-tolerance is enabled).
    *
    * @return exhaustiveTypo
    */
@@ -391,7 +391,7 @@ public class BrowseResponse {
   }
 
   /**
-   * Number of pages available for the current query
+   * Number of pages available for the current query.
    *
    * @return nbPages
    */
@@ -410,7 +410,7 @@ public class BrowseResponse {
   }
 
   /**
-   * The number of hits selected and sorted by the relevant sort algorithm
+   * The number of hits selected and sorted by the relevant sort algorithm.
    *
    * @return nbSortedHits
    */

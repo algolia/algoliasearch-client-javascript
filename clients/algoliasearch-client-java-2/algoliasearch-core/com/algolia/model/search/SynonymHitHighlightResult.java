@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/** Highlighted results */
+/** Highlighted results. */
 public class SynonymHitHighlightResult {
 
   @SerializedName("type")

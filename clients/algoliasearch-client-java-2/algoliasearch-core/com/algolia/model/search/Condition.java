@@ -24,7 +24,7 @@ public class Condition {
   }
 
   /**
-   * Query pattern syntax
+   * Query pattern syntax.
    *
    * @return pattern
    */

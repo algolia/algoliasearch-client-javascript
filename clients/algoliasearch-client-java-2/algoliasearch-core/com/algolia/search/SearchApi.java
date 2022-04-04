@@ -3450,7 +3450,7 @@ public class SearchApi extends ApiClient {
    * Check the current status of a given task.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+   * @param taskID Unique identifier of an task. Numeric value (up to 64bits). (required)
    * @return GetTaskResponse
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
@@ -3471,7 +3471,7 @@ public class SearchApi extends ApiClient {
    * (asynchronously) Check the current status of a given task.
    *
    * @param indexName The index in which to perform the request. (required)
-   * @param taskID Unique identifier of an task. Numeric value (up to 64bits) (required)
+   * @param taskID Unique identifier of an task. Numeric value (up to 64bits). (required)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request

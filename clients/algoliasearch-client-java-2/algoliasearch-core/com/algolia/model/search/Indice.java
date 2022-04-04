@@ -161,7 +161,7 @@ public class Indice {
   }
 
   /**
-   * Last build time
+   * Last build time.
    *
    * @return lastBuildTimeS
    */

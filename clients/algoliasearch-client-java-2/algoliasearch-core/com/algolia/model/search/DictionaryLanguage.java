@@ -3,7 +3,7 @@ package com.algolia.model.search;
 import com.google.gson.annotations.SerializedName;
 import java.util.Objects;
 
-/** Custom entries for a dictionary */
+/** Custom entries for a dictionary. */
 public class DictionaryLanguage {
 
   @SerializedName("nbCustomEntires")
