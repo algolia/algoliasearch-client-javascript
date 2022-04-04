@@ -231,7 +231,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         }
         {{/isExplode}}
         {{/queryParams}}
-        {{#pathParams}}
+        {{#vendorExtensions}}{{#pathParams}}
         // path params
         {{#collectionFormat}}
         if (is_array(${{paramName}})) {
@@ -240,12 +240,12 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         {{/collectionFormat}}
         if (${{paramName}} !== null) {
             $resourcePath = str_replace(
-                '{' . '{{baseName}}' . '}',
-                ObjectSerializer::toPathValue(${{paramName}}),
+                {{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,
+                {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}ObjectSerializer::toPathValue(${{paramName}}){{/x-is-custom-request}},
                 $resourcePath
             );
         }
-        {{/pathParams}}
+        {{/pathParams}}{{/vendorExtensions}}
 
         {{#bodyParams}}
         if (isset(${{paramName}})) { 

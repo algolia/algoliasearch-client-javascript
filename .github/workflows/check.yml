@@ -263,6 +263,10 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build clients java ${{ matrix.client.name }}
 
+      - name: Show diff for '${{ matrix.client.name }}' client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: git --no-pager diff
+
   client_php:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
@@ -289,7 +293,7 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ${{ matrix.client.folder }}
+          path: ${{ format('{0}/lib/Api/{1}.php', matrix.client.folder, matrix.client.api) }}
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
@@ -307,6 +311,10 @@ jobs:
       - name: Build '${{ matrix.client.name }}' client
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn cli build clients php ${{ matrix.client.name }}
+
+      - name: Show diff for '${{ matrix.client.name }}' client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: git --no-pager diff
 
   client_javascript_tests:
     runs-on: ubuntu-20.04

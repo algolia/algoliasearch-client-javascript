@@ -111,8 +111,10 @@ public class {{classname}} extends ApiClient {
         Object bodyObj = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
 
         // create path and map variables
-        String requestPath = "{{{path}}}"{{#pathParams}}
-            .replaceAll("\\{" + "{{baseName}}" + "\\}", this.escapeString({{{paramName}}}.toString())){{/pathParams}};
+        String requestPath = "{{{path}}}"{{#vendorExtensions}}{{#pathParams}}.replaceAll(
+            {{=<% %>=}}"\\{<%baseName%>\\}"<%={{ }}=%>,
+            {{#x-is-custom-request}}{{{paramName}}}.toString(){{/x-is-custom-request}}{{^x-is-custom-request}}this.escapeString({{{paramName}}}.toString()){{/x-is-custom-request}}
+        ){{/pathParams}}{{/vendorExtensions}};
 
         {{javaUtilPrefix}}List<Pair> queryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
         {{javaUtilPrefix}}Map<String, String> headers = new {{javaUtilPrefix}}HashMap<String, String>();

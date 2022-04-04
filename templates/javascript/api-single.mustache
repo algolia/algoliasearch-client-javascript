@@ -202,12 +202,9 @@ export function create{{capitalizedApiName}}Api(options: CreateClientOptions{{#h
       {{/allParams.0}}
       requestOptions?: RequestOptions
         ) : Promise<{{{returnType}}}> {
-      const requestPath = '{{{path}}}'{{#pathParams}}.replace(
-      {{=<% %>=}}
-        '{<%baseName%>}',
-      <%={{ }}=%>
-        encodeURIComponent(String({{paramName}}))
-      ){{/pathParams}};
+      const requestPath = '{{{path}}}'{{#vendorExtensions}}{{#pathParams}}.replace(
+      {{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,{{#x-is-custom-request}}String({{paramName}}){{/x-is-custom-request}}{{^x-is-custom-request}}encodeURIComponent(String({{paramName}})){{/x-is-custom-request}}
+      ){{/pathParams}}{{/vendorExtensions}};
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
