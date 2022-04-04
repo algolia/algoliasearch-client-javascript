@@ -1,10 +1,9 @@
 /* eslint-disable no-console */
 import fsp from 'fs/promises';
-import path from 'path';
 
 import dotenv from 'dotenv';
 import execa from 'execa';
-import { copy, remove } from 'fs-extra';
+import { copy } from 'fs-extra';
 import semver from 'semver';
 import type { ReleaseType } from 'semver';
 
@@ -16,6 +15,7 @@ import {
   exists,
   getGitHubUrl,
   gitCommit,
+  emptyDirExceptForDotGit,
 } from '../common';
 import { getLanguageFolder } from '../config';
 
@@ -125,14 +125,6 @@ async function updateOpenApiTools(
     toAbsolutePath('openapitools.json'),
     JSON.stringify(openapitools, null, 2)
   );
-}
-
-async function emptyDirExceptForDotGit(dir: string): Promise<void> {
-  for (const file of await fsp.readdir(dir)) {
-    if (file !== '.git') {
-      await remove(path.resolve(dir, file));
-    }
-  }
 }
 
 async function updateChangelog({

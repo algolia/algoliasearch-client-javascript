@@ -1,5 +1,8 @@
 /* eslint-disable no-console */
+import { copy } from 'fs-extra';
+
 import {
+  emptyDirExceptForDotGit,
   gitBranchExists,
   gitCommit,
   LANGUAGES,
@@ -71,7 +74,8 @@ async function spreadGeneration(): Promise<void> {
     });
 
     const clientPath = toAbsolutePath(getLanguageFolder(lang));
-    await run(`cp -r ${clientPath}/ ${tempGitDir}`);
+    await emptyDirExceptForDotGit(tempGitDir);
+    await copy(clientPath, tempGitDir, { preserveTimestamps: true });
 
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });

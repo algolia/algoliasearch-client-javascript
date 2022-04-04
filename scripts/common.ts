@@ -3,6 +3,7 @@ import path from 'path';
 
 import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
 import { hashElement } from 'folder-hash';
+import { remove } from 'fs-extra';
 
 import openapitools from '../openapitools.json';
 
@@ -279,4 +280,12 @@ export async function buildCustomGenerators(verbose: boolean): Promise<void> {
 
 export async function gitBranchExists(branchName: string): Promise<boolean> {
   return Boolean(await run(`git ls-remote --heads origin ${branchName}`));
+}
+
+export async function emptyDirExceptForDotGit(dir: string): Promise<void> {
+  for (const file of await fsp.readdir(dir)) {
+    if (file !== '.git') {
+      await remove(path.resolve(dir, file));
+    }
+  }
 }
