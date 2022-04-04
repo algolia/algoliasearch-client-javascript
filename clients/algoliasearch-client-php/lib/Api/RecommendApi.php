@@ -4,7 +4,6 @@ namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
 use Algolia\AlgoliaSearch\Configuration\RecommendConfig;
-use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
@@ -118,11 +117,12 @@ class RecommendApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -164,11 +164,12 @@ class RecommendApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -234,11 +235,12 @@ class RecommendApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -281,11 +283,12 @@ class RecommendApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }

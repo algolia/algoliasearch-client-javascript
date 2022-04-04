@@ -73,10 +73,7 @@ export function createSourcesApi(
       { path, parameters, body }: DelProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace(
-        '{path}',
-        encodeURIComponent(String(path))
-      );
+      const requestPath = '/1{path}'.replace('{path}', String(path));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -116,10 +113,7 @@ export function createSourcesApi(
       { path, parameters }: GetProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace(
-        '{path}',
-        encodeURIComponent(String(path))
-      );
+      const requestPath = '/1{path}'.replace('{path}', String(path));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -159,10 +153,7 @@ export function createSourcesApi(
       { path, parameters, body }: PostProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace(
-        '{path}',
-        encodeURIComponent(String(path))
-      );
+      const requestPath = '/1{path}'.replace('{path}', String(path));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
@@ -255,10 +246,7 @@ export function createSourcesApi(
       { path, parameters, body }: PutProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace(
-        '{path}',
-        encodeURIComponent(String(path))
-      );
+      const requestPath = '/1{path}'.replace('{path}', String(path));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 

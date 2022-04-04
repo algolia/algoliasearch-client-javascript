@@ -144,11 +144,12 @@ class QuerySuggestionsApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -179,10 +180,11 @@ class QuerySuggestionsApi
         $resourcePath = '/1/configs/{indexName}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -221,11 +223,12 @@ class QuerySuggestionsApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -267,10 +270,11 @@ class QuerySuggestionsApi
         $resourcePath = '/1/configs/{indexName}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -298,10 +302,11 @@ class QuerySuggestionsApi
         $resourcePath = '/1/configs/{indexName}/status';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -329,10 +334,11 @@ class QuerySuggestionsApi
         $resourcePath = '/1/logs/{indexName}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -372,11 +378,12 @@ class QuerySuggestionsApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -419,11 +426,12 @@ class QuerySuggestionsApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -461,10 +469,11 @@ class QuerySuggestionsApi
         $resourcePath = '/1/configs/{indexName}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );

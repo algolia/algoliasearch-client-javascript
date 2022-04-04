@@ -117,11 +117,12 @@ class PersonalizationApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -152,10 +153,11 @@ class PersonalizationApi
         $resourcePath = '/1/profiles/{userToken}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($userToken !== null) {
             $resourcePath = str_replace(
-                '{' . 'userToken' . '}',
+                '{userToken}',
                 ObjectSerializer::toPathValue($userToken),
                 $resourcePath
             );
@@ -194,11 +196,12 @@ class PersonalizationApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -240,10 +243,11 @@ class PersonalizationApi
         $resourcePath = '/1/profiles/personalization/{userToken}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($userToken !== null) {
             $resourcePath = str_replace(
-                '{' . 'userToken' . '}',
+                '{userToken}',
                 ObjectSerializer::toPathValue($userToken),
                 $resourcePath
             );
@@ -283,11 +287,12 @@ class PersonalizationApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -330,11 +335,12 @@ class PersonalizationApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }

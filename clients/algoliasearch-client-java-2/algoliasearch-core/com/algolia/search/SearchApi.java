@@ -183,13 +183,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/{objectID}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "objectID" + "\\}",
-          this.escapeString(objectID.toString())
-        );
+        .replaceAll("\\{objectID\\}", this.escapeString(objectID.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -527,7 +524,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/batch".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -754,7 +751,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/dictionaries/{dictionaryName}/batch".replaceAll(
-          "\\{" + "dictionaryName" + "\\}",
+          "\\{dictionaryName\\}",
           this.escapeString(dictionaryName.toString())
         );
 
@@ -875,7 +872,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/rules/batch".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -1027,7 +1024,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/browse".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -1137,7 +1134,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/synonyms/clear".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -1255,7 +1252,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/clear".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -1348,7 +1345,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/rules/clear".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -1460,11 +1457,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = body;
 
     // create path and map variables
-    String requestPath =
-      "/1{path}".replaceAll(
-          "\\{" + "path" + "\\}",
-          this.escapeString(path.toString())
-        );
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -1571,7 +1564,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/keys/{key}".replaceAll(
-          "\\{" + "key" + "\\}",
+          "\\{key\\}",
           this.escapeString(key.toString())
         );
 
@@ -1663,7 +1656,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/deleteByQuery".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -1769,7 +1762,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -1861,13 +1854,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/{objectID}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "objectID" + "\\}",
-          this.escapeString(objectID.toString())
-        );
+        .replaceAll("\\{objectID\\}", this.escapeString(objectID.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -1969,13 +1959,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/rules/{objectID}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "objectID" + "\\}",
-          this.escapeString(objectID.toString())
-        );
+        .replaceAll("\\{objectID\\}", this.escapeString(objectID.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -2103,7 +2090,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/security/sources/{source}".replaceAll(
-          "\\{" + "source" + "\\}",
+          "\\{source\\}",
           this.escapeString(source.toString())
         );
 
@@ -2196,13 +2183,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/synonyms/{objectID}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "objectID" + "\\}",
-          this.escapeString(objectID.toString())
-        );
+        .replaceAll("\\{objectID\\}", this.escapeString(objectID.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -2331,11 +2315,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = null;
 
     // create path and map variables
-    String requestPath =
-      "/1{path}".replaceAll(
-          "\\{" + "path" + "\\}",
-          this.escapeString(path.toString())
-        );
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -2436,7 +2416,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/keys/{key}".replaceAll(
-          "\\{" + "key" + "\\}",
+          "\\{key\\}",
           this.escapeString(key.toString())
         );
 
@@ -2808,13 +2788,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/{objectID}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "objectID" + "\\}",
-          this.escapeString(objectID.toString())
-        );
+        .replaceAll("\\{objectID\\}", this.escapeString(objectID.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3029,13 +3006,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/rules/{objectID}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "objectID" + "\\}",
-          this.escapeString(objectID.toString())
-        );
+        .replaceAll("\\{objectID\\}", this.escapeString(objectID.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3133,7 +3107,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/settings".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -3295,13 +3269,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/synonyms/{objectID}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "objectID" + "\\}",
-          this.escapeString(objectID.toString())
-        );
+        .replaceAll("\\{objectID\\}", this.escapeString(objectID.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3400,13 +3371,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/task/{taskID}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "taskID" + "\\}",
-          this.escapeString(taskID.toString())
-        );
+        .replaceAll("\\{taskID\\}", this.escapeString(taskID.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -3584,7 +3552,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/clusters/mapping/{userID}".replaceAll(
-          "\\{" + "userID" + "\\}",
+          "\\{userID\\}",
           this.escapeString(userID.toString())
         );
 
@@ -4305,7 +4273,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/operation".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -4421,13 +4389,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/{objectID}/partial".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "objectID" + "\\}",
-          this.escapeString(objectID.toString())
-        );
+        .replaceAll("\\{objectID\\}", this.escapeString(objectID.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -4595,11 +4560,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = body;
 
     // create path and map variables
-    String requestPath =
-      "/1{path}".replaceAll(
-          "\\{" + "path" + "\\}",
-          this.escapeString(path.toString())
-        );
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -4706,11 +4667,7 @@ public class SearchApi extends ApiClient {
     Object bodyObj = body;
 
     // create path and map variables
-    String requestPath =
-      "/1{path}".replaceAll(
-          "\\{" + "path" + "\\}",
-          this.escapeString(path.toString())
-        );
+    String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -4817,7 +4774,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/clusters/mapping/{userID}".replaceAll(
-          "\\{" + "userID" + "\\}",
+          "\\{userID\\}",
           this.escapeString(userID.toString())
         );
 
@@ -4997,7 +4954,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/keys/{key}/restore".replaceAll(
-          "\\{" + "key" + "\\}",
+          "\\{key\\}",
           this.escapeString(key.toString())
         );
 
@@ -5089,7 +5046,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -5192,13 +5149,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/rules/{objectID}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "objectID" + "\\}",
-          this.escapeString(objectID.toString())
-        );
+        .replaceAll("\\{objectID\\}", this.escapeString(objectID.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -5352,13 +5306,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/synonyms/{objectID}".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "objectID" + "\\}",
-          this.escapeString(objectID.toString())
-        );
+        .replaceAll("\\{objectID\\}", this.escapeString(objectID.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -5515,7 +5466,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/synonyms/batch".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -5673,7 +5624,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/query".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -5774,7 +5725,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/dictionaries/{dictionaryName}/search".replaceAll(
-          "\\{" + "dictionaryName" + "\\}",
+          "\\{dictionaryName\\}",
           this.escapeString(dictionaryName.toString())
         );
 
@@ -5894,13 +5845,10 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/facets/{facetName}/query".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         )
-        .replaceAll(
-          "\\{" + "facetName" + "\\}",
-          this.escapeString(facetName.toString())
-        );
+        .replaceAll("\\{facetName\\}", this.escapeString(facetName.toString()));
 
     List<Pair> queryParams = new ArrayList<Pair>();
     Map<String, String> headers = new HashMap<String, String>();
@@ -6035,7 +5983,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/rules/search".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -6151,7 +6099,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/synonyms/search".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -6506,7 +6454,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/indexes/{indexName}/settings".replaceAll(
-          "\\{" + "indexName" + "\\}",
+          "\\{indexName\\}",
           this.escapeString(indexName.toString())
         );
 
@@ -6649,7 +6597,7 @@ public class SearchApi extends ApiClient {
     // create path and map variables
     String requestPath =
       "/1/keys/{key}".replaceAll(
-          "\\{" + "key" + "\\}",
+          "\\{key\\}",
           this.escapeString(key.toString())
         );
 

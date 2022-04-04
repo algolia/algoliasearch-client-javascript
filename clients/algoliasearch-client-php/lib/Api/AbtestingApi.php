@@ -3,7 +3,7 @@
 namespace Algolia\AlgoliaSearch\Api;
 
 use Algolia\AlgoliaSearch\Algolia;
-use Algolia\AlgoliaSearch\Configuration\AbTestingConfig;
+use Algolia\AlgoliaSearch\Configuration\AbtestingConfig;
 use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
@@ -23,15 +23,15 @@ class AbtestingApi
     protected $api;
 
     /**
-     * @var AbTestingConfig
+     * @var AbtestingConfig
      */
     protected $config;
 
     /**
-     * @param AbTestingConfig $config
+     * @param AbtestingConfig $config
      * @param ApiWrapperInterface $apiWrapper
      */
-    public function __construct(ApiWrapperInterface $apiWrapper, AbTestingConfig $config)
+    public function __construct(ApiWrapperInterface $apiWrapper, AbtestingConfig $config)
     {
         $this->config = $config;
 
@@ -48,7 +48,7 @@ class AbtestingApi
     public static function create($appId = null, $apiKey = null, $region = null)
     {
         $allowedRegions = explode('-', 'us-de');
-        $config = AbTestingConfig::create($appId, $apiKey, $region, $allowedRegions);
+        $config = AbtestingConfig::create($appId, $apiKey, $region, $allowedRegions);
 
         return static::createWithConfig($config);
     }
@@ -56,9 +56,9 @@ class AbtestingApi
     /**
      * Instantiate the client with congiguration
      *
-     * @param AbTestingConfig $config Configuration
+     * @param AbtestingConfig $config Configuration
      */
-    public static function createWithConfig(AbTestingConfig $config)
+    public static function createWithConfig(AbtestingConfig $config)
     {
         $config = clone $config;
 
@@ -79,7 +79,7 @@ class AbtestingApi
     }
 
     /**
-     * @return AbTestingConfig
+     * @return AbtestingConfig
      */
     public function getClientConfig()
     {
@@ -144,11 +144,12 @@ class AbtestingApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -179,10 +180,11 @@ class AbtestingApi
         $resourcePath = '/2/abtests/{id}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($id !== null) {
             $resourcePath = str_replace(
-                '{' . 'id' . '}',
+                '{id}',
                 ObjectSerializer::toPathValue($id),
                 $resourcePath
             );
@@ -221,11 +223,12 @@ class AbtestingApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -252,10 +255,11 @@ class AbtestingApi
         $resourcePath = '/2/abtests/{id}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($id !== null) {
             $resourcePath = str_replace(
-                '{' . 'id' . '}',
+                '{id}',
                 ObjectSerializer::toPathValue($id),
                 $resourcePath
             );
@@ -332,11 +336,12 @@ class AbtestingApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -379,11 +384,12 @@ class AbtestingApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -414,10 +420,11 @@ class AbtestingApi
         $resourcePath = '/2/abtests/{id}/stop';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($id !== null) {
             $resourcePath = str_replace(
-                '{' . 'id' . '}',
+                '{id}',
                 ObjectSerializer::toPathValue($id),
                 $resourcePath
             );

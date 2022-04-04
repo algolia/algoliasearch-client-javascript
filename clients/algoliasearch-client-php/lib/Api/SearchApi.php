@@ -147,18 +147,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/{objectID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -272,10 +274,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/batch';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -362,10 +365,11 @@ class SearchApi
         $resourcePath = '/1/dictionaries/{dictionaryName}/batch';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($dictionaryName !== null) {
             $resourcePath = str_replace(
-                '{' . 'dictionaryName' . '}',
+                '{dictionaryName}',
                 ObjectSerializer::toPathValue($dictionaryName),
                 $resourcePath
             );
@@ -426,10 +430,11 @@ class SearchApi
                 $queryParams['clearExistingRules'] = $clearExistingRules;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -462,10 +467,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/browse';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -508,10 +514,11 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -539,10 +546,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/clear';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -581,10 +589,11 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -624,11 +633,12 @@ class SearchApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -659,10 +669,11 @@ class SearchApi
         $resourcePath = '/1/keys/{key}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($key !== null) {
             $resourcePath = str_replace(
-                '{' . 'key' . '}',
+                '{key}',
                 ObjectSerializer::toPathValue($key),
                 $resourcePath
             );
@@ -697,10 +708,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/deleteByQuery';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -732,10 +744,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -770,18 +783,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/{objectID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -827,18 +842,20 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -866,10 +883,11 @@ class SearchApi
         $resourcePath = '/1/security/sources/{source}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($source !== null) {
             $resourcePath = str_replace(
-                '{' . 'source' . '}',
+                '{source}',
                 ObjectSerializer::toPathValue($source),
                 $resourcePath
             );
@@ -915,18 +933,20 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -965,11 +985,12 @@ class SearchApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -996,10 +1017,11 @@ class SearchApi
         $resourcePath = '/1/keys/{key}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($key !== null) {
             $resourcePath = str_replace(
-                '{' . 'key' . '}',
+                '{key}',
                 ObjectSerializer::toPathValue($key),
                 $resourcePath
             );
@@ -1138,18 +1160,20 @@ class SearchApi
                 $queryParams['attributesToRetrieve'] = $attributesToRetrieve;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -1211,18 +1235,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/rules/{objectID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -1250,10 +1276,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/settings';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -1303,18 +1330,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/synonyms/{objectID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -1349,18 +1378,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/task/{taskID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($taskID !== null) {
             $resourcePath = str_replace(
-                '{' . 'taskID' . '}',
+                '{taskID}',
                 ObjectSerializer::toPathValue($taskID),
                 $resourcePath
             );
@@ -1406,10 +1437,11 @@ class SearchApi
         $resourcePath = '/1/clusters/mapping/{userID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($userID !== null) {
             $resourcePath = str_replace(
-                '{' . 'userID' . '}',
+                '{userID}',
                 ObjectSerializer::toPathValue($userID),
                 $resourcePath
             );
@@ -1617,10 +1649,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/operation';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -1677,18 +1710,20 @@ class SearchApi
                 $queryParams['createIfNotExists'] = $createIfNotExists;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -1732,11 +1767,12 @@ class SearchApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -1779,11 +1815,12 @@ class SearchApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -1817,10 +1854,11 @@ class SearchApi
         $resourcePath = '/1/clusters/mapping/{userID}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($userID !== null) {
             $resourcePath = str_replace(
-                '{' . 'userID' . '}',
+                '{userID}',
                 ObjectSerializer::toPathValue($userID),
                 $resourcePath
             );
@@ -1875,10 +1913,11 @@ class SearchApi
         $resourcePath = '/1/keys/{key}/restore';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($key !== null) {
             $resourcePath = str_replace(
-                '{' . 'key' . '}',
+                '{key}',
                 ObjectSerializer::toPathValue($key),
                 $resourcePath
             );
@@ -1913,10 +1952,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -1973,18 +2013,20 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -2041,18 +2083,20 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($objectID !== null) {
             $resourcePath = str_replace(
-                '{' . 'objectID' . '}',
+                '{objectID}',
                 ObjectSerializer::toPathValue($objectID),
                 $resourcePath
             );
@@ -2113,10 +2157,11 @@ class SearchApi
                 $queryParams['replaceExistingSynonyms'] = $replaceExistingSynonyms;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -2155,10 +2200,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/query';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -2197,10 +2243,11 @@ class SearchApi
         $resourcePath = '/1/dictionaries/{dictionaryName}/search';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($dictionaryName !== null) {
             $resourcePath = str_replace(
-                '{' . 'dictionaryName' . '}',
+                '{dictionaryName}',
                 ObjectSerializer::toPathValue($dictionaryName),
                 $resourcePath
             );
@@ -2240,18 +2287,20 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/facets/{facetName}/query';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
         }
+
         // path params
         if ($facetName !== null) {
             $resourcePath = str_replace(
-                '{' . 'facetName' . '}',
+                '{facetName}',
                 ObjectSerializer::toPathValue($facetName),
                 $resourcePath
             );
@@ -2290,10 +2339,11 @@ class SearchApi
         $resourcePath = '/1/indexes/{indexName}/rules/search';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -2369,10 +2419,11 @@ class SearchApi
                 $queryParams['hitsPerPage'] = $hitsPerPage;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -2472,10 +2523,11 @@ class SearchApi
                 $queryParams['forwardToReplicas'] = $forwardToReplicas;
             }
         }
+
         // path params
         if ($indexName !== null) {
             $resourcePath = str_replace(
-                '{' . 'indexName' . '}',
+                '{indexName}',
                 ObjectSerializer::toPathValue($indexName),
                 $resourcePath
             );
@@ -2514,10 +2566,11 @@ class SearchApi
         $resourcePath = '/1/keys/{key}';
         $queryParams = [];
         $httpBody = [];
+
         // path params
         if ($key !== null) {
             $resourcePath = str_replace(
-                '{' . 'key' . '}',
+                '{key}',
                 ObjectSerializer::toPathValue($key),
                 $resourcePath
             );

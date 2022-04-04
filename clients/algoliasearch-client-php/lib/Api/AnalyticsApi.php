@@ -117,11 +117,12 @@ class AnalyticsApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -163,11 +164,12 @@ class AnalyticsApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -1219,10 +1221,11 @@ class AnalyticsApi
                 $queryParams['tags'] = $tags;
             }
         }
+
         // path params
         if ($attribute !== null) {
             $resourcePath = str_replace(
-                '{' . 'attribute' . '}',
+                '{attribute}',
                 ObjectSerializer::toPathValue($attribute),
                 $resourcePath
             );
@@ -1686,11 +1689,12 @@ class AnalyticsApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
@@ -1733,11 +1737,12 @@ class AnalyticsApi
                 $queryParams['parameters'] = $parameters;
             }
         }
+
         // path params
         if ($path !== null) {
             $resourcePath = str_replace(
-                '{' . 'path' . '}',
-                ObjectSerializer::toPathValue($path),
+                '{path}',
+                path,
                 $resourcePath
             );
         }
