@@ -2,6 +2,7 @@
   "name": "scripts",
   "version": "1.0.0",
   "scripts": {
+    "createMatrix": "ts-node ci/createMatrix.ts",
     "createReleaseIssue": "ts-node release/create-release-issue.ts",
     "processRelease": "ts-node release/process-release.ts",
     "pushGeneratedCode": "ts-node ci/codegen/pushGeneratedCode.ts",

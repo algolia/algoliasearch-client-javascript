@@ -78,7 +78,7 @@ runs:
       run: |
         base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 }}
 
-        matrix=$(./scripts/ci/create-spec-matrix.sh $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
+        matrix=$(yarn workspace scripts createMatrix $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
 
         if [[ $matrix == '{"client":["no-run"]}' ]]; then
           run="false"
@@ -101,7 +101,7 @@ runs:
         algoliasearch_changed=${{ steps.diff.outputs.JS_ALGOLIASEARCH_CHANGED > 0 }}
         common_changed=${{ steps.diff.outputs.JS_COMMON_CHANGED > 0 }}
 
-        matrix=$(./scripts/ci/create-client-matrix.sh javascript $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
+        matrix=$(yarn workspace scripts createMatrix $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }} javascript)
 
         if [[ $algoliasearch_changed == 'true' || $base_changed == 'true' ]]; then
           echo "Running algoliasearch: true"
@@ -132,7 +132,7 @@ runs:
       run: |
         base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.GENERATORS_CHANGED > 0 || steps.diff.outputs.JAVA_TEMPLATE_CHANGED > 0 }}
 
-        matrix=$(./scripts/ci/create-client-matrix.sh java $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
+        matrix=$(yarn workspace scripts createMatrix $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }} java)
 
         if [[ $matrix == '{"client":["no-run"]}' ]]; then
           run="false"
@@ -153,7 +153,7 @@ runs:
       run: |
         base_changed=${{ steps.diff.outputs.GITHUB_ACTIONS_CHANGED > 0 || steps.diff.outputs.COMMON_SPECS_CHANGED > 0 || steps.diff.outputs.SCRIPTS_CHANGED > 0 || steps.diff.outputs.GENERATORS_CHANGED > 0 || steps.diff.outputs.PHP_TEMPLATE_CHANGED > 0 }}
 
-        matrix=$(./scripts/ci/create-client-matrix.sh php $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }})
+        matrix=$(yarn workspace scripts createMatrix $base_changed ${{ steps.diff.outputs.ORIGIN_BRANCH }} php)
 
         if [[ $matrix == '{"client":["no-run"]}' ]]; then
           run="false"
