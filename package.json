@@ -13,7 +13,7 @@
     "test:size": "bundlesize",
     "test:lint": "eslint . --ext .js,.ts",
     "test:types": "yarn tsc --noEmit",
-    "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --yes",
+    "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --yes",
     "release:publish": "ts-node scripts/publish.ts"
   },
   "devDependencies": {

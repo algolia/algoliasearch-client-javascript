@@ -5,6 +5,7 @@ import execa from 'execa'; // https://github.com/sindresorhus/execa/tree/v5.1.1
 import { hashElement } from 'folder-hash';
 import { remove } from 'fs-extra';
 
+import clientsConfig from '../config/clients.config.json';
 import openapitools from '../openapitools.json';
 
 import { createSpinner } from './oraLog';
@@ -31,7 +32,10 @@ export const GENERATORS: Record<string, Generator> = {
     key: 'javascript-algoliasearch',
     additionalProperties: {
       packageName: '@experimental-api-clients-automation/algoliasearch',
-      packageVersion: '0.0.5',
+      packageVersion:
+        openapitools['generator-cli'].generators[
+          clientsConfig.javascript.mainPackage
+        ].additionalProperties.packageVersion,
     },
   },
 };
