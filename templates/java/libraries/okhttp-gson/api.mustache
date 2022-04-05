@@ -119,18 +119,25 @@ public class {{classname}} extends ApiClient {
         {{javaUtilPrefix}}List<Pair> queryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
         {{javaUtilPrefix}}Map<String, String> headers = new {{javaUtilPrefix}}HashMap<String, String>();
 
-        {{#queryParams}}
+        {{#vendorExtensions}}{{#queryParams}}
         if ({{paramName}} != null) {
+          {{^x-is-custom-request}}
             queryParams.addAll(this.parameterToPair("{{baseName}}", {{paramName}}));
+          {{/x-is-custom-request}}
+          {{#x-is-custom-request}}
+            for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+              queryParams.addAll(this.parameterToPair(parameter.getKey(), parameter.getValue().toString()));
+            }
+          {{/x-is-custom-request}}
         }
 
-        {{/queryParams}}
+        {{/queryParams}}{{/vendorExtensions}}
         {{#headerParams}}
         if ({{paramName}} != null) {
             headers.put("{{baseName}}", this.parameterToString({{paramName}}));
         }
 
-        {{/headerParams}}        
+        {{/headerParams}}
         headers.put("Accept", "application/json");
         headers.put("Content-Type", "application/json");
 

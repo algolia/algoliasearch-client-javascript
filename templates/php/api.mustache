@@ -203,7 +203,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         $resourcePath = '{{{path}}}';
         $queryParams = [];
         $httpBody = [];
-        {{#queryParams}}
+        {{#vendorExtensions}}{{#queryParams}}
 
         {{#isExplode}}
         if (${{paramName}} !== null) {
@@ -214,7 +214,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
                 }
             }
             else {
-                $queryParams['{{baseName}}'] = ${{paramName}};
+                $queryParams{{^x-is-custom-request}}['{{baseName}}']{{/x-is-custom-request}} = ${{paramName}};
             }
         {{/style}}
         {{^style}}
@@ -230,7 +230,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
             $queryParams['{{baseName}}'] = ${{paramName}};
         }
         {{/isExplode}}
-        {{/queryParams}}
+        {{/queryParams}}{{/vendorExtensions}}
         {{#vendorExtensions}}{{#pathParams}}
         // path params
         {{#collectionFormat}}
