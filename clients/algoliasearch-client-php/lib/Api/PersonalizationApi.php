@@ -90,7 +90,7 @@ class PersonalizationApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
      * @return array<string, mixed>
@@ -114,7 +114,7 @@ class PersonalizationApi
                     $queryParams[$key] = $value;
                 }
             } else {
-                $queryParams['parameters'] = $parameters;
+                $queryParams = $parameters;
             }
         }
 
@@ -170,7 +170,7 @@ class PersonalizationApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
      *
      * @return array<string, mixed>
      */
@@ -193,7 +193,7 @@ class PersonalizationApi
                     $queryParams[$key] = $value;
                 }
             } else {
-                $queryParams['parameters'] = $parameters;
+                $queryParams = $parameters;
             }
         }
 
@@ -260,7 +260,7 @@ class PersonalizationApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
      * @return array<string, mixed>
@@ -284,7 +284,7 @@ class PersonalizationApi
                     $queryParams[$key] = $value;
                 }
             } else {
-                $queryParams['parameters'] = $parameters;
+                $queryParams = $parameters;
             }
         }
 
@@ -308,7 +308,7 @@ class PersonalizationApi
      * Send requests to the Algolia REST API.
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
-     * @param string $parameters URL-encoded query string. Force some query parameters to be applied for each query made with this API key. (optional)
+     * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
      * @return array<string, mixed>
@@ -332,7 +332,7 @@ class PersonalizationApi
                     $queryParams[$key] = $value;
                 }
             } else {
-                $queryParams['parameters'] = $parameters;
+                $queryParams = $parameters;
             }
         }
 

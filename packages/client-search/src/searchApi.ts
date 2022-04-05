@@ -148,10 +148,6 @@ export function createSearchApi(options: CreateClientOptions) {
       apiKey: ApiKey,
       requestOptions?: RequestOptions
     ): Promise<AddApiKeyResponse> {
-      const requestPath = '/1/keys';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!apiKey) {
         throw new Error(
           'Parameter `apiKey` is required when calling `addApiKey`.'
@@ -163,6 +159,10 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `apiKey.acl` is required when calling `addApiKey`.'
         );
       }
+
+      const requestPath = '/1/keys';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -193,12 +193,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, objectID, body }: AddOrUpdateObjectProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtWithObjectIdResponse> {
-      const requestPath = '/1/indexes/{indexName}/{objectID}'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{objectID}', encodeURIComponent(String(objectID)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `addOrUpdateObject`.'
@@ -216,6 +210,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `body` is required when calling `addOrUpdateObject`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/{objectID}'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'PUT',
@@ -243,15 +243,15 @@ export function createSearchApi(options: CreateClientOptions) {
       source: Source,
       requestOptions?: RequestOptions
     ): Promise<CreatedAtResponse> {
-      const requestPath = '/1/security/sources/append';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!source) {
         throw new Error(
           'Parameter `source` is required when calling `appendSource`.'
         );
       }
+
+      const requestPath = '/1/security/sources/append';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -281,10 +281,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { xAlgoliaUserID, assignUserIdParams }: AssignUserIdProps,
       requestOptions?: RequestOptions
     ): Promise<CreatedAtResponse> {
-      const requestPath = '/1/clusters/mapping';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!xAlgoliaUserID) {
         throw new Error(
           'Parameter `xAlgoliaUserID` is required when calling `assignUserId`.'
@@ -302,6 +298,10 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `assignUserIdParams.cluster` is required when calling `assignUserId`.'
         );
       }
+
+      const requestPath = '/1/clusters/mapping';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (xAlgoliaUserID !== undefined) {
         queryParameters['X-Algolia-User-ID'] = xAlgoliaUserID.toString();
@@ -335,13 +335,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, batchWriteParams }: BatchProps,
       requestOptions?: RequestOptions
     ): Promise<BatchResponse> {
-      const requestPath = '/1/indexes/{indexName}/batch'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `batch`.'
@@ -353,6 +346,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `batchWriteParams` is required when calling `batch`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/batch'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -382,10 +382,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { xAlgoliaUserID, batchAssignUserIdsParams }: BatchAssignUserIdsProps,
       requestOptions?: RequestOptions
     ): Promise<CreatedAtResponse> {
-      const requestPath = '/1/clusters/mapping/batch';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!xAlgoliaUserID) {
         throw new Error(
           'Parameter `xAlgoliaUserID` is required when calling `batchAssignUserIds`.'
@@ -408,6 +404,10 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `batchAssignUserIdsParams.users` is required when calling `batchAssignUserIds`.'
         );
       }
+
+      const requestPath = '/1/clusters/mapping/batch';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (xAlgoliaUserID !== undefined) {
         queryParameters['X-Algolia-User-ID'] = xAlgoliaUserID.toString();
@@ -444,13 +444,6 @@ export function createSearchApi(options: CreateClientOptions) {
       }: BatchDictionaryEntriesProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtResponse> {
-      const requestPath = '/1/dictionaries/{dictionaryName}/batch'.replace(
-        '{dictionaryName}',
-        encodeURIComponent(String(dictionaryName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!dictionaryName) {
         throw new Error(
           'Parameter `dictionaryName` is required when calling `batchDictionaryEntries`.'
@@ -468,6 +461,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `batchDictionaryEntriesParams.requests` is required when calling `batchDictionaryEntries`.'
         );
       }
+
+      const requestPath = '/1/dictionaries/{dictionaryName}/batch'.replace(
+        '{dictionaryName}',
+        encodeURIComponent(dictionaryName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -504,13 +504,6 @@ export function createSearchApi(options: CreateClientOptions) {
       }: BatchRulesProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}/rules/batch'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `batchRules`.'
@@ -522,6 +515,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `rule` is required when calling `batchRules`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/rules/batch'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
@@ -559,18 +559,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, browseRequest }: BrowseProps,
       requestOptions?: RequestOptions
     ): Promise<BrowseResponse> {
-      const requestPath = '/1/indexes/{indexName}/browse'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `browse`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/browse'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -600,18 +600,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, forwardToReplicas }: ClearAllSynonymsProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}/synonyms/clear'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `clearAllSynonyms`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/synonyms/clear'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
@@ -643,18 +643,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName }: ClearObjectsProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}/clear'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `clearObjects`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/clear'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -683,18 +683,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, forwardToReplicas }: ClearRulesProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}/rules/clear'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `clearRules`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/rules/clear'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
@@ -721,24 +721,20 @@ export function createSearchApi(options: CreateClientOptions) {
      * @summary Send requests to the Algolia REST API.
      * @param del - The del object.
      * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param del.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+     * @param del.parameters - Query parameters to be applied to the current query.
      * @param del.body - The parameters to send with the custom request.
      */
     del(
       { path, parameters, body }: DelProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace('{path}', String(path));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!path) {
         throw new Error('Parameter `path` is required when calling `del`.');
       }
 
-      if (parameters !== undefined) {
-        queryParameters.parameters = parameters.toString();
-      }
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters || {};
 
       const request: Request = {
         method: 'DELETE',
@@ -767,18 +763,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { key }: DeleteApiKeyProps,
       requestOptions?: RequestOptions
     ): Promise<DeleteApiKeyResponse> {
-      const requestPath = '/1/keys/{key}'.replace(
-        '{key}',
-        encodeURIComponent(String(key))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!key) {
         throw new Error(
           'Parameter `key` is required when calling `deleteApiKey`.'
         );
       }
+
+      const requestPath = '/1/keys/{key}'.replace(
+        '{key}',
+        encodeURIComponent(key)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'DELETE',
@@ -807,13 +803,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, searchParams }: DeleteByProps,
       requestOptions?: RequestOptions
     ): Promise<DeletedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}/deleteByQuery'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `deleteBy`.'
@@ -825,6 +814,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `searchParams` is required when calling `deleteBy`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/deleteByQuery'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -853,18 +849,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName }: DeleteIndexProps,
       requestOptions?: RequestOptions
     ): Promise<DeletedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `deleteIndex`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'DELETE',
@@ -893,12 +889,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, objectID }: DeleteObjectProps,
       requestOptions?: RequestOptions
     ): Promise<DeletedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}/{objectID}'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{objectID}', encodeURIComponent(String(objectID)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `deleteObject`.'
@@ -910,6 +900,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `objectID` is required when calling `deleteObject`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/{objectID}'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'DELETE',
@@ -939,12 +935,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, objectID, forwardToReplicas }: DeleteRuleProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{objectID}', encodeURIComponent(String(objectID)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `deleteRule`.'
@@ -956,6 +946,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `objectID` is required when calling `deleteRule`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
@@ -987,18 +983,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { source }: DeleteSourceProps,
       requestOptions?: RequestOptions
     ): Promise<DeleteSourceResponse> {
-      const requestPath = '/1/security/sources/{source}'.replace(
-        '{source}',
-        encodeURIComponent(String(source))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!source) {
         throw new Error(
           'Parameter `source` is required when calling `deleteSource`.'
         );
       }
+
+      const requestPath = '/1/security/sources/{source}'.replace(
+        '{source}',
+        encodeURIComponent(source)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'DELETE',
@@ -1028,12 +1024,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, objectID, forwardToReplicas }: DeleteSynonymProps,
       requestOptions?: RequestOptions
     ): Promise<DeletedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{objectID}', encodeURIComponent(String(objectID)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `deleteSynonym`.'
@@ -1045,6 +1035,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `objectID` is required when calling `deleteSynonym`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
@@ -1071,23 +1067,19 @@ export function createSearchApi(options: CreateClientOptions) {
      * @summary Send requests to the Algolia REST API.
      * @param get - The get object.
      * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+     * @param get.parameters - Query parameters to be applied to the current query.
      */
     get(
       { path, parameters }: GetProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace('{path}', String(path));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!path) {
         throw new Error('Parameter `path` is required when calling `get`.');
       }
 
-      if (parameters !== undefined) {
-        queryParameters.parameters = parameters.toString();
-      }
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters || {};
 
       const request: Request = {
         method: 'GET',
@@ -1115,18 +1107,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { key }: GetApiKeyProps,
       requestOptions?: RequestOptions
     ): Promise<Key> {
-      const requestPath = '/1/keys/{key}'.replace(
-        '{key}',
-        encodeURIComponent(String(key))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!key) {
         throw new Error(
           'Parameter `key` is required when calling `getApiKey`.'
         );
       }
+
+      const requestPath = '/1/keys/{key}'.replace(
+        '{key}',
+        encodeURIComponent(key)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'GET',
@@ -1259,12 +1251,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, objectID, attributesToRetrieve }: GetObjectProps,
       requestOptions?: RequestOptions
     ): Promise<{ [key: string]: string }> {
-      const requestPath = '/1/indexes/{indexName}/{objectID}'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{objectID}', encodeURIComponent(String(objectID)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getObject`.'
@@ -1276,6 +1262,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `objectID` is required when calling `getObject`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/{objectID}'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (attributesToRetrieve !== undefined) {
         queryParameters.attributesToRetrieve = attributesToRetrieve.toString();
@@ -1306,15 +1298,15 @@ export function createSearchApi(options: CreateClientOptions) {
       getObjectsParams: GetObjectsParams,
       requestOptions?: RequestOptions
     ): Promise<GetObjectsResponse> {
-      const requestPath = '/1/indexes/*/objects';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!getObjectsParams) {
         throw new Error(
           'Parameter `getObjectsParams` is required when calling `getObjects`.'
         );
       }
+
+      const requestPath = '/1/indexes/*/objects';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -1344,12 +1336,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, objectID }: GetRuleProps,
       requestOptions?: RequestOptions
     ): Promise<Rule> {
-      const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{objectID}', encodeURIComponent(String(objectID)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getRule`.'
@@ -1361,6 +1347,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `objectID` is required when calling `getRule`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'GET',
@@ -1388,18 +1380,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName }: GetSettingsProps,
       requestOptions?: RequestOptions
     ): Promise<IndexSettings> {
-      const requestPath = '/1/indexes/{indexName}/settings'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getSettings`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/settings'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'GET',
@@ -1453,12 +1445,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, objectID }: GetSynonymProps,
       requestOptions?: RequestOptions
     ): Promise<SynonymHit> {
-      const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{objectID}', encodeURIComponent(String(objectID)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getSynonym`.'
@@ -1470,6 +1456,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `objectID` is required when calling `getSynonym`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'GET',
@@ -1498,12 +1490,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, taskID }: GetTaskProps,
       requestOptions?: RequestOptions
     ): Promise<GetTaskResponse> {
-      const requestPath = '/1/indexes/{indexName}/task/{taskID}'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{taskID}', encodeURIComponent(String(taskID)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getTask`.'
@@ -1515,6 +1501,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `taskID` is required when calling `getTask`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/task/{taskID}'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{taskID}', encodeURIComponent(taskID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'GET',
@@ -1569,18 +1561,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { userID }: GetUserIdProps,
       requestOptions?: RequestOptions
     ): Promise<UserId> {
-      const requestPath = '/1/clusters/mapping/{userID}'.replace(
-        '{userID}',
-        encodeURIComponent(String(userID))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!userID) {
         throw new Error(
           'Parameter `userID` is required when calling `getUserId`.'
         );
       }
+
+      const requestPath = '/1/clusters/mapping/{userID}'.replace(
+        '{userID}',
+        encodeURIComponent(userID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'GET',
@@ -1766,15 +1758,15 @@ export function createSearchApi(options: CreateClientOptions) {
       batchParams: BatchParams,
       requestOptions?: RequestOptions
     ): Promise<MultipleBatchResponse> {
-      const requestPath = '/1/indexes/*/batch';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!batchParams) {
         throw new Error(
           'Parameter `batchParams` is required when calling `multipleBatch`.'
         );
       }
+
+      const requestPath = '/1/indexes/*/batch';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -1802,10 +1794,6 @@ export function createSearchApi(options: CreateClientOptions) {
       multipleQueriesParams: MultipleQueriesParams,
       requestOptions?: RequestOptions
     ): Promise<MultipleQueriesResponse> {
-      const requestPath = '/1/indexes/*/queries';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!multipleQueriesParams) {
         throw new Error(
           'Parameter `multipleQueriesParams` is required when calling `multipleQueries`.'
@@ -1817,6 +1805,10 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `multipleQueriesParams.requests` is required when calling `multipleQueries`.'
         );
       }
+
+      const requestPath = '/1/indexes/*/queries';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -1846,13 +1838,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, operationIndexParams }: OperationIndexProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}/operation'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `operationIndex`.'
@@ -1875,6 +1860,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `operationIndexParams.destination` is required when calling `operationIndex`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/operation'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -1911,12 +1903,6 @@ export function createSearchApi(options: CreateClientOptions) {
       }: PartialUpdateObjectProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtWithObjectIdResponse> {
-      const requestPath = '/1/indexes/{indexName}/{objectID}/partial'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{objectID}', encodeURIComponent(String(objectID)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `partialUpdateObject`.'
@@ -1934,6 +1920,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `attributeOrBuiltInOperation` is required when calling `partialUpdateObject`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/{objectID}/partial'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (createIfNotExists !== undefined) {
         queryParameters.createIfNotExists = createIfNotExists.toString();
@@ -1961,24 +1953,20 @@ export function createSearchApi(options: CreateClientOptions) {
      * @summary Send requests to the Algolia REST API.
      * @param post - The post object.
      * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param post.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+     * @param post.parameters - Query parameters to be applied to the current query.
      * @param post.body - The parameters to send with the custom request.
      */
     post(
       { path, parameters, body }: PostProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace('{path}', String(path));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!path) {
         throw new Error('Parameter `path` is required when calling `post`.');
       }
 
-      if (parameters !== undefined) {
-        queryParameters.parameters = parameters.toString();
-      }
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters || {};
 
       const request: Request = {
         method: 'POST',
@@ -2002,24 +1990,20 @@ export function createSearchApi(options: CreateClientOptions) {
      * @summary Send requests to the Algolia REST API.
      * @param put - The put object.
      * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param put.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+     * @param put.parameters - Query parameters to be applied to the current query.
      * @param put.body - The parameters to send with the custom request.
      */
     put(
       { path, parameters, body }: PutProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace('{path}', String(path));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!path) {
         throw new Error('Parameter `path` is required when calling `put`.');
       }
 
-      if (parameters !== undefined) {
-        queryParameters.parameters = parameters.toString();
-      }
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters || {};
 
       const request: Request = {
         method: 'PUT',
@@ -2048,18 +2032,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { userID }: RemoveUserIdProps,
       requestOptions?: RequestOptions
     ): Promise<RemoveUserIdResponse> {
-      const requestPath = '/1/clusters/mapping/{userID}'.replace(
-        '{userID}',
-        encodeURIComponent(String(userID))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!userID) {
         throw new Error(
           'Parameter `userID` is required when calling `removeUserId`.'
         );
       }
+
+      const requestPath = '/1/clusters/mapping/{userID}'.replace(
+        '{userID}',
+        encodeURIComponent(userID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'DELETE',
@@ -2087,15 +2071,15 @@ export function createSearchApi(options: CreateClientOptions) {
       { source }: ReplaceSourcesProps,
       requestOptions?: RequestOptions
     ): Promise<ReplaceSourceResponse> {
-      const requestPath = '/1/security/sources';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!source) {
         throw new Error(
           'Parameter `source` is required when calling `replaceSources`.'
         );
       }
+
+      const requestPath = '/1/security/sources';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'PUT',
@@ -2124,18 +2108,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { key }: RestoreApiKeyProps,
       requestOptions?: RequestOptions
     ): Promise<AddApiKeyResponse> {
-      const requestPath = '/1/keys/{key}/restore'.replace(
-        '{key}',
-        encodeURIComponent(String(key))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!key) {
         throw new Error(
           'Parameter `key` is required when calling `restoreApiKey`.'
         );
       }
+
+      const requestPath = '/1/keys/{key}/restore'.replace(
+        '{key}',
+        encodeURIComponent(key)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -2164,13 +2148,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, body }: SaveObjectProps,
       requestOptions?: RequestOptions
     ): Promise<SaveObjectResponse> {
-      const requestPath = '/1/indexes/{indexName}'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `saveObject`.'
@@ -2182,6 +2159,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `body` is required when calling `saveObject`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -2213,12 +2197,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, objectID, rule, forwardToReplicas }: SaveRuleProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedRuleResponse> {
-      const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{objectID}', encodeURIComponent(String(objectID)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `saveRule`.'
@@ -2247,6 +2225,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `rule.consequence` is required when calling `saveRule`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
@@ -2282,12 +2266,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, objectID, synonymHit, forwardToReplicas }: SaveSynonymProps,
       requestOptions?: RequestOptions
     ): Promise<SaveSynonymResponse> {
-      const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{objectID}', encodeURIComponent(String(objectID)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `saveSynonym`.'
@@ -2311,6 +2289,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `synonymHit.objectID` is required when calling `saveSynonym`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/synonyms/{objectID}'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
@@ -2351,13 +2335,6 @@ export function createSearchApi(options: CreateClientOptions) {
       }: SaveSynonymsProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}/synonyms/batch'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `saveSynonyms`.'
@@ -2369,6 +2346,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `synonymHit` is required when calling `saveSynonyms`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/synonyms/batch'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
@@ -2407,13 +2391,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, searchParams }: SearchProps,
       requestOptions?: RequestOptions
     ): Promise<SearchResponse> {
-      const requestPath = '/1/indexes/{indexName}/query'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `search`.'
@@ -2425,6 +2402,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `searchParams` is required when calling `search`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/query'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -2457,13 +2441,6 @@ export function createSearchApi(options: CreateClientOptions) {
       }: SearchDictionaryEntriesProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtResponse> {
-      const requestPath = '/1/dictionaries/{dictionaryName}/search'.replace(
-        '{dictionaryName}',
-        encodeURIComponent(String(dictionaryName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!dictionaryName) {
         throw new Error(
           'Parameter `dictionaryName` is required when calling `searchDictionaryEntries`.'
@@ -2481,6 +2458,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `searchDictionaryEntriesParams.query` is required when calling `searchDictionaryEntries`.'
         );
       }
+
+      const requestPath = '/1/dictionaries/{dictionaryName}/search'.replace(
+        '{dictionaryName}',
+        encodeURIComponent(dictionaryName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -2515,12 +2499,6 @@ export function createSearchApi(options: CreateClientOptions) {
       }: SearchForFacetValuesProps,
       requestOptions?: RequestOptions
     ): Promise<SearchForFacetValuesResponse> {
-      const requestPath = '/1/indexes/{indexName}/facets/{facetName}/query'
-        .replace('{indexName}', encodeURIComponent(String(indexName)))
-        .replace('{facetName}', encodeURIComponent(String(facetName)));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `searchForFacetValues`.'
@@ -2532,6 +2510,12 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `facetName` is required when calling `searchForFacetValues`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/facets/{facetName}/query'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{facetName}', encodeURIComponent(facetName));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -2561,13 +2545,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, searchRulesParams }: SearchRulesProps,
       requestOptions?: RequestOptions
     ): Promise<SearchRulesResponse> {
-      const requestPath = '/1/indexes/{indexName}/rules/search'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `searchRules`.'
@@ -2579,6 +2556,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `searchRulesParams` is required when calling `searchRules`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/rules/search'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -2611,18 +2595,18 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, query, type, page, hitsPerPage }: SearchSynonymsProps,
       requestOptions?: RequestOptions
     ): Promise<SearchSynonymsResponse> {
-      const requestPath = '/1/indexes/{indexName}/synonyms/search'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `searchSynonyms`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/synonyms/search'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (query !== undefined) {
         queryParameters.query = query.toString();
@@ -2665,10 +2649,6 @@ export function createSearchApi(options: CreateClientOptions) {
       searchUserIdsParams: SearchUserIdsParams,
       requestOptions?: RequestOptions
     ): Promise<SearchUserIdsResponse> {
-      const requestPath = '/1/clusters/mapping/search';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!searchUserIdsParams) {
         throw new Error(
           'Parameter `searchUserIdsParams` is required when calling `searchUserIds`.'
@@ -2680,6 +2660,10 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `searchUserIdsParams.query` is required when calling `searchUserIds`.'
         );
       }
+
+      const requestPath = '/1/clusters/mapping/search';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -2707,10 +2691,6 @@ export function createSearchApi(options: CreateClientOptions) {
       dictionarySettingsParams: DictionarySettingsParams,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtResponse> {
-      const requestPath = '/1/dictionaries/*/settings';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!dictionarySettingsParams) {
         throw new Error(
           'Parameter `dictionarySettingsParams` is required when calling `setDictionarySettings`.'
@@ -2722,6 +2702,10 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `dictionarySettingsParams.disableStandardEntries` is required when calling `setDictionarySettings`.'
         );
       }
+
+      const requestPath = '/1/dictionaries/*/settings';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'PUT',
@@ -2752,13 +2736,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { indexName, indexSettings, forwardToReplicas }: SetSettingsProps,
       requestOptions?: RequestOptions
     ): Promise<UpdatedAtResponse> {
-      const requestPath = '/1/indexes/{indexName}/settings'.replace(
-        '{indexName}',
-        encodeURIComponent(String(indexName))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `setSettings`.'
@@ -2770,6 +2747,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `indexSettings` is required when calling `setSettings`.'
         );
       }
+
+      const requestPath = '/1/indexes/{indexName}/settings'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
@@ -2803,13 +2787,6 @@ export function createSearchApi(options: CreateClientOptions) {
       { key, apiKey }: UpdateApiKeyProps,
       requestOptions?: RequestOptions
     ): Promise<UpdateApiKeyResponse> {
-      const requestPath = '/1/keys/{key}'.replace(
-        '{key}',
-        encodeURIComponent(String(key))
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!key) {
         throw new Error(
           'Parameter `key` is required when calling `updateApiKey`.'
@@ -2827,6 +2804,13 @@ export function createSearchApi(options: CreateClientOptions) {
           'Parameter `apiKey.acl` is required when calling `updateApiKey`.'
         );
       }
+
+      const requestPath = '/1/keys/{key}'.replace(
+        '{key}',
+        encodeURIComponent(key)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'PUT',
@@ -2954,9 +2938,9 @@ export type DelProps = {
    */
   path: string;
   /**
-   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * Query parameters to be applied to the current query.
    */
-  parameters?: string;
+  parameters?: Record<string, any>;
   /**
    * The parameters to send with the custom request.
    */
@@ -3039,9 +3023,9 @@ export type GetProps = {
    */
   path: string;
   /**
-   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * Query parameters to be applied to the current query.
    */
-  parameters?: string;
+  parameters?: Record<string, any>;
 };
 
 export type GetApiKeyProps = {
@@ -3192,9 +3176,9 @@ export type PostProps = {
    */
   path: string;
   /**
-   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * Query parameters to be applied to the current query.
    */
-  parameters?: string;
+  parameters?: Record<string, any>;
   /**
    * The parameters to send with the custom request.
    */
@@ -3207,9 +3191,9 @@ export type PutProps = {
    */
   path: string;
   /**
-   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * Query parameters to be applied to the current query.
    */
-  parameters?: string;
+  parameters?: Record<string, any>;
   /**
    * The parameters to send with the custom request.
    */

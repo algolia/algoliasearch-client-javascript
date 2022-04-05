@@ -1450,7 +1450,7 @@ public class SearchApi extends ApiClient {
    */
   private Call delCall(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {
@@ -1463,7 +1463,14 @@ public class SearchApi extends ApiClient {
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
-      queryParams.addAll(this.parameterToPair("parameters", parameters));
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParams.addAll(
+          this.parameterToPair(
+              parameter.getKey(),
+              parameter.getValue().toString()
+            )
+        );
+      }
     }
 
     headers.put("Accept", "application/json");
@@ -1481,7 +1488,7 @@ public class SearchApi extends ApiClient {
 
   private Call delValidateBeforeCall(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {
@@ -1500,14 +1507,13 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
-   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
-   *     query made with this API key. (optional)
+   * @param parameters Query parameters to be applied to the current query. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @return Object
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public Object del(String path, String parameters, Object body)
+  public Object del(String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     Call req = delValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
@@ -1520,7 +1526,7 @@ public class SearchApi extends ApiClient {
   }
 
   public Object del(String path) throws AlgoliaRuntimeException {
-    return this.del(path, null, null);
+    return this.del(path, new HashMap<>(), null);
   }
 
   /**
@@ -1528,8 +1534,7 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
-   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
-   *     query made with this API key. (optional)
+   * @param parameters Query parameters to be applied to the current query. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -1538,7 +1543,7 @@ public class SearchApi extends ApiClient {
    */
   public Call delAsync(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {
@@ -2309,7 +2314,7 @@ public class SearchApi extends ApiClient {
    */
   private Call getCall(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {
     Object bodyObj = null;
@@ -2321,7 +2326,14 @@ public class SearchApi extends ApiClient {
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
-      queryParams.addAll(this.parameterToPair("parameters", parameters));
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParams.addAll(
+          this.parameterToPair(
+              parameter.getKey(),
+              parameter.getValue().toString()
+            )
+        );
+      }
     }
 
     headers.put("Accept", "application/json");
@@ -2339,7 +2351,7 @@ public class SearchApi extends ApiClient {
 
   private Call getValidateBeforeCall(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {
     // verify the required parameter 'path' is set
@@ -2357,13 +2369,12 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
-   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
-   *     query made with this API key. (optional)
+   * @param parameters Query parameters to be applied to the current query. (optional)
    * @return Object
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public Object get(String path, String parameters)
+  public Object get(String path, Map<String, Object> parameters)
     throws AlgoliaRuntimeException {
     Call req = getValidateBeforeCall(path, parameters, null);
     if (req instanceof CallEcho) {
@@ -2376,7 +2387,7 @@ public class SearchApi extends ApiClient {
   }
 
   public Object get(String path) throws AlgoliaRuntimeException {
-    return this.get(path, null);
+    return this.get(path, new HashMap<>());
   }
 
   /**
@@ -2384,8 +2395,7 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
-   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
-   *     query made with this API key. (optional)
+   * @param parameters Query parameters to be applied to the current query. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
@@ -2393,7 +2403,7 @@ public class SearchApi extends ApiClient {
    */
   public Call getAsync(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {
     Call call = getValidateBeforeCall(path, parameters, _callback);
@@ -4553,7 +4563,7 @@ public class SearchApi extends ApiClient {
    */
   private Call postCall(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {
@@ -4566,7 +4576,14 @@ public class SearchApi extends ApiClient {
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
-      queryParams.addAll(this.parameterToPair("parameters", parameters));
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParams.addAll(
+          this.parameterToPair(
+              parameter.getKey(),
+              parameter.getValue().toString()
+            )
+        );
+      }
     }
 
     headers.put("Accept", "application/json");
@@ -4584,7 +4601,7 @@ public class SearchApi extends ApiClient {
 
   private Call postValidateBeforeCall(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {
@@ -4603,14 +4620,13 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
-   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
-   *     query made with this API key. (optional)
+   * @param parameters Query parameters to be applied to the current query. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @return Object
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public Object post(String path, String parameters, Object body)
+  public Object post(String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     Call req = postValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
@@ -4623,7 +4639,7 @@ public class SearchApi extends ApiClient {
   }
 
   public Object post(String path) throws AlgoliaRuntimeException {
-    return this.post(path, null, null);
+    return this.post(path, new HashMap<>(), null);
   }
 
   /**
@@ -4631,8 +4647,7 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
-   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
-   *     query made with this API key. (optional)
+   * @param parameters Query parameters to be applied to the current query. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -4641,7 +4656,7 @@ public class SearchApi extends ApiClient {
    */
   public Call postAsync(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {
@@ -4660,7 +4675,7 @@ public class SearchApi extends ApiClient {
    */
   private Call putCall(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {
@@ -4673,7 +4688,14 @@ public class SearchApi extends ApiClient {
     Map<String, String> headers = new HashMap<String, String>();
 
     if (parameters != null) {
-      queryParams.addAll(this.parameterToPair("parameters", parameters));
+      for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
+        queryParams.addAll(
+          this.parameterToPair(
+              parameter.getKey(),
+              parameter.getValue().toString()
+            )
+        );
+      }
     }
 
     headers.put("Accept", "application/json");
@@ -4691,7 +4713,7 @@ public class SearchApi extends ApiClient {
 
   private Call putValidateBeforeCall(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {
@@ -4710,14 +4732,13 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
-   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
-   *     query made with this API key. (optional)
+   * @param parameters Query parameters to be applied to the current query. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @return Object
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public Object put(String path, String parameters, Object body)
+  public Object put(String path, Map<String, Object> parameters, Object body)
     throws AlgoliaRuntimeException {
     Call req = putValidateBeforeCall(path, parameters, body, null);
     if (req instanceof CallEcho) {
@@ -4730,7 +4751,7 @@ public class SearchApi extends ApiClient {
   }
 
   public Object put(String path) throws AlgoliaRuntimeException {
-    return this.put(path, null, null);
+    return this.put(path, new HashMap<>(), null);
   }
 
   /**
@@ -4738,8 +4759,7 @@ public class SearchApi extends ApiClient {
    *
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
-   * @param parameters URL-encoded query string. Force some query parameters to be applied for each
-   *     query made with this API key. (optional)
+   * @param parameters Query parameters to be applied to the current query. (optional)
    * @param body The parameters to send with the custom request. (optional)
    * @param _callback The callback to be executed when the API call finishes
    * @return The request call
@@ -4748,7 +4768,7 @@ public class SearchApi extends ApiClient {
    */
   public Call putAsync(
     String path,
-    String parameters,
+    Map<String, Object> parameters,
     Object body,
     final ApiCallback<Object> _callback
   ) throws AlgoliaRuntimeException {

@@ -68,24 +68,20 @@ export function createInsightsApi(
      * @summary Send requests to the Algolia REST API.
      * @param del - The del object.
      * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param del.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+     * @param del.parameters - Query parameters to be applied to the current query.
      * @param del.body - The parameters to send with the custom request.
      */
     del(
       { path, parameters, body }: DelProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace('{path}', String(path));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!path) {
         throw new Error('Parameter `path` is required when calling `del`.');
       }
 
-      if (parameters !== undefined) {
-        queryParameters.parameters = parameters.toString();
-      }
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters || {};
 
       const request: Request = {
         method: 'DELETE',
@@ -109,23 +105,19 @@ export function createInsightsApi(
      * @summary Send requests to the Algolia REST API.
      * @param get - The get object.
      * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param get.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+     * @param get.parameters - Query parameters to be applied to the current query.
      */
     get(
       { path, parameters }: GetProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace('{path}', String(path));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!path) {
         throw new Error('Parameter `path` is required when calling `get`.');
       }
 
-      if (parameters !== undefined) {
-        queryParameters.parameters = parameters.toString();
-      }
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters || {};
 
       const request: Request = {
         method: 'GET',
@@ -148,24 +140,20 @@ export function createInsightsApi(
      * @summary Send requests to the Algolia REST API.
      * @param post - The post object.
      * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param post.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+     * @param post.parameters - Query parameters to be applied to the current query.
      * @param post.body - The parameters to send with the custom request.
      */
     post(
       { path, parameters, body }: PostProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace('{path}', String(path));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!path) {
         throw new Error('Parameter `path` is required when calling `post`.');
       }
 
-      if (parameters !== undefined) {
-        queryParameters.parameters = parameters.toString();
-      }
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters || {};
 
       const request: Request = {
         method: 'POST',
@@ -193,10 +181,6 @@ export function createInsightsApi(
       insightEvents: InsightEvents,
       requestOptions?: RequestOptions
     ): Promise<PushEventsResponse> {
-      const requestPath = '/1/events';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!insightEvents) {
         throw new Error(
           'Parameter `insightEvents` is required when calling `pushEvents`.'
@@ -208,6 +192,10 @@ export function createInsightsApi(
           'Parameter `insightEvents.events` is required when calling `pushEvents`.'
         );
       }
+
+      const requestPath = '/1/events';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
@@ -231,24 +219,20 @@ export function createInsightsApi(
      * @summary Send requests to the Algolia REST API.
      * @param put - The put object.
      * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param put.parameters - URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+     * @param put.parameters - Query parameters to be applied to the current query.
      * @param put.body - The parameters to send with the custom request.
      */
     put(
       { path, parameters, body }: PutProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
-      const requestPath = '/1{path}'.replace('{path}', String(path));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
       if (!path) {
         throw new Error('Parameter `path` is required when calling `put`.');
       }
 
-      if (parameters !== undefined) {
-        queryParameters.parameters = parameters.toString();
-      }
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters || {};
 
       const request: Request = {
         method: 'PUT',
@@ -276,9 +260,9 @@ export type DelProps = {
    */
   path: string;
   /**
-   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * Query parameters to be applied to the current query.
    */
-  parameters?: string;
+  parameters?: Record<string, any>;
   /**
    * The parameters to send with the custom request.
    */
@@ -291,9 +275,9 @@ export type GetProps = {
    */
   path: string;
   /**
-   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * Query parameters to be applied to the current query.
    */
-  parameters?: string;
+  parameters?: Record<string, any>;
 };
 
 export type PostProps = {
@@ -302,9 +286,9 @@ export type PostProps = {
    */
   path: string;
   /**
-   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * Query parameters to be applied to the current query.
    */
-  parameters?: string;
+  parameters?: Record<string, any>;
   /**
    * The parameters to send with the custom request.
    */
@@ -317,9 +301,9 @@ export type PutProps = {
    */
   path: string;
   /**
-   * URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+   * Query parameters to be applied to the current query.
    */
-  parameters?: string;
+  parameters?: Record<string, any>;
   /**
    * The parameters to send with the custom request.
    */
