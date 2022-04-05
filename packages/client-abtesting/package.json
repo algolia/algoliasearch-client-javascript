@@ -1,6 +1,6 @@
 {
   "name": "@experimental-api-clients-automation/client-abtesting",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "JavaScript client for @experimental-api-clients-automation/client-abtesting",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
@@ -24,9 +24,9 @@
     "node": ">= 14.0.0"
   },
   "dependencies": {
-    "@experimental-api-clients-automation/client-common": "0.0.5",
-    "@experimental-api-clients-automation/requester-browser-xhr": "0.0.5",
-    "@experimental-api-clients-automation/requester-node-http": "0.0.5"
+    "@experimental-api-clients-automation/client-common": "^0.0.5",
+    "@experimental-api-clients-automation/requester-browser-xhr": "^0.0.5",
+    "@experimental-api-clients-automation/requester-node-http": "^0.0.5"
   },
   "devDependencies": {
     "@types/node": "16.11.26",

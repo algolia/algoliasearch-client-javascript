@@ -1,6 +1,6 @@
 {
   "name": "@experimental-api-clients-automation/algoliasearch",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": "algolia/algoliasearch-client-javascript",
   "author": "Algolia",
@@ -18,12 +18,12 @@
     "node": ">= 14.0.0"
   },
   "dependencies": {
-    "@experimental-api-clients-automation/client-analytics": "0.0.5",
-    "@experimental-api-clients-automation/client-common": "0.0.5",
-    "@experimental-api-clients-automation/client-personalization": "0.0.5",
-    "@experimental-api-clients-automation/client-search": "0.0.5",
-    "@experimental-api-clients-automation/requester-browser-xhr": "0.0.5",
-    "@experimental-api-clients-automation/requester-node-http": "0.0.5"
+    "@experimental-api-clients-automation/client-analytics": "0.0.6",
+    "@experimental-api-clients-automation/client-common": "0.0.6",
+    "@experimental-api-clients-automation/client-personalization": "0.0.6",
+    "@experimental-api-clients-automation/client-search": "0.0.6",
+    "@experimental-api-clients-automation/requester-browser-xhr": "0.0.6",
+    "@experimental-api-clients-automation/requester-node-http": "0.0.6"
   },
   "devDependencies": {
     "@types/node": "16.11.26",
