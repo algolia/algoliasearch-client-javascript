@@ -3,7 +3,7 @@ import type { DictionaryEntryState } from './dictionaryEntryState';
 /**
  * A dictionary entry.
  */
-export type DictionaryEntry = {
+export type DictionaryEntry = Record<string, any> & {
   /**
    * Unique identifier of the object.
    */

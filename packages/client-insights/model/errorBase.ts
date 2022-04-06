@@ -1,6 +1,6 @@
 /**
  * Error.
  */
-export type ErrorBase = {
+export type ErrorBase = Record<string, any> & {
   message?: string;
 };

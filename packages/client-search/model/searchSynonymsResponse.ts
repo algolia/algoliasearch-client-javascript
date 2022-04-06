@@ -1,6 +1,6 @@
 import type { SynonymHit } from './synonymHit';
 
-export type SearchSynonymsResponse = {
+export type SearchSynonymsResponse = Record<string, any> & {
   /**
    * Array of synonym objects.
    */

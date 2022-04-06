@@ -5,7 +5,7 @@ import type { SnippetResult } from './snippetResult';
 /**
  * A Recommend hit.
  */
-export type RecommendHit = {
+export type RecommendHit = Record<string, any> & {
   /**
    * Unique identifier of the object.
    */
