@@ -269,7 +269,9 @@ async function processRelease(): Promise<void> {
   await run(`git push`);
 
   // remove old `released` tag
-  await run(`git fetch origin refs/tags/released:refs/tags/released`);
+  await run(
+    `git fetch origin refs/tags/${RELEASED_TAG}:refs/tags/${RELEASED_TAG}`
+  );
   await run(`git tag -d ${RELEASED_TAG}`);
   await run(`git push --delete origin ${RELEASED_TAG}`);
 

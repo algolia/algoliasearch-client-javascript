@@ -179,9 +179,16 @@ async function createReleaseIssue(): Promise<void> {
   const commitsWithUnknownLanguageScope: string[] = [];
   const commitsWithoutLanguageScope: string[] = [];
 
+  // Remove the local tag, and fetch it from the remote.
+  // We move the `released` tag as we release, so we need to make it up-to-date.
+  await run(`git tag -d ${RELEASED_TAG}`);
+  await run(
+    `git fetch origin refs/tags/${RELEASED_TAG}:refs/tags/${RELEASED_TAG}`
+  );
+
   // Reading commits since last release
   const latestCommits = (
-    await run(`git log --oneline ${RELEASED_TAG}..${MAIN_BRANCH}`)
+    await run(`git log --oneline --abbrev=8 ${RELEASED_TAG}..${MAIN_BRANCH}`)
   )
     .split('\n')
     .filter(Boolean)
