@@ -16,7 +16,7 @@ export type {{classname}} = {{#oneOf}}{{.}} {{^-last}}|{{/-last}} {{/oneOf}}{{#a
 */
 {{/description}}
 {{^isEnum}}
-export type {{classname}} = {
+export type {{classname}} = {{#parent}} {{{.}}} & {{/parent}} {
 {{#vars}}
 {{#description}}
     /**
