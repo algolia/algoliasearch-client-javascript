@@ -149,7 +149,7 @@ jobs:
     if: |
       always() &&
       needs.setup.outputs.RUN_JS == 'true' &&
-      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JS_MATRIX) }}
@@ -198,8 +198,8 @@ jobs:
     if: |
       always() &&
       needs.setup.outputs.RUN_JS_ALGOLIASEARCH == 'true' &&
-      contains(needs.client_javascript.result, 'success') &&
-      !contains(needs.client_javascript.result, 'failure')
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure')
     steps:
       - uses: actions/checkout@v2
 
@@ -236,7 +236,7 @@ jobs:
     if: |
       always() &&
       needs.setup.outputs.RUN_JAVA == 'true' &&
-      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.JAVA_MATRIX) }}
@@ -285,7 +285,7 @@ jobs:
     if: |
       always() &&
       needs.setup.outputs.RUN_PHP == 'true' &&
-      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.PHP_MATRIX) }}
@@ -334,7 +334,7 @@ jobs:
     if: |
       always() &&
       needs.setup.outputs.RUN_JS_TESTS == 'true' &&
-      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     steps:
       - uses: actions/checkout@v2
@@ -358,7 +358,7 @@ jobs:
     if: |
       always() &&
       needs.setup.outputs.RUN_CTS == 'true' &&
-      contains(needs.*.result, 'success') &&
+      !contains(needs.*.result, 'cancelled') &&
       !contains(needs.*.result, 'failure')
     steps:
       - uses: actions/checkout@v2
