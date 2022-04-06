@@ -16,6 +16,7 @@ import {
 } from './common';
 import { ctsGenerateMany } from './cts/generate';
 import { runCts } from './cts/runCts';
+import { formatter } from './formatter';
 import { generate } from './generate';
 import { playground } from './playground';
 import type { Generator } from './types';
@@ -289,5 +290,15 @@ program
       });
     }
   );
+
+program
+  .command('format')
+  .description('Format the specified folder for a specific language')
+  .addArgument(new Argument('language', 'The language').choices(LANGUAGES))
+  .argument('folder', 'The folder to format')
+  .option('-v, --verbose', 'make the formatting verbose')
+  .action(async (language: string, folder: string, { verbose }) => {
+    await formatter(language, folder, verbose);
+  });
 
 program.parse();

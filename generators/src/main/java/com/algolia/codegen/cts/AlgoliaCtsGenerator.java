@@ -1,24 +1,21 @@
 package com.algolia.codegen.cts;
 
-import org.openapitools.codegen.*;
-
-import java.util.*;
-import java.util.Map.Entry;
-
 import com.algolia.codegen.Utils;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableMap.Builder;
 import com.samskivert.mustache.Mustache.Lambda;
-
+import io.swagger.v3.core.util.Json;
 import java.io.File;
 import java.io.IOException;
-
-import io.swagger.v3.core.util.Json;
+import java.util.*;
+import java.util.Map.Entry;
+import org.openapitools.codegen.*;
 
 @SuppressWarnings("unchecked")
 public class AlgoliaCtsGenerator extends DefaultCodegen {
+
   // cache the models
   private final Map<String, CodegenModel> models = new HashMap<>();
   private String language;
@@ -38,9 +35,8 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   }
 
   /**
-   * Configures a friendly name for the generator. This will be used by the
-   * generator
-   * to select the library with the -g flag.
+   * Configures a friendly name for the generator. This will be used by the generator to select the
+   * library with the -g flag.
    *
    * @return the friendly name for the generator
    */
@@ -50,8 +46,8 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   }
 
   /**
-   * Returns human-friendly help for the generator. Provide the consumer with help
-   * tips, parameters here
+   * Returns human-friendly help for the generator. Provide the consumer with help tips, parameters
+   * here
    *
    * @return A string value for the help message
    */
@@ -67,17 +63,26 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     language = (String) additionalProperties.get("language");
     client = (String) additionalProperties.get("client");
     packageName = (String) additionalProperties.get("packageName");
-    hasRegionalHost = additionalProperties.get("hasRegionalHost").equals("true");
+    hasRegionalHost =
+      additionalProperties.get("hasRegionalHost").equals("true");
 
     try {
-      JsonNode config = Json.mapper().readTree(new File("config/clients.config.json"));
-      TestConfig testConfig = Json.mapper().treeToValue(config.get(language).get("tests"), TestConfig.class);
+      JsonNode config = Json
+        .mapper()
+        .readTree(new File("config/clients.config.json"));
+      TestConfig testConfig = Json
+        .mapper()
+        .treeToValue(config.get(language).get("tests"), TestConfig.class);
 
       setTemplateDir("tests/CTS/methods/requests/templates/" + language);
       setOutputDir("tests/output/" + language);
-      supportingFiles
-          .add(new SupportingFile("requests.mustache", testConfig.outputFolder + "/methods/requests",
-              client + testConfig.extension));
+      supportingFiles.add(
+        new SupportingFile(
+          "requests.mustache",
+          testConfig.outputFolder + "/methods/requests",
+          client + testConfig.extension
+        )
+      );
     } catch (IOException e) {
       e.printStackTrace();
       System.exit(1);
@@ -88,9 +93,13 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   public Map<String, Object> postProcessAllModels(Map<String, Object> objs) {
     Map<String, Object> mod = super.postProcessAllModels(objs);
     for (Entry<String, Object> entry : mod.entrySet()) {
-      List<Object> innerModel = ((Map<String, List<Object>>) entry.getValue()).get("models");
+      List<Object> innerModel =
+        ((Map<String, List<Object>>) entry.getValue()).get("models");
       if (!innerModel.isEmpty()) {
-        models.put(entry.getKey(), (CodegenModel) ((Map<String, Object>) innerModel.get(0)).get("model"));
+        models.put(
+          entry.getKey(),
+          (CodegenModel) ((Map<String, Object>) innerModel.get(0)).get("model")
+        );
       }
     }
     return mod;
@@ -105,7 +114,9 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   }
 
   @Override
-  public Map<String, Object> postProcessSupportingFileData(Map<String, Object> objs) {
+  public Map<String, Object> postProcessSupportingFileData(
+    Map<String, Object> objs
+  ) {
     Map<String, Request[]> cts = null;
     try {
       cts = loadCTS();
@@ -131,13 +142,19 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       for (Entry<String, Request[]> entry : cts.entrySet()) {
         String operationId = entry.getKey();
         if (!operations.containsKey(operationId)) {
-          throw new CTSException("operationId " + operationId + " does not exist in the spec");
+          throw new CTSException(
+            "operationId " + operationId + " does not exist in the spec"
+          );
         }
         CodegenOperation op = operations.get(operationId);
 
         List<Object> tests = new ArrayList<>();
         for (int i = 0; i < entry.getValue().length; i++) {
-          Map<String, Object> test = paramsType.buildJSONForRequest(entry.getValue()[i], op, i);
+          Map<String, Object> test = paramsType.buildJSONForRequest(
+            entry.getValue()[i],
+            op,
+            i
+          );
           tests.add(test);
         }
         Map<String, Object> testObj = new HashMap<>();
@@ -160,29 +177,40 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     return null;
   }
 
-  private Map<String, Request[]> loadCTS() throws JsonParseException, JsonMappingException, IOException, CTSException {
+  private Map<String, Request[]> loadCTS()
+    throws JsonParseException, JsonMappingException, IOException, CTSException {
     TreeMap<String, Request[]> cts = new TreeMap<>();
     File dir = new File("tests/CTS/methods/requests/" + client);
     if (!dir.exists()) {
       throw new CTSException("CTS not found at " + dir.getAbsolutePath(), true);
     }
     for (File f : dir.listFiles()) {
-      cts.put(f.getName().replace(".json", ""), Json.mapper().readValue(f, Request[].class));
+      cts.put(
+        f.getName().replace(".json", ""),
+        Json.mapper().readValue(f, Request[].class)
+      );
     }
     return cts;
   }
 
   // operationId -> CodegenOperation
-  private HashMap<String, CodegenOperation> buildOperations(Map<String, Object> objs) {
+  private HashMap<String, CodegenOperation> buildOperations(
+    Map<String, Object> objs
+  ) {
     HashMap<String, CodegenOperation> result = new HashMap<>();
-    List<Map<String, Object>> apis = ((Map<String, List<Map<String, Object>>>) objs.get("apiInfo")).get("apis");
+    List<Map<String, Object>> apis =
+      ((Map<String, List<Map<String, Object>>>) objs.get("apiInfo")).get(
+          "apis"
+        );
     for (Map<String, Object> api : apis) {
       String apiName = ((String) api.get("baseName")).toLowerCase();
       if (!apiName.equals(client.replace("-", ""))) {
         continue;
       }
-      List<CodegenOperation> operations = ((Map<String, List<CodegenOperation>>) api.get("operations"))
-          .get("operation");
+      List<CodegenOperation> operations =
+        ((Map<String, List<CodegenOperation>>) api.get("operations")).get(
+            "operation"
+          );
       for (CodegenOperation ope : operations) {
         result.put(ope.operationId, ope);
       }
@@ -209,8 +237,8 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
   }
 
   /**
-   * override with any special text escaping logic to handle unsafe
-   * characters so as to avoid code injection
+   * override with any special text escaping logic to handle unsafe characters so as to avoid code
+   * injection
    *
    * @param input String to be cleaned up
    * @return string with unsafe characters removed or escaped

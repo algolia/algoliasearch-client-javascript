@@ -27,6 +27,15 @@ jobs:
       - name: Lint GitHub actions
         run: yarn github-actions:lint
 
+      - name: Lint generators
+        run: |
+          yarn cli format java generators
+          diff=$(git status --porcelain ./generators | wc -l)
+          if [[ $diff > 0 ]]; then
+            echo "Format the generators folder by running 'yarn docker format java generators'"
+          fi
+          exit $diff
+
     outputs:
       RUN_SCRIPTS: ${{ steps.setup.outputs.RUN_SCRIPTS }}
 
@@ -51,7 +60,7 @@ jobs:
 
   scripts:
     runs-on: ubuntu-20.04
-    timeout-minutes: 20
+    timeout-minutes: 10
     needs: setup
     if: ${{ needs.setup.outputs.RUN_SCRIPTS == 'true' }}
     steps:

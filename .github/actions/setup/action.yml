@@ -34,6 +34,9 @@ runs:
 
     - name: Restore cache
       uses: ./.github/actions/cache
+      with:
+        # We want to load the java formatter
+        language: java
 
     - name: Setting diff outputs variables
       if: inputs.type != 'minimal'

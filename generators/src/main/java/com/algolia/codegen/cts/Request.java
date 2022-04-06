@@ -1,16 +1,16 @@
 package com.algolia.codegen.cts;
 
-import java.io.IOException;
-import java.util.Map;
-
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.TreeNode;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.io.IOException;
+import java.util.Map;
 
 public class Request {
+
   public String testName;
   public String method;
 
@@ -32,6 +32,7 @@ public class Request {
 }
 
 class RequestProp {
+
   public String path;
   public String method;
 
@@ -59,8 +60,7 @@ class RawDeserializer extends JsonDeserializer<String> {
 
   @Override
   public String deserialize(JsonParser jp, DeserializationContext ctxt)
-      throws IOException, JsonProcessingException {
-
+    throws IOException, JsonProcessingException {
     TreeNode tree = jp.getCodec().readTree(jp);
     return tree.toString();
   }

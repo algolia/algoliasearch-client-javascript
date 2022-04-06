@@ -1,6 +1,7 @@
 package com.algolia.codegen.cts;
 
 public class CTSException extends Exception {
+
   private boolean skipable;
 
   public CTSException(String message) {
