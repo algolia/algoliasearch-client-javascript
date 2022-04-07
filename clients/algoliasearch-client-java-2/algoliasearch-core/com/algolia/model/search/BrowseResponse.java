@@ -88,7 +88,7 @@ public class BrowseResponse {
   @SerializedName("cursor")
   private String cursor;
 
-  public BrowseResponse abTestID(Integer abTestID) {
+  public BrowseResponse setAbTestID(Integer abTestID) {
     this.abTestID = abTestID;
     return this;
   }
@@ -104,11 +104,7 @@ public class BrowseResponse {
     return abTestID;
   }
 
-  public void setAbTestID(Integer abTestID) {
-    this.abTestID = abTestID;
-  }
-
-  public BrowseResponse abTestVariantID(Integer abTestVariantID) {
+  public BrowseResponse setAbTestVariantID(Integer abTestVariantID) {
     this.abTestVariantID = abTestVariantID;
     return this;
   }
@@ -124,11 +120,7 @@ public class BrowseResponse {
     return abTestVariantID;
   }
 
-  public void setAbTestVariantID(Integer abTestVariantID) {
-    this.abTestVariantID = abTestVariantID;
-  }
-
-  public BrowseResponse aroundLatLng(String aroundLatLng) {
+  public BrowseResponse setAroundLatLng(String aroundLatLng) {
     this.aroundLatLng = aroundLatLng;
     return this;
   }
@@ -143,11 +135,7 @@ public class BrowseResponse {
     return aroundLatLng;
   }
 
-  public void setAroundLatLng(String aroundLatLng) {
-    this.aroundLatLng = aroundLatLng;
-  }
-
-  public BrowseResponse automaticRadius(String automaticRadius) {
+  public BrowseResponse setAutomaticRadius(String automaticRadius) {
     this.automaticRadius = automaticRadius;
     return this;
   }
@@ -163,11 +151,9 @@ public class BrowseResponse {
     return automaticRadius;
   }
 
-  public void setAutomaticRadius(String automaticRadius) {
-    this.automaticRadius = automaticRadius;
-  }
-
-  public BrowseResponse exhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
+  public BrowseResponse setExhaustiveFacetsCount(
+    Boolean exhaustiveFacetsCount
+  ) {
     this.exhaustiveFacetsCount = exhaustiveFacetsCount;
     return this;
   }
@@ -182,11 +168,7 @@ public class BrowseResponse {
     return exhaustiveFacetsCount;
   }
 
-  public void setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
-    this.exhaustiveFacetsCount = exhaustiveFacetsCount;
-  }
-
-  public BrowseResponse exhaustiveNbHits(Boolean exhaustiveNbHits) {
+  public BrowseResponse setExhaustiveNbHits(Boolean exhaustiveNbHits) {
     this.exhaustiveNbHits = exhaustiveNbHits;
     return this;
   }
@@ -201,11 +183,7 @@ public class BrowseResponse {
     return exhaustiveNbHits;
   }
 
-  public void setExhaustiveNbHits(Boolean exhaustiveNbHits) {
-    this.exhaustiveNbHits = exhaustiveNbHits;
-  }
-
-  public BrowseResponse exhaustiveTypo(Boolean exhaustiveTypo) {
+  public BrowseResponse setExhaustiveTypo(Boolean exhaustiveTypo) {
     this.exhaustiveTypo = exhaustiveTypo;
     return this;
   }
@@ -221,11 +199,7 @@ public class BrowseResponse {
     return exhaustiveTypo;
   }
 
-  public void setExhaustiveTypo(Boolean exhaustiveTypo) {
-    this.exhaustiveTypo = exhaustiveTypo;
-  }
-
-  public BrowseResponse facets(Map<String, Map<String, String>> facets) {
+  public BrowseResponse setFacets(Map<String, Map<String, String>> facets) {
     this.facets = facets;
     return this;
   }
@@ -251,11 +225,7 @@ public class BrowseResponse {
     return facets;
   }
 
-  public void setFacets(Map<String, Map<String, String>> facets) {
-    this.facets = facets;
-  }
-
-  public BrowseResponse facetsStats(
+  public BrowseResponse setFacetsStats(
     Map<String, BaseSearchResponseFacetsStats> facetsStats
   ) {
     this.facetsStats = facetsStats;
@@ -283,13 +253,7 @@ public class BrowseResponse {
     return facetsStats;
   }
 
-  public void setFacetsStats(
-    Map<String, BaseSearchResponseFacetsStats> facetsStats
-  ) {
-    this.facetsStats = facetsStats;
-  }
-
-  public BrowseResponse hitsPerPage(Integer hitsPerPage) {
+  public BrowseResponse setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -304,11 +268,7 @@ public class BrowseResponse {
     return hitsPerPage;
   }
 
-  public void setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-  }
-
-  public BrowseResponse index(String index) {
+  public BrowseResponse setIndex(String index) {
     this.index = index;
     return this;
   }
@@ -323,11 +283,7 @@ public class BrowseResponse {
     return index;
   }
 
-  public void setIndex(String index) {
-    this.index = index;
-  }
-
-  public BrowseResponse indexUsed(String indexUsed) {
+  public BrowseResponse setIndexUsed(String indexUsed) {
     this.indexUsed = indexUsed;
     return this;
   }
@@ -343,11 +299,7 @@ public class BrowseResponse {
     return indexUsed;
   }
 
-  public void setIndexUsed(String indexUsed) {
-    this.indexUsed = indexUsed;
-  }
-
-  public BrowseResponse message(String message) {
+  public BrowseResponse setMessage(String message) {
     this.message = message;
     return this;
   }
@@ -362,11 +314,7 @@ public class BrowseResponse {
     return message;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public BrowseResponse nbHits(Integer nbHits) {
+  public BrowseResponse setNbHits(Integer nbHits) {
     this.nbHits = nbHits;
     return this;
   }
@@ -381,11 +329,7 @@ public class BrowseResponse {
     return nbHits;
   }
 
-  public void setNbHits(Integer nbHits) {
-    this.nbHits = nbHits;
-  }
-
-  public BrowseResponse nbPages(Integer nbPages) {
+  public BrowseResponse setNbPages(Integer nbPages) {
     this.nbPages = nbPages;
     return this;
   }
@@ -400,11 +344,7 @@ public class BrowseResponse {
     return nbPages;
   }
 
-  public void setNbPages(Integer nbPages) {
-    this.nbPages = nbPages;
-  }
-
-  public BrowseResponse nbSortedHits(Integer nbSortedHits) {
+  public BrowseResponse setNbSortedHits(Integer nbSortedHits) {
     this.nbSortedHits = nbSortedHits;
     return this;
   }
@@ -419,11 +359,7 @@ public class BrowseResponse {
     return nbSortedHits;
   }
 
-  public void setNbSortedHits(Integer nbSortedHits) {
-    this.nbSortedHits = nbSortedHits;
-  }
-
-  public BrowseResponse page(Integer page) {
+  public BrowseResponse setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -438,11 +374,7 @@ public class BrowseResponse {
     return page;
   }
 
-  public void setPage(Integer page) {
-    this.page = page;
-  }
-
-  public BrowseResponse params(String params) {
+  public BrowseResponse setParams(String params) {
     this.params = params;
     return this;
   }
@@ -457,11 +389,7 @@ public class BrowseResponse {
     return params;
   }
 
-  public void setParams(String params) {
-    this.params = params;
-  }
-
-  public BrowseResponse parsedQuery(String parsedQuery) {
+  public BrowseResponse setParsedQuery(String parsedQuery) {
     this.parsedQuery = parsedQuery;
     return this;
   }
@@ -476,11 +404,7 @@ public class BrowseResponse {
     return parsedQuery;
   }
 
-  public void setParsedQuery(String parsedQuery) {
-    this.parsedQuery = parsedQuery;
-  }
-
-  public BrowseResponse processingTimeMS(Integer processingTimeMS) {
+  public BrowseResponse setProcessingTimeMS(Integer processingTimeMS) {
     this.processingTimeMS = processingTimeMS;
     return this;
   }
@@ -495,11 +419,7 @@ public class BrowseResponse {
     return processingTimeMS;
   }
 
-  public void setProcessingTimeMS(Integer processingTimeMS) {
-    this.processingTimeMS = processingTimeMS;
-  }
-
-  public BrowseResponse query(String query) {
+  public BrowseResponse setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -514,11 +434,7 @@ public class BrowseResponse {
     return query;
   }
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public BrowseResponse queryAfterRemoval(String queryAfterRemoval) {
+  public BrowseResponse setQueryAfterRemoval(String queryAfterRemoval) {
     this.queryAfterRemoval = queryAfterRemoval;
     return this;
   }
@@ -534,11 +450,7 @@ public class BrowseResponse {
     return queryAfterRemoval;
   }
 
-  public void setQueryAfterRemoval(String queryAfterRemoval) {
-    this.queryAfterRemoval = queryAfterRemoval;
-  }
-
-  public BrowseResponse serverUsed(String serverUsed) {
+  public BrowseResponse setServerUsed(String serverUsed) {
     this.serverUsed = serverUsed;
     return this;
   }
@@ -553,11 +465,7 @@ public class BrowseResponse {
     return serverUsed;
   }
 
-  public void setServerUsed(String serverUsed) {
-    this.serverUsed = serverUsed;
-  }
-
-  public BrowseResponse userData(Object userData) {
+  public BrowseResponse setUserData(Object userData) {
     this.userData = userData;
     return this;
   }
@@ -572,11 +480,7 @@ public class BrowseResponse {
     return userData;
   }
 
-  public void setUserData(Object userData) {
-    this.userData = userData;
-  }
-
-  public BrowseResponse hits(List<Hit> hits) {
+  public BrowseResponse setHits(List<Hit> hits) {
     this.hits = hits;
     return this;
   }
@@ -596,11 +500,7 @@ public class BrowseResponse {
     return hits;
   }
 
-  public void setHits(List<Hit> hits) {
-    this.hits = hits;
-  }
-
-  public BrowseResponse cursor(String cursor) {
+  public BrowseResponse setCursor(String cursor) {
     this.cursor = cursor;
     return this;
   }
@@ -614,10 +514,6 @@ public class BrowseResponse {
   @javax.annotation.Nonnull
   public String getCursor() {
     return cursor;
-  }
-
-  public void setCursor(String cursor) {
-    this.cursor = cursor;
   }
 
   @Override

@@ -9,7 +9,7 @@ public class AssignUserIdParams {
   @SerializedName("cluster")
   private String cluster;
 
-  public AssignUserIdParams cluster(String cluster) {
+  public AssignUserIdParams setCluster(String cluster) {
     this.cluster = cluster;
     return this;
   }
@@ -22,10 +22,6 @@ public class AssignUserIdParams {
   @javax.annotation.Nonnull
   public String getCluster() {
     return cluster;
-  }
-
-  public void setCluster(String cluster) {
-    this.cluster = cluster;
   }
 
   @Override

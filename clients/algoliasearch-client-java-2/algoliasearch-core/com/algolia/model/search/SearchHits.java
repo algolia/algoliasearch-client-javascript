@@ -11,7 +11,7 @@ public class SearchHits {
   @SerializedName("hits")
   private List<Hit> hits = null;
 
-  public SearchHits hits(List<Hit> hits) {
+  public SearchHits setHits(List<Hit> hits) {
     this.hits = hits;
     return this;
   }
@@ -32,10 +32,6 @@ public class SearchHits {
   @javax.annotation.Nullable
   public List<Hit> getHits() {
     return hits;
-  }
-
-  public void setHits(List<Hit> hits) {
-    this.hits = hits;
   }
 
   @Override

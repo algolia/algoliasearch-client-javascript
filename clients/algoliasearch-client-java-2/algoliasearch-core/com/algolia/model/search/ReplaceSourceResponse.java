@@ -9,7 +9,7 @@ public class ReplaceSourceResponse {
   @SerializedName("updatedAt")
   private String updatedAt;
 
-  public ReplaceSourceResponse updatedAt(String updatedAt) {
+  public ReplaceSourceResponse setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -22,10 +22,6 @@ public class ReplaceSourceResponse {
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;
-  }
-
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   @Override

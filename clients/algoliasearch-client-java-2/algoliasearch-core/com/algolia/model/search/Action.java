@@ -9,21 +9,21 @@ import java.io.IOException;
 /** type of operation. */
 @JsonAdapter(Action.Adapter.class)
 public enum Action {
-  ADDOBJECT("addObject"),
+  ADD_OBJECT("addObject"),
 
-  UPDATEOBJECT("updateObject"),
+  UPDATE_OBJECT("updateObject"),
 
-  PARTIALUPDATEOBJECT("partialUpdateObject"),
+  PARTIAL_UPDATE_OBJECT("partialUpdateObject"),
 
-  PARTIALUPDATEOBJECTNOCREATE("partialUpdateObjectNoCreate"),
+  PARTIAL_UPDATE_OBJECT_NO_CREATE("partialUpdateObjectNoCreate"),
 
-  DELETEOBJECT("deleteObject"),
+  DELETE_OBJECT("deleteObject"),
 
   DELETE("delete"),
 
   CLEAR("clear");
 
-  private String value;
+  private final String value;
 
   Action(String value) {
     this.value = value;

@@ -15,7 +15,7 @@ public class SaveObjectResponse {
   @SerializedName("objectID")
   private String objectID;
 
-  public SaveObjectResponse createdAt(String createdAt) {
+  public SaveObjectResponse setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -30,11 +30,7 @@ public class SaveObjectResponse {
     return createdAt;
   }
 
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public SaveObjectResponse taskID(Integer taskID) {
+  public SaveObjectResponse setTaskID(Integer taskID) {
     this.taskID = taskID;
     return this;
   }
@@ -49,11 +45,7 @@ public class SaveObjectResponse {
     return taskID;
   }
 
-  public void setTaskID(Integer taskID) {
-    this.taskID = taskID;
-  }
-
-  public SaveObjectResponse objectID(String objectID) {
+  public SaveObjectResponse setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -66,10 +58,6 @@ public class SaveObjectResponse {
   @javax.annotation.Nullable
   public String getObjectID() {
     return objectID;
-  }
-
-  public void setObjectID(String objectID) {
-    this.objectID = objectID;
   }
 
   @Override

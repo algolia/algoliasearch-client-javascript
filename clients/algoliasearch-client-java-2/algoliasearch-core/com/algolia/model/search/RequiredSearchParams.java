@@ -9,7 +9,7 @@ public class RequiredSearchParams {
   @SerializedName("query")
   private String query = "";
 
-  public RequiredSearchParams query(String query) {
+  public RequiredSearchParams setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -22,10 +22,6 @@ public class RequiredSearchParams {
   @javax.annotation.Nonnull
   public String getQuery() {
     return query;
-  }
-
-  public void setQuery(String query) {
-    this.query = query;
   }
 
   @Override

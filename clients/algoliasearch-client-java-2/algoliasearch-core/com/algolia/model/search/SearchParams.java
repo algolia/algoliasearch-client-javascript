@@ -20,8 +20,6 @@ public abstract class SearchParams implements CompoundType {
     return new SearchParamsSearchParamsString(inside);
   }
 
-  public abstract Object getInsideValue();
-
   public static class Adapter extends TypeAdapter<SearchParams> {
 
     @Override

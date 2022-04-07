@@ -11,7 +11,7 @@ public class GetLogsResponse {
   @SerializedName("logs")
   private List<GetLogsResponseLogs> logs = new ArrayList<>();
 
-  public GetLogsResponse logs(List<GetLogsResponseLogs> logs) {
+  public GetLogsResponse setLogs(List<GetLogsResponseLogs> logs) {
     this.logs = logs;
     return this;
   }
@@ -29,10 +29,6 @@ public class GetLogsResponse {
   @javax.annotation.Nonnull
   public List<GetLogsResponseLogs> getLogs() {
     return logs;
-  }
-
-  public void setLogs(List<GetLogsResponseLogs> logs) {
-    this.logs = logs;
   }
 
   @Override

@@ -26,7 +26,7 @@ public class Rule {
   @SerializedName("validity")
   private List<TimeRange> validity = null;
 
-  public Rule objectID(String objectID) {
+  public Rule setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -41,11 +41,7 @@ public class Rule {
     return objectID;
   }
 
-  public void setObjectID(String objectID) {
-    this.objectID = objectID;
-  }
-
-  public Rule conditions(List<Condition> conditions) {
+  public Rule setConditions(List<Condition> conditions) {
     this.conditions = conditions;
     return this;
   }
@@ -69,11 +65,7 @@ public class Rule {
     return conditions;
   }
 
-  public void setConditions(List<Condition> conditions) {
-    this.conditions = conditions;
-  }
-
-  public Rule consequence(Consequence consequence) {
+  public Rule setConsequence(Consequence consequence) {
     this.consequence = consequence;
     return this;
   }
@@ -88,11 +80,7 @@ public class Rule {
     return consequence;
   }
 
-  public void setConsequence(Consequence consequence) {
-    this.consequence = consequence;
-  }
-
-  public Rule description(String description) {
+  public Rule setDescription(String description) {
     this.description = description;
     return this;
   }
@@ -108,11 +96,7 @@ public class Rule {
     return description;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public Rule enabled(Boolean enabled) {
+  public Rule setEnabled(Boolean enabled) {
     this.enabled = enabled;
     return this;
   }
@@ -128,11 +112,7 @@ public class Rule {
     return enabled;
   }
 
-  public void setEnabled(Boolean enabled) {
-    this.enabled = enabled;
-  }
-
-  public Rule validity(List<TimeRange> validity) {
+  public Rule setValidity(List<TimeRange> validity) {
     this.validity = validity;
     return this;
   }
@@ -154,10 +134,6 @@ public class Rule {
   @javax.annotation.Nullable
   public List<TimeRange> getValidity() {
     return validity;
-  }
-
-  public void setValidity(List<TimeRange> validity) {
-    this.validity = validity;
   }
 
   @Override

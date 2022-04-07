@@ -15,7 +15,7 @@ public class SearchForFacetValuesResponseFacetHits {
   @SerializedName("count")
   private Integer count;
 
-  public SearchForFacetValuesResponseFacetHits value(String value) {
+  public SearchForFacetValuesResponseFacetHits setValue(String value) {
     this.value = value;
     return this;
   }
@@ -30,11 +30,9 @@ public class SearchForFacetValuesResponseFacetHits {
     return value;
   }
 
-  public void setValue(String value) {
-    this.value = value;
-  }
-
-  public SearchForFacetValuesResponseFacetHits highlighted(String highlighted) {
+  public SearchForFacetValuesResponseFacetHits setHighlighted(
+    String highlighted
+  ) {
     this.highlighted = highlighted;
     return this;
   }
@@ -49,11 +47,7 @@ public class SearchForFacetValuesResponseFacetHits {
     return highlighted;
   }
 
-  public void setHighlighted(String highlighted) {
-    this.highlighted = highlighted;
-  }
-
-  public SearchForFacetValuesResponseFacetHits count(Integer count) {
+  public SearchForFacetValuesResponseFacetHits setCount(Integer count) {
     this.count = count;
     return this;
   }
@@ -67,10 +61,6 @@ public class SearchForFacetValuesResponseFacetHits {
   @javax.annotation.Nonnull
   public Integer getCount() {
     return count;
-  }
-
-  public void setCount(Integer count) {
-    this.count = count;
   }
 
   @Override

@@ -17,7 +17,6 @@ import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.internal.ObjectConstructor;
 import com.google.gson.internal.Primitives;
 import com.google.gson.internal.bind.MapTypeAdapterFactory;
-import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
@@ -28,11 +27,7 @@ import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.ParsePosition;
 import java.util.Collections;
-import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -47,14 +42,12 @@ import okio.ByteString;
 public class JSON {
 
   private static Gson gson;
-  private static DateTypeAdapter dateTypeAdapter = new DateTypeAdapter();
-  private static ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
-  private static RetainFieldMapFactory mapAdapter = new RetainFieldMapFactory();
+  private static final ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
+  private static final RetainFieldMapFactory mapAdapter = new RetainFieldMapFactory();
 
   static {
     gson =
       createGson()
-        .registerTypeAdapter(Date.class, dateTypeAdapter)
         .registerTypeAdapter(byte[].class, byteArrayAdapter)
         .registerTypeAdapterFactory(mapAdapter)
         .create();
@@ -63,6 +56,11 @@ public class JSON {
   public static GsonBuilder createGson() {
     GsonFireBuilder fireBuilder = new GsonFireBuilder();
     return fireBuilder.createGsonBuilder();
+  }
+
+  // Suppress default constructor for noninstantiability
+  private JSON() {
+    throw new AssertionError();
   }
 
   /**
@@ -115,10 +113,6 @@ public class JSON {
       }
     }
   }
-
-  public static void setDateFormat(DateFormat dateFormat) {
-    dateTypeAdapter.setFormat(dateFormat);
-  }
 }
 
 /** Gson TypeAdapter for Byte Array type */
@@ -135,71 +129,13 @@ class ByteArrayAdapter extends TypeAdapter<byte[]> {
 
   @Override
   public byte[] read(JsonReader in) throws IOException {
-    switch (in.peek()) {
-      case NULL:
-        in.nextNull();
-        return null;
-      default:
-        String bytesAsBase64 = in.nextString();
-        ByteString byteString = ByteString.decodeBase64(bytesAsBase64);
-        return byteString.toByteArray();
+    if (in.peek() == JsonToken.NULL) {
+      in.nextNull();
+      return null;
     }
-  }
-}
-
-/**
- * Gson TypeAdapter for java.util.Date type If the dateFormat is null, ISO8601Utils will be used.
- */
-class DateTypeAdapter extends TypeAdapter<Date> {
-
-  private DateFormat dateFormat;
-
-  public DateTypeAdapter() {}
-
-  public DateTypeAdapter(DateFormat dateFormat) {
-    this.dateFormat = dateFormat;
-  }
-
-  public void setFormat(DateFormat dateFormat) {
-    this.dateFormat = dateFormat;
-  }
-
-  @Override
-  public void write(JsonWriter out, Date date) throws IOException {
-    if (date == null) {
-      out.nullValue();
-    } else {
-      String value;
-      if (dateFormat != null) {
-        value = dateFormat.format(date);
-      } else {
-        value = ISO8601Utils.format(date, true);
-      }
-      out.value(value);
-    }
-  }
-
-  @Override
-  public Date read(JsonReader in) throws IOException {
-    try {
-      switch (in.peek()) {
-        case NULL:
-          in.nextNull();
-          return null;
-        default:
-          String date = in.nextString();
-          try {
-            if (dateFormat != null) {
-              return dateFormat.parse(date);
-            }
-            return ISO8601Utils.parse(date, new ParsePosition(0));
-          } catch (ParseException e) {
-            throw new JsonParseException(e);
-          }
-      }
-    } catch (IllegalArgumentException e) {
-      throw new JsonParseException(e);
-    }
+    String bytesAsBase64 = in.nextString();
+    ByteString byteString = ByteString.decodeBase64(bytesAsBase64);
+    return byteString != null ? byteString.toByteArray() : new byte[0];
   }
 }
 

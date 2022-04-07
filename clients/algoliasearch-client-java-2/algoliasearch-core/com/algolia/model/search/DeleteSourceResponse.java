@@ -9,7 +9,7 @@ public class DeleteSourceResponse {
   @SerializedName("deletedAt")
   private String deletedAt;
 
-  public DeleteSourceResponse deletedAt(String deletedAt) {
+  public DeleteSourceResponse setDeletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
     return this;
   }
@@ -22,10 +22,6 @@ public class DeleteSourceResponse {
   @javax.annotation.Nonnull
   public String getDeletedAt() {
     return deletedAt;
-  }
-
-  public void setDeletedAt(String deletedAt) {
-    this.deletedAt = deletedAt;
   }
 
   @Override

@@ -13,7 +13,7 @@ public enum OperationType {
 
   COPY("copy");
 
-  private String value;
+  private final String value;
 
   OperationType(String value) {
     this.value = value;

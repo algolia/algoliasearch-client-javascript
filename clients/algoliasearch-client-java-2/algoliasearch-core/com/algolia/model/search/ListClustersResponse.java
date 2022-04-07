@@ -11,7 +11,7 @@ public class ListClustersResponse {
   @SerializedName("topUsers")
   private List<String> topUsers = new ArrayList<>();
 
-  public ListClustersResponse topUsers(List<String> topUsers) {
+  public ListClustersResponse setTopUsers(List<String> topUsers) {
     this.topUsers = topUsers;
     return this;
   }
@@ -29,10 +29,6 @@ public class ListClustersResponse {
   @javax.annotation.Nonnull
   public List<String> getTopUsers() {
     return topUsers;
-  }
-
-  public void setTopUsers(List<String> topUsers) {
-    this.topUsers = topUsers;
   }
 
   @Override

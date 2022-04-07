@@ -9,7 +9,7 @@ public class CreatedAtObject {
   @SerializedName("createdAt")
   private String createdAt;
 
-  public CreatedAtObject createdAt(String createdAt) {
+  public CreatedAtObject setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -22,10 +22,6 @@ public class CreatedAtObject {
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
-  }
-
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
   }
 
   @Override

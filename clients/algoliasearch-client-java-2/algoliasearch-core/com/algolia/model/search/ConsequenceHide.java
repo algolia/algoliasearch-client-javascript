@@ -9,7 +9,7 @@ public class ConsequenceHide {
   @SerializedName("objectID")
   private String objectID;
 
-  public ConsequenceHide objectID(String objectID) {
+  public ConsequenceHide setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -22,10 +22,6 @@ public class ConsequenceHide {
   @javax.annotation.Nonnull
   public String getObjectID() {
     return objectID;
-  }
-
-  public void setObjectID(String objectID) {
-    this.objectID = objectID;
   }
 
   @Override

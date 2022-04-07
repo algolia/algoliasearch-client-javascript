@@ -15,7 +15,7 @@ public class SaveSynonymResponse {
   @SerializedName("id")
   private String id;
 
-  public SaveSynonymResponse taskID(Integer taskID) {
+  public SaveSynonymResponse setTaskID(Integer taskID) {
     this.taskID = taskID;
     return this;
   }
@@ -30,11 +30,7 @@ public class SaveSynonymResponse {
     return taskID;
   }
 
-  public void setTaskID(Integer taskID) {
-    this.taskID = taskID;
-  }
-
-  public SaveSynonymResponse updatedAt(String updatedAt) {
+  public SaveSynonymResponse setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -49,11 +45,7 @@ public class SaveSynonymResponse {
     return updatedAt;
   }
 
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  public SaveSynonymResponse id(String id) {
+  public SaveSynonymResponse setId(String id) {
     this.id = id;
     return this;
   }
@@ -66,10 +58,6 @@ public class SaveSynonymResponse {
   @javax.annotation.Nonnull
   public String getId() {
     return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
   }
 
   @Override

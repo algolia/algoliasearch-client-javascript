@@ -80,7 +80,7 @@ public class BaseSearchResponse {
   @SerializedName("userData")
   private Object userData = new Object();
 
-  public BaseSearchResponse abTestID(Integer abTestID) {
+  public BaseSearchResponse setAbTestID(Integer abTestID) {
     this.abTestID = abTestID;
     return this;
   }
@@ -96,11 +96,7 @@ public class BaseSearchResponse {
     return abTestID;
   }
 
-  public void setAbTestID(Integer abTestID) {
-    this.abTestID = abTestID;
-  }
-
-  public BaseSearchResponse abTestVariantID(Integer abTestVariantID) {
+  public BaseSearchResponse setAbTestVariantID(Integer abTestVariantID) {
     this.abTestVariantID = abTestVariantID;
     return this;
   }
@@ -116,11 +112,7 @@ public class BaseSearchResponse {
     return abTestVariantID;
   }
 
-  public void setAbTestVariantID(Integer abTestVariantID) {
-    this.abTestVariantID = abTestVariantID;
-  }
-
-  public BaseSearchResponse aroundLatLng(String aroundLatLng) {
+  public BaseSearchResponse setAroundLatLng(String aroundLatLng) {
     this.aroundLatLng = aroundLatLng;
     return this;
   }
@@ -135,11 +127,7 @@ public class BaseSearchResponse {
     return aroundLatLng;
   }
 
-  public void setAroundLatLng(String aroundLatLng) {
-    this.aroundLatLng = aroundLatLng;
-  }
-
-  public BaseSearchResponse automaticRadius(String automaticRadius) {
+  public BaseSearchResponse setAutomaticRadius(String automaticRadius) {
     this.automaticRadius = automaticRadius;
     return this;
   }
@@ -155,11 +143,7 @@ public class BaseSearchResponse {
     return automaticRadius;
   }
 
-  public void setAutomaticRadius(String automaticRadius) {
-    this.automaticRadius = automaticRadius;
-  }
-
-  public BaseSearchResponse exhaustiveFacetsCount(
+  public BaseSearchResponse setExhaustiveFacetsCount(
     Boolean exhaustiveFacetsCount
   ) {
     this.exhaustiveFacetsCount = exhaustiveFacetsCount;
@@ -176,11 +160,7 @@ public class BaseSearchResponse {
     return exhaustiveFacetsCount;
   }
 
-  public void setExhaustiveFacetsCount(Boolean exhaustiveFacetsCount) {
-    this.exhaustiveFacetsCount = exhaustiveFacetsCount;
-  }
-
-  public BaseSearchResponse exhaustiveNbHits(Boolean exhaustiveNbHits) {
+  public BaseSearchResponse setExhaustiveNbHits(Boolean exhaustiveNbHits) {
     this.exhaustiveNbHits = exhaustiveNbHits;
     return this;
   }
@@ -195,11 +175,7 @@ public class BaseSearchResponse {
     return exhaustiveNbHits;
   }
 
-  public void setExhaustiveNbHits(Boolean exhaustiveNbHits) {
-    this.exhaustiveNbHits = exhaustiveNbHits;
-  }
-
-  public BaseSearchResponse exhaustiveTypo(Boolean exhaustiveTypo) {
+  public BaseSearchResponse setExhaustiveTypo(Boolean exhaustiveTypo) {
     this.exhaustiveTypo = exhaustiveTypo;
     return this;
   }
@@ -215,11 +191,7 @@ public class BaseSearchResponse {
     return exhaustiveTypo;
   }
 
-  public void setExhaustiveTypo(Boolean exhaustiveTypo) {
-    this.exhaustiveTypo = exhaustiveTypo;
-  }
-
-  public BaseSearchResponse facets(Map<String, Map<String, String>> facets) {
+  public BaseSearchResponse setFacets(Map<String, Map<String, String>> facets) {
     this.facets = facets;
     return this;
   }
@@ -245,11 +217,7 @@ public class BaseSearchResponse {
     return facets;
   }
 
-  public void setFacets(Map<String, Map<String, String>> facets) {
-    this.facets = facets;
-  }
-
-  public BaseSearchResponse facetsStats(
+  public BaseSearchResponse setFacetsStats(
     Map<String, BaseSearchResponseFacetsStats> facetsStats
   ) {
     this.facetsStats = facetsStats;
@@ -277,13 +245,7 @@ public class BaseSearchResponse {
     return facetsStats;
   }
 
-  public void setFacetsStats(
-    Map<String, BaseSearchResponseFacetsStats> facetsStats
-  ) {
-    this.facetsStats = facetsStats;
-  }
-
-  public BaseSearchResponse hitsPerPage(Integer hitsPerPage) {
+  public BaseSearchResponse setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -298,11 +260,7 @@ public class BaseSearchResponse {
     return hitsPerPage;
   }
 
-  public void setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-  }
-
-  public BaseSearchResponse index(String index) {
+  public BaseSearchResponse setIndex(String index) {
     this.index = index;
     return this;
   }
@@ -317,11 +275,7 @@ public class BaseSearchResponse {
     return index;
   }
 
-  public void setIndex(String index) {
-    this.index = index;
-  }
-
-  public BaseSearchResponse indexUsed(String indexUsed) {
+  public BaseSearchResponse setIndexUsed(String indexUsed) {
     this.indexUsed = indexUsed;
     return this;
   }
@@ -337,11 +291,7 @@ public class BaseSearchResponse {
     return indexUsed;
   }
 
-  public void setIndexUsed(String indexUsed) {
-    this.indexUsed = indexUsed;
-  }
-
-  public BaseSearchResponse message(String message) {
+  public BaseSearchResponse setMessage(String message) {
     this.message = message;
     return this;
   }
@@ -356,11 +306,7 @@ public class BaseSearchResponse {
     return message;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
-  }
-
-  public BaseSearchResponse nbHits(Integer nbHits) {
+  public BaseSearchResponse setNbHits(Integer nbHits) {
     this.nbHits = nbHits;
     return this;
   }
@@ -375,11 +321,7 @@ public class BaseSearchResponse {
     return nbHits;
   }
 
-  public void setNbHits(Integer nbHits) {
-    this.nbHits = nbHits;
-  }
-
-  public BaseSearchResponse nbPages(Integer nbPages) {
+  public BaseSearchResponse setNbPages(Integer nbPages) {
     this.nbPages = nbPages;
     return this;
   }
@@ -394,11 +336,7 @@ public class BaseSearchResponse {
     return nbPages;
   }
 
-  public void setNbPages(Integer nbPages) {
-    this.nbPages = nbPages;
-  }
-
-  public BaseSearchResponse nbSortedHits(Integer nbSortedHits) {
+  public BaseSearchResponse setNbSortedHits(Integer nbSortedHits) {
     this.nbSortedHits = nbSortedHits;
     return this;
   }
@@ -413,11 +351,7 @@ public class BaseSearchResponse {
     return nbSortedHits;
   }
 
-  public void setNbSortedHits(Integer nbSortedHits) {
-    this.nbSortedHits = nbSortedHits;
-  }
-
-  public BaseSearchResponse page(Integer page) {
+  public BaseSearchResponse setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -432,11 +366,7 @@ public class BaseSearchResponse {
     return page;
   }
 
-  public void setPage(Integer page) {
-    this.page = page;
-  }
-
-  public BaseSearchResponse params(String params) {
+  public BaseSearchResponse setParams(String params) {
     this.params = params;
     return this;
   }
@@ -451,11 +381,7 @@ public class BaseSearchResponse {
     return params;
   }
 
-  public void setParams(String params) {
-    this.params = params;
-  }
-
-  public BaseSearchResponse parsedQuery(String parsedQuery) {
+  public BaseSearchResponse setParsedQuery(String parsedQuery) {
     this.parsedQuery = parsedQuery;
     return this;
   }
@@ -470,11 +396,7 @@ public class BaseSearchResponse {
     return parsedQuery;
   }
 
-  public void setParsedQuery(String parsedQuery) {
-    this.parsedQuery = parsedQuery;
-  }
-
-  public BaseSearchResponse processingTimeMS(Integer processingTimeMS) {
+  public BaseSearchResponse setProcessingTimeMS(Integer processingTimeMS) {
     this.processingTimeMS = processingTimeMS;
     return this;
   }
@@ -489,11 +411,7 @@ public class BaseSearchResponse {
     return processingTimeMS;
   }
 
-  public void setProcessingTimeMS(Integer processingTimeMS) {
-    this.processingTimeMS = processingTimeMS;
-  }
-
-  public BaseSearchResponse query(String query) {
+  public BaseSearchResponse setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -508,11 +426,7 @@ public class BaseSearchResponse {
     return query;
   }
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public BaseSearchResponse queryAfterRemoval(String queryAfterRemoval) {
+  public BaseSearchResponse setQueryAfterRemoval(String queryAfterRemoval) {
     this.queryAfterRemoval = queryAfterRemoval;
     return this;
   }
@@ -528,11 +442,7 @@ public class BaseSearchResponse {
     return queryAfterRemoval;
   }
 
-  public void setQueryAfterRemoval(String queryAfterRemoval) {
-    this.queryAfterRemoval = queryAfterRemoval;
-  }
-
-  public BaseSearchResponse serverUsed(String serverUsed) {
+  public BaseSearchResponse setServerUsed(String serverUsed) {
     this.serverUsed = serverUsed;
     return this;
   }
@@ -547,11 +457,7 @@ public class BaseSearchResponse {
     return serverUsed;
   }
 
-  public void setServerUsed(String serverUsed) {
-    this.serverUsed = serverUsed;
-  }
-
-  public BaseSearchResponse userData(Object userData) {
+  public BaseSearchResponse setUserData(Object userData) {
     this.userData = userData;
     return this;
   }
@@ -564,10 +470,6 @@ public class BaseSearchResponse {
   @javax.annotation.Nullable
   public Object getUserData() {
     return userData;
-  }
-
-  public void setUserData(Object userData) {
-    this.userData = userData;
   }
 
   @Override

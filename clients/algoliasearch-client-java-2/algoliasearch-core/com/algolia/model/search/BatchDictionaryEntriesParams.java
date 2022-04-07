@@ -14,7 +14,7 @@ public class BatchDictionaryEntriesParams {
   @SerializedName("requests")
   private List<BatchDictionaryEntriesRequest> requests = new ArrayList<>();
 
-  public BatchDictionaryEntriesParams clearExistingDictionaryEntries(
+  public BatchDictionaryEntriesParams setClearExistingDictionaryEntries(
     Boolean clearExistingDictionaryEntries
   ) {
     this.clearExistingDictionaryEntries = clearExistingDictionaryEntries;
@@ -31,13 +31,7 @@ public class BatchDictionaryEntriesParams {
     return clearExistingDictionaryEntries;
   }
 
-  public void setClearExistingDictionaryEntries(
-    Boolean clearExistingDictionaryEntries
-  ) {
-    this.clearExistingDictionaryEntries = clearExistingDictionaryEntries;
-  }
-
-  public BatchDictionaryEntriesParams requests(
+  public BatchDictionaryEntriesParams setRequests(
     List<BatchDictionaryEntriesRequest> requests
   ) {
     this.requests = requests;
@@ -59,10 +53,6 @@ public class BatchDictionaryEntriesParams {
   @javax.annotation.Nonnull
   public List<BatchDictionaryEntriesRequest> getRequests() {
     return requests;
-  }
-
-  public void setRequests(List<BatchDictionaryEntriesRequest> requests) {
-    this.requests = requests;
   }
 
   @Override

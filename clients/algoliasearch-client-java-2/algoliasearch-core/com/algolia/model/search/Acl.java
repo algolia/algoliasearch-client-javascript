@@ -9,19 +9,19 @@ import java.io.IOException;
 /** Gets or Sets acl */
 @JsonAdapter(Acl.Adapter.class)
 public enum Acl {
-  ADDOBJECT("addObject"),
+  ADD_OBJECT("addObject"),
 
   ANALYTICS("analytics"),
 
   BROWSE("browse"),
 
-  DELETEOBJECT("deleteObject"),
+  DELETE_OBJECT("deleteObject"),
 
-  DELETEINDEX("deleteIndex"),
+  DELETE_INDEX("deleteIndex"),
 
-  EDITSETTINGS("editSettings"),
+  EDIT_SETTINGS("editSettings"),
 
-  LISTINDEXES("listIndexes"),
+  LIST_INDEXES("listIndexes"),
 
   LOGS("logs"),
 
@@ -31,13 +31,13 @@ public enum Acl {
 
   SEARCH("search"),
 
-  SEEUNRETRIEVABLEATTRIBUTES("seeUnretrievableAttributes"),
+  SEE_UNRETRIEVABLE_ATTRIBUTES("seeUnretrievableAttributes"),
 
   SETTINGS("settings"),
 
   USAGE("usage");
 
-  private String value;
+  private final String value;
 
   Acl(String value) {
     this.value = value;

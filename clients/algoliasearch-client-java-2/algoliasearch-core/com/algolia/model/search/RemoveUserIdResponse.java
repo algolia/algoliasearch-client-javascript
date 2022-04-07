@@ -9,7 +9,7 @@ public class RemoveUserIdResponse {
   @SerializedName("deletedAt")
   private String deletedAt;
 
-  public RemoveUserIdResponse deletedAt(String deletedAt) {
+  public RemoveUserIdResponse setDeletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
     return this;
   }
@@ -22,10 +22,6 @@ public class RemoveUserIdResponse {
   @javax.annotation.Nonnull
   public String getDeletedAt() {
     return deletedAt;
-  }
-
-  public void setDeletedAt(String deletedAt) {
-    this.deletedAt = deletedAt;
   }
 
   @Override

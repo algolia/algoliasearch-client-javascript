@@ -10,7 +10,7 @@ public class ErrorBase extends HashMap<String, Object> {
   @SerializedName("message")
   private String message;
 
-  public ErrorBase message(String message) {
+  public ErrorBase setMessage(String message) {
     this.message = message;
     return this;
   }
@@ -23,10 +23,6 @@ public class ErrorBase extends HashMap<String, Object> {
   @javax.annotation.Nullable
   public String getMessage() {
     return message;
-  }
-
-  public void setMessage(String message) {
-    this.message = message;
   }
 
   @Override

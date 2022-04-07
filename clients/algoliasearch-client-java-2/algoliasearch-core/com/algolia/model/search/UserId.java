@@ -18,7 +18,7 @@ public class UserId {
   @SerializedName("dataSize")
   private Integer dataSize;
 
-  public UserId userID(String userID) {
+  public UserId setUserID(String userID) {
     this.userID = userID;
     return this;
   }
@@ -33,11 +33,7 @@ public class UserId {
     return userID;
   }
 
-  public void setUserID(String userID) {
-    this.userID = userID;
-  }
-
-  public UserId clusterName(String clusterName) {
+  public UserId setClusterName(String clusterName) {
     this.clusterName = clusterName;
     return this;
   }
@@ -52,11 +48,7 @@ public class UserId {
     return clusterName;
   }
 
-  public void setClusterName(String clusterName) {
-    this.clusterName = clusterName;
-  }
-
-  public UserId nbRecords(Integer nbRecords) {
+  public UserId setNbRecords(Integer nbRecords) {
     this.nbRecords = nbRecords;
     return this;
   }
@@ -71,11 +63,7 @@ public class UserId {
     return nbRecords;
   }
 
-  public void setNbRecords(Integer nbRecords) {
-    this.nbRecords = nbRecords;
-  }
-
-  public UserId dataSize(Integer dataSize) {
+  public UserId setDataSize(Integer dataSize) {
     this.dataSize = dataSize;
     return this;
   }
@@ -88,10 +76,6 @@ public class UserId {
   @javax.annotation.Nonnull
   public Integer getDataSize() {
     return dataSize;
-  }
-
-  public void setDataSize(Integer dataSize) {
-    this.dataSize = dataSize;
   }
 
   @Override

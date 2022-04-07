@@ -17,7 +17,7 @@ public class Promote {
   @SerializedName("position")
   private Integer position;
 
-  public Promote objectID(String objectID) {
+  public Promote setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -32,11 +32,7 @@ public class Promote {
     return objectID;
   }
 
-  public void setObjectID(String objectID) {
-    this.objectID = objectID;
-  }
-
-  public Promote objectIDs(List<String> objectIDs) {
+  public Promote setObjectIDs(List<String> objectIDs) {
     this.objectIDs = objectIDs;
     return this;
   }
@@ -59,11 +55,7 @@ public class Promote {
     return objectIDs;
   }
 
-  public void setObjectIDs(List<String> objectIDs) {
-    this.objectIDs = objectIDs;
-  }
-
-  public Promote position(Integer position) {
+  public Promote setPosition(Integer position) {
     this.position = position;
     return this;
   }
@@ -78,10 +70,6 @@ public class Promote {
   @javax.annotation.Nonnull
   public Integer getPosition() {
     return position;
-  }
-
-  public void setPosition(Integer position) {
-    this.position = position;
   }
 
   @Override

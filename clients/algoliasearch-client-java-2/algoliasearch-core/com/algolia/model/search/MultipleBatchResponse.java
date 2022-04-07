@@ -14,7 +14,7 @@ public class MultipleBatchResponse {
   @SerializedName("objectIDs")
   private List<String> objectIDs = null;
 
-  public MultipleBatchResponse taskID(Object taskID) {
+  public MultipleBatchResponse setTaskID(Object taskID) {
     this.taskID = taskID;
     return this;
   }
@@ -29,11 +29,7 @@ public class MultipleBatchResponse {
     return taskID;
   }
 
-  public void setTaskID(Object taskID) {
-    this.taskID = taskID;
-  }
-
-  public MultipleBatchResponse objectIDs(List<String> objectIDs) {
+  public MultipleBatchResponse setObjectIDs(List<String> objectIDs) {
     this.objectIDs = objectIDs;
     return this;
   }
@@ -54,10 +50,6 @@ public class MultipleBatchResponse {
   @javax.annotation.Nullable
   public List<String> getObjectIDs() {
     return objectIDs;
-  }
-
-  public void setObjectIDs(List<String> objectIDs) {
-    this.objectIDs = objectIDs;
   }
 
   @Override

@@ -12,7 +12,7 @@ public class GetTopUserIdsResponse {
   @SerializedName("topUsers")
   private List<Map<String, List<UserId>>> topUsers = new ArrayList<>();
 
-  public GetTopUserIdsResponse topUsers(
+  public GetTopUserIdsResponse setTopUsers(
     List<Map<String, List<UserId>>> topUsers
   ) {
     this.topUsers = topUsers;
@@ -34,10 +34,6 @@ public class GetTopUserIdsResponse {
   @javax.annotation.Nonnull
   public List<Map<String, List<UserId>>> getTopUsers() {
     return topUsers;
-  }
-
-  public void setTopUsers(List<Map<String, List<UserId>>> topUsers) {
-    this.topUsers = topUsers;
   }
 
   @Override

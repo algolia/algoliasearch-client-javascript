@@ -14,7 +14,7 @@ public class BuiltInOperation {
   @SerializedName("value")
   private String value;
 
-  public BuiltInOperation operation(BuiltInOperationType operation) {
+  public BuiltInOperation setOperation(BuiltInOperationType operation) {
     this.operation = operation;
     return this;
   }
@@ -29,11 +29,7 @@ public class BuiltInOperation {
     return operation;
   }
 
-  public void setOperation(BuiltInOperationType operation) {
-    this.operation = operation;
-  }
-
-  public BuiltInOperation value(String value) {
+  public BuiltInOperation setValue(String value) {
     this.value = value;
     return this;
   }
@@ -47,10 +43,6 @@ public class BuiltInOperation {
   @javax.annotation.Nonnull
   public String getValue() {
     return value;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
   }
 
   @Override

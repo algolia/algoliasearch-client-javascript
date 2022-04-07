@@ -17,7 +17,7 @@ public class OperationIndexParams {
   @SerializedName("scope")
   private List<ScopeType> scope = null;
 
-  public OperationIndexParams operation(OperationType operation) {
+  public OperationIndexParams setOperation(OperationType operation) {
     this.operation = operation;
     return this;
   }
@@ -32,11 +32,7 @@ public class OperationIndexParams {
     return operation;
   }
 
-  public void setOperation(OperationType operation) {
-    this.operation = operation;
-  }
-
-  public OperationIndexParams destination(String destination) {
+  public OperationIndexParams setDestination(String destination) {
     this.destination = destination;
     return this;
   }
@@ -51,11 +47,7 @@ public class OperationIndexParams {
     return destination;
   }
 
-  public void setDestination(String destination) {
-    this.destination = destination;
-  }
-
-  public OperationIndexParams scope(List<ScopeType> scope) {
+  public OperationIndexParams setScope(List<ScopeType> scope) {
     this.scope = scope;
     return this;
   }
@@ -77,10 +69,6 @@ public class OperationIndexParams {
   @javax.annotation.Nullable
   public List<ScopeType> getScope() {
     return scope;
-  }
-
-  public void setScope(List<ScopeType> scope) {
-    this.scope = scope;
   }
 
   @Override

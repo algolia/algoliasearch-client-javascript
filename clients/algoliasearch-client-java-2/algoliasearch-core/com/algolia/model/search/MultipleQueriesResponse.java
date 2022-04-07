@@ -11,7 +11,7 @@ public class MultipleQueriesResponse {
   @SerializedName("results")
   private List<SearchResponse> results = null;
 
-  public MultipleQueriesResponse results(List<SearchResponse> results) {
+  public MultipleQueriesResponse setResults(List<SearchResponse> results) {
     this.results = results;
     return this;
   }
@@ -32,10 +32,6 @@ public class MultipleQueriesResponse {
   @javax.annotation.Nullable
   public List<SearchResponse> getResults() {
     return results;
-  }
-
-  public void setResults(List<SearchResponse> results) {
-    this.results = results;
   }
 
   @Override

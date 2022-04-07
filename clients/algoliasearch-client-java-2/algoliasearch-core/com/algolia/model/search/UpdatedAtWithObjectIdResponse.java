@@ -15,7 +15,7 @@ public class UpdatedAtWithObjectIdResponse {
   @SerializedName("objectID")
   private String objectID;
 
-  public UpdatedAtWithObjectIdResponse taskID(Integer taskID) {
+  public UpdatedAtWithObjectIdResponse setTaskID(Integer taskID) {
     this.taskID = taskID;
     return this;
   }
@@ -30,11 +30,7 @@ public class UpdatedAtWithObjectIdResponse {
     return taskID;
   }
 
-  public void setTaskID(Integer taskID) {
-    this.taskID = taskID;
-  }
-
-  public UpdatedAtWithObjectIdResponse updatedAt(String updatedAt) {
+  public UpdatedAtWithObjectIdResponse setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -49,11 +45,7 @@ public class UpdatedAtWithObjectIdResponse {
     return updatedAt;
   }
 
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  public UpdatedAtWithObjectIdResponse objectID(String objectID) {
+  public UpdatedAtWithObjectIdResponse setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -66,10 +58,6 @@ public class UpdatedAtWithObjectIdResponse {
   @javax.annotation.Nullable
   public String getObjectID() {
     return objectID;
-  }
-
-  public void setObjectID(String objectID) {
-    this.objectID = objectID;
   }
 
   @Override

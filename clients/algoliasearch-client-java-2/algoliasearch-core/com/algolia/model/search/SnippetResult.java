@@ -69,7 +69,7 @@ public class SnippetResult {
   @SerializedName("matchLevel")
   private MatchLevelEnum matchLevel;
 
-  public SnippetResult value(String value) {
+  public SnippetResult setValue(String value) {
     this.value = value;
     return this;
   }
@@ -84,11 +84,7 @@ public class SnippetResult {
     return value;
   }
 
-  public void setValue(String value) {
-    this.value = value;
-  }
-
-  public SnippetResult matchLevel(MatchLevelEnum matchLevel) {
+  public SnippetResult setMatchLevel(MatchLevelEnum matchLevel) {
     this.matchLevel = matchLevel;
     return this;
   }
@@ -101,10 +97,6 @@ public class SnippetResult {
   @javax.annotation.Nullable
   public MatchLevelEnum getMatchLevel() {
     return matchLevel;
-  }
-
-  public void setMatchLevel(MatchLevelEnum matchLevel) {
-    this.matchLevel = matchLevel;
   }
 
   @Override

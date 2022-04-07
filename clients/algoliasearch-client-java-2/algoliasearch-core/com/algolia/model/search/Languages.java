@@ -15,7 +15,7 @@ public class Languages {
   @SerializedName("compounds")
   private DictionaryLanguage compounds;
 
-  public Languages plurals(DictionaryLanguage plurals) {
+  public Languages setPlurals(DictionaryLanguage plurals) {
     this.plurals = plurals;
     return this;
   }
@@ -30,11 +30,7 @@ public class Languages {
     return plurals;
   }
 
-  public void setPlurals(DictionaryLanguage plurals) {
-    this.plurals = plurals;
-  }
-
-  public Languages stopwords(DictionaryLanguage stopwords) {
+  public Languages setStopwords(DictionaryLanguage stopwords) {
     this.stopwords = stopwords;
     return this;
   }
@@ -49,11 +45,7 @@ public class Languages {
     return stopwords;
   }
 
-  public void setStopwords(DictionaryLanguage stopwords) {
-    this.stopwords = stopwords;
-  }
-
-  public Languages compounds(DictionaryLanguage compounds) {
+  public Languages setCompounds(DictionaryLanguage compounds) {
     this.compounds = compounds;
     return this;
   }
@@ -66,10 +58,6 @@ public class Languages {
   @javax.annotation.Nullable
   public DictionaryLanguage getCompounds() {
     return compounds;
-  }
-
-  public void setCompounds(DictionaryLanguage compounds) {
-    this.compounds = compounds;
   }
 
   @Override

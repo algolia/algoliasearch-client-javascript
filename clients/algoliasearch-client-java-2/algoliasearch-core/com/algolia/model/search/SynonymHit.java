@@ -35,7 +35,7 @@ public class SynonymHit {
   @SerializedName("_highlightResult")
   private SynonymHitHighlightResult highlightResult;
 
-  public SynonymHit objectID(String objectID) {
+  public SynonymHit setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -50,11 +50,7 @@ public class SynonymHit {
     return objectID;
   }
 
-  public void setObjectID(String objectID) {
-    this.objectID = objectID;
-  }
-
-  public SynonymHit type(SynonymType type) {
+  public SynonymHit setType(SynonymType type) {
     this.type = type;
     return this;
   }
@@ -69,11 +65,7 @@ public class SynonymHit {
     return type;
   }
 
-  public void setType(SynonymType type) {
-    this.type = type;
-  }
-
-  public SynonymHit synonyms(List<String> synonyms) {
+  public SynonymHit setSynonyms(List<String> synonyms) {
     this.synonyms = synonyms;
     return this;
   }
@@ -96,11 +88,7 @@ public class SynonymHit {
     return synonyms;
   }
 
-  public void setSynonyms(List<String> synonyms) {
-    this.synonyms = synonyms;
-  }
-
-  public SynonymHit input(String input) {
+  public SynonymHit setInput(String input) {
     this.input = input;
     return this;
   }
@@ -115,11 +103,7 @@ public class SynonymHit {
     return input;
   }
 
-  public void setInput(String input) {
-    this.input = input;
-  }
-
-  public SynonymHit word(String word) {
+  public SynonymHit setWord(String word) {
     this.word = word;
     return this;
   }
@@ -134,11 +118,7 @@ public class SynonymHit {
     return word;
   }
 
-  public void setWord(String word) {
-    this.word = word;
-  }
-
-  public SynonymHit corrections(List<String> corrections) {
+  public SynonymHit setCorrections(List<String> corrections) {
     this.corrections = corrections;
     return this;
   }
@@ -161,11 +141,7 @@ public class SynonymHit {
     return corrections;
   }
 
-  public void setCorrections(List<String> corrections) {
-    this.corrections = corrections;
-  }
-
-  public SynonymHit placeholder(String placeholder) {
+  public SynonymHit setPlaceholder(String placeholder) {
     this.placeholder = placeholder;
     return this;
   }
@@ -180,11 +156,7 @@ public class SynonymHit {
     return placeholder;
   }
 
-  public void setPlaceholder(String placeholder) {
-    this.placeholder = placeholder;
-  }
-
-  public SynonymHit replacements(List<String> replacements) {
+  public SynonymHit setReplacements(List<String> replacements) {
     this.replacements = replacements;
     return this;
   }
@@ -207,11 +179,9 @@ public class SynonymHit {
     return replacements;
   }
 
-  public void setReplacements(List<String> replacements) {
-    this.replacements = replacements;
-  }
-
-  public SynonymHit highlightResult(SynonymHitHighlightResult highlightResult) {
+  public SynonymHit setHighlightResult(
+    SynonymHitHighlightResult highlightResult
+  ) {
     this.highlightResult = highlightResult;
     return this;
   }
@@ -224,10 +194,6 @@ public class SynonymHit {
   @javax.annotation.Nullable
   public SynonymHitHighlightResult getHighlightResult() {
     return highlightResult;
-  }
-
-  public void setHighlightResult(SynonymHitHighlightResult highlightResult) {
-    this.highlightResult = highlightResult;
   }
 
   @Override

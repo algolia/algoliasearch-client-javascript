@@ -12,7 +12,7 @@ public class TimeRange {
   @SerializedName("until")
   private Integer until;
 
-  public TimeRange from(Integer from) {
+  public TimeRange setFrom(Integer from) {
     this.from = from;
     return this;
   }
@@ -27,11 +27,7 @@ public class TimeRange {
     return from;
   }
 
-  public void setFrom(Integer from) {
-    this.from = from;
-  }
-
-  public TimeRange until(Integer until) {
+  public TimeRange setUntil(Integer until) {
     this.until = until;
     return this;
   }
@@ -44,10 +40,6 @@ public class TimeRange {
   @javax.annotation.Nonnull
   public Integer getUntil() {
     return until;
-  }
-
-  public void setUntil(Integer until) {
-    this.until = until;
   }
 
   @Override

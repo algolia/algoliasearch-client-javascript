@@ -18,7 +18,7 @@ public class SearchDictionaryEntriesParams {
   @SerializedName("language")
   private String language;
 
-  public SearchDictionaryEntriesParams query(String query) {
+  public SearchDictionaryEntriesParams setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -33,11 +33,7 @@ public class SearchDictionaryEntriesParams {
     return query;
   }
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public SearchDictionaryEntriesParams page(Integer page) {
+  public SearchDictionaryEntriesParams setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -52,11 +48,7 @@ public class SearchDictionaryEntriesParams {
     return page;
   }
 
-  public void setPage(Integer page) {
-    this.page = page;
-  }
-
-  public SearchDictionaryEntriesParams hitsPerPage(Integer hitsPerPage) {
+  public SearchDictionaryEntriesParams setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -71,11 +63,7 @@ public class SearchDictionaryEntriesParams {
     return hitsPerPage;
   }
 
-  public void setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-  }
-
-  public SearchDictionaryEntriesParams language(String language) {
+  public SearchDictionaryEntriesParams setLanguage(String language) {
     this.language = language;
     return this;
   }
@@ -88,10 +76,6 @@ public class SearchDictionaryEntriesParams {
   @javax.annotation.Nullable
   public String getLanguage() {
     return language;
-  }
-
-  public void setLanguage(String language) {
-    this.language = language;
   }
 
   @Override

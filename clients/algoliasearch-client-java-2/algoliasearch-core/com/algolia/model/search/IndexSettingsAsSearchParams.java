@@ -154,11 +154,11 @@ public class IndexSettingsAsSearchParams {
   /** Controls if and how query words are interpreted as prefixes. */
   @JsonAdapter(QueryTypeEnum.Adapter.class)
   public enum QueryTypeEnum {
-    PREFIXLAST("prefixLast"),
+    PREFIX_LAST("prefixLast"),
 
-    PREFIXALL("prefixAll"),
+    PREFIX_ALL("prefixAll"),
 
-    PREFIXNONE("prefixNone");
+    PREFIX_NONE("prefixNone");
 
     private String value;
 
@@ -204,18 +204,18 @@ public class IndexSettingsAsSearchParams {
   }
 
   @SerializedName("queryType")
-  private QueryTypeEnum queryType = QueryTypeEnum.PREFIXLAST;
+  private QueryTypeEnum queryType = QueryTypeEnum.PREFIX_LAST;
 
   /** Selects a strategy to remove words from the query when it doesn't match any hits. */
   @JsonAdapter(RemoveWordsIfNoResultsEnum.Adapter.class)
   public enum RemoveWordsIfNoResultsEnum {
     NONE("none"),
 
-    LASTWORDS("lastWords"),
+    LAST_WORDS("lastWords"),
 
-    FIRSTWORDS("firstWords"),
+    FIRST_WORDS("firstWords"),
 
-    ALLOPTIONAL("allOptional");
+    ALL_OPTIONAL("allOptional");
 
     private String value;
 
@@ -334,11 +334,11 @@ public class IndexSettingsAsSearchParams {
   /** Gets or Sets alternativesAsExact */
   @JsonAdapter(AlternativesAsExactEnum.Adapter.class)
   public enum AlternativesAsExactEnum {
-    IGNOREPLURALS("ignorePlurals"),
+    IGNORE_PLURALS("ignorePlurals"),
 
-    SINGLEWORDSYNONYM("singleWordSynonym"),
+    SINGLE_WORD_SYNONYM("singleWordSynonym"),
 
-    MULTIWORDSSYNONYM("multiWordsSynonym");
+    MULTI_WORDS_SYNONYM("multiWordsSynonym");
 
     private String value;
 
@@ -389,9 +389,9 @@ public class IndexSettingsAsSearchParams {
   /** Gets or Sets advancedSyntaxFeatures */
   @JsonAdapter(AdvancedSyntaxFeaturesEnum.Adapter.class)
   public enum AdvancedSyntaxFeaturesEnum {
-    EXACTPHRASE("exactPhrase"),
+    EXACT_PHRASE("exactPhrase"),
 
-    EXCLUDEWORDS("excludeWords");
+    EXCLUDE_WORDS("excludeWords");
 
     private String value;
 
@@ -464,7 +464,7 @@ public class IndexSettingsAsSearchParams {
   @SerializedName("renderingContent")
   private Object renderingContent = new Object();
 
-  public IndexSettingsAsSearchParams searchableAttributes(
+  public IndexSettingsAsSearchParams setSearchableAttributes(
     List<String> searchableAttributes
   ) {
     this.searchableAttributes = searchableAttributes;
@@ -491,11 +491,7 @@ public class IndexSettingsAsSearchParams {
     return searchableAttributes;
   }
 
-  public void setSearchableAttributes(List<String> searchableAttributes) {
-    this.searchableAttributes = searchableAttributes;
-  }
-
-  public IndexSettingsAsSearchParams attributesForFaceting(
+  public IndexSettingsAsSearchParams setAttributesForFaceting(
     List<String> attributesForFaceting
   ) {
     this.attributesForFaceting = attributesForFaceting;
@@ -522,11 +518,7 @@ public class IndexSettingsAsSearchParams {
     return attributesForFaceting;
   }
 
-  public void setAttributesForFaceting(List<String> attributesForFaceting) {
-    this.attributesForFaceting = attributesForFaceting;
-  }
-
-  public IndexSettingsAsSearchParams unretrievableAttributes(
+  public IndexSettingsAsSearchParams setUnretrievableAttributes(
     List<String> unretrievableAttributes
   ) {
     this.unretrievableAttributes = unretrievableAttributes;
@@ -553,11 +545,7 @@ public class IndexSettingsAsSearchParams {
     return unretrievableAttributes;
   }
 
-  public void setUnretrievableAttributes(List<String> unretrievableAttributes) {
-    this.unretrievableAttributes = unretrievableAttributes;
-  }
-
-  public IndexSettingsAsSearchParams attributesToRetrieve(
+  public IndexSettingsAsSearchParams setAttributesToRetrieve(
     List<String> attributesToRetrieve
   ) {
     this.attributesToRetrieve = attributesToRetrieve;
@@ -584,11 +572,7 @@ public class IndexSettingsAsSearchParams {
     return attributesToRetrieve;
   }
 
-  public void setAttributesToRetrieve(List<String> attributesToRetrieve) {
-    this.attributesToRetrieve = attributesToRetrieve;
-  }
-
-  public IndexSettingsAsSearchParams restrictSearchableAttributes(
+  public IndexSettingsAsSearchParams setRestrictSearchableAttributes(
     List<String> restrictSearchableAttributes
   ) {
     this.restrictSearchableAttributes = restrictSearchableAttributes;
@@ -615,13 +599,7 @@ public class IndexSettingsAsSearchParams {
     return restrictSearchableAttributes;
   }
 
-  public void setRestrictSearchableAttributes(
-    List<String> restrictSearchableAttributes
-  ) {
-    this.restrictSearchableAttributes = restrictSearchableAttributes;
-  }
-
-  public IndexSettingsAsSearchParams ranking(List<String> ranking) {
+  public IndexSettingsAsSearchParams setRanking(List<String> ranking) {
     this.ranking = ranking;
     return this;
   }
@@ -644,11 +622,9 @@ public class IndexSettingsAsSearchParams {
     return ranking;
   }
 
-  public void setRanking(List<String> ranking) {
-    this.ranking = ranking;
-  }
-
-  public IndexSettingsAsSearchParams customRanking(List<String> customRanking) {
+  public IndexSettingsAsSearchParams setCustomRanking(
+    List<String> customRanking
+  ) {
     this.customRanking = customRanking;
     return this;
   }
@@ -673,11 +649,7 @@ public class IndexSettingsAsSearchParams {
     return customRanking;
   }
 
-  public void setCustomRanking(List<String> customRanking) {
-    this.customRanking = customRanking;
-  }
-
-  public IndexSettingsAsSearchParams relevancyStrictness(
+  public IndexSettingsAsSearchParams setRelevancyStrictness(
     Integer relevancyStrictness
   ) {
     this.relevancyStrictness = relevancyStrictness;
@@ -695,11 +667,7 @@ public class IndexSettingsAsSearchParams {
     return relevancyStrictness;
   }
 
-  public void setRelevancyStrictness(Integer relevancyStrictness) {
-    this.relevancyStrictness = relevancyStrictness;
-  }
-
-  public IndexSettingsAsSearchParams attributesToHighlight(
+  public IndexSettingsAsSearchParams setAttributesToHighlight(
     List<String> attributesToHighlight
   ) {
     this.attributesToHighlight = attributesToHighlight;
@@ -726,11 +694,7 @@ public class IndexSettingsAsSearchParams {
     return attributesToHighlight;
   }
 
-  public void setAttributesToHighlight(List<String> attributesToHighlight) {
-    this.attributesToHighlight = attributesToHighlight;
-  }
-
-  public IndexSettingsAsSearchParams attributesToSnippet(
+  public IndexSettingsAsSearchParams setAttributesToSnippet(
     List<String> attributesToSnippet
   ) {
     this.attributesToSnippet = attributesToSnippet;
@@ -757,11 +721,9 @@ public class IndexSettingsAsSearchParams {
     return attributesToSnippet;
   }
 
-  public void setAttributesToSnippet(List<String> attributesToSnippet) {
-    this.attributesToSnippet = attributesToSnippet;
-  }
-
-  public IndexSettingsAsSearchParams highlightPreTag(String highlightPreTag) {
+  public IndexSettingsAsSearchParams setHighlightPreTag(
+    String highlightPreTag
+  ) {
     this.highlightPreTag = highlightPreTag;
     return this;
   }
@@ -776,11 +738,9 @@ public class IndexSettingsAsSearchParams {
     return highlightPreTag;
   }
 
-  public void setHighlightPreTag(String highlightPreTag) {
-    this.highlightPreTag = highlightPreTag;
-  }
-
-  public IndexSettingsAsSearchParams highlightPostTag(String highlightPostTag) {
+  public IndexSettingsAsSearchParams setHighlightPostTag(
+    String highlightPostTag
+  ) {
     this.highlightPostTag = highlightPostTag;
     return this;
   }
@@ -795,11 +755,7 @@ public class IndexSettingsAsSearchParams {
     return highlightPostTag;
   }
 
-  public void setHighlightPostTag(String highlightPostTag) {
-    this.highlightPostTag = highlightPostTag;
-  }
-
-  public IndexSettingsAsSearchParams snippetEllipsisText(
+  public IndexSettingsAsSearchParams setSnippetEllipsisText(
     String snippetEllipsisText
   ) {
     this.snippetEllipsisText = snippetEllipsisText;
@@ -816,11 +772,7 @@ public class IndexSettingsAsSearchParams {
     return snippetEllipsisText;
   }
 
-  public void setSnippetEllipsisText(String snippetEllipsisText) {
-    this.snippetEllipsisText = snippetEllipsisText;
-  }
-
-  public IndexSettingsAsSearchParams restrictHighlightAndSnippetArrays(
+  public IndexSettingsAsSearchParams setRestrictHighlightAndSnippetArrays(
     Boolean restrictHighlightAndSnippetArrays
   ) {
     this.restrictHighlightAndSnippetArrays = restrictHighlightAndSnippetArrays;
@@ -837,13 +789,7 @@ public class IndexSettingsAsSearchParams {
     return restrictHighlightAndSnippetArrays;
   }
 
-  public void setRestrictHighlightAndSnippetArrays(
-    Boolean restrictHighlightAndSnippetArrays
-  ) {
-    this.restrictHighlightAndSnippetArrays = restrictHighlightAndSnippetArrays;
-  }
-
-  public IndexSettingsAsSearchParams hitsPerPage(Integer hitsPerPage) {
+  public IndexSettingsAsSearchParams setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -858,11 +804,7 @@ public class IndexSettingsAsSearchParams {
     return hitsPerPage;
   }
 
-  public void setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-  }
-
-  public IndexSettingsAsSearchParams minWordSizefor1Typo(
+  public IndexSettingsAsSearchParams setMinWordSizefor1Typo(
     Integer minWordSizefor1Typo
   ) {
     this.minWordSizefor1Typo = minWordSizefor1Typo;
@@ -880,11 +822,7 @@ public class IndexSettingsAsSearchParams {
     return minWordSizefor1Typo;
   }
 
-  public void setMinWordSizefor1Typo(Integer minWordSizefor1Typo) {
-    this.minWordSizefor1Typo = minWordSizefor1Typo;
-  }
-
-  public IndexSettingsAsSearchParams minWordSizefor2Typos(
+  public IndexSettingsAsSearchParams setMinWordSizefor2Typos(
     Integer minWordSizefor2Typos
   ) {
     this.minWordSizefor2Typos = minWordSizefor2Typos;
@@ -902,11 +840,7 @@ public class IndexSettingsAsSearchParams {
     return minWordSizefor2Typos;
   }
 
-  public void setMinWordSizefor2Typos(Integer minWordSizefor2Typos) {
-    this.minWordSizefor2Typos = minWordSizefor2Typos;
-  }
-
-  public IndexSettingsAsSearchParams typoTolerance(
+  public IndexSettingsAsSearchParams setTypoTolerance(
     TypoToleranceEnum typoTolerance
   ) {
     this.typoTolerance = typoTolerance;
@@ -923,11 +857,7 @@ public class IndexSettingsAsSearchParams {
     return typoTolerance;
   }
 
-  public void setTypoTolerance(TypoToleranceEnum typoTolerance) {
-    this.typoTolerance = typoTolerance;
-  }
-
-  public IndexSettingsAsSearchParams allowTyposOnNumericTokens(
+  public IndexSettingsAsSearchParams setAllowTyposOnNumericTokens(
     Boolean allowTyposOnNumericTokens
   ) {
     this.allowTyposOnNumericTokens = allowTyposOnNumericTokens;
@@ -944,11 +874,7 @@ public class IndexSettingsAsSearchParams {
     return allowTyposOnNumericTokens;
   }
 
-  public void setAllowTyposOnNumericTokens(Boolean allowTyposOnNumericTokens) {
-    this.allowTyposOnNumericTokens = allowTyposOnNumericTokens;
-  }
-
-  public IndexSettingsAsSearchParams disableTypoToleranceOnAttributes(
+  public IndexSettingsAsSearchParams setDisableTypoToleranceOnAttributes(
     List<String> disableTypoToleranceOnAttributes
   ) {
     this.disableTypoToleranceOnAttributes = disableTypoToleranceOnAttributes;
@@ -977,13 +903,7 @@ public class IndexSettingsAsSearchParams {
     return disableTypoToleranceOnAttributes;
   }
 
-  public void setDisableTypoToleranceOnAttributes(
-    List<String> disableTypoToleranceOnAttributes
-  ) {
-    this.disableTypoToleranceOnAttributes = disableTypoToleranceOnAttributes;
-  }
-
-  public IndexSettingsAsSearchParams separatorsToIndex(
+  public IndexSettingsAsSearchParams setSeparatorsToIndex(
     String separatorsToIndex
   ) {
     this.separatorsToIndex = separatorsToIndex;
@@ -1000,11 +920,7 @@ public class IndexSettingsAsSearchParams {
     return separatorsToIndex;
   }
 
-  public void setSeparatorsToIndex(String separatorsToIndex) {
-    this.separatorsToIndex = separatorsToIndex;
-  }
-
-  public IndexSettingsAsSearchParams ignorePlurals(String ignorePlurals) {
+  public IndexSettingsAsSearchParams setIgnorePlurals(String ignorePlurals) {
     this.ignorePlurals = ignorePlurals;
     return this;
   }
@@ -1019,11 +935,9 @@ public class IndexSettingsAsSearchParams {
     return ignorePlurals;
   }
 
-  public void setIgnorePlurals(String ignorePlurals) {
-    this.ignorePlurals = ignorePlurals;
-  }
-
-  public IndexSettingsAsSearchParams removeStopWords(String removeStopWords) {
+  public IndexSettingsAsSearchParams setRemoveStopWords(
+    String removeStopWords
+  ) {
     this.removeStopWords = removeStopWords;
     return this;
   }
@@ -1038,11 +952,7 @@ public class IndexSettingsAsSearchParams {
     return removeStopWords;
   }
 
-  public void setRemoveStopWords(String removeStopWords) {
-    this.removeStopWords = removeStopWords;
-  }
-
-  public IndexSettingsAsSearchParams keepDiacriticsOnCharacters(
+  public IndexSettingsAsSearchParams setKeepDiacriticsOnCharacters(
     String keepDiacriticsOnCharacters
   ) {
     this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
@@ -1059,11 +969,7 @@ public class IndexSettingsAsSearchParams {
     return keepDiacriticsOnCharacters;
   }
 
-  public void setKeepDiacriticsOnCharacters(String keepDiacriticsOnCharacters) {
-    this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
-  }
-
-  public IndexSettingsAsSearchParams queryLanguages(
+  public IndexSettingsAsSearchParams setQueryLanguages(
     List<String> queryLanguages
   ) {
     this.queryLanguages = queryLanguages;
@@ -1091,11 +997,9 @@ public class IndexSettingsAsSearchParams {
     return queryLanguages;
   }
 
-  public void setQueryLanguages(List<String> queryLanguages) {
-    this.queryLanguages = queryLanguages;
-  }
-
-  public IndexSettingsAsSearchParams decompoundQuery(Boolean decompoundQuery) {
+  public IndexSettingsAsSearchParams setDecompoundQuery(
+    Boolean decompoundQuery
+  ) {
     this.decompoundQuery = decompoundQuery;
     return this;
   }
@@ -1110,11 +1014,7 @@ public class IndexSettingsAsSearchParams {
     return decompoundQuery;
   }
 
-  public void setDecompoundQuery(Boolean decompoundQuery) {
-    this.decompoundQuery = decompoundQuery;
-  }
-
-  public IndexSettingsAsSearchParams enableRules(Boolean enableRules) {
+  public IndexSettingsAsSearchParams setEnableRules(Boolean enableRules) {
     this.enableRules = enableRules;
     return this;
   }
@@ -1129,11 +1029,7 @@ public class IndexSettingsAsSearchParams {
     return enableRules;
   }
 
-  public void setEnableRules(Boolean enableRules) {
-    this.enableRules = enableRules;
-  }
-
-  public IndexSettingsAsSearchParams enablePersonalization(
+  public IndexSettingsAsSearchParams setEnablePersonalization(
     Boolean enablePersonalization
   ) {
     this.enablePersonalization = enablePersonalization;
@@ -1150,11 +1046,7 @@ public class IndexSettingsAsSearchParams {
     return enablePersonalization;
   }
 
-  public void setEnablePersonalization(Boolean enablePersonalization) {
-    this.enablePersonalization = enablePersonalization;
-  }
-
-  public IndexSettingsAsSearchParams queryType(QueryTypeEnum queryType) {
+  public IndexSettingsAsSearchParams setQueryType(QueryTypeEnum queryType) {
     this.queryType = queryType;
     return this;
   }
@@ -1169,11 +1061,7 @@ public class IndexSettingsAsSearchParams {
     return queryType;
   }
 
-  public void setQueryType(QueryTypeEnum queryType) {
-    this.queryType = queryType;
-  }
-
-  public IndexSettingsAsSearchParams removeWordsIfNoResults(
+  public IndexSettingsAsSearchParams setRemoveWordsIfNoResults(
     RemoveWordsIfNoResultsEnum removeWordsIfNoResults
   ) {
     this.removeWordsIfNoResults = removeWordsIfNoResults;
@@ -1190,13 +1078,7 @@ public class IndexSettingsAsSearchParams {
     return removeWordsIfNoResults;
   }
 
-  public void setRemoveWordsIfNoResults(
-    RemoveWordsIfNoResultsEnum removeWordsIfNoResults
-  ) {
-    this.removeWordsIfNoResults = removeWordsIfNoResults;
-  }
-
-  public IndexSettingsAsSearchParams advancedSyntax(Boolean advancedSyntax) {
+  public IndexSettingsAsSearchParams setAdvancedSyntax(Boolean advancedSyntax) {
     this.advancedSyntax = advancedSyntax;
     return this;
   }
@@ -1211,11 +1093,9 @@ public class IndexSettingsAsSearchParams {
     return advancedSyntax;
   }
 
-  public void setAdvancedSyntax(Boolean advancedSyntax) {
-    this.advancedSyntax = advancedSyntax;
-  }
-
-  public IndexSettingsAsSearchParams optionalWords(List<String> optionalWords) {
+  public IndexSettingsAsSearchParams setOptionalWords(
+    List<String> optionalWords
+  ) {
     this.optionalWords = optionalWords;
     return this;
   }
@@ -1240,11 +1120,7 @@ public class IndexSettingsAsSearchParams {
     return optionalWords;
   }
 
-  public void setOptionalWords(List<String> optionalWords) {
-    this.optionalWords = optionalWords;
-  }
-
-  public IndexSettingsAsSearchParams disableExactOnAttributes(
+  public IndexSettingsAsSearchParams setDisableExactOnAttributes(
     List<String> disableExactOnAttributes
   ) {
     this.disableExactOnAttributes = disableExactOnAttributes;
@@ -1271,13 +1147,7 @@ public class IndexSettingsAsSearchParams {
     return disableExactOnAttributes;
   }
 
-  public void setDisableExactOnAttributes(
-    List<String> disableExactOnAttributes
-  ) {
-    this.disableExactOnAttributes = disableExactOnAttributes;
-  }
-
-  public IndexSettingsAsSearchParams exactOnSingleWordQuery(
+  public IndexSettingsAsSearchParams setExactOnSingleWordQuery(
     ExactOnSingleWordQueryEnum exactOnSingleWordQuery
   ) {
     this.exactOnSingleWordQuery = exactOnSingleWordQuery;
@@ -1294,13 +1164,7 @@ public class IndexSettingsAsSearchParams {
     return exactOnSingleWordQuery;
   }
 
-  public void setExactOnSingleWordQuery(
-    ExactOnSingleWordQueryEnum exactOnSingleWordQuery
-  ) {
-    this.exactOnSingleWordQuery = exactOnSingleWordQuery;
-  }
-
-  public IndexSettingsAsSearchParams alternativesAsExact(
+  public IndexSettingsAsSearchParams setAlternativesAsExact(
     List<AlternativesAsExactEnum> alternativesAsExact
   ) {
     this.alternativesAsExact = alternativesAsExact;
@@ -1327,13 +1191,7 @@ public class IndexSettingsAsSearchParams {
     return alternativesAsExact;
   }
 
-  public void setAlternativesAsExact(
-    List<AlternativesAsExactEnum> alternativesAsExact
-  ) {
-    this.alternativesAsExact = alternativesAsExact;
-  }
-
-  public IndexSettingsAsSearchParams advancedSyntaxFeatures(
+  public IndexSettingsAsSearchParams setAdvancedSyntaxFeatures(
     List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures
   ) {
     this.advancedSyntaxFeatures = advancedSyntaxFeatures;
@@ -1361,13 +1219,7 @@ public class IndexSettingsAsSearchParams {
     return advancedSyntaxFeatures;
   }
 
-  public void setAdvancedSyntaxFeatures(
-    List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures
-  ) {
-    this.advancedSyntaxFeatures = advancedSyntaxFeatures;
-  }
-
-  public IndexSettingsAsSearchParams distinct(Integer distinct) {
+  public IndexSettingsAsSearchParams setDistinct(Integer distinct) {
     this.distinct = distinct;
     return this;
   }
@@ -1382,11 +1234,7 @@ public class IndexSettingsAsSearchParams {
     return distinct;
   }
 
-  public void setDistinct(Integer distinct) {
-    this.distinct = distinct;
-  }
-
-  public IndexSettingsAsSearchParams synonyms(Boolean synonyms) {
+  public IndexSettingsAsSearchParams setSynonyms(Boolean synonyms) {
     this.synonyms = synonyms;
     return this;
   }
@@ -1401,11 +1249,7 @@ public class IndexSettingsAsSearchParams {
     return synonyms;
   }
 
-  public void setSynonyms(Boolean synonyms) {
-    this.synonyms = synonyms;
-  }
-
-  public IndexSettingsAsSearchParams replaceSynonymsInHighlight(
+  public IndexSettingsAsSearchParams setReplaceSynonymsInHighlight(
     Boolean replaceSynonymsInHighlight
   ) {
     this.replaceSynonymsInHighlight = replaceSynonymsInHighlight;
@@ -1423,13 +1267,7 @@ public class IndexSettingsAsSearchParams {
     return replaceSynonymsInHighlight;
   }
 
-  public void setReplaceSynonymsInHighlight(
-    Boolean replaceSynonymsInHighlight
-  ) {
-    this.replaceSynonymsInHighlight = replaceSynonymsInHighlight;
-  }
-
-  public IndexSettingsAsSearchParams minProximity(Integer minProximity) {
+  public IndexSettingsAsSearchParams setMinProximity(Integer minProximity) {
     this.minProximity = minProximity;
     return this;
   }
@@ -1444,11 +1282,7 @@ public class IndexSettingsAsSearchParams {
     return minProximity;
   }
 
-  public void setMinProximity(Integer minProximity) {
-    this.minProximity = minProximity;
-  }
-
-  public IndexSettingsAsSearchParams responseFields(
+  public IndexSettingsAsSearchParams setResponseFields(
     List<String> responseFields
   ) {
     this.responseFields = responseFields;
@@ -1476,11 +1310,7 @@ public class IndexSettingsAsSearchParams {
     return responseFields;
   }
 
-  public void setResponseFields(List<String> responseFields) {
-    this.responseFields = responseFields;
-  }
-
-  public IndexSettingsAsSearchParams maxFacetHits(Integer maxFacetHits) {
+  public IndexSettingsAsSearchParams setMaxFacetHits(Integer maxFacetHits) {
     this.maxFacetHits = maxFacetHits;
     return this;
   }
@@ -1496,11 +1326,7 @@ public class IndexSettingsAsSearchParams {
     return maxFacetHits;
   }
 
-  public void setMaxFacetHits(Integer maxFacetHits) {
-    this.maxFacetHits = maxFacetHits;
-  }
-
-  public IndexSettingsAsSearchParams attributeCriteriaComputedByMinProximity(
+  public IndexSettingsAsSearchParams setAttributeCriteriaComputedByMinProximity(
     Boolean attributeCriteriaComputedByMinProximity
   ) {
     this.attributeCriteriaComputedByMinProximity =
@@ -1519,14 +1345,9 @@ public class IndexSettingsAsSearchParams {
     return attributeCriteriaComputedByMinProximity;
   }
 
-  public void setAttributeCriteriaComputedByMinProximity(
-    Boolean attributeCriteriaComputedByMinProximity
+  public IndexSettingsAsSearchParams setRenderingContent(
+    Object renderingContent
   ) {
-    this.attributeCriteriaComputedByMinProximity =
-      attributeCriteriaComputedByMinProximity;
-  }
-
-  public IndexSettingsAsSearchParams renderingContent(Object renderingContent) {
     this.renderingContent = renderingContent;
     return this;
   }
@@ -1540,10 +1361,6 @@ public class IndexSettingsAsSearchParams {
   @javax.annotation.Nullable
   public Object getRenderingContent() {
     return renderingContent;
-  }
-
-  public void setRenderingContent(Object renderingContent) {
-    this.renderingContent = renderingContent;
   }
 
   @Override

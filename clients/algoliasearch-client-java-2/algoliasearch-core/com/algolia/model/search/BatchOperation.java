@@ -12,7 +12,7 @@ public class BatchOperation {
   @SerializedName("body")
   private Object body;
 
-  public BatchOperation action(Action action) {
+  public BatchOperation setAction(Action action) {
     this.action = action;
     return this;
   }
@@ -27,11 +27,7 @@ public class BatchOperation {
     return action;
   }
 
-  public void setAction(Action action) {
-    this.action = action;
-  }
-
-  public BatchOperation body(Object body) {
+  public BatchOperation setBody(Object body) {
     this.body = body;
     return this;
   }
@@ -44,10 +40,6 @@ public class BatchOperation {
   @javax.annotation.Nullable
   public Object getBody() {
     return body;
-  }
-
-  public void setBody(Object body) {
-    this.body = body;
   }
 
   @Override

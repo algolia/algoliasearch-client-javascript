@@ -13,7 +13,7 @@ public enum MultipleQueriesType {
 
   FACET("facet");
 
-  private String value;
+  private final String value;
 
   MultipleQueriesType(String value) {
     this.value = value;

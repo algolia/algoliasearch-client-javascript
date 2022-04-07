@@ -9,11 +9,11 @@ import java.io.IOException;
 /** Actions to perform. */
 @JsonAdapter(DictionaryAction.Adapter.class)
 public enum DictionaryAction {
-  ADDENTRY("addEntry"),
+  ADD_ENTRY("addEntry"),
 
-  DELETEENTRY("deleteEntry");
+  DELETE_ENTRY("deleteEntry");
 
-  private String value;
+  private final String value;
 
   DictionaryAction(String value) {
     this.value = value;

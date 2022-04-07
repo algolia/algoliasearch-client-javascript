@@ -11,9 +11,9 @@ import java.io.IOException;
 public enum MultipleQueriesStrategy {
   NONE("none"),
 
-  STOPIFENOUGHMATCHES("stopIfEnoughMatches");
+  STOP_IF_ENOUGH_MATCHES("stopIfEnoughMatches");
 
-  private String value;
+  private final String value;
 
   MultipleQueriesStrategy(String value) {
     this.value = value;

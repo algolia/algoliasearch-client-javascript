@@ -15,7 +15,7 @@ public class RankingInfoMatchedGeoLocation {
   @SerializedName("distance")
   private Integer distance;
 
-  public RankingInfoMatchedGeoLocation lat(Double lat) {
+  public RankingInfoMatchedGeoLocation setLat(Double lat) {
     this.lat = lat;
     return this;
   }
@@ -30,11 +30,7 @@ public class RankingInfoMatchedGeoLocation {
     return lat;
   }
 
-  public void setLat(Double lat) {
-    this.lat = lat;
-  }
-
-  public RankingInfoMatchedGeoLocation lng(Double lng) {
+  public RankingInfoMatchedGeoLocation setLng(Double lng) {
     this.lng = lng;
     return this;
   }
@@ -49,11 +45,7 @@ public class RankingInfoMatchedGeoLocation {
     return lng;
   }
 
-  public void setLng(Double lng) {
-    this.lng = lng;
-  }
-
-  public RankingInfoMatchedGeoLocation distance(Integer distance) {
+  public RankingInfoMatchedGeoLocation setDistance(Integer distance) {
     this.distance = distance;
     return this;
   }
@@ -66,10 +58,6 @@ public class RankingInfoMatchedGeoLocation {
   @javax.annotation.Nullable
   public Integer getDistance() {
     return distance;
-  }
-
-  public void setDistance(Integer distance) {
-    this.distance = distance;
   }
 
   @Override

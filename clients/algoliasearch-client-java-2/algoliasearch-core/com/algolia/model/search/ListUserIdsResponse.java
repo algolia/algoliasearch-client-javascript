@@ -11,7 +11,7 @@ public class ListUserIdsResponse {
   @SerializedName("userIDs")
   private List<UserId> userIDs = new ArrayList<>();
 
-  public ListUserIdsResponse userIDs(List<UserId> userIDs) {
+  public ListUserIdsResponse setUserIDs(List<UserId> userIDs) {
     this.userIDs = userIDs;
     return this;
   }
@@ -29,10 +29,6 @@ public class ListUserIdsResponse {
   @javax.annotation.Nonnull
   public List<UserId> getUserIDs() {
     return userIDs;
-  }
-
-  public void setUserIDs(List<UserId> userIDs) {
-    this.userIDs = userIDs;
   }
 
   @Override

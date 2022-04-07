@@ -11,7 +11,7 @@ public class GetObjectsParams {
   @SerializedName("requests")
   private List<MultipleGetObjectsParams> requests = null;
 
-  public GetObjectsParams requests(List<MultipleGetObjectsParams> requests) {
+  public GetObjectsParams setRequests(List<MultipleGetObjectsParams> requests) {
     this.requests = requests;
     return this;
   }
@@ -34,10 +34,6 @@ public class GetObjectsParams {
   @javax.annotation.Nullable
   public List<MultipleGetObjectsParams> getRequests() {
     return requests;
-  }
-
-  public void setRequests(List<MultipleGetObjectsParams> requests) {
-    this.requests = requests;
   }
 
   @Override

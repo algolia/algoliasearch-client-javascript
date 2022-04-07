@@ -14,7 +14,7 @@ public class ListIndicesResponse {
   @SerializedName("nbPages")
   private Integer nbPages;
 
-  public ListIndicesResponse items(List<Indice> items) {
+  public ListIndicesResponse setItems(List<Indice> items) {
     this.items = items;
     return this;
   }
@@ -37,11 +37,7 @@ public class ListIndicesResponse {
     return items;
   }
 
-  public void setItems(List<Indice> items) {
-    this.items = items;
-  }
-
-  public ListIndicesResponse nbPages(Integer nbPages) {
+  public ListIndicesResponse setNbPages(Integer nbPages) {
     this.nbPages = nbPages;
     return this;
   }
@@ -54,10 +50,6 @@ public class ListIndicesResponse {
   @javax.annotation.Nullable
   public Integer getNbPages() {
     return nbPages;
-  }
-
-  public void setNbPages(Integer nbPages) {
-    this.nbPages = nbPages;
   }
 
   @Override

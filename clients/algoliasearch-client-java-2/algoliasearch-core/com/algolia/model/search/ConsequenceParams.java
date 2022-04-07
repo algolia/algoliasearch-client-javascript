@@ -260,11 +260,11 @@ public class ConsequenceParams {
   /** Controls if and how query words are interpreted as prefixes. */
   @JsonAdapter(QueryTypeEnum.Adapter.class)
   public enum QueryTypeEnum {
-    PREFIXLAST("prefixLast"),
+    PREFIX_LAST("prefixLast"),
 
-    PREFIXALL("prefixAll"),
+    PREFIX_ALL("prefixAll"),
 
-    PREFIXNONE("prefixNone");
+    PREFIX_NONE("prefixNone");
 
     private String value;
 
@@ -310,18 +310,18 @@ public class ConsequenceParams {
   }
 
   @SerializedName("queryType")
-  private QueryTypeEnum queryType = QueryTypeEnum.PREFIXLAST;
+  private QueryTypeEnum queryType = QueryTypeEnum.PREFIX_LAST;
 
   /** Selects a strategy to remove words from the query when it doesn't match any hits. */
   @JsonAdapter(RemoveWordsIfNoResultsEnum.Adapter.class)
   public enum RemoveWordsIfNoResultsEnum {
     NONE("none"),
 
-    LASTWORDS("lastWords"),
+    LAST_WORDS("lastWords"),
 
-    FIRSTWORDS("firstWords"),
+    FIRST_WORDS("firstWords"),
 
-    ALLOPTIONAL("allOptional");
+    ALL_OPTIONAL("allOptional");
 
     private String value;
 
@@ -440,11 +440,11 @@ public class ConsequenceParams {
   /** Gets or Sets alternativesAsExact */
   @JsonAdapter(AlternativesAsExactEnum.Adapter.class)
   public enum AlternativesAsExactEnum {
-    IGNOREPLURALS("ignorePlurals"),
+    IGNORE_PLURALS("ignorePlurals"),
 
-    SINGLEWORDSYNONYM("singleWordSynonym"),
+    SINGLE_WORD_SYNONYM("singleWordSynonym"),
 
-    MULTIWORDSSYNONYM("multiWordsSynonym");
+    MULTI_WORDS_SYNONYM("multiWordsSynonym");
 
     private String value;
 
@@ -495,9 +495,9 @@ public class ConsequenceParams {
   /** Gets or Sets advancedSyntaxFeatures */
   @JsonAdapter(AdvancedSyntaxFeaturesEnum.Adapter.class)
   public enum AdvancedSyntaxFeaturesEnum {
-    EXACTPHRASE("exactPhrase"),
+    EXACT_PHRASE("exactPhrase"),
 
-    EXCLUDEWORDS("excludeWords");
+    EXCLUDE_WORDS("excludeWords");
 
     private String value;
 
@@ -570,7 +570,7 @@ public class ConsequenceParams {
   @SerializedName("renderingContent")
   private Object renderingContent = new Object();
 
-  public ConsequenceParams query(String query) {
+  public ConsequenceParams setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -585,11 +585,7 @@ public class ConsequenceParams {
     return query;
   }
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public ConsequenceParams automaticFacetFilters(
+  public ConsequenceParams setAutomaticFacetFilters(
     List<AutomaticFacetFilter> automaticFacetFilters
   ) {
     this.automaticFacetFilters = automaticFacetFilters;
@@ -617,13 +613,7 @@ public class ConsequenceParams {
     return automaticFacetFilters;
   }
 
-  public void setAutomaticFacetFilters(
-    List<AutomaticFacetFilter> automaticFacetFilters
-  ) {
-    this.automaticFacetFilters = automaticFacetFilters;
-  }
-
-  public ConsequenceParams automaticOptionalFacetFilters(
+  public ConsequenceParams setAutomaticOptionalFacetFilters(
     List<AutomaticFacetFilter> automaticOptionalFacetFilters
   ) {
     this.automaticOptionalFacetFilters = automaticOptionalFacetFilters;
@@ -650,13 +640,7 @@ public class ConsequenceParams {
     return automaticOptionalFacetFilters;
   }
 
-  public void setAutomaticOptionalFacetFilters(
-    List<AutomaticFacetFilter> automaticOptionalFacetFilters
-  ) {
-    this.automaticOptionalFacetFilters = automaticOptionalFacetFilters;
-  }
-
-  public ConsequenceParams similarQuery(String similarQuery) {
+  public ConsequenceParams setSimilarQuery(String similarQuery) {
     this.similarQuery = similarQuery;
     return this;
   }
@@ -672,11 +656,7 @@ public class ConsequenceParams {
     return similarQuery;
   }
 
-  public void setSimilarQuery(String similarQuery) {
-    this.similarQuery = similarQuery;
-  }
-
-  public ConsequenceParams filters(String filters) {
+  public ConsequenceParams setFilters(String filters) {
     this.filters = filters;
     return this;
   }
@@ -691,11 +671,7 @@ public class ConsequenceParams {
     return filters;
   }
 
-  public void setFilters(String filters) {
-    this.filters = filters;
-  }
-
-  public ConsequenceParams facetFilters(List<String> facetFilters) {
+  public ConsequenceParams setFacetFilters(List<String> facetFilters) {
     this.facetFilters = facetFilters;
     return this;
   }
@@ -718,11 +694,7 @@ public class ConsequenceParams {
     return facetFilters;
   }
 
-  public void setFacetFilters(List<String> facetFilters) {
-    this.facetFilters = facetFilters;
-  }
-
-  public ConsequenceParams optionalFilters(List<String> optionalFilters) {
+  public ConsequenceParams setOptionalFilters(List<String> optionalFilters) {
     this.optionalFilters = optionalFilters;
     return this;
   }
@@ -746,11 +718,7 @@ public class ConsequenceParams {
     return optionalFilters;
   }
 
-  public void setOptionalFilters(List<String> optionalFilters) {
-    this.optionalFilters = optionalFilters;
-  }
-
-  public ConsequenceParams numericFilters(List<String> numericFilters) {
+  public ConsequenceParams setNumericFilters(List<String> numericFilters) {
     this.numericFilters = numericFilters;
     return this;
   }
@@ -773,11 +741,7 @@ public class ConsequenceParams {
     return numericFilters;
   }
 
-  public void setNumericFilters(List<String> numericFilters) {
-    this.numericFilters = numericFilters;
-  }
-
-  public ConsequenceParams tagFilters(List<String> tagFilters) {
+  public ConsequenceParams setTagFilters(List<String> tagFilters) {
     this.tagFilters = tagFilters;
     return this;
   }
@@ -800,11 +764,7 @@ public class ConsequenceParams {
     return tagFilters;
   }
 
-  public void setTagFilters(List<String> tagFilters) {
-    this.tagFilters = tagFilters;
-  }
-
-  public ConsequenceParams sumOrFiltersScores(Boolean sumOrFiltersScores) {
+  public ConsequenceParams setSumOrFiltersScores(Boolean sumOrFiltersScores) {
     this.sumOrFiltersScores = sumOrFiltersScores;
     return this;
   }
@@ -819,11 +779,7 @@ public class ConsequenceParams {
     return sumOrFiltersScores;
   }
 
-  public void setSumOrFiltersScores(Boolean sumOrFiltersScores) {
-    this.sumOrFiltersScores = sumOrFiltersScores;
-  }
-
-  public ConsequenceParams facets(List<String> facets) {
+  public ConsequenceParams setFacets(List<String> facets) {
     this.facets = facets;
     return this;
   }
@@ -846,11 +802,7 @@ public class ConsequenceParams {
     return facets;
   }
 
-  public void setFacets(List<String> facets) {
-    this.facets = facets;
-  }
-
-  public ConsequenceParams maxValuesPerFacet(Integer maxValuesPerFacet) {
+  public ConsequenceParams setMaxValuesPerFacet(Integer maxValuesPerFacet) {
     this.maxValuesPerFacet = maxValuesPerFacet;
     return this;
   }
@@ -865,11 +817,7 @@ public class ConsequenceParams {
     return maxValuesPerFacet;
   }
 
-  public void setMaxValuesPerFacet(Integer maxValuesPerFacet) {
-    this.maxValuesPerFacet = maxValuesPerFacet;
-  }
-
-  public ConsequenceParams facetingAfterDistinct(
+  public ConsequenceParams setFacetingAfterDistinct(
     Boolean facetingAfterDistinct
   ) {
     this.facetingAfterDistinct = facetingAfterDistinct;
@@ -886,11 +834,7 @@ public class ConsequenceParams {
     return facetingAfterDistinct;
   }
 
-  public void setFacetingAfterDistinct(Boolean facetingAfterDistinct) {
-    this.facetingAfterDistinct = facetingAfterDistinct;
-  }
-
-  public ConsequenceParams sortFacetValuesBy(String sortFacetValuesBy) {
+  public ConsequenceParams setSortFacetValuesBy(String sortFacetValuesBy) {
     this.sortFacetValuesBy = sortFacetValuesBy;
     return this;
   }
@@ -905,11 +849,7 @@ public class ConsequenceParams {
     return sortFacetValuesBy;
   }
 
-  public void setSortFacetValuesBy(String sortFacetValuesBy) {
-    this.sortFacetValuesBy = sortFacetValuesBy;
-  }
-
-  public ConsequenceParams page(Integer page) {
+  public ConsequenceParams setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -924,11 +864,7 @@ public class ConsequenceParams {
     return page;
   }
 
-  public void setPage(Integer page) {
-    this.page = page;
-  }
-
-  public ConsequenceParams offset(Integer offset) {
+  public ConsequenceParams setOffset(Integer offset) {
     this.offset = offset;
     return this;
   }
@@ -943,11 +879,7 @@ public class ConsequenceParams {
     return offset;
   }
 
-  public void setOffset(Integer offset) {
-    this.offset = offset;
-  }
-
-  public ConsequenceParams length(Integer length) {
+  public ConsequenceParams setLength(Integer length) {
     this.length = length;
     return this;
   }
@@ -962,11 +894,7 @@ public class ConsequenceParams {
     return length;
   }
 
-  public void setLength(Integer length) {
-    this.length = length;
-  }
-
-  public ConsequenceParams aroundLatLng(String aroundLatLng) {
+  public ConsequenceParams setAroundLatLng(String aroundLatLng) {
     this.aroundLatLng = aroundLatLng;
     return this;
   }
@@ -981,11 +909,7 @@ public class ConsequenceParams {
     return aroundLatLng;
   }
 
-  public void setAroundLatLng(String aroundLatLng) {
-    this.aroundLatLng = aroundLatLng;
-  }
-
-  public ConsequenceParams aroundLatLngViaIP(Boolean aroundLatLngViaIP) {
+  public ConsequenceParams setAroundLatLngViaIP(Boolean aroundLatLngViaIP) {
     this.aroundLatLngViaIP = aroundLatLngViaIP;
     return this;
   }
@@ -1001,11 +925,7 @@ public class ConsequenceParams {
     return aroundLatLngViaIP;
   }
 
-  public void setAroundLatLngViaIP(Boolean aroundLatLngViaIP) {
-    this.aroundLatLngViaIP = aroundLatLngViaIP;
-  }
-
-  public ConsequenceParams aroundRadius(AroundRadius aroundRadius) {
+  public ConsequenceParams setAroundRadius(AroundRadius aroundRadius) {
     this.aroundRadius = aroundRadius;
     return this;
   }
@@ -1020,11 +940,7 @@ public class ConsequenceParams {
     return aroundRadius;
   }
 
-  public void setAroundRadius(AroundRadius aroundRadius) {
-    this.aroundRadius = aroundRadius;
-  }
-
-  public ConsequenceParams aroundPrecision(Integer aroundPrecision) {
+  public ConsequenceParams setAroundPrecision(Integer aroundPrecision) {
     this.aroundPrecision = aroundPrecision;
     return this;
   }
@@ -1039,11 +955,7 @@ public class ConsequenceParams {
     return aroundPrecision;
   }
 
-  public void setAroundPrecision(Integer aroundPrecision) {
-    this.aroundPrecision = aroundPrecision;
-  }
-
-  public ConsequenceParams minimumAroundRadius(Integer minimumAroundRadius) {
+  public ConsequenceParams setMinimumAroundRadius(Integer minimumAroundRadius) {
     this.minimumAroundRadius = minimumAroundRadius;
     return this;
   }
@@ -1058,11 +970,7 @@ public class ConsequenceParams {
     return minimumAroundRadius;
   }
 
-  public void setMinimumAroundRadius(Integer minimumAroundRadius) {
-    this.minimumAroundRadius = minimumAroundRadius;
-  }
-
-  public ConsequenceParams insideBoundingBox(
+  public ConsequenceParams setInsideBoundingBox(
     List<BigDecimal> insideBoundingBox
   ) {
     this.insideBoundingBox = insideBoundingBox;
@@ -1089,11 +997,7 @@ public class ConsequenceParams {
     return insideBoundingBox;
   }
 
-  public void setInsideBoundingBox(List<BigDecimal> insideBoundingBox) {
-    this.insideBoundingBox = insideBoundingBox;
-  }
-
-  public ConsequenceParams insidePolygon(List<BigDecimal> insidePolygon) {
+  public ConsequenceParams setInsidePolygon(List<BigDecimal> insidePolygon) {
     this.insidePolygon = insidePolygon;
     return this;
   }
@@ -1116,11 +1020,7 @@ public class ConsequenceParams {
     return insidePolygon;
   }
 
-  public void setInsidePolygon(List<BigDecimal> insidePolygon) {
-    this.insidePolygon = insidePolygon;
-  }
-
-  public ConsequenceParams naturalLanguages(List<String> naturalLanguages) {
+  public ConsequenceParams setNaturalLanguages(List<String> naturalLanguages) {
     this.naturalLanguages = naturalLanguages;
     return this;
   }
@@ -1149,11 +1049,7 @@ public class ConsequenceParams {
     return naturalLanguages;
   }
 
-  public void setNaturalLanguages(List<String> naturalLanguages) {
-    this.naturalLanguages = naturalLanguages;
-  }
-
-  public ConsequenceParams ruleContexts(List<String> ruleContexts) {
+  public ConsequenceParams setRuleContexts(List<String> ruleContexts) {
     this.ruleContexts = ruleContexts;
     return this;
   }
@@ -1176,11 +1072,7 @@ public class ConsequenceParams {
     return ruleContexts;
   }
 
-  public void setRuleContexts(List<String> ruleContexts) {
-    this.ruleContexts = ruleContexts;
-  }
-
-  public ConsequenceParams personalizationImpact(
+  public ConsequenceParams setPersonalizationImpact(
     Integer personalizationImpact
   ) {
     this.personalizationImpact = personalizationImpact;
@@ -1197,11 +1089,7 @@ public class ConsequenceParams {
     return personalizationImpact;
   }
 
-  public void setPersonalizationImpact(Integer personalizationImpact) {
-    this.personalizationImpact = personalizationImpact;
-  }
-
-  public ConsequenceParams userToken(String userToken) {
+  public ConsequenceParams setUserToken(String userToken) {
     this.userToken = userToken;
     return this;
   }
@@ -1216,11 +1104,7 @@ public class ConsequenceParams {
     return userToken;
   }
 
-  public void setUserToken(String userToken) {
-    this.userToken = userToken;
-  }
-
-  public ConsequenceParams getRankingInfo(Boolean getRankingInfo) {
+  public ConsequenceParams setGetRankingInfo(Boolean getRankingInfo) {
     this.getRankingInfo = getRankingInfo;
     return this;
   }
@@ -1235,11 +1119,7 @@ public class ConsequenceParams {
     return getRankingInfo;
   }
 
-  public void setGetRankingInfo(Boolean getRankingInfo) {
-    this.getRankingInfo = getRankingInfo;
-  }
-
-  public ConsequenceParams clickAnalytics(Boolean clickAnalytics) {
+  public ConsequenceParams setClickAnalytics(Boolean clickAnalytics) {
     this.clickAnalytics = clickAnalytics;
     return this;
   }
@@ -1254,11 +1134,7 @@ public class ConsequenceParams {
     return clickAnalytics;
   }
 
-  public void setClickAnalytics(Boolean clickAnalytics) {
-    this.clickAnalytics = clickAnalytics;
-  }
-
-  public ConsequenceParams analytics(Boolean analytics) {
+  public ConsequenceParams setAnalytics(Boolean analytics) {
     this.analytics = analytics;
     return this;
   }
@@ -1273,11 +1149,7 @@ public class ConsequenceParams {
     return analytics;
   }
 
-  public void setAnalytics(Boolean analytics) {
-    this.analytics = analytics;
-  }
-
-  public ConsequenceParams analyticsTags(List<String> analyticsTags) {
+  public ConsequenceParams setAnalyticsTags(List<String> analyticsTags) {
     this.analyticsTags = analyticsTags;
     return this;
   }
@@ -1300,11 +1172,7 @@ public class ConsequenceParams {
     return analyticsTags;
   }
 
-  public void setAnalyticsTags(List<String> analyticsTags) {
-    this.analyticsTags = analyticsTags;
-  }
-
-  public ConsequenceParams percentileComputation(
+  public ConsequenceParams setPercentileComputation(
     Boolean percentileComputation
   ) {
     this.percentileComputation = percentileComputation;
@@ -1321,11 +1189,7 @@ public class ConsequenceParams {
     return percentileComputation;
   }
 
-  public void setPercentileComputation(Boolean percentileComputation) {
-    this.percentileComputation = percentileComputation;
-  }
-
-  public ConsequenceParams enableABTest(Boolean enableABTest) {
+  public ConsequenceParams setEnableABTest(Boolean enableABTest) {
     this.enableABTest = enableABTest;
     return this;
   }
@@ -1340,11 +1204,7 @@ public class ConsequenceParams {
     return enableABTest;
   }
 
-  public void setEnableABTest(Boolean enableABTest) {
-    this.enableABTest = enableABTest;
-  }
-
-  public ConsequenceParams enableReRanking(Boolean enableReRanking) {
+  public ConsequenceParams setEnableReRanking(Boolean enableReRanking) {
     this.enableReRanking = enableReRanking;
     return this;
   }
@@ -1359,11 +1219,7 @@ public class ConsequenceParams {
     return enableReRanking;
   }
 
-  public void setEnableReRanking(Boolean enableReRanking) {
-    this.enableReRanking = enableReRanking;
-  }
-
-  public ConsequenceParams searchableAttributes(
+  public ConsequenceParams setSearchableAttributes(
     List<String> searchableAttributes
   ) {
     this.searchableAttributes = searchableAttributes;
@@ -1390,11 +1246,7 @@ public class ConsequenceParams {
     return searchableAttributes;
   }
 
-  public void setSearchableAttributes(List<String> searchableAttributes) {
-    this.searchableAttributes = searchableAttributes;
-  }
-
-  public ConsequenceParams attributesForFaceting(
+  public ConsequenceParams setAttributesForFaceting(
     List<String> attributesForFaceting
   ) {
     this.attributesForFaceting = attributesForFaceting;
@@ -1421,11 +1273,7 @@ public class ConsequenceParams {
     return attributesForFaceting;
   }
 
-  public void setAttributesForFaceting(List<String> attributesForFaceting) {
-    this.attributesForFaceting = attributesForFaceting;
-  }
-
-  public ConsequenceParams unretrievableAttributes(
+  public ConsequenceParams setUnretrievableAttributes(
     List<String> unretrievableAttributes
   ) {
     this.unretrievableAttributes = unretrievableAttributes;
@@ -1452,11 +1300,7 @@ public class ConsequenceParams {
     return unretrievableAttributes;
   }
 
-  public void setUnretrievableAttributes(List<String> unretrievableAttributes) {
-    this.unretrievableAttributes = unretrievableAttributes;
-  }
-
-  public ConsequenceParams attributesToRetrieve(
+  public ConsequenceParams setAttributesToRetrieve(
     List<String> attributesToRetrieve
   ) {
     this.attributesToRetrieve = attributesToRetrieve;
@@ -1483,11 +1327,7 @@ public class ConsequenceParams {
     return attributesToRetrieve;
   }
 
-  public void setAttributesToRetrieve(List<String> attributesToRetrieve) {
-    this.attributesToRetrieve = attributesToRetrieve;
-  }
-
-  public ConsequenceParams restrictSearchableAttributes(
+  public ConsequenceParams setRestrictSearchableAttributes(
     List<String> restrictSearchableAttributes
   ) {
     this.restrictSearchableAttributes = restrictSearchableAttributes;
@@ -1514,13 +1354,7 @@ public class ConsequenceParams {
     return restrictSearchableAttributes;
   }
 
-  public void setRestrictSearchableAttributes(
-    List<String> restrictSearchableAttributes
-  ) {
-    this.restrictSearchableAttributes = restrictSearchableAttributes;
-  }
-
-  public ConsequenceParams ranking(List<String> ranking) {
+  public ConsequenceParams setRanking(List<String> ranking) {
     this.ranking = ranking;
     return this;
   }
@@ -1543,11 +1377,7 @@ public class ConsequenceParams {
     return ranking;
   }
 
-  public void setRanking(List<String> ranking) {
-    this.ranking = ranking;
-  }
-
-  public ConsequenceParams customRanking(List<String> customRanking) {
+  public ConsequenceParams setCustomRanking(List<String> customRanking) {
     this.customRanking = customRanking;
     return this;
   }
@@ -1570,11 +1400,7 @@ public class ConsequenceParams {
     return customRanking;
   }
 
-  public void setCustomRanking(List<String> customRanking) {
-    this.customRanking = customRanking;
-  }
-
-  public ConsequenceParams relevancyStrictness(Integer relevancyStrictness) {
+  public ConsequenceParams setRelevancyStrictness(Integer relevancyStrictness) {
     this.relevancyStrictness = relevancyStrictness;
     return this;
   }
@@ -1590,11 +1416,7 @@ public class ConsequenceParams {
     return relevancyStrictness;
   }
 
-  public void setRelevancyStrictness(Integer relevancyStrictness) {
-    this.relevancyStrictness = relevancyStrictness;
-  }
-
-  public ConsequenceParams attributesToHighlight(
+  public ConsequenceParams setAttributesToHighlight(
     List<String> attributesToHighlight
   ) {
     this.attributesToHighlight = attributesToHighlight;
@@ -1621,11 +1443,7 @@ public class ConsequenceParams {
     return attributesToHighlight;
   }
 
-  public void setAttributesToHighlight(List<String> attributesToHighlight) {
-    this.attributesToHighlight = attributesToHighlight;
-  }
-
-  public ConsequenceParams attributesToSnippet(
+  public ConsequenceParams setAttributesToSnippet(
     List<String> attributesToSnippet
   ) {
     this.attributesToSnippet = attributesToSnippet;
@@ -1652,11 +1470,7 @@ public class ConsequenceParams {
     return attributesToSnippet;
   }
 
-  public void setAttributesToSnippet(List<String> attributesToSnippet) {
-    this.attributesToSnippet = attributesToSnippet;
-  }
-
-  public ConsequenceParams highlightPreTag(String highlightPreTag) {
+  public ConsequenceParams setHighlightPreTag(String highlightPreTag) {
     this.highlightPreTag = highlightPreTag;
     return this;
   }
@@ -1671,11 +1485,7 @@ public class ConsequenceParams {
     return highlightPreTag;
   }
 
-  public void setHighlightPreTag(String highlightPreTag) {
-    this.highlightPreTag = highlightPreTag;
-  }
-
-  public ConsequenceParams highlightPostTag(String highlightPostTag) {
+  public ConsequenceParams setHighlightPostTag(String highlightPostTag) {
     this.highlightPostTag = highlightPostTag;
     return this;
   }
@@ -1690,11 +1500,7 @@ public class ConsequenceParams {
     return highlightPostTag;
   }
 
-  public void setHighlightPostTag(String highlightPostTag) {
-    this.highlightPostTag = highlightPostTag;
-  }
-
-  public ConsequenceParams snippetEllipsisText(String snippetEllipsisText) {
+  public ConsequenceParams setSnippetEllipsisText(String snippetEllipsisText) {
     this.snippetEllipsisText = snippetEllipsisText;
     return this;
   }
@@ -1709,11 +1515,7 @@ public class ConsequenceParams {
     return snippetEllipsisText;
   }
 
-  public void setSnippetEllipsisText(String snippetEllipsisText) {
-    this.snippetEllipsisText = snippetEllipsisText;
-  }
-
-  public ConsequenceParams restrictHighlightAndSnippetArrays(
+  public ConsequenceParams setRestrictHighlightAndSnippetArrays(
     Boolean restrictHighlightAndSnippetArrays
   ) {
     this.restrictHighlightAndSnippetArrays = restrictHighlightAndSnippetArrays;
@@ -1730,13 +1532,7 @@ public class ConsequenceParams {
     return restrictHighlightAndSnippetArrays;
   }
 
-  public void setRestrictHighlightAndSnippetArrays(
-    Boolean restrictHighlightAndSnippetArrays
-  ) {
-    this.restrictHighlightAndSnippetArrays = restrictHighlightAndSnippetArrays;
-  }
-
-  public ConsequenceParams hitsPerPage(Integer hitsPerPage) {
+  public ConsequenceParams setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -1751,11 +1547,7 @@ public class ConsequenceParams {
     return hitsPerPage;
   }
 
-  public void setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-  }
-
-  public ConsequenceParams minWordSizefor1Typo(Integer minWordSizefor1Typo) {
+  public ConsequenceParams setMinWordSizefor1Typo(Integer minWordSizefor1Typo) {
     this.minWordSizefor1Typo = minWordSizefor1Typo;
     return this;
   }
@@ -1771,11 +1563,9 @@ public class ConsequenceParams {
     return minWordSizefor1Typo;
   }
 
-  public void setMinWordSizefor1Typo(Integer minWordSizefor1Typo) {
-    this.minWordSizefor1Typo = minWordSizefor1Typo;
-  }
-
-  public ConsequenceParams minWordSizefor2Typos(Integer minWordSizefor2Typos) {
+  public ConsequenceParams setMinWordSizefor2Typos(
+    Integer minWordSizefor2Typos
+  ) {
     this.minWordSizefor2Typos = minWordSizefor2Typos;
     return this;
   }
@@ -1791,11 +1581,7 @@ public class ConsequenceParams {
     return minWordSizefor2Typos;
   }
 
-  public void setMinWordSizefor2Typos(Integer minWordSizefor2Typos) {
-    this.minWordSizefor2Typos = minWordSizefor2Typos;
-  }
-
-  public ConsequenceParams typoTolerance(TypoToleranceEnum typoTolerance) {
+  public ConsequenceParams setTypoTolerance(TypoToleranceEnum typoTolerance) {
     this.typoTolerance = typoTolerance;
     return this;
   }
@@ -1810,11 +1596,7 @@ public class ConsequenceParams {
     return typoTolerance;
   }
 
-  public void setTypoTolerance(TypoToleranceEnum typoTolerance) {
-    this.typoTolerance = typoTolerance;
-  }
-
-  public ConsequenceParams allowTyposOnNumericTokens(
+  public ConsequenceParams setAllowTyposOnNumericTokens(
     Boolean allowTyposOnNumericTokens
   ) {
     this.allowTyposOnNumericTokens = allowTyposOnNumericTokens;
@@ -1831,11 +1613,7 @@ public class ConsequenceParams {
     return allowTyposOnNumericTokens;
   }
 
-  public void setAllowTyposOnNumericTokens(Boolean allowTyposOnNumericTokens) {
-    this.allowTyposOnNumericTokens = allowTyposOnNumericTokens;
-  }
-
-  public ConsequenceParams disableTypoToleranceOnAttributes(
+  public ConsequenceParams setDisableTypoToleranceOnAttributes(
     List<String> disableTypoToleranceOnAttributes
   ) {
     this.disableTypoToleranceOnAttributes = disableTypoToleranceOnAttributes;
@@ -1864,13 +1642,7 @@ public class ConsequenceParams {
     return disableTypoToleranceOnAttributes;
   }
 
-  public void setDisableTypoToleranceOnAttributes(
-    List<String> disableTypoToleranceOnAttributes
-  ) {
-    this.disableTypoToleranceOnAttributes = disableTypoToleranceOnAttributes;
-  }
-
-  public ConsequenceParams separatorsToIndex(String separatorsToIndex) {
+  public ConsequenceParams setSeparatorsToIndex(String separatorsToIndex) {
     this.separatorsToIndex = separatorsToIndex;
     return this;
   }
@@ -1885,11 +1657,7 @@ public class ConsequenceParams {
     return separatorsToIndex;
   }
 
-  public void setSeparatorsToIndex(String separatorsToIndex) {
-    this.separatorsToIndex = separatorsToIndex;
-  }
-
-  public ConsequenceParams ignorePlurals(String ignorePlurals) {
+  public ConsequenceParams setIgnorePlurals(String ignorePlurals) {
     this.ignorePlurals = ignorePlurals;
     return this;
   }
@@ -1904,11 +1672,7 @@ public class ConsequenceParams {
     return ignorePlurals;
   }
 
-  public void setIgnorePlurals(String ignorePlurals) {
-    this.ignorePlurals = ignorePlurals;
-  }
-
-  public ConsequenceParams removeStopWords(String removeStopWords) {
+  public ConsequenceParams setRemoveStopWords(String removeStopWords) {
     this.removeStopWords = removeStopWords;
     return this;
   }
@@ -1923,11 +1687,7 @@ public class ConsequenceParams {
     return removeStopWords;
   }
 
-  public void setRemoveStopWords(String removeStopWords) {
-    this.removeStopWords = removeStopWords;
-  }
-
-  public ConsequenceParams keepDiacriticsOnCharacters(
+  public ConsequenceParams setKeepDiacriticsOnCharacters(
     String keepDiacriticsOnCharacters
   ) {
     this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
@@ -1944,11 +1704,7 @@ public class ConsequenceParams {
     return keepDiacriticsOnCharacters;
   }
 
-  public void setKeepDiacriticsOnCharacters(String keepDiacriticsOnCharacters) {
-    this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
-  }
-
-  public ConsequenceParams queryLanguages(List<String> queryLanguages) {
+  public ConsequenceParams setQueryLanguages(List<String> queryLanguages) {
     this.queryLanguages = queryLanguages;
     return this;
   }
@@ -1972,11 +1728,7 @@ public class ConsequenceParams {
     return queryLanguages;
   }
 
-  public void setQueryLanguages(List<String> queryLanguages) {
-    this.queryLanguages = queryLanguages;
-  }
-
-  public ConsequenceParams decompoundQuery(Boolean decompoundQuery) {
+  public ConsequenceParams setDecompoundQuery(Boolean decompoundQuery) {
     this.decompoundQuery = decompoundQuery;
     return this;
   }
@@ -1991,11 +1743,7 @@ public class ConsequenceParams {
     return decompoundQuery;
   }
 
-  public void setDecompoundQuery(Boolean decompoundQuery) {
-    this.decompoundQuery = decompoundQuery;
-  }
-
-  public ConsequenceParams enableRules(Boolean enableRules) {
+  public ConsequenceParams setEnableRules(Boolean enableRules) {
     this.enableRules = enableRules;
     return this;
   }
@@ -2010,11 +1758,7 @@ public class ConsequenceParams {
     return enableRules;
   }
 
-  public void setEnableRules(Boolean enableRules) {
-    this.enableRules = enableRules;
-  }
-
-  public ConsequenceParams enablePersonalization(
+  public ConsequenceParams setEnablePersonalization(
     Boolean enablePersonalization
   ) {
     this.enablePersonalization = enablePersonalization;
@@ -2031,11 +1775,7 @@ public class ConsequenceParams {
     return enablePersonalization;
   }
 
-  public void setEnablePersonalization(Boolean enablePersonalization) {
-    this.enablePersonalization = enablePersonalization;
-  }
-
-  public ConsequenceParams queryType(QueryTypeEnum queryType) {
+  public ConsequenceParams setQueryType(QueryTypeEnum queryType) {
     this.queryType = queryType;
     return this;
   }
@@ -2050,11 +1790,7 @@ public class ConsequenceParams {
     return queryType;
   }
 
-  public void setQueryType(QueryTypeEnum queryType) {
-    this.queryType = queryType;
-  }
-
-  public ConsequenceParams removeWordsIfNoResults(
+  public ConsequenceParams setRemoveWordsIfNoResults(
     RemoveWordsIfNoResultsEnum removeWordsIfNoResults
   ) {
     this.removeWordsIfNoResults = removeWordsIfNoResults;
@@ -2071,13 +1807,7 @@ public class ConsequenceParams {
     return removeWordsIfNoResults;
   }
 
-  public void setRemoveWordsIfNoResults(
-    RemoveWordsIfNoResultsEnum removeWordsIfNoResults
-  ) {
-    this.removeWordsIfNoResults = removeWordsIfNoResults;
-  }
-
-  public ConsequenceParams advancedSyntax(Boolean advancedSyntax) {
+  public ConsequenceParams setAdvancedSyntax(Boolean advancedSyntax) {
     this.advancedSyntax = advancedSyntax;
     return this;
   }
@@ -2092,11 +1822,7 @@ public class ConsequenceParams {
     return advancedSyntax;
   }
 
-  public void setAdvancedSyntax(Boolean advancedSyntax) {
-    this.advancedSyntax = advancedSyntax;
-  }
-
-  public ConsequenceParams optionalWords(List<String> optionalWords) {
+  public ConsequenceParams setOptionalWords(List<String> optionalWords) {
     this.optionalWords = optionalWords;
     return this;
   }
@@ -2119,11 +1845,7 @@ public class ConsequenceParams {
     return optionalWords;
   }
 
-  public void setOptionalWords(List<String> optionalWords) {
-    this.optionalWords = optionalWords;
-  }
-
-  public ConsequenceParams disableExactOnAttributes(
+  public ConsequenceParams setDisableExactOnAttributes(
     List<String> disableExactOnAttributes
   ) {
     this.disableExactOnAttributes = disableExactOnAttributes;
@@ -2150,13 +1872,7 @@ public class ConsequenceParams {
     return disableExactOnAttributes;
   }
 
-  public void setDisableExactOnAttributes(
-    List<String> disableExactOnAttributes
-  ) {
-    this.disableExactOnAttributes = disableExactOnAttributes;
-  }
-
-  public ConsequenceParams exactOnSingleWordQuery(
+  public ConsequenceParams setExactOnSingleWordQuery(
     ExactOnSingleWordQueryEnum exactOnSingleWordQuery
   ) {
     this.exactOnSingleWordQuery = exactOnSingleWordQuery;
@@ -2173,13 +1889,7 @@ public class ConsequenceParams {
     return exactOnSingleWordQuery;
   }
 
-  public void setExactOnSingleWordQuery(
-    ExactOnSingleWordQueryEnum exactOnSingleWordQuery
-  ) {
-    this.exactOnSingleWordQuery = exactOnSingleWordQuery;
-  }
-
-  public ConsequenceParams alternativesAsExact(
+  public ConsequenceParams setAlternativesAsExact(
     List<AlternativesAsExactEnum> alternativesAsExact
   ) {
     this.alternativesAsExact = alternativesAsExact;
@@ -2206,13 +1916,7 @@ public class ConsequenceParams {
     return alternativesAsExact;
   }
 
-  public void setAlternativesAsExact(
-    List<AlternativesAsExactEnum> alternativesAsExact
-  ) {
-    this.alternativesAsExact = alternativesAsExact;
-  }
-
-  public ConsequenceParams advancedSyntaxFeatures(
+  public ConsequenceParams setAdvancedSyntaxFeatures(
     List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures
   ) {
     this.advancedSyntaxFeatures = advancedSyntaxFeatures;
@@ -2240,13 +1944,7 @@ public class ConsequenceParams {
     return advancedSyntaxFeatures;
   }
 
-  public void setAdvancedSyntaxFeatures(
-    List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures
-  ) {
-    this.advancedSyntaxFeatures = advancedSyntaxFeatures;
-  }
-
-  public ConsequenceParams distinct(Integer distinct) {
+  public ConsequenceParams setDistinct(Integer distinct) {
     this.distinct = distinct;
     return this;
   }
@@ -2261,11 +1959,7 @@ public class ConsequenceParams {
     return distinct;
   }
 
-  public void setDistinct(Integer distinct) {
-    this.distinct = distinct;
-  }
-
-  public ConsequenceParams synonyms(Boolean synonyms) {
+  public ConsequenceParams setSynonyms(Boolean synonyms) {
     this.synonyms = synonyms;
     return this;
   }
@@ -2280,11 +1974,7 @@ public class ConsequenceParams {
     return synonyms;
   }
 
-  public void setSynonyms(Boolean synonyms) {
-    this.synonyms = synonyms;
-  }
-
-  public ConsequenceParams replaceSynonymsInHighlight(
+  public ConsequenceParams setReplaceSynonymsInHighlight(
     Boolean replaceSynonymsInHighlight
   ) {
     this.replaceSynonymsInHighlight = replaceSynonymsInHighlight;
@@ -2302,13 +1992,7 @@ public class ConsequenceParams {
     return replaceSynonymsInHighlight;
   }
 
-  public void setReplaceSynonymsInHighlight(
-    Boolean replaceSynonymsInHighlight
-  ) {
-    this.replaceSynonymsInHighlight = replaceSynonymsInHighlight;
-  }
-
-  public ConsequenceParams minProximity(Integer minProximity) {
+  public ConsequenceParams setMinProximity(Integer minProximity) {
     this.minProximity = minProximity;
     return this;
   }
@@ -2323,11 +2007,7 @@ public class ConsequenceParams {
     return minProximity;
   }
 
-  public void setMinProximity(Integer minProximity) {
-    this.minProximity = minProximity;
-  }
-
-  public ConsequenceParams responseFields(List<String> responseFields) {
+  public ConsequenceParams setResponseFields(List<String> responseFields) {
     this.responseFields = responseFields;
     return this;
   }
@@ -2351,11 +2031,7 @@ public class ConsequenceParams {
     return responseFields;
   }
 
-  public void setResponseFields(List<String> responseFields) {
-    this.responseFields = responseFields;
-  }
-
-  public ConsequenceParams maxFacetHits(Integer maxFacetHits) {
+  public ConsequenceParams setMaxFacetHits(Integer maxFacetHits) {
     this.maxFacetHits = maxFacetHits;
     return this;
   }
@@ -2371,11 +2047,7 @@ public class ConsequenceParams {
     return maxFacetHits;
   }
 
-  public void setMaxFacetHits(Integer maxFacetHits) {
-    this.maxFacetHits = maxFacetHits;
-  }
-
-  public ConsequenceParams attributeCriteriaComputedByMinProximity(
+  public ConsequenceParams setAttributeCriteriaComputedByMinProximity(
     Boolean attributeCriteriaComputedByMinProximity
   ) {
     this.attributeCriteriaComputedByMinProximity =
@@ -2394,14 +2066,7 @@ public class ConsequenceParams {
     return attributeCriteriaComputedByMinProximity;
   }
 
-  public void setAttributeCriteriaComputedByMinProximity(
-    Boolean attributeCriteriaComputedByMinProximity
-  ) {
-    this.attributeCriteriaComputedByMinProximity =
-      attributeCriteriaComputedByMinProximity;
-  }
-
-  public ConsequenceParams renderingContent(Object renderingContent) {
+  public ConsequenceParams setRenderingContent(Object renderingContent) {
     this.renderingContent = renderingContent;
     return this;
   }
@@ -2415,10 +2080,6 @@ public class ConsequenceParams {
   @javax.annotation.Nullable
   public Object getRenderingContent() {
     return renderingContent;
-  }
-
-  public void setRenderingContent(Object renderingContent) {
-    this.renderingContent = renderingContent;
   }
 
   @Override

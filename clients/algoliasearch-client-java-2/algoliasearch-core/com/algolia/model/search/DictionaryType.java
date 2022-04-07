@@ -15,7 +15,7 @@ public enum DictionaryType {
 
   COMPOUNDS("compounds");
 
-  private String value;
+  private final String value;
 
   DictionaryType(String value) {
     this.value = value;

@@ -35,7 +35,7 @@ public class Key {
   @SerializedName("createdAt")
   private String createdAt;
 
-  public Key acl(List<Acl> acl) {
+  public Key setAcl(List<Acl> acl) {
     this.acl = acl;
     return this;
   }
@@ -55,11 +55,7 @@ public class Key {
     return acl;
   }
 
-  public void setAcl(List<Acl> acl) {
-    this.acl = acl;
-  }
-
-  public Key description(String description) {
+  public Key setDescription(String description) {
     this.description = description;
     return this;
   }
@@ -75,11 +71,7 @@ public class Key {
     return description;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public Key indexes(List<String> indexes) {
+  public Key setIndexes(List<String> indexes) {
     this.indexes = indexes;
     return this;
   }
@@ -103,11 +95,7 @@ public class Key {
     return indexes;
   }
 
-  public void setIndexes(List<String> indexes) {
-    this.indexes = indexes;
-  }
-
-  public Key maxHitsPerQuery(Integer maxHitsPerQuery) {
+  public Key setMaxHitsPerQuery(Integer maxHitsPerQuery) {
     this.maxHitsPerQuery = maxHitsPerQuery;
     return this;
   }
@@ -122,11 +110,7 @@ public class Key {
     return maxHitsPerQuery;
   }
 
-  public void setMaxHitsPerQuery(Integer maxHitsPerQuery) {
-    this.maxHitsPerQuery = maxHitsPerQuery;
-  }
-
-  public Key maxQueriesPerIPPerHour(Integer maxQueriesPerIPPerHour) {
+  public Key setMaxQueriesPerIPPerHour(Integer maxQueriesPerIPPerHour) {
     this.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
     return this;
   }
@@ -141,11 +125,7 @@ public class Key {
     return maxQueriesPerIPPerHour;
   }
 
-  public void setMaxQueriesPerIPPerHour(Integer maxQueriesPerIPPerHour) {
-    this.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
-  }
-
-  public Key queryParameters(String queryParameters) {
+  public Key setQueryParameters(String queryParameters) {
     this.queryParameters = queryParameters;
     return this;
   }
@@ -161,11 +141,7 @@ public class Key {
     return queryParameters;
   }
 
-  public void setQueryParameters(String queryParameters) {
-    this.queryParameters = queryParameters;
-  }
-
-  public Key referers(List<String> referers) {
+  public Key setReferers(List<String> referers) {
     this.referers = referers;
     return this;
   }
@@ -188,11 +164,7 @@ public class Key {
     return referers;
   }
 
-  public void setReferers(List<String> referers) {
-    this.referers = referers;
-  }
-
-  public Key validity(Integer validity) {
+  public Key setValidity(Integer validity) {
     this.validity = validity;
     return this;
   }
@@ -208,11 +180,7 @@ public class Key {
     return validity;
   }
 
-  public void setValidity(Integer validity) {
-    this.validity = validity;
-  }
-
-  public Key createdAt(String createdAt) {
+  public Key setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -225,10 +193,6 @@ public class Key {
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
-  }
-
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
   }
 
   @Override

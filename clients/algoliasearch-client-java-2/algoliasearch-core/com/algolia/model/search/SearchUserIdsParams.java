@@ -18,7 +18,7 @@ public class SearchUserIdsParams {
   @SerializedName("hitsPerPage")
   private Integer hitsPerPage = 20;
 
-  public SearchUserIdsParams query(String query) {
+  public SearchUserIdsParams setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -34,11 +34,7 @@ public class SearchUserIdsParams {
     return query;
   }
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public SearchUserIdsParams clusterName(String clusterName) {
+  public SearchUserIdsParams setClusterName(String clusterName) {
     this.clusterName = clusterName;
     return this;
   }
@@ -53,11 +49,7 @@ public class SearchUserIdsParams {
     return clusterName;
   }
 
-  public void setClusterName(String clusterName) {
-    this.clusterName = clusterName;
-  }
-
-  public SearchUserIdsParams page(Integer page) {
+  public SearchUserIdsParams setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -72,11 +64,7 @@ public class SearchUserIdsParams {
     return page;
   }
 
-  public void setPage(Integer page) {
-    this.page = page;
-  }
-
-  public SearchUserIdsParams hitsPerPage(Integer hitsPerPage) {
+  public SearchUserIdsParams setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -89,10 +77,6 @@ public class SearchUserIdsParams {
   @javax.annotation.Nullable
   public Integer getHitsPerPage() {
     return hitsPerPage;
-  }
-
-  public void setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
   }
 
   @Override

@@ -15,7 +15,7 @@ public class AutomaticFacetFilter {
   @SerializedName("disjunctive")
   private Boolean disjunctive = false;
 
-  public AutomaticFacetFilter facet(String facet) {
+  public AutomaticFacetFilter setFacet(String facet) {
     this.facet = facet;
     return this;
   }
@@ -30,11 +30,7 @@ public class AutomaticFacetFilter {
     return facet;
   }
 
-  public void setFacet(String facet) {
-    this.facet = facet;
-  }
-
-  public AutomaticFacetFilter score(Integer score) {
+  public AutomaticFacetFilter setScore(Integer score) {
     this.score = score;
     return this;
   }
@@ -49,11 +45,7 @@ public class AutomaticFacetFilter {
     return score;
   }
 
-  public void setScore(Integer score) {
-    this.score = score;
-  }
-
-  public AutomaticFacetFilter disjunctive(Boolean disjunctive) {
+  public AutomaticFacetFilter setDisjunctive(Boolean disjunctive) {
     this.disjunctive = disjunctive;
     return this;
   }
@@ -66,10 +58,6 @@ public class AutomaticFacetFilter {
   @javax.annotation.Nullable
   public Boolean getDisjunctive() {
     return disjunctive;
-  }
-
-  public void setDisjunctive(Boolean disjunctive) {
-    this.disjunctive = disjunctive;
   }
 
   @Override

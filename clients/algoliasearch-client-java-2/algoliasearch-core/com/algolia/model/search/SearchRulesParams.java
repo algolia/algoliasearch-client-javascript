@@ -29,7 +29,7 @@ public class SearchRulesParams {
   @SerializedName("requestOptions")
   private List<Object> requestOptions = null;
 
-  public SearchRulesParams query(String query) {
+  public SearchRulesParams setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -44,11 +44,7 @@ public class SearchRulesParams {
     return query;
   }
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public SearchRulesParams anchoring(Anchoring anchoring) {
+  public SearchRulesParams setAnchoring(Anchoring anchoring) {
     this.anchoring = anchoring;
     return this;
   }
@@ -63,11 +59,7 @@ public class SearchRulesParams {
     return anchoring;
   }
 
-  public void setAnchoring(Anchoring anchoring) {
-    this.anchoring = anchoring;
-  }
-
-  public SearchRulesParams context(String context) {
+  public SearchRulesParams setContext(String context) {
     this.context = context;
     return this;
   }
@@ -82,11 +74,7 @@ public class SearchRulesParams {
     return context;
   }
 
-  public void setContext(String context) {
-    this.context = context;
-  }
-
-  public SearchRulesParams page(Integer page) {
+  public SearchRulesParams setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -101,11 +89,7 @@ public class SearchRulesParams {
     return page;
   }
 
-  public void setPage(Integer page) {
-    this.page = page;
-  }
-
-  public SearchRulesParams hitsPerPage(Integer hitsPerPage) {
+  public SearchRulesParams setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -120,11 +104,7 @@ public class SearchRulesParams {
     return hitsPerPage;
   }
 
-  public void setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-  }
-
-  public SearchRulesParams enabled(Boolean enabled) {
+  public SearchRulesParams setEnabled(Boolean enabled) {
     this.enabled = enabled;
     return this;
   }
@@ -140,11 +120,7 @@ public class SearchRulesParams {
     return enabled;
   }
 
-  public void setEnabled(Boolean enabled) {
-    this.enabled = enabled;
-  }
-
-  public SearchRulesParams requestOptions(List<Object> requestOptions) {
+  public SearchRulesParams setRequestOptions(List<Object> requestOptions) {
     this.requestOptions = requestOptions;
     return this;
   }
@@ -165,10 +141,6 @@ public class SearchRulesParams {
   @javax.annotation.Nullable
   public List<Object> getRequestOptions() {
     return requestOptions;
-  }
-
-  public void setRequestOptions(List<Object> requestOptions) {
-    this.requestOptions = requestOptions;
   }
 
   @Override

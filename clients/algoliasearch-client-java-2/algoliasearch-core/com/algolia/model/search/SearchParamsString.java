@@ -9,7 +9,7 @@ public class SearchParamsString {
   @SerializedName("params")
   private String params = "";
 
-  public SearchParamsString params(String params) {
+  public SearchParamsString setParams(String params) {
     this.params = params;
     return this;
   }
@@ -22,10 +22,6 @@ public class SearchParamsString {
   @javax.annotation.Nullable
   public String getParams() {
     return params;
-  }
-
-  public void setParams(String params) {
-    this.params = params;
   }
 
   @Override

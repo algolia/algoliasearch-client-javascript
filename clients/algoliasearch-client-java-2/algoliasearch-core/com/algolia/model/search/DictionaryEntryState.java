@@ -13,7 +13,7 @@ public enum DictionaryEntryState {
 
   DISABLED("disabled");
 
-  private String value;
+  private final String value;
 
   DictionaryEntryState(String value) {
     this.value = value;

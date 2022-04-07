@@ -13,13 +13,13 @@ public enum SynonymType {
 
   ONEWAYSYNONYM("onewaysynonym"),
 
-  ALTCORRECTION1("altcorrection1"),
+  ALTCORRECTION_1("altcorrection1"),
 
-  ALTCORRECTION2("altcorrection2"),
+  ALTCORRECTION_2("altcorrection2"),
 
   PLACEHOLDER("placeholder");
 
-  private String value;
+  private final String value;
 
   SynonymType(String value) {
     this.value = value;

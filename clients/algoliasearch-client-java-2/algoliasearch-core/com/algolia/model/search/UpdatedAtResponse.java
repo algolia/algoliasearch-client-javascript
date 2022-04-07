@@ -12,7 +12,7 @@ public class UpdatedAtResponse {
   @SerializedName("updatedAt")
   private String updatedAt;
 
-  public UpdatedAtResponse taskID(Integer taskID) {
+  public UpdatedAtResponse setTaskID(Integer taskID) {
     this.taskID = taskID;
     return this;
   }
@@ -27,11 +27,7 @@ public class UpdatedAtResponse {
     return taskID;
   }
 
-  public void setTaskID(Integer taskID) {
-    this.taskID = taskID;
-  }
-
-  public UpdatedAtResponse updatedAt(String updatedAt) {
+  public UpdatedAtResponse setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -44,10 +40,6 @@ public class UpdatedAtResponse {
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;
-  }
-
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   @Override

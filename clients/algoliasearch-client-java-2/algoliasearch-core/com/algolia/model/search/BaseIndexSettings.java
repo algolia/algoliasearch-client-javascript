@@ -44,7 +44,7 @@ public class BaseIndexSettings {
   @SerializedName("userData")
   private Object userData = new Object();
 
-  public BaseIndexSettings replicas(List<String> replicas) {
+  public BaseIndexSettings setReplicas(List<String> replicas) {
     this.replicas = replicas;
     return this;
   }
@@ -67,11 +67,7 @@ public class BaseIndexSettings {
     return replicas;
   }
 
-  public void setReplicas(List<String> replicas) {
-    this.replicas = replicas;
-  }
-
-  public BaseIndexSettings paginationLimitedTo(Integer paginationLimitedTo) {
+  public BaseIndexSettings setPaginationLimitedTo(Integer paginationLimitedTo) {
     this.paginationLimitedTo = paginationLimitedTo;
     return this;
   }
@@ -86,11 +82,7 @@ public class BaseIndexSettings {
     return paginationLimitedTo;
   }
 
-  public void setPaginationLimitedTo(Integer paginationLimitedTo) {
-    this.paginationLimitedTo = paginationLimitedTo;
-  }
-
-  public BaseIndexSettings disableTypoToleranceOnWords(
+  public BaseIndexSettings setDisableTypoToleranceOnWords(
     List<String> disableTypoToleranceOnWords
   ) {
     this.disableTypoToleranceOnWords = disableTypoToleranceOnWords;
@@ -117,13 +109,7 @@ public class BaseIndexSettings {
     return disableTypoToleranceOnWords;
   }
 
-  public void setDisableTypoToleranceOnWords(
-    List<String> disableTypoToleranceOnWords
-  ) {
-    this.disableTypoToleranceOnWords = disableTypoToleranceOnWords;
-  }
-
-  public BaseIndexSettings attributesToTransliterate(
+  public BaseIndexSettings setAttributesToTransliterate(
     List<String> attributesToTransliterate
   ) {
     this.attributesToTransliterate = attributesToTransliterate;
@@ -150,13 +136,7 @@ public class BaseIndexSettings {
     return attributesToTransliterate;
   }
 
-  public void setAttributesToTransliterate(
-    List<String> attributesToTransliterate
-  ) {
-    this.attributesToTransliterate = attributesToTransliterate;
-  }
-
-  public BaseIndexSettings camelCaseAttributes(
+  public BaseIndexSettings setCamelCaseAttributes(
     List<String> camelCaseAttributes
   ) {
     this.camelCaseAttributes = camelCaseAttributes;
@@ -183,11 +163,7 @@ public class BaseIndexSettings {
     return camelCaseAttributes;
   }
 
-  public void setCamelCaseAttributes(List<String> camelCaseAttributes) {
-    this.camelCaseAttributes = camelCaseAttributes;
-  }
-
-  public BaseIndexSettings decompoundedAttributes(
+  public BaseIndexSettings setDecompoundedAttributes(
     Object decompoundedAttributes
   ) {
     this.decompoundedAttributes = decompoundedAttributes;
@@ -205,11 +181,7 @@ public class BaseIndexSettings {
     return decompoundedAttributes;
   }
 
-  public void setDecompoundedAttributes(Object decompoundedAttributes) {
-    this.decompoundedAttributes = decompoundedAttributes;
-  }
-
-  public BaseIndexSettings indexLanguages(List<String> indexLanguages) {
+  public BaseIndexSettings setIndexLanguages(List<String> indexLanguages) {
     this.indexLanguages = indexLanguages;
     return this;
   }
@@ -233,11 +205,7 @@ public class BaseIndexSettings {
     return indexLanguages;
   }
 
-  public void setIndexLanguages(List<String> indexLanguages) {
-    this.indexLanguages = indexLanguages;
-  }
-
-  public BaseIndexSettings filterPromotes(Boolean filterPromotes) {
+  public BaseIndexSettings setFilterPromotes(Boolean filterPromotes) {
     this.filterPromotes = filterPromotes;
     return this;
   }
@@ -253,11 +221,7 @@ public class BaseIndexSettings {
     return filterPromotes;
   }
 
-  public void setFilterPromotes(Boolean filterPromotes) {
-    this.filterPromotes = filterPromotes;
-  }
-
-  public BaseIndexSettings disablePrefixOnAttributes(
+  public BaseIndexSettings setDisablePrefixOnAttributes(
     List<String> disablePrefixOnAttributes
   ) {
     this.disablePrefixOnAttributes = disablePrefixOnAttributes;
@@ -284,13 +248,7 @@ public class BaseIndexSettings {
     return disablePrefixOnAttributes;
   }
 
-  public void setDisablePrefixOnAttributes(
-    List<String> disablePrefixOnAttributes
-  ) {
-    this.disablePrefixOnAttributes = disablePrefixOnAttributes;
-  }
-
-  public BaseIndexSettings allowCompressionOfIntegerArray(
+  public BaseIndexSettings setAllowCompressionOfIntegerArray(
     Boolean allowCompressionOfIntegerArray
   ) {
     this.allowCompressionOfIntegerArray = allowCompressionOfIntegerArray;
@@ -307,13 +265,7 @@ public class BaseIndexSettings {
     return allowCompressionOfIntegerArray;
   }
 
-  public void setAllowCompressionOfIntegerArray(
-    Boolean allowCompressionOfIntegerArray
-  ) {
-    this.allowCompressionOfIntegerArray = allowCompressionOfIntegerArray;
-  }
-
-  public BaseIndexSettings numericAttributesForFiltering(
+  public BaseIndexSettings setNumericAttributesForFiltering(
     List<String> numericAttributesForFiltering
   ) {
     this.numericAttributesForFiltering = numericAttributesForFiltering;
@@ -340,13 +292,7 @@ public class BaseIndexSettings {
     return numericAttributesForFiltering;
   }
 
-  public void setNumericAttributesForFiltering(
-    List<String> numericAttributesForFiltering
-  ) {
-    this.numericAttributesForFiltering = numericAttributesForFiltering;
-  }
-
-  public BaseIndexSettings userData(Object userData) {
+  public BaseIndexSettings setUserData(Object userData) {
     this.userData = userData;
     return this;
   }
@@ -359,10 +305,6 @@ public class BaseIndexSettings {
   @javax.annotation.Nullable
   public Object getUserData() {
     return userData;
-  }
-
-  public void setUserData(Object userData) {
-    this.userData = userData;
   }
 
   @Override

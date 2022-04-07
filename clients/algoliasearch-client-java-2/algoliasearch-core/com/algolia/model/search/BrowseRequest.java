@@ -12,7 +12,7 @@ public class BrowseRequest {
   @SerializedName("cursor")
   private String cursor;
 
-  public BrowseRequest params(String params) {
+  public BrowseRequest setParams(String params) {
     this.params = params;
     return this;
   }
@@ -27,11 +27,7 @@ public class BrowseRequest {
     return params;
   }
 
-  public void setParams(String params) {
-    this.params = params;
-  }
-
-  public BrowseRequest cursor(String cursor) {
+  public BrowseRequest setCursor(String cursor) {
     this.cursor = cursor;
     return this;
   }
@@ -45,10 +41,6 @@ public class BrowseRequest {
   @javax.annotation.Nullable
   public String getCursor() {
     return cursor;
-  }
-
-  public void setCursor(String cursor) {
-    this.cursor = cursor;
   }
 
   @Override

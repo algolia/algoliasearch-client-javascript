@@ -77,7 +77,7 @@ public class HighlightResult {
   @SerializedName("fullyHighlighted")
   private Boolean fullyHighlighted;
 
-  public HighlightResult value(String value) {
+  public HighlightResult setValue(String value) {
     this.value = value;
     return this;
   }
@@ -92,11 +92,7 @@ public class HighlightResult {
     return value;
   }
 
-  public void setValue(String value) {
-    this.value = value;
-  }
-
-  public HighlightResult matchLevel(MatchLevelEnum matchLevel) {
+  public HighlightResult setMatchLevel(MatchLevelEnum matchLevel) {
     this.matchLevel = matchLevel;
     return this;
   }
@@ -111,11 +107,7 @@ public class HighlightResult {
     return matchLevel;
   }
 
-  public void setMatchLevel(MatchLevelEnum matchLevel) {
-    this.matchLevel = matchLevel;
-  }
-
-  public HighlightResult matchedWords(List<String> matchedWords) {
+  public HighlightResult setMatchedWords(List<String> matchedWords) {
     this.matchedWords = matchedWords;
     return this;
   }
@@ -138,11 +130,7 @@ public class HighlightResult {
     return matchedWords;
   }
 
-  public void setMatchedWords(List<String> matchedWords) {
-    this.matchedWords = matchedWords;
-  }
-
-  public HighlightResult fullyHighlighted(Boolean fullyHighlighted) {
+  public HighlightResult setFullyHighlighted(Boolean fullyHighlighted) {
     this.fullyHighlighted = fullyHighlighted;
     return this;
   }
@@ -155,10 +143,6 @@ public class HighlightResult {
   @javax.annotation.Nullable
   public Boolean getFullyHighlighted() {
     return fullyHighlighted;
-  }
-
-  public void setFullyHighlighted(Boolean fullyHighlighted) {
-    this.fullyHighlighted = fullyHighlighted;
   }
 
   @Override

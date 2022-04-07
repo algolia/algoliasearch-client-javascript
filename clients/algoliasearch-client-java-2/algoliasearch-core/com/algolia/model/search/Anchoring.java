@@ -14,13 +14,13 @@ import java.io.IOException;
 public enum Anchoring {
   IS("is"),
 
-  STARTSWITH("startsWith"),
+  STARTS_WITH("startsWith"),
 
-  ENDSWITH("endsWith"),
+  ENDS_WITH("endsWith"),
 
   CONTAINS("contains");
 
-  private String value;
+  private final String value;
 
   Anchoring(String value) {
     this.value = value;

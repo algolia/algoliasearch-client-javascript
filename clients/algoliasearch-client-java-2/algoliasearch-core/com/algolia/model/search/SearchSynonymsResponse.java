@@ -15,7 +15,7 @@ public class SearchSynonymsResponse extends HashMap<String, Object> {
   @SerializedName("nbHits")
   private Integer nbHits;
 
-  public SearchSynonymsResponse hits(List<SynonymHit> hits) {
+  public SearchSynonymsResponse setHits(List<SynonymHit> hits) {
     this.hits = hits;
     return this;
   }
@@ -35,11 +35,7 @@ public class SearchSynonymsResponse extends HashMap<String, Object> {
     return hits;
   }
 
-  public void setHits(List<SynonymHit> hits) {
-    this.hits = hits;
-  }
-
-  public SearchSynonymsResponse nbHits(Integer nbHits) {
+  public SearchSynonymsResponse setNbHits(Integer nbHits) {
     this.nbHits = nbHits;
     return this;
   }
@@ -52,10 +48,6 @@ public class SearchSynonymsResponse extends HashMap<String, Object> {
   @javax.annotation.Nonnull
   public Integer getNbHits() {
     return nbHits;
-  }
-
-  public void setNbHits(Integer nbHits) {
-    this.nbHits = nbHits;
   }
 
   @Override

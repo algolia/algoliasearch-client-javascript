@@ -12,7 +12,7 @@ public class AddApiKeyResponse {
   @SerializedName("createdAt")
   private String createdAt;
 
-  public AddApiKeyResponse key(String key) {
+  public AddApiKeyResponse setKey(String key) {
     this.key = key;
     return this;
   }
@@ -27,11 +27,7 @@ public class AddApiKeyResponse {
     return key;
   }
 
-  public void setKey(String key) {
-    this.key = key;
-  }
-
-  public AddApiKeyResponse createdAt(String createdAt) {
+  public AddApiKeyResponse setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -44,10 +40,6 @@ public class AddApiKeyResponse {
   @javax.annotation.Nonnull
   public String getCreatedAt() {
     return createdAt;
-  }
-
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
   }
 
   @Override

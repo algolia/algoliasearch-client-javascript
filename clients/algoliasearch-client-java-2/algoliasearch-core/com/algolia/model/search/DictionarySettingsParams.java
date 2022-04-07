@@ -9,7 +9,7 @@ public class DictionarySettingsParams {
   @SerializedName("disableStandardEntries")
   private StandardEntries disableStandardEntries;
 
-  public DictionarySettingsParams disableStandardEntries(
+  public DictionarySettingsParams setDisableStandardEntries(
     StandardEntries disableStandardEntries
   ) {
     this.disableStandardEntries = disableStandardEntries;
@@ -24,12 +24,6 @@ public class DictionarySettingsParams {
   @javax.annotation.Nonnull
   public StandardEntries getDisableStandardEntries() {
     return disableStandardEntries;
-  }
-
-  public void setDisableStandardEntries(
-    StandardEntries disableStandardEntries
-  ) {
-    this.disableStandardEntries = disableStandardEntries;
   }
 
   @Override

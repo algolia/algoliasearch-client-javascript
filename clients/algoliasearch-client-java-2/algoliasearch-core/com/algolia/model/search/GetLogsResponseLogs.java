@@ -53,7 +53,7 @@ public class GetLogsResponseLogs {
   @SerializedName("inner_queries")
   private List<GetLogsResponseInnerQueries> innerQueries = null;
 
-  public GetLogsResponseLogs timestamp(String timestamp) {
+  public GetLogsResponseLogs setTimestamp(String timestamp) {
     this.timestamp = timestamp;
     return this;
   }
@@ -68,11 +68,7 @@ public class GetLogsResponseLogs {
     return timestamp;
   }
 
-  public void setTimestamp(String timestamp) {
-    this.timestamp = timestamp;
-  }
-
-  public GetLogsResponseLogs method(String method) {
+  public GetLogsResponseLogs setMethod(String method) {
     this.method = method;
     return this;
   }
@@ -87,11 +83,7 @@ public class GetLogsResponseLogs {
     return method;
   }
 
-  public void setMethod(String method) {
-    this.method = method;
-  }
-
-  public GetLogsResponseLogs answerCode(String answerCode) {
+  public GetLogsResponseLogs setAnswerCode(String answerCode) {
     this.answerCode = answerCode;
     return this;
   }
@@ -106,11 +98,7 @@ public class GetLogsResponseLogs {
     return answerCode;
   }
 
-  public void setAnswerCode(String answerCode) {
-    this.answerCode = answerCode;
-  }
-
-  public GetLogsResponseLogs queryBody(String queryBody) {
+  public GetLogsResponseLogs setQueryBody(String queryBody) {
     this.queryBody = queryBody;
     return this;
   }
@@ -125,11 +113,7 @@ public class GetLogsResponseLogs {
     return queryBody;
   }
 
-  public void setQueryBody(String queryBody) {
-    this.queryBody = queryBody;
-  }
-
-  public GetLogsResponseLogs answer(String answer) {
+  public GetLogsResponseLogs setAnswer(String answer) {
     this.answer = answer;
     return this;
   }
@@ -144,11 +128,7 @@ public class GetLogsResponseLogs {
     return answer;
   }
 
-  public void setAnswer(String answer) {
-    this.answer = answer;
-  }
-
-  public GetLogsResponseLogs url(String url) {
+  public GetLogsResponseLogs setUrl(String url) {
     this.url = url;
     return this;
   }
@@ -163,11 +143,7 @@ public class GetLogsResponseLogs {
     return url;
   }
 
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
-  public GetLogsResponseLogs ip(String ip) {
+  public GetLogsResponseLogs setIp(String ip) {
     this.ip = ip;
     return this;
   }
@@ -182,11 +158,7 @@ public class GetLogsResponseLogs {
     return ip;
   }
 
-  public void setIp(String ip) {
-    this.ip = ip;
-  }
-
-  public GetLogsResponseLogs queryHeaders(String queryHeaders) {
+  public GetLogsResponseLogs setQueryHeaders(String queryHeaders) {
     this.queryHeaders = queryHeaders;
     return this;
   }
@@ -201,11 +173,7 @@ public class GetLogsResponseLogs {
     return queryHeaders;
   }
 
-  public void setQueryHeaders(String queryHeaders) {
-    this.queryHeaders = queryHeaders;
-  }
-
-  public GetLogsResponseLogs sha1(String sha1) {
+  public GetLogsResponseLogs setSha1(String sha1) {
     this.sha1 = sha1;
     return this;
   }
@@ -220,11 +188,7 @@ public class GetLogsResponseLogs {
     return sha1;
   }
 
-  public void setSha1(String sha1) {
-    this.sha1 = sha1;
-  }
-
-  public GetLogsResponseLogs nbApiCalls(String nbApiCalls) {
+  public GetLogsResponseLogs setNbApiCalls(String nbApiCalls) {
     this.nbApiCalls = nbApiCalls;
     return this;
   }
@@ -239,11 +203,7 @@ public class GetLogsResponseLogs {
     return nbApiCalls;
   }
 
-  public void setNbApiCalls(String nbApiCalls) {
-    this.nbApiCalls = nbApiCalls;
-  }
-
-  public GetLogsResponseLogs processingTimeMs(String processingTimeMs) {
+  public GetLogsResponseLogs setProcessingTimeMs(String processingTimeMs) {
     this.processingTimeMs = processingTimeMs;
     return this;
   }
@@ -258,11 +218,7 @@ public class GetLogsResponseLogs {
     return processingTimeMs;
   }
 
-  public void setProcessingTimeMs(String processingTimeMs) {
-    this.processingTimeMs = processingTimeMs;
-  }
-
-  public GetLogsResponseLogs index(String index) {
+  public GetLogsResponseLogs setIndex(String index) {
     this.index = index;
     return this;
   }
@@ -277,11 +233,7 @@ public class GetLogsResponseLogs {
     return index;
   }
 
-  public void setIndex(String index) {
-    this.index = index;
-  }
-
-  public GetLogsResponseLogs queryParams(String queryParams) {
+  public GetLogsResponseLogs setQueryParams(String queryParams) {
     this.queryParams = queryParams;
     return this;
   }
@@ -296,11 +248,7 @@ public class GetLogsResponseLogs {
     return queryParams;
   }
 
-  public void setQueryParams(String queryParams) {
-    this.queryParams = queryParams;
-  }
-
-  public GetLogsResponseLogs queryNbHits(String queryNbHits) {
+  public GetLogsResponseLogs setQueryNbHits(String queryNbHits) {
     this.queryNbHits = queryNbHits;
     return this;
   }
@@ -315,11 +263,7 @@ public class GetLogsResponseLogs {
     return queryNbHits;
   }
 
-  public void setQueryNbHits(String queryNbHits) {
-    this.queryNbHits = queryNbHits;
-  }
-
-  public GetLogsResponseLogs innerQueries(
+  public GetLogsResponseLogs setInnerQueries(
     List<GetLogsResponseInnerQueries> innerQueries
   ) {
     this.innerQueries = innerQueries;
@@ -344,10 +288,6 @@ public class GetLogsResponseLogs {
   @javax.annotation.Nullable
   public List<GetLogsResponseInnerQueries> getInnerQueries() {
     return innerQueries;
-  }
-
-  public void setInnerQueries(List<GetLogsResponseInnerQueries> innerQueries) {
-    this.innerQueries = innerQueries;
   }
 
   @Override

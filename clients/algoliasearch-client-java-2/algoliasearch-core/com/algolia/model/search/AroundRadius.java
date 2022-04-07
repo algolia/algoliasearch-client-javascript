@@ -20,8 +20,6 @@ public abstract class AroundRadius implements CompoundType {
     return new AroundRadiusInteger(inside);
   }
 
-  public abstract Object getInsideValue();
-
   public static class Adapter extends TypeAdapter<AroundRadius> {
 
     @Override

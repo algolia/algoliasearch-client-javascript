@@ -17,7 +17,7 @@ public class MultipleGetObjectsParams {
   @SerializedName("indexName")
   private String indexName;
 
-  public MultipleGetObjectsParams attributesToRetrieve(
+  public MultipleGetObjectsParams setAttributesToRetrieve(
     List<String> attributesToRetrieve
   ) {
     this.attributesToRetrieve = attributesToRetrieve;
@@ -44,11 +44,7 @@ public class MultipleGetObjectsParams {
     return attributesToRetrieve;
   }
 
-  public void setAttributesToRetrieve(List<String> attributesToRetrieve) {
-    this.attributesToRetrieve = attributesToRetrieve;
-  }
-
-  public MultipleGetObjectsParams objectID(String objectID) {
+  public MultipleGetObjectsParams setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -63,11 +59,7 @@ public class MultipleGetObjectsParams {
     return objectID;
   }
 
-  public void setObjectID(String objectID) {
-    this.objectID = objectID;
-  }
-
-  public MultipleGetObjectsParams indexName(String indexName) {
+  public MultipleGetObjectsParams setIndexName(String indexName) {
     this.indexName = indexName;
     return this;
   }
@@ -80,10 +72,6 @@ public class MultipleGetObjectsParams {
   @javax.annotation.Nonnull
   public String getIndexName() {
     return indexName;
-  }
-
-  public void setIndexName(String indexName) {
-    this.indexName = indexName;
   }
 
   @Override

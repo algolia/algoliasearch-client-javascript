@@ -15,7 +15,7 @@ public class SearchForFacetValuesRequest {
   @SerializedName("maxFacetHits")
   private Integer maxFacetHits = 10;
 
-  public SearchForFacetValuesRequest params(String params) {
+  public SearchForFacetValuesRequest setParams(String params) {
     this.params = params;
     return this;
   }
@@ -30,11 +30,7 @@ public class SearchForFacetValuesRequest {
     return params;
   }
 
-  public void setParams(String params) {
-    this.params = params;
-  }
-
-  public SearchForFacetValuesRequest facetQuery(String facetQuery) {
+  public SearchForFacetValuesRequest setFacetQuery(String facetQuery) {
     this.facetQuery = facetQuery;
     return this;
   }
@@ -49,11 +45,7 @@ public class SearchForFacetValuesRequest {
     return facetQuery;
   }
 
-  public void setFacetQuery(String facetQuery) {
-    this.facetQuery = facetQuery;
-  }
-
-  public SearchForFacetValuesRequest maxFacetHits(Integer maxFacetHits) {
+  public SearchForFacetValuesRequest setMaxFacetHits(Integer maxFacetHits) {
     this.maxFacetHits = maxFacetHits;
     return this;
   }
@@ -67,10 +59,6 @@ public class SearchForFacetValuesRequest {
   @javax.annotation.Nullable
   public Integer getMaxFacetHits() {
     return maxFacetHits;
-  }
-
-  public void setMaxFacetHits(Integer maxFacetHits) {
-    this.maxFacetHits = maxFacetHits;
   }
 
   @Override

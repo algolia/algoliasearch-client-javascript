@@ -12,7 +12,7 @@ public class UpdateApiKeyResponse {
   @SerializedName("updatedAt")
   private String updatedAt;
 
-  public UpdateApiKeyResponse key(String key) {
+  public UpdateApiKeyResponse setKey(String key) {
     this.key = key;
     return this;
   }
@@ -27,11 +27,7 @@ public class UpdateApiKeyResponse {
     return key;
   }
 
-  public void setKey(String key) {
-    this.key = key;
-  }
-
-  public UpdateApiKeyResponse updatedAt(String updatedAt) {
+  public UpdateApiKeyResponse setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -44,10 +40,6 @@ public class UpdateApiKeyResponse {
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;
-  }
-
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   @Override

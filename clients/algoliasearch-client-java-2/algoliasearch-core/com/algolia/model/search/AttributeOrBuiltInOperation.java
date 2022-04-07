@@ -22,8 +22,6 @@ public abstract class AttributeOrBuiltInOperation implements CompoundType {
     return new AttributeOrBuiltInOperationString(inside);
   }
 
-  public abstract Object getInsideValue();
-
   public static class Adapter extends TypeAdapter<AttributeOrBuiltInOperation> {
 
     @Override

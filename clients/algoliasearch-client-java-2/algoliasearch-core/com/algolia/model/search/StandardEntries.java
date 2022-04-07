@@ -20,7 +20,7 @@ public class StandardEntries {
   @SerializedName("compounds")
   private Map<String, Boolean> compounds = null;
 
-  public StandardEntries plurals(Map<String, Boolean> plurals) {
+  public StandardEntries setPlurals(Map<String, Boolean> plurals) {
     this.plurals = plurals;
     return this;
   }
@@ -43,11 +43,7 @@ public class StandardEntries {
     return plurals;
   }
 
-  public void setPlurals(Map<String, Boolean> plurals) {
-    this.plurals = plurals;
-  }
-
-  public StandardEntries stopwords(Map<String, Boolean> stopwords) {
+  public StandardEntries setStopwords(Map<String, Boolean> stopwords) {
     this.stopwords = stopwords;
     return this;
   }
@@ -70,11 +66,7 @@ public class StandardEntries {
     return stopwords;
   }
 
-  public void setStopwords(Map<String, Boolean> stopwords) {
-    this.stopwords = stopwords;
-  }
-
-  public StandardEntries compounds(Map<String, Boolean> compounds) {
+  public StandardEntries setCompounds(Map<String, Boolean> compounds) {
     this.compounds = compounds;
     return this;
   }
@@ -95,10 +87,6 @@ public class StandardEntries {
   @javax.annotation.Nullable
   public Map<String, Boolean> getCompounds() {
     return compounds;
-  }
-
-  public void setCompounds(Map<String, Boolean> compounds) {
-    this.compounds = compounds;
   }
 
   @Override

@@ -11,7 +11,7 @@ public class ListApiKeysResponse {
   @SerializedName("keys")
   private List<Key> keys = new ArrayList<>();
 
-  public ListApiKeysResponse keys(List<Key> keys) {
+  public ListApiKeysResponse setKeys(List<Key> keys) {
     this.keys = keys;
     return this;
   }
@@ -29,10 +29,6 @@ public class ListApiKeysResponse {
   @javax.annotation.Nonnull
   public List<Key> getKeys() {
     return keys;
-  }
-
-  public void setKeys(List<Key> keys) {
-    this.keys = keys;
   }
 
   @Override

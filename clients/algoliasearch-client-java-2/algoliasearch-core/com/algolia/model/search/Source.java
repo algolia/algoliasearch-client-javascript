@@ -12,7 +12,7 @@ public class Source {
   @SerializedName("description")
   private String description;
 
-  public Source source(String source) {
+  public Source setSource(String source) {
     this.source = source;
     return this;
   }
@@ -27,11 +27,7 @@ public class Source {
     return source;
   }
 
-  public void setSource(String source) {
-    this.source = source;
-  }
-
-  public Source description(String description) {
+  public Source setDescription(String description) {
     this.description = description;
     return this;
   }
@@ -44,10 +40,6 @@ public class Source {
   @javax.annotation.Nullable
   public String getDescription() {
     return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
   }
 
   @Override

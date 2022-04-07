@@ -190,11 +190,11 @@ public class IndexSettings {
   /** Controls if and how query words are interpreted as prefixes. */
   @JsonAdapter(QueryTypeEnum.Adapter.class)
   public enum QueryTypeEnum {
-    PREFIXLAST("prefixLast"),
+    PREFIX_LAST("prefixLast"),
 
-    PREFIXALL("prefixAll"),
+    PREFIX_ALL("prefixAll"),
 
-    PREFIXNONE("prefixNone");
+    PREFIX_NONE("prefixNone");
 
     private String value;
 
@@ -240,18 +240,18 @@ public class IndexSettings {
   }
 
   @SerializedName("queryType")
-  private QueryTypeEnum queryType = QueryTypeEnum.PREFIXLAST;
+  private QueryTypeEnum queryType = QueryTypeEnum.PREFIX_LAST;
 
   /** Selects a strategy to remove words from the query when it doesn't match any hits. */
   @JsonAdapter(RemoveWordsIfNoResultsEnum.Adapter.class)
   public enum RemoveWordsIfNoResultsEnum {
     NONE("none"),
 
-    LASTWORDS("lastWords"),
+    LAST_WORDS("lastWords"),
 
-    FIRSTWORDS("firstWords"),
+    FIRST_WORDS("firstWords"),
 
-    ALLOPTIONAL("allOptional");
+    ALL_OPTIONAL("allOptional");
 
     private String value;
 
@@ -370,11 +370,11 @@ public class IndexSettings {
   /** Gets or Sets alternativesAsExact */
   @JsonAdapter(AlternativesAsExactEnum.Adapter.class)
   public enum AlternativesAsExactEnum {
-    IGNOREPLURALS("ignorePlurals"),
+    IGNORE_PLURALS("ignorePlurals"),
 
-    SINGLEWORDSYNONYM("singleWordSynonym"),
+    SINGLE_WORD_SYNONYM("singleWordSynonym"),
 
-    MULTIWORDSSYNONYM("multiWordsSynonym");
+    MULTI_WORDS_SYNONYM("multiWordsSynonym");
 
     private String value;
 
@@ -425,9 +425,9 @@ public class IndexSettings {
   /** Gets or Sets advancedSyntaxFeatures */
   @JsonAdapter(AdvancedSyntaxFeaturesEnum.Adapter.class)
   public enum AdvancedSyntaxFeaturesEnum {
-    EXACTPHRASE("exactPhrase"),
+    EXACT_PHRASE("exactPhrase"),
 
-    EXCLUDEWORDS("excludeWords");
+    EXCLUDE_WORDS("excludeWords");
 
     private String value;
 
@@ -500,7 +500,7 @@ public class IndexSettings {
   @SerializedName("renderingContent")
   private Object renderingContent = new Object();
 
-  public IndexSettings replicas(List<String> replicas) {
+  public IndexSettings setReplicas(List<String> replicas) {
     this.replicas = replicas;
     return this;
   }
@@ -523,11 +523,7 @@ public class IndexSettings {
     return replicas;
   }
 
-  public void setReplicas(List<String> replicas) {
-    this.replicas = replicas;
-  }
-
-  public IndexSettings paginationLimitedTo(Integer paginationLimitedTo) {
+  public IndexSettings setPaginationLimitedTo(Integer paginationLimitedTo) {
     this.paginationLimitedTo = paginationLimitedTo;
     return this;
   }
@@ -542,11 +538,7 @@ public class IndexSettings {
     return paginationLimitedTo;
   }
 
-  public void setPaginationLimitedTo(Integer paginationLimitedTo) {
-    this.paginationLimitedTo = paginationLimitedTo;
-  }
-
-  public IndexSettings disableTypoToleranceOnWords(
+  public IndexSettings setDisableTypoToleranceOnWords(
     List<String> disableTypoToleranceOnWords
   ) {
     this.disableTypoToleranceOnWords = disableTypoToleranceOnWords;
@@ -573,13 +565,7 @@ public class IndexSettings {
     return disableTypoToleranceOnWords;
   }
 
-  public void setDisableTypoToleranceOnWords(
-    List<String> disableTypoToleranceOnWords
-  ) {
-    this.disableTypoToleranceOnWords = disableTypoToleranceOnWords;
-  }
-
-  public IndexSettings attributesToTransliterate(
+  public IndexSettings setAttributesToTransliterate(
     List<String> attributesToTransliterate
   ) {
     this.attributesToTransliterate = attributesToTransliterate;
@@ -606,13 +592,9 @@ public class IndexSettings {
     return attributesToTransliterate;
   }
 
-  public void setAttributesToTransliterate(
-    List<String> attributesToTransliterate
+  public IndexSettings setCamelCaseAttributes(
+    List<String> camelCaseAttributes
   ) {
-    this.attributesToTransliterate = attributesToTransliterate;
-  }
-
-  public IndexSettings camelCaseAttributes(List<String> camelCaseAttributes) {
     this.camelCaseAttributes = camelCaseAttributes;
     return this;
   }
@@ -637,11 +619,9 @@ public class IndexSettings {
     return camelCaseAttributes;
   }
 
-  public void setCamelCaseAttributes(List<String> camelCaseAttributes) {
-    this.camelCaseAttributes = camelCaseAttributes;
-  }
-
-  public IndexSettings decompoundedAttributes(Object decompoundedAttributes) {
+  public IndexSettings setDecompoundedAttributes(
+    Object decompoundedAttributes
+  ) {
     this.decompoundedAttributes = decompoundedAttributes;
     return this;
   }
@@ -657,11 +637,7 @@ public class IndexSettings {
     return decompoundedAttributes;
   }
 
-  public void setDecompoundedAttributes(Object decompoundedAttributes) {
-    this.decompoundedAttributes = decompoundedAttributes;
-  }
-
-  public IndexSettings indexLanguages(List<String> indexLanguages) {
+  public IndexSettings setIndexLanguages(List<String> indexLanguages) {
     this.indexLanguages = indexLanguages;
     return this;
   }
@@ -685,11 +661,7 @@ public class IndexSettings {
     return indexLanguages;
   }
 
-  public void setIndexLanguages(List<String> indexLanguages) {
-    this.indexLanguages = indexLanguages;
-  }
-
-  public IndexSettings filterPromotes(Boolean filterPromotes) {
+  public IndexSettings setFilterPromotes(Boolean filterPromotes) {
     this.filterPromotes = filterPromotes;
     return this;
   }
@@ -705,11 +677,7 @@ public class IndexSettings {
     return filterPromotes;
   }
 
-  public void setFilterPromotes(Boolean filterPromotes) {
-    this.filterPromotes = filterPromotes;
-  }
-
-  public IndexSettings disablePrefixOnAttributes(
+  public IndexSettings setDisablePrefixOnAttributes(
     List<String> disablePrefixOnAttributes
   ) {
     this.disablePrefixOnAttributes = disablePrefixOnAttributes;
@@ -736,13 +704,7 @@ public class IndexSettings {
     return disablePrefixOnAttributes;
   }
 
-  public void setDisablePrefixOnAttributes(
-    List<String> disablePrefixOnAttributes
-  ) {
-    this.disablePrefixOnAttributes = disablePrefixOnAttributes;
-  }
-
-  public IndexSettings allowCompressionOfIntegerArray(
+  public IndexSettings setAllowCompressionOfIntegerArray(
     Boolean allowCompressionOfIntegerArray
   ) {
     this.allowCompressionOfIntegerArray = allowCompressionOfIntegerArray;
@@ -759,13 +721,7 @@ public class IndexSettings {
     return allowCompressionOfIntegerArray;
   }
 
-  public void setAllowCompressionOfIntegerArray(
-    Boolean allowCompressionOfIntegerArray
-  ) {
-    this.allowCompressionOfIntegerArray = allowCompressionOfIntegerArray;
-  }
-
-  public IndexSettings numericAttributesForFiltering(
+  public IndexSettings setNumericAttributesForFiltering(
     List<String> numericAttributesForFiltering
   ) {
     this.numericAttributesForFiltering = numericAttributesForFiltering;
@@ -792,13 +748,7 @@ public class IndexSettings {
     return numericAttributesForFiltering;
   }
 
-  public void setNumericAttributesForFiltering(
-    List<String> numericAttributesForFiltering
-  ) {
-    this.numericAttributesForFiltering = numericAttributesForFiltering;
-  }
-
-  public IndexSettings userData(Object userData) {
+  public IndexSettings setUserData(Object userData) {
     this.userData = userData;
     return this;
   }
@@ -813,11 +763,9 @@ public class IndexSettings {
     return userData;
   }
 
-  public void setUserData(Object userData) {
-    this.userData = userData;
-  }
-
-  public IndexSettings searchableAttributes(List<String> searchableAttributes) {
+  public IndexSettings setSearchableAttributes(
+    List<String> searchableAttributes
+  ) {
     this.searchableAttributes = searchableAttributes;
     return this;
   }
@@ -842,11 +790,7 @@ public class IndexSettings {
     return searchableAttributes;
   }
 
-  public void setSearchableAttributes(List<String> searchableAttributes) {
-    this.searchableAttributes = searchableAttributes;
-  }
-
-  public IndexSettings attributesForFaceting(
+  public IndexSettings setAttributesForFaceting(
     List<String> attributesForFaceting
   ) {
     this.attributesForFaceting = attributesForFaceting;
@@ -873,11 +817,7 @@ public class IndexSettings {
     return attributesForFaceting;
   }
 
-  public void setAttributesForFaceting(List<String> attributesForFaceting) {
-    this.attributesForFaceting = attributesForFaceting;
-  }
-
-  public IndexSettings unretrievableAttributes(
+  public IndexSettings setUnretrievableAttributes(
     List<String> unretrievableAttributes
   ) {
     this.unretrievableAttributes = unretrievableAttributes;
@@ -904,11 +844,9 @@ public class IndexSettings {
     return unretrievableAttributes;
   }
 
-  public void setUnretrievableAttributes(List<String> unretrievableAttributes) {
-    this.unretrievableAttributes = unretrievableAttributes;
-  }
-
-  public IndexSettings attributesToRetrieve(List<String> attributesToRetrieve) {
+  public IndexSettings setAttributesToRetrieve(
+    List<String> attributesToRetrieve
+  ) {
     this.attributesToRetrieve = attributesToRetrieve;
     return this;
   }
@@ -933,11 +871,7 @@ public class IndexSettings {
     return attributesToRetrieve;
   }
 
-  public void setAttributesToRetrieve(List<String> attributesToRetrieve) {
-    this.attributesToRetrieve = attributesToRetrieve;
-  }
-
-  public IndexSettings restrictSearchableAttributes(
+  public IndexSettings setRestrictSearchableAttributes(
     List<String> restrictSearchableAttributes
   ) {
     this.restrictSearchableAttributes = restrictSearchableAttributes;
@@ -964,13 +898,7 @@ public class IndexSettings {
     return restrictSearchableAttributes;
   }
 
-  public void setRestrictSearchableAttributes(
-    List<String> restrictSearchableAttributes
-  ) {
-    this.restrictSearchableAttributes = restrictSearchableAttributes;
-  }
-
-  public IndexSettings ranking(List<String> ranking) {
+  public IndexSettings setRanking(List<String> ranking) {
     this.ranking = ranking;
     return this;
   }
@@ -993,11 +921,7 @@ public class IndexSettings {
     return ranking;
   }
 
-  public void setRanking(List<String> ranking) {
-    this.ranking = ranking;
-  }
-
-  public IndexSettings customRanking(List<String> customRanking) {
+  public IndexSettings setCustomRanking(List<String> customRanking) {
     this.customRanking = customRanking;
     return this;
   }
@@ -1020,11 +944,7 @@ public class IndexSettings {
     return customRanking;
   }
 
-  public void setCustomRanking(List<String> customRanking) {
-    this.customRanking = customRanking;
-  }
-
-  public IndexSettings relevancyStrictness(Integer relevancyStrictness) {
+  public IndexSettings setRelevancyStrictness(Integer relevancyStrictness) {
     this.relevancyStrictness = relevancyStrictness;
     return this;
   }
@@ -1040,11 +960,7 @@ public class IndexSettings {
     return relevancyStrictness;
   }
 
-  public void setRelevancyStrictness(Integer relevancyStrictness) {
-    this.relevancyStrictness = relevancyStrictness;
-  }
-
-  public IndexSettings attributesToHighlight(
+  public IndexSettings setAttributesToHighlight(
     List<String> attributesToHighlight
   ) {
     this.attributesToHighlight = attributesToHighlight;
@@ -1071,11 +987,9 @@ public class IndexSettings {
     return attributesToHighlight;
   }
 
-  public void setAttributesToHighlight(List<String> attributesToHighlight) {
-    this.attributesToHighlight = attributesToHighlight;
-  }
-
-  public IndexSettings attributesToSnippet(List<String> attributesToSnippet) {
+  public IndexSettings setAttributesToSnippet(
+    List<String> attributesToSnippet
+  ) {
     this.attributesToSnippet = attributesToSnippet;
     return this;
   }
@@ -1100,11 +1014,7 @@ public class IndexSettings {
     return attributesToSnippet;
   }
 
-  public void setAttributesToSnippet(List<String> attributesToSnippet) {
-    this.attributesToSnippet = attributesToSnippet;
-  }
-
-  public IndexSettings highlightPreTag(String highlightPreTag) {
+  public IndexSettings setHighlightPreTag(String highlightPreTag) {
     this.highlightPreTag = highlightPreTag;
     return this;
   }
@@ -1119,11 +1029,7 @@ public class IndexSettings {
     return highlightPreTag;
   }
 
-  public void setHighlightPreTag(String highlightPreTag) {
-    this.highlightPreTag = highlightPreTag;
-  }
-
-  public IndexSettings highlightPostTag(String highlightPostTag) {
+  public IndexSettings setHighlightPostTag(String highlightPostTag) {
     this.highlightPostTag = highlightPostTag;
     return this;
   }
@@ -1138,11 +1044,7 @@ public class IndexSettings {
     return highlightPostTag;
   }
 
-  public void setHighlightPostTag(String highlightPostTag) {
-    this.highlightPostTag = highlightPostTag;
-  }
-
-  public IndexSettings snippetEllipsisText(String snippetEllipsisText) {
+  public IndexSettings setSnippetEllipsisText(String snippetEllipsisText) {
     this.snippetEllipsisText = snippetEllipsisText;
     return this;
   }
@@ -1157,11 +1059,7 @@ public class IndexSettings {
     return snippetEllipsisText;
   }
 
-  public void setSnippetEllipsisText(String snippetEllipsisText) {
-    this.snippetEllipsisText = snippetEllipsisText;
-  }
-
-  public IndexSettings restrictHighlightAndSnippetArrays(
+  public IndexSettings setRestrictHighlightAndSnippetArrays(
     Boolean restrictHighlightAndSnippetArrays
   ) {
     this.restrictHighlightAndSnippetArrays = restrictHighlightAndSnippetArrays;
@@ -1178,13 +1076,7 @@ public class IndexSettings {
     return restrictHighlightAndSnippetArrays;
   }
 
-  public void setRestrictHighlightAndSnippetArrays(
-    Boolean restrictHighlightAndSnippetArrays
-  ) {
-    this.restrictHighlightAndSnippetArrays = restrictHighlightAndSnippetArrays;
-  }
-
-  public IndexSettings hitsPerPage(Integer hitsPerPage) {
+  public IndexSettings setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -1199,11 +1091,7 @@ public class IndexSettings {
     return hitsPerPage;
   }
 
-  public void setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-  }
-
-  public IndexSettings minWordSizefor1Typo(Integer minWordSizefor1Typo) {
+  public IndexSettings setMinWordSizefor1Typo(Integer minWordSizefor1Typo) {
     this.minWordSizefor1Typo = minWordSizefor1Typo;
     return this;
   }
@@ -1219,11 +1107,7 @@ public class IndexSettings {
     return minWordSizefor1Typo;
   }
 
-  public void setMinWordSizefor1Typo(Integer minWordSizefor1Typo) {
-    this.minWordSizefor1Typo = minWordSizefor1Typo;
-  }
-
-  public IndexSettings minWordSizefor2Typos(Integer minWordSizefor2Typos) {
+  public IndexSettings setMinWordSizefor2Typos(Integer minWordSizefor2Typos) {
     this.minWordSizefor2Typos = minWordSizefor2Typos;
     return this;
   }
@@ -1239,11 +1123,7 @@ public class IndexSettings {
     return minWordSizefor2Typos;
   }
 
-  public void setMinWordSizefor2Typos(Integer minWordSizefor2Typos) {
-    this.minWordSizefor2Typos = minWordSizefor2Typos;
-  }
-
-  public IndexSettings typoTolerance(TypoToleranceEnum typoTolerance) {
+  public IndexSettings setTypoTolerance(TypoToleranceEnum typoTolerance) {
     this.typoTolerance = typoTolerance;
     return this;
   }
@@ -1258,11 +1138,7 @@ public class IndexSettings {
     return typoTolerance;
   }
 
-  public void setTypoTolerance(TypoToleranceEnum typoTolerance) {
-    this.typoTolerance = typoTolerance;
-  }
-
-  public IndexSettings allowTyposOnNumericTokens(
+  public IndexSettings setAllowTyposOnNumericTokens(
     Boolean allowTyposOnNumericTokens
   ) {
     this.allowTyposOnNumericTokens = allowTyposOnNumericTokens;
@@ -1279,11 +1155,7 @@ public class IndexSettings {
     return allowTyposOnNumericTokens;
   }
 
-  public void setAllowTyposOnNumericTokens(Boolean allowTyposOnNumericTokens) {
-    this.allowTyposOnNumericTokens = allowTyposOnNumericTokens;
-  }
-
-  public IndexSettings disableTypoToleranceOnAttributes(
+  public IndexSettings setDisableTypoToleranceOnAttributes(
     List<String> disableTypoToleranceOnAttributes
   ) {
     this.disableTypoToleranceOnAttributes = disableTypoToleranceOnAttributes;
@@ -1312,13 +1184,7 @@ public class IndexSettings {
     return disableTypoToleranceOnAttributes;
   }
 
-  public void setDisableTypoToleranceOnAttributes(
-    List<String> disableTypoToleranceOnAttributes
-  ) {
-    this.disableTypoToleranceOnAttributes = disableTypoToleranceOnAttributes;
-  }
-
-  public IndexSettings separatorsToIndex(String separatorsToIndex) {
+  public IndexSettings setSeparatorsToIndex(String separatorsToIndex) {
     this.separatorsToIndex = separatorsToIndex;
     return this;
   }
@@ -1333,11 +1199,7 @@ public class IndexSettings {
     return separatorsToIndex;
   }
 
-  public void setSeparatorsToIndex(String separatorsToIndex) {
-    this.separatorsToIndex = separatorsToIndex;
-  }
-
-  public IndexSettings ignorePlurals(String ignorePlurals) {
+  public IndexSettings setIgnorePlurals(String ignorePlurals) {
     this.ignorePlurals = ignorePlurals;
     return this;
   }
@@ -1352,11 +1214,7 @@ public class IndexSettings {
     return ignorePlurals;
   }
 
-  public void setIgnorePlurals(String ignorePlurals) {
-    this.ignorePlurals = ignorePlurals;
-  }
-
-  public IndexSettings removeStopWords(String removeStopWords) {
+  public IndexSettings setRemoveStopWords(String removeStopWords) {
     this.removeStopWords = removeStopWords;
     return this;
   }
@@ -1371,11 +1229,7 @@ public class IndexSettings {
     return removeStopWords;
   }
 
-  public void setRemoveStopWords(String removeStopWords) {
-    this.removeStopWords = removeStopWords;
-  }
-
-  public IndexSettings keepDiacriticsOnCharacters(
+  public IndexSettings setKeepDiacriticsOnCharacters(
     String keepDiacriticsOnCharacters
   ) {
     this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
@@ -1392,11 +1246,7 @@ public class IndexSettings {
     return keepDiacriticsOnCharacters;
   }
 
-  public void setKeepDiacriticsOnCharacters(String keepDiacriticsOnCharacters) {
-    this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
-  }
-
-  public IndexSettings queryLanguages(List<String> queryLanguages) {
+  public IndexSettings setQueryLanguages(List<String> queryLanguages) {
     this.queryLanguages = queryLanguages;
     return this;
   }
@@ -1420,11 +1270,7 @@ public class IndexSettings {
     return queryLanguages;
   }
 
-  public void setQueryLanguages(List<String> queryLanguages) {
-    this.queryLanguages = queryLanguages;
-  }
-
-  public IndexSettings decompoundQuery(Boolean decompoundQuery) {
+  public IndexSettings setDecompoundQuery(Boolean decompoundQuery) {
     this.decompoundQuery = decompoundQuery;
     return this;
   }
@@ -1439,11 +1285,7 @@ public class IndexSettings {
     return decompoundQuery;
   }
 
-  public void setDecompoundQuery(Boolean decompoundQuery) {
-    this.decompoundQuery = decompoundQuery;
-  }
-
-  public IndexSettings enableRules(Boolean enableRules) {
+  public IndexSettings setEnableRules(Boolean enableRules) {
     this.enableRules = enableRules;
     return this;
   }
@@ -1458,11 +1300,7 @@ public class IndexSettings {
     return enableRules;
   }
 
-  public void setEnableRules(Boolean enableRules) {
-    this.enableRules = enableRules;
-  }
-
-  public IndexSettings enablePersonalization(Boolean enablePersonalization) {
+  public IndexSettings setEnablePersonalization(Boolean enablePersonalization) {
     this.enablePersonalization = enablePersonalization;
     return this;
   }
@@ -1477,11 +1315,7 @@ public class IndexSettings {
     return enablePersonalization;
   }
 
-  public void setEnablePersonalization(Boolean enablePersonalization) {
-    this.enablePersonalization = enablePersonalization;
-  }
-
-  public IndexSettings queryType(QueryTypeEnum queryType) {
+  public IndexSettings setQueryType(QueryTypeEnum queryType) {
     this.queryType = queryType;
     return this;
   }
@@ -1496,11 +1330,7 @@ public class IndexSettings {
     return queryType;
   }
 
-  public void setQueryType(QueryTypeEnum queryType) {
-    this.queryType = queryType;
-  }
-
-  public IndexSettings removeWordsIfNoResults(
+  public IndexSettings setRemoveWordsIfNoResults(
     RemoveWordsIfNoResultsEnum removeWordsIfNoResults
   ) {
     this.removeWordsIfNoResults = removeWordsIfNoResults;
@@ -1517,13 +1347,7 @@ public class IndexSettings {
     return removeWordsIfNoResults;
   }
 
-  public void setRemoveWordsIfNoResults(
-    RemoveWordsIfNoResultsEnum removeWordsIfNoResults
-  ) {
-    this.removeWordsIfNoResults = removeWordsIfNoResults;
-  }
-
-  public IndexSettings advancedSyntax(Boolean advancedSyntax) {
+  public IndexSettings setAdvancedSyntax(Boolean advancedSyntax) {
     this.advancedSyntax = advancedSyntax;
     return this;
   }
@@ -1538,11 +1362,7 @@ public class IndexSettings {
     return advancedSyntax;
   }
 
-  public void setAdvancedSyntax(Boolean advancedSyntax) {
-    this.advancedSyntax = advancedSyntax;
-  }
-
-  public IndexSettings optionalWords(List<String> optionalWords) {
+  public IndexSettings setOptionalWords(List<String> optionalWords) {
     this.optionalWords = optionalWords;
     return this;
   }
@@ -1565,11 +1385,7 @@ public class IndexSettings {
     return optionalWords;
   }
 
-  public void setOptionalWords(List<String> optionalWords) {
-    this.optionalWords = optionalWords;
-  }
-
-  public IndexSettings disableExactOnAttributes(
+  public IndexSettings setDisableExactOnAttributes(
     List<String> disableExactOnAttributes
   ) {
     this.disableExactOnAttributes = disableExactOnAttributes;
@@ -1596,13 +1412,7 @@ public class IndexSettings {
     return disableExactOnAttributes;
   }
 
-  public void setDisableExactOnAttributes(
-    List<String> disableExactOnAttributes
-  ) {
-    this.disableExactOnAttributes = disableExactOnAttributes;
-  }
-
-  public IndexSettings exactOnSingleWordQuery(
+  public IndexSettings setExactOnSingleWordQuery(
     ExactOnSingleWordQueryEnum exactOnSingleWordQuery
   ) {
     this.exactOnSingleWordQuery = exactOnSingleWordQuery;
@@ -1619,13 +1429,7 @@ public class IndexSettings {
     return exactOnSingleWordQuery;
   }
 
-  public void setExactOnSingleWordQuery(
-    ExactOnSingleWordQueryEnum exactOnSingleWordQuery
-  ) {
-    this.exactOnSingleWordQuery = exactOnSingleWordQuery;
-  }
-
-  public IndexSettings alternativesAsExact(
+  public IndexSettings setAlternativesAsExact(
     List<AlternativesAsExactEnum> alternativesAsExact
   ) {
     this.alternativesAsExact = alternativesAsExact;
@@ -1652,13 +1456,7 @@ public class IndexSettings {
     return alternativesAsExact;
   }
 
-  public void setAlternativesAsExact(
-    List<AlternativesAsExactEnum> alternativesAsExact
-  ) {
-    this.alternativesAsExact = alternativesAsExact;
-  }
-
-  public IndexSettings advancedSyntaxFeatures(
+  public IndexSettings setAdvancedSyntaxFeatures(
     List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures
   ) {
     this.advancedSyntaxFeatures = advancedSyntaxFeatures;
@@ -1686,13 +1484,7 @@ public class IndexSettings {
     return advancedSyntaxFeatures;
   }
 
-  public void setAdvancedSyntaxFeatures(
-    List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures
-  ) {
-    this.advancedSyntaxFeatures = advancedSyntaxFeatures;
-  }
-
-  public IndexSettings distinct(Integer distinct) {
+  public IndexSettings setDistinct(Integer distinct) {
     this.distinct = distinct;
     return this;
   }
@@ -1707,11 +1499,7 @@ public class IndexSettings {
     return distinct;
   }
 
-  public void setDistinct(Integer distinct) {
-    this.distinct = distinct;
-  }
-
-  public IndexSettings synonyms(Boolean synonyms) {
+  public IndexSettings setSynonyms(Boolean synonyms) {
     this.synonyms = synonyms;
     return this;
   }
@@ -1726,11 +1514,7 @@ public class IndexSettings {
     return synonyms;
   }
 
-  public void setSynonyms(Boolean synonyms) {
-    this.synonyms = synonyms;
-  }
-
-  public IndexSettings replaceSynonymsInHighlight(
+  public IndexSettings setReplaceSynonymsInHighlight(
     Boolean replaceSynonymsInHighlight
   ) {
     this.replaceSynonymsInHighlight = replaceSynonymsInHighlight;
@@ -1748,13 +1532,7 @@ public class IndexSettings {
     return replaceSynonymsInHighlight;
   }
 
-  public void setReplaceSynonymsInHighlight(
-    Boolean replaceSynonymsInHighlight
-  ) {
-    this.replaceSynonymsInHighlight = replaceSynonymsInHighlight;
-  }
-
-  public IndexSettings minProximity(Integer minProximity) {
+  public IndexSettings setMinProximity(Integer minProximity) {
     this.minProximity = minProximity;
     return this;
   }
@@ -1769,11 +1547,7 @@ public class IndexSettings {
     return minProximity;
   }
 
-  public void setMinProximity(Integer minProximity) {
-    this.minProximity = minProximity;
-  }
-
-  public IndexSettings responseFields(List<String> responseFields) {
+  public IndexSettings setResponseFields(List<String> responseFields) {
     this.responseFields = responseFields;
     return this;
   }
@@ -1797,11 +1571,7 @@ public class IndexSettings {
     return responseFields;
   }
 
-  public void setResponseFields(List<String> responseFields) {
-    this.responseFields = responseFields;
-  }
-
-  public IndexSettings maxFacetHits(Integer maxFacetHits) {
+  public IndexSettings setMaxFacetHits(Integer maxFacetHits) {
     this.maxFacetHits = maxFacetHits;
     return this;
   }
@@ -1817,11 +1587,7 @@ public class IndexSettings {
     return maxFacetHits;
   }
 
-  public void setMaxFacetHits(Integer maxFacetHits) {
-    this.maxFacetHits = maxFacetHits;
-  }
-
-  public IndexSettings attributeCriteriaComputedByMinProximity(
+  public IndexSettings setAttributeCriteriaComputedByMinProximity(
     Boolean attributeCriteriaComputedByMinProximity
   ) {
     this.attributeCriteriaComputedByMinProximity =
@@ -1840,14 +1606,7 @@ public class IndexSettings {
     return attributeCriteriaComputedByMinProximity;
   }
 
-  public void setAttributeCriteriaComputedByMinProximity(
-    Boolean attributeCriteriaComputedByMinProximity
-  ) {
-    this.attributeCriteriaComputedByMinProximity =
-      attributeCriteriaComputedByMinProximity;
-  }
-
-  public IndexSettings renderingContent(Object renderingContent) {
+  public IndexSettings setRenderingContent(Object renderingContent) {
     this.renderingContent = renderingContent;
     return this;
   }
@@ -1861,10 +1620,6 @@ public class IndexSettings {
   @javax.annotation.Nullable
   public Object getRenderingContent() {
     return renderingContent;
-  }
-
-  public void setRenderingContent(Object renderingContent) {
-    this.renderingContent = renderingContent;
   }
 
   @Override

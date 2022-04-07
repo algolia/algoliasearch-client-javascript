@@ -17,7 +17,7 @@ public class Params {
   @SerializedName("automaticOptionalFacetFilters")
   private List<AutomaticFacetFilter> automaticOptionalFacetFilters = null;
 
-  public Params query(String query) {
+  public Params setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -32,11 +32,7 @@ public class Params {
     return query;
   }
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public Params automaticFacetFilters(
+  public Params setAutomaticFacetFilters(
     List<AutomaticFacetFilter> automaticFacetFilters
   ) {
     this.automaticFacetFilters = automaticFacetFilters;
@@ -64,13 +60,7 @@ public class Params {
     return automaticFacetFilters;
   }
 
-  public void setAutomaticFacetFilters(
-    List<AutomaticFacetFilter> automaticFacetFilters
-  ) {
-    this.automaticFacetFilters = automaticFacetFilters;
-  }
-
-  public Params automaticOptionalFacetFilters(
+  public Params setAutomaticOptionalFacetFilters(
     List<AutomaticFacetFilter> automaticOptionalFacetFilters
   ) {
     this.automaticOptionalFacetFilters = automaticOptionalFacetFilters;
@@ -95,12 +85,6 @@ public class Params {
   @javax.annotation.Nullable
   public List<AutomaticFacetFilter> getAutomaticOptionalFacetFilters() {
     return automaticOptionalFacetFilters;
-  }
-
-  public void setAutomaticOptionalFacetFilters(
-    List<AutomaticFacetFilter> automaticOptionalFacetFilters
-  ) {
-    this.automaticOptionalFacetFilters = automaticOptionalFacetFilters;
   }
 
   @Override

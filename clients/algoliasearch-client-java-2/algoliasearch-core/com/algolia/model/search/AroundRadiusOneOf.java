@@ -11,7 +11,7 @@ import java.io.IOException;
 public enum AroundRadiusOneOf {
   ALL("all");
 
-  private String value;
+  private final String value;
 
   AroundRadiusOneOf(String value) {
     this.value = value;

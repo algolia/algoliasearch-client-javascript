@@ -9,7 +9,7 @@ public class GetDictionarySettingsResponse {
   @SerializedName("disableStandardEntries")
   private StandardEntries disableStandardEntries;
 
-  public GetDictionarySettingsResponse disableStandardEntries(
+  public GetDictionarySettingsResponse setDisableStandardEntries(
     StandardEntries disableStandardEntries
   ) {
     this.disableStandardEntries = disableStandardEntries;
@@ -24,12 +24,6 @@ public class GetDictionarySettingsResponse {
   @javax.annotation.Nonnull
   public StandardEntries getDisableStandardEntries() {
     return disableStandardEntries;
-  }
-
-  public void setDisableStandardEntries(
-    StandardEntries disableStandardEntries
-  ) {
-    this.disableStandardEntries = disableStandardEntries;
   }
 
   @Override

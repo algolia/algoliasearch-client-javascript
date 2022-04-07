@@ -15,7 +15,7 @@ public class MultipleBatchOperation {
   @SerializedName("indexName")
   private String indexName;
 
-  public MultipleBatchOperation action(Action action) {
+  public MultipleBatchOperation setAction(Action action) {
     this.action = action;
     return this;
   }
@@ -30,11 +30,7 @@ public class MultipleBatchOperation {
     return action;
   }
 
-  public void setAction(Action action) {
-    this.action = action;
-  }
-
-  public MultipleBatchOperation body(Object body) {
+  public MultipleBatchOperation setBody(Object body) {
     this.body = body;
     return this;
   }
@@ -49,11 +45,7 @@ public class MultipleBatchOperation {
     return body;
   }
 
-  public void setBody(Object body) {
-    this.body = body;
-  }
-
-  public MultipleBatchOperation indexName(String indexName) {
+  public MultipleBatchOperation setIndexName(String indexName) {
     this.indexName = indexName;
     return this;
   }
@@ -66,10 +58,6 @@ public class MultipleBatchOperation {
   @javax.annotation.Nullable
   public String getIndexName() {
     return indexName;
-  }
-
-  public void setIndexName(String indexName) {
-    this.indexName = indexName;
   }
 
   @Override

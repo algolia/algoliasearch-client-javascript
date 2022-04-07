@@ -24,7 +24,7 @@ public class SearchUserIdsResponseHits {
   @SerializedName("_highlightResult")
   private SearchUserIdsResponseHighlightResult highlightResult;
 
-  public SearchUserIdsResponseHits userID(String userID) {
+  public SearchUserIdsResponseHits setUserID(String userID) {
     this.userID = userID;
     return this;
   }
@@ -39,11 +39,7 @@ public class SearchUserIdsResponseHits {
     return userID;
   }
 
-  public void setUserID(String userID) {
-    this.userID = userID;
-  }
-
-  public SearchUserIdsResponseHits clusterName(String clusterName) {
+  public SearchUserIdsResponseHits setClusterName(String clusterName) {
     this.clusterName = clusterName;
     return this;
   }
@@ -58,11 +54,7 @@ public class SearchUserIdsResponseHits {
     return clusterName;
   }
 
-  public void setClusterName(String clusterName) {
-    this.clusterName = clusterName;
-  }
-
-  public SearchUserIdsResponseHits nbRecords(Integer nbRecords) {
+  public SearchUserIdsResponseHits setNbRecords(Integer nbRecords) {
     this.nbRecords = nbRecords;
     return this;
   }
@@ -77,11 +69,7 @@ public class SearchUserIdsResponseHits {
     return nbRecords;
   }
 
-  public void setNbRecords(Integer nbRecords) {
-    this.nbRecords = nbRecords;
-  }
-
-  public SearchUserIdsResponseHits dataSize(Integer dataSize) {
+  public SearchUserIdsResponseHits setDataSize(Integer dataSize) {
     this.dataSize = dataSize;
     return this;
   }
@@ -96,11 +84,7 @@ public class SearchUserIdsResponseHits {
     return dataSize;
   }
 
-  public void setDataSize(Integer dataSize) {
-    this.dataSize = dataSize;
-  }
-
-  public SearchUserIdsResponseHits objectID(String objectID) {
+  public SearchUserIdsResponseHits setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -115,11 +99,7 @@ public class SearchUserIdsResponseHits {
     return objectID;
   }
 
-  public void setObjectID(String objectID) {
-    this.objectID = objectID;
-  }
-
-  public SearchUserIdsResponseHits highlightResult(
+  public SearchUserIdsResponseHits setHighlightResult(
     SearchUserIdsResponseHighlightResult highlightResult
   ) {
     this.highlightResult = highlightResult;
@@ -134,12 +114,6 @@ public class SearchUserIdsResponseHits {
   @javax.annotation.Nonnull
   public SearchUserIdsResponseHighlightResult getHighlightResult() {
     return highlightResult;
-  }
-
-  public void setHighlightResult(
-    SearchUserIdsResponseHighlightResult highlightResult
-  ) {
-    this.highlightResult = highlightResult;
   }
 
   @Override

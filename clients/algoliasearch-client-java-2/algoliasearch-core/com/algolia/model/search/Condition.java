@@ -18,7 +18,7 @@ public class Condition {
   @SerializedName("context")
   private String context;
 
-  public Condition pattern(String pattern) {
+  public Condition setPattern(String pattern) {
     this.pattern = pattern;
     return this;
   }
@@ -33,11 +33,7 @@ public class Condition {
     return pattern;
   }
 
-  public void setPattern(String pattern) {
-    this.pattern = pattern;
-  }
-
-  public Condition anchoring(Anchoring anchoring) {
+  public Condition setAnchoring(Anchoring anchoring) {
     this.anchoring = anchoring;
     return this;
   }
@@ -52,11 +48,7 @@ public class Condition {
     return anchoring;
   }
 
-  public void setAnchoring(Anchoring anchoring) {
-    this.anchoring = anchoring;
-  }
-
-  public Condition alternatives(Boolean alternatives) {
+  public Condition setAlternatives(Boolean alternatives) {
     this.alternatives = alternatives;
     return this;
   }
@@ -71,11 +63,7 @@ public class Condition {
     return alternatives;
   }
 
-  public void setAlternatives(Boolean alternatives) {
-    this.alternatives = alternatives;
-  }
-
-  public Condition context(String context) {
+  public Condition setContext(String context) {
     this.context = context;
     return this;
   }
@@ -88,10 +76,6 @@ public class Condition {
   @javax.annotation.Nullable
   public String getContext() {
     return context;
-  }
-
-  public void setContext(String context) {
-    this.context = context;
   }
 
   @Override

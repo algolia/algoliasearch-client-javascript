@@ -16,7 +16,7 @@ public class GetTaskResponse {
   public enum StatusEnum {
     PUBLISHED("published"),
 
-    NOTPUBLISHED("notPublished");
+    NOT_PUBLISHED("notPublished");
 
     private String value;
 
@@ -63,7 +63,7 @@ public class GetTaskResponse {
   @SerializedName("status")
   private StatusEnum status;
 
-  public GetTaskResponse status(StatusEnum status) {
+  public GetTaskResponse setStatus(StatusEnum status) {
     this.status = status;
     return this;
   }
@@ -76,10 +76,6 @@ public class GetTaskResponse {
   @javax.annotation.Nonnull
   public StatusEnum getStatus() {
     return status;
-  }
-
-  public void setStatus(StatusEnum status) {
-    this.status = status;
   }
 
   @Override

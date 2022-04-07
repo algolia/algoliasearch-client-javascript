@@ -105,7 +105,7 @@ public class BaseSearchParams {
   @SerializedName("enableReRanking")
   private Boolean enableReRanking = true;
 
-  public BaseSearchParams similarQuery(String similarQuery) {
+  public BaseSearchParams setSimilarQuery(String similarQuery) {
     this.similarQuery = similarQuery;
     return this;
   }
@@ -121,11 +121,7 @@ public class BaseSearchParams {
     return similarQuery;
   }
 
-  public void setSimilarQuery(String similarQuery) {
-    this.similarQuery = similarQuery;
-  }
-
-  public BaseSearchParams filters(String filters) {
+  public BaseSearchParams setFilters(String filters) {
     this.filters = filters;
     return this;
   }
@@ -140,11 +136,7 @@ public class BaseSearchParams {
     return filters;
   }
 
-  public void setFilters(String filters) {
-    this.filters = filters;
-  }
-
-  public BaseSearchParams facetFilters(List<String> facetFilters) {
+  public BaseSearchParams setFacetFilters(List<String> facetFilters) {
     this.facetFilters = facetFilters;
     return this;
   }
@@ -167,11 +159,7 @@ public class BaseSearchParams {
     return facetFilters;
   }
 
-  public void setFacetFilters(List<String> facetFilters) {
-    this.facetFilters = facetFilters;
-  }
-
-  public BaseSearchParams optionalFilters(List<String> optionalFilters) {
+  public BaseSearchParams setOptionalFilters(List<String> optionalFilters) {
     this.optionalFilters = optionalFilters;
     return this;
   }
@@ -195,11 +183,7 @@ public class BaseSearchParams {
     return optionalFilters;
   }
 
-  public void setOptionalFilters(List<String> optionalFilters) {
-    this.optionalFilters = optionalFilters;
-  }
-
-  public BaseSearchParams numericFilters(List<String> numericFilters) {
+  public BaseSearchParams setNumericFilters(List<String> numericFilters) {
     this.numericFilters = numericFilters;
     return this;
   }
@@ -222,11 +206,7 @@ public class BaseSearchParams {
     return numericFilters;
   }
 
-  public void setNumericFilters(List<String> numericFilters) {
-    this.numericFilters = numericFilters;
-  }
-
-  public BaseSearchParams tagFilters(List<String> tagFilters) {
+  public BaseSearchParams setTagFilters(List<String> tagFilters) {
     this.tagFilters = tagFilters;
     return this;
   }
@@ -249,11 +229,7 @@ public class BaseSearchParams {
     return tagFilters;
   }
 
-  public void setTagFilters(List<String> tagFilters) {
-    this.tagFilters = tagFilters;
-  }
-
-  public BaseSearchParams sumOrFiltersScores(Boolean sumOrFiltersScores) {
+  public BaseSearchParams setSumOrFiltersScores(Boolean sumOrFiltersScores) {
     this.sumOrFiltersScores = sumOrFiltersScores;
     return this;
   }
@@ -268,11 +244,7 @@ public class BaseSearchParams {
     return sumOrFiltersScores;
   }
 
-  public void setSumOrFiltersScores(Boolean sumOrFiltersScores) {
-    this.sumOrFiltersScores = sumOrFiltersScores;
-  }
-
-  public BaseSearchParams facets(List<String> facets) {
+  public BaseSearchParams setFacets(List<String> facets) {
     this.facets = facets;
     return this;
   }
@@ -295,11 +267,7 @@ public class BaseSearchParams {
     return facets;
   }
 
-  public void setFacets(List<String> facets) {
-    this.facets = facets;
-  }
-
-  public BaseSearchParams maxValuesPerFacet(Integer maxValuesPerFacet) {
+  public BaseSearchParams setMaxValuesPerFacet(Integer maxValuesPerFacet) {
     this.maxValuesPerFacet = maxValuesPerFacet;
     return this;
   }
@@ -314,11 +282,9 @@ public class BaseSearchParams {
     return maxValuesPerFacet;
   }
 
-  public void setMaxValuesPerFacet(Integer maxValuesPerFacet) {
-    this.maxValuesPerFacet = maxValuesPerFacet;
-  }
-
-  public BaseSearchParams facetingAfterDistinct(Boolean facetingAfterDistinct) {
+  public BaseSearchParams setFacetingAfterDistinct(
+    Boolean facetingAfterDistinct
+  ) {
     this.facetingAfterDistinct = facetingAfterDistinct;
     return this;
   }
@@ -333,11 +299,7 @@ public class BaseSearchParams {
     return facetingAfterDistinct;
   }
 
-  public void setFacetingAfterDistinct(Boolean facetingAfterDistinct) {
-    this.facetingAfterDistinct = facetingAfterDistinct;
-  }
-
-  public BaseSearchParams sortFacetValuesBy(String sortFacetValuesBy) {
+  public BaseSearchParams setSortFacetValuesBy(String sortFacetValuesBy) {
     this.sortFacetValuesBy = sortFacetValuesBy;
     return this;
   }
@@ -352,11 +314,7 @@ public class BaseSearchParams {
     return sortFacetValuesBy;
   }
 
-  public void setSortFacetValuesBy(String sortFacetValuesBy) {
-    this.sortFacetValuesBy = sortFacetValuesBy;
-  }
-
-  public BaseSearchParams page(Integer page) {
+  public BaseSearchParams setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -371,11 +329,7 @@ public class BaseSearchParams {
     return page;
   }
 
-  public void setPage(Integer page) {
-    this.page = page;
-  }
-
-  public BaseSearchParams offset(Integer offset) {
+  public BaseSearchParams setOffset(Integer offset) {
     this.offset = offset;
     return this;
   }
@@ -390,11 +344,7 @@ public class BaseSearchParams {
     return offset;
   }
 
-  public void setOffset(Integer offset) {
-    this.offset = offset;
-  }
-
-  public BaseSearchParams length(Integer length) {
+  public BaseSearchParams setLength(Integer length) {
     this.length = length;
     return this;
   }
@@ -409,11 +359,7 @@ public class BaseSearchParams {
     return length;
   }
 
-  public void setLength(Integer length) {
-    this.length = length;
-  }
-
-  public BaseSearchParams aroundLatLng(String aroundLatLng) {
+  public BaseSearchParams setAroundLatLng(String aroundLatLng) {
     this.aroundLatLng = aroundLatLng;
     return this;
   }
@@ -428,11 +374,7 @@ public class BaseSearchParams {
     return aroundLatLng;
   }
 
-  public void setAroundLatLng(String aroundLatLng) {
-    this.aroundLatLng = aroundLatLng;
-  }
-
-  public BaseSearchParams aroundLatLngViaIP(Boolean aroundLatLngViaIP) {
+  public BaseSearchParams setAroundLatLngViaIP(Boolean aroundLatLngViaIP) {
     this.aroundLatLngViaIP = aroundLatLngViaIP;
     return this;
   }
@@ -448,11 +390,7 @@ public class BaseSearchParams {
     return aroundLatLngViaIP;
   }
 
-  public void setAroundLatLngViaIP(Boolean aroundLatLngViaIP) {
-    this.aroundLatLngViaIP = aroundLatLngViaIP;
-  }
-
-  public BaseSearchParams aroundRadius(AroundRadius aroundRadius) {
+  public BaseSearchParams setAroundRadius(AroundRadius aroundRadius) {
     this.aroundRadius = aroundRadius;
     return this;
   }
@@ -467,11 +405,7 @@ public class BaseSearchParams {
     return aroundRadius;
   }
 
-  public void setAroundRadius(AroundRadius aroundRadius) {
-    this.aroundRadius = aroundRadius;
-  }
-
-  public BaseSearchParams aroundPrecision(Integer aroundPrecision) {
+  public BaseSearchParams setAroundPrecision(Integer aroundPrecision) {
     this.aroundPrecision = aroundPrecision;
     return this;
   }
@@ -486,11 +420,7 @@ public class BaseSearchParams {
     return aroundPrecision;
   }
 
-  public void setAroundPrecision(Integer aroundPrecision) {
-    this.aroundPrecision = aroundPrecision;
-  }
-
-  public BaseSearchParams minimumAroundRadius(Integer minimumAroundRadius) {
+  public BaseSearchParams setMinimumAroundRadius(Integer minimumAroundRadius) {
     this.minimumAroundRadius = minimumAroundRadius;
     return this;
   }
@@ -505,11 +435,7 @@ public class BaseSearchParams {
     return minimumAroundRadius;
   }
 
-  public void setMinimumAroundRadius(Integer minimumAroundRadius) {
-    this.minimumAroundRadius = minimumAroundRadius;
-  }
-
-  public BaseSearchParams insideBoundingBox(
+  public BaseSearchParams setInsideBoundingBox(
     List<BigDecimal> insideBoundingBox
   ) {
     this.insideBoundingBox = insideBoundingBox;
@@ -536,11 +462,7 @@ public class BaseSearchParams {
     return insideBoundingBox;
   }
 
-  public void setInsideBoundingBox(List<BigDecimal> insideBoundingBox) {
-    this.insideBoundingBox = insideBoundingBox;
-  }
-
-  public BaseSearchParams insidePolygon(List<BigDecimal> insidePolygon) {
+  public BaseSearchParams setInsidePolygon(List<BigDecimal> insidePolygon) {
     this.insidePolygon = insidePolygon;
     return this;
   }
@@ -563,11 +485,7 @@ public class BaseSearchParams {
     return insidePolygon;
   }
 
-  public void setInsidePolygon(List<BigDecimal> insidePolygon) {
-    this.insidePolygon = insidePolygon;
-  }
-
-  public BaseSearchParams naturalLanguages(List<String> naturalLanguages) {
+  public BaseSearchParams setNaturalLanguages(List<String> naturalLanguages) {
     this.naturalLanguages = naturalLanguages;
     return this;
   }
@@ -594,11 +512,7 @@ public class BaseSearchParams {
     return naturalLanguages;
   }
 
-  public void setNaturalLanguages(List<String> naturalLanguages) {
-    this.naturalLanguages = naturalLanguages;
-  }
-
-  public BaseSearchParams ruleContexts(List<String> ruleContexts) {
+  public BaseSearchParams setRuleContexts(List<String> ruleContexts) {
     this.ruleContexts = ruleContexts;
     return this;
   }
@@ -621,11 +535,9 @@ public class BaseSearchParams {
     return ruleContexts;
   }
 
-  public void setRuleContexts(List<String> ruleContexts) {
-    this.ruleContexts = ruleContexts;
-  }
-
-  public BaseSearchParams personalizationImpact(Integer personalizationImpact) {
+  public BaseSearchParams setPersonalizationImpact(
+    Integer personalizationImpact
+  ) {
     this.personalizationImpact = personalizationImpact;
     return this;
   }
@@ -640,11 +552,7 @@ public class BaseSearchParams {
     return personalizationImpact;
   }
 
-  public void setPersonalizationImpact(Integer personalizationImpact) {
-    this.personalizationImpact = personalizationImpact;
-  }
-
-  public BaseSearchParams userToken(String userToken) {
+  public BaseSearchParams setUserToken(String userToken) {
     this.userToken = userToken;
     return this;
   }
@@ -659,11 +567,7 @@ public class BaseSearchParams {
     return userToken;
   }
 
-  public void setUserToken(String userToken) {
-    this.userToken = userToken;
-  }
-
-  public BaseSearchParams getRankingInfo(Boolean getRankingInfo) {
+  public BaseSearchParams setGetRankingInfo(Boolean getRankingInfo) {
     this.getRankingInfo = getRankingInfo;
     return this;
   }
@@ -678,11 +582,7 @@ public class BaseSearchParams {
     return getRankingInfo;
   }
 
-  public void setGetRankingInfo(Boolean getRankingInfo) {
-    this.getRankingInfo = getRankingInfo;
-  }
-
-  public BaseSearchParams clickAnalytics(Boolean clickAnalytics) {
+  public BaseSearchParams setClickAnalytics(Boolean clickAnalytics) {
     this.clickAnalytics = clickAnalytics;
     return this;
   }
@@ -697,11 +597,7 @@ public class BaseSearchParams {
     return clickAnalytics;
   }
 
-  public void setClickAnalytics(Boolean clickAnalytics) {
-    this.clickAnalytics = clickAnalytics;
-  }
-
-  public BaseSearchParams analytics(Boolean analytics) {
+  public BaseSearchParams setAnalytics(Boolean analytics) {
     this.analytics = analytics;
     return this;
   }
@@ -716,11 +612,7 @@ public class BaseSearchParams {
     return analytics;
   }
 
-  public void setAnalytics(Boolean analytics) {
-    this.analytics = analytics;
-  }
-
-  public BaseSearchParams analyticsTags(List<String> analyticsTags) {
+  public BaseSearchParams setAnalyticsTags(List<String> analyticsTags) {
     this.analyticsTags = analyticsTags;
     return this;
   }
@@ -743,11 +635,9 @@ public class BaseSearchParams {
     return analyticsTags;
   }
 
-  public void setAnalyticsTags(List<String> analyticsTags) {
-    this.analyticsTags = analyticsTags;
-  }
-
-  public BaseSearchParams percentileComputation(Boolean percentileComputation) {
+  public BaseSearchParams setPercentileComputation(
+    Boolean percentileComputation
+  ) {
     this.percentileComputation = percentileComputation;
     return this;
   }
@@ -762,11 +652,7 @@ public class BaseSearchParams {
     return percentileComputation;
   }
 
-  public void setPercentileComputation(Boolean percentileComputation) {
-    this.percentileComputation = percentileComputation;
-  }
-
-  public BaseSearchParams enableABTest(Boolean enableABTest) {
+  public BaseSearchParams setEnableABTest(Boolean enableABTest) {
     this.enableABTest = enableABTest;
     return this;
   }
@@ -781,11 +667,7 @@ public class BaseSearchParams {
     return enableABTest;
   }
 
-  public void setEnableABTest(Boolean enableABTest) {
-    this.enableABTest = enableABTest;
-  }
-
-  public BaseSearchParams enableReRanking(Boolean enableReRanking) {
+  public BaseSearchParams setEnableReRanking(Boolean enableReRanking) {
     this.enableReRanking = enableReRanking;
     return this;
   }
@@ -798,10 +680,6 @@ public class BaseSearchParams {
   @javax.annotation.Nullable
   public Boolean getEnableReRanking() {
     return enableReRanking;
-  }
-
-  public void setEnableReRanking(Boolean enableReRanking) {
-    this.enableReRanking = enableReRanking;
   }
 
   @Override

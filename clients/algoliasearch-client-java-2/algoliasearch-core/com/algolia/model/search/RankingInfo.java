@@ -41,7 +41,7 @@ public class RankingInfo {
   @SerializedName("word")
   private Integer word;
 
-  public RankingInfo filters(Integer filters) {
+  public RankingInfo setFilters(Integer filters) {
     this.filters = filters;
     return this;
   }
@@ -56,11 +56,7 @@ public class RankingInfo {
     return filters;
   }
 
-  public void setFilters(Integer filters) {
-    this.filters = filters;
-  }
-
-  public RankingInfo firstMatchedWord(Integer firstMatchedWord) {
+  public RankingInfo setFirstMatchedWord(Integer firstMatchedWord) {
     this.firstMatchedWord = firstMatchedWord;
     return this;
   }
@@ -75,11 +71,7 @@ public class RankingInfo {
     return firstMatchedWord;
   }
 
-  public void setFirstMatchedWord(Integer firstMatchedWord) {
-    this.firstMatchedWord = firstMatchedWord;
-  }
-
-  public RankingInfo geoDistance(Integer geoDistance) {
+  public RankingInfo setGeoDistance(Integer geoDistance) {
     this.geoDistance = geoDistance;
     return this;
   }
@@ -95,11 +87,7 @@ public class RankingInfo {
     return geoDistance;
   }
 
-  public void setGeoDistance(Integer geoDistance) {
-    this.geoDistance = geoDistance;
-  }
-
-  public RankingInfo geoPrecision(Integer geoPrecision) {
+  public RankingInfo setGeoPrecision(Integer geoPrecision) {
     this.geoPrecision = geoPrecision;
     return this;
   }
@@ -114,11 +102,7 @@ public class RankingInfo {
     return geoPrecision;
   }
 
-  public void setGeoPrecision(Integer geoPrecision) {
-    this.geoPrecision = geoPrecision;
-  }
-
-  public RankingInfo matchedGeoLocation(
+  public RankingInfo setMatchedGeoLocation(
     Map<String, RankingInfoMatchedGeoLocation> matchedGeoLocation
   ) {
     this.matchedGeoLocation = matchedGeoLocation;
@@ -146,13 +130,7 @@ public class RankingInfo {
     return matchedGeoLocation;
   }
 
-  public void setMatchedGeoLocation(
-    Map<String, RankingInfoMatchedGeoLocation> matchedGeoLocation
-  ) {
-    this.matchedGeoLocation = matchedGeoLocation;
-  }
-
-  public RankingInfo nbExactWords(Integer nbExactWords) {
+  public RankingInfo setNbExactWords(Integer nbExactWords) {
     this.nbExactWords = nbExactWords;
     return this;
   }
@@ -167,11 +145,7 @@ public class RankingInfo {
     return nbExactWords;
   }
 
-  public void setNbExactWords(Integer nbExactWords) {
-    this.nbExactWords = nbExactWords;
-  }
-
-  public RankingInfo nbTypos(Integer nbTypos) {
+  public RankingInfo setNbTypos(Integer nbTypos) {
     this.nbTypos = nbTypos;
     return this;
   }
@@ -186,11 +160,7 @@ public class RankingInfo {
     return nbTypos;
   }
 
-  public void setNbTypos(Integer nbTypos) {
-    this.nbTypos = nbTypos;
-  }
-
-  public RankingInfo promoted(Boolean promoted) {
+  public RankingInfo setPromoted(Boolean promoted) {
     this.promoted = promoted;
     return this;
   }
@@ -205,11 +175,7 @@ public class RankingInfo {
     return promoted;
   }
 
-  public void setPromoted(Boolean promoted) {
-    this.promoted = promoted;
-  }
-
-  public RankingInfo proximityDistance(Integer proximityDistance) {
+  public RankingInfo setProximityDistance(Integer proximityDistance) {
     this.proximityDistance = proximityDistance;
     return this;
   }
@@ -225,11 +191,7 @@ public class RankingInfo {
     return proximityDistance;
   }
 
-  public void setProximityDistance(Integer proximityDistance) {
-    this.proximityDistance = proximityDistance;
-  }
-
-  public RankingInfo userScore(Integer userScore) {
+  public RankingInfo setUserScore(Integer userScore) {
     this.userScore = userScore;
     return this;
   }
@@ -244,11 +206,7 @@ public class RankingInfo {
     return userScore;
   }
 
-  public void setUserScore(Integer userScore) {
-    this.userScore = userScore;
-  }
-
-  public RankingInfo word(Integer word) {
+  public RankingInfo setWord(Integer word) {
     this.word = word;
     return this;
   }
@@ -261,10 +219,6 @@ public class RankingInfo {
   @javax.annotation.Nullable
   public Integer getWord() {
     return word;
-  }
-
-  public void setWord(Integer word) {
-    this.word = word;
   }
 
   @Override

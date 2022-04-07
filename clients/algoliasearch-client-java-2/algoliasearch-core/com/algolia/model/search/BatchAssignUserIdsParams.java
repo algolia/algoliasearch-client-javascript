@@ -14,7 +14,7 @@ public class BatchAssignUserIdsParams {
   @SerializedName("users")
   private List<String> users = new ArrayList<>();
 
-  public BatchAssignUserIdsParams cluster(String cluster) {
+  public BatchAssignUserIdsParams setCluster(String cluster) {
     this.cluster = cluster;
     return this;
   }
@@ -29,11 +29,7 @@ public class BatchAssignUserIdsParams {
     return cluster;
   }
 
-  public void setCluster(String cluster) {
-    this.cluster = cluster;
-  }
-
-  public BatchAssignUserIdsParams users(List<String> users) {
+  public BatchAssignUserIdsParams setUsers(List<String> users) {
     this.users = users;
     return this;
   }
@@ -51,10 +47,6 @@ public class BatchAssignUserIdsParams {
   @javax.annotation.Nonnull
   public List<String> getUsers() {
     return users;
-  }
-
-  public void setUsers(List<String> users) {
-    this.users = users;
   }
 
   @Override

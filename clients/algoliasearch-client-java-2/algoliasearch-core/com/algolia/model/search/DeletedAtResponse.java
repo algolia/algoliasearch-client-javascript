@@ -12,7 +12,7 @@ public class DeletedAtResponse {
   @SerializedName("deletedAt")
   private String deletedAt;
 
-  public DeletedAtResponse taskID(Integer taskID) {
+  public DeletedAtResponse setTaskID(Integer taskID) {
     this.taskID = taskID;
     return this;
   }
@@ -27,11 +27,7 @@ public class DeletedAtResponse {
     return taskID;
   }
 
-  public void setTaskID(Integer taskID) {
-    this.taskID = taskID;
-  }
-
-  public DeletedAtResponse deletedAt(String deletedAt) {
+  public DeletedAtResponse setDeletedAt(String deletedAt) {
     this.deletedAt = deletedAt;
     return this;
   }
@@ -44,10 +40,6 @@ public class DeletedAtResponse {
   @javax.annotation.Nonnull
   public String getDeletedAt() {
     return deletedAt;
-  }
-
-  public void setDeletedAt(String deletedAt) {
-    this.deletedAt = deletedAt;
   }
 
   @Override

@@ -27,7 +27,7 @@ public class DictionaryEntry extends HashMap<String, Object> {
   @SerializedName("state")
   private DictionaryEntryState state = DictionaryEntryState.ENABLED;
 
-  public DictionaryEntry objectID(String objectID) {
+  public DictionaryEntry setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -42,11 +42,7 @@ public class DictionaryEntry extends HashMap<String, Object> {
     return objectID;
   }
 
-  public void setObjectID(String objectID) {
-    this.objectID = objectID;
-  }
-
-  public DictionaryEntry language(String language) {
+  public DictionaryEntry setLanguage(String language) {
     this.language = language;
     return this;
   }
@@ -61,11 +57,7 @@ public class DictionaryEntry extends HashMap<String, Object> {
     return language;
   }
 
-  public void setLanguage(String language) {
-    this.language = language;
-  }
-
-  public DictionaryEntry word(String word) {
+  public DictionaryEntry setWord(String word) {
     this.word = word;
     return this;
   }
@@ -80,11 +72,7 @@ public class DictionaryEntry extends HashMap<String, Object> {
     return word;
   }
 
-  public void setWord(String word) {
-    this.word = word;
-  }
-
-  public DictionaryEntry words(List<String> words) {
+  public DictionaryEntry setWords(List<String> words) {
     this.words = words;
     return this;
   }
@@ -107,11 +95,7 @@ public class DictionaryEntry extends HashMap<String, Object> {
     return words;
   }
 
-  public void setWords(List<String> words) {
-    this.words = words;
-  }
-
-  public DictionaryEntry decomposition(List<String> decomposition) {
+  public DictionaryEntry setDecomposition(List<String> decomposition) {
     this.decomposition = decomposition;
     return this;
   }
@@ -134,11 +118,7 @@ public class DictionaryEntry extends HashMap<String, Object> {
     return decomposition;
   }
 
-  public void setDecomposition(List<String> decomposition) {
-    this.decomposition = decomposition;
-  }
-
-  public DictionaryEntry state(DictionaryEntryState state) {
+  public DictionaryEntry setState(DictionaryEntryState state) {
     this.state = state;
     return this;
   }
@@ -151,10 +131,6 @@ public class DictionaryEntry extends HashMap<String, Object> {
   @javax.annotation.Nullable
   public DictionaryEntryState getState() {
     return state;
-  }
-
-  public void setState(DictionaryEntryState state) {
-    this.state = state;
   }
 
   @Override

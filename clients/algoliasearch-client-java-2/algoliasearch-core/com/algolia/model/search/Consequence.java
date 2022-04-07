@@ -23,7 +23,7 @@ public class Consequence {
   @SerializedName("userData")
   private Object userData;
 
-  public Consequence params(ConsequenceParams params) {
+  public Consequence setParams(ConsequenceParams params) {
     this.params = params;
     return this;
   }
@@ -38,11 +38,7 @@ public class Consequence {
     return params;
   }
 
-  public void setParams(ConsequenceParams params) {
-    this.params = params;
-  }
-
-  public Consequence promote(List<Promote> promote) {
+  public Consequence setPromote(List<Promote> promote) {
     this.promote = promote;
     return this;
   }
@@ -65,11 +61,7 @@ public class Consequence {
     return promote;
   }
 
-  public void setPromote(List<Promote> promote) {
-    this.promote = promote;
-  }
-
-  public Consequence filterPromotes(Boolean filterPromotes) {
+  public Consequence setFilterPromotes(Boolean filterPromotes) {
     this.filterPromotes = filterPromotes;
     return this;
   }
@@ -86,11 +78,7 @@ public class Consequence {
     return filterPromotes;
   }
 
-  public void setFilterPromotes(Boolean filterPromotes) {
-    this.filterPromotes = filterPromotes;
-  }
-
-  public Consequence hide(List<ConsequenceHide> hide) {
+  public Consequence setHide(List<ConsequenceHide> hide) {
     this.hide = hide;
     return this;
   }
@@ -114,11 +102,7 @@ public class Consequence {
     return hide;
   }
 
-  public void setHide(List<ConsequenceHide> hide) {
-    this.hide = hide;
-  }
-
-  public Consequence userData(Object userData) {
+  public Consequence setUserData(Object userData) {
     this.userData = userData;
     return this;
   }
@@ -132,10 +116,6 @@ public class Consequence {
   @javax.annotation.Nullable
   public Object getUserData() {
     return userData;
-  }
-
-  public void setUserData(Object userData) {
-    this.userData = userData;
   }
 
   @Override

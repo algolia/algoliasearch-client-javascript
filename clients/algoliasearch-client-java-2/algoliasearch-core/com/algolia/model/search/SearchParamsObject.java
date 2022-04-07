@@ -254,11 +254,11 @@ public class SearchParamsObject {
   /** Controls if and how query words are interpreted as prefixes. */
   @JsonAdapter(QueryTypeEnum.Adapter.class)
   public enum QueryTypeEnum {
-    PREFIXLAST("prefixLast"),
+    PREFIX_LAST("prefixLast"),
 
-    PREFIXALL("prefixAll"),
+    PREFIX_ALL("prefixAll"),
 
-    PREFIXNONE("prefixNone");
+    PREFIX_NONE("prefixNone");
 
     private String value;
 
@@ -304,18 +304,18 @@ public class SearchParamsObject {
   }
 
   @SerializedName("queryType")
-  private QueryTypeEnum queryType = QueryTypeEnum.PREFIXLAST;
+  private QueryTypeEnum queryType = QueryTypeEnum.PREFIX_LAST;
 
   /** Selects a strategy to remove words from the query when it doesn't match any hits. */
   @JsonAdapter(RemoveWordsIfNoResultsEnum.Adapter.class)
   public enum RemoveWordsIfNoResultsEnum {
     NONE("none"),
 
-    LASTWORDS("lastWords"),
+    LAST_WORDS("lastWords"),
 
-    FIRSTWORDS("firstWords"),
+    FIRST_WORDS("firstWords"),
 
-    ALLOPTIONAL("allOptional");
+    ALL_OPTIONAL("allOptional");
 
     private String value;
 
@@ -434,11 +434,11 @@ public class SearchParamsObject {
   /** Gets or Sets alternativesAsExact */
   @JsonAdapter(AlternativesAsExactEnum.Adapter.class)
   public enum AlternativesAsExactEnum {
-    IGNOREPLURALS("ignorePlurals"),
+    IGNORE_PLURALS("ignorePlurals"),
 
-    SINGLEWORDSYNONYM("singleWordSynonym"),
+    SINGLE_WORD_SYNONYM("singleWordSynonym"),
 
-    MULTIWORDSSYNONYM("multiWordsSynonym");
+    MULTI_WORDS_SYNONYM("multiWordsSynonym");
 
     private String value;
 
@@ -489,9 +489,9 @@ public class SearchParamsObject {
   /** Gets or Sets advancedSyntaxFeatures */
   @JsonAdapter(AdvancedSyntaxFeaturesEnum.Adapter.class)
   public enum AdvancedSyntaxFeaturesEnum {
-    EXACTPHRASE("exactPhrase"),
+    EXACT_PHRASE("exactPhrase"),
 
-    EXCLUDEWORDS("excludeWords");
+    EXCLUDE_WORDS("excludeWords");
 
     private String value;
 
@@ -564,7 +564,7 @@ public class SearchParamsObject {
   @SerializedName("renderingContent")
   private Object renderingContent = new Object();
 
-  public SearchParamsObject similarQuery(String similarQuery) {
+  public SearchParamsObject setSimilarQuery(String similarQuery) {
     this.similarQuery = similarQuery;
     return this;
   }
@@ -580,11 +580,7 @@ public class SearchParamsObject {
     return similarQuery;
   }
 
-  public void setSimilarQuery(String similarQuery) {
-    this.similarQuery = similarQuery;
-  }
-
-  public SearchParamsObject filters(String filters) {
+  public SearchParamsObject setFilters(String filters) {
     this.filters = filters;
     return this;
   }
@@ -599,11 +595,7 @@ public class SearchParamsObject {
     return filters;
   }
 
-  public void setFilters(String filters) {
-    this.filters = filters;
-  }
-
-  public SearchParamsObject facetFilters(List<String> facetFilters) {
+  public SearchParamsObject setFacetFilters(List<String> facetFilters) {
     this.facetFilters = facetFilters;
     return this;
   }
@@ -626,11 +618,7 @@ public class SearchParamsObject {
     return facetFilters;
   }
 
-  public void setFacetFilters(List<String> facetFilters) {
-    this.facetFilters = facetFilters;
-  }
-
-  public SearchParamsObject optionalFilters(List<String> optionalFilters) {
+  public SearchParamsObject setOptionalFilters(List<String> optionalFilters) {
     this.optionalFilters = optionalFilters;
     return this;
   }
@@ -654,11 +642,7 @@ public class SearchParamsObject {
     return optionalFilters;
   }
 
-  public void setOptionalFilters(List<String> optionalFilters) {
-    this.optionalFilters = optionalFilters;
-  }
-
-  public SearchParamsObject numericFilters(List<String> numericFilters) {
+  public SearchParamsObject setNumericFilters(List<String> numericFilters) {
     this.numericFilters = numericFilters;
     return this;
   }
@@ -681,11 +665,7 @@ public class SearchParamsObject {
     return numericFilters;
   }
 
-  public void setNumericFilters(List<String> numericFilters) {
-    this.numericFilters = numericFilters;
-  }
-
-  public SearchParamsObject tagFilters(List<String> tagFilters) {
+  public SearchParamsObject setTagFilters(List<String> tagFilters) {
     this.tagFilters = tagFilters;
     return this;
   }
@@ -708,11 +688,7 @@ public class SearchParamsObject {
     return tagFilters;
   }
 
-  public void setTagFilters(List<String> tagFilters) {
-    this.tagFilters = tagFilters;
-  }
-
-  public SearchParamsObject sumOrFiltersScores(Boolean sumOrFiltersScores) {
+  public SearchParamsObject setSumOrFiltersScores(Boolean sumOrFiltersScores) {
     this.sumOrFiltersScores = sumOrFiltersScores;
     return this;
   }
@@ -727,11 +703,7 @@ public class SearchParamsObject {
     return sumOrFiltersScores;
   }
 
-  public void setSumOrFiltersScores(Boolean sumOrFiltersScores) {
-    this.sumOrFiltersScores = sumOrFiltersScores;
-  }
-
-  public SearchParamsObject facets(List<String> facets) {
+  public SearchParamsObject setFacets(List<String> facets) {
     this.facets = facets;
     return this;
   }
@@ -754,11 +726,7 @@ public class SearchParamsObject {
     return facets;
   }
 
-  public void setFacets(List<String> facets) {
-    this.facets = facets;
-  }
-
-  public SearchParamsObject maxValuesPerFacet(Integer maxValuesPerFacet) {
+  public SearchParamsObject setMaxValuesPerFacet(Integer maxValuesPerFacet) {
     this.maxValuesPerFacet = maxValuesPerFacet;
     return this;
   }
@@ -773,11 +741,7 @@ public class SearchParamsObject {
     return maxValuesPerFacet;
   }
 
-  public void setMaxValuesPerFacet(Integer maxValuesPerFacet) {
-    this.maxValuesPerFacet = maxValuesPerFacet;
-  }
-
-  public SearchParamsObject facetingAfterDistinct(
+  public SearchParamsObject setFacetingAfterDistinct(
     Boolean facetingAfterDistinct
   ) {
     this.facetingAfterDistinct = facetingAfterDistinct;
@@ -794,11 +758,7 @@ public class SearchParamsObject {
     return facetingAfterDistinct;
   }
 
-  public void setFacetingAfterDistinct(Boolean facetingAfterDistinct) {
-    this.facetingAfterDistinct = facetingAfterDistinct;
-  }
-
-  public SearchParamsObject sortFacetValuesBy(String sortFacetValuesBy) {
+  public SearchParamsObject setSortFacetValuesBy(String sortFacetValuesBy) {
     this.sortFacetValuesBy = sortFacetValuesBy;
     return this;
   }
@@ -813,11 +773,7 @@ public class SearchParamsObject {
     return sortFacetValuesBy;
   }
 
-  public void setSortFacetValuesBy(String sortFacetValuesBy) {
-    this.sortFacetValuesBy = sortFacetValuesBy;
-  }
-
-  public SearchParamsObject page(Integer page) {
+  public SearchParamsObject setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -832,11 +788,7 @@ public class SearchParamsObject {
     return page;
   }
 
-  public void setPage(Integer page) {
-    this.page = page;
-  }
-
-  public SearchParamsObject offset(Integer offset) {
+  public SearchParamsObject setOffset(Integer offset) {
     this.offset = offset;
     return this;
   }
@@ -851,11 +803,7 @@ public class SearchParamsObject {
     return offset;
   }
 
-  public void setOffset(Integer offset) {
-    this.offset = offset;
-  }
-
-  public SearchParamsObject length(Integer length) {
+  public SearchParamsObject setLength(Integer length) {
     this.length = length;
     return this;
   }
@@ -870,11 +818,7 @@ public class SearchParamsObject {
     return length;
   }
 
-  public void setLength(Integer length) {
-    this.length = length;
-  }
-
-  public SearchParamsObject aroundLatLng(String aroundLatLng) {
+  public SearchParamsObject setAroundLatLng(String aroundLatLng) {
     this.aroundLatLng = aroundLatLng;
     return this;
   }
@@ -889,11 +833,7 @@ public class SearchParamsObject {
     return aroundLatLng;
   }
 
-  public void setAroundLatLng(String aroundLatLng) {
-    this.aroundLatLng = aroundLatLng;
-  }
-
-  public SearchParamsObject aroundLatLngViaIP(Boolean aroundLatLngViaIP) {
+  public SearchParamsObject setAroundLatLngViaIP(Boolean aroundLatLngViaIP) {
     this.aroundLatLngViaIP = aroundLatLngViaIP;
     return this;
   }
@@ -909,11 +849,7 @@ public class SearchParamsObject {
     return aroundLatLngViaIP;
   }
 
-  public void setAroundLatLngViaIP(Boolean aroundLatLngViaIP) {
-    this.aroundLatLngViaIP = aroundLatLngViaIP;
-  }
-
-  public SearchParamsObject aroundRadius(AroundRadius aroundRadius) {
+  public SearchParamsObject setAroundRadius(AroundRadius aroundRadius) {
     this.aroundRadius = aroundRadius;
     return this;
   }
@@ -928,11 +864,7 @@ public class SearchParamsObject {
     return aroundRadius;
   }
 
-  public void setAroundRadius(AroundRadius aroundRadius) {
-    this.aroundRadius = aroundRadius;
-  }
-
-  public SearchParamsObject aroundPrecision(Integer aroundPrecision) {
+  public SearchParamsObject setAroundPrecision(Integer aroundPrecision) {
     this.aroundPrecision = aroundPrecision;
     return this;
   }
@@ -947,11 +879,9 @@ public class SearchParamsObject {
     return aroundPrecision;
   }
 
-  public void setAroundPrecision(Integer aroundPrecision) {
-    this.aroundPrecision = aroundPrecision;
-  }
-
-  public SearchParamsObject minimumAroundRadius(Integer minimumAroundRadius) {
+  public SearchParamsObject setMinimumAroundRadius(
+    Integer minimumAroundRadius
+  ) {
     this.minimumAroundRadius = minimumAroundRadius;
     return this;
   }
@@ -966,11 +896,7 @@ public class SearchParamsObject {
     return minimumAroundRadius;
   }
 
-  public void setMinimumAroundRadius(Integer minimumAroundRadius) {
-    this.minimumAroundRadius = minimumAroundRadius;
-  }
-
-  public SearchParamsObject insideBoundingBox(
+  public SearchParamsObject setInsideBoundingBox(
     List<BigDecimal> insideBoundingBox
   ) {
     this.insideBoundingBox = insideBoundingBox;
@@ -997,11 +923,7 @@ public class SearchParamsObject {
     return insideBoundingBox;
   }
 
-  public void setInsideBoundingBox(List<BigDecimal> insideBoundingBox) {
-    this.insideBoundingBox = insideBoundingBox;
-  }
-
-  public SearchParamsObject insidePolygon(List<BigDecimal> insidePolygon) {
+  public SearchParamsObject setInsidePolygon(List<BigDecimal> insidePolygon) {
     this.insidePolygon = insidePolygon;
     return this;
   }
@@ -1024,11 +946,7 @@ public class SearchParamsObject {
     return insidePolygon;
   }
 
-  public void setInsidePolygon(List<BigDecimal> insidePolygon) {
-    this.insidePolygon = insidePolygon;
-  }
-
-  public SearchParamsObject naturalLanguages(List<String> naturalLanguages) {
+  public SearchParamsObject setNaturalLanguages(List<String> naturalLanguages) {
     this.naturalLanguages = naturalLanguages;
     return this;
   }
@@ -1057,11 +975,7 @@ public class SearchParamsObject {
     return naturalLanguages;
   }
 
-  public void setNaturalLanguages(List<String> naturalLanguages) {
-    this.naturalLanguages = naturalLanguages;
-  }
-
-  public SearchParamsObject ruleContexts(List<String> ruleContexts) {
+  public SearchParamsObject setRuleContexts(List<String> ruleContexts) {
     this.ruleContexts = ruleContexts;
     return this;
   }
@@ -1084,11 +998,7 @@ public class SearchParamsObject {
     return ruleContexts;
   }
 
-  public void setRuleContexts(List<String> ruleContexts) {
-    this.ruleContexts = ruleContexts;
-  }
-
-  public SearchParamsObject personalizationImpact(
+  public SearchParamsObject setPersonalizationImpact(
     Integer personalizationImpact
   ) {
     this.personalizationImpact = personalizationImpact;
@@ -1105,11 +1015,7 @@ public class SearchParamsObject {
     return personalizationImpact;
   }
 
-  public void setPersonalizationImpact(Integer personalizationImpact) {
-    this.personalizationImpact = personalizationImpact;
-  }
-
-  public SearchParamsObject userToken(String userToken) {
+  public SearchParamsObject setUserToken(String userToken) {
     this.userToken = userToken;
     return this;
   }
@@ -1124,11 +1030,7 @@ public class SearchParamsObject {
     return userToken;
   }
 
-  public void setUserToken(String userToken) {
-    this.userToken = userToken;
-  }
-
-  public SearchParamsObject getRankingInfo(Boolean getRankingInfo) {
+  public SearchParamsObject setGetRankingInfo(Boolean getRankingInfo) {
     this.getRankingInfo = getRankingInfo;
     return this;
   }
@@ -1143,11 +1045,7 @@ public class SearchParamsObject {
     return getRankingInfo;
   }
 
-  public void setGetRankingInfo(Boolean getRankingInfo) {
-    this.getRankingInfo = getRankingInfo;
-  }
-
-  public SearchParamsObject clickAnalytics(Boolean clickAnalytics) {
+  public SearchParamsObject setClickAnalytics(Boolean clickAnalytics) {
     this.clickAnalytics = clickAnalytics;
     return this;
   }
@@ -1162,11 +1060,7 @@ public class SearchParamsObject {
     return clickAnalytics;
   }
 
-  public void setClickAnalytics(Boolean clickAnalytics) {
-    this.clickAnalytics = clickAnalytics;
-  }
-
-  public SearchParamsObject analytics(Boolean analytics) {
+  public SearchParamsObject setAnalytics(Boolean analytics) {
     this.analytics = analytics;
     return this;
   }
@@ -1181,11 +1075,7 @@ public class SearchParamsObject {
     return analytics;
   }
 
-  public void setAnalytics(Boolean analytics) {
-    this.analytics = analytics;
-  }
-
-  public SearchParamsObject analyticsTags(List<String> analyticsTags) {
+  public SearchParamsObject setAnalyticsTags(List<String> analyticsTags) {
     this.analyticsTags = analyticsTags;
     return this;
   }
@@ -1208,11 +1098,7 @@ public class SearchParamsObject {
     return analyticsTags;
   }
 
-  public void setAnalyticsTags(List<String> analyticsTags) {
-    this.analyticsTags = analyticsTags;
-  }
-
-  public SearchParamsObject percentileComputation(
+  public SearchParamsObject setPercentileComputation(
     Boolean percentileComputation
   ) {
     this.percentileComputation = percentileComputation;
@@ -1229,11 +1115,7 @@ public class SearchParamsObject {
     return percentileComputation;
   }
 
-  public void setPercentileComputation(Boolean percentileComputation) {
-    this.percentileComputation = percentileComputation;
-  }
-
-  public SearchParamsObject enableABTest(Boolean enableABTest) {
+  public SearchParamsObject setEnableABTest(Boolean enableABTest) {
     this.enableABTest = enableABTest;
     return this;
   }
@@ -1248,11 +1130,7 @@ public class SearchParamsObject {
     return enableABTest;
   }
 
-  public void setEnableABTest(Boolean enableABTest) {
-    this.enableABTest = enableABTest;
-  }
-
-  public SearchParamsObject enableReRanking(Boolean enableReRanking) {
+  public SearchParamsObject setEnableReRanking(Boolean enableReRanking) {
     this.enableReRanking = enableReRanking;
     return this;
   }
@@ -1267,11 +1145,7 @@ public class SearchParamsObject {
     return enableReRanking;
   }
 
-  public void setEnableReRanking(Boolean enableReRanking) {
-    this.enableReRanking = enableReRanking;
-  }
-
-  public SearchParamsObject query(String query) {
+  public SearchParamsObject setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -1286,11 +1160,7 @@ public class SearchParamsObject {
     return query;
   }
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public SearchParamsObject searchableAttributes(
+  public SearchParamsObject setSearchableAttributes(
     List<String> searchableAttributes
   ) {
     this.searchableAttributes = searchableAttributes;
@@ -1317,11 +1187,7 @@ public class SearchParamsObject {
     return searchableAttributes;
   }
 
-  public void setSearchableAttributes(List<String> searchableAttributes) {
-    this.searchableAttributes = searchableAttributes;
-  }
-
-  public SearchParamsObject attributesForFaceting(
+  public SearchParamsObject setAttributesForFaceting(
     List<String> attributesForFaceting
   ) {
     this.attributesForFaceting = attributesForFaceting;
@@ -1348,11 +1214,7 @@ public class SearchParamsObject {
     return attributesForFaceting;
   }
 
-  public void setAttributesForFaceting(List<String> attributesForFaceting) {
-    this.attributesForFaceting = attributesForFaceting;
-  }
-
-  public SearchParamsObject unretrievableAttributes(
+  public SearchParamsObject setUnretrievableAttributes(
     List<String> unretrievableAttributes
   ) {
     this.unretrievableAttributes = unretrievableAttributes;
@@ -1379,11 +1241,7 @@ public class SearchParamsObject {
     return unretrievableAttributes;
   }
 
-  public void setUnretrievableAttributes(List<String> unretrievableAttributes) {
-    this.unretrievableAttributes = unretrievableAttributes;
-  }
-
-  public SearchParamsObject attributesToRetrieve(
+  public SearchParamsObject setAttributesToRetrieve(
     List<String> attributesToRetrieve
   ) {
     this.attributesToRetrieve = attributesToRetrieve;
@@ -1410,11 +1268,7 @@ public class SearchParamsObject {
     return attributesToRetrieve;
   }
 
-  public void setAttributesToRetrieve(List<String> attributesToRetrieve) {
-    this.attributesToRetrieve = attributesToRetrieve;
-  }
-
-  public SearchParamsObject restrictSearchableAttributes(
+  public SearchParamsObject setRestrictSearchableAttributes(
     List<String> restrictSearchableAttributes
   ) {
     this.restrictSearchableAttributes = restrictSearchableAttributes;
@@ -1441,13 +1295,7 @@ public class SearchParamsObject {
     return restrictSearchableAttributes;
   }
 
-  public void setRestrictSearchableAttributes(
-    List<String> restrictSearchableAttributes
-  ) {
-    this.restrictSearchableAttributes = restrictSearchableAttributes;
-  }
-
-  public SearchParamsObject ranking(List<String> ranking) {
+  public SearchParamsObject setRanking(List<String> ranking) {
     this.ranking = ranking;
     return this;
   }
@@ -1470,11 +1318,7 @@ public class SearchParamsObject {
     return ranking;
   }
 
-  public void setRanking(List<String> ranking) {
-    this.ranking = ranking;
-  }
-
-  public SearchParamsObject customRanking(List<String> customRanking) {
+  public SearchParamsObject setCustomRanking(List<String> customRanking) {
     this.customRanking = customRanking;
     return this;
   }
@@ -1497,11 +1341,9 @@ public class SearchParamsObject {
     return customRanking;
   }
 
-  public void setCustomRanking(List<String> customRanking) {
-    this.customRanking = customRanking;
-  }
-
-  public SearchParamsObject relevancyStrictness(Integer relevancyStrictness) {
+  public SearchParamsObject setRelevancyStrictness(
+    Integer relevancyStrictness
+  ) {
     this.relevancyStrictness = relevancyStrictness;
     return this;
   }
@@ -1517,11 +1359,7 @@ public class SearchParamsObject {
     return relevancyStrictness;
   }
 
-  public void setRelevancyStrictness(Integer relevancyStrictness) {
-    this.relevancyStrictness = relevancyStrictness;
-  }
-
-  public SearchParamsObject attributesToHighlight(
+  public SearchParamsObject setAttributesToHighlight(
     List<String> attributesToHighlight
   ) {
     this.attributesToHighlight = attributesToHighlight;
@@ -1548,11 +1386,7 @@ public class SearchParamsObject {
     return attributesToHighlight;
   }
 
-  public void setAttributesToHighlight(List<String> attributesToHighlight) {
-    this.attributesToHighlight = attributesToHighlight;
-  }
-
-  public SearchParamsObject attributesToSnippet(
+  public SearchParamsObject setAttributesToSnippet(
     List<String> attributesToSnippet
   ) {
     this.attributesToSnippet = attributesToSnippet;
@@ -1579,11 +1413,7 @@ public class SearchParamsObject {
     return attributesToSnippet;
   }
 
-  public void setAttributesToSnippet(List<String> attributesToSnippet) {
-    this.attributesToSnippet = attributesToSnippet;
-  }
-
-  public SearchParamsObject highlightPreTag(String highlightPreTag) {
+  public SearchParamsObject setHighlightPreTag(String highlightPreTag) {
     this.highlightPreTag = highlightPreTag;
     return this;
   }
@@ -1598,11 +1428,7 @@ public class SearchParamsObject {
     return highlightPreTag;
   }
 
-  public void setHighlightPreTag(String highlightPreTag) {
-    this.highlightPreTag = highlightPreTag;
-  }
-
-  public SearchParamsObject highlightPostTag(String highlightPostTag) {
+  public SearchParamsObject setHighlightPostTag(String highlightPostTag) {
     this.highlightPostTag = highlightPostTag;
     return this;
   }
@@ -1617,11 +1443,7 @@ public class SearchParamsObject {
     return highlightPostTag;
   }
 
-  public void setHighlightPostTag(String highlightPostTag) {
-    this.highlightPostTag = highlightPostTag;
-  }
-
-  public SearchParamsObject snippetEllipsisText(String snippetEllipsisText) {
+  public SearchParamsObject setSnippetEllipsisText(String snippetEllipsisText) {
     this.snippetEllipsisText = snippetEllipsisText;
     return this;
   }
@@ -1636,11 +1458,7 @@ public class SearchParamsObject {
     return snippetEllipsisText;
   }
 
-  public void setSnippetEllipsisText(String snippetEllipsisText) {
-    this.snippetEllipsisText = snippetEllipsisText;
-  }
-
-  public SearchParamsObject restrictHighlightAndSnippetArrays(
+  public SearchParamsObject setRestrictHighlightAndSnippetArrays(
     Boolean restrictHighlightAndSnippetArrays
   ) {
     this.restrictHighlightAndSnippetArrays = restrictHighlightAndSnippetArrays;
@@ -1657,13 +1475,7 @@ public class SearchParamsObject {
     return restrictHighlightAndSnippetArrays;
   }
 
-  public void setRestrictHighlightAndSnippetArrays(
-    Boolean restrictHighlightAndSnippetArrays
-  ) {
-    this.restrictHighlightAndSnippetArrays = restrictHighlightAndSnippetArrays;
-  }
-
-  public SearchParamsObject hitsPerPage(Integer hitsPerPage) {
+  public SearchParamsObject setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -1678,11 +1490,9 @@ public class SearchParamsObject {
     return hitsPerPage;
   }
 
-  public void setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-  }
-
-  public SearchParamsObject minWordSizefor1Typo(Integer minWordSizefor1Typo) {
+  public SearchParamsObject setMinWordSizefor1Typo(
+    Integer minWordSizefor1Typo
+  ) {
     this.minWordSizefor1Typo = minWordSizefor1Typo;
     return this;
   }
@@ -1698,11 +1508,9 @@ public class SearchParamsObject {
     return minWordSizefor1Typo;
   }
 
-  public void setMinWordSizefor1Typo(Integer minWordSizefor1Typo) {
-    this.minWordSizefor1Typo = minWordSizefor1Typo;
-  }
-
-  public SearchParamsObject minWordSizefor2Typos(Integer minWordSizefor2Typos) {
+  public SearchParamsObject setMinWordSizefor2Typos(
+    Integer minWordSizefor2Typos
+  ) {
     this.minWordSizefor2Typos = minWordSizefor2Typos;
     return this;
   }
@@ -1718,11 +1526,7 @@ public class SearchParamsObject {
     return minWordSizefor2Typos;
   }
 
-  public void setMinWordSizefor2Typos(Integer minWordSizefor2Typos) {
-    this.minWordSizefor2Typos = minWordSizefor2Typos;
-  }
-
-  public SearchParamsObject typoTolerance(TypoToleranceEnum typoTolerance) {
+  public SearchParamsObject setTypoTolerance(TypoToleranceEnum typoTolerance) {
     this.typoTolerance = typoTolerance;
     return this;
   }
@@ -1737,11 +1541,7 @@ public class SearchParamsObject {
     return typoTolerance;
   }
 
-  public void setTypoTolerance(TypoToleranceEnum typoTolerance) {
-    this.typoTolerance = typoTolerance;
-  }
-
-  public SearchParamsObject allowTyposOnNumericTokens(
+  public SearchParamsObject setAllowTyposOnNumericTokens(
     Boolean allowTyposOnNumericTokens
   ) {
     this.allowTyposOnNumericTokens = allowTyposOnNumericTokens;
@@ -1758,11 +1558,7 @@ public class SearchParamsObject {
     return allowTyposOnNumericTokens;
   }
 
-  public void setAllowTyposOnNumericTokens(Boolean allowTyposOnNumericTokens) {
-    this.allowTyposOnNumericTokens = allowTyposOnNumericTokens;
-  }
-
-  public SearchParamsObject disableTypoToleranceOnAttributes(
+  public SearchParamsObject setDisableTypoToleranceOnAttributes(
     List<String> disableTypoToleranceOnAttributes
   ) {
     this.disableTypoToleranceOnAttributes = disableTypoToleranceOnAttributes;
@@ -1791,13 +1587,7 @@ public class SearchParamsObject {
     return disableTypoToleranceOnAttributes;
   }
 
-  public void setDisableTypoToleranceOnAttributes(
-    List<String> disableTypoToleranceOnAttributes
-  ) {
-    this.disableTypoToleranceOnAttributes = disableTypoToleranceOnAttributes;
-  }
-
-  public SearchParamsObject separatorsToIndex(String separatorsToIndex) {
+  public SearchParamsObject setSeparatorsToIndex(String separatorsToIndex) {
     this.separatorsToIndex = separatorsToIndex;
     return this;
   }
@@ -1812,11 +1602,7 @@ public class SearchParamsObject {
     return separatorsToIndex;
   }
 
-  public void setSeparatorsToIndex(String separatorsToIndex) {
-    this.separatorsToIndex = separatorsToIndex;
-  }
-
-  public SearchParamsObject ignorePlurals(String ignorePlurals) {
+  public SearchParamsObject setIgnorePlurals(String ignorePlurals) {
     this.ignorePlurals = ignorePlurals;
     return this;
   }
@@ -1831,11 +1617,7 @@ public class SearchParamsObject {
     return ignorePlurals;
   }
 
-  public void setIgnorePlurals(String ignorePlurals) {
-    this.ignorePlurals = ignorePlurals;
-  }
-
-  public SearchParamsObject removeStopWords(String removeStopWords) {
+  public SearchParamsObject setRemoveStopWords(String removeStopWords) {
     this.removeStopWords = removeStopWords;
     return this;
   }
@@ -1850,11 +1632,7 @@ public class SearchParamsObject {
     return removeStopWords;
   }
 
-  public void setRemoveStopWords(String removeStopWords) {
-    this.removeStopWords = removeStopWords;
-  }
-
-  public SearchParamsObject keepDiacriticsOnCharacters(
+  public SearchParamsObject setKeepDiacriticsOnCharacters(
     String keepDiacriticsOnCharacters
   ) {
     this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
@@ -1871,11 +1649,7 @@ public class SearchParamsObject {
     return keepDiacriticsOnCharacters;
   }
 
-  public void setKeepDiacriticsOnCharacters(String keepDiacriticsOnCharacters) {
-    this.keepDiacriticsOnCharacters = keepDiacriticsOnCharacters;
-  }
-
-  public SearchParamsObject queryLanguages(List<String> queryLanguages) {
+  public SearchParamsObject setQueryLanguages(List<String> queryLanguages) {
     this.queryLanguages = queryLanguages;
     return this;
   }
@@ -1899,11 +1673,7 @@ public class SearchParamsObject {
     return queryLanguages;
   }
 
-  public void setQueryLanguages(List<String> queryLanguages) {
-    this.queryLanguages = queryLanguages;
-  }
-
-  public SearchParamsObject decompoundQuery(Boolean decompoundQuery) {
+  public SearchParamsObject setDecompoundQuery(Boolean decompoundQuery) {
     this.decompoundQuery = decompoundQuery;
     return this;
   }
@@ -1918,11 +1688,7 @@ public class SearchParamsObject {
     return decompoundQuery;
   }
 
-  public void setDecompoundQuery(Boolean decompoundQuery) {
-    this.decompoundQuery = decompoundQuery;
-  }
-
-  public SearchParamsObject enableRules(Boolean enableRules) {
+  public SearchParamsObject setEnableRules(Boolean enableRules) {
     this.enableRules = enableRules;
     return this;
   }
@@ -1937,11 +1703,7 @@ public class SearchParamsObject {
     return enableRules;
   }
 
-  public void setEnableRules(Boolean enableRules) {
-    this.enableRules = enableRules;
-  }
-
-  public SearchParamsObject enablePersonalization(
+  public SearchParamsObject setEnablePersonalization(
     Boolean enablePersonalization
   ) {
     this.enablePersonalization = enablePersonalization;
@@ -1958,11 +1720,7 @@ public class SearchParamsObject {
     return enablePersonalization;
   }
 
-  public void setEnablePersonalization(Boolean enablePersonalization) {
-    this.enablePersonalization = enablePersonalization;
-  }
-
-  public SearchParamsObject queryType(QueryTypeEnum queryType) {
+  public SearchParamsObject setQueryType(QueryTypeEnum queryType) {
     this.queryType = queryType;
     return this;
   }
@@ -1977,11 +1735,7 @@ public class SearchParamsObject {
     return queryType;
   }
 
-  public void setQueryType(QueryTypeEnum queryType) {
-    this.queryType = queryType;
-  }
-
-  public SearchParamsObject removeWordsIfNoResults(
+  public SearchParamsObject setRemoveWordsIfNoResults(
     RemoveWordsIfNoResultsEnum removeWordsIfNoResults
   ) {
     this.removeWordsIfNoResults = removeWordsIfNoResults;
@@ -1998,13 +1752,7 @@ public class SearchParamsObject {
     return removeWordsIfNoResults;
   }
 
-  public void setRemoveWordsIfNoResults(
-    RemoveWordsIfNoResultsEnum removeWordsIfNoResults
-  ) {
-    this.removeWordsIfNoResults = removeWordsIfNoResults;
-  }
-
-  public SearchParamsObject advancedSyntax(Boolean advancedSyntax) {
+  public SearchParamsObject setAdvancedSyntax(Boolean advancedSyntax) {
     this.advancedSyntax = advancedSyntax;
     return this;
   }
@@ -2019,11 +1767,7 @@ public class SearchParamsObject {
     return advancedSyntax;
   }
 
-  public void setAdvancedSyntax(Boolean advancedSyntax) {
-    this.advancedSyntax = advancedSyntax;
-  }
-
-  public SearchParamsObject optionalWords(List<String> optionalWords) {
+  public SearchParamsObject setOptionalWords(List<String> optionalWords) {
     this.optionalWords = optionalWords;
     return this;
   }
@@ -2046,11 +1790,7 @@ public class SearchParamsObject {
     return optionalWords;
   }
 
-  public void setOptionalWords(List<String> optionalWords) {
-    this.optionalWords = optionalWords;
-  }
-
-  public SearchParamsObject disableExactOnAttributes(
+  public SearchParamsObject setDisableExactOnAttributes(
     List<String> disableExactOnAttributes
   ) {
     this.disableExactOnAttributes = disableExactOnAttributes;
@@ -2077,13 +1817,7 @@ public class SearchParamsObject {
     return disableExactOnAttributes;
   }
 
-  public void setDisableExactOnAttributes(
-    List<String> disableExactOnAttributes
-  ) {
-    this.disableExactOnAttributes = disableExactOnAttributes;
-  }
-
-  public SearchParamsObject exactOnSingleWordQuery(
+  public SearchParamsObject setExactOnSingleWordQuery(
     ExactOnSingleWordQueryEnum exactOnSingleWordQuery
   ) {
     this.exactOnSingleWordQuery = exactOnSingleWordQuery;
@@ -2100,13 +1834,7 @@ public class SearchParamsObject {
     return exactOnSingleWordQuery;
   }
 
-  public void setExactOnSingleWordQuery(
-    ExactOnSingleWordQueryEnum exactOnSingleWordQuery
-  ) {
-    this.exactOnSingleWordQuery = exactOnSingleWordQuery;
-  }
-
-  public SearchParamsObject alternativesAsExact(
+  public SearchParamsObject setAlternativesAsExact(
     List<AlternativesAsExactEnum> alternativesAsExact
   ) {
     this.alternativesAsExact = alternativesAsExact;
@@ -2133,13 +1861,7 @@ public class SearchParamsObject {
     return alternativesAsExact;
   }
 
-  public void setAlternativesAsExact(
-    List<AlternativesAsExactEnum> alternativesAsExact
-  ) {
-    this.alternativesAsExact = alternativesAsExact;
-  }
-
-  public SearchParamsObject advancedSyntaxFeatures(
+  public SearchParamsObject setAdvancedSyntaxFeatures(
     List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures
   ) {
     this.advancedSyntaxFeatures = advancedSyntaxFeatures;
@@ -2167,13 +1889,7 @@ public class SearchParamsObject {
     return advancedSyntaxFeatures;
   }
 
-  public void setAdvancedSyntaxFeatures(
-    List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures
-  ) {
-    this.advancedSyntaxFeatures = advancedSyntaxFeatures;
-  }
-
-  public SearchParamsObject distinct(Integer distinct) {
+  public SearchParamsObject setDistinct(Integer distinct) {
     this.distinct = distinct;
     return this;
   }
@@ -2188,11 +1904,7 @@ public class SearchParamsObject {
     return distinct;
   }
 
-  public void setDistinct(Integer distinct) {
-    this.distinct = distinct;
-  }
-
-  public SearchParamsObject synonyms(Boolean synonyms) {
+  public SearchParamsObject setSynonyms(Boolean synonyms) {
     this.synonyms = synonyms;
     return this;
   }
@@ -2207,11 +1919,7 @@ public class SearchParamsObject {
     return synonyms;
   }
 
-  public void setSynonyms(Boolean synonyms) {
-    this.synonyms = synonyms;
-  }
-
-  public SearchParamsObject replaceSynonymsInHighlight(
+  public SearchParamsObject setReplaceSynonymsInHighlight(
     Boolean replaceSynonymsInHighlight
   ) {
     this.replaceSynonymsInHighlight = replaceSynonymsInHighlight;
@@ -2229,13 +1937,7 @@ public class SearchParamsObject {
     return replaceSynonymsInHighlight;
   }
 
-  public void setReplaceSynonymsInHighlight(
-    Boolean replaceSynonymsInHighlight
-  ) {
-    this.replaceSynonymsInHighlight = replaceSynonymsInHighlight;
-  }
-
-  public SearchParamsObject minProximity(Integer minProximity) {
+  public SearchParamsObject setMinProximity(Integer minProximity) {
     this.minProximity = minProximity;
     return this;
   }
@@ -2250,11 +1952,7 @@ public class SearchParamsObject {
     return minProximity;
   }
 
-  public void setMinProximity(Integer minProximity) {
-    this.minProximity = minProximity;
-  }
-
-  public SearchParamsObject responseFields(List<String> responseFields) {
+  public SearchParamsObject setResponseFields(List<String> responseFields) {
     this.responseFields = responseFields;
     return this;
   }
@@ -2278,11 +1976,7 @@ public class SearchParamsObject {
     return responseFields;
   }
 
-  public void setResponseFields(List<String> responseFields) {
-    this.responseFields = responseFields;
-  }
-
-  public SearchParamsObject maxFacetHits(Integer maxFacetHits) {
+  public SearchParamsObject setMaxFacetHits(Integer maxFacetHits) {
     this.maxFacetHits = maxFacetHits;
     return this;
   }
@@ -2298,11 +1992,7 @@ public class SearchParamsObject {
     return maxFacetHits;
   }
 
-  public void setMaxFacetHits(Integer maxFacetHits) {
-    this.maxFacetHits = maxFacetHits;
-  }
-
-  public SearchParamsObject attributeCriteriaComputedByMinProximity(
+  public SearchParamsObject setAttributeCriteriaComputedByMinProximity(
     Boolean attributeCriteriaComputedByMinProximity
   ) {
     this.attributeCriteriaComputedByMinProximity =
@@ -2321,14 +2011,7 @@ public class SearchParamsObject {
     return attributeCriteriaComputedByMinProximity;
   }
 
-  public void setAttributeCriteriaComputedByMinProximity(
-    Boolean attributeCriteriaComputedByMinProximity
-  ) {
-    this.attributeCriteriaComputedByMinProximity =
-      attributeCriteriaComputedByMinProximity;
-  }
-
-  public SearchParamsObject renderingContent(Object renderingContent) {
+  public SearchParamsObject setRenderingContent(Object renderingContent) {
     this.renderingContent = renderingContent;
     return this;
   }
@@ -2342,10 +2025,6 @@ public class SearchParamsObject {
   @javax.annotation.Nullable
   public Object getRenderingContent() {
     return renderingContent;
-  }
-
-  public void setRenderingContent(Object renderingContent) {
-    this.renderingContent = renderingContent;
   }
 
   @Override

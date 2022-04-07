@@ -9,7 +9,7 @@ public class BaseBrowseResponse {
   @SerializedName("cursor")
   private String cursor;
 
-  public BaseBrowseResponse cursor(String cursor) {
+  public BaseBrowseResponse setCursor(String cursor) {
     this.cursor = cursor;
     return this;
   }
@@ -23,10 +23,6 @@ public class BaseBrowseResponse {
   @javax.annotation.Nonnull
   public String getCursor() {
     return cursor;
-  }
-
-  public void setCursor(String cursor) {
-    this.cursor = cursor;
   }
 
   @Override

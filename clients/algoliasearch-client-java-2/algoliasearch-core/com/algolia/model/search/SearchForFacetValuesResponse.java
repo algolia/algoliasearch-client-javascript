@@ -11,7 +11,7 @@ public class SearchForFacetValuesResponse {
   @SerializedName("facetHits")
   private List<SearchForFacetValuesResponseFacetHits> facetHits = new ArrayList<>();
 
-  public SearchForFacetValuesResponse facetHits(
+  public SearchForFacetValuesResponse setFacetHits(
     List<SearchForFacetValuesResponseFacetHits> facetHits
   ) {
     this.facetHits = facetHits;
@@ -33,12 +33,6 @@ public class SearchForFacetValuesResponse {
   @javax.annotation.Nonnull
   public List<SearchForFacetValuesResponseFacetHits> getFacetHits() {
     return facetHits;
-  }
-
-  public void setFacetHits(
-    List<SearchForFacetValuesResponseFacetHits> facetHits
-  ) {
-    this.facetHits = facetHits;
   }
 
   @Override

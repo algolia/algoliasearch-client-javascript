@@ -14,7 +14,7 @@ public class BatchResponse {
   @SerializedName("objectIDs")
   private List<String> objectIDs = null;
 
-  public BatchResponse taskID(Integer taskID) {
+  public BatchResponse setTaskID(Integer taskID) {
     this.taskID = taskID;
     return this;
   }
@@ -29,11 +29,7 @@ public class BatchResponse {
     return taskID;
   }
 
-  public void setTaskID(Integer taskID) {
-    this.taskID = taskID;
-  }
-
-  public BatchResponse objectIDs(List<String> objectIDs) {
+  public BatchResponse setObjectIDs(List<String> objectIDs) {
     this.objectIDs = objectIDs;
     return this;
   }
@@ -54,10 +50,6 @@ public class BatchResponse {
   @javax.annotation.Nullable
   public List<String> getObjectIDs() {
     return objectIDs;
-  }
-
-  public void setObjectIDs(List<String> objectIDs) {
-    this.objectIDs = objectIDs;
   }
 
   @Override

@@ -32,7 +32,7 @@ public class ApiKey {
   @SerializedName("validity")
   private Integer validity = 0;
 
-  public ApiKey acl(List<Acl> acl) {
+  public ApiKey setAcl(List<Acl> acl) {
     this.acl = acl;
     return this;
   }
@@ -52,11 +52,7 @@ public class ApiKey {
     return acl;
   }
 
-  public void setAcl(List<Acl> acl) {
-    this.acl = acl;
-  }
-
-  public ApiKey description(String description) {
+  public ApiKey setDescription(String description) {
     this.description = description;
     return this;
   }
@@ -72,11 +68,7 @@ public class ApiKey {
     return description;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public ApiKey indexes(List<String> indexes) {
+  public ApiKey setIndexes(List<String> indexes) {
     this.indexes = indexes;
     return this;
   }
@@ -100,11 +92,7 @@ public class ApiKey {
     return indexes;
   }
 
-  public void setIndexes(List<String> indexes) {
-    this.indexes = indexes;
-  }
-
-  public ApiKey maxHitsPerQuery(Integer maxHitsPerQuery) {
+  public ApiKey setMaxHitsPerQuery(Integer maxHitsPerQuery) {
     this.maxHitsPerQuery = maxHitsPerQuery;
     return this;
   }
@@ -119,11 +107,7 @@ public class ApiKey {
     return maxHitsPerQuery;
   }
 
-  public void setMaxHitsPerQuery(Integer maxHitsPerQuery) {
-    this.maxHitsPerQuery = maxHitsPerQuery;
-  }
-
-  public ApiKey maxQueriesPerIPPerHour(Integer maxQueriesPerIPPerHour) {
+  public ApiKey setMaxQueriesPerIPPerHour(Integer maxQueriesPerIPPerHour) {
     this.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
     return this;
   }
@@ -138,11 +122,7 @@ public class ApiKey {
     return maxQueriesPerIPPerHour;
   }
 
-  public void setMaxQueriesPerIPPerHour(Integer maxQueriesPerIPPerHour) {
-    this.maxQueriesPerIPPerHour = maxQueriesPerIPPerHour;
-  }
-
-  public ApiKey queryParameters(String queryParameters) {
+  public ApiKey setQueryParameters(String queryParameters) {
     this.queryParameters = queryParameters;
     return this;
   }
@@ -158,11 +138,7 @@ public class ApiKey {
     return queryParameters;
   }
 
-  public void setQueryParameters(String queryParameters) {
-    this.queryParameters = queryParameters;
-  }
-
-  public ApiKey referers(List<String> referers) {
+  public ApiKey setReferers(List<String> referers) {
     this.referers = referers;
     return this;
   }
@@ -185,11 +161,7 @@ public class ApiKey {
     return referers;
   }
 
-  public void setReferers(List<String> referers) {
-    this.referers = referers;
-  }
-
-  public ApiKey validity(Integer validity) {
+  public ApiKey setValidity(Integer validity) {
     this.validity = validity;
     return this;
   }
@@ -203,10 +175,6 @@ public class ApiKey {
   @javax.annotation.Nullable
   public Integer getValidity() {
     return validity;
-  }
-
-  public void setValidity(Integer validity) {
-    this.validity = validity;
   }
 
   @Override

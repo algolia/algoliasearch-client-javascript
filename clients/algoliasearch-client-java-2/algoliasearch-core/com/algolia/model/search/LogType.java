@@ -17,7 +17,7 @@ public enum LogType {
 
   ERROR("error");
 
-  private String value;
+  private final String value;
 
   LogType(String value) {
     this.value = value;

@@ -12,7 +12,9 @@ public class SearchUserIdsResponseHighlightResult {
   @SerializedName("clusterName")
   private HighlightResult clusterName;
 
-  public SearchUserIdsResponseHighlightResult userID(HighlightResult userID) {
+  public SearchUserIdsResponseHighlightResult setUserID(
+    HighlightResult userID
+  ) {
     this.userID = userID;
     return this;
   }
@@ -27,11 +29,7 @@ public class SearchUserIdsResponseHighlightResult {
     return userID;
   }
 
-  public void setUserID(HighlightResult userID) {
-    this.userID = userID;
-  }
-
-  public SearchUserIdsResponseHighlightResult clusterName(
+  public SearchUserIdsResponseHighlightResult setClusterName(
     HighlightResult clusterName
   ) {
     this.clusterName = clusterName;
@@ -46,10 +44,6 @@ public class SearchUserIdsResponseHighlightResult {
   @javax.annotation.Nonnull
   public HighlightResult getClusterName() {
     return clusterName;
-  }
-
-  public void setClusterName(HighlightResult clusterName) {
-    this.clusterName = clusterName;
   }
 
   @Override

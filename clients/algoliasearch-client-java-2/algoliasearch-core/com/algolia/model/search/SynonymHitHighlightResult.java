@@ -14,7 +14,7 @@ public class SynonymHitHighlightResult {
   @SerializedName("synonyms")
   private List<HighlightResult> synonyms = null;
 
-  public SynonymHitHighlightResult type(HighlightResult type) {
+  public SynonymHitHighlightResult setType(HighlightResult type) {
     this.type = type;
     return this;
   }
@@ -29,11 +29,7 @@ public class SynonymHitHighlightResult {
     return type;
   }
 
-  public void setType(HighlightResult type) {
-    this.type = type;
-  }
-
-  public SynonymHitHighlightResult synonyms(List<HighlightResult> synonyms) {
+  public SynonymHitHighlightResult setSynonyms(List<HighlightResult> synonyms) {
     this.synonyms = synonyms;
     return this;
   }
@@ -56,10 +52,6 @@ public class SynonymHitHighlightResult {
   @javax.annotation.Nullable
   public List<HighlightResult> getSynonyms() {
     return synonyms;
-  }
-
-  public void setSynonyms(List<HighlightResult> synonyms) {
-    this.synonyms = synonyms;
   }
 
   @Override

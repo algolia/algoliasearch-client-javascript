@@ -18,7 +18,7 @@ public class BaseSearchResponseFacetsStats {
   @SerializedName("sum")
   private Integer sum;
 
-  public BaseSearchResponseFacetsStats min(Integer min) {
+  public BaseSearchResponseFacetsStats setMin(Integer min) {
     this.min = min;
     return this;
   }
@@ -33,11 +33,7 @@ public class BaseSearchResponseFacetsStats {
     return min;
   }
 
-  public void setMin(Integer min) {
-    this.min = min;
-  }
-
-  public BaseSearchResponseFacetsStats max(Integer max) {
+  public BaseSearchResponseFacetsStats setMax(Integer max) {
     this.max = max;
     return this;
   }
@@ -52,11 +48,7 @@ public class BaseSearchResponseFacetsStats {
     return max;
   }
 
-  public void setMax(Integer max) {
-    this.max = max;
-  }
-
-  public BaseSearchResponseFacetsStats avg(Integer avg) {
+  public BaseSearchResponseFacetsStats setAvg(Integer avg) {
     this.avg = avg;
     return this;
   }
@@ -71,11 +63,7 @@ public class BaseSearchResponseFacetsStats {
     return avg;
   }
 
-  public void setAvg(Integer avg) {
-    this.avg = avg;
-  }
-
-  public BaseSearchResponseFacetsStats sum(Integer sum) {
+  public BaseSearchResponseFacetsStats setSum(Integer sum) {
     this.sum = sum;
     return this;
   }
@@ -88,10 +76,6 @@ public class BaseSearchResponseFacetsStats {
   @javax.annotation.Nullable
   public Integer getSum() {
     return sum;
-  }
-
-  public void setSum(Integer sum) {
-    this.sum = sum;
   }
 
   @Override

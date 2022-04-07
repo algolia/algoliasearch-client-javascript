@@ -15,7 +15,7 @@ public class GetLogsResponseInnerQueries {
   @SerializedName("query_id")
   private String queryId;
 
-  public GetLogsResponseInnerQueries indexName(String indexName) {
+  public GetLogsResponseInnerQueries setIndexName(String indexName) {
     this.indexName = indexName;
     return this;
   }
@@ -30,11 +30,7 @@ public class GetLogsResponseInnerQueries {
     return indexName;
   }
 
-  public void setIndexName(String indexName) {
-    this.indexName = indexName;
-  }
-
-  public GetLogsResponseInnerQueries userToken(String userToken) {
+  public GetLogsResponseInnerQueries setUserToken(String userToken) {
     this.userToken = userToken;
     return this;
   }
@@ -49,11 +45,7 @@ public class GetLogsResponseInnerQueries {
     return userToken;
   }
 
-  public void setUserToken(String userToken) {
-    this.userToken = userToken;
-  }
-
-  public GetLogsResponseInnerQueries queryId(String queryId) {
+  public GetLogsResponseInnerQueries setQueryId(String queryId) {
     this.queryId = queryId;
     return this;
   }
@@ -66,10 +58,6 @@ public class GetLogsResponseInnerQueries {
   @javax.annotation.Nullable
   public String getQueryId() {
     return queryId;
-  }
-
-  public void setQueryId(String queryId) {
-    this.queryId = queryId;
   }
 
   @Override

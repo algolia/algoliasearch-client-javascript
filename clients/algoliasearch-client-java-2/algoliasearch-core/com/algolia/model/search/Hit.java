@@ -22,7 +22,7 @@ public class Hit extends HashMap<String, Object> {
   @SerializedName("_distinctSeqID")
   private Integer distinctSeqID;
 
-  public Hit objectID(String objectID) {
+  public Hit setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -37,11 +37,7 @@ public class Hit extends HashMap<String, Object> {
     return objectID;
   }
 
-  public void setObjectID(String objectID) {
-    this.objectID = objectID;
-  }
-
-  public Hit highlightResult(HighlightResult highlightResult) {
+  public Hit setHighlightResult(HighlightResult highlightResult) {
     this.highlightResult = highlightResult;
     return this;
   }
@@ -56,11 +52,7 @@ public class Hit extends HashMap<String, Object> {
     return highlightResult;
   }
 
-  public void setHighlightResult(HighlightResult highlightResult) {
-    this.highlightResult = highlightResult;
-  }
-
-  public Hit snippetResult(SnippetResult snippetResult) {
+  public Hit setSnippetResult(SnippetResult snippetResult) {
     this.snippetResult = snippetResult;
     return this;
   }
@@ -75,11 +67,7 @@ public class Hit extends HashMap<String, Object> {
     return snippetResult;
   }
 
-  public void setSnippetResult(SnippetResult snippetResult) {
-    this.snippetResult = snippetResult;
-  }
-
-  public Hit rankingInfo(RankingInfo rankingInfo) {
+  public Hit setRankingInfo(RankingInfo rankingInfo) {
     this.rankingInfo = rankingInfo;
     return this;
   }
@@ -94,11 +82,7 @@ public class Hit extends HashMap<String, Object> {
     return rankingInfo;
   }
 
-  public void setRankingInfo(RankingInfo rankingInfo) {
-    this.rankingInfo = rankingInfo;
-  }
-
-  public Hit distinctSeqID(Integer distinctSeqID) {
+  public Hit setDistinctSeqID(Integer distinctSeqID) {
     this.distinctSeqID = distinctSeqID;
     return this;
   }
@@ -111,10 +95,6 @@ public class Hit extends HashMap<String, Object> {
   @javax.annotation.Nullable
   public Integer getDistinctSeqID() {
     return distinctSeqID;
-  }
-
-  public void setDistinctSeqID(Integer distinctSeqID) {
-    this.distinctSeqID = distinctSeqID;
   }
 
   @Override

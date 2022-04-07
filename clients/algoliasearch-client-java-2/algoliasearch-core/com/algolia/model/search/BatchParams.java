@@ -11,7 +11,7 @@ public class BatchParams {
   @SerializedName("requests")
   private List<MultipleBatchOperation> requests = null;
 
-  public BatchParams requests(List<MultipleBatchOperation> requests) {
+  public BatchParams setRequests(List<MultipleBatchOperation> requests) {
     this.requests = requests;
     return this;
   }
@@ -32,10 +32,6 @@ public class BatchParams {
   @javax.annotation.Nullable
   public List<MultipleBatchOperation> getRequests() {
     return requests;
-  }
-
-  public void setRequests(List<MultipleBatchOperation> requests) {
-    this.requests = requests;
   }
 
   @Override

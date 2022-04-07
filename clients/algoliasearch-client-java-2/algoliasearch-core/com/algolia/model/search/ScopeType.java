@@ -15,7 +15,7 @@ public enum ScopeType {
 
   RULES("rules");
 
-  private String value;
+  private final String value;
 
   ScopeType(String value) {
     this.value = value;

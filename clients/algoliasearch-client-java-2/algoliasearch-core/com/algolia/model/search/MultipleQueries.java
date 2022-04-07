@@ -21,7 +21,7 @@ public class MultipleQueries {
   @SerializedName("params")
   private String params;
 
-  public MultipleQueries indexName(String indexName) {
+  public MultipleQueries setIndexName(String indexName) {
     this.indexName = indexName;
     return this;
   }
@@ -36,11 +36,7 @@ public class MultipleQueries {
     return indexName;
   }
 
-  public void setIndexName(String indexName) {
-    this.indexName = indexName;
-  }
-
-  public MultipleQueries query(String query) {
+  public MultipleQueries setQuery(String query) {
     this.query = query;
     return this;
   }
@@ -55,11 +51,7 @@ public class MultipleQueries {
     return query;
   }
 
-  public void setQuery(String query) {
-    this.query = query;
-  }
-
-  public MultipleQueries type(MultipleQueriesType type) {
+  public MultipleQueries setType(MultipleQueriesType type) {
     this.type = type;
     return this;
   }
@@ -74,11 +66,7 @@ public class MultipleQueries {
     return type;
   }
 
-  public void setType(MultipleQueriesType type) {
-    this.type = type;
-  }
-
-  public MultipleQueries facet(String facet) {
+  public MultipleQueries setFacet(String facet) {
     this.facet = facet;
     return this;
   }
@@ -93,11 +81,7 @@ public class MultipleQueries {
     return facet;
   }
 
-  public void setFacet(String facet) {
-    this.facet = facet;
-  }
-
-  public MultipleQueries params(String params) {
+  public MultipleQueries setParams(String params) {
     this.params = params;
     return this;
   }
@@ -110,10 +94,6 @@ public class MultipleQueries {
   @javax.annotation.Nullable
   public String getParams() {
     return params;
-  }
-
-  public void setParams(String params) {
-    this.params = params;
   }
 
   @Override

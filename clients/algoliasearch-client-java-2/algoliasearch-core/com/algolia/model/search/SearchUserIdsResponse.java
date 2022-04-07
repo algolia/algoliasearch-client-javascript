@@ -23,7 +23,7 @@ public class SearchUserIdsResponse {
   @SerializedName("updatedAt")
   private String updatedAt;
 
-  public SearchUserIdsResponse hits(List<SearchUserIdsResponseHits> hits) {
+  public SearchUserIdsResponse setHits(List<SearchUserIdsResponseHits> hits) {
     this.hits = hits;
     return this;
   }
@@ -43,11 +43,7 @@ public class SearchUserIdsResponse {
     return hits;
   }
 
-  public void setHits(List<SearchUserIdsResponseHits> hits) {
-    this.hits = hits;
-  }
-
-  public SearchUserIdsResponse nbHits(Integer nbHits) {
+  public SearchUserIdsResponse setNbHits(Integer nbHits) {
     this.nbHits = nbHits;
     return this;
   }
@@ -62,11 +58,7 @@ public class SearchUserIdsResponse {
     return nbHits;
   }
 
-  public void setNbHits(Integer nbHits) {
-    this.nbHits = nbHits;
-  }
-
-  public SearchUserIdsResponse page(Integer page) {
+  public SearchUserIdsResponse setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -81,11 +73,7 @@ public class SearchUserIdsResponse {
     return page;
   }
 
-  public void setPage(Integer page) {
-    this.page = page;
-  }
-
-  public SearchUserIdsResponse hitsPerPage(Integer hitsPerPage) {
+  public SearchUserIdsResponse setHitsPerPage(Integer hitsPerPage) {
     this.hitsPerPage = hitsPerPage;
     return this;
   }
@@ -100,11 +88,7 @@ public class SearchUserIdsResponse {
     return hitsPerPage;
   }
 
-  public void setHitsPerPage(Integer hitsPerPage) {
-    this.hitsPerPage = hitsPerPage;
-  }
-
-  public SearchUserIdsResponse updatedAt(String updatedAt) {
+  public SearchUserIdsResponse setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -117,10 +101,6 @@ public class SearchUserIdsResponse {
   @javax.annotation.Nonnull
   public String getUpdatedAt() {
     return updatedAt;
-  }
-
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
   }
 
   @Override

@@ -11,7 +11,7 @@ public class GetObjectsResponse {
   @SerializedName("results")
   private List<Object> results = null;
 
-  public GetObjectsResponse results(List<Object> results) {
+  public GetObjectsResponse setResults(List<Object> results) {
     this.results = results;
     return this;
   }
@@ -32,10 +32,6 @@ public class GetObjectsResponse {
   @javax.annotation.Nullable
   public List<Object> getResults() {
     return results;
-  }
-
-  public void setResults(List<Object> results) {
-    this.results = results;
   }
 
   @Override

@@ -15,7 +15,7 @@ public class UpdatedRuleResponse {
   @SerializedName("taskID")
   private Integer taskID;
 
-  public UpdatedRuleResponse objectID(String objectID) {
+  public UpdatedRuleResponse setObjectID(String objectID) {
     this.objectID = objectID;
     return this;
   }
@@ -30,11 +30,7 @@ public class UpdatedRuleResponse {
     return objectID;
   }
 
-  public void setObjectID(String objectID) {
-    this.objectID = objectID;
-  }
-
-  public UpdatedRuleResponse updatedAt(String updatedAt) {
+  public UpdatedRuleResponse setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -49,11 +45,7 @@ public class UpdatedRuleResponse {
     return updatedAt;
   }
 
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  public UpdatedRuleResponse taskID(Integer taskID) {
+  public UpdatedRuleResponse setTaskID(Integer taskID) {
     this.taskID = taskID;
     return this;
   }
@@ -66,10 +58,6 @@ public class UpdatedRuleResponse {
   @javax.annotation.Nonnull
   public Integer getTaskID() {
     return taskID;
-  }
-
-  public void setTaskID(Integer taskID) {
-    this.taskID = taskID;
   }
 
   @Override

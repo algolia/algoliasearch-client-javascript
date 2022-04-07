@@ -41,7 +41,7 @@ public class Indice {
   @SerializedName("replicas")
   private List<String> replicas = null;
 
-  public Indice name(String name) {
+  public Indice setName(String name) {
     this.name = name;
     return this;
   }
@@ -56,11 +56,7 @@ public class Indice {
     return name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Indice createdAt(String createdAt) {
+  public Indice setCreatedAt(String createdAt) {
     this.createdAt = createdAt;
     return this;
   }
@@ -75,11 +71,7 @@ public class Indice {
     return createdAt;
   }
 
-  public void setCreatedAt(String createdAt) {
-    this.createdAt = createdAt;
-  }
-
-  public Indice updatedAt(String updatedAt) {
+  public Indice setUpdatedAt(String updatedAt) {
     this.updatedAt = updatedAt;
     return this;
   }
@@ -94,11 +86,7 @@ public class Indice {
     return updatedAt;
   }
 
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
-  }
-
-  public Indice entries(Integer entries) {
+  public Indice setEntries(Integer entries) {
     this.entries = entries;
     return this;
   }
@@ -113,11 +101,7 @@ public class Indice {
     return entries;
   }
 
-  public void setEntries(Integer entries) {
-    this.entries = entries;
-  }
-
-  public Indice dataSize(Integer dataSize) {
+  public Indice setDataSize(Integer dataSize) {
     this.dataSize = dataSize;
     return this;
   }
@@ -132,11 +116,7 @@ public class Indice {
     return dataSize;
   }
 
-  public void setDataSize(Integer dataSize) {
-    this.dataSize = dataSize;
-  }
-
-  public Indice fileSize(Integer fileSize) {
+  public Indice setFileSize(Integer fileSize) {
     this.fileSize = fileSize;
     return this;
   }
@@ -151,11 +131,7 @@ public class Indice {
     return fileSize;
   }
 
-  public void setFileSize(Integer fileSize) {
-    this.fileSize = fileSize;
-  }
-
-  public Indice lastBuildTimeS(Integer lastBuildTimeS) {
+  public Indice setLastBuildTimeS(Integer lastBuildTimeS) {
     this.lastBuildTimeS = lastBuildTimeS;
     return this;
   }
@@ -170,11 +146,7 @@ public class Indice {
     return lastBuildTimeS;
   }
 
-  public void setLastBuildTimeS(Integer lastBuildTimeS) {
-    this.lastBuildTimeS = lastBuildTimeS;
-  }
-
-  public Indice numberOfPendingTask(Integer numberOfPendingTask) {
+  public Indice setNumberOfPendingTask(Integer numberOfPendingTask) {
     this.numberOfPendingTask = numberOfPendingTask;
     return this;
   }
@@ -189,11 +161,7 @@ public class Indice {
     return numberOfPendingTask;
   }
 
-  public void setNumberOfPendingTask(Integer numberOfPendingTask) {
-    this.numberOfPendingTask = numberOfPendingTask;
-  }
-
-  public Indice pendingTask(Boolean pendingTask) {
+  public Indice setPendingTask(Boolean pendingTask) {
     this.pendingTask = pendingTask;
     return this;
   }
@@ -209,11 +177,7 @@ public class Indice {
     return pendingTask;
   }
 
-  public void setPendingTask(Boolean pendingTask) {
-    this.pendingTask = pendingTask;
-  }
-
-  public Indice primary(String primary) {
+  public Indice setPrimary(String primary) {
     this.primary = primary;
     return this;
   }
@@ -228,11 +192,7 @@ public class Indice {
     return primary;
   }
 
-  public void setPrimary(String primary) {
-    this.primary = primary;
-  }
-
-  public Indice replicas(List<String> replicas) {
+  public Indice setReplicas(List<String> replicas) {
     this.replicas = replicas;
     return this;
   }
@@ -254,10 +214,6 @@ public class Indice {
   @javax.annotation.Nullable
   public List<String> getReplicas() {
     return replicas;
-  }
-
-  public void setReplicas(List<String> replicas) {
-    this.replicas = replicas;
   }
 
   @Override

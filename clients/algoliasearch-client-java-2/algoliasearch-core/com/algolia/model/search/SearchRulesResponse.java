@@ -20,7 +20,7 @@ public class SearchRulesResponse {
   @SerializedName("nbPages")
   private Integer nbPages;
 
-  public SearchRulesResponse hits(List<Rule> hits) {
+  public SearchRulesResponse setHits(List<Rule> hits) {
     this.hits = hits;
     return this;
   }
@@ -40,11 +40,7 @@ public class SearchRulesResponse {
     return hits;
   }
 
-  public void setHits(List<Rule> hits) {
-    this.hits = hits;
-  }
-
-  public SearchRulesResponse nbHits(Integer nbHits) {
+  public SearchRulesResponse setNbHits(Integer nbHits) {
     this.nbHits = nbHits;
     return this;
   }
@@ -59,11 +55,7 @@ public class SearchRulesResponse {
     return nbHits;
   }
 
-  public void setNbHits(Integer nbHits) {
-    this.nbHits = nbHits;
-  }
-
-  public SearchRulesResponse page(Integer page) {
+  public SearchRulesResponse setPage(Integer page) {
     this.page = page;
     return this;
   }
@@ -78,11 +70,7 @@ public class SearchRulesResponse {
     return page;
   }
 
-  public void setPage(Integer page) {
-    this.page = page;
-  }
-
-  public SearchRulesResponse nbPages(Integer nbPages) {
+  public SearchRulesResponse setNbPages(Integer nbPages) {
     this.nbPages = nbPages;
     return this;
   }
@@ -95,10 +83,6 @@ public class SearchRulesResponse {
   @javax.annotation.Nonnull
   public Integer getNbPages() {
     return nbPages;
-  }
-
-  public void setNbPages(Integer nbPages) {
-    this.nbPages = nbPages;
   }
 
   @Override

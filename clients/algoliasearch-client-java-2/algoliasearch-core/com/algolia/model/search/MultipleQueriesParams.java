@@ -14,7 +14,7 @@ public class MultipleQueriesParams {
   @SerializedName("strategy")
   private MultipleQueriesStrategy strategy;
 
-  public MultipleQueriesParams requests(List<MultipleQueries> requests) {
+  public MultipleQueriesParams setRequests(List<MultipleQueries> requests) {
     this.requests = requests;
     return this;
   }
@@ -34,11 +34,7 @@ public class MultipleQueriesParams {
     return requests;
   }
 
-  public void setRequests(List<MultipleQueries> requests) {
-    this.requests = requests;
-  }
-
-  public MultipleQueriesParams strategy(MultipleQueriesStrategy strategy) {
+  public MultipleQueriesParams setStrategy(MultipleQueriesStrategy strategy) {
     this.strategy = strategy;
     return this;
   }
@@ -51,10 +47,6 @@ public class MultipleQueriesParams {
   @javax.annotation.Nullable
   public MultipleQueriesStrategy getStrategy() {
     return strategy;
-  }
-
-  public void setStrategy(MultipleQueriesStrategy strategy) {
-    this.strategy = strategy;
   }
 
   @Override

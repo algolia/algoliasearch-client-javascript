@@ -9,7 +9,7 @@ public class DictionaryLanguage {
   @SerializedName("nbCustomEntires")
   private Integer nbCustomEntires;
 
-  public DictionaryLanguage nbCustomEntires(Integer nbCustomEntires) {
+  public DictionaryLanguage setNbCustomEntires(Integer nbCustomEntires) {
     this.nbCustomEntires = nbCustomEntires;
     return this;
   }
@@ -23,10 +23,6 @@ public class DictionaryLanguage {
   @javax.annotation.Nullable
   public Integer getNbCustomEntires() {
     return nbCustomEntires;
-  }
-
-  public void setNbCustomEntires(Integer nbCustomEntires) {
-    this.nbCustomEntires = nbCustomEntires;
   }
 
   @Override

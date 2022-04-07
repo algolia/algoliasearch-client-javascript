@@ -17,13 +17,13 @@ public enum BuiltInOperationType {
 
   REMOVE("Remove"),
 
-  ADDUNIQUE("AddUnique"),
+  ADD_UNIQUE("AddUnique"),
 
-  INCREMENTFROM("IncrementFrom"),
+  INCREMENT_FROM("IncrementFrom"),
 
-  INCREMENTSET("IncrementSet");
+  INCREMENT_SET("IncrementSet");
 
-  private String value;
+  private final String value;
 
   BuiltInOperationType(String value) {
     this.value = value;
