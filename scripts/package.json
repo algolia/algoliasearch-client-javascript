@@ -9,6 +9,7 @@
     "cleanGeneratedBranch": "ts-node ci/codegen/cleanGeneratedBranch.ts",
     "spreadGeneration": "ts-node ci/codegen/spreadGeneration.ts",
     "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts",
+    "setRunVariables": "ts-node ci/setRunVariables.ts",
     "test": "jest"
   },
   "devDependencies": {

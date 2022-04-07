@@ -47,32 +47,7 @@ runs:
         baseRef=${{ github.base_ref }}
         origin=$( [[ -z $baseRef ]] && echo $previousCommit || echo "origin/$baseRef" )
 
-        echo "Checking diff with branch: $origin"
-
-        echo "::set-output name=GITHUB_ACTIONS_CHANGED::$(git diff --shortstat $origin..HEAD -- .github/actions .github/workflows | wc -l)"
-
-        echo "::set-output name=SPECS_CHANGED::$(git diff --shortstat $origin..HEAD -- specs | wc -l)"
-        echo "::set-output name=COMMON_SPECS_CHANGED::$(git diff --shortstat $origin..HEAD -- specs/common | wc -l)"
-
-        echo "::set-output name=TESTS_CHANGED::$(git diff --shortstat $origin..HEAD -- tests | wc -l)"
-
-        echo "::set-output name=SCRIPTS_CHANGED::$(git diff --shortstat $origin..HEAD -- scripts | wc -l)"
-
-        echo "::set-output name=GENERATORS_CHANGED::$(git diff --shortstat $origin..HEAD -- generators | wc -l)"
-
-        echo "::set-output name=JS_CLIENT_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-javascript | wc -l)"
-        echo "::set-output name=JS_ALGOLIASEARCH_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-javascript/packages/algoliasearch clients/algoliasearch-client-javascript/packages/client-search clients/algoliasearch-client-javascript/packages/client-analytics clients/algoliasearch-client-javascript/packages/client-personalization | wc -l)"
-        echo "::set-output name=JS_COMMON_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-javascript/packages/client-common clients/algoliasearch-client-javascript/packages/requester-browser-xhr clients/algoliasearch-client-javascript/packages/requester-node-http | wc -l)"
-        echo "::set-output name=JS_COMMON_TESTS_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-javascript/packages/client-common/src/__tests__ | wc -l)"
-        echo "::set-output name=JS_TEMPLATE_CHANGED::$(git diff --shortstat $origin..HEAD -- templates/javascript | wc -l)"
-
-        echo "::set-output name=JAVA_CLIENT_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-java-2 | wc -l)"
-        echo "::set-output name=JAVA_TEMPLATE_CHANGED::$(git diff --shortstat $origin..HEAD -- templates/java | wc -l)"
-
-        echo "::set-output name=PHP_CLIENT_CHANGED::$(git diff --shortstat $origin..HEAD -- clients/algoliasearch-client-php | wc -l)"
-        echo "::set-output name=PHP_TEMPLATE_CHANGED::$(git diff --shortstat $origin..HEAD -- templates/php | wc -l)"
-
-        echo "::set-output name=ORIGIN_BRANCH::$origin"
+        yarn workspace scripts setRunVariables "$origin"
 
     - name: Compute specs matrix
       if: inputs.type != 'minimal'

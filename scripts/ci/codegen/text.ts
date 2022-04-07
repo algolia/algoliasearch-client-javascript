@@ -1,6 +1,7 @@
-import { OWNER, REPO } from '../../release/common';
+import { MAIN_BRANCH, OWNER, REPO } from '../../release/common';
 
-const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
+export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
+export const GENERATED_MAIN_BRANCH = `generated/${MAIN_BRANCH}`;
 
 export default {
   notification: {
@@ -13,7 +14,7 @@ export default {
   },
   cleanup: {
     header: '### ✗ The generated branch has been deleted.',
-    body: `If the PR has been merged, you can check the generated code on the [\`generated/main\` branch](${REPO_URL}/tree/generated/main).`,
+    body: `If the PR has been merged, you can check the generated code on the [\`${GENERATED_MAIN_BRANCH}\` branch](${REPO_URL}/tree/${GENERATED_MAIN_BRANCH}).`,
   },
   codegen: {
     header: '### ✔️ Code generated!',

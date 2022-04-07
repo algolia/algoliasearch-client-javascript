@@ -54,7 +54,7 @@ async function loadTests(client: string): Promise<TestsBlock[]> {
     });
   }
 
-  return testsBlocks;
+  return testsBlocks.sort((a, b) => a.operationId.localeCompare(b.operationId));
 }
 
 export async function generateClientTests(

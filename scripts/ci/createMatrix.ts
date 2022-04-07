@@ -1,5 +1,7 @@
-import { CLIENTS, GENERATORS, run } from '../common';
+import { CLIENTS, GENERATORS } from '../common';
 import type { Language } from '../types';
+
+import { getNbGitDiff } from './utils';
 
 type CreateMatrix = {
   baseChanged: boolean;
@@ -20,18 +22,6 @@ type Matrix<TMatrix> = {
 
 // This empty matrix is required by the CI, otherwise it throws
 const EMPTY_MATRIX = JSON.stringify({ client: ['no-run'] });
-
-/**
- * Returns the number of diff between a `branch` and the current HEAD for the given `path`.
- */
-async function getNbGitDiff(branch: string, path: string): Promise<number> {
-  return parseInt(
-    (
-      await run(`git diff --shortstat ${branch}..HEAD -- ${path} | wc -l`)
-    ).trim(),
-    10
-  );
-}
 
 async function getClientMatrix({
   language,
@@ -54,8 +44,14 @@ async function getClientMatrix({
       continue;
     }
 
-    const specChanges = await getNbGitDiff(baseBranch, `specs/${client}`);
-    const clientChanges = await getNbGitDiff(baseBranch, output);
+    const specChanges = await getNbGitDiff({
+      branch: baseBranch,
+      path: `specs/${client}`,
+    });
+    const clientChanges = await getNbGitDiff({
+      branch: baseBranch,
+      path: output,
+    });
 
     if (clientChanges === 0 && specChanges === 0 && !baseChanged) {
       continue;
@@ -89,7 +85,10 @@ async function getSpecMatrix({
   const matrix: Matrix<string> = { client: [] };
 
   for (const client of CLIENTS) {
-    const specChanges = await getNbGitDiff(baseBranch, `specs/${client}`);
+    const specChanges = await getNbGitDiff({
+      branch: baseBranch,
+      path: `specs/${client}`,
+    });
 
     if (specChanges === 0 && !baseChanged) {
       continue;
@@ -101,6 +100,9 @@ async function getSpecMatrix({
   return matrix;
 }
 
+/**
+ * Creates a matrix for the CI jobs based on the files that changed.
+ */
 async function createMatrix(opts: CreateMatrix): Promise<void> {
   const matrix = opts.language
     ? await getClientMatrix(opts)

@@ -1,6 +1,6 @@
 import { cleanGeneratedBranch } from '../cleanGeneratedBranch';
 import { pushGeneratedCode } from '../pushGeneratedCode';
-import commentText from '../text';
+import commentText, { GENERATED_MAIN_BRANCH } from '../text';
 import {
   getCommentBody,
   upsertGenerationComment,
@@ -66,7 +66,7 @@ describe('codegen', () => {
       expect(await getCommentBody('cleanup')).toMatchInlineSnapshot(`
         "### ✗ The generated branch has been deleted.
 
-        If the PR has been merged, you can check the generated code on the [\`generated/main\` branch](https://github.com/algolia/api-clients-automation/tree/generated/main)."
+        If the PR has been merged, you can check the generated code on the [\`${GENERATED_MAIN_BRANCH}\` branch](https://github.com/algolia/api-clients-automation/tree/${GENERATED_MAIN_BRANCH})."
       `);
     });
 

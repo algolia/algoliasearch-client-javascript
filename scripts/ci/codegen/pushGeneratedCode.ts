@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { run } from '../../common';
 import { configureGitHubAuthor } from '../../release/common';
+import { getNbGitDiff } from '../utils';
 
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 const FOLDERS_TO_CHECK = 'yarn.lock openapitools.json clients specs/bundled';
@@ -22,9 +23,11 @@ export async function pushGeneratedCode(): Promise<void> {
   const generatedCodeBranch = `generated/${baseBranch}`;
 
   if (
-    (await run(
-      `git status --porcelain ${FOLDERS_TO_CHECK} | wc -l | tr -d ' '`
-    )) === '0'
+    (await getNbGitDiff({
+      branch: baseBranch,
+      head: null,
+      path: FOLDERS_TO_CHECK,
+    })) === 0
   ) {
     console.log(`No generated code changes found for '${baseBranch}'.`);
 

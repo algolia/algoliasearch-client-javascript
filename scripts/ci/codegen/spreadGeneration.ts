@@ -10,14 +10,9 @@ import {
   toAbsolutePath,
 } from '../../common';
 import { getLanguageFolder } from '../../config';
-import {
-  cloneRepository,
-  configureGitHubAuthor,
-  OWNER,
-  REPO,
-} from '../../release/common';
+import { cloneRepository, configureGitHubAuthor } from '../../release/common';
 
-const GENERATED_MAIN_BRANCH = `generated/main`;
+import { GENERATED_MAIN_BRANCH, REPO_URL } from './text';
 
 export function decideWhereToSpread(commitMessage: string): string[] {
   if (commitMessage.startsWith('chore: release')) {
@@ -40,10 +35,7 @@ export function cleanUpCommitMessage(commitMessage: string): string {
     return commitMessage;
   }
 
-  return [
-    result[1],
-    `https://github.com/${OWNER}/${REPO}/pull/${result[2]}`,
-  ].join('\n\n');
+  return [result[1], `${REPO_URL}/pull/${result[2]}`].join('\n\n');
 }
 
 async function spreadGeneration(): Promise<void> {
