@@ -22,7 +22,8 @@
           "apiName": "search",
           "capitalizedApiName": "Search",
           "packageVersion": "0.0.5",
-          "packageName": "@experimental-api-clients-automation/client-search"
+          "packageName": "@experimental-api-clients-automation/client-search",
+          "utilsPackageVersion": "0.0.5"
         }
       },
       "javascript-recommend": {
@@ -44,7 +45,8 @@
           "apiName": "recommend",
           "capitalizedApiName": "Recommend",
           "packageVersion": "0.0.5",
-          "packageName": "@experimental-api-clients-automation/recommend"
+          "packageName": "@experimental-api-clients-automation/recommend",
+          "utilsPackageVersion": "0.0.5"
         }
       },
       "javascript-personalization": {
@@ -69,7 +71,8 @@
           "hasRegionalHost": true,
           "isEuHost": true,
           "host": "personalization",
-          "topLevelDomain": "com"
+          "topLevelDomain": "com",
+          "utilsPackageVersion": "0.0.5"
         }
       },
       "javascript-analytics": {
@@ -95,7 +98,8 @@
           "hasRegionalHost": true,
           "isDeHost": true,
           "host": "analytics",
-          "topLevelDomain": "com"
+          "topLevelDomain": "com",
+          "utilsPackageVersion": "0.0.5"
         }
       },
       "javascript-insights": {
@@ -121,7 +125,8 @@
           "hasRegionalHost": true,
           "isDeHost": true,
           "host": "insights",
-          "topLevelDomain": "io"
+          "topLevelDomain": "io",
+          "utilsPackageVersion": "0.0.5"
         }
       },
       "javascript-abtesting": {
@@ -147,7 +152,8 @@
           "fallbackToAliasHost": true,
           "isDeHost": true,
           "host": "analytics",
-          "topLevelDomain": "com"
+          "topLevelDomain": "com",
+          "utilsPackageVersion": "0.0.5"
         }
       },
       "javascript-query-suggestions": {
@@ -172,7 +178,8 @@
           "hasRegionalHost": true,
           "isEuHost": true,
           "host": "query-suggestions",
-          "topLevelDomain": "com"
+          "topLevelDomain": "com",
+          "utilsPackageVersion": "0.0.5"
         }
       },
       "javascript-sources": {
@@ -197,7 +204,8 @@
           "hasRegionalHost": true,
           "isDeHost": true,
           "host": "data",
-          "topLevelDomain": "com"
+          "topLevelDomain": "com",
+          "utilsPackageVersion": "0.0.5"
         }
       },
       "javascript-predict": {
@@ -219,7 +227,8 @@
           "capitalizedApiName": "Predict",
           "packageVersion": "0.0.5",
           "packageName": "@experimental-api-clients-automation/client-predict",
-          "experimentalHost": "predict-api-oslcbws3zq-ew.a.run.app"
+          "experimentalHost": "predict-api-oslcbws3zq-ew.a.run.app",
+          "utilsPackageVersion": "0.0.5"
         }
       },
       "java-search": {

@@ -28,6 +28,7 @@ import {
   configureGitHubAuthor,
   cloneRepository,
   getOctokit,
+  MAIN_PACKAGE,
 } from './common';
 import TEXT from './text';
 import type {
@@ -103,22 +104,36 @@ export function getVersionsToRelease(issueBody: string): VersionsToRelease {
 async function updateOpenApiTools(
   versionsToRelease: VersionsToRelease
 ): Promise<void> {
+  const nextUtilsPackageVersion = semver.inc(
+    openapitools['generator-cli'].generators[MAIN_PACKAGE.javascript]
+      .additionalProperties.utilsPackageVersion,
+    versionsToRelease.javascript?.releaseType
+  );
+
   Object.keys(openapitools['generator-cli'].generators).forEach((client) => {
     const lang = client.split('-')[0];
     if (versionsToRelease[lang]) {
       const additionalProperties =
         openapitools['generator-cli'].generators[client].additionalProperties;
+      const releaseType = versionsToRelease[lang].releaseType;
 
       const newVersion = semver.inc(
         additionalProperties.packageVersion,
-        versionsToRelease[lang].releaseType
+        releaseType
       );
       if (!newVersion) {
         throw new Error(
-          `Failed to bump version ${additionalProperties.packageVersion} by ${versionsToRelease[lang].releaseType}.`
+          `Failed to bump version ${additionalProperties.packageVersion} by ${releaseType}.`
         );
       }
       additionalProperties.packageVersion = newVersion;
+
+      // In case we're not releasing javascript package,
+      // we shouldn't bump the utils version.
+      // At that time `nextUtilsPackageVersion` is undefined, and the following branch is skipped.
+      if (lang === 'javascript' && nextUtilsPackageVersion) {
+        additionalProperties.utilsPackageVersion = nextUtilsPackageVersion;
+      }
     }
   });
   await fsp.writeFile(
