@@ -9,7 +9,6 @@ export default function HomepageFeatures() {
       <div className={clsx('col col--4')}>
         <div className="text--center padding-horiz--md">
           <h3>API Clients Automation by Algolia</h3>
-          <p>Hello</p>
         </div>
       </div>
     </section>
