@@ -13,7 +13,7 @@ export async function playground({
       });
       break;
     case 'java':
-      await run(`./gradle/gradlew --no-daemon -p playground/java run`, {
+      await run(`./gradle/gradlew -p playground/java run`, {
         verbose,
       });
       break;

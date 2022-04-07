@@ -93,7 +93,7 @@ public class {{classname}} extends ApiClient {
     {{#operation}}
     /**
      * Build call for {{operationId}}
-     * @param _callback Callback for upload/download progress
+     * @param callback Callback for upload/download progress
      * @return Call to execute
      * @throws AlgoliaRuntimeException If fail to serialize the request body object
      {{#isDeprecated}}
@@ -107,7 +107,7 @@ public class {{classname}} extends ApiClient {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    private Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}> _callback) throws AlgoliaRuntimeException {
+    private Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}> callback) throws AlgoliaRuntimeException {
         Object bodyObj = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
 
         // create path and map variables
@@ -141,13 +141,13 @@ public class {{classname}} extends ApiClient {
         headers.put("Accept", "application/json");
         headers.put("Content-Type", "application/json");
 
-        return this.buildCall(requestPath, "{{httpMethod}}", queryParams, bodyObj, headers, _callback);
+        return this.buildCall(requestPath, "{{httpMethod}}", queryParams, bodyObj, headers, callback);
     }
 
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    private Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}> _callback) throws AlgoliaRuntimeException {
+    private Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}> callback) throws AlgoliaRuntimeException {
         {{#allParams}}{{#required}}
         // verify the required parameter '{{paramName}}' is set
         if ({{paramName}} == null) {
@@ -155,7 +155,7 @@ public class {{classname}} extends ApiClient {
         }
         {{/required}}{{/allParams}}
 
-        return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}_callback);
+        return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}callback);
     }
 
     /**
@@ -195,7 +195,7 @@ public class {{classname}} extends ApiClient {
      * (asynchronously)
      * {{notes}}{{#allParams}}
      * @param {{paramName}} {{{description}}}{{#required}} (required){{/required}}{{^required}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}}){{/required}}{{/allParams}}
-     * @param _callback The callback to be executed when the API call finishes
+     * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request body object
      {{#isDeprecated}}
@@ -209,10 +209,10 @@ public class {{classname}} extends ApiClient {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws AlgoliaRuntimeException {
-        Call call = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}_callback);
+    public Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> callback) throws AlgoliaRuntimeException {
+        Call call = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}callback);
         {{#returnType}}Type returnType = new TypeToken<{{{returnType}}}>(){}.getType();
-        this.executeAsync(call, returnType, _callback);{{/returnType}}{{^returnType}}this.executeAsync(call, _callback);{{/returnType}}
+        this.executeAsync(call, returnType, callback);{{/returnType}}{{^returnType}}this.executeAsync(call, callback);{{/returnType}}
         return call;
     }
     {{/operation}}
