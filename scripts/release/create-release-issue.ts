@@ -2,6 +2,7 @@
 import dotenv from 'dotenv';
 import semver from 'semver';
 
+import { getNbGitDiff } from '../ci/utils';
 import {
   LANGUAGES,
   ROOT_ENV_PATH,
@@ -161,7 +162,11 @@ async function createReleaseIssue(): Promise<void> {
     );
   }
 
-  if (await run('git status --porcelain')) {
+  if (
+    (await getNbGitDiff({
+      head: null,
+    })) !== 0
+  ) {
     throw new Error(
       'Working directory is not clean. Commit all the changes first.'
     );

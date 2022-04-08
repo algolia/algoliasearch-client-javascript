@@ -13,6 +13,7 @@ import {
 } from '../../common';
 import { getLanguageFolder } from '../../config';
 import { cloneRepository, configureGitHubAuthor } from '../../release/common';
+import { getNbGitDiff } from '../utils';
 
 export function decideWhereToSpread(commitMessage: string): string[] {
   if (commitMessage.startsWith('chore: release')) {
@@ -68,6 +69,16 @@ async function spreadGeneration(): Promise<void> {
     const clientPath = toAbsolutePath(getLanguageFolder(lang));
     await emptyDirExceptForDotGit(tempGitDir);
     await copy(clientPath, tempGitDir, { preserveTimestamps: true });
+
+    if (
+      (await getNbGitDiff({
+        head: null,
+        cwd: tempGitDir,
+      })) === 0
+    ) {
+      console.log(`Skipping ${lang} repository, because there is no change.`);
+      return;
+    }
 
     await configureGitHubAuthor(tempGitDir);
     await run(`git add .`, { cwd: tempGitDir });
