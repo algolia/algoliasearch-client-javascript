@@ -51,12 +51,6 @@ public class RetryStrategy {
           );
 
           try {
-            System.out.println(
-              "MAKING REQUEST TO " +
-              newUrl +
-              " try: " +
-              currentHost.getRetryCount()
-            );
             Response response = chain.proceed(request);
             currentHost.setLastUse(Utils.nowUTC());
             // no timeout

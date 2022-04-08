@@ -68,6 +68,26 @@ Some Algolia clients (search and recommend) targets the default appId host (`${a
 
 As the generator does not support reading `servers` in a spec file, hosts methods and variables are extracted with a custom script and create variables for you to use in the mustache templates, [read more here](/docs/addNewClient#generators).
 
+### User Agent
+
+The header 'User-Agent' must respect a strict pattern of a base, client, plus additional user defined segments:
+base: `Algolia for <language> (<apiVersion>)`
+client: `; <clientName> (<clientVersion>)`
+segment: `; <Description> ([version])`
+
+The version is optional for segments.
+
+The resulting User Agent is the concatenation of `base`, `client`, and all the `segments`.
+
+For example, if we have:
+base: `Algolia for Java (5.0.0)`
+client: `; Search (5.0.0)`
+segment: `; JVM (11.0.14); experimental`
+
+Then the resulting User Agent is `Algolia for Java (5.0.0); Search (5.0.0); JVM (11.0.14); experimental`.
+
+You can take a look at the Java implementation [here](https://github.com/algolia/api-clients-automation/pull/347).
+
 ### Requesters
 
 > TODO: informations

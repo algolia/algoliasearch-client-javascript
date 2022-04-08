@@ -5,6 +5,7 @@ import com.algolia.exceptions.AlgoliaRetryException;
 import com.algolia.exceptions.AlgoliaRuntimeException;
 import com.algolia.model.search.*;
 import com.algolia.search.SearchApi;
+import com.algolia.utils.UserAgent;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -12,7 +13,12 @@ public class App {
   public static void main(String[] args) {
     Dotenv dotenv = Dotenv.configure().directory("../").load();
 
-    SearchApi client = new SearchApi(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_SEARCH_KEY"));
+    SearchApi client = new SearchApi(dotenv.get("ALGOLIA_APPLICATION_ID"), dotenv.get("ALGOLIA_SEARCH_KEY"),
+        new UserAgent.Segment[] {
+            new UserAgent.Segment("test", "8.0.0"),
+            new UserAgent.Segment("JVM", "11.0.14"),
+            new UserAgent.Segment("no version")
+        });
 
     String indexName = dotenv.get("SEARCH_INDEX");
     SearchParamsObject params = new SearchParamsObject();

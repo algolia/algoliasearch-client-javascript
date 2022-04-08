@@ -35,23 +35,35 @@ public class {{classname}} extends ApiClient {
     {{#hasRegionalHost}}
     {{#fallbackToAliasHost}}
     public {{classname}}(String appId, String apiKey) {
-        super(appId, apiKey, new HttpRequester(getDefaultHosts(".")));
+        this(appId, apiKey, new HttpRequester(getDefaultHosts(".")), null);
     }
     
     {{/fallbackToAliasHost}}
     public {{classname}}(String appId, String apiKey, String region) {
-        super(appId, apiKey, new HttpRequester(getDefaultHosts(region)));
+        this(appId, apiKey, new HttpRequester(getDefaultHosts(region)), null);
+    }
+
+    public {{classname}}(String appId, String apiKey, String region, UserAgent.Segment[] userAgentSegments) {
+        this(appId, apiKey, new HttpRequester(getDefaultHosts(region)), userAgentSegments);
     }
     {{/hasRegionalHost}}
 
     {{^hasRegionalHost}}
     public {{classname}}(String appId, String apiKey) {
-        super(appId, apiKey, new HttpRequester(getDefaultHosts(appId)));
+        this(appId, apiKey, new HttpRequester(getDefaultHosts(appId)), null);
+    }
+
+    public {{classname}}(String appId, String apiKey, UserAgent.Segment[] userAgentSegments) {
+        this(appId, apiKey, new HttpRequester(getDefaultHosts(appId)), userAgentSegments);
     }
     {{/hasRegionalHost}}
-    
+
     public {{classname}}(String appId, String apiKey, Requester requester) {
-        super(appId, apiKey, requester);
+        this(appId, apiKey, requester, null);
+    }
+
+    public {{classname}}(String appId, String apiKey, Requester requester, UserAgent.Segment[] userAgentSegments) {
+        super(appId, apiKey, requester, "{{{baseName}}}", userAgentSegments);
     }
 
     {{^hasRegionalHost}}{{^experimentalHost}}

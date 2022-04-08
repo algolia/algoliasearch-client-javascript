@@ -2,6 +2,7 @@ package {{invokerPackage}};
 
 import com.algolia.utils.Requester;
 import com.algolia.exceptions.*;
+import com.algolia.utils.UserAgent;
 
 import okhttp3.*;
 import okhttp3.internal.http.HttpMethod;
@@ -37,12 +38,19 @@ public class ApiClient {
     /*
      * Constructor for ApiClient with custom Requester
      */
-    public ApiClient(String appId, String apiKey, Requester requester) {
-        setUserAgent("{{{httpUserAgent}}}{{^httpUserAgent}}OpenAPI-Generator/{{{artifactVersion}}}/java{{/httpUserAgent}}");
+    public ApiClient(String appId, String apiKey, Requester requester, String clientName, UserAgent.Segment[] segments) {
+      UserAgent ua = new UserAgent("{{packageVersion}}");
+      ua.addSegment(new UserAgent.Segment(clientName, "{{packageVersion}}"));
+      if(segments != null) {
+        for(UserAgent.Segment segment : segments) {
+          ua.addSegment(segment);
+        }
+      }
+      setUserAgent(ua.toString());
 
-        this.appId = appId;
-        this.apiKey = apiKey;
-        this.requester = requester;
+      this.appId = appId;
+      this.apiKey = apiKey;
+      this.requester = requester;
     }
 
     public DateFormat getDateFormat() {
