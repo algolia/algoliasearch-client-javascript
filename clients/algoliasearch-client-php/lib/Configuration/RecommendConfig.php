@@ -2,6 +2,6 @@
 
 namespace Algolia\AlgoliaSearch\Configuration;
 
-class RecommendConfig extends ConfigWithRegion
+class RecommendConfig extends Configuration
 {
 }

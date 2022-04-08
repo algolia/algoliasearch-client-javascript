@@ -6,7 +6,6 @@ namespace {{modelPackage}};
 {{^isEnum}}
 {{^parentSchema}}
 
-use \ArrayAccess;
 {{/parentSchema}}
 {{/isEnum}}
 use \{{invokerPackage}}\ObjectSerializer;
@@ -18,12 +17,7 @@ use \{{invokerPackage}}\ObjectSerializer;
 {{#description}}
  * @description {{.}}
 {{/description}}
- * @package  {{invokerPackage}}
-{{^isEnum}}
- * @implements \ArrayAccess<TKey, TValue>
- * @template TKey int|null
- * @template TValue mixed|null
-{{/isEnum}}
+ * @package {{invokerPackage}}
  */
 {{#isEnum}}{{>model_enum}}{{/isEnum}}{{^isEnum}}{{>model_generic}}{{/isEnum}}
 {{/model}}{{/models}}

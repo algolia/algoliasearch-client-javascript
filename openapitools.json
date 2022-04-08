@@ -264,7 +264,7 @@
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
-        "globalProperty": "apis,supportingFiles",
+        "modelPackage": "Model\\Search",
         "additionalProperties": {
           "configClassname": "SearchConfig",
           "useCache": true,
@@ -283,7 +283,7 @@
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
-        "globalProperty": "apis,supportingFiles",
+        "modelPackage": "Model\\Recommend",
         "additionalProperties": {
           "configClassname": "RecommendConfig",
           "useCache": true,
@@ -302,7 +302,7 @@
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
-        "globalProperty": "apis,supportingFiles",
+        "modelPackage": "Model\\Personalization",
         "additionalProperties": {
           "configClassname": "PersonalizationConfig",
           "hasRegionalHost": true,
@@ -325,7 +325,7 @@
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
-        "globalProperty": "apis,supportingFiles",
+        "modelPackage": "Model\\Analytics",
         "additionalProperties": {
           "configClassname": "AnalyticsConfig",
           "hasRegionalHost": true,
@@ -349,7 +349,7 @@
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
-        "globalProperty": "apis,supportingFiles",
+        "modelPackage": "Model\\Insights",
         "additionalProperties": {
           "configClassname": "InsightsConfig",
           "hasRegionalHost": true,
@@ -373,7 +373,7 @@
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
-        "globalProperty": "apis,supportingFiles",
+        "modelPackage": "Model\\Abtesting",
         "additionalProperties": {
           "configClassname": "AbtestingConfig",
           "hasRegionalHost": true,
@@ -397,7 +397,7 @@
         "gitUserId": "algolia",
         "gitRepoId": "algoliasearch-client-php",
         "invokerPackage": "Algolia\\AlgoliaSearch",
-        "globalProperty": "apis,supportingFiles",
+        "modelPackage": "Model\\QuerySuggestions",
         "additionalProperties": {
           "configClassname": "QuerySuggestionsConfig",
           "hasRegionalHost": true,

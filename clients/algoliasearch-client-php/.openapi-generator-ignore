@@ -6,8 +6,6 @@
 
 docs/**
 test/**
-lib/Model/**
-lib/Model/
 
 .travis.yml
 README.md

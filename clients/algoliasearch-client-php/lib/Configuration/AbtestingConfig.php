@@ -2,6 +2,6 @@
 
 namespace Algolia\AlgoliaSearch\Configuration;
 
-class AbTestingConfig extends ConfigWithRegion
+class AbtestingConfig extends ConfigWithRegion
 {
 }

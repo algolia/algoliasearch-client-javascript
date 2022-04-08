@@ -302,7 +302,9 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ${{ format('{0}/lib/Api/{1}.php', matrix.client.folder, matrix.client.api) }}
+          path: |
+            ${{ format('{0}/lib/Api/{1}.php', matrix.client.folder, matrix.client.api) }}
+            ${{ format('{0}/lib/Model/{1}/**', matrix.client.folder, matrix.client.capitalizedName) }}
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(

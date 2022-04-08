@@ -367,12 +367,15 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-php/lib/Api/SearchApi.php
+        path: |
+          clients/algoliasearch-client-php/lib/Api/SearchApi.php
+          clients/algoliasearch-client-php/lib/Model/Search/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/SearchApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/SearchConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Search/**',
             'specs/bundled/search.yml',
             'templates/php/**',
             'generators/src/**'
@@ -382,12 +385,15 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-php/lib/Api/RecommendApi.php
+        path: |
+          clients/algoliasearch-client-php/lib/Api/RecommendApi.php
+          clients/algoliasearch-client-php/lib/Model/Recommend/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/RecommendApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/RecommendConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Recommend/**',
             'specs/bundled/recommend.yml',
             'templates/php/**',
             'generators/src/**'
@@ -397,12 +403,15 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-php/lib/Api/PersonalizationApi.php
+        path: |
+          clients/algoliasearch-client-php/lib/Api/PersonalizationApi.php
+          clients/algoliasearch-client-php/lib/Model/Personalization/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/PersonalizationApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/PersonalizationConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Personalization/**',
             'specs/bundled/personalization.yml',
             'templates/php/**',
             'generators/src/**'
@@ -412,12 +421,15 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-php/lib/Api/AnalyticsApi.php
+        path: |
+          clients/algoliasearch-client-php/lib/Api/AnalyticsApi.php
+          clients/algoliasearch-client-php/lib/Model/Analytics/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/AnalyticsApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/AnalyticsConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Analytics/**',
             'specs/bundled/analytics.yml',
             'templates/php/**',
             'generators/src/**'
@@ -427,12 +439,15 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-php/lib/Api/InsightsApi.php
+        path: |
+          clients/algoliasearch-client-php/lib/Api/InsightsApi.php
+          clients/algoliasearch-client-php/lib/Model/Insights/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/InsightsApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/InsightsConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Insights/**',
             'specs/bundled/insights.yml',
             'templates/php/**',
             'generators/src/**'
@@ -442,12 +457,15 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-php/lib/Api/AbtestingApi.php
+        path: |
+          clients/algoliasearch-client-php/lib/Api/AbtestingApi.php
+          clients/algoliasearch-client-php/lib/Model/Abtesting/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/AbtestingApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/AbtestingConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/Abtesting/**',
             'specs/bundled/abtesting.yml',
             'templates/php/**',
             'generators/src/**'
@@ -457,12 +475,15 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-php/lib/Api/QuerySuggestionsApi.php
+        path: |
+          clients/algoliasearch-client-php/lib/Api/QuerySuggestionsApi.php
+          clients/algoliasearch-client-php/lib/Model/QuerySuggestions/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
             'clients/algoliasearch-client-php/lib/Api/QuerySuggestionsApi.php',
             'clients/algoliasearch-client-php/lib/Configuration/QuerySuggestionsConfig.php',
+            'clients/algoliasearch-client-php/lib/Model/QuerySuggestions/**',
             'specs/bundled/query-suggestions.yml',
             'templates/php/**',
             'generators/src/**'

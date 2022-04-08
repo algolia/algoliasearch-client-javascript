@@ -75,7 +75,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
     {{/hasRegionalHost}}
     
     /**
-     * Instantiate the client with congiguration
+     * Instantiate the client with configuration
      *
      * @param {{configClassname}} $config Configuration
      */
@@ -134,10 +134,16 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
      *
 {{/description}}
 {{#allParams}}
-     * @param {{#isString}}string{{/isString}}{{#isInteger}}int{{/isInteger}}{{^isString}}{{^isInteger}}array{{/isInteger}}{{/isString}} ${{paramName}}{{#description}} {{.}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
+     * @param {{#isString}}string{{/isString}}{{#isInteger}}int{{/isInteger}}{{#isBoolean}}bool{{/isBoolean}}{{^isString}}{{^isInteger}}{{^isBoolean}}array{{/isBoolean}}{{/isInteger}}{{/isString}} ${{paramName}}{{#description}} {{.}}{{/description}}{{^description}} {{paramName}}{{/description}} {{#required}}(required){{/required}}{{^required}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/required}}{{#isDeprecated}} (deprecated){{/isDeprecated}}
+{{#isModel}}
+    {{#vars}}
+     * - ${{paramName}}{{> arrayParam}}
+    {{/vars}}
+     * @see {{{dataType}}}
+{{/isModel}}
 {{/allParams}}
      *
-     * @return array<string, mixed>
+     * @return {{#returnType}}{{#responses}}{{#dataType}}{{#-first}}array<string, mixed>|{{{dataType}}}{{/-first}}{{/dataType}}{{/responses}}{{/returnType}}{{^returnType}}void{{/returnType}}
   {{#isDeprecated}}
      * @deprecated
   {{/isDeprecated}}
@@ -241,7 +247,7 @@ use {{invokerPackage}}\RetryStrategy\ClusterHosts;
         if (${{paramName}} !== null) {
             $resourcePath = str_replace(
                 {{=<% %>=}}'{<%baseName%>}'<%={{ }}=%>,
-                {{#x-is-custom-request}}{{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}ObjectSerializer::toPathValue(${{paramName}}){{/x-is-custom-request}},
+                {{#x-is-custom-request}}${{paramName}}{{/x-is-custom-request}}{{^x-is-custom-request}}ObjectSerializer::toPathValue(${{paramName}}){{/x-is-custom-request}},
                 $resourcePath
             );
         }

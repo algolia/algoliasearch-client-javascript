@@ -14,6 +14,7 @@ import {
   getLanguageFolder,
   getLanguageModelFolder,
 } from './config';
+import { createClientName } from './cts/utils';
 import { formatter } from './formatter';
 import { createSpinner } from './oraLog';
 import { setHostsOptions } from './pre-gen/setHostsOptions';
@@ -32,6 +33,9 @@ async function removeExistingModel(
   switch (language) {
     case 'java':
       clientModel = client;
+      break;
+    case 'php':
+      clientModel = createClientName(client, 'php');
       break;
     default:
       break;

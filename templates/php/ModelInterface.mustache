@@ -1,41 +1,27 @@
 <?php
 
-namespace Algolia\AlgoliaSearch\Model;
+namespace {{modelPackage}};
 
 /**
  * Interface abstracting model access.
  *
- * @package Algolia\AlgoliaSearch\Model
+ * @package {{modelPackage}}
  */
 interface ModelInterface
 {
-    /**
-     * The original name of the model.
-     *
-     * @return string
-     */
-    public function getModelName();
-
     /**
      * Array of property to type mappings. Used for (de)serialization
      *
      * @return array
      */
-    public static function openAPITypes();
+    public static function modelTypes();
 
     /**
      * Array of property to format mappings. Used for (de)serialization
      *
      * @return array
      */
-    public static function openAPIFormats();
-
-    /**
-     * Array of attributes where the key is the local name, and the value is the original name
-     *
-     * @return array
-     */
-    public static function attributeMap();
+    public static function modelFormats();
 
     /**
      * Array of attributes to setter functions (for deserialization of responses)
