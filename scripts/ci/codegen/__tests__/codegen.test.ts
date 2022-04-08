@@ -1,6 +1,7 @@
+import { GENERATED_MAIN_BRANCH } from '../../../common';
 import { cleanGeneratedBranch } from '../cleanGeneratedBranch';
 import { pushGeneratedCode } from '../pushGeneratedCode';
-import commentText, { GENERATED_MAIN_BRANCH } from '../text';
+import commentText from '../text';
 import {
   getCommentBody,
   upsertGenerationComment,
@@ -84,7 +85,7 @@ describe('codegen', () => {
           |  Name | Link |
           |---------------------------------|------------------------|
           | 🔨 Triggered by | [\`myCommit\`](https://github.com/algolia/api-clients-automation/pull/42/commits/myCommit) |
-          | 🔍 Generated code | [\`theGeneratedCommit\`](https://github.com/algolia/api-clients-automation/commit/theGeneratedCommit) |
+          | 🔍 Generated code | [\`theGeneratedCommit\`](https://github.com/algolia/api-clients-automation/compare/generated/main...theGeneratedCommit) |
           | 🌲 Generated branch | [\`myBranch\`](https://github.com/algolia/api-clients-automation/tree/myBranch) |
           "
         `);

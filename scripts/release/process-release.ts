@@ -15,14 +15,14 @@ import {
   exists,
   getGitHubUrl,
   gitCommit,
+  OWNER,
+  REPO,
   emptyDirExceptForDotGit,
 } from '../common';
 import { getLanguageFolder } from '../config';
 
 import {
   RELEASED_TAG,
-  OWNER,
-  REPO,
   TEAM_SLUG,
   getMarkdownSection,
   configureGitHubAuthor,

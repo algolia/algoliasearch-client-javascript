@@ -8,11 +8,11 @@ import {
   LANGUAGES,
   run,
   toAbsolutePath,
+  GENERATED_MAIN_BRANCH,
+  REPO_URL,
 } from '../../common';
 import { getLanguageFolder } from '../../config';
 import { cloneRepository, configureGitHubAuthor } from '../../release/common';
-
-import { GENERATED_MAIN_BRANCH, REPO_URL } from './text';
 
 export function decideWhereToSpread(commitMessage: string): string[] {
   if (commitMessage.startsWith('chore: release')) {

@@ -1,7 +1,4 @@
-import { MAIN_BRANCH, OWNER, REPO } from '../../release/common';
-
-export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
-export const GENERATED_MAIN_BRANCH = `generated/${MAIN_BRANCH}`;
+import { REPO_URL, GENERATED_MAIN_BRANCH } from '../../common';
 
 export default {
   notification: {
@@ -28,7 +25,7 @@ export default {
 |  Name | Link |
 |---------------------------------|------------------------|
 | 🔨 Triggered by | [\`${commit}\`](${REPO_URL}/pull/${eventNumber}/commits/${commit}) |
-| 🔍 Generated code | [\`${generatedCommit}\`](${REPO_URL}/commit/${generatedCommit}) |
+| 🔍 Generated code | [\`${generatedCommit}\`](${REPO_URL}/compare/${GENERATED_MAIN_BRANCH}...${generatedCommit}) |
 | 🌲 Generated branch | [\`${branch}\`](${REPO_URL}/tree/${branch}) |
 `;
     },

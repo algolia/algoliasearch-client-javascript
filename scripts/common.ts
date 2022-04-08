@@ -6,6 +6,7 @@ import { hashElement } from 'folder-hash';
 import { remove } from 'fs-extra';
 
 import clientsConfig from '../config/clients.config.json';
+import config from '../config/release.config.json';
 import openapitools from '../openapitools.json';
 
 import { createSpinner } from './oraLog';
@@ -15,6 +16,12 @@ import type {
   Generator,
   RunOptions,
 } from './types';
+
+export const MAIN_BRANCH = config.mainBranch;
+export const GENERATED_MAIN_BRANCH = `generated/${MAIN_BRANCH}`;
+export const OWNER = config.owner;
+export const REPO = config.repo;
+export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
 
 export const CI = Boolean(process.env.CI);
 export const DOCKER = Boolean(process.env.DOCKER);

@@ -2,17 +2,18 @@
 import dotenv from 'dotenv';
 import semver from 'semver';
 
-import { LANGUAGES, ROOT_ENV_PATH, run, getPackageVersion } from '../common';
-import type { Language } from '../types';
-
 import {
-  RELEASED_TAG,
+  LANGUAGES,
+  ROOT_ENV_PATH,
+  run,
+  getPackageVersion,
   MAIN_BRANCH,
   OWNER,
   REPO,
-  MAIN_PACKAGE,
-  getOctokit,
-} from './common';
+} from '../common';
+import type { Language } from '../types';
+
+import { RELEASED_TAG, MAIN_PACKAGE, getOctokit } from './common';
 import TEXT from './text';
 import type {
   Versions,

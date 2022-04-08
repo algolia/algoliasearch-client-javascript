@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import { run } from '../../common';
-import { getOctokit, OWNER, REPO } from '../../release/common';
+import { run, OWNER, REPO } from '../../common';
+import { getOctokit } from '../../release/common';
 
 import commentText from './text';
 

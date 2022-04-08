@@ -7,9 +7,6 @@ import config from '../../config/release.config.json';
 import { getGitHubUrl, run } from '../common';
 
 export const RELEASED_TAG = config.releasedTag;
-export const MAIN_BRANCH = config.mainBranch;
-export const OWNER = config.owner;
-export const REPO = config.repo;
 export const TEAM_SLUG = config.teamSlug;
 export const MAIN_PACKAGE = Object.keys(clientsConfig).reduce(
   (mainPackage: { [lang: string]: string }, lang: string) => {
