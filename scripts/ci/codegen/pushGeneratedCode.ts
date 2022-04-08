@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { run, GENERATED_MAIN_BRANCH } from '../../common';
+import { run } from '../../common';
 import { configureGitHubAuthor } from '../../release/common';
 import { getNbGitDiff } from '../utils';
 
@@ -45,9 +45,7 @@ export async function pushGeneratedCode(): Promise<void> {
     await run(`yarn workspace scripts cleanGeneratedBranch ${baseBranch}`);
 
     console.log(`Creating branch for generated code: '${generatedCodeBranch}'`);
-    await run(
-      `git branch ${generatedCodeBranch} origin/${GENERATED_MAIN_BRANCH}`
-    );
+    await run(`git branch ${generatedCodeBranch}`);
   }
 
   await run(`git checkout ${generatedCodeBranch}`);
