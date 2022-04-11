@@ -54,7 +54,7 @@ class AbtestingApi
     }
 
     /**
-     * Instantiate the client with congiguration
+     * Instantiate the client with configuration
      *
      * @param AbtestingConfig $config Configuration
      */
@@ -90,8 +90,13 @@ class AbtestingApi
      * Creates a new A/B test with provided configuration.
      *
      * @param array $addABTestsRequest addABTestsRequest (required)
+     * - $addABTestsRequest['name'] => (string) A/B test name. (required)
+     * - $addABTestsRequest['variant'] => (array) List of 2 variants for the A/B test. (required)
+     * - $addABTestsRequest['endAt'] => (string) End date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ. (required)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Abtesting\AddABTestsRequest
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Abtesting\ABTestResponse
      */
     public function addABTests($addABTestsRequest)
     {
@@ -120,7 +125,7 @@ class AbtestingApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function del($path, $parameters = null, $body = null)
     {
@@ -149,7 +154,7 @@ class AbtestingApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -166,7 +171,7 @@ class AbtestingApi
      *
      * @param int $id The A/B test ID. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Abtesting\ABTestResponse
      */
     public function deleteABTest($id)
     {
@@ -199,7 +204,7 @@ class AbtestingApi
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function get($path, $parameters = null)
     {
@@ -228,7 +233,7 @@ class AbtestingApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -241,7 +246,7 @@ class AbtestingApi
      *
      * @param int $id The A/B test ID. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Abtesting\ABTest
      */
     public function getABTest($id)
     {
@@ -274,7 +279,7 @@ class AbtestingApi
      * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
      * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Abtesting\ListABTestsResponse
      */
     public function listABTests($offset = 0, $limit = 10)
     {
@@ -312,7 +317,7 @@ class AbtestingApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function post($path, $parameters = null, $body = null)
     {
@@ -341,7 +346,7 @@ class AbtestingApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -360,7 +365,7 @@ class AbtestingApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function put($path, $parameters = null, $body = null)
     {
@@ -389,7 +394,7 @@ class AbtestingApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -406,7 +411,7 @@ class AbtestingApi
      *
      * @param int $id The A/B test ID. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Abtesting\ABTestResponse
      */
     public function stopABTest($id)
     {

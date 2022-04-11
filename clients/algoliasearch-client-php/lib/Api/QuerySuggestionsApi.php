@@ -54,7 +54,7 @@ class QuerySuggestionsApi
     }
 
     /**
-     * Instantiate the client with congiguration
+     * Instantiate the client with configuration
      *
      * @param QuerySuggestionsConfig $config Configuration
      */
@@ -91,7 +91,9 @@ class QuerySuggestionsApi
      *
      * @param array $querySuggestionsIndexWithIndexParam querySuggestionsIndexWithIndexParam (required)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndexWithIndexParam
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse
      */
     public function createConfig($querySuggestionsIndexWithIndexParam)
     {
@@ -120,7 +122,7 @@ class QuerySuggestionsApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function del($path, $parameters = null, $body = null)
     {
@@ -149,7 +151,7 @@ class QuerySuggestionsApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -166,7 +168,7 @@ class QuerySuggestionsApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse
      */
     public function deleteConfig($indexName)
     {
@@ -199,7 +201,7 @@ class QuerySuggestionsApi
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function get($path, $parameters = null)
     {
@@ -228,7 +230,7 @@ class QuerySuggestionsApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -240,7 +242,7 @@ class QuerySuggestionsApi
      * Get all the configurations of Query Suggestions.
      *
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndex[]
      */
     public function getAllConfigs()
     {
@@ -256,7 +258,7 @@ class QuerySuggestionsApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndex
      */
     public function getConfig($indexName)
     {
@@ -288,7 +290,7 @@ class QuerySuggestionsApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\Status
      */
     public function getConfigStatus($indexName)
     {
@@ -320,7 +322,7 @@ class QuerySuggestionsApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\LogFile[]
      */
     public function getLogFile($indexName)
     {
@@ -354,7 +356,7 @@ class QuerySuggestionsApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function post($path, $parameters = null, $body = null)
     {
@@ -383,7 +385,7 @@ class QuerySuggestionsApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -402,7 +404,7 @@ class QuerySuggestionsApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function put($path, $parameters = null, $body = null)
     {
@@ -431,7 +433,7 @@ class QuerySuggestionsApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -448,8 +450,13 @@ class QuerySuggestionsApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $querySuggestionsIndexParam querySuggestionsIndexParam (required)
+     * - $querySuggestionsIndexParam['sourceIndices'] => (array) List of source indices used to generate a Query Suggestions index. (required)
+     * - $querySuggestionsIndexParam['languages'] => (array) De-duplicate singular and plural suggestions. For example, let's say your index contains English content, and that two suggestions “shoe” and “shoes” end up in your Query Suggestions index. If the English language is configured, only the most popular of those two suggestions would remain.
+     * - $querySuggestionsIndexParam['exclude'] => (array) List of words and patterns to exclude from the Query Suggestions index.
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\QuerySuggestions\QuerySuggestionsIndexParam
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\QuerySuggestions\SucessResponse
      */
     public function updateConfig($indexName, $querySuggestionsIndexParam)
     {

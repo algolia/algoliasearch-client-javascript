@@ -8,6 +8,7 @@ use Algolia\AlgoliaSearch\ObjectSerializer;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapper;
 use Algolia\AlgoliaSearch\RetryStrategy\ApiWrapperInterface;
 use Algolia\AlgoliaSearch\RetryStrategy\ClusterHosts;
+use GuzzleHttp\RequestOptions;
 
 /**
  * SearchApi Class Doc Comment
@@ -50,7 +51,7 @@ class SearchApi
     }
 
     /**
-     * Instantiate the client with congiguration
+     * Instantiate the client with configuration
      *
      * @param SearchConfig $config Configuration
      */
@@ -91,8 +92,18 @@ class SearchApi
      * Create a new API key.
      *
      * @param array $apiKey apiKey (required)
+     * - $apiKey['acl'] => (array) Set of permissions associated with the key. (required)
+     * - $apiKey['description'] => (string) A comment used to identify a key more easily in the dashboard. It is not interpreted by the API.
+     * - $apiKey['indexes'] => (array) Restrict this new API key to a list of indices or index patterns. If the list is empty, all indices are allowed.
+     * - $apiKey['maxHitsPerQuery'] => (int) Maximum number of hits this API key can retrieve in one query. If zero, no limit is enforced.
+     * - $apiKey['maxQueriesPerIPPerHour'] => (int) Maximum number of API calls per hour allowed from a given IP address or a user token.
+     * - $apiKey['queryParameters'] => (string) URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+     * - $apiKey['referers'] => (array) Restrict this new API key to specific referers. If empty or blank, defaults to all referers.
+     * - $apiKey['validity'] => (int) Validity limit for this key in seconds. The key will automatically be removed after this period of time.
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\ApiKey
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\AddApiKeyResponse
      */
     public function addApiKey($apiKey)
     {
@@ -121,7 +132,7 @@ class SearchApi
      * @param string $objectID Unique identifier of an object. (required)
      * @param array $body The Algolia object. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtWithObjectIdResponse
      */
     public function addOrUpdateObject($indexName, $objectID, $body)
     {
@@ -178,7 +189,9 @@ class SearchApi
      *
      * @param array $source The source to add. (required)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\Source
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\CreatedAtResponse
      */
     public function appendSource($source)
     {
@@ -205,8 +218,11 @@ class SearchApi
      *
      * @param string $xAlgoliaUserID userID to assign. (required)
      * @param array $assignUserIdParams assignUserIdParams (required)
+     * - $assignUserIdParams['cluster'] => (string) Name of the cluster. (required)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\AssignUserIdParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\CreatedAtResponse
      */
     public function assignUserId($xAlgoliaUserID, $assignUserIdParams)
     {
@@ -253,8 +269,11 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $batchWriteParams batchWriteParams (required)
+     * - $batchWriteParams['requests'] => (array)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\BatchWriteParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\BatchResponse
      */
     public function batch($indexName, $batchWriteParams)
     {
@@ -296,8 +315,12 @@ class SearchApi
      *
      * @param string $xAlgoliaUserID userID to assign. (required)
      * @param array $batchAssignUserIdsParams batchAssignUserIdsParams (required)
+     * - $batchAssignUserIdsParams['cluster'] => (string) Name of the cluster. (required)
+     * - $batchAssignUserIdsParams['users'] => (array) userIDs to assign. Note you cannot move users with this method. (required)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\BatchAssignUserIdsParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\CreatedAtResponse
      */
     public function batchAssignUserIds($xAlgoliaUserID, $batchAssignUserIdsParams)
     {
@@ -344,8 +367,12 @@ class SearchApi
      *
      * @param array $dictionaryName The dictionary to search in. (required)
      * @param array $batchDictionaryEntriesParams batchDictionaryEntriesParams (required)
+     * - $batchDictionaryEntriesParams['clearExistingDictionaryEntries'] => (bool) When `true`, start the batch by removing all the custom entries from the dictionary.
+     * - $batchDictionaryEntriesParams['requests'] => (array) List of operations to batch. Each operation is described by an `action` and a `body`. (required)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\BatchDictionaryEntriesParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse
      */
     public function batchDictionaryEntries($dictionaryName, $batchDictionaryEntriesParams)
     {
@@ -387,10 +414,10 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $rule rule (required)
-     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param array $clearExistingRules When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept. (optional)
+     * @param bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param bool $clearExistingRules When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse
      */
     public function batchRules($indexName, $rule, $forwardToReplicas = null, $clearExistingRules = null)
     {
@@ -452,8 +479,12 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $browseRequest browseRequest (optional)
+     * - $browseRequest['params'] => (string) Search parameters as URL-encoded query string.
+     * - $browseRequest['cursor'] => (string) Cursor indicating the location to resume browsing from. Must match the value returned by the previous call.
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\BrowseRequest
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\BrowseResponse
      */
     public function browse($indexName, $browseRequest = null)
     {
@@ -488,9 +519,9 @@ class SearchApi
      * Clear all synonyms.
      *
      * @param string $indexName The index in which to perform the request. (required)
-     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse
      */
     public function clearAllSynonyms($indexName, $forwardToReplicas = null)
     {
@@ -532,7 +563,7 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse
      */
     public function clearObjects($indexName)
     {
@@ -563,9 +594,9 @@ class SearchApi
      * Clear Rules.
      *
      * @param string $indexName The index in which to perform the request. (required)
-     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse
      */
     public function clearRules($indexName, $forwardToReplicas = null)
     {
@@ -609,7 +640,7 @@ class SearchApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function del($path, $parameters = null, $body = null)
     {
@@ -638,7 +669,7 @@ class SearchApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -655,7 +686,7 @@ class SearchApi
      *
      * @param string $key API Key string. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\DeleteApiKeyResponse
      */
     public function deleteApiKey($key)
     {
@@ -688,7 +719,9 @@ class SearchApi
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $searchParams searchParams (required)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\SearchParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\DeletedAtResponse
      */
     public function deleteBy($indexName, $searchParams)
     {
@@ -730,7 +763,7 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\DeletedAtResponse
      */
     public function deleteIndex($indexName)
     {
@@ -763,7 +796,7 @@ class SearchApi
      * @param string $indexName The index in which to perform the request. (required)
      * @param string $objectID Unique identifier of an object. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\DeletedAtResponse
      */
     public function deleteObject($indexName, $objectID)
     {
@@ -810,9 +843,9 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param string $objectID Unique identifier of an object. (required)
-     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse
      */
     public function deleteRule($indexName, $objectID, $forwardToReplicas = null)
     {
@@ -869,7 +902,7 @@ class SearchApi
      *
      * @param string $source The IP range of the source. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\DeleteSourceResponse
      */
     public function deleteSource($source)
     {
@@ -901,9 +934,9 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param string $objectID Unique identifier of an object. (required)
-     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\DeletedAtResponse
      */
     public function deleteSynonym($indexName, $objectID, $forwardToReplicas = null)
     {
@@ -961,7 +994,7 @@ class SearchApi
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function get($path, $parameters = null)
     {
@@ -990,7 +1023,7 @@ class SearchApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -1003,7 +1036,7 @@ class SearchApi
      *
      * @param string $key API Key string. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\Key
      */
     public function getApiKey($key)
     {
@@ -1034,7 +1067,7 @@ class SearchApi
      * List dictionaries supported per language.
      *
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|array<string,\Algolia\AlgoliaSearch\Model\Search\Languages>
      */
     public function getDictionaryLanguages()
     {
@@ -1049,7 +1082,7 @@ class SearchApi
      * Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
      *
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\GetDictionarySettingsResponse
      */
     public function getDictionarySettings()
     {
@@ -1068,7 +1101,7 @@ class SearchApi
      * @param string $indexName Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices. (optional)
      * @param array $type Type of log entries to retrieve. When omitted, all log entries are retrieved. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\GetLogsResponse
      */
     public function getLogs($offset = 0, $length = 10, $indexName = null, $type = null)
     {
@@ -1130,7 +1163,7 @@ class SearchApi
      * @param string $objectID Unique identifier of an object. (required)
      * @param array $attributesToRetrieve List of attributes to retrieve. If not specified, all retrievable attributes are returned. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|array<string,string>
      */
     public function getObject($indexName, $objectID, $attributesToRetrieve = null)
     {
@@ -1186,8 +1219,11 @@ class SearchApi
      * Retrieve one or more objects.
      *
      * @param array $getObjectsParams getObjectsParams (required)
+     * - $getObjectsParams['requests'] => (array)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\GetObjectsParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\GetObjectsResponse
      */
     public function getObjects($getObjectsParams)
     {
@@ -1215,7 +1251,7 @@ class SearchApi
      * @param string $indexName The index in which to perform the request. (required)
      * @param string $objectID Unique identifier of an object. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\Rule
      */
     public function getRule($indexName, $objectID)
     {
@@ -1262,7 +1298,7 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\IndexSettings
      */
     public function getSettings($indexName)
     {
@@ -1293,7 +1329,7 @@ class SearchApi
      * List all allowed sources.
      *
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\Source[]
      */
     public function getSources()
     {
@@ -1310,7 +1346,7 @@ class SearchApi
      * @param string $indexName The index in which to perform the request. (required)
      * @param string $objectID Unique identifier of an object. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\SynonymHit
      */
     public function getSynonym($indexName, $objectID)
     {
@@ -1358,7 +1394,7 @@ class SearchApi
      * @param string $indexName The index in which to perform the request. (required)
      * @param int $taskID Unique identifier of an task. Numeric value (up to 64bits). (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\GetTaskResponse
      */
     public function getTask($indexName, $taskID)
     {
@@ -1404,7 +1440,7 @@ class SearchApi
      * Get top userID
      *
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\GetTopUserIdsResponse
      */
     public function getTopUserIds()
     {
@@ -1420,7 +1456,7 @@ class SearchApi
      *
      * @param string $userID userID to assign. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UserId
      */
     public function getUserId($userID)
     {
@@ -1453,9 +1489,9 @@ class SearchApi
     /**
      * Has pending mappings
      *
-     * @param array $getClusters Whether to get clusters or not. (optional)
+     * @param bool $getClusters Whether to get clusters or not. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\CreatedAtResponse
      */
     public function hasPendingMappings($getClusters = null)
     {
@@ -1480,7 +1516,7 @@ class SearchApi
      * Get the full list of API Keys.
      *
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\ListApiKeysResponse
      */
     public function listApiKeys()
     {
@@ -1495,7 +1531,7 @@ class SearchApi
      * List clusters
      *
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\ListClustersResponse
      */
     public function listClusters()
     {
@@ -1511,7 +1547,7 @@ class SearchApi
      *
      * @param int $page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\ListIndicesResponse
      */
     public function listIndices($page = null)
     {
@@ -1538,7 +1574,7 @@ class SearchApi
      * @param int $page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional)
      * @param int $hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\ListUserIdsResponse
      */
     public function listUserIds($page = null, $hitsPerPage = 100)
     {
@@ -1573,8 +1609,11 @@ class SearchApi
      * Perform multiple write operations.
      *
      * @param array $batchParams batchParams (required)
+     * - $batchParams['requests'] => (array)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\BatchParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\MultipleBatchResponse
      */
     public function multipleBatch($batchParams)
     {
@@ -1600,8 +1639,12 @@ class SearchApi
      * Get search results for the given requests.
      *
      * @param array $multipleQueriesParams multipleQueriesParams (required)
+     * - $multipleQueriesParams['requests'] => (array)  (required)
+     * - $multipleQueriesParams['strategy'] => (array)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\MultipleQueriesParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\MultipleQueriesResponse
      */
     public function multipleQueries($multipleQueriesParams)
     {
@@ -1628,8 +1671,13 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $operationIndexParams operationIndexParams (required)
+     * - $operationIndexParams['operation'] => (array)  (required)
+     * - $operationIndexParams['destination'] => (string) The Algolia index name. (required)
+     * - $operationIndexParams['scope'] => (array) Scope of the data to copy. When absent, a full copy is performed. When present, only the selected scopes are copied.
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\OperationIndexParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse
      */
     public function operationIndex($indexName, $operationIndexParams)
     {
@@ -1672,9 +1720,9 @@ class SearchApi
      * @param string $indexName The index in which to perform the request. (required)
      * @param string $objectID Unique identifier of an object. (required)
      * @param array $attributeOrBuiltInOperation List of attributes to update. (required)
-     * @param array $createIfNotExists Creates the record if it does not exist yet. (optional, default to true)
+     * @param bool $createIfNotExists Creates the record if it does not exist yet. (optional, default to true)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtWithObjectIdResponse
      */
     public function partialUpdateObject($indexName, $objectID, $attributeOrBuiltInOperation, $createIfNotExists = true)
     {
@@ -1743,7 +1791,7 @@ class SearchApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function post($path, $parameters = null, $body = null)
     {
@@ -1772,7 +1820,7 @@ class SearchApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -1791,7 +1839,7 @@ class SearchApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function put($path, $parameters = null, $body = null)
     {
@@ -1820,7 +1868,7 @@ class SearchApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -1837,7 +1885,7 @@ class SearchApi
      *
      * @param string $userID userID to assign. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\RemoveUserIdResponse
      */
     public function removeUserId($userID)
     {
@@ -1872,7 +1920,7 @@ class SearchApi
      *
      * @param array $source The sources to allow. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\ReplaceSourceResponse
      */
     public function replaceSources($source)
     {
@@ -1899,7 +1947,7 @@ class SearchApi
      *
      * @param string $key API Key string. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\AddApiKeyResponse
      */
     public function restoreApiKey($key)
     {
@@ -1932,7 +1980,7 @@ class SearchApi
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $body The Algolia record. (required)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\SaveObjectResponse
      */
     public function saveObject($indexName, $body)
     {
@@ -1975,9 +2023,18 @@ class SearchApi
      * @param string $indexName The index in which to perform the request. (required)
      * @param string $objectID Unique identifier of an object. (required)
      * @param array $rule rule (required)
-     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * - $rule['objectID'] => (string) Unique identifier of the object. (required)
+     * - $rule['conditions'] => (array) A list of conditions that should apply to activate a Rule. You can use up to 25 conditions per Rule.
+     * - $rule['consequence'] => (array)  (required)
+     * - $rule['description'] => (string) This field is intended for Rule management purposes, in particular to ease searching for Rules and presenting them to human readers. It's not interpreted by the API.
+     * - $rule['enabled'] => (bool) Whether the Rule is enabled. Disabled Rules remain in the index, but aren't applied at query time.
+     * - $rule['validity'] => (array) By default, Rules are permanently valid. When validity periods are specified, the Rule applies only during those periods; it's ignored the rest of the time. The list must not be empty.
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\Rule
+     *
+     * @param bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedRuleResponse
      */
     public function saveRule($indexName, $objectID, $rule, $forwardToReplicas = null)
     {
@@ -2045,9 +2102,21 @@ class SearchApi
      * @param string $indexName The index in which to perform the request. (required)
      * @param string $objectID Unique identifier of an object. (required)
      * @param array $synonymHit synonymHit (required)
-     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * - $synonymHit['objectID'] => (string) Unique identifier of the synonym object to be created or updated. (required)
+     * - $synonymHit['type'] => (array)
+     * - $synonymHit['synonyms'] => (array) Words or phrases to be considered equivalent.
+     * - $synonymHit['input'] => (string) Word or phrase to appear in query strings (for onewaysynonym).
+     * - $synonymHit['word'] => (string) Word or phrase to appear in query strings (for altcorrection1 and altcorrection2).
+     * - $synonymHit['corrections'] => (array) Words to be matched in records.
+     * - $synonymHit['placeholder'] => (string) Token to be put inside records.
+     * - $synonymHit['replacements'] => (array) List of query words that will match the token.
+     * - $synonymHit['_highlightResult'] => (array)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\SynonymHit
+     *
+     * @param bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\SaveSynonymResponse
      */
     public function saveSynonym($indexName, $objectID, $synonymHit, $forwardToReplicas = null)
     {
@@ -2114,10 +2183,10 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $synonymHit synonymHit (required)
-     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
-     * @param array $replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this request. (optional)
+     * @param bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     * @param bool $replaceExistingSynonyms Replace all synonyms of the index with the ones sent with this request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse
      */
     public function saveSynonyms($indexName, $synonymHit, $forwardToReplicas = null, $replaceExistingSynonyms = null)
     {
@@ -2180,7 +2249,9 @@ class SearchApi
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $searchParams searchParams (required)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\SearchParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\SearchResponse
      */
     public function search($indexName, $searchParams)
     {
@@ -2222,8 +2293,14 @@ class SearchApi
      *
      * @param array $dictionaryName The dictionary to search in. (required)
      * @param array $searchDictionaryEntriesParams searchDictionaryEntriesParams (required)
+     * - $searchDictionaryEntriesParams['query'] => (string) The text to search in the index. (required)
+     * - $searchDictionaryEntriesParams['page'] => (int) Specify the page to retrieve.
+     * - $searchDictionaryEntriesParams['hitsPerPage'] => (int) Set the number of hits per page.
+     * - $searchDictionaryEntriesParams['language'] => (string) Language ISO code supported by the dictionary (e.g., \"en\" for English).
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\SearchDictionaryEntriesParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse
      */
     public function searchDictionaryEntries($dictionaryName, $searchDictionaryEntriesParams)
     {
@@ -2266,8 +2343,13 @@ class SearchApi
      * @param string $indexName The index in which to perform the request. (required)
      * @param string $facetName The facet name. (required)
      * @param array $searchForFacetValuesRequest searchForFacetValuesRequest (optional)
+     * - $searchForFacetValuesRequest['params'] => (string) Search parameters as URL-encoded query string.
+     * - $searchForFacetValuesRequest['facetQuery'] => (string) Text to search inside the facet's values.
+     * - $searchForFacetValuesRequest['maxFacetHits'] => (int) Maximum number of facet hits to return during a search for facet values. For performance reasons, the maximum allowed number of returned values is 100.
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\SearchForFacetValuesRequest
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\SearchForFacetValuesResponse
      */
     public function searchForFacetValues($indexName, $facetName, $searchForFacetValuesRequest = null)
     {
@@ -2318,8 +2400,17 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $searchRulesParams searchRulesParams (required)
+     * - $searchRulesParams['query'] => (string) Full text query.
+     * - $searchRulesParams['anchoring'] => (array)
+     * - $searchRulesParams['context'] => (string) Restricts matches to contextual rules with a specific context (exact match).
+     * - $searchRulesParams['page'] => (int) Requested page (zero-based).
+     * - $searchRulesParams['hitsPerPage'] => (int) Maximum number of hits in a page. Minimum is 1, maximum is 1000.
+     * - $searchRulesParams['enabled'] => (bool) When specified, restricts matches to rules with a specific enabled status. When absent (default), all rules are retrieved, regardless of their enabled status.
+     * - $searchRulesParams['requestOptions'] => (array) A mapping of requestOptions to send along with the request.
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\SearchRulesParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\SearchRulesResponse
      */
     public function searchRules($indexName, $searchRulesParams)
     {
@@ -2365,7 +2456,7 @@ class SearchApi
      * @param int $page Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination). (optional, default to 0)
      * @param int $hitsPerPage Maximum number of objects to retrieve. (optional, default to 100)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\SearchSynonymsResponse
      */
     public function searchSynonyms($indexName, $query = '', $type = null, $page = 0, $hitsPerPage = 100)
     {
@@ -2436,8 +2527,14 @@ class SearchApi
      * Search userID
      *
      * @param array $searchUserIdsParams searchUserIdsParams (required)
+     * - $searchUserIdsParams['query'] => (string) Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users. (required)
+     * - $searchUserIdsParams['clusterName'] => (string) Name of the cluster.
+     * - $searchUserIdsParams['page'] => (int) Specify the page to retrieve.
+     * - $searchUserIdsParams['hitsPerPage'] => (int) Set the number of hits per page.
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\SearchUserIdsParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\SearchUserIdsResponse
      */
     public function searchUserIds($searchUserIdsParams)
     {
@@ -2463,8 +2560,11 @@ class SearchApi
      * Set dictionary settings.
      *
      * @param array $dictionarySettingsParams dictionarySettingsParams (required)
+     * - $dictionarySettingsParams['disableStandardEntries'] => (array)  (required)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\DictionarySettingsParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse
      */
     public function setDictionarySettings($dictionarySettingsParams)
     {
@@ -2491,9 +2591,12 @@ class SearchApi
      *
      * @param string $indexName The index in which to perform the request. (required)
      * @param array $indexSettings indexSettings (required)
-     * @param array $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\IndexSettings
+     *
+     * @param bool $forwardToReplicas When true, changes are also propagated to replicas of the given indexName. (optional)
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdatedAtResponse
      */
     public function setSettings($indexName, $indexSettings, $forwardToReplicas = null)
     {
@@ -2545,8 +2648,18 @@ class SearchApi
      *
      * @param string $key API Key string. (required)
      * @param array $apiKey apiKey (required)
+     * - $apiKey['acl'] => (array) Set of permissions associated with the key. (required)
+     * - $apiKey['description'] => (string) A comment used to identify a key more easily in the dashboard. It is not interpreted by the API.
+     * - $apiKey['indexes'] => (array) Restrict this new API key to a list of indices or index patterns. If the list is empty, all indices are allowed.
+     * - $apiKey['maxHitsPerQuery'] => (int) Maximum number of hits this API key can retrieve in one query. If zero, no limit is enforced.
+     * - $apiKey['maxQueriesPerIPPerHour'] => (int) Maximum number of API calls per hour allowed from a given IP address or a user token.
+     * - $apiKey['queryParameters'] => (string) URL-encoded query string. Force some query parameters to be applied for each query made with this API key.
+     * - $apiKey['referers'] => (array) Restrict this new API key to specific referers. If empty or blank, defaults to all referers.
+     * - $apiKey['validity'] => (int) Validity limit for this key in seconds. The key will automatically be removed after this period of time.
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Search\ApiKey
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Search\UpdateApiKeyResponse
      */
     public function updateApiKey($key, $apiKey)
     {

@@ -53,7 +53,7 @@ class InsightsApi
     }
 
     /**
-     * Instantiate the client with congiguration
+     * Instantiate the client with configuration
      *
      * @param InsightsConfig $config Configuration
      */
@@ -92,7 +92,7 @@ class InsightsApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function del($path, $parameters = null, $body = null)
     {
@@ -121,7 +121,7 @@ class InsightsApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -139,7 +139,7 @@ class InsightsApi
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function get($path, $parameters = null)
     {
@@ -168,7 +168,7 @@ class InsightsApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -183,7 +183,7 @@ class InsightsApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function post($path, $parameters = null, $body = null)
     {
@@ -212,7 +212,7 @@ class InsightsApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -228,8 +228,11 @@ class InsightsApi
      * Pushes an array of events.
      *
      * @param array $insightEvents insightEvents (required)
+     * - $insightEvents['events'] => (array) Array of events sent. (required)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Insights\InsightEvents
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Insights\PushEventsResponse
      */
     public function pushEvents($insightEvents)
     {
@@ -258,7 +261,7 @@ class InsightsApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function put($path, $parameters = null, $body = null)
     {
@@ -287,7 +290,7 @@ class InsightsApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }

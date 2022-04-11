@@ -49,7 +49,7 @@ class RecommendApi
     }
 
     /**
-     * Instantiate the client with congiguration
+     * Instantiate the client with configuration
      *
      * @param RecommendConfig $config Configuration
      */
@@ -93,7 +93,7 @@ class RecommendApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function del($path, $parameters = null, $body = null)
     {
@@ -122,7 +122,7 @@ class RecommendApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -140,7 +140,7 @@ class RecommendApi
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function get($path, $parameters = null)
     {
@@ -169,7 +169,7 @@ class RecommendApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -181,8 +181,11 @@ class RecommendApi
      * Returns recommendations for a specific model and objectID.
      *
      * @param array $getRecommendationsParams getRecommendationsParams (required)
+     * - $getRecommendationsParams['requests'] => (array) The `getRecommendations` requests. (required)
      *
-     * @return array<string, mixed>
+     * @see \Algolia\AlgoliaSearch\Model\Recommend\GetRecommendationsParams
+     *
+     * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Recommend\GetRecommendationsResponse
      */
     public function getRecommendations($getRecommendationsParams)
     {
@@ -211,7 +214,7 @@ class RecommendApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function post($path, $parameters = null, $body = null)
     {
@@ -240,7 +243,7 @@ class RecommendApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }
@@ -259,7 +262,7 @@ class RecommendApi
      * @param array $parameters Query parameters to be applied to the current query. (optional)
      * @param array $body The parameters to send with the custom request. (optional)
      *
-     * @return array<string, mixed>
+     * @return array<string, mixed>|object
      */
     public function put($path, $parameters = null, $body = null)
     {
@@ -288,7 +291,7 @@ class RecommendApi
         if ($path !== null) {
             $resourcePath = str_replace(
                 '{path}',
-                path,
+                $path,
                 $resourcePath
             );
         }

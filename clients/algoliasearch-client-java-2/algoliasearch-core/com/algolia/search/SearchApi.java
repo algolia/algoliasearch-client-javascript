@@ -26,11 +26,33 @@ import okhttp3.Call;
 public class SearchApi extends ApiClient {
 
   public SearchApi(String appId, String apiKey) {
-    super(appId, apiKey, new HttpRequester(getDefaultHosts(appId)));
+    this(appId, apiKey, new HttpRequester(getDefaultHosts(appId)), null);
+  }
+
+  public SearchApi(
+    String appId,
+    String apiKey,
+    UserAgent.Segment[] userAgentSegments
+  ) {
+    this(
+      appId,
+      apiKey,
+      new HttpRequester(getDefaultHosts(appId)),
+      userAgentSegments
+    );
   }
 
   public SearchApi(String appId, String apiKey, Requester requester) {
-    super(appId, apiKey, requester);
+    this(appId, apiKey, requester, null);
+  }
+
+  public SearchApi(
+    String appId,
+    String apiKey,
+    Requester requester,
+    UserAgent.Segment[] userAgentSegments
+  ) {
+    super(appId, apiKey, requester, "Search", userAgentSegments);
   }
 
   private static List<StatefulHost> getDefaultHosts(String appId) {

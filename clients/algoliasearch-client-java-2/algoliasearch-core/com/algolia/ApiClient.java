@@ -2,6 +2,7 @@ package com.algolia;
 
 import com.algolia.exceptions.*;
 import com.algolia.utils.Requester;
+import com.algolia.utils.UserAgent;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -28,8 +29,21 @@ public class ApiClient {
   /*
    * Constructor for ApiClient with custom Requester
    */
-  public ApiClient(String appId, String apiKey, Requester requester) {
-    setUserAgent("OpenAPI-Generator/0.1.0/java");
+  public ApiClient(
+    String appId,
+    String apiKey,
+    Requester requester,
+    String clientName,
+    UserAgent.Segment[] segments
+  ) {
+    UserAgent ua = new UserAgent("0.0.1");
+    ua.addSegment(new UserAgent.Segment(clientName, "0.0.1"));
+    if (segments != null) {
+      for (UserAgent.Segment segment : segments) {
+        ua.addSegment(segment);
+      }
+    }
+    setUserAgent(ua.toString());
 
     this.appId = appId;
     this.apiKey = apiKey;
