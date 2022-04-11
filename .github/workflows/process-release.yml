@@ -19,6 +19,8 @@ jobs:
       - name: Setup
         id: setup
         uses: ./.github/actions/setup
+        with:
+          workflow_name: process-release
 
       - run: yarn workspace scripts processRelease
         env:

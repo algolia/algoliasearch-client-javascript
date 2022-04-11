@@ -6,6 +6,9 @@ inputs:
   type:
     description: Type of setup, `minimal` will only run the JavaScript installation.
     required: false
+  workflow_name:
+    description: Name of the workflow that is executing this action.
+    required: false
 
 runs:
   using: composite
@@ -44,7 +47,7 @@ runs:
       shell: bash
       run: |
         previousCommit=${{ github.event.before }}
-        baseRef=${{ github.base_ref }}
+        baseRef=${{ inputs.workflow_name == 'process-release' && 'main' || github.base_ref }}
         origin=$( [[ -z $baseRef ]] && echo $previousCommit || echo "origin/$baseRef" )
 
         yarn workspace scripts setRunVariables "$origin"

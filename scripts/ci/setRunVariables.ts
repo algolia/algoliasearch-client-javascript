@@ -109,11 +109,13 @@ async function setRunVariables({
 }
 
 if (require.main === module) {
-  const [origin] = process.argv.slice(2);
+  const [originBranch] = process.argv.slice(2);
 
-  if (!origin) {
-    throw new Error(`Unable to retrieve the origin: ${origin}`);
+  if (!originBranch) {
+    throw new Error(
+      `Unable to retrieve the origin branch: ${JSON.stringify(originBranch)}`
+    );
   }
 
-  setRunVariables({ originBranch: origin });
+  setRunVariables({ originBranch });
 }
