@@ -31,7 +31,7 @@ import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 
 export * from '../model/models';
-export const apiClientVersion = '0.0.5';
+export const apiClientVersion = '0.0.6';
 
 export type Region = 'de' | 'us';
 
