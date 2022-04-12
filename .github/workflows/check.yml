@@ -191,42 +191,6 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: git --no-pager diff
 
-  client_javascript_algoliasearch:
-    timeout-minutes: 10
-    runs-on: ubuntu-20.04
-    needs: client_javascript
-    if: |
-      always() &&
-      needs.setup.outputs.RUN_JS_ALGOLIASEARCH == 'true' &&
-      !contains(needs.*.result, 'cancelled') &&
-      !contains(needs.*.result, 'failure')
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Restore cache
-        uses: ./.github/actions/cache
-        with:
-          job: codegen
-          language: javascript
-
-      - name: Cache 'algoliasearch' client
-        id: cache
-        uses: actions/cache@v2
-        with:
-          path: clients/algoliasearch-client-javascript/packages/algoliasearch
-          key: |
-            ${{ env.CACHE_VERSION }}-${{
-            hashFiles(
-              'clients/algoliasearch-client-javascript/packages/algoliasearch/**',
-              'clients/algoliasearch-client-javascript/packages/client-search/**',
-              'clients/algoliasearch-client-javascript/packages/client-analytics/**',
-              'clients/algoliasearch-client-javascript/packages/client-personalization/**'
-            )}}
-
-      - name: Build 'algoliasearch' client
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn cli build clients javascript algoliasearch
-
   client_java:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
@@ -327,12 +291,46 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: git --no-pager diff
 
+  client_javascript_algoliasearch:
+    timeout-minutes: 10
+    runs-on: ubuntu-20.04
+    needs: client_javascript
+    if: |
+      always() &&
+      needs.setup.outputs.RUN_JS_ALGOLIASEARCH == 'true' &&
+      !contains(needs.*.result, 'cancelled') &&
+      !contains(needs.*.result, 'failure')
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Restore cache
+        uses: ./.github/actions/cache
+        with:
+          job: codegen
+          language: javascript
+
+      - name: Cache 'algoliasearch' client
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: clients/algoliasearch-client-javascript/packages/algoliasearch
+          key: |
+            ${{ env.CACHE_VERSION }}-${{
+            hashFiles(
+              'clients/algoliasearch-client-javascript/packages/algoliasearch/**',
+              'clients/algoliasearch-client-javascript/packages/client-search/**',
+              'clients/algoliasearch-client-javascript/packages/client-analytics/**',
+              'clients/algoliasearch-client-javascript/packages/client-personalization/**'
+            )}}
+
+      - name: Build 'algoliasearch' client
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn cli build clients javascript algoliasearch
+
   client_javascript_tests:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
-    needs:
-      - client_javascript
-      - client_javascript_algoliasearch
+    needs: client_javascript
     if: |
       always() &&
       needs.setup.outputs.RUN_JS_TESTS == 'true' &&
@@ -354,7 +352,6 @@ jobs:
     timeout-minutes: 20
     needs:
       - client_javascript
-      - client_javascript_algoliasearch
       - client_java
       - client_php
     if: |
@@ -390,6 +387,7 @@ jobs:
     needs:
       - cts
       - client_javascript_tests
+      - client_javascript_algoliasearch
     if: |
       always() &&
       needs.setup.outputs.RUN_CODEGEN == 'true' &&
