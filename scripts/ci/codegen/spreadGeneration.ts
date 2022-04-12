@@ -3,12 +3,10 @@ import { copy } from 'fs-extra';
 
 import {
   emptyDirExceptForDotGit,
-  gitBranchExists,
   gitCommit,
   LANGUAGES,
   run,
   toAbsolutePath,
-  GENERATED_MAIN_BRANCH,
   REPO_URL,
 } from '../../common';
 import { getLanguageFolder } from '../../config';
@@ -44,20 +42,11 @@ async function spreadGeneration(): Promise<void> {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
   }
 
-  if (!(await gitBranchExists(GENERATED_MAIN_BRANCH))) {
-    console.log(
-      `Skiping because the branch \`${GENERATED_MAIN_BRANCH}\` does not exist.`
-    );
-    return;
-  }
-
   const lastCommitMessage = await run(`git log -1 --format="%s"`);
   const name = (await run(`git log -1 --format="%an"`)).trim();
   const email = (await run(`git log -1 --format="%ae"`)).trim();
   const commitMessage = cleanUpCommitMessage(lastCommitMessage);
   const langs = decideWhereToSpread(lastCommitMessage);
-
-  await run(`git checkout ${GENERATED_MAIN_BRANCH}`);
 
   for (const lang of langs) {
     const { tempGitDir } = await cloneRepository({

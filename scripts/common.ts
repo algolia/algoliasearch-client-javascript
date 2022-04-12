@@ -18,7 +18,6 @@ import type {
 } from './types';
 
 export const MAIN_BRANCH = config.mainBranch;
-export const GENERATED_MAIN_BRANCH = `generated/${MAIN_BRANCH}`;
 export const OWNER = config.owner;
 export const REPO = config.repo;
 export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;

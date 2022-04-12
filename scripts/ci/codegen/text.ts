@@ -1,4 +1,4 @@
-import { REPO_URL, GENERATED_MAIN_BRANCH } from '../../common';
+import { MAIN_BRANCH, REPO_URL } from '../../common';
 
 export default {
   notification: {
@@ -11,7 +11,7 @@ export default {
   },
   cleanup: {
     header: '### ✗ The generated branch has been deleted.',
-    body: `If the PR has been merged, you can check the generated code on the [\`${GENERATED_MAIN_BRANCH}\` branch](${REPO_URL}/tree/${GENERATED_MAIN_BRANCH}).`,
+    body: `If the PR has been merged, you can check the generated code on the [\`${MAIN_BRANCH}\` branch](${REPO_URL}/tree/${MAIN_BRANCH}).`,
   },
   codegen: {
     header: '### ✔️ Code generated!',
@@ -25,7 +25,7 @@ export default {
 |  Name | Link |
 |---------------------------------|------------------------|
 | 🔨 Triggered by | [\`${commit}\`](${REPO_URL}/pull/${eventNumber}/commits/${commit}) |
-| 🔍 Generated code | [\`${generatedCommit}\`](${REPO_URL}/compare/${GENERATED_MAIN_BRANCH}...${generatedCommit}) |
+| 🔍 Generated code | [\`${generatedCommit}\`](${REPO_URL}/commit/${generatedCommit}) |
 | 🌲 Generated branch | [\`${branch}\`](${REPO_URL}/tree/${branch}) |
 `;
     },

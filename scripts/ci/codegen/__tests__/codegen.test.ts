@@ -1,4 +1,4 @@
-import { GENERATED_MAIN_BRANCH } from '../../../common';
+import { MAIN_BRANCH } from '../../../common';
 import { cleanGeneratedBranch } from '../cleanGeneratedBranch';
 import { pushGeneratedCode } from '../pushGeneratedCode';
 import commentText from '../text';
@@ -67,7 +67,7 @@ describe('codegen', () => {
       expect(await getCommentBody('cleanup')).toMatchInlineSnapshot(`
         "### ✗ The generated branch has been deleted.
 
-        If the PR has been merged, you can check the generated code on the [\`${GENERATED_MAIN_BRANCH}\` branch](https://github.com/algolia/api-clients-automation/tree/${GENERATED_MAIN_BRANCH})."
+        If the PR has been merged, you can check the generated code on the [\`${MAIN_BRANCH}\` branch](https://github.com/algolia/api-clients-automation/tree/${MAIN_BRANCH})."
       `);
     });
 
@@ -85,7 +85,7 @@ describe('codegen', () => {
           |  Name | Link |
           |---------------------------------|------------------------|
           | 🔨 Triggered by | [\`myCommit\`](https://github.com/algolia/api-clients-automation/pull/42/commits/myCommit) |
-          | 🔍 Generated code | [\`theGeneratedCommit\`](https://github.com/algolia/api-clients-automation/compare/generated/main...theGeneratedCommit) |
+          | 🔍 Generated code | [\`theGeneratedCommit\`](https://github.com/algolia/api-clients-automation/commit/theGeneratedCommit) |
           | 🌲 Generated branch | [\`myBranch\`](https://github.com/algolia/api-clients-automation/tree/myBranch) |
           "
         `);

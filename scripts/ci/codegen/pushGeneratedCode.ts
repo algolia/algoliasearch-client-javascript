@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { run } from '../../common';
+import { MAIN_BRANCH, run } from '../../common';
 import { configureGitHubAuthor } from '../../release/common';
 import { getNbGitDiff } from '../utils';
 
@@ -17,10 +17,11 @@ export async function pushGeneratedCode(): Promise<void> {
   await configureGitHubAuthor();
 
   const baseBranch = await run('git branch --show-current');
+  const isMainBranch = baseBranch === MAIN_BRANCH;
   console.log(`Checking codegen status on '${baseBranch}'.`);
 
   const nbDiff = await getNbGitDiff({
-    branch: 'origin/generated/main',
+    branch: baseBranch,
     head: null,
     path: FOLDERS_TO_CHECK,
   });
@@ -38,22 +39,13 @@ export async function pushGeneratedCode(): Promise<void> {
   console.log(`${nbDiff} changes found for ${FOLDERS_TO_CHECK}`);
 
   // determine generated branch name based on current branch
-  const generatedCodeBranch = `generated/${baseBranch}`;
+  const branchToPush = isMainBranch ? baseBranch : `generated/${baseBranch}`;
 
-  // We don't re-create GENERATED_MAIN_BRANCH
-  if (baseBranch !== 'main') {
+  if (!isMainBranch) {
     await run(`yarn workspace scripts cleanGeneratedBranch ${baseBranch}`);
 
-    console.log(`Creating branch for generated code: '${generatedCodeBranch}'`);
-    await run(`git branch ${generatedCodeBranch}`);
-  }
-
-  await run(`git checkout ${generatedCodeBranch}`);
-
-  // For the GENERATED_MAIN_BRANCH, we take the latest commit on main and generate code
-  if (baseBranch === 'main') {
-    console.log(`Merging '${baseBranch}' in '${generatedCodeBranch}'`);
-    await run(`git merge --no-commit ${baseBranch}`);
+    console.log(`Creating branch for generated code: '${branchToPush}'`);
+    await run(`git checkout -b ${branchToPush}`);
   }
 
   const commitMessage =
@@ -62,11 +54,11 @@ export async function pushGeneratedCode(): Promise<void> {
 Co-authored-by: %an <%ae>"`);
 
   console.log(
-    `Pushing code for folders '${FOLDERS_TO_CHECK}' to generated branch: '${generatedCodeBranch}'`
+    `Pushing code for folders '${FOLDERS_TO_CHECK}' to generated branch: '${branchToPush}'`
   );
   await run(`git add ${FOLDERS_TO_CHECK}`);
   await run(`git commit -m "${commitMessage}"`);
-  await run(`git push origin ${generatedCodeBranch}`);
+  await run(`git push origin ${branchToPush}`);
 
   if (PR_NUMBER) {
     await run(`git checkout ${baseBranch}`);
