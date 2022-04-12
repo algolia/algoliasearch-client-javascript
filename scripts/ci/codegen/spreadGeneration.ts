@@ -68,7 +68,7 @@ async function spreadGeneration(): Promise<void> {
       console.log(
         `❎ Skipping ${lang} repository, because there is no change.`
       );
-      return;
+      continue;
     }
 
     await configureGitHubAuthor(tempGitDir);
