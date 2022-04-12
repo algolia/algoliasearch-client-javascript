@@ -14,7 +14,7 @@
     "test:lint": "eslint . --ext .js,.ts",
     "test:types": "yarn tsc --noEmit",
     "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --yes",
-    "release:publish": "ts-node scripts/publish.ts"
+    "release:publish": "ts-node --project tsconfig.script.json scripts/publish.ts"
   },
   "devDependencies": {
     "@babel/core": "7.17.9",
@@ -25,8 +25,9 @@
     "@rollup/plugin-babel": "5.3.1",
     "@rollup/plugin-node-resolve": "13.1.3",
     "@types/rollup-plugin-node-globals": "1.4.1",
+    "@types/semver": "7.3.9",
     "bundlesize2": "0.0.31",
-    "execa": "6.1.0",
+    "execa": "5.1.1",
     "lerna": "4.0.0",
     "rollup": "2.70.1",
     "rollup-plugin-filesize": "9.1.2",
