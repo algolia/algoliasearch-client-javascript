@@ -53,7 +53,8 @@ export async function pushGeneratedCode(): Promise<void> {
       isMainBranch ? '[skip ci]' : ''
     }
 
-Co-authored-by: %an <%ae>"`);
+Co-authored-by: %an <%ae>
+%(trailers:key=Co-authored-by)"`);
 
   console.log(
     `Pushing code for folders '${FOLDERS_TO_CHECK}' to generated branch: '${branchToPush}'`
