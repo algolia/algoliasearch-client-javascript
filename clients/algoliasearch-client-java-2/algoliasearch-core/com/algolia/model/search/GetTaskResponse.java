@@ -1,69 +1,15 @@
 package com.algolia.model.search;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 import java.util.Objects;
 
 /** GetTaskResponse */
 public class GetTaskResponse {
 
-  /** Gets or Sets status */
-  @JsonAdapter(StatusEnum.Adapter.class)
-  public enum StatusEnum {
-    PUBLISHED("published"),
-
-    NOT_PUBLISHED("notPublished");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static StatusEnum fromValue(String value) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<StatusEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final StatusEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public StatusEnum read(final JsonReader jsonReader) throws IOException {
-        String value = jsonReader.nextString();
-        return StatusEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("status")
-  private StatusEnum status;
+  private TaskStatus status;
 
-  public GetTaskResponse setStatus(StatusEnum status) {
+  public GetTaskResponse setStatus(TaskStatus status) {
     this.status = status;
     return this;
   }
@@ -74,7 +20,7 @@ public class GetTaskResponse {
    * @return status
    */
   @javax.annotation.Nonnull
-  public StatusEnum getStatus() {
+  public TaskStatus getStatus() {
     return status;
   }
 

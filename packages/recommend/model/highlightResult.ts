@@ -1,3 +1,5 @@
+import type { MatchLevel } from './matchLevel';
+
 /**
  * Highlighted attributes.
  */
@@ -6,10 +8,7 @@ export type HighlightResult = {
    * Markup text with occurrences highlighted.
    */
   value?: string;
-  /**
-   * Indicates how well the attribute matched the search query.
-   */
-  matchLevel?: HighlightResultMatchLevel;
+  matchLevel?: MatchLevel;
   /**
    * List of words from the query that matched the object.
    */
@@ -19,5 +18,3 @@ export type HighlightResult = {
    */
   fullyHighlighted?: boolean;
 };
-
-export type HighlightResultMatchLevel = 'full' | 'none' | 'partial';

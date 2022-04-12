@@ -12,8 +12,8 @@ import java.io.IOException;
 @JsonAdapter(AroundRadius.Adapter.class)
 public abstract class AroundRadius implements CompoundType {
 
-  public static AroundRadius ofAroundRadiusOneOf(AroundRadiusOneOf inside) {
-    return new AroundRadiusAroundRadiusOneOf(inside);
+  public static AroundRadius ofAroundRadiusAll(AroundRadiusAll inside) {
+    return new AroundRadiusAroundRadiusAll(inside);
   }
 
   public static AroundRadius ofInteger(Integer inside) {
@@ -39,16 +39,16 @@ public abstract class AroundRadius implements CompoundType {
 }
 
 @JsonAdapter(AroundRadius.Adapter.class)
-class AroundRadiusAroundRadiusOneOf extends AroundRadius {
+class AroundRadiusAroundRadiusAll extends AroundRadius {
 
-  private final AroundRadiusOneOf insideValue;
+  private final AroundRadiusAll insideValue;
 
-  AroundRadiusAroundRadiusOneOf(AroundRadiusOneOf insideValue) {
+  AroundRadiusAroundRadiusAll(AroundRadiusAll insideValue) {
     this.insideValue = insideValue;
   }
 
   @Override
-  public AroundRadiusOneOf getInsideValue() {
+  public AroundRadiusAll getInsideValue() {
     return insideValue;
   }
 }

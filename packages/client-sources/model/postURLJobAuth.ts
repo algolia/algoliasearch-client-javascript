@@ -1,11 +1,10 @@
+import type { AuthenticationType } from './authenticationType';
+
 /**
  * The authentication scheme for the URL that will be fetched.
  */
 export type PostURLJobAuth = {
-  /**
-   * The type of authentication to use.
-   */
-  type: PostURLJobAuthType;
+  type: AuthenticationType;
   /**
    * The login to use for Basic Auth.
    */
@@ -15,5 +14,3 @@ export type PostURLJobAuth = {
    */
   password: string;
 };
-
-export type PostURLJobAuthType = 'basic';

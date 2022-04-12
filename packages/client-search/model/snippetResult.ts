@@ -1,12 +1,9 @@
+import type { MatchLevel } from './matchLevel';
+
 export type SnippetResult = {
   /**
    * Markup text with occurrences highlighted.
    */
   value?: string;
-  /**
-   * Indicates how well the attribute matched the search query.
-   */
-  matchLevel?: SnippetResultMatchLevel;
+  matchLevel?: MatchLevel;
 };
-
-export type SnippetResultMatchLevel = 'full' | 'none' | 'partial';

@@ -1,6 +1,7 @@
 export * from './errorBase';
 export * from './indexName';
 export * from './logFile';
+export * from './logLevel';
 export * from './querySuggestionsIndex';
 export * from './querySuggestionsIndexParam';
 export * from './querySuggestionsIndexWithIndexParam';

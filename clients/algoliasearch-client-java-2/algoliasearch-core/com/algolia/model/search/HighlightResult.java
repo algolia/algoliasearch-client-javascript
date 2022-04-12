@@ -1,11 +1,6 @@
 package com.algolia.model.search;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,60 +11,8 @@ public class HighlightResult {
   @SerializedName("value")
   private String value;
 
-  /** Indicates how well the attribute matched the search query. */
-  @JsonAdapter(MatchLevelEnum.Adapter.class)
-  public enum MatchLevelEnum {
-    NONE("none"),
-
-    PARTIAL("partial"),
-
-    FULL("full");
-
-    private String value;
-
-    MatchLevelEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static MatchLevelEnum fromValue(String value) {
-      for (MatchLevelEnum b : MatchLevelEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<MatchLevelEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final MatchLevelEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public MatchLevelEnum read(final JsonReader jsonReader)
-        throws IOException {
-        String value = jsonReader.nextString();
-        return MatchLevelEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("matchLevel")
-  private MatchLevelEnum matchLevel;
+  private MatchLevel matchLevel;
 
   @SerializedName("matchedWords")
   private List<String> matchedWords = null;
@@ -92,18 +35,18 @@ public class HighlightResult {
     return value;
   }
 
-  public HighlightResult setMatchLevel(MatchLevelEnum matchLevel) {
+  public HighlightResult setMatchLevel(MatchLevel matchLevel) {
     this.matchLevel = matchLevel;
     return this;
   }
 
   /**
-   * Indicates how well the attribute matched the search query.
+   * Get matchLevel
    *
    * @return matchLevel
    */
   @javax.annotation.Nullable
-  public MatchLevelEnum getMatchLevel() {
+  public MatchLevel getMatchLevel() {
     return matchLevel;
   }
 

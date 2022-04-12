@@ -1,11 +1,10 @@
+import type { EventType } from './eventType';
+
 /**
  * Insights event.
  */
 export type InsightEvent = {
-  /**
-   * An eventType can be a click, a conversion, or a view.
-   */
-  eventType: InsightEventEventType;
+  eventType: EventType;
   /**
    * A user-defined string used to categorize events.
    */
@@ -39,5 +38,3 @@ export type InsightEvent = {
    */
   positions?: number[];
 };
-
-export type InsightEventEventType = 'click' | 'conversion' | 'view';

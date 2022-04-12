@@ -40,6 +40,13 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
+    eventType:
+      type: string
+      description: An eventType can be a click, a conversion, or a view.
+      enum:
+        - click
+        - conversion
+        - view
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -223,12 +230,7 @@ paths:
                     additionalProperties: false
                     properties:
                       eventType:
-                        type: string
-                        description: An eventType can be a click, a conversion, or a view.
-                        enum:
-                          - click
-                          - conversion
-                          - view
+                        $ref: '#/components/schemas/eventType'
                       eventName:
                         type: string
                         description: A user-defined string used to categorize events.

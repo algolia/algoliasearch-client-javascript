@@ -1,3 +1,4 @@
+import type { Method } from './method';
 import type { PostURLJobAuth } from './postURLJobAuth';
 
 /**
@@ -8,11 +9,6 @@ export type PostURLJobInput = {
    * The URL of the file to ingest.
    */
   url: string;
-  /**
-   * The HTTP method that will be used to fetch the URL.
-   */
-  method?: PostURLJobInputMethod;
+  method?: Method;
   auth?: PostURLJobAuth;
 };
-
-export type PostURLJobInputMethod = 'GET' | 'POST';

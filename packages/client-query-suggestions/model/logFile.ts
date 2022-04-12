@@ -1,12 +1,11 @@
+import type { LogLevel } from './logLevel';
+
 export type LogFile = {
   /**
    * Date and time of creation of the record.
    */
   timestamp: string;
-  /**
-   * Type of the record, can be one of three values (INFO, SKIP or ERROR).
-   */
-  level: LogFileLevel;
+  level: LogLevel;
   /**
    * Detailed description of what happened.
    */
@@ -16,5 +15,3 @@ export type LogFile = {
    */
   contextLevel: number;
 };
-
-export type LogFileLevel = 'ERROR' | 'INFO' | 'SKIP';

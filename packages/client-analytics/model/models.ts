@@ -1,3 +1,4 @@
+export * from './direction';
 export * from './errorBase';
 export * from './getAverageClickPositionResponse';
 export * from './getAverageClickPositionResponseDates';
@@ -30,6 +31,7 @@ export * from './getTopFiltersNoResultsValues';
 export * from './getTopHitsResponse';
 export * from './getTopSearchesResponse';
 export * from './getUsersCountResponse';
+export * from './orderBy';
 export * from './topHitsResponse';
 export * from './topHitsResponseHits';
 export * from './topHitsResponseWithAnalytics';

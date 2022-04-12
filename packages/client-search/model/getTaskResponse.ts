@@ -1,5 +1,5 @@
-export type GetTaskResponse = {
-  status: GetTaskResponseStatus;
-};
+import type { TaskStatus } from './taskStatus';
 
-export type GetTaskResponseStatus = 'notPublished' | 'published';
+export type GetTaskResponse = {
+  status: TaskStatus;
+};

@@ -230,6 +230,13 @@ components:
             indexName:
               type: string
               description: Index name to target.
+    logLevel:
+      type: string
+      enum:
+        - INFO
+        - SKIP
+        - ERROR
+      description: type of the record, can be one of three values (INFO, SKIP or ERROR).
   responses:
     BadRequest:
       description: Bad request or request arguments.
@@ -620,14 +627,7 @@ paths:
                       type: string
                       description: date and time of creation of the record.
                     level:
-                      type: string
-                      enum:
-                        - INFO
-                        - SKIP
-                        - ERROR
-                      description: >-
-                        type of the record, can be one of three values (INFO,
-                        SKIP or ERROR).
+                      $ref: '#/components/schemas/logLevel'
                     message:
                       type: string
                       description: detailed description of what happened.

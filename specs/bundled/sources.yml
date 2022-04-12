@@ -40,6 +40,33 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
+    taskType:
+      type: string
+      description: The type of the task executed.
+      enum:
+        - csv
+    method:
+      type: string
+      description: The HTTP method that will be used to fetch the URL.
+      default: GET
+      enum:
+        - GET
+        - POST
+    authenticationType:
+      type: string
+      description: The type of authentication to use.
+      enum:
+        - basic
+    productType:
+      type: string
+      description: The product to target.
+      enum:
+        - search
+    operationType:
+      type: string
+      description: The type of operation to execute.
+      enum:
+        - replace
     task:
       type: object
       description: A task object.
@@ -50,10 +77,7 @@ components:
           format: uuid
           example: e0f6db8a-24f5-4092-83a4-1b2c6cb6d809
         type:
-          type: string
-          description: The type of the task executed.
-          enum:
-            - csv
+          $ref: '#/components/schemas/taskType'
       required:
         - id
         - type
@@ -232,10 +256,7 @@ paths:
                 - target
               properties:
                 type:
-                  type: string
-                  description: The type of the file to ingest.
-                  enum:
-                    - csv
+                  $ref: '#/components/schemas/taskType'
                 uniqueIDColumn:
                   type: string
                   description: The name of the column that hold the unique identifier.
@@ -252,12 +273,7 @@ paths:
                       type: string
                       description: The URL of the file to ingest.
                     method:
-                      type: string
-                      description: The HTTP method that will be used to fetch the URL.
-                      default: GET
-                      enum:
-                        - GET
-                        - POST
+                      $ref: '#/components/schemas/method'
                     auth:
                       type: object
                       title: postURLJobAuth
@@ -271,10 +287,7 @@ paths:
                         - password
                       properties:
                         type:
-                          type: string
-                          description: The type of authentication to use.
-                          enum:
-                            - basic
+                          $ref: '#/components/schemas/authenticationType'
                         login:
                           type: string
                           description: The login to use for Basic Auth.
@@ -294,19 +307,13 @@ paths:
                     - operation
                   properties:
                     type:
-                      type: string
-                      description: The product to target.
-                      enum:
-                        - search
+                      $ref: '#/components/schemas/productType'
                     indexName:
                       type: string
                       description: The index name of the product.
                       example: my_index_name
                     operation:
-                      type: string
-                      description: The type of operation to execute.
-                      enum:
-                        - replace
+                      $ref: '#/components/schemas/operationType'
       responses:
         '200':
           description: OK

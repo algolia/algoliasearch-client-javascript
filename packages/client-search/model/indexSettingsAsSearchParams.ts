@@ -1,3 +1,10 @@
+import type { AdvancedSyntaxFeatures } from './advancedSyntaxFeatures';
+import type { AlternativesAsExact } from './alternativesAsExact';
+import type { ExactOnSingleWordQuery } from './exactOnSingleWordQuery';
+import type { QueryType } from './queryType';
+import type { RemoveWordsIfNoResults } from './removeWordsIfNoResults';
+import type { TypoTolerance } from './typoTolerance';
+
 export type IndexSettingsAsSearchParams = {
   /**
    * The complete list of attributes used for searching.
@@ -67,10 +74,7 @@ export type IndexSettingsAsSearchParams = {
    * Minimum number of characters a word in the query string must contain to accept matches with 2 typos.
    */
   minWordSizefor2Typos?: number;
-  /**
-   * Controls whether typo tolerance is enabled and how it is applied.
-   */
-  typoTolerance?: IndexSettingsAsSearchParamsTypoTolerance;
+  typoTolerance?: TypoTolerance;
   /**
    * Whether to allow typos on numbers (\"numeric tokens\") in the query string.
    */
@@ -111,14 +115,8 @@ export type IndexSettingsAsSearchParams = {
    * Enable the Personalization feature.
    */
   enablePersonalization?: boolean;
-  /**
-   * Controls if and how query words are interpreted as prefixes.
-   */
-  queryType?: IndexSettingsAsSearchParamsQueryType;
-  /**
-   * Selects a strategy to remove words from the query when it doesn\'t match any hits.
-   */
-  removeWordsIfNoResults?: IndexSettingsAsSearchParamsRemoveWordsIfNoResults;
+  queryType?: QueryType;
+  removeWordsIfNoResults?: RemoveWordsIfNoResults;
   /**
    * Enables the advanced query syntax.
    */
@@ -131,18 +129,15 @@ export type IndexSettingsAsSearchParams = {
    * List of attributes on which you want to disable the exact ranking criterion.
    */
   disableExactOnAttributes?: string[];
-  /**
-   * Controls how the exact ranking criterion is computed when the query contains only one word.
-   */
-  exactOnSingleWordQuery?: IndexSettingsAsSearchParamsExactOnSingleWordQuery;
+  exactOnSingleWordQuery?: ExactOnSingleWordQuery;
   /**
    * List of alternatives that should be considered an exact match by the exact ranking criterion.
    */
-  alternativesAsExact?: IndexSettingsAsSearchParamsAlternativesAsExact[];
+  alternativesAsExact?: AlternativesAsExact[];
   /**
    * Allows you to specify which advanced syntax features are active when ‘advancedSyntax\' is enabled.
    */
-  advancedSyntaxFeatures?: IndexSettingsAsSearchParamsAdvancedSyntaxFeatures[];
+  advancedSyntaxFeatures?: AdvancedSyntaxFeatures[];
   /**
    * Enables de-duplication or grouping of results.
    */
@@ -176,34 +171,3 @@ export type IndexSettingsAsSearchParams = {
    */
   renderingContent?: Record<string, any>;
 };
-
-export type IndexSettingsAsSearchParamsTypoTolerance =
-  | 'false'
-  | 'min'
-  | 'strict'
-  | 'true';
-
-export type IndexSettingsAsSearchParamsQueryType =
-  | 'prefixAll'
-  | 'prefixLast'
-  | 'prefixNone';
-
-export type IndexSettingsAsSearchParamsRemoveWordsIfNoResults =
-  | 'allOptional'
-  | 'firstWords'
-  | 'lastWords'
-  | 'none';
-
-export type IndexSettingsAsSearchParamsExactOnSingleWordQuery =
-  | 'attribute'
-  | 'none'
-  | 'word';
-
-export type IndexSettingsAsSearchParamsAlternativesAsExact =
-  | 'ignorePlurals'
-  | 'multiWordsSynonym'
-  | 'singleWordSynonym';
-
-export type IndexSettingsAsSearchParamsAdvancedSyntaxFeatures =
-  | 'exactPhrase'
-  | 'excludeWords';

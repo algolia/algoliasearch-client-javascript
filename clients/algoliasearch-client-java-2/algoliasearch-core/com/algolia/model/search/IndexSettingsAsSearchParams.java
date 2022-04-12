@@ -1,11 +1,6 @@
 package com.algolia.model.search;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -64,62 +59,8 @@ public class IndexSettingsAsSearchParams {
   @SerializedName("minWordSizefor2Typos")
   private Integer minWordSizefor2Typos = 8;
 
-  /** Controls whether typo tolerance is enabled and how it is applied. */
-  @JsonAdapter(TypoToleranceEnum.Adapter.class)
-  public enum TypoToleranceEnum {
-    TRUE("true"),
-
-    FALSE("false"),
-
-    MIN("min"),
-
-    STRICT("strict");
-
-    private String value;
-
-    TypoToleranceEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static TypoToleranceEnum fromValue(String value) {
-      for (TypoToleranceEnum b : TypoToleranceEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<TypoToleranceEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final TypoToleranceEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public TypoToleranceEnum read(final JsonReader jsonReader)
-        throws IOException {
-        String value = jsonReader.nextString();
-        return TypoToleranceEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("typoTolerance")
-  private TypoToleranceEnum typoTolerance = TypoToleranceEnum.TRUE;
+  private TypoTolerance typoTolerance = TypoTolerance.TRUE;
 
   @SerializedName("allowTyposOnNumericTokens")
   private Boolean allowTyposOnNumericTokens = true;
@@ -151,119 +92,12 @@ public class IndexSettingsAsSearchParams {
   @SerializedName("enablePersonalization")
   private Boolean enablePersonalization = false;
 
-  /** Controls if and how query words are interpreted as prefixes. */
-  @JsonAdapter(QueryTypeEnum.Adapter.class)
-  public enum QueryTypeEnum {
-    PREFIX_LAST("prefixLast"),
-
-    PREFIX_ALL("prefixAll"),
-
-    PREFIX_NONE("prefixNone");
-
-    private String value;
-
-    QueryTypeEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static QueryTypeEnum fromValue(String value) {
-      for (QueryTypeEnum b : QueryTypeEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<QueryTypeEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final QueryTypeEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public QueryTypeEnum read(final JsonReader jsonReader)
-        throws IOException {
-        String value = jsonReader.nextString();
-        return QueryTypeEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("queryType")
-  private QueryTypeEnum queryType = QueryTypeEnum.PREFIX_LAST;
-
-  /** Selects a strategy to remove words from the query when it doesn't match any hits. */
-  @JsonAdapter(RemoveWordsIfNoResultsEnum.Adapter.class)
-  public enum RemoveWordsIfNoResultsEnum {
-    NONE("none"),
-
-    LAST_WORDS("lastWords"),
-
-    FIRST_WORDS("firstWords"),
-
-    ALL_OPTIONAL("allOptional");
-
-    private String value;
-
-    RemoveWordsIfNoResultsEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static RemoveWordsIfNoResultsEnum fromValue(String value) {
-      for (RemoveWordsIfNoResultsEnum b : RemoveWordsIfNoResultsEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter
-      extends TypeAdapter<RemoveWordsIfNoResultsEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final RemoveWordsIfNoResultsEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public RemoveWordsIfNoResultsEnum read(final JsonReader jsonReader)
-        throws IOException {
-        String value = jsonReader.nextString();
-        return RemoveWordsIfNoResultsEnum.fromValue(value);
-      }
-    }
-  }
+  private QueryType queryType = QueryType.PREFIX_LAST;
 
   @SerializedName("removeWordsIfNoResults")
-  private RemoveWordsIfNoResultsEnum removeWordsIfNoResults =
-    RemoveWordsIfNoResultsEnum.NONE;
+  private RemoveWordsIfNoResults removeWordsIfNoResults =
+    RemoveWordsIfNoResults.NONE;
 
   @SerializedName("advancedSyntax")
   private Boolean advancedSyntax = false;
@@ -274,171 +108,15 @@ public class IndexSettingsAsSearchParams {
   @SerializedName("disableExactOnAttributes")
   private List<String> disableExactOnAttributes = null;
 
-  /** Controls how the exact ranking criterion is computed when the query contains only one word. */
-  @JsonAdapter(ExactOnSingleWordQueryEnum.Adapter.class)
-  public enum ExactOnSingleWordQueryEnum {
-    ATTRIBUTE("attribute"),
-
-    NONE("none"),
-
-    WORD("word");
-
-    private String value;
-
-    ExactOnSingleWordQueryEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static ExactOnSingleWordQueryEnum fromValue(String value) {
-      for (ExactOnSingleWordQueryEnum b : ExactOnSingleWordQueryEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter
-      extends TypeAdapter<ExactOnSingleWordQueryEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final ExactOnSingleWordQueryEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public ExactOnSingleWordQueryEnum read(final JsonReader jsonReader)
-        throws IOException {
-        String value = jsonReader.nextString();
-        return ExactOnSingleWordQueryEnum.fromValue(value);
-      }
-    }
-  }
-
   @SerializedName("exactOnSingleWordQuery")
-  private ExactOnSingleWordQueryEnum exactOnSingleWordQuery =
-    ExactOnSingleWordQueryEnum.ATTRIBUTE;
-
-  /** Gets or Sets alternativesAsExact */
-  @JsonAdapter(AlternativesAsExactEnum.Adapter.class)
-  public enum AlternativesAsExactEnum {
-    IGNORE_PLURALS("ignorePlurals"),
-
-    SINGLE_WORD_SYNONYM("singleWordSynonym"),
-
-    MULTI_WORDS_SYNONYM("multiWordsSynonym");
-
-    private String value;
-
-    AlternativesAsExactEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static AlternativesAsExactEnum fromValue(String value) {
-      for (AlternativesAsExactEnum b : AlternativesAsExactEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<AlternativesAsExactEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final AlternativesAsExactEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public AlternativesAsExactEnum read(final JsonReader jsonReader)
-        throws IOException {
-        String value = jsonReader.nextString();
-        return AlternativesAsExactEnum.fromValue(value);
-      }
-    }
-  }
+  private ExactOnSingleWordQuery exactOnSingleWordQuery =
+    ExactOnSingleWordQuery.ATTRIBUTE;
 
   @SerializedName("alternativesAsExact")
-  private List<AlternativesAsExactEnum> alternativesAsExact = null;
-
-  /** Gets or Sets advancedSyntaxFeatures */
-  @JsonAdapter(AdvancedSyntaxFeaturesEnum.Adapter.class)
-  public enum AdvancedSyntaxFeaturesEnum {
-    EXACT_PHRASE("exactPhrase"),
-
-    EXCLUDE_WORDS("excludeWords");
-
-    private String value;
-
-    AdvancedSyntaxFeaturesEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static AdvancedSyntaxFeaturesEnum fromValue(String value) {
-      for (AdvancedSyntaxFeaturesEnum b : AdvancedSyntaxFeaturesEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter
-      extends TypeAdapter<AdvancedSyntaxFeaturesEnum> {
-
-      @Override
-      public void write(
-        final JsonWriter jsonWriter,
-        final AdvancedSyntaxFeaturesEnum enumeration
-      ) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public AdvancedSyntaxFeaturesEnum read(final JsonReader jsonReader)
-        throws IOException {
-        String value = jsonReader.nextString();
-        return AdvancedSyntaxFeaturesEnum.fromValue(value);
-      }
-    }
-  }
+  private List<AlternativesAsExact> alternativesAsExact = null;
 
   @SerializedName("advancedSyntaxFeatures")
-  private List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures = null;
+  private List<AdvancedSyntaxFeatures> advancedSyntaxFeatures = null;
 
   @SerializedName("distinct")
   private Integer distinct = 0;
@@ -841,19 +519,19 @@ public class IndexSettingsAsSearchParams {
   }
 
   public IndexSettingsAsSearchParams setTypoTolerance(
-    TypoToleranceEnum typoTolerance
+    TypoTolerance typoTolerance
   ) {
     this.typoTolerance = typoTolerance;
     return this;
   }
 
   /**
-   * Controls whether typo tolerance is enabled and how it is applied.
+   * Get typoTolerance
    *
    * @return typoTolerance
    */
   @javax.annotation.Nullable
-  public TypoToleranceEnum getTypoTolerance() {
+  public TypoTolerance getTypoTolerance() {
     return typoTolerance;
   }
 
@@ -1046,35 +724,35 @@ public class IndexSettingsAsSearchParams {
     return enablePersonalization;
   }
 
-  public IndexSettingsAsSearchParams setQueryType(QueryTypeEnum queryType) {
+  public IndexSettingsAsSearchParams setQueryType(QueryType queryType) {
     this.queryType = queryType;
     return this;
   }
 
   /**
-   * Controls if and how query words are interpreted as prefixes.
+   * Get queryType
    *
    * @return queryType
    */
   @javax.annotation.Nullable
-  public QueryTypeEnum getQueryType() {
+  public QueryType getQueryType() {
     return queryType;
   }
 
   public IndexSettingsAsSearchParams setRemoveWordsIfNoResults(
-    RemoveWordsIfNoResultsEnum removeWordsIfNoResults
+    RemoveWordsIfNoResults removeWordsIfNoResults
   ) {
     this.removeWordsIfNoResults = removeWordsIfNoResults;
     return this;
   }
 
   /**
-   * Selects a strategy to remove words from the query when it doesn't match any hits.
+   * Get removeWordsIfNoResults
    *
    * @return removeWordsIfNoResults
    */
   @javax.annotation.Nullable
-  public RemoveWordsIfNoResultsEnum getRemoveWordsIfNoResults() {
+  public RemoveWordsIfNoResults getRemoveWordsIfNoResults() {
     return removeWordsIfNoResults;
   }
 
@@ -1148,31 +826,31 @@ public class IndexSettingsAsSearchParams {
   }
 
   public IndexSettingsAsSearchParams setExactOnSingleWordQuery(
-    ExactOnSingleWordQueryEnum exactOnSingleWordQuery
+    ExactOnSingleWordQuery exactOnSingleWordQuery
   ) {
     this.exactOnSingleWordQuery = exactOnSingleWordQuery;
     return this;
   }
 
   /**
-   * Controls how the exact ranking criterion is computed when the query contains only one word.
+   * Get exactOnSingleWordQuery
    *
    * @return exactOnSingleWordQuery
    */
   @javax.annotation.Nullable
-  public ExactOnSingleWordQueryEnum getExactOnSingleWordQuery() {
+  public ExactOnSingleWordQuery getExactOnSingleWordQuery() {
     return exactOnSingleWordQuery;
   }
 
   public IndexSettingsAsSearchParams setAlternativesAsExact(
-    List<AlternativesAsExactEnum> alternativesAsExact
+    List<AlternativesAsExact> alternativesAsExact
   ) {
     this.alternativesAsExact = alternativesAsExact;
     return this;
   }
 
   public IndexSettingsAsSearchParams addAlternativesAsExactItem(
-    AlternativesAsExactEnum alternativesAsExactItem
+    AlternativesAsExact alternativesAsExactItem
   ) {
     if (this.alternativesAsExact == null) {
       this.alternativesAsExact = new ArrayList<>();
@@ -1187,19 +865,19 @@ public class IndexSettingsAsSearchParams {
    * @return alternativesAsExact
    */
   @javax.annotation.Nullable
-  public List<AlternativesAsExactEnum> getAlternativesAsExact() {
+  public List<AlternativesAsExact> getAlternativesAsExact() {
     return alternativesAsExact;
   }
 
   public IndexSettingsAsSearchParams setAdvancedSyntaxFeatures(
-    List<AdvancedSyntaxFeaturesEnum> advancedSyntaxFeatures
+    List<AdvancedSyntaxFeatures> advancedSyntaxFeatures
   ) {
     this.advancedSyntaxFeatures = advancedSyntaxFeatures;
     return this;
   }
 
   public IndexSettingsAsSearchParams addAdvancedSyntaxFeaturesItem(
-    AdvancedSyntaxFeaturesEnum advancedSyntaxFeaturesItem
+    AdvancedSyntaxFeatures advancedSyntaxFeaturesItem
   ) {
     if (this.advancedSyntaxFeatures == null) {
       this.advancedSyntaxFeatures = new ArrayList<>();
@@ -1215,7 +893,7 @@ public class IndexSettingsAsSearchParams {
    * @return advancedSyntaxFeatures
    */
   @javax.annotation.Nullable
-  public List<AdvancedSyntaxFeaturesEnum> getAdvancedSyntaxFeatures() {
+  public List<AdvancedSyntaxFeatures> getAdvancedSyntaxFeatures() {
     return advancedSyntaxFeatures;
   }
 

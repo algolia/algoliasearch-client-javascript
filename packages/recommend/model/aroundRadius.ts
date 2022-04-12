@@ -1,3 +1,3 @@
-import type { AroundRadiusOneOf } from './aroundRadiusOneOf';
+import type { AroundRadiusAll } from './aroundRadiusAll';
 
-export type AroundRadius = AroundRadiusOneOf | number;
+export type AroundRadius = AroundRadiusAll | number;
