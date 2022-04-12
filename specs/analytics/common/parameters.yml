@@ -13,18 +13,26 @@ OrderBy:
   name: orderBy
   description: Reorder the results.
   schema:
-    type: string
-    enum: [searchCount, clickThroughRate, conversionRate, averageClickPosition]
-    default: searchCount
+    $ref: '#/orderBy'
+
+# private
+orderBy:
+  type: string
+  enum: [searchCount, clickThroughRate, conversionRate, averageClickPosition]
+  default: searchCount
 
 Direction:
   in: query
   name: direction
   description: The sorting of the result.
   schema:
-    type: string
-    enum: [asc, desc]
-    default: asc
+    $ref: '#/direction'
+
+# private
+direction:
+  type: string
+  enum: [asc, desc]
+  default: asc
 
 ClickAnalytics:
   in: query

@@ -32,3 +32,7 @@ logType:
   type: string
   enum: [all, query, build, error]
   default: all
+
+taskStatus:
+  type: string
+  enum: [published, notPublished]

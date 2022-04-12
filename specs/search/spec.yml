@@ -6,9 +6,9 @@ info:
 components:
   securitySchemes:
     appId:
-      $ref: ../common/securitySchemes.yml#/appId
+      $ref: '../common/securitySchemes.yml#/appId'
     apiKey:
-      $ref: ../common/securitySchemes.yml#/apiKey
+      $ref: '../common/securitySchemes.yml#/apiKey'
 servers:
   - url: https://{appId}.algolianet.com
     variables:
@@ -41,132 +41,132 @@ paths:
   # ### Custom request ###
   # ######################
   /1{path}:
-    $ref: ../common/paths/customRequest.yml
+    $ref: '../common/paths/customRequest.yml'
 
   # ########################
   # ### Search Endpoints ###
   # ########################
   /1/indexes/{indexName}/query:
-    $ref: paths/search/search.yml
+    $ref: 'paths/search/search.yml'
   /1/indexes/*/queries:
-    $ref: paths/search/multipleQueries.yml
+    $ref: 'paths/search/multipleQueries.yml'
   /1/indexes/{indexName}/facets/{facetName}/query:
-    $ref: paths/search/searchForFacetValues.yml
+    $ref: 'paths/search/searchForFacetValues.yml'
   /1/indexes/{indexName}/browse:
-    $ref: paths/search/browse.yml
+    $ref: 'paths/search/browse.yml'
 
   # #########################
   # ### Objects Endpoints ###
   # #########################
   /1/indexes/{indexName}:
-    $ref: paths/objects/objects.yml
+    $ref: 'paths/objects/objects.yml'
   /1/indexes/{indexName}/{objectID}:
-    $ref: paths/objects/object.yml
+    $ref: 'paths/objects/object.yml'
   /1/indexes/{indexName}/deleteByQuery:
-    $ref: paths/objects/deleteBy.yml
+    $ref: 'paths/objects/deleteBy.yml'
   /1/indexes/{indexName}/clear:
-    $ref: paths/objects/clearObjects.yml
+    $ref: 'paths/objects/clearObjects.yml'
   /1/indexes/{indexName}/{objectID}/partial:
-    $ref: paths/objects/partialUpdate.yml
+    $ref: 'paths/objects/partialUpdate.yml'
   /1/indexes/{indexName}/batch:
-    $ref: paths/objects/batch.yml
+    $ref: 'paths/objects/batch.yml'
   /1/indexes/*/batch:
-    $ref: paths/objects/multipleBatch.yml
+    $ref: 'paths/objects/multipleBatch.yml'
   /1/indexes/*/objects:
-    $ref: paths/objects/multipleGetObjects.yml
+    $ref: 'paths/objects/multipleGetObjects.yml'
 
   # ##########################
   # ### Settings Endpoints ###
   # ##########################
   /1/indexes/{indexName}/settings:
-    $ref: paths/settings/settings.yml
+    $ref: 'paths/settings/settings.yml'
 
   # ##########################
   # ### Synonyms Endpoints ###
   # ##########################
   /1/indexes/{indexName}/synonyms/{objectID}:
-    $ref: paths/synonyms/synonym.yml
+    $ref: 'paths/synonyms/synonym.yml'
   /1/indexes/{indexName}/synonyms/batch:
-    $ref: paths/synonyms/batchSynonyms.yml
+    $ref: 'paths/synonyms/batchSynonyms.yml'
   /1/indexes/{indexName}/synonyms/clear:
-    $ref: paths/synonyms/clearAllSynonyms.yml
+    $ref: 'paths/synonyms/clearAllSynonyms.yml'
   /1/indexes/{indexName}/synonyms/search:
-    $ref: paths/synonyms/searchSynonyms.yml
+    $ref: 'paths/synonyms/searchSynonyms.yml'
 
   # ######################
   # ### Keys Endpoints ###
   # ######################
   /1/keys:
-    $ref: paths/keys/keys.yml
+    $ref: 'paths/keys/keys.yml'
   /1/keys/{key}:
-    $ref: paths/keys/key.yml
+    $ref: 'paths/keys/key.yml'
   /1/keys/{key}/restore:
-    $ref: paths/keys/restoreApiKey.yml
+    $ref: 'paths/keys/restoreApiKey.yml'
 
   # #######################
   # ### Rules Endpoints ###
   # #######################
   /1/indexes/{indexName}/rules/{objectID}:
-    $ref: paths/rules/rule.yml
+    $ref: 'paths/rules/rule.yml'
   /1/indexes/{indexName}/rules/batch:
-    $ref: paths/rules/batchRules.yml
+    $ref: 'paths/rules/batchRules.yml'
   /1/indexes/{indexName}/rules/clear:
-    $ref: paths/rules/clearRules.yml
+    $ref: 'paths/rules/clearRules.yml'
   /1/indexes/{indexName}/rules/search:
-    $ref: paths/rules/searchRules.yml
+    $ref: 'paths/rules/searchRules.yml'
 
   # ##############################
   # ### Dictionaries Endpoints ###
   # ##############################
   /1/dictionaries/{dictionaryName}/batch:
-    $ref: paths/dictionaries/batchDictionaryEntries.yml
+    $ref: 'paths/dictionaries/batchDictionaryEntries.yml'
   /1/dictionaries/{dictionaryName}/search:
-    $ref: paths/dictionaries/searchDictionaryEntries.yml
+    $ref: 'paths/dictionaries/searchDictionaryEntries.yml'
   /1/dictionaries/*/settings:
-    $ref: paths/dictionaries/dictionarySettings.yml
+    $ref: 'paths/dictionaries/dictionarySettings.yml'
   /1/dictionaries/*/languages:
-    $ref: paths/dictionaries/getDictionaryLanguages.yml
+    $ref: 'paths/dictionaries/getDictionaryLanguages.yml'
 
   # ###############################
   # ### MultiClusters Endpoints ###
   # ###############################
   /1/clusters/mapping:
-    $ref: paths/multiclusters/userIds.yml
+    $ref: 'paths/multiclusters/userIds.yml'
   /1/clusters/mapping/batch:
-    $ref: paths/multiclusters/batchAssignUserIds.yml
+    $ref: 'paths/multiclusters/batchAssignUserIds.yml'
   /1/clusters/mapping/top:
-    $ref: paths/multiclusters/getTopUserIds.yml
+    $ref: 'paths/multiclusters/getTopUserIds.yml'
   /1/clusters/mapping/{userID}:
-    $ref: paths/multiclusters/userId.yml
+    $ref: 'paths/multiclusters/userId.yml'
   /1/clusters:
-    $ref: paths/multiclusters/listClusters.yml
+    $ref: 'paths/multiclusters/listClusters.yml'
   /1/clusters/mapping/search:
-    $ref: paths/multiclusters/searchUserIds.yml
+    $ref: 'paths/multiclusters/searchUserIds.yml'
   /1/clusters/mapping/pending:
-    $ref: paths/multiclusters/hasPendingMappings.yml
+    $ref: 'paths/multiclusters/hasPendingMappings.yml'
 
   # #######################
   # ### Vault Endpoints ###
   # #######################
   /1/security/sources:
-    $ref: paths/vault/vaultSources.yml
+    $ref: 'paths/vault/vaultSources.yml'
   /1/security/sources/append:
-    $ref: paths/vault/appendSource.yml
+    $ref: 'paths/vault/appendSource.yml'
   /1/security/sources/{source}:
-    $ref: paths/vault/deleteSource.yml
+    $ref: 'paths/vault/deleteSource.yml'
 
   # ##########################
   # ### Advanced Endpoints ###
   # ##########################
   /1/logs:
-    $ref: paths/advanced/getLogs.yml
+    $ref: 'paths/advanced/getLogs.yml'
   /1/indexes/{indexName}/task/{taskID}:
-    $ref: paths/advanced/getTask.yml
+    $ref: 'paths/advanced/getTask.yml'
 
   # ################################
   # ### Manage Indices Endpoints ###
   # ################################
   /1/indexes/{indexName}/operation:
-    $ref: paths/manage_indices/operationIndex.yml
+    $ref: 'paths/manage_indices/operationIndex.yml'
   /1/indexes:
-    $ref: paths/manage_indices/listIndices.yml
+    $ref: 'paths/manage_indices/listIndices.yml'

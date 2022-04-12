@@ -2,4 +2,4 @@ description: Status unprocessable entity.
 content:
   application/json:
     schema:
-      $ref: ../schemas/ErrorBase.yml
+      $ref: '../schemas/ErrorBase.yml'

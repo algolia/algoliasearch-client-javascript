@@ -21,7 +21,7 @@ get:
               - count
             properties:
               count:
-                $ref: ../../../common/parameters.yml#/count
+                $ref: '../../../common/parameters.yml#/count'
               dates:
                 type: array
                 description: A list of users count with their date.
@@ -35,12 +35,12 @@ get:
                     date:
                       $ref: '../../common/parameters.yml#/date'
                     count:
-                      $ref: ../../../common/parameters.yml#/count
+                      $ref: '../../../common/parameters.yml#/count'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

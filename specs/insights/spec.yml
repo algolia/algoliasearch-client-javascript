@@ -29,7 +29,7 @@ paths:
   # ### Custom request ###
   # ######################
   /1{path}:
-    $ref: ../common/paths/customRequest.yml
+    $ref: '../common/paths/customRequest.yml'
 
   /1/events:
-    $ref: paths/pushEvents.yml
+    $ref: 'paths/pushEvents.yml'

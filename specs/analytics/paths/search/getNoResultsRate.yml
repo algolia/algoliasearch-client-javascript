@@ -25,9 +25,9 @@ get:
               rate:
                 $ref: '../../common/parameters.yml#/rate'
               count:
-                $ref: ../../../common/parameters.yml#/count
+                $ref: '../../../common/parameters.yml#/count'
               noResultCount:
-                $ref: ../../../common/parameters.yml#/count
+                $ref: '../../../common/parameters.yml#/count'
               dates:
                 type: array
                 description: A list of searches without results with their date, rate and counts.
@@ -43,16 +43,16 @@ get:
                     date:
                       $ref: '../../common/parameters.yml#/date'
                     noResultCount:
-                      $ref: ../../../common/parameters.yml#/count
+                      $ref: '../../../common/parameters.yml#/count'
                     count:
-                      $ref: ../../../common/parameters.yml#/count
+                      $ref: '../../../common/parameters.yml#/count'
                     rate:
                       $ref: '../../common/parameters.yml#/rate'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

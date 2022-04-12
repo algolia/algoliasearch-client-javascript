@@ -14,23 +14,23 @@ put:
           type: object
   responses:
     '200':
-      $ref: ../../../common/responses/UpdatedAtWithObjectId.yml
+      $ref: '../../../common/responses/UpdatedAtWithObjectId.yml'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'
 
 get:
   operationId: getObject
   summary: Retrieve one object from the index.
   description: Retrieve one object from the index.
   parameters:
-    - $ref: ../../../common/parameters.yml#/IndexName
-    - $ref: ../../../common/parameters.yml#/ObjectID
+    - $ref: '../../../common/parameters.yml#/IndexName'
+    - $ref: '../../../common/parameters.yml#/ObjectID'
     - name: attributesToRetrieve
       in: query
       description: List of attributes to retrieve. If not specified, all retrievable attributes are returned.
@@ -50,13 +50,13 @@ get:
             additionalProperties:
               $ref: 'common/schemas.yml#/attribute'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'
 
 delete:
   operationId: deleteObject
@@ -67,12 +67,12 @@ delete:
     - $ref: '../../../common/parameters.yml#/ObjectID'
   responses:
     '200':
-      $ref: ../../../common/responses/DeletedAt.yml
+      $ref: '../../../common/responses/DeletedAt.yml'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'

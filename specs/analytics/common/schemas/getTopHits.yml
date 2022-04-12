@@ -17,7 +17,7 @@ topHitsResponse:
           hit:
             $ref: '../parameters.yml#/hit'
           count:
-            $ref: ../../../common/parameters.yml#/count
+            $ref: '../../../common/parameters.yml#/count'
 
 topHitsResponseWithAnalytics:
   type: object
@@ -43,13 +43,13 @@ topHitsResponseWithAnalytics:
           hit:
             $ref: '../parameters.yml#/hit'
           count:
-            $ref: ../../../common/parameters.yml#/count
+            $ref: '../../../common/parameters.yml#/count'
           clickThroughRate:
             $ref: '../parameters.yml#/rate'
           conversionRate:
             $ref: '../parameters.yml#/conversionRate'
           trackedSearchCount:
-            $ref: ../../../common/parameters.yml#/trackedSearchCount
+            $ref: '../../../common/parameters.yml#/trackedSearchCount'
           clickCount:
             $ref: '../parameters.yml#/clickCount'
           conversionCount:

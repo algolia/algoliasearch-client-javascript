@@ -16,11 +16,11 @@ topSearchesResponse:
           - nbHits
         properties:
           search:
-            $ref: ../parameters.yml#/search
+            $ref: '../parameters.yml#/search'
           count:
-            $ref: ../../../common/parameters.yml#/count
+            $ref: '../../../common/parameters.yml#/count'
           nbHits:
-            $ref: ../../../search/common/schemas/SearchResponse.yml#/nbHits
+            $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
 
 topSearchesResponseWithAnalytics:
   type: object
@@ -48,7 +48,7 @@ topSearchesResponseWithAnalytics:
           search:
             $ref: '../parameters.yml#/search'
           count:
-            $ref: ../../../common/parameters.yml#/count
+            $ref: '../../../common/parameters.yml#/count'
           clickThroughRate:
             $ref: '../parameters.yml#/rate'
           averageClickPosition:
@@ -56,13 +56,13 @@ topSearchesResponseWithAnalytics:
           conversionRate:
             $ref: '../parameters.yml#/conversionRate'
           trackedSearchCount:
-            $ref: ../../../common/parameters.yml#/trackedSearchCount
+            $ref: '../../../common/parameters.yml#/trackedSearchCount'
           clickCount:
             $ref: '../parameters.yml#/clickCount'
           conversionCount:
             $ref: '../parameters.yml#/conversionCount'
           nbHits:
-            $ref: ../../../search/common/schemas/SearchResponse.yml#/nbHits
+            $ref: '../../../search/common/schemas/SearchResponse.yml#/nbHits'
 
 getTopSearchesResponse:
   oneOf:

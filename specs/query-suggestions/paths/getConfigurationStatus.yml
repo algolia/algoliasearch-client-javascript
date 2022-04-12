@@ -6,7 +6,7 @@ get:
     The status includes whether the Query Suggestions index is currently in the process of being built, and the last build time.
   summary: Get the status of a Query Suggestion's index.
   parameters:
-    - $ref: ../../common/parameters.yml#/IndexName
+    - $ref: '../../common/parameters.yml#/IndexName'
   responses:
     '200':
       description: OK
@@ -32,8 +32,8 @@ get:
                 format: data-time
                 description: Date and time of the last build.
     '401':
-      $ref: ../../common/responses/Unauthorized.yml
+      $ref: '../../common/responses/Unauthorized.yml'
     '403':
-      $ref: ../../common/responses/MethodNotAllowed.yml
+      $ref: '../../common/responses/MethodNotAllowed.yml'
     '500':
-      $ref: ../../common/responses/InternalError.yml
+      $ref: '../../common/responses/InternalError.yml'

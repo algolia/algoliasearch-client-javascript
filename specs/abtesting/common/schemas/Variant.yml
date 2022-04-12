@@ -26,18 +26,18 @@ variant:
       format: double
       description: Conversion rate for the variant.
     description:
-      $ref: ../parameters.yml#/description
+      $ref: '../parameters.yml#/description'
     index:
-      $ref: ../parameters.yml#/index
+      $ref: '../parameters.yml#/index'
     noResultCount:
-      $ref: ../../../common/parameters.yml#/count
+      $ref: '../../../common/parameters.yml#/count'
     searchCount:
       type: integer
       description: The number of search during the A/B test.
     trackedSearchCount:
-      $ref: ../../../common/parameters.yml#/trackedSearchCount
+      $ref: '../../../common/parameters.yml#/trackedSearchCount'
     trafficPercentage:
-      $ref: ../parameters.yml#/trafficPercentage
+      $ref: '../parameters.yml#/trafficPercentage'
     userCount:
       type: integer
       description: The number of user during the A/B test.

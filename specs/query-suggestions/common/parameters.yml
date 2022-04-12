@@ -46,7 +46,7 @@ QuerySuggestionsIndexParam:
     - sourceIndices
   properties:
     sourceIndices:
-      $ref: ../common/parameters.yml#/SourceIndices
+      $ref: '../common/parameters.yml#/SourceIndices'
     languages:
       type: array
       items:

@@ -41,7 +41,7 @@ paths:
   # ### Custom request ###
   # ######################
   /1{path}:
-    $ref: ../common/paths/customRequest.yml
+    $ref: '../common/paths/customRequest.yml'
 
   /1/indexes/*/recommendations:
-    $ref: paths/getRecommendations.yml
+    $ref: 'paths/getRecommendations.yml'

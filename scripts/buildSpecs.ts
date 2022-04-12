@@ -41,6 +41,39 @@ async function propagateTagsToOperations(
   return true;
 }
 
+async function lintCommon(verbose: boolean, useCache: boolean): Promise<void> {
+  let hash = '';
+  const cacheFile = toAbsolutePath(`specs/dist/common.cache`);
+  if (useCache) {
+    const { cacheExists, hash: newCache } = await checkForCache(
+      {
+        job: 'common specs',
+        folder: toAbsolutePath('specs/'),
+        generatedFiles: [],
+        filesToCache: ['common'],
+        cacheFile,
+      },
+      verbose
+    );
+
+    if (cacheExists) {
+      return;
+    }
+
+    hash = newCache;
+  }
+
+  const spinner = createSpinner('linting common spec', verbose).start();
+  await run(`yarn specs:lint common`, { verbose });
+
+  if (hash) {
+    spinner.text = `storing common spec cache`;
+    await fsp.writeFile(cacheFile, hash);
+  }
+
+  spinner.succeed();
+}
+
 async function buildSpec(
   client: string,
   outputFormat: string,
@@ -87,7 +120,7 @@ async function buildSpec(
   }
 
   spinner.text = `linting ${client} spec`;
-  await run(`yarn specs:lint ${client}`, { verbose });
+  await run(`yarn specs:fix ${client}`, { verbose });
 
   spinner.text = `validating ${client} spec`;
   await run(`yarn openapi lint specs/bundled/${client}.${outputFormat}`, {
@@ -112,6 +145,8 @@ export async function buildSpecs(
   useCache: boolean
 ): Promise<void> {
   await fsp.mkdir(toAbsolutePath('specs/dist'), { recursive: true });
+
+  await lintCommon(verbose, useCache);
 
   await Promise.all(
     clients.map((client) => buildSpec(client, outputFormat, verbose, useCache))

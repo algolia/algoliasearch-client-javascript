@@ -1,6 +1,6 @@
 get:
   operationId: get
-  $ref: ../schemas/CustomRequest.yml#/customRequest
+  $ref: '../schemas/CustomRequest.yml#/customRequest'
 
 post:
   operationId: post
@@ -10,7 +10,7 @@ post:
       application/json:
         schema:
           type: object
-  $ref: ../schemas/CustomRequest.yml#/customRequest
+  $ref: '../schemas/CustomRequest.yml#/customRequest'
 
 put:
   operationId: put
@@ -20,7 +20,7 @@ put:
       application/json:
         schema:
           type: object
-  $ref: ../schemas/CustomRequest.yml#/customRequest
+  $ref: '../schemas/CustomRequest.yml#/customRequest'
 
 delete:
   operationId: del
@@ -30,4 +30,4 @@ delete:
       application/json:
         schema:
           type: object
-  $ref: ../schemas/CustomRequest.yml#/customRequest
+  $ref: '../schemas/CustomRequest.yml#/customRequest'

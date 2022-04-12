@@ -26,4 +26,4 @@ getTopFilterForAttribute:
     value:
       $ref: '../parameters.yml#/value'
     count:
-      $ref: ../../../common/parameters.yml#/count
+      $ref: '../../../common/parameters.yml#/count'

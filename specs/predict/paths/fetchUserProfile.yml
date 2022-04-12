@@ -18,19 +18,12 @@ post:
               type: array
               description: List with model types for which to retrieve predictions.
               items:
-                type: string
-                enum:
-                  - funnel_stage
-                  - order_value
-                  - affinities
+                $ref: '../common/enums.yml#/modelsToRetrieve'
             typesToRetrieve:
               type: array
               description: List with types to be retrieved.
               items:
-                type: string
-                enum:
-                  - properties
-                  - segments
+                $ref: '../common/enums.yml#/typesToRetrieve'
               minItems: 1
   responses:
     '200':
@@ -126,12 +119,12 @@ post:
                     items:
                       type: string
     '404':
-      $ref: ../responses/UserNotFound.yml
+      $ref: '../responses/UserNotFound.yml'
     '405':
-      $ref: ../../common/responses/MethodNotAllowed.yml
+      $ref: '../../common/responses/MethodNotAllowed.yml'
     '400':
       description: ModelsToRetrieve or typesToRetrieve must be set.
       content:
         application/json:
           schema:
-            $ref: ../../common/schemas/ErrorBase.yml
+            $ref: '../../common/schemas/ErrorBase.yml'

@@ -197,5 +197,8 @@ aroundRadius:
   oneOf:
     - type: integer
       minimum: 1
-    - type: string
-      enum: [all]
+    - $ref: '#/aroundRadiusAll'
+
+aroundRadiusAll:
+  type: string
+  enum: [all]

@@ -13,11 +13,11 @@ abTestsVariant:
   additionalProperties: false
   properties:
     index:
-      $ref: ../parameters.yml#/index
+      $ref: '../parameters.yml#/index'
     trafficPercentage:
-      $ref: ../parameters.yml#/trafficPercentage
+      $ref: '../parameters.yml#/trafficPercentage'
     description:
-      $ref: ../parameters.yml#/description
+      $ref: '../parameters.yml#/description'
   required:
     - index
     - trafficPercentage

@@ -22,7 +22,7 @@ paths:
   # ### Custom request ###
   # ######################
   /1{path}:
-    $ref: ../common/paths/customRequest.yml
+    $ref: '../common/paths/customRequest.yml'
 
   /1/users/{userID}/fetch:
-    $ref: paths/fetchUserProfile.yml
+    $ref: 'paths/fetchUserProfile.yml'

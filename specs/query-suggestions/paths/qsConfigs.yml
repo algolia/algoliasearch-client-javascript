@@ -7,20 +7,20 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../common/parameters.yml#/QuerySuggestionsIndexWithIndexParam
+          $ref: '../common/parameters.yml#/QuerySuggestionsIndexWithIndexParam'
   responses:
     '200':
-      $ref: ../../common/responses/Success.yml
+      $ref: '../../common/responses/Success.yml'
     '400':
-      $ref: ../../common/responses/BadRequest.yml
+      $ref: '../../common/responses/BadRequest.yml'
     '401':
-      $ref: ../../common/responses/Unauthorized.yml
+      $ref: '../../common/responses/Unauthorized.yml'
     '403':
-      $ref: ../../common/responses/MethodNotAllowed.yml
+      $ref: '../../common/responses/MethodNotAllowed.yml'
     '422':
-      $ref: ../../common/responses/StatusUnprocessableEntity.yml
+      $ref: '../../common/responses/StatusUnprocessableEntity.yml'
     '500':
-      $ref: ../../common/responses/InternalError.yml
+      $ref: '../../common/responses/InternalError.yml'
 
 get:
   tags:
@@ -39,12 +39,12 @@ get:
           schema:
             type: array
             items:
-              $ref: ../common/schemas/QuerySuggestionsIndex.yml#/QuerySuggestionsIndex
+              $ref: '../common/schemas/QuerySuggestionsIndex.yml#/QuerySuggestionsIndex'
     '401':
-      $ref: ../../common/responses/Unauthorized.yml
+      $ref: '../../common/responses/Unauthorized.yml'
     '403':
-      $ref: ../../common/responses/MethodNotAllowed.yml
+      $ref: '../../common/responses/MethodNotAllowed.yml'
     '422':
-      $ref: ../../common/responses/StatusUnprocessableEntity.yml
+      $ref: '../../common/responses/StatusUnprocessableEntity.yml'
     '500':
-      $ref: ../../common/responses/InternalError.yml
+      $ref: '../../common/responses/InternalError.yml'

@@ -18,6 +18,6 @@ getTopFilterAttribute:
     - count
   properties:
     attribute:
-      $ref: ../parameters.yml#/attribute
+      $ref: '../parameters.yml#/attribute'
     count:
-      $ref: ../../../common/parameters.yml#/count
+      $ref: '../../../common/parameters.yml#/count'

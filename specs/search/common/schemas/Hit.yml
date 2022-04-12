@@ -28,9 +28,7 @@ highlightResult:
     value:
       $ref: '#/highlightedValue'
     matchLevel:
-      type: string
-      description: Indicates how well the attribute matched the search query.
-      enum: [none, partial, full]
+      $ref: '#/matchLevel'
     matchedWords:
       type: array
       description: List of words from the query that matched the object.
@@ -47,9 +45,7 @@ snippetResult:
     value:
       $ref: '#/highlightedValue'
     matchLevel:
-      type: string
-      description: Indicates how well the attribute matched the search query.
-      enum: [none, partial, full]
+      $ref: '#/matchLevel'
 
 rankingInfo:
   type: object
@@ -107,3 +103,8 @@ highlightedValue:
   type: string
   description: Markup text with occurrences highlighted.
   example: <em>George</em> <em>Clo</em>oney
+
+matchLevel:
+  type: string
+  description: Indicates how well the attribute matched the search query.
+  enum: [none, partial, full]

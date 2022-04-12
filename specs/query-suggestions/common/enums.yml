@@ -1,0 +1,4 @@
+logLevel:
+  type: string
+  enum: [INFO, SKIP, ERROR]
+  description: type of the record, can be one of three values (INFO, SKIP or ERROR).

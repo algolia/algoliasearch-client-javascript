@@ -28,11 +28,11 @@ paths:
   # ### Custom request ###
   # ######################
   /1{path}:
-    $ref: ../common/paths/customRequest.yml
+    $ref: '../common/paths/customRequest.yml'
 
   /1/profiles/personalization/{userToken}:
-    $ref: paths/getUserTokenProfile.yml
+    $ref: 'paths/getUserTokenProfile.yml'
   /1/profiles/{userToken}:
-    $ref: paths/deleteUserProfile.yml
+    $ref: 'paths/deleteUserProfile.yml'
   /1/strategies/personalization:
-    $ref: paths/personalizationStrategy.yml
+    $ref: 'paths/personalizationStrategy.yml'

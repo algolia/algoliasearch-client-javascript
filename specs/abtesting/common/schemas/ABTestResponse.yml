@@ -3,11 +3,11 @@ ABTestResponse:
   additionalProperties: false
   properties:
     index:
-      $ref: ../parameters.yml#/index
+      $ref: '../parameters.yml#/index'
     abTestID:
-      $ref: ../parameters.yml#/abTestID
+      $ref: '../parameters.yml#/abTestID'
     taskID:
-      $ref: ../../../common/parameters.yml#/taskID
+      $ref: '../../../common/parameters.yml#/taskID'
   required:
     - abTestID
     - index

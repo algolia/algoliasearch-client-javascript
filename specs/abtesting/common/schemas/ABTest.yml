@@ -9,7 +9,7 @@ ABTest:
   additionalProperties: false
   properties:
     abTestID:
-      $ref: ../parameters.yml#/abTestID
+      $ref: '../parameters.yml#/abTestID'
     clickSignificance:
       type: number
       format: double
@@ -19,16 +19,16 @@ ABTest:
       format: double
       description: A/B test significance based on conversion data. Should be > 0.95 to be considered significant (no matter which variant is winning).
     endAt:
-      $ref: ../parameters.yml#/endAt
+      $ref: '../parameters.yml#/endAt'
     createdAt:
-      $ref: ../parameters.yml#/createdAt
+      $ref: '../parameters.yml#/createdAt'
     name:
-      $ref: ../parameters.yml#/name
+      $ref: '../parameters.yml#/name'
     status:
       type: string
       description: status of the A/B test.
     variants:
-      $ref: Variant.yml#/variants
+      $ref: 'Variant.yml#/variants'
   required:
     - status
     - name

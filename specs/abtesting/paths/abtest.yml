@@ -6,41 +6,41 @@ get:
     Behaves in the same way as GET /2/abtests however the endpoint will return 403.
   summary: Returns metadata and metrics for A/B test id.
   parameters:
-    - $ref: ../common/parameters.yml#/ID
+    - $ref: '../common/parameters.yml#/ID'
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            $ref: ../common/schemas/ABTest.yml#/ABTest
+            $ref: '../common/schemas/ABTest.yml#/ABTest'
     '400':
-      $ref: ../../common/responses/BadRequest.yml
+      $ref: '../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../common/responses/MethodNotAllowed.yml
+      $ref: '../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../common/responses/IndexNotFound.yml
+      $ref: '../../common/responses/IndexNotFound.yml'
 
 delete:
   operationId: deleteABTest
   description: Deletes the A/B Test and removes all associated metadata & metrics.
   summary: Deletes the A/B Test.
   parameters:
-    - $ref: ../common/parameters.yml#/ID
+    - $ref: '../common/parameters.yml#/ID'
   responses:
     '200':
       description: OK
       content:
         application/json:
           schema:
-            $ref: ../common/schemas/ABTestResponse.yml#/ABTestResponse
+            $ref: '../common/schemas/ABTestResponse.yml#/ABTestResponse'
     '400':
-      $ref: ../../common/responses/BadRequest.yml
+      $ref: '../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../common/responses/MethodNotAllowed.yml
+      $ref: '../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../common/responses/IndexNotFound.yml
+      $ref: '../../common/responses/IndexNotFound.yml'

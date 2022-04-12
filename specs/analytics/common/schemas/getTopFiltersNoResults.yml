@@ -18,7 +18,7 @@ getTopFiltersNoResultsValues:
     - count
   properties:
     count:
-      $ref: ../../../common/parameters.yml#/count
+      $ref: '../../../common/parameters.yml#/count'
     values:
       type: array
       description: A list of filters without results.

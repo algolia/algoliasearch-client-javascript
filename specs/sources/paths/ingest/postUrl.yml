@@ -17,10 +17,7 @@ post:
             - target
           properties:
             type:
-              type: string
-              description: The type of the file to ingest.
-              enum:
-                - csv
+              $ref: '../../common/schemas/Task.yml#/taskType'
             uniqueIDColumn:
               type: string
               description: The name of the column that hold the unique identifier.
@@ -37,12 +34,7 @@ post:
                   type: string
                   description: The URL of the file to ingest.
                 method:
-                  type: string
-                  description: The HTTP method that will be used to fetch the URL.
-                  default: GET
-                  enum:
-                    - GET
-                    - POST
+                  $ref: '../../common/enums.yml#/method'
                 auth:
                   type: object
                   title: postURLJobAuth
@@ -54,10 +46,7 @@ post:
                     - password
                   properties:
                     type:
-                      type: string
-                      description: The type of authentication to use.
-                      enum:
-                        - basic
+                      $ref: '../../common/enums.yml#/authenticationType'
                     login:
                       type: string
                       description: The login to use for Basic Auth.
@@ -77,19 +66,13 @@ post:
                 - operation
               properties:
                 type:
-                  type: string
-                  description: The product to target.
-                  enum:
-                    - search
+                  $ref: '../../common/enums.yml#/productType'
                 indexName:
                   type: string
                   description: The index name of the product.
                   example: my_index_name
                 operation:
-                  type: string
-                  description: The type of operation to execute.
-                  enum:
-                    - replace
+                  $ref: '../../common/enums.yml#/operationType'
   responses:
     '200':
       description: OK
@@ -103,6 +86,6 @@ post:
               - task
             properties:
               task:
-                $ref: ../../common/schemas/Task.yml#/task
+                $ref: '../../common/schemas/Task.yml#/task'
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'

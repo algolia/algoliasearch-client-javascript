@@ -15,16 +15,16 @@ post:
           additionalProperties: false
           properties:
             name:
-              $ref: ../common/parameters.yml#/name
+              $ref: '../common/parameters.yml#/name'
             variant:
               type: array
               description: List of 2 variants for the A/B test.
               minItems: 2
               maxItems: 2
               items:
-                $ref: ../common/schemas/AddABTestsVariant.yml#/AddABTestsVariant
+                $ref: '../common/schemas/AddABTestsVariant.yml#/AddABTestsVariant'
             endAt:
-              $ref: ../common/parameters.yml#/endAt
+              $ref: '../common/parameters.yml#/endAt'
           required:
             - name
             - variant
@@ -35,15 +35,15 @@ post:
       content:
         application/json:
           schema:
-            $ref: ../common/schemas/ABTestResponse.yml#/ABTestResponse
+            $ref: '../common/schemas/ABTestResponse.yml#/ABTestResponse'
     '400':
-      $ref: ../../common/responses/BadRequest.yml
+      $ref: '../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../common/responses/MethodNotAllowed.yml
+      $ref: '../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../common/responses/IndexNotFound.yml
+      $ref: '../../common/responses/IndexNotFound.yml'
 
 get:
   operationId: listABTests
@@ -51,8 +51,8 @@ get:
     Fetch all existing A/B tests for App that are available for the current API Key. Returns an array of metadata and metrics. When no data has been processed, the metrics will be returned as null.
   summary: Fetch all existing A/B tests for App that are available for the current API Key.
   parameters:
-    - $ref: ../../common/parameters.yml#/Offset
-    - $ref: ../../common/parameters.yml#/Limit
+    - $ref: '../../common/parameters.yml#/Offset'
+    - $ref: '../../common/parameters.yml#/Limit'
   responses:
     '200':
       description: OK
@@ -64,7 +64,7 @@ get:
             additionalProperties: false
             properties:
               abtests:
-                $ref: ../common/schemas/ABTest.yml#/ABTests
+                $ref: '../common/schemas/ABTest.yml#/ABTests'
               count:
                 type: integer
                 description: Number of A/B tests found for the app.
@@ -76,10 +76,10 @@ get:
               - count
               - total
     '400':
-      $ref: ../../common/responses/BadRequest.yml
+      $ref: '../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../common/responses/MethodNotAllowed.yml
+      $ref: '../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../common/responses/IndexNotFound.yml
+      $ref: '../../common/responses/IndexNotFound.yml'

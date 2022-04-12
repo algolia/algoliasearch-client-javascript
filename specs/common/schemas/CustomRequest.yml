@@ -15,13 +15,13 @@ Responses:
         schema:
           type: object
   '400':
-    $ref: ../responses/BadRequest.yml
+    $ref: '../responses/BadRequest.yml'
   '402':
-    $ref: ../responses/FeatureNotEnabled.yml
+    $ref: '../responses/FeatureNotEnabled.yml'
   '403':
-    $ref: ../responses/MethodNotAllowed.yml
+    $ref: '../responses/MethodNotAllowed.yml'
   '404':
-    $ref: ../responses/IndexNotFound.yml
+    $ref: '../responses/IndexNotFound.yml'
 
 PathInPath:
   name: path

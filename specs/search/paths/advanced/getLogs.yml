@@ -26,7 +26,7 @@ get:
       in: query
       description: Type of log entries to retrieve. When omitted, all log entries are retrieved.
       schema:
-        $ref: ../../common/enums.yml#/logType
+        $ref: '../../common/enums.yml#/logType'
   responses:
     '200':
       description: OK
@@ -114,10 +114,10 @@ get:
                     - nb_api_calls
                     - processing_time_ms
     '400':
-      $ref: ../../../common/responses/BadRequest.yml
+      $ref: '../../../common/responses/BadRequest.yml'
     '402':
-      $ref: ../../../common/responses/FeatureNotEnabled.yml
+      $ref: '../../../common/responses/FeatureNotEnabled.yml'
     '403':
-      $ref: ../../../common/responses/MethodNotAllowed.yml
+      $ref: '../../../common/responses/MethodNotAllowed.yml'
     '404':
-      $ref: ../../../common/responses/IndexNotFound.yml
+      $ref: '../../../common/responses/IndexNotFound.yml'
