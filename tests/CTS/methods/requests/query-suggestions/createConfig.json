@@ -11,11 +11,23 @@
               "attributes": "test"
             }
           ],
-          "generate": [["facetA", "facetB"], ["facetC"]]
+          "generate": [
+            [
+              "facetA",
+              "facetB"
+            ],
+            [
+              "facetC"
+            ]
+          ]
         }
       ],
-      "languages": ["french"],
-      "exclude": ["test"]
+      "languages": [
+        "french"
+      ],
+      "exclude": [
+        "test"
+      ]
     },
     "request": {
       "path": "/1/configs",
@@ -30,11 +42,23 @@
                 "attributes": "test"
               }
             ],
-            "generate": [["facetA", "facetB"], ["facetC"]]
+            "generate": [
+              [
+                "facetA",
+                "facetB"
+              ],
+              [
+                "facetC"
+              ]
+            ]
           }
         ],
-        "languages": ["french"],
-        "exclude": ["test"]
+        "languages": [
+          "french"
+        ],
+        "exclude": [
+          "test"
+        ]
       }
     }
   }

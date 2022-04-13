@@ -3,25 +3,22 @@
   "version": "0.0.5",
   "description": "JavaScript client for @experimental-api-clients-automation/recommend",
   "repository": "algolia/algoliasearch-client-javascript",
-  "author": "Algolia",
   "license": "MIT",
+  "author": "Algolia",
   "main": "index.js",
-  "module": "dist/recommend.esm.node.js",
-  "types": "index.d.ts",
   "jsdelivr": "dist/recommend.umd.browser.js",
   "unpkg": "dist/recommend.umd.browser.js",
+  "module": "dist/recommend.esm.node.js",
   "browser": "dist/recommend.cjs.browser.js",
-  "scripts": {
-    "clean": "rm -rf ./dist"
-  },
+  "types": "index.d.ts",
   "files": [
     "dist",
     "model",
     "index.js",
     "index.d.ts"
   ],
-  "engines": {
-    "node": ">= 14.0.0"
+  "scripts": {
+    "clean": "rm -rf ./dist"
   },
   "dependencies": {
     "@experimental-api-clients-automation/client-common": "0.0.5",
@@ -31,5 +28,8 @@
   "devDependencies": {
     "@types/node": "16.11.26",
     "typescript": "4.6.3"
+  },
+  "engines": {
+    "node": ">= 14.0.0"
   }
 }

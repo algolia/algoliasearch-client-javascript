@@ -6,7 +6,11 @@
         "type": "method",
         "object": "$client",
         "path": "getRecommendations",
-        "parameters": [{ "requests": [] }],
+        "parameters": [
+          {
+            "requests": []
+          }
+        ],
         "expected": {
           "match": {
             "objectContaining": {
@@ -24,7 +28,11 @@
         "type": "method",
         "object": "$client",
         "path": "getRecommendations",
-        "parameters": [{ "requests": [] }],
+        "parameters": [
+          {
+            "requests": []
+          }
+        ],
         "expected": {
           "testSubject": "actual.userAgent",
           "match": {
@@ -41,7 +49,11 @@
         "type": "method",
         "object": "$client",
         "path": "getRecommendations",
-        "parameters": [{ "requests": [] }],
+        "parameters": [
+          {
+            "requests": []
+          }
+        ],
         "expected": {
           "match": {
             "objectContaining": {

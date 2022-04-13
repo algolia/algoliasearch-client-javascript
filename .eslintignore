@@ -2,3 +2,5 @@ node_modules
 dist
 playground
 build
+composer.json
+tsconfig.json

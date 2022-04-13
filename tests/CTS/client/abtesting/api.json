@@ -9,7 +9,12 @@
         "parameters": [
           {
             "name": "test",
-            "variant": [{ "index": "my-test-index", "trafficPercentage": 90 }],
+            "variant": [
+              {
+                "index": "my-test-index",
+                "trafficPercentage": 90
+              }
+            ],
             "endAt": "2022-02-01T13:37:01Z"
           }
         ],
@@ -32,7 +37,12 @@
         "parameters": [
           {
             "name": "test",
-            "variant": [{ "index": "my-test-index", "trafficPercentage": 90 }],
+            "variant": [
+              {
+                "index": "my-test-index",
+                "trafficPercentage": 90
+              }
+            ],
             "endAt": "2022-02-01T13:37:01Z"
           }
         ],

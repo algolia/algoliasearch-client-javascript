@@ -6,7 +6,9 @@
         "type": "method",
         "object": "$client",
         "path": "createConfig",
-        "parameters": [{}],
+        "parameters": [
+          {}
+        ],
         "expected": {
           "testSubject": "actual.userAgent",
           "match": {
@@ -23,7 +25,9 @@
         "type": "method",
         "object": "$client",
         "path": "createConfig",
-        "parameters": [{}],
+        "parameters": [
+          {}
+        ],
         "expected": {
           "match": {
             "objectContaining": {

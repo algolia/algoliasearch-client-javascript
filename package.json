@@ -1,20 +1,20 @@
 {
   "name": "algoliasearch-client-javascript",
+  "private": true,
   "workspaces": [
     "packages/*"
   ],
-  "private": true,
   "scripts": {
-    "build:utils": "yarn build client-common && yarn build requester-browser-xhr && yarn build requester-node-http",
     "build": "CLIENT=${0:-all} yarn rollup -c rollup.config.js",
-    "clean:utils": "yarn workspace @experimental-api-clients-automation/client-common clean && yarn workspace @experimental-api-clients-automation/requester-node-http clean && yarn workspace @experimental-api-clients-automation/requester-browser-xhr clean",
+    "build:utils": "yarn build client-common && yarn build requester-browser-xhr && yarn build requester-node-http",
     "clean": "rm -rf packages/*/dist",
+    "clean:utils": "yarn workspace @experimental-api-clients-automation/client-common clean && yarn workspace @experimental-api-clients-automation/requester-node-http clean && yarn workspace @experimental-api-clients-automation/requester-browser-xhr clean",
     "release": "shipjs prepare",
-    "test:size": "bundlesize",
-    "test:lint": "eslint . --ext .js,.ts",
-    "test:types": "yarn tsc --noEmit",
     "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --yes",
-    "release:publish": "ts-node --project tsconfig.script.json scripts/publish.ts"
+    "release:publish": "ts-node --project tsconfig.script.json scripts/publish.ts",
+    "test:lint": "eslint . --ext .js,.ts",
+    "test:size": "bundlesize",
+    "test:types": "yarn tsc --noEmit"
   },
   "devDependencies": {
     "@babel/core": "7.17.9",

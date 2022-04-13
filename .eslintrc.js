@@ -117,6 +117,11 @@ module.exports = {
           },
         ],
       },
+    },
+    {
+      files: ['*.json'],
+
+      plugins: ['json-format']
     }
   ],
 };

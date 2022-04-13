@@ -18,7 +18,11 @@
         "type": "method",
         "object": "$client",
         "path": "pushEvents",
-        "parameters": [{ "events": [] }],
+        "parameters": [
+          {
+            "events": []
+          }
+        ],
         "expected": {
           "match": {
             "objectContaining": {

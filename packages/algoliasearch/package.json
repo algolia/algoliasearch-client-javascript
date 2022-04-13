@@ -3,19 +3,16 @@
   "version": "0.0.5",
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": "algolia/algoliasearch-client-javascript",
-  "author": "Algolia",
   "license": "MIT",
+  "author": "Algolia",
   "main": "index.js",
-  "module": "dist/algoliasearch.esm.node.js",
-  "types": "index.d.ts",
   "jsdelivr": "dist/algoliasearch.umd.browser.js",
   "unpkg": "dist/algoliasearch.umd.browser.js",
+  "module": "dist/algoliasearch.esm.node.js",
   "browser": "dist/algoliasearch.cjs.browser.js",
+  "types": "index.d.ts",
   "scripts": {
     "clean": "rm -rf ./dist"
-  },
-  "engines": {
-    "node": ">= 14.0.0"
   },
   "dependencies": {
     "@experimental-api-clients-automation/client-analytics": "0.0.5",
@@ -28,5 +25,8 @@
   "devDependencies": {
     "@types/node": "16.11.26",
     "typescript": "4.6.3"
+  },
+  "engines": {
+    "node": ">= 14.0.0"
   }
 }

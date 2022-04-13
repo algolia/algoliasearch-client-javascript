@@ -6,7 +6,11 @@
         "type": "method",
         "object": "$client",
         "path": "getAverageClickPosition",
-        "parameters": [{ "index": "my-index" }],
+        "parameters": [
+          {
+            "index": "my-index"
+          }
+        ],
         "expected": {
           "testSubject": "actual.userAgent",
           "match": {
@@ -23,7 +27,11 @@
         "type": "method",
         "object": "$client",
         "path": "getAverageClickPosition",
-        "parameters": [{ "index": "my-index" }],
+        "parameters": [
+          {
+            "index": "my-index"
+          }
+        ],
         "expected": {
           "match": {
             "objectContaining": {

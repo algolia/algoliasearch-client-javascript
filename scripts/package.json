@@ -2,15 +2,15 @@
   "name": "scripts",
   "version": "1.0.0",
   "scripts": {
+    "cleanGeneratedBranch": "ts-node ci/codegen/cleanGeneratedBranch.ts",
     "createMatrix": "ts-node ci/createMatrix.ts",
     "createReleaseIssue": "ts-node release/create-release-issue.ts",
     "processRelease": "ts-node release/process-release.ts",
     "pushGeneratedCode": "ts-node ci/codegen/pushGeneratedCode.ts",
-    "cleanGeneratedBranch": "ts-node ci/codegen/cleanGeneratedBranch.ts",
-    "spreadGeneration": "ts-node ci/codegen/spreadGeneration.ts",
-    "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts",
     "setRunVariables": "ts-node ci/setRunVariables.ts",
-    "test": "jest"
+    "spreadGeneration": "ts-node ci/codegen/spreadGeneration.ts",
+    "test": "jest",
+    "upsertGenerationComment": "ts-node ci/codegen/upsertGenerationComment.ts"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "10.0.3",

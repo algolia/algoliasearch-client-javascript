@@ -18,7 +18,11 @@
         "type": "method",
         "object": "$client",
         "path": "getAverageClickPosition",
-        "parameters": [{ "index": "my-index" }],
+        "parameters": [
+          {
+            "index": "my-index"
+          }
+        ],
         "expected": {
           "match": {
             "objectContaining": {
@@ -36,7 +40,9 @@
         "type": "method",
         "object": "$client",
         "path": "getClickPositions",
-        "parameters": [{}],
+        "parameters": [
+          {}
+        ],
         "expected": {
           "error": "Parameter `index` is required when calling `getClickPositions`."
         }
