@@ -5,6 +5,10 @@
       "maxSize": "7.05KB"
     },
     {
+      "path": "packages/algoliasearch-lite/dist/algoliasearch-lite.umd.browser.js",
+      "maxSize": "3.80KB"
+    },
+    {
       "path": "packages/client-abtesting/dist/client-abtesting.umd.browser.js",
       "maxSize": "3.85KB"
     },

@@ -21,12 +21,12 @@ type Tag = {
   description: string;
 };
 
-type Path = Record<string, Record<string, any>>;
+type Paths = Record<string, Record<string, any>>;
 
 export type Spec = {
   servers: Server[];
   tags: Tag[];
-  paths: Path[];
+  paths: Paths;
 };
 
 type AdditionalProperties = Partial<{

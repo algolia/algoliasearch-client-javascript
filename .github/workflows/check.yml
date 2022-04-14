@@ -94,21 +94,21 @@ jobs:
       - name: Restore cache
         uses: ./.github/actions/cache
 
-      - name: Cache '${{ matrix.client }}' bundled specs
+      - name: Cache '${{ matrix.client.name }}' bundled specs
         id: cache
         uses: actions/cache@v2
         with:
-          path: specs/bundled/${{ matrix.client }}.yml
+          path: ${{ matrix.client.bundledPath }}
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('specs/{0}/**', matrix.client),
+              format('{0}/**', matrix.client.path),
               'specs/common/**'
             )}}
 
-      - name: Building '${{ matrix.client }}' specs
+      - name: Building '${{ matrix.client.name }}' specs
         if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn cli build specs ${{ matrix.client }}
+        run: yarn cli build specs ${{ matrix.client.name }}
 
   client_javascript_common:
     timeout-minutes: 10
@@ -169,14 +169,14 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ${{ matrix.client.folder }}
+          path: ${{ matrix.client.path }}
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('{0}/src/**', matrix.client.folder),
-              format('{0}/model/**', matrix.client.folder),
-              format('{0}/builds/**', matrix.client.folder),
-              format('{0}/package.json', matrix.client.folder),
+              format('{0}/src/**', matrix.client.path),
+              format('{0}/model/**', matrix.client.path),
+              format('{0}/builds/**', matrix.client.path),
+              format('{0}/package.json', matrix.client.path),
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/javascript/**',
               'generators/src/**'
@@ -220,12 +220,12 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ${{ matrix.client.folder }}
+          path: ${{ matrix.client.path }}
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('{0}/{1}/**', matrix.client.folder, matrix.client.name),
-              format('{0}/model/{1}/**', matrix.client.folder, matrix.client.name),
+              format('{0}/{1}/**', matrix.client.path, matrix.client.name),
+              format('{0}/model/{1}/**', matrix.client.path, matrix.client.name),
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/java/**',
               'generators/src/**'

@@ -112,7 +112,7 @@ function initPackagesConfig() {
   }
 
   return availableClients.flatMap((packageName) => {
-    const isAlgoliasearchClient = packageName.startsWith('algoliasearch');
+    const isAlgoliasearchClient = packageName === 'algoliasearch';
     const commonConfig = {
       package: packageName,
       name: isAlgoliasearchClient

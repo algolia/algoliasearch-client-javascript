@@ -150,15 +150,17 @@ buildCommand
       { verbose, interactive }
     ) => {
       language = await promptLanguage(language, interactive);
-      client = await promptClient(client, interactive, [
-        ...CLIENTS_JS_UTILS,
-        ...CLIENTS_JS,
-      ]);
+
+      const shouldBuildJs = language === 'javascript' || language === 'all';
+      const clientList = shouldBuildJs
+        ? [...CLIENTS_JS_UTILS, ...CLIENTS_JS]
+        : CLIENTS;
+      client = await promptClient(client, interactive, clientList);
 
       // We build the JavaScript utils before generated clients as they
       // rely on them
       if (
-        (language === 'javascript' || language === 'all') &&
+        shouldBuildJs &&
         (!client || client === 'all' || CLIENTS_JS_UTILS.includes(client))
       ) {
         await buildJSClientUtils(Boolean(verbose), client);

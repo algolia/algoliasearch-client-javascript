@@ -10,12 +10,19 @@ type CreateMatrix = {
   language?: Language;
 };
 
-type ClientMatrix = {
+type BaseMatrix = {
   name: string;
-  folder: string;
+  path: string;
+};
+
+type ClientMatrix = BaseMatrix & {
   config?: string;
   api?: string;
   capitalizedName?: string;
+};
+
+type SpecMatrix = BaseMatrix & {
+  bundledPath: string;
 };
 
 type Matrix<TMatrix> = {
@@ -61,7 +68,7 @@ async function getClientMatrix({
 
     const matchedGenerator: ClientMatrix = {
       name: client,
-      folder: output,
+      path: output,
     };
 
     // Extra informations for the PHP matrix in order to properly scope the
@@ -84,8 +91,8 @@ async function getClientMatrix({
 async function getSpecMatrix({
   baseBranch,
   baseChanged,
-}: CreateMatrix): Promise<Matrix<string>> {
-  const matrix: Matrix<string> = { client: [] };
+}: CreateMatrix): Promise<Matrix<SpecMatrix>> {
+  const matrix: Matrix<SpecMatrix> = { client: [] };
 
   for (const client of CLIENTS) {
     const specChanges = await getNbGitDiff({
@@ -97,7 +104,23 @@ async function getSpecMatrix({
       continue;
     }
 
-    matrix.client.push(client);
+    const spec = {
+      name: client,
+      path: `specs/${client}`,
+      bundledPath: `specs/bundled/${client}.yml`,
+    };
+
+    // The `algoliasearch-lite` spec is created by the `search` spec
+    if (client === 'algoliasearch-lite') {
+      matrix.client.push({
+        ...spec,
+        path: 'specs/search',
+      });
+
+      continue;
+    }
+
+    matrix.client.push(spec);
   }
 
   return matrix;
