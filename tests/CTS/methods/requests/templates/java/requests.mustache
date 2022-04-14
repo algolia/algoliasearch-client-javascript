@@ -50,8 +50,8 @@ class {{client}}Tests {
 
         {{#request.searchParams}}
         HashMap<String, String> expectedQuery = JSON.deserialize("{{#lambda.escapequotes}}{{{request.searchParams}}}{{/lambda.escapequotes}}", new TypeToken<HashMap<String, String>>() {}.getType());
-        List<Pair> acutalQuery = req.getQueryParams();
-        for (Pair p : acutalQuery) {
+        List<Pair> actualQuery = req.getQueryParams();
+        for (Pair p : actualQuery) {
             assertEquals(expectedQuery.get(p.getName()), p.getValue());
         }
         {{/request.searchParams}}

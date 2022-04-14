@@ -20,22 +20,20 @@ describe('utils', () => {
 
   describe('createClientName', () => {
     it('does not capitalize every part for JavaScript', () => {
-      expect(createClientName('search', 'javascript')).toEqual('searchApi');
+      expect(createClientName('search', 'javascript')).toEqual('search');
       expect(createClientName('search-client', 'javascript')).toEqual(
-        'searchClientApi'
+        'searchClient'
       );
       expect(createClientName('search-cli!nt-complex', 'javascript')).toEqual(
-        'searchCli!ntComplexApi'
+        'searchCli!ntComplex'
       );
     });
 
     it('capitalize every part for other languages', () => {
-      expect(createClientName('search', 'java')).toEqual('SearchApi');
-      expect(createClientName('search-client', 'java')).toEqual(
-        'SearchClientApi'
-      );
+      expect(createClientName('search', 'java')).toEqual('Search');
+      expect(createClientName('search-client', 'java')).toEqual('SearchClient');
       expect(createClientName('search-cli!nt-complex', 'java')).toEqual(
-        'SearchCli!ntComplexApi'
+        'SearchCli!ntComplex'
       );
     });
   });

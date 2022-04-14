@@ -200,8 +200,13 @@ public class ParametersWithDataType {
     String parent,
     int suffix
   ) throws CTSException {
-    assert (spec.getHasVars());
-    assert (spec.getItems() == null);
+    if (!spec.getHasVars()) {
+      throw new CTSException("Spec has no vars.");
+    }
+
+    if (spec.getItems() != null) {
+      throw new CTSException("Spec has items.");
+    }
 
     if (
       spec instanceof CodegenModel && ((CodegenModel) spec).oneOf.size() > 0
@@ -269,8 +274,13 @@ public class ParametersWithDataType {
     IJsonSchemaValidationProperties spec,
     int suffix
   ) throws CTSException {
-    assert (!spec.getHasVars());
-    assert (spec.getItems() == null);
+    if (spec.getHasVars()) {
+      throw new CTSException("Spec has vars.");
+    }
+
+    if (spec.getItems() != null) {
+      throw new CTSException("Spec has items.");
+    }
 
     Map<String, Object> vars = (Map<String, Object>) param;
 
@@ -300,18 +310,37 @@ public class ParametersWithDataType {
     IJsonSchemaValidationProperties spec,
     int suffix
   ) throws CTSException {
-    assert (!spec.getHasVars());
-    assert (spec.getItems() != null);
+    if (spec.getHasVars()) {
+      throw new CTSException("Spec has vars.");
+    }
 
     Map<String, Object> vars = (Map<String, Object>) param;
 
     List<Object> values = new ArrayList<>();
+
+    CodegenProperty items = spec.getItems();
+
     for (Entry<String, Object> entry : vars.entrySet()) {
+      IJsonSchemaValidationProperties itemType = items;
+
+      // The generator consider a free form object type as an `object`, which
+      // is wrong in our case, so we infer it.
+      if (
+        items == null ||
+        (items.openApiType.equals("object") && items.isFreeFormObject)
+      ) {
+        CodegenParameter maybeMatch = new CodegenParameter();
+        String paramType = inferDataType(entry.getValue(), maybeMatch, null);
+
+        maybeMatch.dataType = paramType;
+        itemType = maybeMatch;
+      }
+
       values.add(
         traverseParams(
           entry.getKey(),
           entry.getValue(),
-          spec.getItems(),
+          itemType,
           paramName,
           suffix + 1
         )

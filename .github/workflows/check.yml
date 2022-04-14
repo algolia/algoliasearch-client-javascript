@@ -277,6 +277,7 @@ jobs:
             hashFiles(
               format('{0}/lib/Api/{1}.php', matrix.client.folder, matrix.client.api),
               format('{0}/lib/Configuration/{1}.php', matrix.client.folder, matrix.client.config),
+              format('{0}/lib/Model/{1}/**', matrix.client.folder, matrix.client.capitalizedName),
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/php/**',
               'generators/src/**'

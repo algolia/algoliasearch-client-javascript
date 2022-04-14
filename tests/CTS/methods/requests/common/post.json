@@ -1,0 +1,36 @@
+[
+  {
+    "method": "post",
+    "testName": "allow post method for a custom path with minimal parameters",
+    "parameters": {
+      "path": "/test/minimal"
+    },
+    "request": {
+      "path": "/1/test/minimal",
+      "method": "POST"
+    }
+  },
+  {
+    "method": "post",
+    "testName": "allow post method for a custom path with all parameters",
+    "parameters": {
+      "path": "/test/all",
+      "parameters": {
+        "query": "parameters"
+      },
+      "body": {
+        "body": "parameters"
+      }
+    },
+    "request": {
+      "path": "/1/test/all",
+      "method": "POST",
+      "data": {
+        "body": "parameters"
+      },
+      "searchParams": {
+        "query": "parameters"
+      }
+    }
+  }
+]

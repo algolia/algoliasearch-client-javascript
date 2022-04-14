@@ -42,6 +42,31 @@ describe('createConfig', () => {
   });
 });
 
+describe('del', () => {
+  test('allow del method for a custom path with minimal parameters', async () => {
+    const req = (await client.del({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
+  });
+
+  test('allow del method for a custom path with all parameters', async () => {
+    const req = (await client.del({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('DELETE');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual({ query: 'parameters' });
+  });
+});
+
 describe('deleteConfig', () => {
   test('deleteConfig', async () => {
     const req = (await client.deleteConfig({
@@ -52,6 +77,31 @@ describe('deleteConfig', () => {
     expect(req.method).toEqual('DELETE');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toEqual(undefined);
+  });
+});
+
+describe('get', () => {
+  test('allow get method for a custom path with minimal parameters', async () => {
+    const req = (await client.get({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
+  });
+
+  test('allow get method for a custom path with all parameters', async () => {
+    const req = (await client.get({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('GET');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual({ query: 'parameters' });
   });
 });
 
@@ -102,6 +152,58 @@ describe('getLogFile', () => {
     expect(req.method).toEqual('GET');
     expect(req.data).toEqual(undefined);
     expect(req.searchParams).toEqual(undefined);
+  });
+});
+
+describe('post', () => {
+  test('allow post method for a custom path with minimal parameters', async () => {
+    const req = (await client.post({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
+  });
+
+  test('allow post method for a custom path with all parameters', async () => {
+    const req = (await client.post({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+      body: { body: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({ body: 'parameters' });
+    expect(req.searchParams).toEqual({ query: 'parameters' });
+  });
+});
+
+describe('put', () => {
+  test('allow put method for a custom path with minimal parameters', async () => {
+    const req = (await client.put({
+      path: '/test/minimal',
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/minimal');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual(undefined);
+    expect(req.searchParams).toEqual(undefined);
+  });
+
+  test('allow put method for a custom path with all parameters', async () => {
+    const req = (await client.put({
+      path: '/test/all',
+      parameters: { query: 'parameters' },
+      body: { body: 'parameters' },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/test/all');
+    expect(req.method).toEqual('PUT');
+    expect(req.data).toEqual({ body: 'parameters' });
+    expect(req.searchParams).toEqual({ query: 'parameters' });
   });
 });
 

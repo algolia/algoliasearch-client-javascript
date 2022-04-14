@@ -172,8 +172,8 @@ class SearchApiTests {
       "{\"X-Algolia-User-ID\":\"userID\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -271,8 +271,8 @@ class SearchApiTests {
       "{\"X-Algolia-User-ID\":\"userID\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -602,8 +602,8 @@ class SearchApiTests {
       "{\"forwardToReplicas\":\"true\",\"clearExistingRules\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -694,6 +694,50 @@ class SearchApiTests {
 
     assertEquals(req.getPath(), "/1/indexes/indexName/rules/clear");
     assertEquals(req.getMethod(), "POST");
+  }
+
+  @Test
+  @DisplayName("allow del method for a custom path with minimal parameters")
+  void delTest0() {
+    String path0 = "/test/minimal";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.del(path0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/minimal");
+    assertEquals(req.getMethod(), "DELETE");
+  }
+
+  @Test
+  @DisplayName("allow del method for a custom path with all parameters")
+  void delTest1() {
+    String path0 = "/test/all";
+
+    HashMap parameters0 = new HashMap<String, Object>();
+    {
+      String query1 = "parameters";
+
+      parameters0.put("query", query1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.del(path0, parameters0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/all");
+    assertEquals(req.getMethod(), "DELETE");
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"query\":\"parameters\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
   }
 
   @Test
@@ -819,6 +863,50 @@ class SearchApiTests {
   }
 
   @Test
+  @DisplayName("allow get method for a custom path with minimal parameters")
+  void getTest0() {
+    String path0 = "/test/minimal";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.get(path0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/minimal");
+    assertEquals(req.getMethod(), "GET");
+  }
+
+  @Test
+  @DisplayName("allow get method for a custom path with all parameters")
+  void getTest1() {
+    String path0 = "/test/all";
+
+    HashMap parameters0 = new HashMap<String, Object>();
+    {
+      String query1 = "parameters";
+
+      parameters0.put("query", query1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.get(path0, parameters0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/all");
+    assertEquals(req.getMethod(), "GET");
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"query\":\"parameters\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
   @DisplayName("getApiKey")
   void getApiKeyTest0() {
     String key0 = "myTestApiKey";
@@ -879,8 +967,8 @@ class SearchApiTests {
       "{\"offset\":\"5\",\"length\":\"10\",\"indexName\":\"theIndexName\",\"type\":\"all\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -914,8 +1002,8 @@ class SearchApiTests {
       "{\"attributesToRetrieve\":\"attr1,attr2\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -1087,8 +1175,8 @@ class SearchApiTests {
       "{\"getClusters\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -1134,8 +1222,8 @@ class SearchApiTests {
       "{\"page\":\"8\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -1159,8 +1247,8 @@ class SearchApiTests {
       "{\"page\":\"8\",\"hitsPerPage\":\"100\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -1370,8 +1458,126 @@ class SearchApiTests {
       "{\"createIfNotExists\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("allow post method for a custom path with minimal parameters")
+  void postTest0() {
+    String path0 = "/test/minimal";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.post(path0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/minimal");
+    assertEquals(req.getMethod(), "POST");
+  }
+
+  @Test
+  @DisplayName("allow post method for a custom path with all parameters")
+  void postTest1() {
+    String path0 = "/test/all";
+
+    HashMap parameters0 = new HashMap<String, Object>();
+    {
+      String query1 = "parameters";
+
+      parameters0.put("query", query1);
+    }
+
+    HashMap body0 = new HashMap<String, Object>();
+    {
+      String body1 = "parameters";
+
+      body0.put("body", body1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.post(path0, parameters0, body0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/all");
+    assertEquals(req.getMethod(), "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"body\":\"parameters\"}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"query\":\"parameters\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
+      assertEquals(expectedQuery.get(p.getName()), p.getValue());
+    }
+  }
+
+  @Test
+  @DisplayName("allow put method for a custom path with minimal parameters")
+  void putTest0() {
+    String path0 = "/test/minimal";
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.put(path0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/minimal");
+    assertEquals(req.getMethod(), "PUT");
+  }
+
+  @Test
+  @DisplayName("allow put method for a custom path with all parameters")
+  void putTest1() {
+    String path0 = "/test/all";
+
+    HashMap parameters0 = new HashMap<String, Object>();
+    {
+      String query1 = "parameters";
+
+      parameters0.put("query", query1);
+    }
+
+    HashMap body0 = new HashMap<String, Object>();
+    {
+      String body1 = "parameters";
+
+      body0.put("body", body1);
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.put(path0, parameters0, body0);
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/test/all");
+    assertEquals(req.getMethod(), "PUT");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"body\":\"parameters\"}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+
+    HashMap<String, String> expectedQuery = JSON.deserialize(
+      "{\"query\":\"parameters\"}",
+      new TypeToken<HashMap<String, String>>() {}.getType()
+    );
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -1540,8 +1746,8 @@ class SearchApiTests {
       "{\"forwardToReplicas\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -1606,8 +1812,8 @@ class SearchApiTests {
       "{\"forwardToReplicas\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -1706,8 +1912,8 @@ class SearchApiTests {
       "{\"forwardToReplicas\":\"true\",\"replaceExistingSynonyms\":\"false\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }
@@ -2102,8 +2308,8 @@ class SearchApiTests {
       "{\"forwardToReplicas\":\"true\"}",
       new TypeToken<HashMap<String, String>>() {}.getType()
     );
-    List<Pair> acutalQuery = req.getQueryParams();
-    for (Pair p : acutalQuery) {
+    List<Pair> actualQuery = req.getQueryParams();
+    for (Pair p : actualQuery) {
       assertEquals(expectedQuery.get(p.getName()), p.getValue());
     }
   }

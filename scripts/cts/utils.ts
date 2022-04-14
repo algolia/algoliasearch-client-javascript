@@ -30,8 +30,9 @@ export function createClientName(client: string, language: string): string {
     })
     .join('');
 
-  return `${clientName}Api`;
+  return clientName;
 }
+
 export async function createOutputDir({
   language,
   testPath,
