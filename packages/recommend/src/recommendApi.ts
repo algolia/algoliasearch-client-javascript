@@ -89,10 +89,9 @@ export function createRecommendApi(options: CreateClientOptions) {
      * @param del - The del object.
      * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param del.parameters - Query parameters to be applied to the current query.
-     * @param del.body - The parameters to send with the custom request.
      */
     del(
-      { path, parameters, body }: DelProps,
+      { path, parameters }: DelProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
       if (!path) {
@@ -106,7 +105,6 @@ export function createRecommendApi(options: CreateClientOptions) {
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
-        data: body,
       };
 
       return transporter.request(
@@ -283,10 +281,6 @@ export type DelProps = {
    * Query parameters to be applied to the current query.
    */
   parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
 };
 
 export type GetProps = {

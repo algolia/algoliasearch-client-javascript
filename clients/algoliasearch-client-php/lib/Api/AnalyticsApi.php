@@ -91,11 +91,10 @@ class AnalyticsApi
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
-     * @param array $body The parameters to send with the custom request. (optional)
      *
      * @return array<string, mixed>|object
      */
-    public function del($path, $parameters = null, $body = null)
+    public function del($path, $parameters = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
@@ -125,10 +124,6 @@ class AnalyticsApi
                 $path,
                 $resourcePath
             );
-        }
-
-        if (isset($body)) {
-            $httpBody = $body;
         }
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);
@@ -1464,15 +1459,15 @@ class AnalyticsApi
      * @param bool $clickAnalytics Whether to include the click-through and conversion rates for a search. (optional, default to false)
      * @param string $startDate The lower bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
      * @param string $endDate The upper bound timestamp (a date, a string like \&quot;2006-01-02\&quot;) of the period to analyze. (optional)
-     * @param string $orderBy Reorder the results. (optional, default to 'searchCount')
-     * @param string $direction The sorting of the result. (optional, default to 'asc')
+     * @param array $orderBy Reorder the results. (optional)
+     * @param array $direction The sorting of the result. (optional)
      * @param int $limit Number of records to return. Limit is the size of the page. (optional, default to 10)
      * @param int $offset Position of the starting record. Used for paging. 0 is the first record. (optional, default to 0)
      * @param string $tags Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded. (optional)
      *
      * @return array<string, mixed>|\Algolia\AlgoliaSearch\Model\Analytics\GetTopSearchesResponse
      */
-    public function getTopSearches($index, $clickAnalytics = false, $startDate = null, $endDate = null, $orderBy = 'searchCount', $direction = 'asc', $limit = 10, $offset = 0, $tags = null)
+    public function getTopSearches($index, $clickAnalytics = false, $startDate = null, $endDate = null, $orderBy = null, $direction = null, $limit = 10, $offset = 0, $tags = null)
     {
         // verify the required parameter 'index' is set
         if ($index === null || (is_array($index) && count($index) === 0)) {

@@ -123,11 +123,10 @@ class AbtestingApi
      *
      * @param string $path The path of the API endpoint to target, anything after the /1 needs to be specified. (required)
      * @param array $parameters Query parameters to be applied to the current query. (optional)
-     * @param array $body The parameters to send with the custom request. (optional)
      *
      * @return array<string, mixed>|object
      */
-    public function del($path, $parameters = null, $body = null)
+    public function del($path, $parameters = null)
     {
         // verify the required parameter 'path' is set
         if ($path === null || (is_array($path) && count($path) === 0)) {
@@ -157,10 +156,6 @@ class AbtestingApi
                 $path,
                 $resourcePath
             );
-        }
-
-        if (isset($body)) {
-            $httpBody = $body;
         }
 
         return $this->sendRequest('DELETE', $resourcePath, $queryParams, $httpBody);

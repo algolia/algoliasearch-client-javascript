@@ -1473,10 +1473,9 @@ public class SearchApi extends ApiClient {
   private Call delCall(
     String path,
     Map<String, Object> parameters,
-    Object body,
     final ApiCallback<Object> callback
   ) throws AlgoliaRuntimeException {
-    Object bodyObj = body;
+    Object bodyObj = null;
 
     // create path and map variables
     String requestPath = "/1{path}".replaceAll("\\{path\\}", path.toString());
@@ -1511,7 +1510,6 @@ public class SearchApi extends ApiClient {
   private Call delValidateBeforeCall(
     String path,
     Map<String, Object> parameters,
-    Object body,
     final ApiCallback<Object> callback
   ) throws AlgoliaRuntimeException {
     // verify the required parameter 'path' is set
@@ -1521,7 +1519,7 @@ public class SearchApi extends ApiClient {
       );
     }
 
-    return delCall(path, parameters, body, callback);
+    return delCall(path, parameters, callback);
   }
 
   /**
@@ -1530,14 +1528,13 @@ public class SearchApi extends ApiClient {
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
    * @param parameters Query parameters to be applied to the current query. (optional)
-   * @param body The parameters to send with the custom request. (optional)
    * @return Object
    * @throws AlgoliaRuntimeException If fail to call the API, e.g. server error or cannot
    *     deserialize the response body
    */
-  public Object del(String path, Map<String, Object> parameters, Object body)
+  public Object del(String path, Map<String, Object> parameters)
     throws AlgoliaRuntimeException {
-    Call req = delValidateBeforeCall(path, parameters, body, null);
+    Call req = delValidateBeforeCall(path, parameters, null);
     if (req instanceof CallEcho) {
       return new EchoResponse.SearchEcho.Del(((CallEcho) req).request());
     }
@@ -1548,7 +1545,7 @@ public class SearchApi extends ApiClient {
   }
 
   public Object del(String path) throws AlgoliaRuntimeException {
-    return this.del(path, new HashMap<>(), null);
+    return this.del(path, new HashMap<>());
   }
 
   /**
@@ -1557,7 +1554,6 @@ public class SearchApi extends ApiClient {
    * @param path The path of the API endpoint to target, anything after the /1 needs to be
    *     specified. (required)
    * @param parameters Query parameters to be applied to the current query. (optional)
-   * @param body The parameters to send with the custom request. (optional)
    * @param callback The callback to be executed when the API call finishes
    * @return The request call
    * @throws AlgoliaRuntimeException If fail to process the API call, e.g. serializing the request
@@ -1566,10 +1562,9 @@ public class SearchApi extends ApiClient {
   public Call delAsync(
     String path,
     Map<String, Object> parameters,
-    Object body,
     final ApiCallback<Object> callback
   ) throws AlgoliaRuntimeException {
-    Call call = delValidateBeforeCall(path, parameters, body, callback);
+    Call call = delValidateBeforeCall(path, parameters, callback);
     Type returnType = new TypeToken<Object>() {}.getType();
     this.executeAsync(call, returnType, callback);
     return call;

@@ -17,7 +17,7 @@ class LogFile extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mode
       */
     protected static $modelTypes = [
         'timestamp' => 'string',
-        'level' => 'string',
+        'level' => '\Algolia\AlgoliaSearch\Model\QuerySuggestions\LogLevel',
         'message' => 'string',
         'contextLevel' => 'int',
     ];
@@ -98,24 +98,6 @@ class LogFile extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mode
         return self::$getters;
     }
 
-    const LEVEL_INFO = 'INFO';
-    const LEVEL_SKIP = 'SKIP';
-    const LEVEL_ERROR = 'ERROR';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getLevelAllowableValues()
-    {
-        return [
-            self::LEVEL_INFO,
-            self::LEVEL_SKIP,
-            self::LEVEL_ERROR,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -159,15 +141,6 @@ class LogFile extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mode
         if (!isset($this->container['level']) || $this->container['level'] === null) {
             $invalidProperties[] = "'level' can't be null";
         }
-        $allowedValues = $this->getLevelAllowableValues();
-        if (isset($this->container['level']) && !in_array($this->container['level'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'level', must be one of '%s'",
-                $this->container['level'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if (!isset($this->container['message']) || $this->container['message'] === null) {
             $invalidProperties[] = "'message' can't be null";
         }
@@ -216,7 +189,7 @@ class LogFile extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mode
     /**
      * Gets level
      *
-     * @return string
+     * @return \Algolia\AlgoliaSearch\Model\QuerySuggestions\LogLevel
      */
     public function getLevel()
     {
@@ -226,22 +199,12 @@ class LogFile extends \Algolia\AlgoliaSearch\Model\AbstractModel implements Mode
     /**
      * Sets level
      *
-     * @param string $level type of the record, can be one of three values (INFO, SKIP or ERROR)
+     * @param \Algolia\AlgoliaSearch\Model\QuerySuggestions\LogLevel $level level
      *
      * @return self
      */
     public function setLevel($level)
     {
-        $allowedValues = $this->getLevelAllowableValues();
-        if (!in_array($level, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'level', must be one of '%s'",
-                    $level,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['level'] = $level;
 
         return $this;

@@ -18,7 +18,7 @@ class InsightEvent extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
       * @var string[]
       */
     protected static $modelTypes = [
-        'eventType' => 'string',
+        'eventType' => '\Algolia\AlgoliaSearch\Model\Insights\EventType',
         'eventName' => 'string',
         'index' => 'string',
         'userToken' => 'string',
@@ -120,24 +120,6 @@ class InsightEvent extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         return self::$getters;
     }
 
-    const EVENT_TYPE_CLICK = 'click';
-    const EVENT_TYPE_CONVERSION = 'conversion';
-    const EVENT_TYPE_VIEW = 'view';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getEventTypeAllowableValues()
-    {
-        return [
-            self::EVENT_TYPE_CLICK,
-            self::EVENT_TYPE_CONVERSION,
-            self::EVENT_TYPE_VIEW,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -193,15 +175,6 @@ class InsightEvent extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         if (!isset($this->container['eventType']) || $this->container['eventType'] === null) {
             $invalidProperties[] = "'eventType' can't be null";
         }
-        $allowedValues = $this->getEventTypeAllowableValues();
-        if (isset($this->container['eventType']) && !in_array($this->container['eventType'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'eventType', must be one of '%s'",
-                $this->container['eventType'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if (!isset($this->container['eventName']) || $this->container['eventName'] === null) {
             $invalidProperties[] = "'eventName' can't be null";
         }
@@ -229,7 +202,7 @@ class InsightEvent extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Gets eventType
      *
-     * @return string
+     * @return \Algolia\AlgoliaSearch\Model\Insights\EventType
      */
     public function getEventType()
     {
@@ -239,22 +212,12 @@ class InsightEvent extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Sets eventType
      *
-     * @param string $eventType an eventType can be a click, a conversion, or a view
+     * @param \Algolia\AlgoliaSearch\Model\Insights\EventType $eventType eventType
      *
      * @return self
      */
     public function setEventType($eventType)
     {
-        $allowedValues = $this->getEventTypeAllowableValues();
-        if (!in_array($eventType, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'eventType', must be one of '%s'",
-                    $eventType,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['eventType'] = $eventType;
 
         return $this;

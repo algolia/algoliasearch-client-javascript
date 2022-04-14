@@ -16,7 +16,7 @@ class GetTaskResponse extends \Algolia\AlgoliaSearch\Model\AbstractModel impleme
       * @var string[]
       */
     protected static $modelTypes = [
-        'status' => 'string',
+        'status' => '\Algolia\AlgoliaSearch\Model\Search\TaskStatus',
     ];
 
     /**
@@ -86,22 +86,6 @@ class GetTaskResponse extends \Algolia\AlgoliaSearch\Model\AbstractModel impleme
         return self::$getters;
     }
 
-    const STATUS_PUBLISHED = 'published';
-    const STATUS_NOT_PUBLISHED = 'notPublished';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getStatusAllowableValues()
-    {
-        return [
-            self::STATUS_PUBLISHED,
-            self::STATUS_NOT_PUBLISHED,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -133,14 +117,6 @@ class GetTaskResponse extends \Algolia\AlgoliaSearch\Model\AbstractModel impleme
         if (!isset($this->container['status']) || $this->container['status'] === null) {
             $invalidProperties[] = "'status' can't be null";
         }
-        $allowedValues = $this->getStatusAllowableValues();
-        if (isset($this->container['status']) && !in_array($this->container['status'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'status', must be one of '%s'",
-                $this->container['status'],
-                implode("', '", $allowedValues)
-            );
-        }
 
         return $invalidProperties;
     }
@@ -159,7 +135,7 @@ class GetTaskResponse extends \Algolia\AlgoliaSearch\Model\AbstractModel impleme
     /**
      * Gets status
      *
-     * @return string
+     * @return \Algolia\AlgoliaSearch\Model\Search\TaskStatus
      */
     public function getStatus()
     {
@@ -169,22 +145,12 @@ class GetTaskResponse extends \Algolia\AlgoliaSearch\Model\AbstractModel impleme
     /**
      * Sets status
      *
-     * @param string $status status
+     * @param \Algolia\AlgoliaSearch\Model\Search\TaskStatus $status status
      *
      * @return self
      */
     public function setStatus($status)
     {
-        $allowedValues = $this->getStatusAllowableValues();
-        if (!in_array($status, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'status', must be one of '%s'",
-                    $status,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['status'] = $status;
 
         return $this;

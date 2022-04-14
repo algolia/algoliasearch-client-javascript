@@ -19,7 +19,7 @@ class HighlightResult extends \Algolia\AlgoliaSearch\Model\AbstractModel impleme
       */
     protected static $modelTypes = [
         'value' => 'string',
-        'matchLevel' => 'string',
+        'matchLevel' => '\Algolia\AlgoliaSearch\Model\Search\MatchLevel',
         'matchedWords' => 'string[]',
         'fullyHighlighted' => 'bool',
     ];
@@ -100,24 +100,6 @@ class HighlightResult extends \Algolia\AlgoliaSearch\Model\AbstractModel impleme
         return self::$getters;
     }
 
-    const MATCH_LEVEL_NONE = 'none';
-    const MATCH_LEVEL_PARTIAL = 'partial';
-    const MATCH_LEVEL_FULL = 'full';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getMatchLevelAllowableValues()
-    {
-        return [
-            self::MATCH_LEVEL_NONE,
-            self::MATCH_LEVEL_PARTIAL,
-            self::MATCH_LEVEL_FULL,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -154,15 +136,6 @@ class HighlightResult extends \Algolia\AlgoliaSearch\Model\AbstractModel impleme
     public function listInvalidProperties()
     {
         $invalidProperties = [];
-
-        $allowedValues = $this->getMatchLevelAllowableValues();
-        if (isset($this->container['matchLevel']) && !in_array($this->container['matchLevel'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'matchLevel', must be one of '%s'",
-                $this->container['matchLevel'],
-                implode("', '", $allowedValues)
-            );
-        }
 
         return $invalidProperties;
     }
@@ -205,7 +178,7 @@ class HighlightResult extends \Algolia\AlgoliaSearch\Model\AbstractModel impleme
     /**
      * Gets matchLevel
      *
-     * @return string|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\MatchLevel|null
      */
     public function getMatchLevel()
     {
@@ -215,22 +188,12 @@ class HighlightResult extends \Algolia\AlgoliaSearch\Model\AbstractModel impleme
     /**
      * Sets matchLevel
      *
-     * @param string|null $matchLevel indicates how well the attribute matched the search query
+     * @param \Algolia\AlgoliaSearch\Model\Search\MatchLevel|null $matchLevel matchLevel
      *
      * @return self
      */
     public function setMatchLevel($matchLevel)
     {
-        $allowedValues = $this->getMatchLevelAllowableValues();
-        if (!is_null($matchLevel) && !in_array($matchLevel, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'matchLevel', must be one of '%s'",
-                    $matchLevel,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['matchLevel'] = $matchLevel;
 
         return $this;

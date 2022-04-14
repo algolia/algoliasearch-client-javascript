@@ -67,7 +67,7 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         'hitsPerPage' => 'int',
         'minWordSizefor1Typo' => 'int',
         'minWordSizefor2Typos' => 'int',
-        'typoTolerance' => 'string',
+        'typoTolerance' => '\Algolia\AlgoliaSearch\Model\Search\TypoTolerance',
         'allowTyposOnNumericTokens' => 'bool',
         'disableTypoToleranceOnAttributes' => 'string[]',
         'separatorsToIndex' => 'string',
@@ -78,14 +78,14 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         'decompoundQuery' => 'bool',
         'enableRules' => 'bool',
         'enablePersonalization' => 'bool',
-        'queryType' => 'string',
-        'removeWordsIfNoResults' => 'string',
+        'queryType' => '\Algolia\AlgoliaSearch\Model\Search\QueryType',
+        'removeWordsIfNoResults' => '\Algolia\AlgoliaSearch\Model\Search\RemoveWordsIfNoResults',
         'advancedSyntax' => 'bool',
         'optionalWords' => 'string[]',
         'disableExactOnAttributes' => 'string[]',
-        'exactOnSingleWordQuery' => 'string',
-        'alternativesAsExact' => 'string[]',
-        'advancedSyntaxFeatures' => 'string[]',
+        'exactOnSingleWordQuery' => '\Algolia\AlgoliaSearch\Model\Search\ExactOnSingleWordQuery',
+        'alternativesAsExact' => '\Algolia\AlgoliaSearch\Model\Search\AlternativesAsExact[]',
+        'advancedSyntaxFeatures' => '\Algolia\AlgoliaSearch\Model\Search\AdvancedSyntaxFeatures[]',
         'distinct' => 'int',
         'synonyms' => 'bool',
         'replaceSynonymsInHighlight' => 'bool',
@@ -394,111 +394,6 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         return self::$getters;
     }
 
-    const TYPO_TOLERANCE_TRUE = 'true';
-    const TYPO_TOLERANCE_FALSE = 'false';
-    const TYPO_TOLERANCE_MIN = 'min';
-    const TYPO_TOLERANCE_STRICT = 'strict';
-    const QUERY_TYPE_PREFIX_LAST = 'prefixLast';
-    const QUERY_TYPE_PREFIX_ALL = 'prefixAll';
-    const QUERY_TYPE_PREFIX_NONE = 'prefixNone';
-    const REMOVE_WORDS_IF_NO_RESULTS_NONE = 'none';
-    const REMOVE_WORDS_IF_NO_RESULTS_LAST_WORDS = 'lastWords';
-    const REMOVE_WORDS_IF_NO_RESULTS_FIRST_WORDS = 'firstWords';
-    const REMOVE_WORDS_IF_NO_RESULTS_ALL_OPTIONAL = 'allOptional';
-    const EXACT_ON_SINGLE_WORD_QUERY_ATTRIBUTE = 'attribute';
-    const EXACT_ON_SINGLE_WORD_QUERY_NONE = 'none';
-    const EXACT_ON_SINGLE_WORD_QUERY_WORD = 'word';
-    const ALTERNATIVES_AS_EXACT_IGNORE_PLURALS = 'ignorePlurals';
-    const ALTERNATIVES_AS_EXACT_SINGLE_WORD_SYNONYM = 'singleWordSynonym';
-    const ALTERNATIVES_AS_EXACT_MULTI_WORDS_SYNONYM = 'multiWordsSynonym';
-    const ADVANCED_SYNTAX_FEATURES_EXACT_PHRASE = 'exactPhrase';
-    const ADVANCED_SYNTAX_FEATURES_EXCLUDE_WORDS = 'excludeWords';
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getTypoToleranceAllowableValues()
-    {
-        return [
-            self::TYPO_TOLERANCE_TRUE,
-            self::TYPO_TOLERANCE_FALSE,
-            self::TYPO_TOLERANCE_MIN,
-            self::TYPO_TOLERANCE_STRICT,
-        ];
-    }
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getQueryTypeAllowableValues()
-    {
-        return [
-            self::QUERY_TYPE_PREFIX_LAST,
-            self::QUERY_TYPE_PREFIX_ALL,
-            self::QUERY_TYPE_PREFIX_NONE,
-        ];
-    }
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getRemoveWordsIfNoResultsAllowableValues()
-    {
-        return [
-            self::REMOVE_WORDS_IF_NO_RESULTS_NONE,
-            self::REMOVE_WORDS_IF_NO_RESULTS_LAST_WORDS,
-            self::REMOVE_WORDS_IF_NO_RESULTS_FIRST_WORDS,
-            self::REMOVE_WORDS_IF_NO_RESULTS_ALL_OPTIONAL,
-        ];
-    }
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getExactOnSingleWordQueryAllowableValues()
-    {
-        return [
-            self::EXACT_ON_SINGLE_WORD_QUERY_ATTRIBUTE,
-            self::EXACT_ON_SINGLE_WORD_QUERY_NONE,
-            self::EXACT_ON_SINGLE_WORD_QUERY_WORD,
-        ];
-    }
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getAlternativesAsExactAllowableValues()
-    {
-        return [
-            self::ALTERNATIVES_AS_EXACT_IGNORE_PLURALS,
-            self::ALTERNATIVES_AS_EXACT_SINGLE_WORD_SYNONYM,
-            self::ALTERNATIVES_AS_EXACT_MULTI_WORDS_SYNONYM,
-        ];
-    }
-
-    /**
-     * Gets allowable values of the enum
-     *
-     * @return string[]
-     */
-    public function getAdvancedSyntaxFeaturesAllowableValues()
-    {
-        return [
-            self::ADVANCED_SYNTAX_FEATURES_EXACT_PHRASE,
-            self::ADVANCED_SYNTAX_FEATURES_EXCLUDE_WORDS,
-        ];
-    }
-
     /**
      * Associative array for storing property values
      *
@@ -773,42 +668,6 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         if (!isset($this->container['query']) || $this->container['query'] === null) {
             $invalidProperties[] = "'query' can't be null";
         }
-        $allowedValues = $this->getTypoToleranceAllowableValues();
-        if (isset($this->container['typoTolerance']) && !in_array($this->container['typoTolerance'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'typoTolerance', must be one of '%s'",
-                $this->container['typoTolerance'],
-                implode("', '", $allowedValues)
-            );
-        }
-
-        $allowedValues = $this->getQueryTypeAllowableValues();
-        if (isset($this->container['queryType']) && !in_array($this->container['queryType'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'queryType', must be one of '%s'",
-                $this->container['queryType'],
-                implode("', '", $allowedValues)
-            );
-        }
-
-        $allowedValues = $this->getRemoveWordsIfNoResultsAllowableValues();
-        if (isset($this->container['removeWordsIfNoResults']) && !in_array($this->container['removeWordsIfNoResults'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'removeWordsIfNoResults', must be one of '%s'",
-                $this->container['removeWordsIfNoResults'],
-                implode("', '", $allowedValues)
-            );
-        }
-
-        $allowedValues = $this->getExactOnSingleWordQueryAllowableValues();
-        if (isset($this->container['exactOnSingleWordQuery']) && !in_array($this->container['exactOnSingleWordQuery'], $allowedValues, true)) {
-            $invalidProperties[] = sprintf(
-                "invalid value '%s' for 'exactOnSingleWordQuery', must be one of '%s'",
-                $this->container['exactOnSingleWordQuery'],
-                implode("', '", $allowedValues)
-            );
-        }
-
         if (isset($this->container['distinct']) && ($this->container['distinct'] > 4)) {
             $invalidProperties[] = "invalid value for 'distinct', must be smaller than or equal to 4.";
         }
@@ -2081,7 +1940,7 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Gets typoTolerance
      *
-     * @return string|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\TypoTolerance|null
      */
     public function getTypoTolerance()
     {
@@ -2091,22 +1950,12 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Sets typoTolerance
      *
-     * @param string|null $typoTolerance controls whether typo tolerance is enabled and how it is applied
+     * @param \Algolia\AlgoliaSearch\Model\Search\TypoTolerance|null $typoTolerance typoTolerance
      *
      * @return self
      */
     public function setTypoTolerance($typoTolerance)
     {
-        $allowedValues = $this->getTypoToleranceAllowableValues();
-        if (!is_null($typoTolerance) && !in_array($typoTolerance, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'typoTolerance', must be one of '%s'",
-                    $typoTolerance,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['typoTolerance'] = $typoTolerance;
 
         return $this;
@@ -2355,7 +2204,7 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Gets queryType
      *
-     * @return string|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\QueryType|null
      */
     public function getQueryType()
     {
@@ -2365,22 +2214,12 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Sets queryType
      *
-     * @param string|null $queryType controls if and how query words are interpreted as prefixes
+     * @param \Algolia\AlgoliaSearch\Model\Search\QueryType|null $queryType queryType
      *
      * @return self
      */
     public function setQueryType($queryType)
     {
-        $allowedValues = $this->getQueryTypeAllowableValues();
-        if (!is_null($queryType) && !in_array($queryType, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'queryType', must be one of '%s'",
-                    $queryType,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['queryType'] = $queryType;
 
         return $this;
@@ -2389,7 +2228,7 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Gets removeWordsIfNoResults
      *
-     * @return string|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\RemoveWordsIfNoResults|null
      */
     public function getRemoveWordsIfNoResults()
     {
@@ -2399,22 +2238,12 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Sets removeWordsIfNoResults
      *
-     * @param string|null $removeWordsIfNoResults selects a strategy to remove words from the query when it doesn't match any hits
+     * @param \Algolia\AlgoliaSearch\Model\Search\RemoveWordsIfNoResults|null $removeWordsIfNoResults removeWordsIfNoResults
      *
      * @return self
      */
     public function setRemoveWordsIfNoResults($removeWordsIfNoResults)
     {
-        $allowedValues = $this->getRemoveWordsIfNoResultsAllowableValues();
-        if (!is_null($removeWordsIfNoResults) && !in_array($removeWordsIfNoResults, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'removeWordsIfNoResults', must be one of '%s'",
-                    $removeWordsIfNoResults,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['removeWordsIfNoResults'] = $removeWordsIfNoResults;
 
         return $this;
@@ -2495,7 +2324,7 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Gets exactOnSingleWordQuery
      *
-     * @return string|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\ExactOnSingleWordQuery|null
      */
     public function getExactOnSingleWordQuery()
     {
@@ -2505,22 +2334,12 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Sets exactOnSingleWordQuery
      *
-     * @param string|null $exactOnSingleWordQuery controls how the exact ranking criterion is computed when the query contains only one word
+     * @param \Algolia\AlgoliaSearch\Model\Search\ExactOnSingleWordQuery|null $exactOnSingleWordQuery exactOnSingleWordQuery
      *
      * @return self
      */
     public function setExactOnSingleWordQuery($exactOnSingleWordQuery)
     {
-        $allowedValues = $this->getExactOnSingleWordQueryAllowableValues();
-        if (!is_null($exactOnSingleWordQuery) && !in_array($exactOnSingleWordQuery, $allowedValues, true)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value '%s' for 'exactOnSingleWordQuery', must be one of '%s'",
-                    $exactOnSingleWordQuery,
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['exactOnSingleWordQuery'] = $exactOnSingleWordQuery;
 
         return $this;
@@ -2529,7 +2348,7 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Gets alternativesAsExact
      *
-     * @return string[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\AlternativesAsExact[]|null
      */
     public function getAlternativesAsExact()
     {
@@ -2539,21 +2358,12 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Sets alternativesAsExact
      *
-     * @param string[]|null $alternativesAsExact list of alternatives that should be considered an exact match by the exact ranking criterion
+     * @param \Algolia\AlgoliaSearch\Model\Search\AlternativesAsExact[]|null $alternativesAsExact list of alternatives that should be considered an exact match by the exact ranking criterion
      *
      * @return self
      */
     public function setAlternativesAsExact($alternativesAsExact)
     {
-        $allowedValues = $this->getAlternativesAsExactAllowableValues();
-        if (!is_null($alternativesAsExact) && array_diff($alternativesAsExact, $allowedValues)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'alternativesAsExact', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['alternativesAsExact'] = $alternativesAsExact;
 
         return $this;
@@ -2562,7 +2372,7 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Gets advancedSyntaxFeatures
      *
-     * @return string[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\AdvancedSyntaxFeatures[]|null
      */
     public function getAdvancedSyntaxFeatures()
     {
@@ -2572,21 +2382,12 @@ class SearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
     /**
      * Sets advancedSyntaxFeatures
      *
-     * @param string[]|null $advancedSyntaxFeatures allows you to specify which advanced syntax features are active when ‘advancedSyntax' is enabled
+     * @param \Algolia\AlgoliaSearch\Model\Search\AdvancedSyntaxFeatures[]|null $advancedSyntaxFeatures allows you to specify which advanced syntax features are active when ‘advancedSyntax' is enabled
      *
      * @return self
      */
     public function setAdvancedSyntaxFeatures($advancedSyntaxFeatures)
     {
-        $allowedValues = $this->getAdvancedSyntaxFeaturesAllowableValues();
-        if (!is_null($advancedSyntaxFeatures) && array_diff($advancedSyntaxFeatures, $allowedValues)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    "Invalid value for 'advancedSyntaxFeatures', must be one of '%s'",
-                    implode("', '", $allowedValues)
-                )
-            );
-        }
         $this->container['advancedSyntaxFeatures'] = $advancedSyntaxFeatures;
 
         return $this;
