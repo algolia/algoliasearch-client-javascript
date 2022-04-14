@@ -1,6 +1,5 @@
 import path from 'path';
 
-import { buildJSClientUtils } from './buildClients';
 import { buildSpecs } from './buildSpecs';
 import {
   buildCustomGenerators,
@@ -143,12 +142,6 @@ export async function generate(
   for (const lang of langs) {
     if (!(CI && lang === 'javascript')) {
       await formatter(lang, getLanguageFolder(lang), verbose);
-    }
-
-    // JavaScript utils are tested independently, we only build them
-    // during dev to ease the process
-    if (!CI && lang === 'javascript') {
-      await buildJSClientUtils(verbose, 'all');
     }
   }
 }

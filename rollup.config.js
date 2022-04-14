@@ -15,6 +15,9 @@ const client = process.env.CLIENT?.replace(
 );
 const UTILS = ['client-common', 'requester-browser-xhr', 'requester-node-http'];
 
+const CLIENT_ALL = 'all';
+const CLIENT_UTILS = 'utils';
+
 function createLicence(name, version) {
   return `/*! ${name}.umd.js | ${version} | © Algolia, inc. | https://github.com/algolia/algoliasearch-client-javascript */`;
 }
@@ -45,64 +48,70 @@ function createBundlers({ output, clientPath }) {
 }
 
 function getAvailableClients() {
-  const exception = new Set([
-    'client-common',
-    'requester-browser-xhr',
-    'requester-node-http',
-  ]);
-
   // ['algoliasearch', 'client-abtesting', ... ]
   const availableClients = fs
     .readdirSync('packages/')
-    .filter((_client) => !exception.has(_client));
+    .filter((_client) => !UTILS.includes(_client));
 
-  return client === 'all'
+  return client === CLIENT_ALL
     ? availableClients
     : availableClients.filter((availableClient) => availableClient === client);
 }
 
-function initPackagesConfig() {
+function getUtilConfigs() {
+  const commonOptions = {
+    input: 'index.ts',
+    formats: ['cjs-node', 'esm-node'],
+    external: [],
+    dependencies: [],
+  };
+
+  return [
+    // Common
+    {
+      ...commonOptions,
+      output: 'client-common',
+      package: 'client-common',
+      name: '@experimental-api-clients-automation/client-common',
+    },
+    // Browser requester
+    {
+      ...commonOptions,
+      output: 'requester-browser-xhr',
+      package: 'requester-browser-xhr',
+      name: '@experimental-api-clients-automation/requester-browser-xhr',
+      external: ['dom'],
+      dependencies: ['@experimental-api-clients-automation/client-common'],
+    },
+    // Node requester
+    {
+      ...commonOptions,
+      output: 'requester-node-http',
+      package: 'requester-node-http',
+      name: '@experimental-api-clients-automation/requester-node-http',
+      external: ['https', 'http', 'url'],
+      dependencies: ['@experimental-api-clients-automation/client-common'],
+    },
+  ];
+}
+
+function isClientBuilt(client) {
+  // Checking existence of `dist` folder doesn't really guarantee the built files are up-to-date.
+  // However, on the CI, it's very likely.
+  // For the local environment, we simply return `false`, which will trigger unnecessary builds.
+  // We can come back here and improve this part (checking if `dist` folder exists and if it's up-to-date).
+  return process.env.CI
+    ? fs.existsSync(path.resolve('packages', client, 'dist'))
+    : false;
+}
+
+function getPackageConfigs() {
+  if (client === CLIENT_UTILS) {
+    return getUtilConfigs();
+  }
+
   if (UTILS.includes(client)) {
-    const commonOptions = {
-      input: 'index.ts',
-      formats: ['cjs-node', 'esm-node'],
-      external: [],
-      dependencies: [],
-    };
-
-    const availableUtils = [
-      // Common
-      {
-        ...commonOptions,
-        output: 'client-common',
-        package: 'client-common',
-        name: '@experimental-api-clients-automation/client-common',
-      },
-      // Browser requester
-      {
-        ...commonOptions,
-        output: 'requester-browser-xhr',
-        package: 'requester-browser-xhr',
-        name: '@experimental-api-clients-automation/requester-browser-xhr',
-        external: ['dom'],
-        dependencies: ['@experimental-api-clients-automation/client-common'],
-      },
-      // Node requester
-      {
-        ...commonOptions,
-        output: 'requester-node-http',
-        package: 'requester-node-http',
-        name: '@experimental-api-clients-automation/requester-node-http',
-        external: ['https', 'http', 'url'],
-        dependencies: ['@experimental-api-clients-automation/client-common'],
-      },
-    ];
-
-    return client === 'all'
-      ? availableUtils
-      : availableUtils.filter(
-          (availableUtil) => availableUtil.package === client
-        );
+    return getUtilConfigs().filter((config) => config.package === client);
   }
 
   const availableClients = getAvailableClients();
@@ -111,7 +120,7 @@ function initPackagesConfig() {
     throw new Error(`No clients matches '${client}'.`);
   }
 
-  return availableClients.flatMap((packageName) => {
+  const configs = availableClients.flatMap((packageName) => {
     const isAlgoliasearchClient = packageName === 'algoliasearch';
     const commonConfig = {
       package: packageName,
@@ -157,12 +166,17 @@ function initPackagesConfig() {
       },
     ];
   });
+
+  return [
+    ...getUtilConfigs().filter((config) => !isClientBuilt(config.package)),
+    ...configs,
+  ];
 }
 
-const packagesConfig = initPackagesConfig();
+const packageConfigs = getPackageConfigs();
 const rollupConfig = [];
 
-packagesConfig.forEach((packageConfig) => {
+packageConfigs.forEach((packageConfig) => {
   const clientPath = path.resolve('packages', packageConfig.package);
   const clientPackage = JSON.parse(
     fs.readFileSync(path.resolve(clientPath, 'package.json'))
