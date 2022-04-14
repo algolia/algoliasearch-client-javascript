@@ -1,0 +1,1 @@
+export type AroundRadiusAll = 'all';
