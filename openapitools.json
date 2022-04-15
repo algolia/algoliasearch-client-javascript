@@ -21,9 +21,9 @@
           "buildFile": "client-search",
           "apiName": "search",
           "capitalizedApiName": "Search",
-          "packageVersion": "0.0.5",
+          "packageVersion": "0.1.0",
           "packageName": "@experimental-api-clients-automation/client-search",
-          "utilsPackageVersion": "0.0.5"
+          "utilsPackageVersion": "0.1.0"
         }
       },
       "javascript-algoliasearch-lite": {
@@ -44,9 +44,9 @@
           "buildFile": "algoliasearch-lite",
           "apiName": "algoliasearchLite",
           "capitalizedApiName": "AlgoliasearchLite",
-          "packageVersion": "0.0.5",
+          "packageVersion": "0.1.0",
           "packageName": "@experimental-api-clients-automation/algoliasearch-lite",
-          "utilsPackageVersion": "0.0.5"
+          "utilsPackageVersion": "0.1.0"
         }
       },
       "javascript-recommend": {
@@ -67,9 +67,9 @@
           "buildFile": "recommend",
           "apiName": "recommend",
           "capitalizedApiName": "Recommend",
-          "packageVersion": "0.0.5",
+          "packageVersion": "0.1.0",
           "packageName": "@experimental-api-clients-automation/recommend",
-          "utilsPackageVersion": "0.0.5"
+          "utilsPackageVersion": "0.1.0"
         }
       },
       "javascript-personalization": {
@@ -89,13 +89,13 @@
           "buildFile": "client-personalization",
           "apiName": "personalization",
           "capitalizedApiName": "Personalization",
-          "packageVersion": "0.0.5",
+          "packageVersion": "0.1.0",
           "packageName": "@experimental-api-clients-automation/client-personalization",
           "hasRegionalHost": true,
           "isEuHost": true,
           "host": "personalization",
           "topLevelDomain": "com",
-          "utilsPackageVersion": "0.0.5"
+          "utilsPackageVersion": "0.1.0"
         }
       },
       "javascript-analytics": {
@@ -115,14 +115,14 @@
           "buildFile": "client-analytics",
           "apiName": "analytics",
           "capitalizedApiName": "Analytics",
-          "packageVersion": "0.0.5",
+          "packageVersion": "0.1.0",
           "packageName": "@experimental-api-clients-automation/client-analytics",
           "fallbackToAliasHost": true,
           "hasRegionalHost": true,
           "isDeHost": true,
           "host": "analytics",
           "topLevelDomain": "com",
-          "utilsPackageVersion": "0.0.5"
+          "utilsPackageVersion": "0.1.0"
         }
       },
       "javascript-insights": {
@@ -142,14 +142,14 @@
           "buildFile": "client-insights",
           "apiName": "insights",
           "capitalizedApiName": "Insights",
-          "packageVersion": "0.0.5",
+          "packageVersion": "0.1.0",
           "packageName": "@experimental-api-clients-automation/client-insights",
           "fallbackToAliasHost": true,
           "hasRegionalHost": true,
           "isDeHost": true,
           "host": "insights",
           "topLevelDomain": "io",
-          "utilsPackageVersion": "0.0.5"
+          "utilsPackageVersion": "0.1.0"
         }
       },
       "javascript-abtesting": {
@@ -169,14 +169,14 @@
           "buildFile": "client-abtesting",
           "apiName": "abtesting",
           "capitalizedApiName": "Abtesting",
-          "packageVersion": "0.0.5",
+          "packageVersion": "0.1.0",
           "packageName": "@experimental-api-clients-automation/client-abtesting",
           "hasRegionalHost": true,
           "fallbackToAliasHost": true,
           "isDeHost": true,
           "host": "analytics",
           "topLevelDomain": "com",
-          "utilsPackageVersion": "0.0.5"
+          "utilsPackageVersion": "0.1.0"
         }
       },
       "javascript-query-suggestions": {
@@ -196,13 +196,13 @@
           "buildFile": "client-query-suggestions",
           "apiName": "querySuggestions",
           "capitalizedApiName": "QuerySuggestions",
-          "packageVersion": "0.0.5",
+          "packageVersion": "0.1.0",
           "packageName": "@experimental-api-clients-automation/client-query-suggestions",
           "hasRegionalHost": true,
           "isEuHost": true,
           "host": "query-suggestions",
           "topLevelDomain": "com",
-          "utilsPackageVersion": "0.0.5"
+          "utilsPackageVersion": "0.1.0"
         }
       },
       "javascript-sources": {
@@ -222,13 +222,13 @@
           "buildFile": "client-sources",
           "apiName": "sources",
           "capitalizedApiName": "Sources",
-          "packageVersion": "0.0.5",
+          "packageVersion": "0.1.0",
           "packageName": "@experimental-api-clients-automation/client-sources",
           "hasRegionalHost": true,
           "isDeHost": true,
           "host": "data",
           "topLevelDomain": "com",
-          "utilsPackageVersion": "0.0.5"
+          "utilsPackageVersion": "0.1.0"
         }
       },
       "javascript-predict": {
@@ -248,10 +248,10 @@
           "buildFile": "client-predict",
           "apiName": "predict",
           "capitalizedApiName": "Predict",
-          "packageVersion": "0.0.5",
+          "packageVersion": "0.1.0",
           "packageName": "@experimental-api-clients-automation/client-predict",
           "experimentalHost": "predict-api-oslcbws3zq-ew.a.run.app",
-          "utilsPackageVersion": "0.0.5"
+          "utilsPackageVersion": "0.1.0"
         }
       },
       "java-search": {
