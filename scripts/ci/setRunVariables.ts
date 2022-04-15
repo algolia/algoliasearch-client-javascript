@@ -16,7 +16,7 @@ const JS_CLIENT_FOLDER = 'clients/algoliasearch-client-javascript';
 const VARIABLES_TO_CHECK = [
   {
     name: 'GITHUB_ACTIONS_CHANGED',
-    path: ['.github/actions', '.github/workflows'],
+    path: ['.github/actions', '.github/workflows', '.github/.cache_version'],
   },
   {
     name: 'SPECS_CHANGED',

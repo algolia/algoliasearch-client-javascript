@@ -1,6 +1,6 @@
 {
   "name": "@experimental-api-clients-automation/client-common",
-  "version": "0.1.0",
+  "version": "0.0.5",
   "description": "Common package for the Algolia JavaScript API client.",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
