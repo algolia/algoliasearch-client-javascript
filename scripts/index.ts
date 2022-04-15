@@ -151,13 +151,14 @@ buildCommand
     ) => {
       language = await promptLanguage(language, interactive);
 
-      const shouldBuildJs = language === 'javascript' || language === 'all';
-      const clientList = shouldBuildJs
-        ? [...CLIENTS_JS_UTILS, ...CLIENTS_JS]
-        : CLIENTS;
+      const clientList =
+        language === 'javascript' || language === 'all' ? CLIENTS_JS : CLIENTS;
       client = await promptClient(client, interactive, clientList);
 
-      await buildClients(language, client, Boolean(verbose));
+      await buildClients(
+        generatorList({ language, client, clientList }),
+        Boolean(verbose)
+      );
     }
   );
 
