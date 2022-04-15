@@ -239,6 +239,7 @@ paths:
                           sessionId to a technical identifier.
                       timestamp:
                         type: integer
+                        format: int64
                         description: >-
                           Time of the event expressed in milliseconds since the
                           Unix epoch.
