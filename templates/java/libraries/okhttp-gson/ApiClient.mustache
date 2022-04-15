@@ -180,12 +180,9 @@ public class ApiClient {
             String jsonStr = JSON.serialize(param);
             return jsonStr.substring(1, jsonStr.length() - 1);
         } else if (param instanceof Collection) {
-            StringBuilder b = new StringBuilder();
+            StringJoiner b = new StringJoiner(",");
             for (Object o : (Collection) param) {
-                if (b.length() > 0) {
-                    b.append(",");
-                }
-                b.append(String.valueOf(o));
+              b.add(String.valueOf(o));
             }
             return b.toString();
         } else {
@@ -206,7 +203,7 @@ public class ApiClient {
         List<Pair> params = new ArrayList<Pair>();
 
         // preconditions
-        if (name == null || name.isEmpty() || value == null || value instanceof Collection) {
+        if (name == null || name.isEmpty() || value == null) {
             return params;
         }
 

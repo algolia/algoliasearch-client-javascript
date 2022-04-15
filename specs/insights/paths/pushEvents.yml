@@ -36,6 +36,7 @@ post:
                     description: A user identifier. Depending if the user is logged-in or not, several strategies can be used from a sessionId to a technical identifier.
                   timestamp:
                     type: integer
+                    format: int64
                     description: Time of the event expressed in milliseconds since the Unix epoch.
                   queryID:
                     type: string

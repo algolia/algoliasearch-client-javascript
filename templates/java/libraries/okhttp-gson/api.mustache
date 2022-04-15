@@ -12,7 +12,7 @@ import okhttp3.Request;
 
 import com.algolia.utils.*;
 import com.algolia.utils.echo.*;
-import com.algolia.model.search.*;
+import {{modelPackage}}.*;
 import com.algolia.exceptions.*;
 import com.algolia.utils.retry.CallType;
 import com.algolia.utils.retry.StatefulHost;
@@ -35,7 +35,7 @@ public class {{classname}} extends ApiClient {
     {{#hasRegionalHost}}
     {{#fallbackToAliasHost}}
     public {{classname}}(String appId, String apiKey) {
-        this(appId, apiKey, new HttpRequester(getDefaultHosts(".")), null);
+        this(appId, apiKey, new HttpRequester(getDefaultHosts(null)), null);
     }
     
     {{/fallbackToAliasHost}}
@@ -50,11 +50,11 @@ public class {{classname}} extends ApiClient {
 
     {{^hasRegionalHost}}
     public {{classname}}(String appId, String apiKey) {
-        this(appId, apiKey, new HttpRequester(getDefaultHosts(appId)), null);
+        this(appId, apiKey, new HttpRequester(getDefaultHosts({{^experimentalHost}}appId{{/experimentalHost}})), null);
     }
 
     public {{classname}}(String appId, String apiKey, UserAgent.Segment[] userAgentSegments) {
-        this(appId, apiKey, new HttpRequester(getDefaultHosts(appId)), userAgentSegments);
+        this(appId, apiKey, new HttpRequester(getDefaultHosts({{^experimentalHost}}appId{{/experimentalHost}})), userAgentSegments);
     }
     {{/hasRegionalHost}}
 
@@ -86,7 +86,7 @@ public class {{classname}} extends ApiClient {
     {{#experimentalHost}}
     private static List<StatefulHost> getDefaultHosts() {
       List<StatefulHost> hosts = new ArrayList<StatefulHost>();
-      hosts.add(new StatefulHost("https", "{{{experimentalHost}}}",  EnumSet.of(CallType.READ, CallType.WRITE)));
+      hosts.add(new StatefulHost("{{{experimentalHost}}}", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
       return hosts;
     }
     {{/experimentalHost}}
@@ -94,10 +94,7 @@ public class {{classname}} extends ApiClient {
     {{#hasRegionalHost}}
     private static List<StatefulHost> getDefaultHosts(String region) {
       List<StatefulHost> hosts = new ArrayList<StatefulHost>();
-      hosts.add(new StatefulHost({{{host}}} + "." + region + ".algolia.{{#topLevelDomain}}{{.}}{{/topLevelDomain}}{{^topLevelDomain}}com{{/topLevelDomain}}", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
-
-      hosts.add(new StatefulHost(appId + "-1.algolianet.com", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
-
+      hosts.add(new StatefulHost("{{{host}}}." + (region == null ? "" : region + ".") + "algolia.{{#topLevelDomain}}{{.}}{{/topLevelDomain}}{{^topLevelDomain}}com{{/topLevelDomain}}", "https", EnumSet.of(CallType.READ, CallType.WRITE)));
       return hosts;
     }
     {{/hasRegionalHost}}
@@ -138,7 +135,7 @@ public class {{classname}} extends ApiClient {
           {{/x-is-custom-request}}
           {{#x-is-custom-request}}
             for (Map.Entry<String, Object> parameter : parameters.entrySet()) {
-              queryParams.addAll(this.parameterToPair(parameter.getKey(), parameter.getValue().toString()));
+              queryParams.addAll(this.parameterToPair(parameter.getKey(), parameter.getValue()));
             }
           {{/x-is-custom-request}}
         }
@@ -189,7 +186,7 @@ public class {{classname}} extends ApiClient {
     public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws AlgoliaRuntimeException {
         Call req = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
         if (req instanceof CallEcho) {
-            {{#returnType}}return new EchoResponse.{{baseName}}Echo.{{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}(((CallEcho)req).request());{{/returnType}}
+            {{#returnType}}return new EchoResponse{{baseName}}.{{#lambda.titlecase}}{{{operationId}}}{{/lambda.titlecase}}(((CallEcho)req).request());{{/returnType}}
         }
         Call call = (Call)req;
         {{#returnType}}Type returnType = new TypeToken<{{{.}}}>(){}.getType();

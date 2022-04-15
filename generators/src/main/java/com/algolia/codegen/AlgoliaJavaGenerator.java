@@ -44,12 +44,24 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       boolean isDeHost = false;
       String host = "";
       String topLevelDomain = "";
-
       for (Map<String, Object> server : servers) {
         if (!server.containsKey("url")) {
           throw new GenerationException(
             "Invalid server, does not contains 'url'"
           );
+        }
+
+        // Determine if the current URL with `region` also have an alias without
+        // variables.
+        for (Map<String, Object> otherServer : servers) {
+          if (server == otherServer) {
+            continue;
+          }
+          String otherUrl = (String) otherServer.getOrDefault("url", "");
+          if (otherUrl.replace(".{region}", "").equals(server.get("url"))) {
+            fallbackToAliasHost = true;
+            break;
+          }
         }
 
         if (!server.containsKey("variables")) {
@@ -72,12 +84,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
         hasRegionalHost = true;
 
         URL url = new URL((String) server.get("url"));
-
-        if (!fallbackToAliasHost) {
-          // Determine if the current URL with `region` also have an alias without
-          // variables.
-          fallbackToAliasHost = true;
-        }
 
         if (enums.contains("eu")) {
           isEuHost = true;
@@ -177,7 +183,17 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       ((Map<String, List<Map<String, Object>>>) bundle.get("apiInfo")).get(
           "apis"
         );
+
     for (Map<String, Object> api : apis) {
+      String clientName = (String) api.get("baseName");
+      supportingFiles.add(
+        new SupportingFile(
+          "EchoResponse.mustache",
+          "algoliasearch-core/com/algolia/utils/echo",
+          "EchoResponse" + clientName + ".java"
+        )
+      );
+
       List<CodegenOperation> operations =
         ((Map<String, List<CodegenOperation>>) api.get("operations")).get(
             "operation"
@@ -208,14 +224,6 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
   public void processOpts() {
     super.processOpts();
 
-    supportingFiles.add(
-      new SupportingFile(
-        "EchoResponse.mustache",
-        "algoliasearch-core/com/algolia/utils/echo",
-        "EchoResponse.java"
-      )
-    );
-
     // Prevent all useless file to generate
     apiTestTemplateFiles.clear();
     modelTestTemplateFiles.clear();
@@ -237,6 +245,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     if ("String".equals(datatype)) {
       // convert camelCase77String to CAMEL_CASE_77_STRING
       return value
+        .replaceAll("-", "_")
         .replaceAll("(.+?)([A-Z]|[0-9])", "$1_$2")
         .toUpperCase(Locale.ROOT);
     }

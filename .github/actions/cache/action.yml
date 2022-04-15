@@ -384,9 +384,114 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/search/**',
+            'clients/algoliasearch-client-java-2/api/SearchApi.java',
             'clients/algoliasearch-client-java-2/model/search/**',
             'specs/bundled/search.yml',
+            'templates/java/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built Java recommend client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-java-2
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-java-2/api/RecommendApi.java',
+            'clients/algoliasearch-client-java-2/model/recommend/**',
+            'specs/bundled/recommend.yml',
+            'templates/java/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built Java personalization client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-java-2
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-java-2/api/PersonalizationApi.java',
+            'clients/algoliasearch-client-java-2/model/personalization/**',
+            'specs/bundled/personalization.yml',
+            'templates/java/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built Java analytics client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-java-2
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-java-2/api/AnalyticsApi.java',
+            'clients/algoliasearch-client-java-2/model/analytics/**',
+            'specs/bundled/analytics.yml',
+            'templates/java/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built Java insights client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-java-2
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-java-2/api/Insights.java',
+            'clients/algoliasearch-client-java-2/model/insights/**',
+            'specs/bundled/insights.yml',
+            'templates/java/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built Java abtesting client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-java-2
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-java-2/api/AbtestingApi.java',
+            'clients/algoliasearch-client-java-2/model/abtesting/**',
+            'specs/bundled/abtesting.yml',
+            'templates/java/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built Java query-suggestions client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-java-2
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-java-2/api/QuerySuggestionsApi.java',
+            'clients/algoliasearch-client-java-2/model/querySuggestions/**',
+            'specs/bundled/query-suggestions.yml',
+            'templates/java/**',
+            'generators/src/**'
+          )}}
+
+    - name: Restore built Java predict client
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-java-2
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'clients/algoliasearch-client-java-2/api/PredictApi.java',
+            'clients/algoliasearch-client-java-2/model/predict/**',
+            'specs/bundled/predict.yml',
             'templates/java/**',
             'generators/src/**'
           )}}

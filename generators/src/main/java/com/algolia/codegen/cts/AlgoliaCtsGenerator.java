@@ -132,7 +132,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
       // We can put whatever we want in the bundle, and it will be accessible in the
       // template
       bundle.put("client", createClientName());
-      bundle.put("import", packageName);
+      bundle.put("import", createImportName());
       bundle.put("hasRegionalHost", hasRegionalHost);
       bundle.put("lambda", lambda);
 
@@ -250,6 +250,20 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
     }
 
     return clientName + "Api";
+  }
+
+  private String createImportName() {
+    if (!language.equals("java")) {
+      return this.packageName;
+    }
+    String[] clientParts = client.split("-");
+    // do not capitalize the first part
+    String name = clientParts[0];
+    for (int i = 1; i < clientParts.length; i++) {
+      name += Utils.capitalize(clientParts[i]);
+    }
+
+    return name;
   }
 
   /**

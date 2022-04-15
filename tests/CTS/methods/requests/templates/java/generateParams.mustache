@@ -1,11 +1,12 @@
 {{#isString}}String {{{key}}}{{suffix}} = "{{{value}}}";{{/isString}}
 {{#isInteger}}int {{{key}}}{{suffix}} = {{{value}}};{{/isInteger}}
+{{#isLong}}long {{{key}}}{{suffix}} = {{{value}}}L;{{/isLong}}
 {{#isDouble}}double {{{key}}}{{suffix}} = {{{value}}};{{/isDouble}}
 {{#isBoolean}}boolean {{{key}}}{{suffix}} = {{{value}}};{{/isBoolean}}
 {{#isEnum}}{{{objectName}}} {{{key}}}{{suffix}} = {{{objectName}}}.fromValue("{{{value}}}");{{/isEnum}}
-{{#isArray}}List {{{key}}}{{suffix}} = new ArrayList(); { {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.add({{{key}}}{{suffix}});{{/value}} }{{/isArray}}
+{{#isArray}}List{{> generateGenerics}} {{{key}}}{{suffix}} = new ArrayList<>(); { {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.add({{> maybeConvertOneOf}});{{/value}} }{{/isArray}}
 {{#isObject}}{{{objectName}}} {{{key}}}{{suffix}} = new {{{objectName}}}();
-{ {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.set{{#lambda.titlecase}}{{{key}}}{{/lambda.titlecase}}({{{key}}}{{suffix}});
-{{/value}} }{{/isObject}}{{#isFreeFormObject}}HashMap {{{key}}}{{suffix}} = new HashMap<String, Object>();
-{ {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.put("{{{key}}}", {{{key}}}{{suffix}});
+{ {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.set{{#lambda.titlecase}}{{{key}}}{{/lambda.titlecase}}({{> maybeConvertOneOf}});
+{{/value}} }{{/isObject}}{{#isFreeFormObject}}Map{{> forceMapGenerics}} {{{key}}}{{suffix}} = new HashMap<>();
+{ {{#value}}{{> generateParams}}{{parent}}{{parentSuffix}}.put("{{{key}}}", {{> maybeConvertOneOf}});
 {{/value}} }{{/isFreeFormObject}}

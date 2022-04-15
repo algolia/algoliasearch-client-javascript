@@ -1,6 +1,7 @@
 package com.algolia.methods.requests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.*;
@@ -13,8 +14,8 @@ import com.google.gson.reflect.TypeToken;
 
 import com.algolia.JSON;
 import com.algolia.Pair;
-import com.algolia.model.search.*;
-import com.algolia.search.{{client}};
+import com.algolia.model.{{import}}.*;
+import com.algolia.api.{{client}};
 import com.algolia.utils.echo.*;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -36,7 +37,7 @@ class {{client}}Tests {
         {{#parametersWithDataType}}{{> generateParams}}{{/parametersWithDataType}}
 
         EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
-            return client.{{method}}({{#parametersWithDataType}}{{#oneOfModel}}{{{classname}}}.of{{{name}}}({{{key}}}{{suffix}}){{/oneOfModel}}{{^oneOfModel}}{{{key}}}{{suffix}}{{/oneOfModel}}{{^-last}},{{/-last}}{{/parametersWithDataType}});
+            return client.{{method}}({{#parametersWithDataType}}{{> maybeConvertOneOf}}{{^-last}},{{/-last}}{{/parametersWithDataType}});
         });
 
         assertEquals(req.getPath(), "{{{request.path}}}");
@@ -49,10 +50,16 @@ class {{client}}Tests {
         {{/request.data}}
 
         {{#request.searchParams}}
-        HashMap<String, String> expectedQuery = JSON.deserialize("{{#lambda.escapequotes}}{{{request.searchParams}}}{{/lambda.escapequotes}}", new TypeToken<HashMap<String, String>>() {}.getType());
+        Map<String, String> expectedQuery = JSON.deserialize("{{#lambda.escapequotes}}{{{request.searchParams}}}{{/lambda.escapequotes}}", new TypeToken<HashMap<String, String>>() {}.getType());
         List<Pair> actualQuery = req.getQueryParams();
-        for (Pair p : actualQuery) {
-            assertEquals(expectedQuery.get(p.getName()), p.getValue());
+        for (Map.Entry<String, String> entry : expectedQuery.entrySet()) {
+            boolean found = false;
+            for (Pair p : actualQuery) {
+              if (p.getName().equals(entry.getKey()) && p.getValue().equals(entry.getValue())) {
+                found = true;
+              }
+            }
+            assertTrue(found, "Query parameter " + entry.getKey() + " not found in the actual query");
         }
         {{/request.searchParams}}
     }
