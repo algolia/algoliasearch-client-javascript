@@ -15,6 +15,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.TOKEN_RELEASE_BOT }}
+          ref: main_test
 
       - name: Setup
         id: setup
