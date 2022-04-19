@@ -6,6 +6,7 @@
   ],
   "scripts": {
     "build": "CLIENT=${0:-all} yarn rollup -c rollup.config.js",
+    "build:all": "./scripts/build_all.sh",
     "build:utils": "yarn build utils",
     "clean": "rm -rf packages/*/dist || true",
     "clean:utils": "yarn workspace @experimental-api-clients-automation/client-common clean && yarn workspace @experimental-api-clients-automation/requester-node-http clean && yarn workspace @experimental-api-clients-automation/requester-browser-xhr clean",
