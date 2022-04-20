@@ -7,19 +7,22 @@ import {
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
 import {
-  createPersonalizationApi,
+  createPersonalizationClient,
   apiClientVersion,
-} from '../src/personalizationApi';
-import type { PersonalizationApi, Region } from '../src/personalizationApi';
+} from '../src/personalizationClient';
+import type {
+  PersonalizationClient,
+  Region,
+} from '../src/personalizationClient';
 
-export * from '../src/personalizationApi';
+export * from '../src/personalizationClient';
 
-export function personalizationApi(
+export function personalizationClient(
   appId: string,
   apiKey: string,
   region: Region,
   options?: InitClientOptions
-): PersonalizationApi {
+): PersonalizationClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -32,7 +35,7 @@ export function personalizationApi(
     throw new Error('`region` is missing.');
   }
 
-  return createPersonalizationApi({
+  return createPersonalizationClient({
     appId,
     apiKey,
     region,

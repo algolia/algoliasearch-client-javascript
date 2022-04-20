@@ -5,16 +5,16 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
-import { createSearchApi } from '../src/searchApi';
-import type { SearchApi } from '../src/searchApi';
+import { createSearchClient } from '../src/searchClient';
+import type { SearchClient } from '../src/searchClient';
 
-export * from '../src/searchApi';
+export * from '../src/searchClient';
 
-export function searchApi(
+export function searchClient(
   appId: string,
   apiKey: string,
   options?: InitClientOptions
-): SearchApi {
+): SearchClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -23,7 +23,7 @@ export function searchApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createSearchApi({
+  return createSearchClient({
     appId,
     apiKey,
     timeouts: {

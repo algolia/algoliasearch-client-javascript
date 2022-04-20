@@ -6,17 +6,20 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
-import { createAbtestingApi, apiClientVersion } from '../src/abtestingApi';
-import type { AbtestingApi, Region } from '../src/abtestingApi';
+import {
+  createAbtestingClient,
+  apiClientVersion,
+} from '../src/abtestingClient';
+import type { AbtestingClient, Region } from '../src/abtestingClient';
 
-export * from '../src/abtestingApi';
+export * from '../src/abtestingClient';
 
-export function abtestingApi(
+export function abtestingClient(
   appId: string,
   apiKey: string,
   region?: Region,
   options?: InitClientOptions
-): AbtestingApi {
+): AbtestingClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -25,7 +28,7 @@ export function abtestingApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createAbtestingApi({
+  return createAbtestingClient({
     appId,
     apiKey,
     region,

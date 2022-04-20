@@ -5,17 +5,20 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
-import { createQuerySuggestionsApi } from '../src/querySuggestionsApi';
-import type { QuerySuggestionsApi, Region } from '../src/querySuggestionsApi';
+import { createQuerySuggestionsClient } from '../src/querySuggestionsClient';
+import type {
+  QuerySuggestionsClient,
+  Region,
+} from '../src/querySuggestionsClient';
 
-export * from '../src/querySuggestionsApi';
+export * from '../src/querySuggestionsClient';
 
-export function querySuggestionsApi(
+export function querySuggestionsClient(
   appId: string,
   apiKey: string,
   region: Region,
   options?: InitClientOptions
-): QuerySuggestionsApi {
+): QuerySuggestionsClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -28,7 +31,7 @@ export function querySuggestionsApi(
     throw new Error('`region` is missing.');
   }
 
-  return createQuerySuggestionsApi({
+  return createQuerySuggestionsClient({
     appId,
     apiKey,
     region,

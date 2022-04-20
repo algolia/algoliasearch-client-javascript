@@ -5,17 +5,17 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
-import { createSourcesApi } from '../src/sourcesApi';
-import type { SourcesApi, Region } from '../src/sourcesApi';
+import { createSourcesClient } from '../src/sourcesClient';
+import type { SourcesClient, Region } from '../src/sourcesClient';
 
-export * from '../src/sourcesApi';
+export * from '../src/sourcesClient';
 
-export function sourcesApi(
+export function sourcesClient(
   appId: string,
   apiKey: string,
   region: Region,
   options?: InitClientOptions
-): SourcesApi {
+): SourcesClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -28,7 +28,7 @@ export function sourcesApi(
     throw new Error('`region` is missing.');
   }
 
-  return createSourcesApi({
+  return createSourcesClient({
     appId,
     apiKey,
     region,

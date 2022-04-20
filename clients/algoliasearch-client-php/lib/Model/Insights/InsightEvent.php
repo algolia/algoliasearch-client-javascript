@@ -39,7 +39,7 @@ class InsightEvent extends \Algolia\AlgoliaSearch\Model\AbstractModel implements
         'eventName' => null,
         'index' => null,
         'userToken' => null,
-        'timestamp' => null,
+        'timestamp' => 'int64',
         'queryID' => null,
         'objectIDs' => null,
         'filters' => null,

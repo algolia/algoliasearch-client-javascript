@@ -6,17 +6,17 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
-import { createSourcesApi, apiClientVersion } from '../src/sourcesApi';
-import type { SourcesApi, Region } from '../src/sourcesApi';
+import { createSourcesClient, apiClientVersion } from '../src/sourcesClient';
+import type { SourcesClient, Region } from '../src/sourcesClient';
 
-export * from '../src/sourcesApi';
+export * from '../src/sourcesClient';
 
-export function sourcesApi(
+export function sourcesClient(
   appId: string,
   apiKey: string,
   region: Region,
   options?: InitClientOptions
-): SourcesApi {
+): SourcesClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -29,7 +29,7 @@ export function sourcesApi(
     throw new Error('`region` is missing.');
   }
 
-  return createSourcesApi({
+  return createSourcesClient({
     appId,
     apiKey,
     region,

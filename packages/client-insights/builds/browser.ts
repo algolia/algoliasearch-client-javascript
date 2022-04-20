@@ -6,17 +6,17 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
-import { createInsightsApi, apiClientVersion } from '../src/insightsApi';
-import type { InsightsApi, Region } from '../src/insightsApi';
+import { createInsightsClient, apiClientVersion } from '../src/insightsClient';
+import type { InsightsClient, Region } from '../src/insightsClient';
 
-export * from '../src/insightsApi';
+export * from '../src/insightsClient';
 
-export function insightsApi(
+export function insightsClient(
   appId: string,
   apiKey: string,
   region?: Region,
   options?: InitClientOptions
-): InsightsApi {
+): InsightsClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -25,7 +25,7 @@ export function insightsApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createInsightsApi({
+  return createInsightsClient({
     appId,
     apiKey,
     region,

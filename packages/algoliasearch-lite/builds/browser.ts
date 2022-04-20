@@ -7,18 +7,18 @@ import {
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
 import {
-  createAlgoliasearchLiteApi,
+  createAlgoliasearchLiteClient,
   apiClientVersion,
-} from '../src/algoliasearchLiteApi';
-import type { AlgoliasearchLiteApi } from '../src/algoliasearchLiteApi';
+} from '../src/algoliasearchLiteClient';
+import type { AlgoliasearchLiteClient } from '../src/algoliasearchLiteClient';
 
-export * from '../src/algoliasearchLiteApi';
+export * from '../src/algoliasearchLiteClient';
 
-export function algoliasearchLiteApi(
+export function algoliasearchLiteClient(
   appId: string,
   apiKey: string,
   options?: InitClientOptions
-): AlgoliasearchLiteApi {
+): AlgoliasearchLiteClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -27,7 +27,7 @@ export function algoliasearchLiteApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createAlgoliasearchLiteApi({
+  return createAlgoliasearchLiteClient({
     appId,
     apiKey,
     timeouts: {

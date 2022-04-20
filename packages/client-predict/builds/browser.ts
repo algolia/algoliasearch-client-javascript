@@ -6,16 +6,16 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
-import { createPredictApi, apiClientVersion } from '../src/predictApi';
-import type { PredictApi } from '../src/predictApi';
+import { createPredictClient, apiClientVersion } from '../src/predictClient';
+import type { PredictClient } from '../src/predictClient';
 
-export * from '../src/predictApi';
+export * from '../src/predictClient';
 
-export function predictApi(
+export function predictClient(
   appId: string,
   apiKey: string,
   options?: InitClientOptions
-): PredictApi {
+): PredictClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -24,7 +24,7 @@ export function predictApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createPredictApi({
+  return createPredictClient({
     appId,
     apiKey,
     timeouts: {

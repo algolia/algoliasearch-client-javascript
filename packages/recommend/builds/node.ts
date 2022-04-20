@@ -5,16 +5,16 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
-import { createRecommendApi } from '../src/recommendApi';
-import type { RecommendApi } from '../src/recommendApi';
+import { createRecommendClient } from '../src/recommendClient';
+import type { RecommendClient } from '../src/recommendClient';
 
-export * from '../src/recommendApi';
+export * from '../src/recommendClient';
 
-export function recommendApi(
+export function recommendClient(
   appId: string,
   apiKey: string,
   options?: InitClientOptions
-): RecommendApi {
+): RecommendClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -23,7 +23,7 @@ export function recommendApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createRecommendApi({
+  return createRecommendClient({
     appId,
     apiKey,
     timeouts: {

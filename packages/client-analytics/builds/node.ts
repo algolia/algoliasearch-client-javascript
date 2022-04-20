@@ -5,17 +5,17 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
-import { createAnalyticsApi } from '../src/analyticsApi';
-import type { AnalyticsApi, Region } from '../src/analyticsApi';
+import { createAnalyticsClient } from '../src/analyticsClient';
+import type { AnalyticsClient, Region } from '../src/analyticsClient';
 
-export * from '../src/analyticsApi';
+export * from '../src/analyticsClient';
 
-export function analyticsApi(
+export function analyticsClient(
   appId: string,
   apiKey: string,
   region?: Region,
   options?: InitClientOptions
-): AnalyticsApi {
+): AnalyticsClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -24,7 +24,7 @@ export function analyticsApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createAnalyticsApi({
+  return createAnalyticsClient({
     appId,
     apiKey,
     region,

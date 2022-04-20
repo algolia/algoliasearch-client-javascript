@@ -5,16 +5,16 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
-import { createAlgoliasearchLiteApi } from '../src/algoliasearchLiteApi';
-import type { AlgoliasearchLiteApi } from '../src/algoliasearchLiteApi';
+import { createAlgoliasearchLiteClient } from '../src/algoliasearchLiteClient';
+import type { AlgoliasearchLiteClient } from '../src/algoliasearchLiteClient';
 
-export * from '../src/algoliasearchLiteApi';
+export * from '../src/algoliasearchLiteClient';
 
-export function algoliasearchLiteApi(
+export function algoliasearchLiteClient(
   appId: string,
   apiKey: string,
   options?: InitClientOptions
-): AlgoliasearchLiteApi {
+): AlgoliasearchLiteClient {
   if (!appId) {
     throw new Error('`appId` is missing.');
   }
@@ -23,7 +23,7 @@ export function algoliasearchLiteApi(
     throw new Error('`apiKey` is missing.');
   }
 
-  return createAlgoliasearchLiteApi({
+  return createAlgoliasearchLiteClient({
     appId,
     apiKey,
     timeouts: {
