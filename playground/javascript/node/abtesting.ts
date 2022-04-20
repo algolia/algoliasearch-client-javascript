@@ -1,4 +1,4 @@
-import { abtestingApi } from '@experimental-api-clients-automation/client-abtesting';
+import { abtestingClient } from '@experimental-api-clients-automation/client-abtesting';
 import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
@@ -9,7 +9,7 @@ const apiKey =
   process.env.ALGOLIA_ANALYTICS_KEY || '**** ANALYTICS_API_KEY *****';
 
 // Init client with appId and apiKey
-const client = abtestingApi(appId, apiKey, 'de');
+const client = abtestingClient(appId, apiKey, 'de');
 
 async function testABTesting() {
   try {

@@ -6,6 +6,9 @@ import org.openapitools.codegen.CodegenOperation;
 
 public class Utils {
 
+  /** The suffix of our client names. */
+  public static final String API_SUFFIX = "Client";
+
   public static final Set<String> CUSTOM_METHOD = Sets.newHashSet(
     "del",
     "get",

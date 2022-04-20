@@ -1,18 +1,15 @@
-import { searchApi } from '@experimental-api-clients-automation/client-search';
+import { searchClient } from '@experimental-api-clients-automation/client-search';
 
 import './app.css';
 
-const searchClient = searchApi(
-  'QPBQ67WNIG',
-  'b590ae1153bf574215ca1605c19eb1fe'
-);
+const client = searchClient('QPBQ67WNIG', 'b590ae1153bf574215ca1605c19eb1fe');
 
-searchClient.addUserAgent('Browser playground', '0.0.1');
+client.addUserAgent('Browser playground', '0.0.1');
 
 const searchButton = document.querySelector('#search');
 
 searchButton?.addEventListener('click', async () => {
-  const results = await searchClient.search({
+  const results = await client.search({
     indexName: 'docsearch',
     searchParams: {
       query: 'docsearch',

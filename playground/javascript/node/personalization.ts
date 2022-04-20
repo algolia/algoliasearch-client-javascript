@@ -1,4 +1,4 @@
-import { personalizationApi } from '@experimental-api-clients-automation/client-personalization';
+import { personalizationClient } from '@experimental-api-clients-automation/client-personalization';
 import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
@@ -9,7 +9,7 @@ const apiKey =
   process.env.ALGOLIA_RECOMMENDATION_KEY || '**** RECOMMENDATION_API_KEY *****';
 
 // Init client with appId and apiKey
-const client = personalizationApi(appId, apiKey, 'eu');
+const client = personalizationClient(appId, apiKey, 'eu');
 
 async function testPersonalization() {
   try {

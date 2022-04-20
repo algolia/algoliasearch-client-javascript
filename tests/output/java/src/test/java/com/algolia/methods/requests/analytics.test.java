@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.algolia.JSON;
 import com.algolia.Pair;
-import com.algolia.api.AnalyticsApi;
+import com.algolia.api.AnalyticsClient;
 import com.algolia.model.analytics.*;
 import com.algolia.utils.echo.*;
 import com.google.gson.reflect.TypeToken;
@@ -19,13 +19,13 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AnalyticsApiTests {
+class AnalyticsClientTests {
 
-  private AnalyticsApi client;
+  private AnalyticsClient client;
 
   @BeforeAll
   void init() {
-    client = new AnalyticsApi("appId", "apiKey", new EchoRequester());
+    client = new AnalyticsClient("appId", "apiKey", new EchoRequester());
   }
 
   @Test

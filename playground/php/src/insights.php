@@ -2,9 +2,9 @@
 
 require '../../../clients/algoliasearch-client-php/vendor/autoload.php';
 
-use Algolia\AlgoliaSearch\Api\InsightsApi;
+use Algolia\AlgoliaSearch\Api\InsightsClient;
 
-$client = InsightsApi::create(getenv('ALGOLIA_APPLICATION_ID'), getenv('ALGOLIA_ADMIN_KEY'));
+$client = InsightsClient::create(getenv('ALGOLIA_APPLICATION_ID'), getenv('ALGOLIA_ADMIN_KEY'));
 $indexName = getenv('SEARCH_INDEX');
 
 $twoDaysAgoMs = (time() - (2 * 24 * 60 * 60)) * 1000;

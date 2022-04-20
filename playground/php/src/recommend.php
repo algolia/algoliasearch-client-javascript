@@ -2,9 +2,9 @@
 
 require '../../../clients/algoliasearch-client-php/vendor/autoload.php';
 
-use Algolia\AlgoliaSearch\Api\RecommendApi;
+use Algolia\AlgoliaSearch\Api\RecommendClient;
 
-$client = RecommendApi::create(getenv('ALGOLIA_APPLICATION_ID'), getenv('ALGOLIA_ADMIN_KEY'));
+$client = RecommendClient::create(getenv('ALGOLIA_APPLICATION_ID'), getenv('ALGOLIA_ADMIN_KEY'));
 $indexName = getenv('SEARCH_INDEX');
 $query = getenv('SEARCH_QUERY');
 

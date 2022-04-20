@@ -1,4 +1,4 @@
-import { searchApi } from '@experimental-api-clients-automation/client-search';
+import { searchClient } from '@experimental-api-clients-automation/client-search';
 import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
@@ -11,7 +11,7 @@ const searchIndex = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 
 // Init client with appId and apiKey
-const client = searchApi(appId, apiKey);
+const client = searchClient(appId, apiKey);
 
 client.addUserAgent('Node playground', '0.0.1');
 

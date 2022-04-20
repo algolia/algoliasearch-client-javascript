@@ -77,7 +77,7 @@ async function getClientMatrix({
       const clientName = createClientName(client, 'php');
 
       matchedGenerator.config = `${clientName}Config`;
-      matchedGenerator.api = `${clientName}Api`;
+      matchedGenerator.api = `${clientName}Client`;
       matchedGenerator.capitalizedName = clientName;
     }
 

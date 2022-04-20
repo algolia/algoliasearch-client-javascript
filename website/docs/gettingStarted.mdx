@@ -57,15 +57,15 @@ const personalizationCilent = client.initPersonalization(
 ```
 
 ```js
-import { searchApi } from '@experimental-api-clients-automation/client-search';
+import { searchClient } from '@experimental-api-clients-automation/client-search';
 
-const client = searchApi(appId, apiKey);
+const client = searchClient(appId, apiKey);
 ```
 
 It is possible to customize the client by passing optional parameters:
 
 ```js
-const client = searchApi(appId, apiKey, {
+const client = searchClient(appId, apiKey, {
   requester: customRequester(),
   hosts: [
     {
@@ -91,7 +91,7 @@ console.log('Search result', res.hits);
 Or with the `personalization` client
 
 ```js
-const res = await personalizationCilent.getUserTokenProfile({
+const res = await personalizationClient.getUserTokenProfile({
   userToken: 'token',
 });
 

@@ -131,7 +131,7 @@ public class AlgoliaCtsGenerator extends DefaultCodegen {
 
       // We can put whatever we want in the bundle, and it will be accessible in the
       // template
-      bundle.put("client", Utils.createClientName(client, language) + "Api");
+      bundle.put("client", Utils.createClientName(client, language) + "Client");
       bundle.put("import", createImportName());
       bundle.put("hasRegionalHost", hasRegionalHost);
       bundle.put("lambda", lambda);

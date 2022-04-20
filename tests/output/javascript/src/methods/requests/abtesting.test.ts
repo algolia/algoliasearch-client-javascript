@@ -1,11 +1,11 @@
-import { abtestingApi } from '@experimental-api-clients-automation/client-abtesting';
+import { abtestingClient } from '@experimental-api-clients-automation/client-abtesting';
 import type { EchoResponse } from '@experimental-api-clients-automation/client-common';
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = abtestingApi(appId, apiKey, 'us', {
+const client = abtestingClient(appId, apiKey, 'us', {
   requester: echoRequester(),
 });
 

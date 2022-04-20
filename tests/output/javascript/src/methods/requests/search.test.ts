@@ -1,11 +1,11 @@
 import type { EchoResponse } from '@experimental-api-clients-automation/client-common';
-import { searchApi } from '@experimental-api-clients-automation/client-search';
+import { searchClient } from '@experimental-api-clients-automation/client-search';
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = searchApi(appId, apiKey, { requester: echoRequester() });
+const client = searchClient(appId, apiKey, { requester: echoRequester() });
 
 describe('addApiKey', () => {
   test('addApiKey', async () => {

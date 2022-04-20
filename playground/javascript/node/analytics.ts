@@ -1,4 +1,4 @@
-import { analyticsApi } from '@experimental-api-clients-automation/client-analytics';
+import { analyticsClient } from '@experimental-api-clients-automation/client-analytics';
 import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
@@ -11,7 +11,7 @@ const apiKey =
 const analyticsIndex = process.env.ANALYTICS_INDEX || 'test_index';
 
 // Init client with appId and apiKey
-const client = analyticsApi(appId, apiKey, 'de');
+const client = analyticsClient(appId, apiKey, 'de');
 
 async function testAnalytics() {
   try {

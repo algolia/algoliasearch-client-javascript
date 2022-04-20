@@ -1,4 +1,4 @@
-import { querySuggestionsApi } from '@experimental-api-clients-automation/client-query-suggestions';
+import { querySuggestionsClient } from '@experimental-api-clients-automation/client-query-suggestions';
 import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
@@ -10,7 +10,7 @@ const apiKey =
   '**** QUERY_SUGGESTIONS_KEY *****';
 
 // Init client with appId and apiKey
-const client = querySuggestionsApi(appId, apiKey, 'us');
+const client = querySuggestionsClient(appId, apiKey, 'us');
 
 async function testQuerySuggestions() {
   try {

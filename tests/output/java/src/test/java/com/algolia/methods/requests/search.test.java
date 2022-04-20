@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.algolia.JSON;
 import com.algolia.Pair;
-import com.algolia.api.SearchApi;
+import com.algolia.api.SearchClient;
 import com.algolia.model.search.*;
 import com.algolia.utils.echo.*;
 import com.google.gson.reflect.TypeToken;
@@ -19,13 +19,13 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class SearchApiTests {
+class SearchClientTests {
 
-  private SearchApi client;
+  private SearchClient client;
 
   @BeforeAll
   void init() {
-    client = new SearchApi("appId", "apiKey", new EchoRequester());
+    client = new SearchClient("appId", "apiKey", new EchoRequester());
   }
 
   @Test

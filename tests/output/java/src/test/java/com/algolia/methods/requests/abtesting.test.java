@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.algolia.JSON;
 import com.algolia.Pair;
-import com.algolia.api.AbtestingApi;
+import com.algolia.api.AbtestingClient;
 import com.algolia.model.abtesting.*;
 import com.algolia.utils.echo.*;
 import com.google.gson.reflect.TypeToken;
@@ -19,13 +19,13 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class AbtestingApiTests {
+class AbtestingClientTests {
 
-  private AbtestingApi client;
+  private AbtestingClient client;
 
   @BeforeAll
   void init() {
-    client = new AbtestingApi("appId", "apiKey", new EchoRequester());
+    client = new AbtestingClient("appId", "apiKey", new EchoRequester());
   }
 
   @Test

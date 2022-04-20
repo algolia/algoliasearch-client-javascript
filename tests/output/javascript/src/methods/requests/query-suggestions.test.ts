@@ -1,11 +1,11 @@
 import type { EchoResponse } from '@experimental-api-clients-automation/client-common';
-import { querySuggestionsApi } from '@experimental-api-clients-automation/client-query-suggestions';
+import { querySuggestionsClient } from '@experimental-api-clients-automation/client-query-suggestions';
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = querySuggestionsApi(appId, apiKey, 'us', {
+const client = querySuggestionsClient(appId, apiKey, 'us', {
   requester: echoRequester(),
 });
 

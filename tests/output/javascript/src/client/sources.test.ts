@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable prefer-const */
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
-import { sourcesApi } from '@experimental-api-clients-automation/client-sources';
+import { sourcesClient } from '@experimental-api-clients-automation/client-sources';
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient() {
-  return sourcesApi(appId, apiKey, 'us', { requester: echoRequester() });
+  return sourcesClient(appId, apiKey, 'us', { requester: echoRequester() });
 }
 
 describe('api', () => {
@@ -83,7 +83,7 @@ describe('parameters', () => {
     let actual;
     await expect(
       new Promise((resolve, reject) => {
-        $client = sourcesApi('my-app-id', 'my-api-key', '', {
+        $client = sourcesClient('my-app-id', 'my-api-key', '', {
           requester: echoRequester(),
         });
 
@@ -105,7 +105,7 @@ describe('parameters', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        $client = sourcesApi('my-app-id', 'my-api-key', 'us', {
+        $client = sourcesClient('my-app-id', 'my-api-key', 'us', {
           requester: echoRequester(),
         });
 

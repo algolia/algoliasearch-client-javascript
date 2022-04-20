@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable prefer-const */
 // @ts-nocheck Failing tests will have type errors, but we cannot suppress them even with @ts-expect-error because it doesn't work for a block of lines.
-import { querySuggestionsApi } from '@experimental-api-clients-automation/client-query-suggestions';
+import { querySuggestionsClient } from '@experimental-api-clients-automation/client-query-suggestions';
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = 'test-app-id';
 const apiKey = 'test-api-key';
 
 function createClient() {
-  return querySuggestionsApi(appId, apiKey, 'us', {
+  return querySuggestionsClient(appId, apiKey, 'us', {
     requester: echoRequester(),
   });
 }
@@ -56,7 +56,7 @@ describe('parameters', () => {
     let actual;
     await expect(
       new Promise((resolve, reject) => {
-        $client = querySuggestionsApi('my-app-id', 'my-api-key', '', {
+        $client = querySuggestionsClient('my-app-id', 'my-api-key', '', {
           requester: echoRequester(),
         });
 
@@ -78,7 +78,7 @@ describe('parameters', () => {
 
     await expect(
       new Promise((resolve, reject) => {
-        $client = querySuggestionsApi('my-app-id', 'my-api-key', 'us', {
+        $client = querySuggestionsClient('my-app-id', 'my-api-key', 'us', {
           requester: echoRequester(),
         });
 

@@ -384,7 +384,7 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/SearchApi.java',
+            'clients/algoliasearch-client-java-2/api/SearchClient.java',
             'clients/algoliasearch-client-java-2/model/search/**',
             'specs/bundled/search.yml',
             'templates/java/**',
@@ -399,7 +399,7 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/RecommendApi.java',
+            'clients/algoliasearch-client-java-2/api/RecommendClient.java',
             'clients/algoliasearch-client-java-2/model/recommend/**',
             'specs/bundled/recommend.yml',
             'templates/java/**',
@@ -414,7 +414,7 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/PersonalizationApi.java',
+            'clients/algoliasearch-client-java-2/api/PersonalizationClient.java',
             'clients/algoliasearch-client-java-2/model/personalization/**',
             'specs/bundled/personalization.yml',
             'templates/java/**',
@@ -429,7 +429,7 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/AnalyticsApi.java',
+            'clients/algoliasearch-client-java-2/api/AnalyticsClient.java',
             'clients/algoliasearch-client-java-2/model/analytics/**',
             'specs/bundled/analytics.yml',
             'templates/java/**',
@@ -459,7 +459,7 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/AbtestingApi.java',
+            'clients/algoliasearch-client-java-2/api/AbtestingClient.java',
             'clients/algoliasearch-client-java-2/model/abtesting/**',
             'specs/bundled/abtesting.yml',
             'templates/java/**',
@@ -474,7 +474,7 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/QuerySuggestionsApi.java',
+            'clients/algoliasearch-client-java-2/api/QuerySuggestionsClient.java',
             'clients/algoliasearch-client-java-2/model/querySuggestions/**',
             'specs/bundled/query-suggestions.yml',
             'templates/java/**',
@@ -489,7 +489,7 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/PredictApi.java',
+            'clients/algoliasearch-client-java-2/api/PredictClient.java',
             'clients/algoliasearch-client-java-2/model/predict/**',
             'specs/bundled/predict.yml',
             'templates/java/**',
@@ -502,12 +502,12 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-php/lib/Api/SearchApi.php
+          clients/algoliasearch-client-php/lib/Api/SearchClient.php
           clients/algoliasearch-client-php/lib/Model/Search/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/SearchApi.php',
+            'clients/algoliasearch-client-php/lib/Api/SearchClient.php',
             'clients/algoliasearch-client-php/lib/Configuration/SearchConfig.php',
             'clients/algoliasearch-client-php/lib/Model/Search/**',
             'specs/bundled/search.yml',
@@ -520,12 +520,12 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-php/lib/Api/RecommendApi.php
+          clients/algoliasearch-client-php/lib/Api/RecommendClient.php
           clients/algoliasearch-client-php/lib/Model/Recommend/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/RecommendApi.php',
+            'clients/algoliasearch-client-php/lib/Api/RecommendClient.php',
             'clients/algoliasearch-client-php/lib/Configuration/RecommendConfig.php',
             'clients/algoliasearch-client-php/lib/Model/Recommend/**',
             'specs/bundled/recommend.yml',
@@ -538,12 +538,12 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-php/lib/Api/PersonalizationApi.php
+          clients/algoliasearch-client-php/lib/Api/PersonalizationClient.php
           clients/algoliasearch-client-php/lib/Model/Personalization/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/PersonalizationApi.php',
+            'clients/algoliasearch-client-php/lib/Api/PersonalizationClient.php',
             'clients/algoliasearch-client-php/lib/Configuration/PersonalizationConfig.php',
             'clients/algoliasearch-client-php/lib/Model/Personalization/**',
             'specs/bundled/personalization.yml',
@@ -556,12 +556,12 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-php/lib/Api/AnalyticsApi.php
+          clients/algoliasearch-client-php/lib/Api/AnalyticsClient.php
           clients/algoliasearch-client-php/lib/Model/Analytics/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/AnalyticsApi.php',
+            'clients/algoliasearch-client-php/lib/Api/AnalyticsClient.php',
             'clients/algoliasearch-client-php/lib/Configuration/AnalyticsConfig.php',
             'clients/algoliasearch-client-php/lib/Model/Analytics/**',
             'specs/bundled/analytics.yml',
@@ -574,12 +574,12 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-php/lib/Api/InsightsApi.php
+          clients/algoliasearch-client-php/lib/Api/InsightsClient.php
           clients/algoliasearch-client-php/lib/Model/Insights/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/InsightsApi.php',
+            'clients/algoliasearch-client-php/lib/Api/InsightsClient.php',
             'clients/algoliasearch-client-php/lib/Configuration/InsightsConfig.php',
             'clients/algoliasearch-client-php/lib/Model/Insights/**',
             'specs/bundled/insights.yml',
@@ -592,12 +592,12 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-php/lib/Api/AbtestingApi.php
+          clients/algoliasearch-client-php/lib/Api/AbtestingClient.php
           clients/algoliasearch-client-php/lib/Model/Abtesting/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/AbtestingApi.php',
+            'clients/algoliasearch-client-php/lib/Api/AbtestingClient.php',
             'clients/algoliasearch-client-php/lib/Configuration/AbtestingConfig.php',
             'clients/algoliasearch-client-php/lib/Model/Abtesting/**',
             'specs/bundled/abtesting.yml',
@@ -610,12 +610,12 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          clients/algoliasearch-client-php/lib/Api/QuerySuggestionsApi.php
+          clients/algoliasearch-client-php/lib/Api/QuerySuggestionsClient.php
           clients/algoliasearch-client-php/lib/Model/QuerySuggestions/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/QuerySuggestionsApi.php',
+            'clients/algoliasearch-client-php/lib/Api/QuerySuggestionsClient.php',
             'clients/algoliasearch-client-php/lib/Configuration/QuerySuggestionsConfig.php',
             'clients/algoliasearch-client-php/lib/Model/QuerySuggestions/**',
             'specs/bundled/query-suggestions.yml',

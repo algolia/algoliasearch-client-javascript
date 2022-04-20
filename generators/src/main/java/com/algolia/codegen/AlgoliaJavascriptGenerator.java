@@ -12,6 +12,8 @@ import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
 
 public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
+  private String CLIENT;
+
   @Override
   public String getName() {
     return "algolia-javascript";
@@ -53,12 +55,12 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
 
   /** Set default generator options */
   private void setDefaultGeneratorOptions(Map<String, Object> client) {
-    String spec = (String) client.get("pathPrefix");
-    String apiName = spec + "Api";
+    CLIENT = (String) client.get("pathPrefix");
+    String apiName = CLIENT + Utils.API_SUFFIX;
 
     additionalProperties.put("apiName", apiName);
     additionalProperties.put("capitalizedApiName", Utils.capitalize(apiName));
-    additionalProperties.put("userAgent", Utils.capitalize(spec));
+    additionalProperties.put("userAgent", Utils.capitalize(CLIENT));
   }
 
   /** Provides an opportunity to inspect and modify operation data before the code is generated. */
@@ -78,6 +80,37 @@ public class AlgoliaJavascriptGenerator extends TypeScriptNodeClientCodegen {
     setDefaultGeneratorOptions(client);
 
     return results;
+  }
+
+  /**
+   * The `apiSuffix` option is not supported on the TypeScript client, so we override the names
+   * method to use it with our suffix.
+   */
+
+  /** The `apiName` is capitalized. */
+  @Override
+  public String toApiName(String name) {
+    if (name.length() == 0) {
+      return "Default" + Utils.API_SUFFIX;
+    }
+
+    return Utils.capitalize(CLIENT + Utils.API_SUFFIX);
+  }
+
+  /** The `apiFileName` is in camelCase. */
+  @Override
+  public String toApiFilename(String name) {
+    if (name.length() == 0) {
+      return "default" + Utils.API_SUFFIX;
+    }
+
+    return CLIENT + Utils.API_SUFFIX;
+  }
+
+  /** The `apiFileName` is in camelCase. */
+  @Override
+  public String apiFilename(String templateName, String tag) {
+    return super.apiFilename(templateName, toApiFilename(CLIENT));
   }
 
   @Override

@@ -1,8 +1,8 @@
 import type {
-  AnalyticsApi,
+  AnalyticsClient,
   Region as AnalyticsRegion,
-} from '@experimental-api-clients-automation/client-analytics/src/analyticsApi';
-import { createAnalyticsApi } from '@experimental-api-clients-automation/client-analytics/src/analyticsApi';
+} from '@experimental-api-clients-automation/client-analytics/src/analyticsClient';
+import { createAnalyticsClient } from '@experimental-api-clients-automation/client-analytics/src/analyticsClient';
 import type {
   CreateClientOptions,
   Host,
@@ -13,11 +13,11 @@ import {
   createNullCache,
 } from '@experimental-api-clients-automation/client-common';
 import type {
-  PersonalizationApi,
+  PersonalizationClient,
   Region as PersonalizationRegion,
-} from '@experimental-api-clients-automation/client-personalization/src/personalizationApi';
-import { createPersonalizationApi } from '@experimental-api-clients-automation/client-personalization/src/personalizationApi';
-import { createSearchApi } from '@experimental-api-clients-automation/client-search/src/searchApi';
+} from '@experimental-api-clients-automation/client-personalization/src/personalizationClient';
+import { createPersonalizationClient } from '@experimental-api-clients-automation/client-personalization/src/personalizationClient';
+import { createSearchClient } from '@experimental-api-clients-automation/client-search/src/searchClient';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -53,8 +53,8 @@ export function algoliasearch(
     analyticsApiKey: string,
     region?: AnalyticsRegion,
     analyticsOptions?: { requester?: Requester; hosts?: Host[] }
-  ): AnalyticsApi {
-    return createAnalyticsApi({
+  ): AnalyticsClient {
+    return createAnalyticsClient({
       appId: analyticsAppId,
       apiKey: analyticsApiKey,
       region,
@@ -68,12 +68,12 @@ export function algoliasearch(
     personalizationApiKey: string,
     region: PersonalizationRegion,
     personalizationOptions?: { requester?: Requester; hosts?: Host[] }
-  ): PersonalizationApi {
+  ): PersonalizationClient {
     if (!region) {
       throw new Error('`region` is missing.');
     }
 
-    return createPersonalizationApi({
+    return createPersonalizationClient({
       appId: personalizationAppId,
       apiKey: personalizationApiKey,
       region,
@@ -83,7 +83,7 @@ export function algoliasearch(
   }
 
   return {
-    ...createSearchApi({ appId, apiKey, ...commonOptions }),
+    ...createSearchClient({ appId, apiKey, ...commonOptions }),
     initAnalytics,
     initPersonalization,
   };

@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.algolia.JSON;
 import com.algolia.Pair;
-import com.algolia.api.QuerySuggestionsApi;
+import com.algolia.api.QuerySuggestionsClient;
 import com.algolia.model.querySuggestions.*;
 import com.algolia.utils.echo.*;
 import com.google.gson.reflect.TypeToken;
@@ -19,13 +19,13 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class QuerySuggestionsApiTests {
+class QuerySuggestionsClientTests {
 
-  private QuerySuggestionsApi client;
+  private QuerySuggestionsClient client;
 
   @BeforeAll
   void init() {
-    client = new QuerySuggestionsApi("appId", "apiKey", new EchoRequester());
+    client = new QuerySuggestionsClient("appId", "apiKey", new EchoRequester());
   }
 
   @Test

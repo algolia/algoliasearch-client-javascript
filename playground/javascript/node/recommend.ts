@@ -1,4 +1,4 @@
-import { recommendApi } from '@experimental-api-clients-automation/recommend';
+import { recommendClient } from '@experimental-api-clients-automation/recommend';
 import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
@@ -11,7 +11,7 @@ const searchIndex = process.env.SEARCH_INDEX || 'test_index';
 const searchQuery = process.env.SEARCH_QUERY || 'test_query';
 
 // Init client with appId and apiKey
-const client = recommendApi(appId, apiKey);
+const client = recommendClient(appId, apiKey);
 
 async function testRecommend() {
   try {

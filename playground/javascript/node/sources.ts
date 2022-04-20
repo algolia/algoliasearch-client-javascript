@@ -1,4 +1,4 @@
-import { sourcesApi } from '@experimental-api-clients-automation/client-sources';
+import { sourcesClient } from '@experimental-api-clients-automation/client-sources';
 import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
@@ -8,7 +8,7 @@ const appId = process.env.ALGOLIA_APPLICATION_ID || '**** APP_ID *****';
 const apiKey = process.env.ALGOLIA_ADMIN_KEY || '**** ALGOLIA_ADMIN_KEY *****';
 
 // Init client with appId and apiKey
-const client = sourcesApi(appId, apiKey, 'us');
+const client = sourcesClient(appId, apiKey, 'us');
 
 async function testSource() {
   try {

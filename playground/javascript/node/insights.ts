@@ -1,4 +1,4 @@
-import { insightsApi } from '@experimental-api-clients-automation/client-insights';
+import { insightsClient } from '@experimental-api-clients-automation/client-insights';
 import { ApiError } from '@experimental-api-clients-automation/client-common';
 import dotenv from 'dotenv';
 
@@ -9,7 +9,7 @@ const apiKey =
   process.env.ALGOLIA_INSIGHTS_API_KEY || '**** INSIGHTS_API_KEY *****';
 
 // Init client with appId and apiKey
-const client = insightsApi(appId, apiKey);
+const client = insightsClient(appId, apiKey);
 
 async function testInsights() {
   try {

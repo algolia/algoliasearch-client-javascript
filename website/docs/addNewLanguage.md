@@ -53,7 +53,7 @@ By default, OpenAPI will put the `AppId` and `ApiKey` in every method parameters
 The constructor of the client can be edited (from the `.mustache` files) to accept and store those values.
 
 - [First implementation on the JavaScript client](https://github.com/algolia/api-clients-automation/pull/7)
-- [Current implementation on the JavaScript client](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-javascript/packages/client-search/src/searchApi.ts#L110-L125)
+- [Current implementation on the JavaScript client](https://github.com/algolia/api-clients-automation/blob/main/clients/algoliasearch-client-javascript/packages/client-search/src/searchClient.ts#L110-L125)
 
 ### Retry strategy
 

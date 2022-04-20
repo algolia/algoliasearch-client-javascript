@@ -98,7 +98,7 @@ export async function generateClientTests(
     template,
     {
       import: packageName,
-      client: `${createClientName(client, language)}Api`,
+      client: `${createClientName(client, language)}Client`,
       blocks: modifyForMustache(testsBlocks),
       hasRegionalHost: hasRegionalHost ? true : undefined,
     },

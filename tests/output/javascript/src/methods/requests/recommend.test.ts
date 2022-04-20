@@ -1,11 +1,11 @@
 import type { EchoResponse } from '@experimental-api-clients-automation/client-common';
-import { recommendApi } from '@experimental-api-clients-automation/recommend';
+import { recommendClient } from '@experimental-api-clients-automation/recommend';
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 const appId = process.env.ALGOLIA_APPLICATION_ID || 'test_app_id';
 const apiKey = process.env.ALGOLIA_SEARCH_KEY || 'test_api_key';
 
-const client = recommendApi(appId, apiKey, { requester: echoRequester() });
+const client = recommendClient(appId, apiKey, { requester: echoRequester() });
 
 describe('del', () => {
   test('allow del method for a custom path with minimal parameters', async () => {

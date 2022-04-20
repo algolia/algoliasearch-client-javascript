@@ -4,7 +4,7 @@ namespace Algolia\AlgoliaSearch\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-class SearchApiTest extends TestCase
+class SearchClientTest extends TestCase
 {
     public function testTest()
     {

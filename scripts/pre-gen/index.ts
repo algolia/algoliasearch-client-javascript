@@ -1,2 +1,2 @@
-export * from './removeExistingModel';
+export * from './removeExistingCodegen';
 export * from './setDefaultGeneratorOptions';

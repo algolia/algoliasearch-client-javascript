@@ -3,11 +3,11 @@ import { buildCustomGenerators, CI, run } from './common';
 import { getCustomGenerator, getLanguageFolder } from './config';
 import { formatter } from './formatter';
 import { createSpinner } from './oraLog';
-import { removeExistingModel, setDefaultGeneratorOptions } from './pre-gen';
+import { removeExistingCodegen, setDefaultGeneratorOptions } from './pre-gen';
 import type { Generator } from './types';
 
 async function preGen(gen: Generator, verbose?: boolean): Promise<void> {
-  await removeExistingModel(gen, verbose);
+  await removeExistingCodegen(gen, verbose);
 
   await setDefaultGeneratorOptions(gen);
 }
