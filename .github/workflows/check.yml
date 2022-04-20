@@ -406,7 +406,7 @@ jobs:
       - client_javascript_algoliasearch
     if: |
       always() &&
-      github.event_name == 'refs/heads/main' &&
+      github.ref == 'refs/heads/main' &&
       needs.setup.outputs.RUN_CODEGEN == 'true' &&
       needs.cts.result == 'success'
     steps:
