@@ -32,7 +32,7 @@ import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 import type { OrderBy } from '../model/orderBy';
 
-export * from '../model/models';
+export * from '../model';
 export const apiClientVersion = '0.0.5';
 
 export type Region = 'de' | 'us';

@@ -17,7 +17,7 @@ import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
 import type { PersonalizationStrategyParams } from '../model/personalizationStrategyParams';
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';
 
-export * from '../model/models';
+export * from '../model';
 export const apiClientVersion = '0.0.5';
 
 export type Region = 'eu' | 'us';

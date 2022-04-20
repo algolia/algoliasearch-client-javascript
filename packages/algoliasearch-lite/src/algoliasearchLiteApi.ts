@@ -20,7 +20,7 @@ import type { SearchForFacetValuesResponse } from '../model/searchForFacetValues
 import type { SearchParams } from '../model/searchParams';
 import type { SearchResponse } from '../model/searchResponse';
 
-export * from '../model/models';
+export * from '../model';
 export const apiClientVersion = '0.0.5';
 
 function getDefaultHosts(appId: string): Host[] {
