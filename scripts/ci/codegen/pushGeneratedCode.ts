@@ -60,6 +60,7 @@ Co-authored-by: %an <%ae>
     `Pushing code for folders '${FOLDERS_TO_CHECK}' to generated branch: '${branchToPush}'`
   );
   await run(`git add ${FOLDERS_TO_CHECK}`);
+  await run('git add `git ls-files --deleted`');
   await run(`git commit -m "${commitMessage}"`);
   await run(`git push origin ${branchToPush}`);
 
