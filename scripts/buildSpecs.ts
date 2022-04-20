@@ -4,7 +4,7 @@ import yaml from 'js-yaml';
 
 import { checkForCache, exists, run, toAbsolutePath } from './common';
 import { createSpinner } from './oraLog';
-import type { Spec } from './pre-gen/setHostsOptions';
+import type { Spec } from './types';
 
 const ALGOLIASEARCH_LITE_OPERATIONS = [
   'search',

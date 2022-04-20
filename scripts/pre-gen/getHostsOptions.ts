@@ -1,65 +1,22 @@
-import { readFile, stat, writeFile } from 'fs/promises';
+import { readFile } from 'fs/promises';
 import { URL } from 'url';
 
 import yaml from 'js-yaml';
 
 import { exists, toAbsolutePath } from '../common';
-import type { Generator } from '../types';
+import type { AdditionalProperties, Generator, Spec } from '../types';
 
-type Server = {
-  url: string;
-  variables?: {
-    [k: string]: {
-      enum?: string[];
-      default: string;
-    };
-  };
-};
-
-type Tag = {
-  name: string;
-  description: string;
-};
-
-type Paths = Record<string, Record<string, any>>;
-
-export type Spec = {
-  servers: Server[];
-  tags: Tag[];
-  paths: Paths;
-};
-
-type AdditionalProperties = Partial<{
-  hasRegionalHost: boolean;
-  fallbackToAliasHost: boolean;
-  isEuHost: boolean;
-  isDeHost: boolean;
-  host: string;
-  topLevelDomain: string;
-  /**
-   * Client name needs to be explicitly set, no variables required in the host.
-   */
-  experimentalHost: string;
-}>;
-
-export async function setHostsOptions({
+/**
+ * Retrieve hosts options from the bundled spec file to define them
+ * in the `additionalProperties` of a generator.
+ *
+ * Those options are used to determine which host method should be generated
+ * in the template.
+ */
+export async function getHostsOptions({
   client,
-  key: generator,
-}: Pick<Generator, 'client' | 'key'>): Promise<void> {
-  const openapitoolsPath = toAbsolutePath('openapitools.json');
-  if (!(await stat(openapitoolsPath))) {
-    throw new Error(
-      `File not found ${openapitoolsPath}.\nMake sure your run scripts from the root directory using yarn workspace.`
-    );
-  }
-  const openapitools = JSON.parse(await readFile(openapitoolsPath, 'utf-8'));
-
-  const generatorOptions = openapitools['generator-cli'].generators[generator];
-
-  if (!generator || !generatorOptions) {
-    throw new Error(`Generator not found: ${generator}`);
-  }
-
+  key,
+}: Pick<Generator, 'client' | 'key'>): Promise<AdditionalProperties> {
   const specPath = toAbsolutePath(`specs/bundled/${client}.yml`);
 
   if (!(await exists(specPath))) {
@@ -117,16 +74,8 @@ export async function setHostsOptions({
       additionalProperties.topLevelDomain = host.split('.').pop();
     }
 
-    generatorOptions.additionalProperties = {
-      ...generatorOptions.additionalProperties,
-      ...additionalProperties,
-    };
-
-    await writeFile(
-      openapitoolsPath,
-      JSON.stringify(openapitools, null, 2).concat('\n')
-    );
+    return additionalProperties;
   } catch (e) {
-    throw new Error(`Error reading yaml file ${generator}: ${e}`);
+    throw new Error(`Error reading yaml file ${key}: ${e}`);
   }
 }

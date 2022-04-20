@@ -27,4 +27,23 @@ public class Utils {
     }
     return ope;
   }
+
+  /** Returns the client name for the given language */
+  public static String createClientName(String client, String language) {
+    String[] clientParts = client.split("-");
+    String clientName = "";
+    if (language.equals("javascript")) {
+      // do not capitalize the first part
+      clientName = clientParts[0].toLowerCase();
+      for (int i = 1; i < clientParts.length; i++) {
+        clientName += capitalize(clientParts[i]);
+      }
+    } else {
+      for (int i = 0; i < clientParts.length; i++) {
+        clientName += capitalize(clientParts[i]);
+      }
+    }
+
+    return clientName;
+  }
 }

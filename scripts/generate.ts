@@ -1,69 +1,15 @@
-import path from 'path';
-
 import { buildSpecs } from './buildSpecs';
-import {
-  buildCustomGenerators,
-  CI,
-  run,
-  runIfExists,
-  toAbsolutePath,
-} from './common';
-import {
-  getCustomGenerator,
-  getLanguageFolder,
-  getLanguageModelFolder,
-} from './config';
-import { createClientName } from './cts/utils';
+import { buildCustomGenerators, CI, run } from './common';
+import { getCustomGenerator, getLanguageFolder } from './config';
 import { formatter } from './formatter';
 import { createSpinner } from './oraLog';
-import { setHostsOptions } from './pre-gen/setHostsOptions';
+import { removeExistingModel, setDefaultGeneratorOptions } from './pre-gen';
 import type { Generator } from './types';
 
-/**
- * Remove `model` folder for the current language and client.
- */
-async function removeExistingModel(
-  { language, client, output }: Generator,
-  verbose?: boolean
-): Promise<void> {
-  const baseModelFolder = getLanguageModelFolder(language);
-
-  let clientModel = '';
-  switch (language) {
-    case 'java':
-      clientModel = client;
-      break;
-    case 'php':
-      clientModel = createClientName(client, 'php');
-      break;
-    default:
-      break;
-  }
-
-  await run(
-    `rm -rf ${toAbsolutePath(
-      path.resolve('..', output, baseModelFolder, clientModel)
-    )}`,
-    {
-      verbose,
-    }
-  );
-}
-
 async function preGen(gen: Generator, verbose?: boolean): Promise<void> {
-  // Run bash pre-gen script
-  await runIfExists(
-    `./scripts/pre-gen/${gen.language}.sh`,
-    `${gen.output} ${gen.key}`,
-    {
-      verbose,
-    }
-  );
+  await removeExistingModel(gen, verbose);
 
-  await removeExistingModel(gen);
-
-  // Updates `openapitools.json` file based on the spec `servers`
-  await setHostsOptions({ client: gen.client, key: gen.key });
+  await setDefaultGeneratorOptions(gen);
 }
 
 async function generateClient(
@@ -81,15 +27,6 @@ async function generateClient(
       verbose,
     }
   );
-}
-
-async function postGen(
-  { language, key, output }: Generator,
-  verbose?: boolean
-): Promise<void> {
-  await runIfExists(`./scripts/post-gen/${language}.sh`, `${output} ${key}`, {
-    verbose,
-  });
 }
 
 export async function generate(
@@ -127,9 +64,6 @@ export async function generate(
 
       await run('YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn', { verbose });
     }
-
-    spinner.text = `post-gen ${gen.key}`;
-    await postGen(gen, verbose);
 
     if (CI && gen.language === 'javascript') {
       // because the CI is parallelized, run the formatter for each client

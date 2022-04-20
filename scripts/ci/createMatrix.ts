@@ -74,12 +74,11 @@ async function getClientMatrix({
     // Extra informations for the PHP matrix in order to properly scope the
     // GitHub action cache
     if (language === 'php') {
-      matchedGenerator.config = additionalProperties.configClassname;
-      matchedGenerator.api = additionalProperties.configClassname.replace(
-        'Config',
-        'Api'
-      );
-      matchedGenerator.capitalizedName = createClientName(client, 'php');
+      const clientName = createClientName(client, 'php');
+
+      matchedGenerator.config = `${clientName}Config`;
+      matchedGenerator.api = `${clientName}Api`;
+      matchedGenerator.capitalizedName = clientName;
     }
 
     matrix.client.push(matchedGenerator);
