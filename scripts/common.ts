@@ -186,30 +186,20 @@ export async function runIfExists(
 
 export async function gitCommit({
   message,
-  coauthor,
+  coAuthors,
   cwd = ROOT_DIR,
 }: {
   message: string;
-  coauthor?: {
-    name: string;
-    email: string;
-  };
+  coAuthors?: string[];
   cwd?: string;
 }): Promise<void> {
-  await execa(
-    'git',
-    [
-      'commit',
-      '-m',
-      message +
-        (coauthor
-          ? `\n\n\nCo-authored-by: ${coauthor.name} <${coauthor.email}>`
-          : ''),
-    ],
-    {
-      cwd,
-    }
-  );
+  const messageWithCoAuthors = coAuthors
+    ? `${message}\n\n\n${coAuthors.join('\n')}`
+    : message;
+
+  await execa('git', ['commit', '-m', messageWithCoAuthors], {
+    cwd,
+  });
 }
 
 export async function checkForCache(

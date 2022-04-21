@@ -42,9 +42,17 @@ async function spreadGeneration(): Promise<void> {
     throw new Error('Environment variable `GITHUB_TOKEN` does not exist.');
   }
 
-  const lastCommitMessage = await run(`git log -1 --format="%s"`);
-  const name = (await run(`git log -1 --format="%an"`)).trim();
-  const email = (await run(`git log -1 --format="%ae"`)).trim();
+  const lastCommitMessage = await run('git log -1 --format="%s"');
+  const author = (
+    await run('git log -1 --format="Co-authored-by: %an <%ae>"')
+  ).trim();
+  const coAuthors = (
+    await run('git log -1 --format="%(trailers:key=Co-authored-by)"')
+  )
+    .split('\n')
+    .map((coAuthor) => coAuthor.trim())
+    .filter(Boolean);
+
   const commitMessage = cleanUpCommitMessage(lastCommitMessage);
   const langs = decideWhereToSpread(lastCommitMessage);
 
@@ -75,7 +83,7 @@ async function spreadGeneration(): Promise<void> {
     await run(`git add .`, { cwd: tempGitDir });
     await gitCommit({
       message: commitMessage,
-      coauthor: { name, email },
+      coAuthors: [author, ...coAuthors],
       cwd: tempGitDir,
     });
     await run(`git push`, { cwd: tempGitDir });
