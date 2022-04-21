@@ -62,12 +62,11 @@ public class AlgoliaPhpGenerator extends PhpClientCodegen {
 
   @Override
   public void processOpts() {
-    super.processOpts();
-
     // generator specific options
     setApiNameSuffix(Utils.API_SUFFIX);
     setParameterNamingConvention("camelCase");
-    additionalProperties.put("apiNameSuffix", Utils.API_SUFFIX);
+
+    super.processOpts();
 
     // Remove base template as we want to change its path
     supportingFiles.removeIf(file ->

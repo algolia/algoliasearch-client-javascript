@@ -155,15 +155,15 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
         List<HashMap<String, String>> listOneOf = new ArrayList();
 
         for (String iterateModel : model.oneOf) {
-          HashMap<String, String> hashMapOneOf = new HashMap();
+          HashMap<String, String> oneOfModel = new HashMap();
 
-          hashMapOneOf.put("type", iterateModel);
-          hashMapOneOf.put(
+          oneOfModel.put("type", iterateModel);
+          oneOfModel.put(
             "name",
             iterateModel.replace("<", "").replace(">", "")
           );
 
-          listOneOf.add(hashMapOneOf);
+          listOneOf.add(oneOfModel);
         }
 
         model.vendorExtensions.put("x-is-one-of-interface", true);
@@ -189,7 +189,7 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
       supportingFiles.add(
         new SupportingFile(
           "EchoResponse.mustache",
-          "algoliasearch-core/com/algolia/utils/echo",
+          sourceFolder + "/com/algolia/utils/echo",
           "EchoResponse" + clientName + ".java"
         )
       );
@@ -222,16 +222,13 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
 
   @Override
   public void processOpts() {
-    super.processOpts();
-
     // generator specific options
     setDateLibrary("java8");
-    setSourceFolder("algoliasearch-core");
+    setSourceFolder("algoliasearch-core/src");
+    setInvokerPackage("com.algolia");
     setApiNameSuffix(Utils.API_SUFFIX);
 
-    additionalProperties.put("apiNameSuffix", Utils.API_SUFFIX);
-    additionalProperties.put("java8", true);
-    additionalProperties.put("sourceFolder", "algoliasearch-core");
+    super.processOpts();
 
     // Prevent all useless file to generate
     apiTestTemplateFiles.clear();

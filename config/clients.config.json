@@ -2,8 +2,8 @@
   "java": {
     "folder": "clients/algoliasearch-client-java-2",
     "mainPackage": "java-search",
-    "modelFolder": "algoliasearch-core/com/algolia/model",
-    "apiFolder": "algoliasearch-core/com/algolia/api",
+    "modelFolder": "algoliasearch-core/src/com/algolia/model",
+    "apiFolder": "algoliasearch-core/src/com/algolia/api",
     "customGenerator": "algolia-java",
     "tests": {
       "extension": ".test.java",
