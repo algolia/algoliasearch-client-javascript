@@ -1,6 +1,7 @@
 import { MAIN_BRANCH, REPO_URL } from '../../common';
 
 export default {
+  commitStartMessage: 'chore: generated code for commit',
   notification: {
     header: '### 🔨 The codegen job will run at the end of the CI.',
     body: '_Make sure your last commit does not contains generated code, it will be automatically pushed by our CI._',

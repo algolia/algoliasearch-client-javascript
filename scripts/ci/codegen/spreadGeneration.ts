@@ -13,6 +13,8 @@ import { getLanguageFolder } from '../../config';
 import { cloneRepository, configureGitHubAuthor } from '../../release/common';
 import { getNbGitDiff } from '../utils';
 
+import text from './text';
+
 export function decideWhereToSpread(commitMessage: string): string[] {
   if (commitMessage.startsWith('chore: release')) {
     return [];
@@ -29,12 +31,31 @@ export function decideWhereToSpread(commitMessage: string): string[] {
 }
 
 export function cleanUpCommitMessage(commitMessage: string): string {
-  const result = commitMessage.match(/(.+)\s\(#(\d+)\)$/);
-  if (!result) {
+  const isCodeGenCommit = commitMessage.startsWith(text.commitStartMessage);
+
+  if (isCodeGenCommit) {
+    const hash = commitMessage
+      .split(text.commitStartMessage)[1]
+      .replace('. [skip ci]', '')
+      .trim();
+
+    if (!hash) {
+      return commitMessage;
+    }
+
+    return [
+      `${text.commitStartMessage} ${hash.substring(0, 8)}. [skip ci]`,
+      `${REPO_URL}/commit/${hash}`,
+    ].join('\n\n');
+  }
+
+  const prCommit = commitMessage.match(/(.+)\s\(#(\d+)\)$/);
+
+  if (!prCommit) {
     return commitMessage;
   }
 
-  return [result[1], `${REPO_URL}/pull/${result[2]}`].join('\n\n');
+  return [prCommit[1], `${REPO_URL}/pull/${prCommit[2]}`].join('\n\n');
 }
 
 async function spreadGeneration(): Promise<void> {

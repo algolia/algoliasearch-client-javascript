@@ -3,6 +3,8 @@ import { MAIN_BRANCH, run } from '../../common';
 import { configureGitHubAuthor } from '../../release/common';
 import { getNbGitDiff } from '../utils';
 
+import text from './text';
+
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 const FOLDERS_TO_CHECK = 'yarn.lock openapitools.json clients specs/bundled';
 
@@ -48,10 +50,9 @@ export async function pushGeneratedCode(): Promise<void> {
     await run(`git checkout -b ${branchToPush}`);
   }
 
-  const commitMessage =
-    await run(`git show -s ${baseBranch} --format="chore: generated code for commit %H. ${
-      isMainBranch ? '[skip ci]' : ''
-    }
+  const commitMessage = await run(`git show -s ${baseBranch} --format="${
+    text.commitStartMessage
+  } %H. ${isMainBranch ? '[skip ci]' : ''}
 
 Co-authored-by: %an <%ae>
 %(trailers:key=Co-authored-by)"`);
