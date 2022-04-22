@@ -24,7 +24,7 @@ async function publish(): Promise<void> {
   const tag = semver.prerelease(version)?.[0];
 
   await execa.command(
-    `lerna exec --no-bail -- npm publish --access public ${
+    `lerna exec --no-bail -- npm_config_registry=https://registry.npmjs.org/ npm publish --access public ${
       tag ? `--tag ${tag}` : ''
     }`,
     {
