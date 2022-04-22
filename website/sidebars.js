@@ -19,7 +19,7 @@ const sidebars = {
         },
         'addNewClient',
         'addNewLanguage',
-        'pullRequest',
+        'commitAndPullRequest',
         'releaseProcess',
       ],
     },
