@@ -311,9 +311,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: query-suggestions
-    description: Query Suggestions API reference.
 paths:
   /1{path}:
     get:
@@ -453,8 +450,6 @@ paths:
       tags:
         - query-suggestions
     get:
-      tags:
-        - query-suggestions
       operationId: getAllConfigs
       description: >
         Get all the configurations of Query Suggestions.
@@ -479,6 +474,8 @@ paths:
           $ref: '#/components/responses/StatusUnprocessableEntity'
         '500':
           $ref: '#/components/responses/InternalError'
+      tags:
+        - query-suggestions
   /1/configs/{indexName}:
     put:
       operationId: updateConfig
@@ -502,8 +499,6 @@ paths:
       tags:
         - query-suggestions
     delete:
-      tags:
-        - query-suggestions
       operationId: deleteConfig
       description: >
         Delete a configuration of a Query Suggestion's index.
@@ -525,9 +520,9 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '500':
           $ref: '#/components/responses/InternalError'
-    get:
       tags:
         - query-suggestions
+    get:
       operationId: getConfig
       description: Get the configuration of a single Query Suggestions index.
       summary: Get the configuration of a single Query Suggestions index.
@@ -550,6 +545,8 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
         '500':
           $ref: '#/components/responses/InternalError'
+      tags:
+        - query-suggestions
   /1/configs/{indexName}/status:
     get:
       operationId: getConfigStatus

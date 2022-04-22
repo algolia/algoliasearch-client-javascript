@@ -969,9 +969,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: recommend
-    description: Recommend API reference.
 paths:
   /1{path}:
     get:

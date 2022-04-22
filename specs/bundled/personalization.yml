@@ -145,9 +145,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: personalization
-    description: Personalization API reference.
 paths:
   /1{path}:
     get:
@@ -386,8 +383,6 @@ paths:
       tags:
         - personalization
     get:
-      tags:
-        - personalization
       operationId: getPersonalizationStrategy
       description: >-
         The strategy contains information on the events and facets that impact
@@ -408,3 +403,5 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '404':
           $ref: '#/components/responses/IndexNotFound'
+      tags:
+        - personalization

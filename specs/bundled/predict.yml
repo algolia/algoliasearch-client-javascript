@@ -96,9 +96,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: predict
-    description: Predict API reference.
 paths:
   /1{path}:
     get:

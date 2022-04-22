@@ -117,9 +117,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: sources
-    description: Sources API reference.
 paths:
   /1{path}:
     get:
