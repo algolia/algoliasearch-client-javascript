@@ -20,9 +20,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: sources
-    description: Sources API reference.
 paths:
   # ######################
   # ### Custom request ###

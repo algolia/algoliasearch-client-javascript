@@ -19,8 +19,6 @@ put:
       $ref: '../../common/responses/InternalError.yml'
 
 delete:
-  tags:
-    - query-suggestions
   operationId: deleteConfig
   description: >
     Delete a configuration of a Query Suggestion's index.
@@ -42,8 +40,6 @@ delete:
       $ref: '../../common/responses/InternalError.yml'
 
 get:
-  tags:
-    - query-suggestions
   operationId: getConfig
   description: Get the configuration of a single Query Suggestions index.
   summary: Get the configuration of a single Query Suggestions index.

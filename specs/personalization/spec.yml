@@ -20,9 +20,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: personalization
-    description: Personalization API reference.
 paths:
   # ######################
   # ### Custom request ###

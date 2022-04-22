@@ -23,8 +23,6 @@ post:
       $ref: '../../common/responses/InternalError.yml'
 
 get:
-  tags:
-    - query-suggestions
   operationId: getAllConfigs
   description: >
     Get all the configurations of Query Suggestions.

@@ -32,8 +32,6 @@ post:
     '404':
       $ref: '../../common/responses/IndexNotFound.yml'
 get:
-  tags:
-    - personalization
   operationId: getPersonalizationStrategy
   description: The strategy contains information on the events and facets that impact user profiles and personalized search results.
   summary: Get the current personalization strategy.

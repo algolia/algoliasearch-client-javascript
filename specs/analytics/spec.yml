@@ -21,9 +21,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: analytics
-    description: Analytics API reference.
 paths:
   # ######################
   # ### Custom request ###

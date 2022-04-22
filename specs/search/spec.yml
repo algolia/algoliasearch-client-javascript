@@ -33,9 +33,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: search
-    description: Search API reference.
 paths:
   # ######################
   # ### Custom request ###

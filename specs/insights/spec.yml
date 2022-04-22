@@ -21,9 +21,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: insights
-    description: Insights API reference.
 paths:
   # ######################
   # ### Custom request ###

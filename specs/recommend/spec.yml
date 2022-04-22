@@ -33,9 +33,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: recommend
-    description: Recommend API reference.
 paths:
   # ######################
   # ### Custom request ###

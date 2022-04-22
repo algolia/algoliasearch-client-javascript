@@ -19,8 +19,6 @@ get:
       $ref: '../../../common/responses/IndexNotFound.yml'
 
 put:
-  tags:
-    - search
   operationId: replaceSources
   description: Replace all allowed sources.
   summary: Replace all allowed sources.
