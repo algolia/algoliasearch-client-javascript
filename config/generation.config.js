@@ -2,6 +2,8 @@
 module.exports = {
   patterns: [
     // Ignore the roots and go down the tree by negating hand written files
+    'specs/bundled/*.yml',
+
     'clients/**',
     'clients/**/.*', // hidden files are not ignored by default
     '!clients/README.md',
