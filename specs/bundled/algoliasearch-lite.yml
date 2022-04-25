@@ -1901,9 +1901,6 @@ servers:
 security:
   - appId: []
     apiKey: []
-tags:
-  - name: search
-    description: Search API reference.
 paths:
   /1{path}:
     post:
