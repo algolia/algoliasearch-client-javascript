@@ -6,16 +6,14 @@
 
 api/**
 docs/**
-gradle/**
 src/**
 README.md
 
 .travis.yml
 build.sbt
-gradle.properties
 git_push.sh
 pom.xml
-gradle*
+gradlew.bat
 
 # Selective source file
 algoliasearch-core/src/com/algolia/auth/**

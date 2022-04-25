@@ -7,7 +7,7 @@ import { getNbGitDiff } from './utils';
 type CreateMatrix = {
   baseChanged: boolean;
   baseBranch: string;
-  language?: Language;
+  forLanguage?: Language;
 };
 
 type BaseMatrix = {
@@ -21,9 +21,7 @@ type ClientMatrix = BaseMatrix & {
   capitalizedName?: string;
 };
 
-type SpecMatrix = BaseMatrix & {
-  bundledPath: string;
-};
+type SpecMatrix = BaseMatrix;
 
 type Matrix<TMatrix> = {
   client: TMatrix[];
@@ -33,23 +31,15 @@ type Matrix<TMatrix> = {
 const EMPTY_MATRIX = JSON.stringify({ client: ['no-run'] });
 
 async function getClientMatrix({
-  language,
+  forLanguage,
   baseBranch,
   baseChanged,
 }: CreateMatrix): Promise<Matrix<ClientMatrix>> {
   const matrix: Matrix<ClientMatrix> = { client: [] };
 
-  for (const {
-    client,
-    output,
-    additionalProperties,
-    ...options
-  } of Object.values(GENERATORS)) {
-    if (
-      options.language !== language ||
-      // `algoliasearch` is an aggregation of clients
-      client === 'algoliasearch'
-    ) {
+  for (const { language, client, output } of Object.values(GENERATORS)) {
+    // `algoliasearch` is an aggregation of clients
+    if (language !== forLanguage || client === 'algoliasearch') {
       continue;
     }
 
@@ -71,15 +61,11 @@ async function getClientMatrix({
       path: output,
     };
 
-    // Extra informations for the PHP matrix in order to properly scope the
-    // GitHub action cache
-    if (language === 'php') {
-      const clientName = createClientName(client, 'php');
+    const clientName = createClientName(client, language);
 
-      matchedGenerator.config = `${clientName}Config`;
-      matchedGenerator.api = `${clientName}Client`;
-      matchedGenerator.capitalizedName = clientName;
-    }
+    matchedGenerator.config = `${clientName}Config`;
+    matchedGenerator.api = `${clientName}Client`;
+    matchedGenerator.capitalizedName = clientName;
 
     matrix.client.push(matchedGenerator);
   }
@@ -103,10 +89,9 @@ async function getSpecMatrix({
       continue;
     }
 
-    const spec = {
+    const spec: SpecMatrix = {
       name: client,
       path: `specs/${client}`,
-      bundledPath: `specs/bundled/${client}.yml`,
     };
 
     // The `algoliasearch-lite` spec is created by the `search` spec
@@ -129,7 +114,7 @@ async function getSpecMatrix({
  * Creates a matrix for the CI jobs based on the files that changed.
  */
 async function createMatrix(opts: CreateMatrix): Promise<void> {
-  const matrix = opts.language
+  const matrix = opts.forLanguage
     ? await getClientMatrix(opts)
     : await getSpecMatrix(opts);
 
@@ -145,6 +130,6 @@ if (require.main === module) {
   createMatrix({
     baseChanged: args[0] === 'true',
     baseBranch: args[1],
-    language: args[2] as Language,
+    forLanguage: args[2] as Language,
   });
 }

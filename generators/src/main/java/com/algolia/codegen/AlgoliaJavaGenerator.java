@@ -235,6 +235,11 @@ public class AlgoliaJavaGenerator extends JavaClientCodegen {
     modelTestTemplateFiles.clear();
     apiDocTemplateFiles.clear();
     modelDocTemplateFiles.clear();
+
+    supportingFiles.removeIf(file ->
+      file.getTemplateFile().equals("build.gradle.mustache") ||
+      file.getTemplateFile().equals("settings.gradle.mustache")
+    );
   }
 
   @Override

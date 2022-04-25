@@ -98,7 +98,7 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ${{ matrix.client.bundledPath }}
+          path: ${{ format('specs/bundled/{0}.yml', matrix.client.name) }}
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
@@ -220,12 +220,12 @@ jobs:
         id: cache
         uses: actions/cache@v2
         with:
-          path: ${{ matrix.client.path }}
+          path: |
+            ${{ format('{0}/algoliasearch-core/src/com/algolia/api/{1}.java', matrix.client.path, matrix.client.api) }}
+            ${{ format('{0}/{1}/**', matrix.client.path, matrix.client.capitalizedName) }}
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('{0}/{1}/**', matrix.client.path, matrix.client.name),
-              format('{0}/model/{1}/**', matrix.client.path, matrix.client.name),
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/java/**',
               'generators/src/**'
@@ -275,9 +275,6 @@ jobs:
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(
-              format('{0}/lib/Api/{1}.php', matrix.client.path, matrix.client.api),
-              format('{0}/lib/Configuration/{1}.php', matrix.client.path, matrix.client.config),
-              format('{0}/lib/Model/{1}/**', matrix.client.path, matrix.client.capitalizedName),
               format('specs/bundled/{0}.yml', matrix.client.name),
               'templates/php/**',
               'generators/src/**'

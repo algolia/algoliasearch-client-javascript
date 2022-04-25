@@ -376,16 +376,29 @@ runs:
           )}}
 
     # Restore Java clients: used during 'cts' or 'codegen'
+    - name: Restore Java client gradle properties
+      if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' || (inputs.job == 'client' && inputs.language == 'java') }}
+      uses: actions/cache@v2
+      with:
+        path: clients/algoliasearch-client-java-2/gradle.properties
+        key: |
+          ${{ env.CACHE_VERSION }}-${{
+          hashFiles(
+            'specs/bundled/search.yml',
+            'templates/java/**',
+            'generators/src/**'
+          )}}
+
     - name: Restore built Java search client
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-java-2
+        path: |
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/SearchClient.java
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/search/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/SearchClient.java',
-            'clients/algoliasearch-client-java-2/model/search/**',
             'specs/bundled/search.yml',
             'templates/java/**',
             'generators/src/**'
@@ -395,12 +408,12 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-java-2
+        path: |
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/RecommendClient.java
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/recommend/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/RecommendClient.java',
-            'clients/algoliasearch-client-java-2/model/recommend/**',
             'specs/bundled/recommend.yml',
             'templates/java/**',
             'generators/src/**'
@@ -410,12 +423,12 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-java-2
+        path: |
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/PersonalizationClient.java
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/personalization/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/PersonalizationClient.java',
-            'clients/algoliasearch-client-java-2/model/personalization/**',
             'specs/bundled/personalization.yml',
             'templates/java/**',
             'generators/src/**'
@@ -425,12 +438,12 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-java-2
+        path: |
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/AnalyticsClient.java
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/analytics/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/AnalyticsClient.java',
-            'clients/algoliasearch-client-java-2/model/analytics/**',
             'specs/bundled/analytics.yml',
             'templates/java/**',
             'generators/src/**'
@@ -440,12 +453,12 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-java-2
+        path: |
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/InsightsClient.java
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/insights/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/Insights.java',
-            'clients/algoliasearch-client-java-2/model/insights/**',
             'specs/bundled/insights.yml',
             'templates/java/**',
             'generators/src/**'
@@ -455,12 +468,12 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-java-2
+        path: |
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/AbtestingClient.java
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/abtesting/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/AbtestingClient.java',
-            'clients/algoliasearch-client-java-2/model/abtesting/**',
             'specs/bundled/abtesting.yml',
             'templates/java/**',
             'generators/src/**'
@@ -470,12 +483,12 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-java-2
+        path: |
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/QuerySuggestionsClient.java
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/querySuggestions/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/QuerySuggestionsClient.java',
-            'clients/algoliasearch-client-java-2/model/querySuggestions/**',
             'specs/bundled/query-suggestions.yml',
             'templates/java/**',
             'generators/src/**'
@@ -485,12 +498,12 @@ runs:
       if: ${{ inputs.job == 'cts' || inputs.job == 'codegen' }}
       uses: actions/cache@v2
       with:
-        path: clients/algoliasearch-client-java-2
+        path: |
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/api/PredictClient.java
+          clients/algoliasearch-client-java-2/algoliasearch-core/src/com/algolia/model/predict/**
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-java-2/api/PredictClient.java',
-            'clients/algoliasearch-client-java-2/model/predict/**',
             'specs/bundled/predict.yml',
             'templates/java/**',
             'generators/src/**'
@@ -507,9 +520,6 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/SearchClient.php',
-            'clients/algoliasearch-client-php/lib/Configuration/SearchConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Search/**',
             'specs/bundled/search.yml',
             'templates/php/**',
             'generators/src/**'
@@ -525,9 +535,6 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/RecommendClient.php',
-            'clients/algoliasearch-client-php/lib/Configuration/RecommendConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Recommend/**',
             'specs/bundled/recommend.yml',
             'templates/php/**',
             'generators/src/**'
@@ -543,9 +550,6 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/PersonalizationClient.php',
-            'clients/algoliasearch-client-php/lib/Configuration/PersonalizationConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Personalization/**',
             'specs/bundled/personalization.yml',
             'templates/php/**',
             'generators/src/**'
@@ -561,9 +565,6 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/AnalyticsClient.php',
-            'clients/algoliasearch-client-php/lib/Configuration/AnalyticsConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Analytics/**',
             'specs/bundled/analytics.yml',
             'templates/php/**',
             'generators/src/**'
@@ -579,9 +580,6 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/InsightsClient.php',
-            'clients/algoliasearch-client-php/lib/Configuration/InsightsConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Insights/**',
             'specs/bundled/insights.yml',
             'templates/php/**',
             'generators/src/**'
@@ -597,9 +595,6 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/AbtestingClient.php',
-            'clients/algoliasearch-client-php/lib/Configuration/AbtestingConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/Abtesting/**',
             'specs/bundled/abtesting.yml',
             'templates/php/**',
             'generators/src/**'
@@ -615,9 +610,6 @@ runs:
         key: |
           ${{ env.CACHE_VERSION }}-${{
           hashFiles(
-            'clients/algoliasearch-client-php/lib/Api/QuerySuggestionsClient.php',
-            'clients/algoliasearch-client-php/lib/Configuration/QuerySuggestionsConfig.php',
-            'clients/algoliasearch-client-php/lib/Model/QuerySuggestions/**',
             'specs/bundled/query-suggestions.yml',
             'templates/php/**',
             'generators/src/**'

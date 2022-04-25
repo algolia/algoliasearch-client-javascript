@@ -1,41 +1,8 @@
-plugins {
-    id 'java-library'
-    id 'maven-publish'
-}
-
-group = 'com.algolia'
-version = '0.1.0'
-description = 'algoliasearch-client-java-2'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-
-repositories {
+buildscript {
+  repositories {
     mavenCentral()
-}
-
-dependencies {
-    implementation 'com.google.code.findbugs:jsr305:3.0.2'
-    api 'com.squareup.okhttp3:okhttp:4.9.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
-    api 'com.google.code.gson:gson:2.8.9'
-    implementation 'io.gsonfire:gson-fire:1.8.5'
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
-        }
-    }
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
-sourceSets {
-    main {
-        java {
-            srcDirs = ["algoliasearch-core/src"]
-        }
-    }
+  }
+  dependencies {
+    classpath 'com.vanniktech:gradle-maven-publish-plugin:0.19.0'
+  }
 }

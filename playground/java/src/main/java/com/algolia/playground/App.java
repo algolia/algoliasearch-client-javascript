@@ -4,7 +4,7 @@ import com.algolia.exceptions.AlgoliaApiException;
 import com.algolia.exceptions.AlgoliaRetryException;
 import com.algolia.exceptions.AlgoliaRuntimeException;
 import com.algolia.model.search.*;
-import com.algolia.search.SearchClient;
+import com.algolia.api.SearchClient;
 import com.algolia.utils.UserAgent;
 import io.github.cdimascio.dotenv.Dotenv;
 

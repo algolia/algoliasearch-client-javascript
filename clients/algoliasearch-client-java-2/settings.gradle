@@ -1,1 +1,3 @@
 rootProject.name = "algoliasearch-client-java-2"
+
+include(":algoliasearch-core")
