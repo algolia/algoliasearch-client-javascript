@@ -8,9 +8,11 @@ import text from './text';
 const PR_NUMBER = parseInt(process.env.PR_NUMBER || '0', 10);
 const FOLDERS_TO_CHECK = 'yarn.lock openapitools.json clients specs/bundled';
 
-async function isUpToDate(): Promise<boolean> {
+async function isUpToDate(baseBranch: string): Promise<boolean> {
   await run('git fetch origin');
-  return (await run('git status')).includes('Your branch is up to date with');
+  return (await run(`git pull origin ${baseBranch}`)).includes(
+    'Already up to date.'
+  );
 }
 
 /**
@@ -55,9 +57,9 @@ export async function pushGeneratedCode(): Promise<void> {
     await run(`git checkout -b ${branchToPush}`);
   }
 
-  if (!(await isUpToDate())) {
+  if (!(await isUpToDate(baseBranch))) {
     console.log(
-      `The branch ${branchToPush} is not up to date with ${baseBranch}, stopping this task and letting the new job push generated code.`
+      `The branch '${baseBranch}' is not up to date with origin, stopping this task and letting the new job push generated code.`
     );
     return;
   }
