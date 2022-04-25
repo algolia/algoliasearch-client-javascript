@@ -47,9 +47,9 @@ function createMemoizedMicromatchMatcher(patterns = []) {
 }
 
 async function preCommit() {
-  const stagedFiles = (await run(`git diff --name-only --cached`)).split('\n');
+  const stagedFiles = (await run('git diff --name-only --cached')).split('\n');
   const deletedFiles = new Set(
-    (await run(`git ls-files --deleted`)).split('\n')
+    (await run('git diff --name-only --staged --diff-filter=D')).split('\n')
   );
   const matcher = createMemoizedMicromatchMatcher(GENERATED_FILE_PATTERNS);
 
