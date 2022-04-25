@@ -1,47 +1,29 @@
-{{#models}}
-{{#model}}
+{{#models}}{{#model}}
 {{#tsImports}}
 import { {{classname}} } from '{{filename}}';
 {{/tsImports}}
 
 {{! We handle types that depend on other interfaces }}
 {{#interfaces.size}}
-export type {{classname}} = {{#oneOf}}{{.}} {{^-last}}|{{/-last}} {{/oneOf}}{{#allOf}}{{.}} {{^-last}}&{{/-last}} {{/allOf}};
-{{/interfaces.size}}
-
-{{^interfaces}}
 {{#description}}
 /**
 * {{{description}}}
-*/
-{{/description}}
-{{^isEnum}}
-export type {{classname}} = {{#parent}} {{{.}}} & {{/parent}} {
-{{#vars}}
+*/{{/description}}
+export type {{classname}} = {{#oneOf}}{{{.}}} {{^-last}}|{{/-last}} {{/oneOf}}{{#allOf}}{{{.}}} {{^-last}}&{{/-last}} {{/allOf}};
+{{/interfaces.size}}{{^interfaces.size}}
 {{#description}}
+/**
+* {{{description}}}
+*/{{/description}}{{^isEnum}}
+export type {{classname}} = {{#parent}} {{{.}}} & {{/parent}} {
+{{#vars}}{{#description}}
     /**
     * {{{description}}}
-    */
-{{/description}}
-    {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{classname}}{{{nameInCamelCase}}}{{#isArray}}[]{{/isArray}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
-{{/vars}}
+    */{{/description}}
+    {{name}}{{^required}}?{{/required}}: {{#isEnum}}{{classname}}{{{nameInCamelCase}}}{{#isArray}}[]{{/isArray}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};{{/vars}}
 }
-
-{{#hasEnums}}
-{{#vars}}
-{{#isEnum}}
-export type {{classname}}{{nameInCamelCase}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}
-
 {{/isEnum}}
-{{/vars}}
-{{/hasEnums}}
-{{/isEnum}}
+{{#hasEnums}}{{#vars}}{{#isEnum}}export type {{classname}}{{nameInCamelCase}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}{{/isEnum}}{{/vars}}{{/hasEnums}}
+{{#isEnum}}export type {{classname}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}{{/isEnum}}
 
-{{#isEnum}}
-export type {{classname}} = {{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}|{{/-last}}{{/enumVars}}{{/allowableValues}}
-
-{{/isEnum}}
-
-{{/interfaces}}
-{{/model}}
-{{/models}}
+{{/interfaces.size}}{{/model}}{{/models}}
