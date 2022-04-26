@@ -80,7 +80,6 @@ Co-authored-by: %an <%ae>
   await run(`git push origin ${branchToPush}`);
 
   if (PR_NUMBER) {
-    await run(`git checkout ${baseBranch}`);
     await run(`yarn workspace scripts upsertGenerationComment codegen`);
   }
 }

@@ -14,6 +14,7 @@ const allowedTriggers = ['notification', 'codegen', 'noGen', 'cleanup'];
 type Trigger = keyof typeof commentText;
 
 export async function getCommentBody(trigger: Trigger): Promise<string> {
+  // All of the case where we are not pushing generated code.
   if (
     trigger === 'notification' ||
     trigger === 'noGen' ||
@@ -24,10 +25,11 @@ export async function getCommentBody(trigger: Trigger): Promise<string> {
 ${commentText[trigger].body}`;
   }
 
-  const baseBranch = await run('git branch --show-current');
+  // We are on a codegen step on a pull request here
+  const generatedBranch = await run('git branch --show-current');
+  const baseBranch = generatedBranch.replace('generated/', '');
   const baseCommit = await run(`git show ${baseBranch} -s --format=%H`);
 
-  const generatedBranch = `generated/${baseBranch}`;
   const generatedCommit = await run(
     `git show ${generatedBranch} -s --format=%H`
   );
@@ -48,7 +50,9 @@ ${commentText.codegen.body(
 export async function upsertGenerationComment(trigger: Trigger): Promise<void> {
   if (!trigger || allowedTriggers.includes(trigger) === false) {
     throw new Error(
-      '`upsertGenerationComment` requires a `trigger` parameter (`codegen` | `notification`).'
+      `'upsertGenerationComment' requires a 'trigger' parameter (${allowedTriggers.join(
+        ' | '
+      )}).`
     );
   }
 
