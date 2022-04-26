@@ -1,10 +1,14 @@
 ---
-title: Generation commands
+title: Clients commands
 ---
 
-# CLI generation commands
+# Clients commands
+
+The Clients commands are used to [`generate`](#generate) and [`build`](#build) API clients.
 
 ## Usage
+
+> `language` and `client` defaults to `all`
 
 ```bash
 yarn docker generate <language | all> <client | all>
@@ -17,7 +21,9 @@ yarn docker generate <language | all> <client | all>
 | verbose     | -v, --verbose     | Make the process verbose, display logs from third party tools |
 | interactive | -i, --interactive | Open prompt to query parameters                               |
 
-## Generate all clients for all support languages
+## Generate
+
+### Generate all clients for all supported languages
 
 ```bash
 yarn docker generate
@@ -29,7 +35,9 @@ yarn docker generate
 yarn docker generate java sources
 ```
 
-## Build all clients for all support languages
+## Build
+
+### Build all clients for all supported languages
 
 ```bash
 yarn docker build clients

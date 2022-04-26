@@ -16,13 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.algolia.com/doc/api-client/getting-started/install/javascript/" target="_blank">Documentation</a>  •
-  <a href="https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/" target="_blank">InstantSearch</a>  •
-  <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
-  <a href="http://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
-  <a href="https://github.com/algolia/algoliasearch-client-javascript/issues" target="_blank">Report a bug</a>  •
-  <a href="https://www.algolia.com/doc/api-client/troubleshooting/faq/javascript/" target="_blank">FAQ</a>  •
-  <a href="https://www.algolia.com/support" target="_blank">Support</a>
+  <a href="https://api-clients-automation.netlify.app/docs/clients/introduction" target="_blank">Documentation</a>
 </p>
 
 # Contributing to this repository

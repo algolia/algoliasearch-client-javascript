@@ -7,38 +7,19 @@ title: Common Test Suite
 The CTS aims at ensuring minimal working operation for the API clients, by comparing the request formed by sample parameters.
 It is automaticaly generated for all languages, from a JSON entry point.
 
-## How to run it
+:::info
 
-> CTS requires all clients to be built
+Common Test Suite requires all clients to be built.
 
-```bash
-yarn docker build specs all
-yarn docker build clients all all
-yarn docker cts generate all all
-yarn docker cts run all
-```
+[CLI commands for the Common Test Suite](/docs/automation/CLI/ctsCommands)
 
-If you only want to generate the tests for a language, you can run:
-
-```bash
-yarn docker cts generate javascript all
-```
-
-Or for a specific client:
-
-```bash
-yarn docker cts generate all search
-```
-
-Or a specific language and client:
-
-```bash
-yarn docker cts generate javascript search
-```
+:::
 
 ## How to add test
 
 The test generation script requires a JSON file name from the `operationId` (e.g. `search.json`), located in the `CTS/<client>/requests/` folder (e.g. `CTS/search/requests/`).
+
+> See the [browse test file for the search client](https://github.com/algolia/api-clients-automation/blob/main/tests/CTS/methods/requests/search/browse.json)
 
 ```json
 [
@@ -48,22 +29,33 @@ The test generation script requires a JSON file name from the `operationId` (e.g
     "parameters": {
       "indexName": "testIndex",
       "searchParam": {
+        // query parameters
+        "offset": 42,
+        "limit": 21,
+        // data parameters
         "query": "the string to search"
       }
     },
     "request": {
       "path": "/1/indexes/testIndex/query",
       "method": "POST",
-      "data": { "query": "the string to search" }
+      "data": { "query": "the string to search" },
+      "searchParams": {
+        "offset": "42",
+        "limit": "21"
+      }
     }
   }
 ]
 ```
 
 And that's it! If the name of the file matches a real `operationId` in the spec, then a test will be generated.
+
 ## How to add a new language
 
-- Create a template in `test/CTS/templates/<your language>/requests.mustache` that parses an array of tests into the test framework of choice
+Create a template in [`tests/CTS/methods/requests/templates/<languageName>/requests.mustache`](https://github.com/algolia/api-clients-automation/tree/main/tests/CTS/methods/requests/templates) that parses an array of tests into the test framework of choice.
+
+> See [implementation of the JavaScript tests](https://github.com/algolia/api-clients-automation/blob/main/tests/CTS/methods/requests/templates/javascript/requests.mustache)
 
 When writing your template, here is a list of variables accessible from `mustache`:
 

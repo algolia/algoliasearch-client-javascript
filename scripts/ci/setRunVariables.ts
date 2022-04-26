@@ -40,7 +40,11 @@ const VARIABLES_TO_CHECK = [
   },
   {
     name: 'JS_CLIENT_CHANGED',
-    path: [JS_CLIENT_FOLDER, `:!${JS_CLIENT_FOLDER}/.github`],
+    path: [
+      JS_CLIENT_FOLDER,
+      `:!${JS_CLIENT_FOLDER}/.github`,
+      `:!${JS_CLIENT_FOLDER}/README.md`,
+    ],
   },
   {
     name: 'JS_ALGOLIASEARCH_CHANGED',

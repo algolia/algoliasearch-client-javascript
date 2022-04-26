@@ -2,9 +2,13 @@
 title: Specs commands
 ---
 
-# CLI specs commands
+# Specs commands
+
+The Specs commands are used to [`build`](#build), [`lint`](#lint) and validate the REST API specs.
 
 ## Usage
+
+> `client` defaults to `all`
 
 ```bash
 yarn docker build specs <client | all>
@@ -18,27 +22,33 @@ yarn docker build specs <client | all>
 | interactive | -i, --interactive | Open prompt to query parameters                               |
 | skip cache  | -s, --skip-cache  | Skip cache checking to force building specs                   |
 
-## Build all specs
+## Build
+
+### Build all specs
 
 ```bash
 yarn docker build specs
 ```
 
-## Build specific spec
+### Build specific spec
 
 ```bash
 yarn docker build specs recommend
 ```
 
-## Fix the specs format
+## Lint
 
-This is used by the build script and should not need to be called manually but if you want to format all specs file do:
+### Fix specs
+
+> Automatically done when building specs
 
 ```bash
 yarn specs:fix
 ```
 
-If you just want to check the format (not override the files), run:
+### Check specs
+
+If you just want to check the format (not override the files)
 
 ```bash
 yarn specs:lint <client>

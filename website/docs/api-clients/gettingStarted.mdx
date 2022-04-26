@@ -1,5 +1,5 @@
 ---
-title: Getting started
+title: Getting Started
 ---
 
 import Tabs from '@theme/Tabs';
@@ -16,23 +16,21 @@ import TabItem from '@theme/TabItem';
 
 ## Installation
 
-To get started, you first need to install `algoliasearch` (or any other available API client package)
+To get started, you first need to install `algoliasearch` (or any other available API client package). You can find the full list of available packages [here](https://www.npmjs.com/org/experimental-api-clients-automation).
 
 ```bash
 yarn add @experimental-api-clients-automation/algoliasearch
 ```
 
-Or use a specific package to reduce bundle size:
+Or use a specific package:
 
 ```bash
 yarn add @experimental-api-clients-automation/client-search
 ```
 
-You can find the full list of available packages [here](https://www.npmjs.com/org/experimental-api-clients-automation).
+**Without a package manager**
 
-### Without a package manager
-
-Add the JavaScript to your `<head>`
+Add the following JavaScript snippet to the `<head>` of your website:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@experimental-api-clients-automation/algoliasearch/dist/algoliasearch.umd.browser.js"></script>
@@ -40,32 +38,43 @@ Add the JavaScript to your `<head>`
 
 ## Using the client
 
-Then you need to import the correct package, depending on your choice:
+Then you need to import the correct package:
 
 ```js
 import { algoliasearch } from '@experimental-api-clients-automation/algoliasearch';
 
-const client = algoliasearch(appId, apiKey);
+const client = algoliasearch('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 
 // And access analytics or personalization client
-const analyticsClient = client.initAnalytics(analyticsAppId, analyticsApiKey);
+const analyticsClient = client.initAnalytics('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 const personalizationCilent = client.initPersonalization(
-  personalizationAppId,
-  personalizationApiKey,
+  '<YOUR_APP_ID>',
+  '<YOUR_API_KEY>',
   'eu'
 );
+
+const searchRes = await client.search({
+  indexName: '<YOUR_INDEX>',
+  searchParams: { query: searchQuery },
+});
+const analyticsRes = await analyticsClient.getTopFilterForAttribute({
+  attribute: 'myAttribute1,myAttribute2',
+  index: '<YOUR_INDEX>',
+});
+
+console.log('[Results]', searchRes, analyticsRes);
 ```
 
 ```js
 import { searchClient } from '@experimental-api-clients-automation/client-search';
 
-const client = searchClient(appId, apiKey);
+const client = searchClient('<YOUR_APP_ID>', '<YOUR_API_KEY>');
 ```
 
 It is possible to customize the client by passing optional parameters:
 
 ```js
-const client = searchClient(appId, apiKey, {
+const client = searchClient('<YOUR_APP_ID>', '<YOUR_API_KEY>', {
   requester: customRequester(),
   hosts: [
     {
@@ -77,15 +86,15 @@ const client = searchClient(appId, apiKey, {
 });
 ```
 
-Once the client is setup, you can enjoy all of Algolia API !
+Once the client is setup, you can play with the Algolia API!
 
 ```js
 const res = await client.search({
-  indexName: 'my-index',
+  indexName: '<YOUR_INDEX>',
   searchParams: { query: 'words to query' },
 });
 
-console.log('Search result', res.hits);
+console.log('[Results]', res);
 ```
 
 Or with the `personalization` client
@@ -95,7 +104,7 @@ const res = await personalizationClient.getUserTokenProfile({
   userToken: 'token',
 });
 
-console.log('User scores', res.scores);
+console.log('[Results]', res);
 ```
 
 </TabItem>

@@ -9,3 +9,5 @@ This folder hosts the bundled specs used to:
 - Generate clients.
 - Generate documentation.
 - Share single readable spec file for a specific client.
+
+[Read more on our documentation](https://api-clients-automation.netlify.app/docs/automation/introduction)

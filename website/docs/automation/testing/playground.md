@@ -6,7 +6,15 @@ title: Playground
 
 All of the existing clients should have an active playground for you to test generated clients, if it's not the case, consider contributing or letting us know!
 
+:::info
+
+Make sure to first [setup the repository tooling](/docs/automation/setupRepository) to ease your journey!
+
+:::
+
 ## Usage
+
+> `language` and `client` defaults to `all`
 
 ```bash
 yarn docker playground <languageName> <clientName>

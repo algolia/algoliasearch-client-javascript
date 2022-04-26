@@ -2,6 +2,8 @@
 
 This folder hosts the generated clients.
 
+[Read more on our documentation](https://api-clients-automation.netlify.app/docs/clients/introduction)
+
 ## Generated clients
 
 ### Java
