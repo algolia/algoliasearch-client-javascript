@@ -20,13 +20,15 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
         'firstMatchedWord' => 'int',
         'geoDistance' => 'int',
         'geoPrecision' => 'int',
-        'matchedGeoLocation' => 'array<string,\Algolia\AlgoliaSearch\Model\Recommend\RankingInfoMatchedGeoLocation>',
+        'matchedGeoLocation' => '\Algolia\AlgoliaSearch\Model\Recommend\MatchedGeoLocation',
+        'personalization' => '\Algolia\AlgoliaSearch\Model\Recommend\Personalization',
         'nbExactWords' => 'int',
         'nbTypos' => 'int',
         'promoted' => 'bool',
         'proximityDistance' => 'int',
         'userScore' => 'int',
-        'word' => 'int',
+        'words' => 'int',
+        'promotedByReRanking' => 'bool',
     ];
 
     /**
@@ -40,12 +42,14 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
         'geoDistance' => null,
         'geoPrecision' => null,
         'matchedGeoLocation' => null,
+        'personalization' => null,
         'nbExactWords' => null,
         'nbTypos' => null,
         'promoted' => null,
         'proximityDistance' => null,
         'userScore' => null,
-        'word' => null,
+        'words' => null,
+        'promotedByReRanking' => null,
     ];
 
     /**
@@ -79,12 +83,14 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
         'geoDistance' => 'setGeoDistance',
         'geoPrecision' => 'setGeoPrecision',
         'matchedGeoLocation' => 'setMatchedGeoLocation',
+        'personalization' => 'setPersonalization',
         'nbExactWords' => 'setNbExactWords',
         'nbTypos' => 'setNbTypos',
         'promoted' => 'setPromoted',
         'proximityDistance' => 'setProximityDistance',
         'userScore' => 'setUserScore',
-        'word' => 'setWord',
+        'words' => 'setWords',
+        'promotedByReRanking' => 'setPromotedByReRanking',
     ];
 
     /**
@@ -98,12 +104,14 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
         'geoDistance' => 'getGeoDistance',
         'geoPrecision' => 'getGeoPrecision',
         'matchedGeoLocation' => 'getMatchedGeoLocation',
+        'personalization' => 'getPersonalization',
         'nbExactWords' => 'getNbExactWords',
         'nbTypos' => 'getNbTypos',
         'promoted' => 'getPromoted',
         'proximityDistance' => 'getProximityDistance',
         'userScore' => 'getUserScore',
-        'word' => 'getWord',
+        'words' => 'getWords',
+        'promotedByReRanking' => 'getPromotedByReRanking',
     ];
 
     /**
@@ -155,6 +163,9 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
         if (isset($data['matchedGeoLocation'])) {
             $this->container['matchedGeoLocation'] = $data['matchedGeoLocation'];
         }
+        if (isset($data['personalization'])) {
+            $this->container['personalization'] = $data['personalization'];
+        }
         if (isset($data['nbExactWords'])) {
             $this->container['nbExactWords'] = $data['nbExactWords'];
         }
@@ -170,8 +181,11 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
         if (isset($data['userScore'])) {
             $this->container['userScore'] = $data['userScore'];
         }
-        if (isset($data['word'])) {
-            $this->container['word'] = $data['word'];
+        if (isset($data['words'])) {
+            $this->container['words'] = $data['words'];
+        }
+        if (isset($data['promotedByReRanking'])) {
+            $this->container['promotedByReRanking'] = $data['promotedByReRanking'];
         }
     }
 
@@ -183,6 +197,31 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     public function listInvalidProperties()
     {
         $invalidProperties = [];
+
+        if (!isset($this->container['filters']) || $this->container['filters'] === null) {
+            $invalidProperties[] = "'filters' can't be null";
+        }
+        if (!isset($this->container['firstMatchedWord']) || $this->container['firstMatchedWord'] === null) {
+            $invalidProperties[] = "'firstMatchedWord' can't be null";
+        }
+        if (!isset($this->container['geoDistance']) || $this->container['geoDistance'] === null) {
+            $invalidProperties[] = "'geoDistance' can't be null";
+        }
+        if (!isset($this->container['nbExactWords']) || $this->container['nbExactWords'] === null) {
+            $invalidProperties[] = "'nbExactWords' can't be null";
+        }
+        if (!isset($this->container['nbTypos']) || $this->container['nbTypos'] === null) {
+            $invalidProperties[] = "'nbTypos' can't be null";
+        }
+        if (!isset($this->container['promoted']) || $this->container['promoted'] === null) {
+            $invalidProperties[] = "'promoted' can't be null";
+        }
+        if (!isset($this->container['userScore']) || $this->container['userScore'] === null) {
+            $invalidProperties[] = "'userScore' can't be null";
+        }
+        if (!isset($this->container['words']) || $this->container['words'] === null) {
+            $invalidProperties[] = "'words' can't be null";
+        }
 
         return $invalidProperties;
     }
@@ -201,7 +240,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Gets filters
      *
-     * @return int|null
+     * @return int
      */
     public function getFilters()
     {
@@ -211,7 +250,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Sets filters
      *
-     * @param int|null $filters this field is reserved for advanced usage
+     * @param int $filters this field is reserved for advanced usage
      *
      * @return self
      */
@@ -225,7 +264,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Gets firstMatchedWord
      *
-     * @return int|null
+     * @return int
      */
     public function getFirstMatchedWord()
     {
@@ -235,7 +274,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Sets firstMatchedWord
      *
-     * @param int|null $firstMatchedWord position of the most important matched attribute in the attributes to index list
+     * @param int $firstMatchedWord position of the most important matched attribute in the attributes to index list
      *
      * @return self
      */
@@ -249,7 +288,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Gets geoDistance
      *
-     * @return int|null
+     * @return int
      */
     public function getGeoDistance()
     {
@@ -259,7 +298,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Sets geoDistance
      *
-     * @param int|null $geoDistance distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters)
+     * @param int $geoDistance distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters)
      *
      * @return self
      */
@@ -297,7 +336,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Gets matchedGeoLocation
      *
-     * @return array<string,\Algolia\AlgoliaSearch\Model\Recommend\RankingInfoMatchedGeoLocation>|null
+     * @return \Algolia\AlgoliaSearch\Model\Recommend\MatchedGeoLocation|null
      */
     public function getMatchedGeoLocation()
     {
@@ -307,7 +346,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Sets matchedGeoLocation
      *
-     * @param array<string,\Algolia\AlgoliaSearch\Model\Recommend\RankingInfoMatchedGeoLocation>|null $matchedGeoLocation matchedGeoLocation
+     * @param \Algolia\AlgoliaSearch\Model\Recommend\MatchedGeoLocation|null $matchedGeoLocation matchedGeoLocation
      *
      * @return self
      */
@@ -319,9 +358,33 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     }
 
     /**
+     * Gets personalization
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Recommend\Personalization|null
+     */
+    public function getPersonalization()
+    {
+        return $this->container['personalization'] ?? null;
+    }
+
+    /**
+     * Sets personalization
+     *
+     * @param \Algolia\AlgoliaSearch\Model\Recommend\Personalization|null $personalization personalization
+     *
+     * @return self
+     */
+    public function setPersonalization($personalization)
+    {
+        $this->container['personalization'] = $personalization;
+
+        return $this;
+    }
+
+    /**
      * Gets nbExactWords
      *
-     * @return int|null
+     * @return int
      */
     public function getNbExactWords()
     {
@@ -331,7 +394,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Sets nbExactWords
      *
-     * @param int|null $nbExactWords number of exactly matched words
+     * @param int $nbExactWords number of exactly matched words
      *
      * @return self
      */
@@ -345,7 +408,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Gets nbTypos
      *
-     * @return int|null
+     * @return int
      */
     public function getNbTypos()
     {
@@ -355,7 +418,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Sets nbTypos
      *
-     * @param int|null $nbTypos number of typos encountered when matching the record
+     * @param int $nbTypos number of typos encountered when matching the record
      *
      * @return self
      */
@@ -369,7 +432,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Gets promoted
      *
-     * @return bool|null
+     * @return bool
      */
     public function getPromoted()
     {
@@ -379,7 +442,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Sets promoted
      *
-     * @param bool|null $promoted present and set to true if a Rule promoted the hit
+     * @param bool $promoted present and set to true if a Rule promoted the hit
      *
      * @return self
      */
@@ -417,7 +480,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Gets userScore
      *
-     * @return int|null
+     * @return int
      */
     public function getUserScore()
     {
@@ -427,7 +490,7 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     /**
      * Sets userScore
      *
-     * @param int|null $userScore custom ranking for the object, expressed as a single integer value
+     * @param int $userScore custom ranking for the object, expressed as a single integer value
      *
      * @return self
      */
@@ -439,25 +502,49 @@ class RankingInfo extends \Algolia\AlgoliaSearch\Model\AbstractModel implements 
     }
 
     /**
-     * Gets word
+     * Gets words
      *
-     * @return int|null
+     * @return int
      */
-    public function getWord()
+    public function getWords()
     {
-        return $this->container['word'] ?? null;
+        return $this->container['words'] ?? null;
     }
 
     /**
-     * Sets word
+     * Sets words
      *
-     * @param int|null $word number of matched words, including prefixes and typos
+     * @param int $words number of matched words, including prefixes and typos
      *
      * @return self
      */
-    public function setWord($word)
+    public function setWords($words)
     {
-        $this->container['word'] = $word;
+        $this->container['words'] = $words;
+
+        return $this;
+    }
+
+    /**
+     * Gets promotedByReRanking
+     *
+     * @return bool|null
+     */
+    public function getPromotedByReRanking()
+    {
+        return $this->container['promotedByReRanking'] ?? null;
+    }
+
+    /**
+     * Sets promotedByReRanking
+     *
+     * @param bool|null $promotedByReRanking wether the record are promoted by the re-ranking strategy
+     *
+     * @return self
+     */
+    public function setPromotedByReRanking($promotedByReRanking)
+    {
+        $this->container['promotedByReRanking'] = $promotedByReRanking;
 
         return $this;
     }

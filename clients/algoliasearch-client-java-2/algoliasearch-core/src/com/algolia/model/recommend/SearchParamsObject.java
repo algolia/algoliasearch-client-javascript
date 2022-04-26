@@ -16,16 +16,16 @@ public class SearchParamsObject {
   private String filters = "";
 
   @SerializedName("facetFilters")
-  private List<String> facetFilters = null;
+  private FacetFilters facetFilters;
 
   @SerializedName("optionalFilters")
-  private List<String> optionalFilters = null;
+  private OptionalFilters optionalFilters;
 
   @SerializedName("numericFilters")
-  private List<String> numericFilters = null;
+  private NumericFilters numericFilters;
 
   @SerializedName("tagFilters")
-  private List<String> tagFilters = null;
+  private TagFilters tagFilters;
 
   @SerializedName("sumOrFiltersScores")
   private Boolean sumOrFiltersScores = false;
@@ -104,6 +104,9 @@ public class SearchParamsObject {
 
   @SerializedName("enableReRanking")
   private Boolean enableReRanking = true;
+
+  @SerializedName("reRankingApplyFilter")
+  private ReRankingApplyFilter reRankingApplyFilter;
 
   @SerializedName("query")
   private String query = "";
@@ -273,96 +276,65 @@ public class SearchParamsObject {
     return filters;
   }
 
-  public SearchParamsObject setFacetFilters(List<String> facetFilters) {
+  public SearchParamsObject setFacetFilters(FacetFilters facetFilters) {
     this.facetFilters = facetFilters;
     return this;
   }
 
-  public SearchParamsObject addFacetFiltersItem(String facetFiltersItem) {
-    if (this.facetFilters == null) {
-      this.facetFilters = new ArrayList<>();
-    }
-    this.facetFilters.add(facetFiltersItem);
-    return this;
-  }
-
   /**
-   * Filter hits by facet value.
+   * Get facetFilters
    *
    * @return facetFilters
    */
   @javax.annotation.Nullable
-  public List<String> getFacetFilters() {
+  public FacetFilters getFacetFilters() {
     return facetFilters;
   }
 
-  public SearchParamsObject setOptionalFilters(List<String> optionalFilters) {
+  public SearchParamsObject setOptionalFilters(
+    OptionalFilters optionalFilters
+  ) {
     this.optionalFilters = optionalFilters;
     return this;
   }
 
-  public SearchParamsObject addOptionalFiltersItem(String optionalFiltersItem) {
-    if (this.optionalFilters == null) {
-      this.optionalFilters = new ArrayList<>();
-    }
-    this.optionalFilters.add(optionalFiltersItem);
-    return this;
-  }
-
   /**
-   * Create filters for ranking purposes, where records that match the filter are ranked higher, or
-   * lower in the case of a negative optional filter.
+   * Get optionalFilters
    *
    * @return optionalFilters
    */
   @javax.annotation.Nullable
-  public List<String> getOptionalFilters() {
+  public OptionalFilters getOptionalFilters() {
     return optionalFilters;
   }
 
-  public SearchParamsObject setNumericFilters(List<String> numericFilters) {
+  public SearchParamsObject setNumericFilters(NumericFilters numericFilters) {
     this.numericFilters = numericFilters;
     return this;
   }
 
-  public SearchParamsObject addNumericFiltersItem(String numericFiltersItem) {
-    if (this.numericFilters == null) {
-      this.numericFilters = new ArrayList<>();
-    }
-    this.numericFilters.add(numericFiltersItem);
-    return this;
-  }
-
   /**
-   * Filter on numeric attributes.
+   * Get numericFilters
    *
    * @return numericFilters
    */
   @javax.annotation.Nullable
-  public List<String> getNumericFilters() {
+  public NumericFilters getNumericFilters() {
     return numericFilters;
   }
 
-  public SearchParamsObject setTagFilters(List<String> tagFilters) {
+  public SearchParamsObject setTagFilters(TagFilters tagFilters) {
     this.tagFilters = tagFilters;
     return this;
   }
 
-  public SearchParamsObject addTagFiltersItem(String tagFiltersItem) {
-    if (this.tagFilters == null) {
-      this.tagFilters = new ArrayList<>();
-    }
-    this.tagFilters.add(tagFiltersItem);
-    return this;
-  }
-
   /**
-   * Filter hits by tags.
+   * Get tagFilters
    *
    * @return tagFilters
    */
   @javax.annotation.Nullable
-  public List<String> getTagFilters() {
+  public TagFilters getTagFilters() {
     return tagFilters;
   }
 
@@ -821,6 +793,23 @@ public class SearchParamsObject {
   @javax.annotation.Nullable
   public Boolean getEnableReRanking() {
     return enableReRanking;
+  }
+
+  public SearchParamsObject setReRankingApplyFilter(
+    ReRankingApplyFilter reRankingApplyFilter
+  ) {
+    this.reRankingApplyFilter = reRankingApplyFilter;
+    return this;
+  }
+
+  /**
+   * Get reRankingApplyFilter
+   *
+   * @return reRankingApplyFilter
+   */
+  @javax.annotation.Nullable
+  public ReRankingApplyFilter getReRankingApplyFilter() {
+    return reRankingApplyFilter;
   }
 
   public SearchParamsObject setQuery(String query) {
@@ -1786,6 +1775,10 @@ public class SearchParamsObject {
         this.enableReRanking,
         searchParamsObject.enableReRanking
       ) &&
+      Objects.equals(
+        this.reRankingApplyFilter,
+        searchParamsObject.reRankingApplyFilter
+      ) &&
       Objects.equals(this.query, searchParamsObject.query) &&
       Objects.equals(
         this.searchableAttributes,
@@ -1953,6 +1946,7 @@ public class SearchParamsObject {
       percentileComputation,
       enableABTest,
       enableReRanking,
+      reRankingApplyFilter,
       query,
       searchableAttributes,
       attributesForFaceting,
@@ -2117,6 +2111,10 @@ public class SearchParamsObject {
     sb
       .append("    enableReRanking: ")
       .append(toIndentedString(enableReRanking))
+      .append("\n");
+    sb
+      .append("    reRankingApplyFilter: ")
+      .append(toIndentedString(reRankingApplyFilter))
       .append("\n");
     sb.append("    query: ").append(toIndentedString(query)).append("\n");
     sb

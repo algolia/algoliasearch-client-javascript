@@ -18,10 +18,10 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     protected static $modelTypes = [
         'similarQuery' => 'string',
         'filters' => 'string',
-        'facetFilters' => 'string[]',
-        'optionalFilters' => 'string[]',
-        'numericFilters' => 'string[]',
-        'tagFilters' => 'string[]',
+        'facetFilters' => '\Algolia\AlgoliaSearch\Model\Search\FacetFilters',
+        'optionalFilters' => '\Algolia\AlgoliaSearch\Model\Search\OptionalFilters',
+        'numericFilters' => '\Algolia\AlgoliaSearch\Model\Search\NumericFilters',
+        'tagFilters' => '\Algolia\AlgoliaSearch\Model\Search\TagFilters',
         'sumOrFiltersScores' => 'bool',
         'facets' => 'string[]',
         'maxValuesPerFacet' => 'int',
@@ -48,6 +48,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
         'percentileComputation' => 'bool',
         'enableABTest' => 'bool',
         'enableReRanking' => 'bool',
+        'reRankingApplyFilter' => '\Algolia\AlgoliaSearch\Model\Search\ReRankingApplyFilter',
         'query' => 'string',
         'searchableAttributes' => 'string[]',
         'attributesForFaceting' => 'string[]',
@@ -133,6 +134,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
         'percentileComputation' => null,
         'enableABTest' => null,
         'enableReRanking' => null,
+        'reRankingApplyFilter' => null,
         'query' => null,
         'searchableAttributes' => null,
         'attributesForFaceting' => null,
@@ -238,6 +240,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
         'percentileComputation' => 'setPercentileComputation',
         'enableABTest' => 'setEnableABTest',
         'enableReRanking' => 'setEnableReRanking',
+        'reRankingApplyFilter' => 'setReRankingApplyFilter',
         'query' => 'setQuery',
         'searchableAttributes' => 'setSearchableAttributes',
         'attributesForFaceting' => 'setAttributesForFaceting',
@@ -323,6 +326,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
         'percentileComputation' => 'getPercentileComputation',
         'enableABTest' => 'getEnableABTest',
         'enableReRanking' => 'getEnableReRanking',
+        'reRankingApplyFilter' => 'getReRankingApplyFilter',
         'query' => 'getQuery',
         'searchableAttributes' => 'getSearchableAttributes',
         'attributesForFaceting' => 'getAttributesForFaceting',
@@ -499,6 +503,9 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
         }
         if (isset($data['enableReRanking'])) {
             $this->container['enableReRanking'] = $data['enableReRanking'];
+        }
+        if (isset($data['reRankingApplyFilter'])) {
+            $this->container['reRankingApplyFilter'] = $data['reRankingApplyFilter'];
         }
         if (isset($data['query'])) {
             $this->container['query'] = $data['query'];
@@ -746,7 +753,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Gets facetFilters
      *
-     * @return string[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\FacetFilters|null
      */
     public function getFacetFilters()
     {
@@ -756,7 +763,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Sets facetFilters
      *
-     * @param string[]|null $facetFilters filter hits by facet value
+     * @param \Algolia\AlgoliaSearch\Model\Search\FacetFilters|null $facetFilters facetFilters
      *
      * @return self
      */
@@ -770,7 +777,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Gets optionalFilters
      *
-     * @return string[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\OptionalFilters|null
      */
     public function getOptionalFilters()
     {
@@ -780,7 +787,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Sets optionalFilters
      *
-     * @param string[]|null $optionalFilters create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter
+     * @param \Algolia\AlgoliaSearch\Model\Search\OptionalFilters|null $optionalFilters optionalFilters
      *
      * @return self
      */
@@ -794,7 +801,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Gets numericFilters
      *
-     * @return string[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\NumericFilters|null
      */
     public function getNumericFilters()
     {
@@ -804,7 +811,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Sets numericFilters
      *
-     * @param string[]|null $numericFilters filter on numeric attributes
+     * @param \Algolia\AlgoliaSearch\Model\Search\NumericFilters|null $numericFilters numericFilters
      *
      * @return self
      */
@@ -818,7 +825,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Gets tagFilters
      *
-     * @return string[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\TagFilters|null
      */
     public function getTagFilters()
     {
@@ -828,7 +835,7 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     /**
      * Sets tagFilters
      *
-     * @param string[]|null $tagFilters filter hits by tags
+     * @param \Algolia\AlgoliaSearch\Model\Search\TagFilters|null $tagFilters tagFilters
      *
      * @return self
      */
@@ -1470,6 +1477,30 @@ class SearchParamsObject extends \Algolia\AlgoliaSearch\Model\AbstractModel impl
     public function setEnableReRanking($enableReRanking)
     {
         $this->container['enableReRanking'] = $enableReRanking;
+
+        return $this;
+    }
+
+    /**
+     * Gets reRankingApplyFilter
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Search\ReRankingApplyFilter|null
+     */
+    public function getReRankingApplyFilter()
+    {
+        return $this->container['reRankingApplyFilter'] ?? null;
+    }
+
+    /**
+     * Sets reRankingApplyFilter
+     *
+     * @param \Algolia\AlgoliaSearch\Model\Search\ReRankingApplyFilter|null $reRankingApplyFilter reRankingApplyFilter
+     *
+     * @return self
+     */
+    public function setReRankingApplyFilter($reRankingApplyFilter)
+    {
+        $this->container['reRankingApplyFilter'] = $reRankingApplyFilter;
 
         return $this;
     }

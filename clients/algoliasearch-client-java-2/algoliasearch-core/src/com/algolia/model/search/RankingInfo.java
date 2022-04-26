@@ -1,8 +1,6 @@
 package com.algolia.model.search;
 
 import com.google.gson.annotations.SerializedName;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 /** RankingInfo */
@@ -21,7 +19,10 @@ public class RankingInfo {
   private Integer geoPrecision;
 
   @SerializedName("matchedGeoLocation")
-  private Map<String, RankingInfoMatchedGeoLocation> matchedGeoLocation = null;
+  private MatchedGeoLocation matchedGeoLocation;
+
+  @SerializedName("personalization")
+  private Personalization personalization;
 
   @SerializedName("nbExactWords")
   private Integer nbExactWords;
@@ -38,8 +39,11 @@ public class RankingInfo {
   @SerializedName("userScore")
   private Integer userScore;
 
-  @SerializedName("word")
-  private Integer word;
+  @SerializedName("words")
+  private Integer words;
+
+  @SerializedName("promotedByReRanking")
+  private Boolean promotedByReRanking;
 
   public RankingInfo setFilters(Integer filters) {
     this.filters = filters;
@@ -51,7 +55,7 @@ public class RankingInfo {
    *
    * @return filters
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Integer getFilters() {
     return filters;
   }
@@ -66,7 +70,7 @@ public class RankingInfo {
    *
    * @return firstMatchedWord
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Integer getFirstMatchedWord() {
     return firstMatchedWord;
   }
@@ -82,7 +86,7 @@ public class RankingInfo {
    *
    * @return geoDistance
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Integer getGeoDistance() {
     return geoDistance;
   }
@@ -103,20 +107,9 @@ public class RankingInfo {
   }
 
   public RankingInfo setMatchedGeoLocation(
-    Map<String, RankingInfoMatchedGeoLocation> matchedGeoLocation
+    MatchedGeoLocation matchedGeoLocation
   ) {
     this.matchedGeoLocation = matchedGeoLocation;
-    return this;
-  }
-
-  public RankingInfo putMatchedGeoLocationItem(
-    String key,
-    RankingInfoMatchedGeoLocation matchedGeoLocationItem
-  ) {
-    if (this.matchedGeoLocation == null) {
-      this.matchedGeoLocation = new HashMap<>();
-    }
-    this.matchedGeoLocation.put(key, matchedGeoLocationItem);
     return this;
   }
 
@@ -126,8 +119,23 @@ public class RankingInfo {
    * @return matchedGeoLocation
    */
   @javax.annotation.Nullable
-  public Map<String, RankingInfoMatchedGeoLocation> getMatchedGeoLocation() {
+  public MatchedGeoLocation getMatchedGeoLocation() {
     return matchedGeoLocation;
+  }
+
+  public RankingInfo setPersonalization(Personalization personalization) {
+    this.personalization = personalization;
+    return this;
+  }
+
+  /**
+   * Get personalization
+   *
+   * @return personalization
+   */
+  @javax.annotation.Nullable
+  public Personalization getPersonalization() {
+    return personalization;
   }
 
   public RankingInfo setNbExactWords(Integer nbExactWords) {
@@ -140,7 +148,7 @@ public class RankingInfo {
    *
    * @return nbExactWords
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Integer getNbExactWords() {
     return nbExactWords;
   }
@@ -155,7 +163,7 @@ public class RankingInfo {
    *
    * @return nbTypos
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Integer getNbTypos() {
     return nbTypos;
   }
@@ -170,7 +178,7 @@ public class RankingInfo {
    *
    * @return promoted
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Boolean getPromoted() {
     return promoted;
   }
@@ -201,24 +209,39 @@ public class RankingInfo {
    *
    * @return userScore
    */
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public Integer getUserScore() {
     return userScore;
   }
 
-  public RankingInfo setWord(Integer word) {
-    this.word = word;
+  public RankingInfo setWords(Integer words) {
+    this.words = words;
     return this;
   }
 
   /**
    * Number of matched words, including prefixes and typos.
    *
-   * @return word
+   * @return words
+   */
+  @javax.annotation.Nonnull
+  public Integer getWords() {
+    return words;
+  }
+
+  public RankingInfo setPromotedByReRanking(Boolean promotedByReRanking) {
+    this.promotedByReRanking = promotedByReRanking;
+    return this;
+  }
+
+  /**
+   * Wether the record are promoted by the re-ranking strategy.
+   *
+   * @return promotedByReRanking
    */
   @javax.annotation.Nullable
-  public Integer getWord() {
-    return word;
+  public Boolean getPromotedByReRanking() {
+    return promotedByReRanking;
   }
 
   @Override
@@ -236,12 +259,14 @@ public class RankingInfo {
       Objects.equals(this.geoDistance, rankingInfo.geoDistance) &&
       Objects.equals(this.geoPrecision, rankingInfo.geoPrecision) &&
       Objects.equals(this.matchedGeoLocation, rankingInfo.matchedGeoLocation) &&
+      Objects.equals(this.personalization, rankingInfo.personalization) &&
       Objects.equals(this.nbExactWords, rankingInfo.nbExactWords) &&
       Objects.equals(this.nbTypos, rankingInfo.nbTypos) &&
       Objects.equals(this.promoted, rankingInfo.promoted) &&
       Objects.equals(this.proximityDistance, rankingInfo.proximityDistance) &&
       Objects.equals(this.userScore, rankingInfo.userScore) &&
-      Objects.equals(this.word, rankingInfo.word)
+      Objects.equals(this.words, rankingInfo.words) &&
+      Objects.equals(this.promotedByReRanking, rankingInfo.promotedByReRanking)
     );
   }
 
@@ -253,12 +278,14 @@ public class RankingInfo {
       geoDistance,
       geoPrecision,
       matchedGeoLocation,
+      personalization,
       nbExactWords,
       nbTypos,
       promoted,
       proximityDistance,
       userScore,
-      word
+      words,
+      promotedByReRanking
     );
   }
 
@@ -284,6 +311,10 @@ public class RankingInfo {
       .append(toIndentedString(matchedGeoLocation))
       .append("\n");
     sb
+      .append("    personalization: ")
+      .append(toIndentedString(personalization))
+      .append("\n");
+    sb
       .append("    nbExactWords: ")
       .append(toIndentedString(nbExactWords))
       .append("\n");
@@ -297,7 +328,11 @@ public class RankingInfo {
       .append("    userScore: ")
       .append(toIndentedString(userScore))
       .append("\n");
-    sb.append("    word: ").append(toIndentedString(word)).append("\n");
+    sb.append("    words: ").append(toIndentedString(words)).append("\n");
+    sb
+      .append("    promotedByReRanking: ")
+      .append(toIndentedString(promotedByReRanking))
+      .append("\n");
     sb.append("}");
     return sb.toString();
   }

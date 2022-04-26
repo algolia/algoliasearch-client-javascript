@@ -18,10 +18,10 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     protected static $modelTypes = [
         'similarQuery' => 'string',
         'filters' => 'string',
-        'facetFilters' => 'string[]',
-        'optionalFilters' => 'string[]',
-        'numericFilters' => 'string[]',
-        'tagFilters' => 'string[]',
+        'facetFilters' => '\Algolia\AlgoliaSearch\Model\Search\FacetFilters',
+        'optionalFilters' => '\Algolia\AlgoliaSearch\Model\Search\OptionalFilters',
+        'numericFilters' => '\Algolia\AlgoliaSearch\Model\Search\NumericFilters',
+        'tagFilters' => '\Algolia\AlgoliaSearch\Model\Search\TagFilters',
         'sumOrFiltersScores' => 'bool',
         'facets' => 'string[]',
         'maxValuesPerFacet' => 'int',
@@ -48,6 +48,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
         'percentileComputation' => 'bool',
         'enableABTest' => 'bool',
         'enableReRanking' => 'bool',
+        'reRankingApplyFilter' => '\Algolia\AlgoliaSearch\Model\Search\ReRankingApplyFilter',
     ];
 
     /**
@@ -88,6 +89,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
         'percentileComputation' => null,
         'enableABTest' => null,
         'enableReRanking' => null,
+        'reRankingApplyFilter' => null,
     ];
 
     /**
@@ -148,6 +150,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
         'percentileComputation' => 'setPercentileComputation',
         'enableABTest' => 'setEnableABTest',
         'enableReRanking' => 'setEnableReRanking',
+        'reRankingApplyFilter' => 'setReRankingApplyFilter',
     ];
 
     /**
@@ -188,6 +191,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
         'percentileComputation' => 'getPercentileComputation',
         'enableABTest' => 'getEnableABTest',
         'enableReRanking' => 'getEnableReRanking',
+        'reRankingApplyFilter' => 'getReRankingApplyFilter',
     ];
 
     /**
@@ -320,6 +324,9 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
         if (isset($data['enableReRanking'])) {
             $this->container['enableReRanking'] = $data['enableReRanking'];
         }
+        if (isset($data['reRankingApplyFilter'])) {
+            $this->container['reRankingApplyFilter'] = $data['reRankingApplyFilter'];
+        }
     }
 
     /**
@@ -408,7 +415,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     /**
      * Gets facetFilters
      *
-     * @return string[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\FacetFilters|null
      */
     public function getFacetFilters()
     {
@@ -418,7 +425,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     /**
      * Sets facetFilters
      *
-     * @param string[]|null $facetFilters filter hits by facet value
+     * @param \Algolia\AlgoliaSearch\Model\Search\FacetFilters|null $facetFilters facetFilters
      *
      * @return self
      */
@@ -432,7 +439,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     /**
      * Gets optionalFilters
      *
-     * @return string[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\OptionalFilters|null
      */
     public function getOptionalFilters()
     {
@@ -442,7 +449,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     /**
      * Sets optionalFilters
      *
-     * @param string[]|null $optionalFilters create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter
+     * @param \Algolia\AlgoliaSearch\Model\Search\OptionalFilters|null $optionalFilters optionalFilters
      *
      * @return self
      */
@@ -456,7 +463,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     /**
      * Gets numericFilters
      *
-     * @return string[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\NumericFilters|null
      */
     public function getNumericFilters()
     {
@@ -466,7 +473,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     /**
      * Sets numericFilters
      *
-     * @param string[]|null $numericFilters filter on numeric attributes
+     * @param \Algolia\AlgoliaSearch\Model\Search\NumericFilters|null $numericFilters numericFilters
      *
      * @return self
      */
@@ -480,7 +487,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     /**
      * Gets tagFilters
      *
-     * @return string[]|null
+     * @return \Algolia\AlgoliaSearch\Model\Search\TagFilters|null
      */
     public function getTagFilters()
     {
@@ -490,7 +497,7 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     /**
      * Sets tagFilters
      *
-     * @param string[]|null $tagFilters filter hits by tags
+     * @param \Algolia\AlgoliaSearch\Model\Search\TagFilters|null $tagFilters tagFilters
      *
      * @return self
      */
@@ -1132,6 +1139,30 @@ class BaseSearchParams extends \Algolia\AlgoliaSearch\Model\AbstractModel implem
     public function setEnableReRanking($enableReRanking)
     {
         $this->container['enableReRanking'] = $enableReRanking;
+
+        return $this;
+    }
+
+    /**
+     * Gets reRankingApplyFilter
+     *
+     * @return \Algolia\AlgoliaSearch\Model\Search\ReRankingApplyFilter|null
+     */
+    public function getReRankingApplyFilter()
+    {
+        return $this->container['reRankingApplyFilter'] ?? null;
+    }
+
+    /**
+     * Sets reRankingApplyFilter
+     *
+     * @param \Algolia\AlgoliaSearch\Model\Search\ReRankingApplyFilter|null $reRankingApplyFilter reRankingApplyFilter
+     *
+     * @return self
+     */
+    public function setReRankingApplyFilter($reRankingApplyFilter)
+    {
+        $this->container['reRankingApplyFilter'] = $reRankingApplyFilter;
 
         return $this;
     }

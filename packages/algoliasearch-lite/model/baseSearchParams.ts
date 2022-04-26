@@ -1,4 +1,9 @@
 import type { AroundRadius } from './aroundRadius';
+import type { FacetFilters } from './facetFilters';
+import type { NumericFilters } from './numericFilters';
+import type { OptionalFilters } from './optionalFilters';
+import type { ReRankingApplyFilter } from './reRankingApplyFilter';
+import type { TagFilters } from './tagFilters';
 
 export type BaseSearchParams = {
   /**
@@ -9,22 +14,10 @@ export type BaseSearchParams = {
    * Filter the query with numeric, facet and/or tag filters.
    */
   filters?: string;
-  /**
-   * Filter hits by facet value.
-   */
-  facetFilters?: string[];
-  /**
-   * Create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter.
-   */
-  optionalFilters?: string[];
-  /**
-   * Filter on numeric attributes.
-   */
-  numericFilters?: string[];
-  /**
-   * Filter hits by tags.
-   */
-  tagFilters?: string[];
+  facetFilters?: FacetFilters;
+  optionalFilters?: OptionalFilters;
+  numericFilters?: NumericFilters;
+  tagFilters?: TagFilters;
   /**
    * Determines how to calculate the total score for filtering.
    */
@@ -126,4 +119,5 @@ export type BaseSearchParams = {
    * Whether this search should use AI Re-Ranking.
    */
   enableReRanking?: boolean;
+  reRankingApplyFilter?: ReRankingApplyFilter;
 };

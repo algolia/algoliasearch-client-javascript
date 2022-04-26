@@ -25,16 +25,16 @@ public class ConsequenceParams {
   private String filters = "";
 
   @SerializedName("facetFilters")
-  private List<String> facetFilters = null;
+  private FacetFilters facetFilters;
 
   @SerializedName("optionalFilters")
-  private List<String> optionalFilters = null;
+  private OptionalFilters optionalFilters;
 
   @SerializedName("numericFilters")
-  private List<String> numericFilters = null;
+  private NumericFilters numericFilters;
 
   @SerializedName("tagFilters")
-  private List<String> tagFilters = null;
+  private TagFilters tagFilters;
 
   @SerializedName("sumOrFiltersScores")
   private Boolean sumOrFiltersScores = false;
@@ -113,6 +113,9 @@ public class ConsequenceParams {
 
   @SerializedName("enableReRanking")
   private Boolean enableReRanking = true;
+
+  @SerializedName("reRankingApplyFilter")
+  private ReRankingApplyFilter reRankingApplyFilter;
 
   @SerializedName("searchableAttributes")
   private List<String> searchableAttributes = null;
@@ -349,96 +352,63 @@ public class ConsequenceParams {
     return filters;
   }
 
-  public ConsequenceParams setFacetFilters(List<String> facetFilters) {
+  public ConsequenceParams setFacetFilters(FacetFilters facetFilters) {
     this.facetFilters = facetFilters;
     return this;
   }
 
-  public ConsequenceParams addFacetFiltersItem(String facetFiltersItem) {
-    if (this.facetFilters == null) {
-      this.facetFilters = new ArrayList<>();
-    }
-    this.facetFilters.add(facetFiltersItem);
-    return this;
-  }
-
   /**
-   * Filter hits by facet value.
+   * Get facetFilters
    *
    * @return facetFilters
    */
   @javax.annotation.Nullable
-  public List<String> getFacetFilters() {
+  public FacetFilters getFacetFilters() {
     return facetFilters;
   }
 
-  public ConsequenceParams setOptionalFilters(List<String> optionalFilters) {
+  public ConsequenceParams setOptionalFilters(OptionalFilters optionalFilters) {
     this.optionalFilters = optionalFilters;
     return this;
   }
 
-  public ConsequenceParams addOptionalFiltersItem(String optionalFiltersItem) {
-    if (this.optionalFilters == null) {
-      this.optionalFilters = new ArrayList<>();
-    }
-    this.optionalFilters.add(optionalFiltersItem);
-    return this;
-  }
-
   /**
-   * Create filters for ranking purposes, where records that match the filter are ranked higher, or
-   * lower in the case of a negative optional filter.
+   * Get optionalFilters
    *
    * @return optionalFilters
    */
   @javax.annotation.Nullable
-  public List<String> getOptionalFilters() {
+  public OptionalFilters getOptionalFilters() {
     return optionalFilters;
   }
 
-  public ConsequenceParams setNumericFilters(List<String> numericFilters) {
+  public ConsequenceParams setNumericFilters(NumericFilters numericFilters) {
     this.numericFilters = numericFilters;
     return this;
   }
 
-  public ConsequenceParams addNumericFiltersItem(String numericFiltersItem) {
-    if (this.numericFilters == null) {
-      this.numericFilters = new ArrayList<>();
-    }
-    this.numericFilters.add(numericFiltersItem);
-    return this;
-  }
-
   /**
-   * Filter on numeric attributes.
+   * Get numericFilters
    *
    * @return numericFilters
    */
   @javax.annotation.Nullable
-  public List<String> getNumericFilters() {
+  public NumericFilters getNumericFilters() {
     return numericFilters;
   }
 
-  public ConsequenceParams setTagFilters(List<String> tagFilters) {
+  public ConsequenceParams setTagFilters(TagFilters tagFilters) {
     this.tagFilters = tagFilters;
     return this;
   }
 
-  public ConsequenceParams addTagFiltersItem(String tagFiltersItem) {
-    if (this.tagFilters == null) {
-      this.tagFilters = new ArrayList<>();
-    }
-    this.tagFilters.add(tagFiltersItem);
-    return this;
-  }
-
   /**
-   * Filter hits by tags.
+   * Get tagFilters
    *
    * @return tagFilters
    */
   @javax.annotation.Nullable
-  public List<String> getTagFilters() {
+  public TagFilters getTagFilters() {
     return tagFilters;
   }
 
@@ -895,6 +865,23 @@ public class ConsequenceParams {
   @javax.annotation.Nullable
   public Boolean getEnableReRanking() {
     return enableReRanking;
+  }
+
+  public ConsequenceParams setReRankingApplyFilter(
+    ReRankingApplyFilter reRankingApplyFilter
+  ) {
+    this.reRankingApplyFilter = reRankingApplyFilter;
+    return this;
+  }
+
+  /**
+   * Get reRankingApplyFilter
+   *
+   * @return reRankingApplyFilter
+   */
+  @javax.annotation.Nullable
+  public ReRankingApplyFilter getReRankingApplyFilter() {
+    return reRankingApplyFilter;
   }
 
   public ConsequenceParams setSearchableAttributes(
@@ -1842,6 +1829,10 @@ public class ConsequenceParams {
       Objects.equals(this.enableABTest, consequenceParams.enableABTest) &&
       Objects.equals(this.enableReRanking, consequenceParams.enableReRanking) &&
       Objects.equals(
+        this.reRankingApplyFilter,
+        consequenceParams.reRankingApplyFilter
+      ) &&
+      Objects.equals(
         this.searchableAttributes,
         consequenceParams.searchableAttributes
       ) &&
@@ -2001,6 +1992,7 @@ public class ConsequenceParams {
       percentileComputation,
       enableABTest,
       enableReRanking,
+      reRankingApplyFilter,
       searchableAttributes,
       attributesForFaceting,
       unretrievableAttributes,
@@ -2173,6 +2165,10 @@ public class ConsequenceParams {
     sb
       .append("    enableReRanking: ")
       .append(toIndentedString(enableReRanking))
+      .append("\n");
+    sb
+      .append("    reRankingApplyFilter: ")
+      .append(toIndentedString(reRankingApplyFilter))
       .append("\n");
     sb
       .append("    searchableAttributes: ")

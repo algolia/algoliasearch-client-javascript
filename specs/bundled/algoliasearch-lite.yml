@@ -162,6 +162,38 @@ components:
       properties:
         params:
           $ref: '#/components/schemas/paramsAsString'
+    searchFiltersArrayString:
+      type: array
+      items:
+        type: string
+    searchFiltersNestedArrayString:
+      type: array
+      items:
+        type: array
+        items:
+          type: string
+    facetFilters:
+      description: Filter hits by facet value.
+      oneOf:
+        - $ref: '#/components/schemas/searchFiltersArrayString'
+        - $ref: '#/components/schemas/searchFiltersNestedArrayString'
+    optionalFilters:
+      description: >-
+        Create filters for ranking purposes, where records that match the filter
+        are ranked higher, or lower in the case of a negative optional filter.
+      oneOf:
+        - $ref: '#/components/schemas/searchFiltersArrayString'
+        - $ref: '#/components/schemas/searchFiltersNestedArrayString'
+    numericFilters:
+      description: Filter on numeric attributes.
+      oneOf:
+        - $ref: '#/components/schemas/searchFiltersArrayString'
+        - $ref: '#/components/schemas/searchFiltersNestedArrayString'
+    tagFilters:
+      description: Filter hits by tags.
+      oneOf:
+        - $ref: '#/components/schemas/searchFiltersArrayString'
+        - $ref: '#/components/schemas/searchFiltersNestedArrayString'
     page:
       type: integer
       description: Specify the page to retrieve.
@@ -176,6 +208,13 @@ components:
         - type: integer
           minimum: 1
         - $ref: '#/components/schemas/aroundRadiusAll'
+    reRankingApplyFilter:
+      description: >-
+        When Dynamic Re-Ranking is enabled, only records that match these
+        filters will be impacted by Dynamic Re-Ranking.
+      oneOf:
+        - $ref: '#/components/schemas/searchFiltersArrayString'
+        - $ref: '#/components/schemas/searchFiltersNestedArrayString'
     baseSearchParams:
       type: object
       additionalProperties: false
@@ -191,32 +230,13 @@ components:
           description: Filter the query with numeric, facet and/or tag filters.
           default: ''
         facetFilters:
-          type: array
-          items:
-            type: string
-          description: Filter hits by facet value.
-          default: []
+          $ref: '#/components/schemas/facetFilters'
         optionalFilters:
-          type: array
-          items:
-            type: string
-          description: >-
-            Create filters for ranking purposes, where records that match the
-            filter are ranked higher, or lower in the case of a negative
-            optional filter.
-          default: []
+          $ref: '#/components/schemas/optionalFilters'
         numericFilters:
-          type: array
-          items:
-            type: string
-          description: Filter on numeric attributes.
-          default: []
+          $ref: '#/components/schemas/numericFilters'
         tagFilters:
-          type: array
-          items:
-            type: string
-          description: Filter hits by tags.
-          default: []
+          $ref: '#/components/schemas/tagFilters'
         sumOrFiltersScores:
           type: boolean
           description: Determines how to calculate the total score for filtering.
@@ -349,6 +369,8 @@ components:
           type: boolean
           description: Whether this search should use AI Re-Ranking.
           default: true
+        reRankingApplyFilter:
+          $ref: '#/components/schemas/reRankingApplyFilter'
     query:
       type: string
       description: The text to search in the index.
@@ -873,6 +895,34 @@ components:
           $ref: '#/components/schemas/highlightedValue'
         matchLevel:
           $ref: '#/components/schemas/matchLevel'
+    matchedGeoLocation:
+      type: object
+      properties:
+        lat:
+          type: number
+          format: double
+          description: Latitude of the matched location.
+        lng:
+          type: number
+          format: double
+          description: Longitude of the matched location.
+        distance:
+          type: integer
+          description: >-
+            Distance between the matched location and the search location (in
+            meters).
+    personalization:
+      type: object
+      properties:
+        filtersScore:
+          type: integer
+          description: The score of the filters.
+        rankingScore:
+          type: integer
+          description: The score of the ranking.
+        score:
+          type: integer
+          description: The score of the event.
     rankingInfo:
       type: object
       additionalProperties: false
@@ -895,24 +945,9 @@ components:
           type: integer
           description: Precision used when computing the geo distance, in meters.
         matchedGeoLocation:
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties: false
-            properties:
-              lat:
-                type: number
-                format: double
-                description: Latitude of the matched location.
-              lng:
-                type: number
-                format: double
-                description: Longitude of the matched location.
-              distance:
-                type: integer
-                description: >-
-                  Distance between the matched location and the search location
-                  (in meters).
+          $ref: '#/components/schemas/matchedGeoLocation'
+        personalization:
+          $ref: '#/components/schemas/personalization'
         nbExactWords:
           type: integer
           description: Number of exactly matched words.
@@ -930,9 +965,21 @@ components:
         userScore:
           type: integer
           description: Custom ranking for the object, expressed as a single integer value.
-        word:
+        words:
           type: integer
           description: Number of matched words, including prefixes and typos.
+        promotedByReRanking:
+          type: boolean
+          description: Wether the record are promoted by the re-ranking strategy.
+      required:
+        - promoted
+        - nbTypos
+        - firstMatchedWord
+        - geoDistance
+        - nbExactWords
+        - words
+        - filters
+        - userScore
     _distinctSeqID:
       type: integer
     hit:
