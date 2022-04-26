@@ -1011,7 +1011,7 @@ describe('saveSynonyms', () => {
 });
 
 describe('search', () => {
-  test('search', async () => {
+  test('search with minimal parameters', async () => {
     const req = (await client.search({
       indexName: 'indexName',
       searchParams: { query: 'myQuery' },
@@ -1020,6 +1020,21 @@ describe('search', () => {
     expect(req.path).toEqual('/1/indexes/indexName/query');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ query: 'myQuery' });
+    expect(req.searchParams).toEqual(undefined);
+  });
+
+  test('search with facetFilters', async () => {
+    const req = (await client.search({
+      indexName: 'indexName',
+      searchParams: { query: 'myQuery', facetFilters: ['tags:algolia'] },
+    })) as unknown as EchoResponse;
+
+    expect(req.path).toEqual('/1/indexes/indexName/query');
+    expect(req.method).toEqual('POST');
+    expect(req.data).toEqual({
+      query: 'myQuery',
+      facetFilters: ['tags:algolia'],
+    });
     expect(req.searchParams).toEqual(undefined);
   });
 });

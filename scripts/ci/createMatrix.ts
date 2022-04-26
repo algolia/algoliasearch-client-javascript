@@ -1,5 +1,5 @@
 import { CLIENTS, GENERATORS } from '../common';
-import { createClientName } from '../cts/utils';
+import { camelize, createClientName } from '../cts/utils';
 import type { Language } from '../types';
 
 import { getNbGitDiff } from './utils';
@@ -16,9 +16,10 @@ type BaseMatrix = {
 };
 
 type ClientMatrix = BaseMatrix & {
-  config?: string;
-  api?: string;
-  capitalizedName?: string;
+  config: string;
+  api: string;
+  capitalizedName: string;
+  camelizedName: string;
 };
 
 type SpecMatrix = BaseMatrix;
@@ -56,18 +57,16 @@ async function getClientMatrix({
       continue;
     }
 
-    const matchedGenerator: ClientMatrix = {
-      name: client,
-      path: output,
-    };
-
     const clientName = createClientName(client, language);
 
-    matchedGenerator.config = `${clientName}Config`;
-    matchedGenerator.api = `${clientName}Client`;
-    matchedGenerator.capitalizedName = clientName;
-
-    matrix.client.push(matchedGenerator);
+    matrix.client.push({
+      name: client,
+      path: output,
+      config: `${clientName}Config`,
+      api: `${clientName}Client`,
+      capitalizedName: clientName,
+      camelizedName: camelize(client),
+    });
   }
 
   return matrix;

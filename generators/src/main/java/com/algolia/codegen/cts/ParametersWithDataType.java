@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import io.swagger.util.Json;
 import java.util.*;
 import java.util.Map.Entry;
+import org.openapitools.codegen.CodegenComposedSchemas;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
 import org.openapitools.codegen.CodegenParameter;
@@ -205,7 +206,24 @@ public class ParametersWithDataType {
     int suffix
   ) throws CTSException {
     if (!spec.getHasVars()) {
-      throw new CTSException("Spec has no vars.");
+      // In this case we might have a complex `allOf`, we will first check
+      // if it exists
+      CodegenComposedSchemas composedSchemas = spec.getComposedSchemas();
+
+      if (composedSchemas != null) {
+        List<CodegenProperty> allOf = composedSchemas.getAllOf();
+
+        if (allOf != null && !allOf.isEmpty()) {
+          traverseParams(paramName, param, allOf.get(0), parent, suffix);
+
+          return;
+        }
+      }
+      // We only throw if there is no `composedSchemas`, because `oneOf` can also
+      // be handled below
+      else {
+        throw new CTSException("Spec has no vars.");
+      }
     }
 
     if (spec.getItems() != null) {
@@ -224,12 +242,21 @@ public class ParametersWithDataType {
       );
 
       HashMap<String, String> oneOfModel = new HashMap<>();
+      String typeName = getTypeName(match).replace("<", "").replace(">", "");
 
       oneOfModel.put("classname", Utils.capitalize(baseType));
-      oneOfModel.put(
-        "name",
-        getTypeName(match).replace("<", "").replace(">", "")
-      );
+
+      if (typeName.equals("List")) {
+        CodegenProperty items = match.getItems();
+
+        if (items == null) {
+          throw new CTSException("Unhandled case for empty oneOf List items.");
+        }
+
+        typeName += getTypeName(items);
+      }
+
+      oneOfModel.put("name", typeName);
       testOutput.put("oneOfModel", oneOfModel);
 
       return;
@@ -466,7 +493,18 @@ public class ParametersWithDataType {
       return bestOneOf;
     }
     if (param instanceof List) {
-      // no idea for list
+      // NICE ---> no idea for list <--- NICE
+      CodegenComposedSchemas composedSchemas = model.getComposedSchemas();
+
+      if (composedSchemas != null) {
+        List<CodegenProperty> oneOf = composedSchemas.getOneOf();
+
+        // Somehow this is not yet enough
+        if (oneOf != null && !oneOf.isEmpty()) {
+          return oneOf.get(0);
+        }
+      }
+
       return null;
     }
 

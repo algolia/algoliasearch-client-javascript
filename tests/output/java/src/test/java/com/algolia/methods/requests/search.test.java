@@ -2098,7 +2098,7 @@ class SearchClientTests {
   }
 
   @Test
-  @DisplayName("search")
+  @DisplayName("search with minimal parameters")
   void searchTest0() {
     String indexName0 = "indexName";
 
@@ -2123,6 +2123,46 @@ class SearchClientTests {
     assertDoesNotThrow(() -> {
       JSONAssert.assertEquals(
         "{\"query\":\"myQuery\"}",
+        req.getBody(),
+        JSONCompareMode.STRICT_ORDER
+      );
+    });
+  }
+
+  @Test
+  @DisplayName("search with facetFilters")
+  void searchTest1() {
+    String indexName0 = "indexName";
+
+    SearchParamsObject searchParams0 = new SearchParamsObject();
+    {
+      String query1 = "myQuery";
+
+      searchParams0.setQuery(query1);
+
+      List<String> facetFilters1 = new ArrayList<>();
+      {
+        String facetFilters_02 = "tags:algolia";
+
+        facetFilters1.add(facetFilters_02);
+      }
+      searchParams0.setFacetFilters(FacetFilters.ofListString(facetFilters1));
+    }
+
+    EchoResponseInterface req = (EchoResponseInterface) assertDoesNotThrow(() -> {
+        return client.search(
+          indexName0,
+          SearchParams.ofSearchParamsObject(searchParams0)
+        );
+      }
+    );
+
+    assertEquals(req.getPath(), "/1/indexes/indexName/query");
+    assertEquals(req.getMethod(), "POST");
+
+    assertDoesNotThrow(() -> {
+      JSONAssert.assertEquals(
+        "{\"query\":\"myQuery\",\"facetFilters\":[\"tags:algolia\"]}",
         req.getBody(),
         JSONCompareMode.STRICT_ORDER
       );

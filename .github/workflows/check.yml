@@ -222,7 +222,7 @@ jobs:
         with:
           path: |
             ${{ format('{0}/algoliasearch-core/src/com/algolia/api/{1}.java', matrix.client.path, matrix.client.api) }}
-            ${{ format('{0}/{1}/**', matrix.client.path, matrix.client.capitalizedName) }}
+            ${{ format('{0}/algoliasearch-core/src/com/algolia/model/{1}/**', matrix.client.path, matrix.client.camelizedName) }}
           key: |
             ${{ env.CACHE_VERSION }}-${{
             hashFiles(

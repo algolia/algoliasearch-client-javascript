@@ -194,12 +194,7 @@ buildCommand
         clientsTodo = CLIENTS;
       }
       // ignore cache when building from cli
-      await buildSpecs(
-        clientsTodo,
-        outputFormat!,
-        Boolean(verbose),
-        !skipCache
-      );
+      await buildSpecs(clientsTodo, outputFormat, Boolean(verbose), !skipCache);
     }
   );
 

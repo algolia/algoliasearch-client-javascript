@@ -64,22 +64,9 @@ rankingInfo:
       type: integer
       description: Precision used when computing the geo distance, in meters.
     matchedGeoLocation:
-      type: object
-      additionalProperties:
-        type: object
-        additionalProperties: false
-        properties:
-          lat:
-            type: number
-            format: double
-            description: Latitude of the matched location.
-          lng:
-            type: number
-            format: double
-            description: Longitude of the matched location.
-          distance:
-            type: integer
-            description: Distance between the matched location and the search location (in meters).
+      $ref: '#/matchedGeoLocation'
+    personalization:
+      $ref: '#/personalization'
     nbExactWords:
       type: integer
       description: Number of exactly matched words.
@@ -95,9 +82,21 @@ rankingInfo:
     userScore:
       type: integer
       description: Custom ranking for the object, expressed as a single integer value.
-    word:
+    words:
       type: integer
       description: Number of matched words, including prefixes and typos.
+    promotedByReRanking:
+      type: boolean
+      description: Wether the record are promoted by the re-ranking strategy.
+  required:
+    - promoted
+    - nbTypos
+    - firstMatchedWord
+    - geoDistance
+    - nbExactWords
+    - words
+    - filters
+    - userScore
 
 highlightedValue:
   type: string
@@ -108,3 +107,31 @@ matchLevel:
   type: string
   description: Indicates how well the attribute matched the search query.
   enum: [none, partial, full]
+
+matchedGeoLocation:
+  type: object
+  properties:
+    lat:
+      type: number
+      format: double
+      description: Latitude of the matched location.
+    lng:
+      type: number
+      format: double
+      description: Longitude of the matched location.
+    distance:
+      type: integer
+      description: Distance between the matched location and the search location (in meters).
+
+personalization:
+  type: object
+  properties:
+    filtersScore:
+      type: integer
+      description: The score of the filters.
+    rankingScore:
+      type: integer
+      description: The score of the ranking.
+    score:
+      type: integer
+      description: The score of the event.

@@ -30,31 +30,14 @@ baseSearchParams:
       type: string
       description: Filter the query with numeric, facet and/or tag filters.
       default: ''
-      # There could be a pattern for this one (complicated one)
     facetFilters:
-      type: array
-      items:
-        type: string
-      description: Filter hits by facet value.
-      default: []
+      $ref: '#/facetFilters'
     optionalFilters:
-      type: array
-      items:
-        type: string
-      description: Create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter.
-      default: []
+      $ref: '#/optionalFilters'
     numericFilters:
-      type: array
-      items:
-        type: string
-      description: Filter on numeric attributes.
-      default: []
+      $ref: '#/numericFilters'
     tagFilters:
-      type: array
-      items:
-        type: string
-      description: Filter hits by tags.
-      default: []
+      $ref: '#/tagFilters'
     sumOrFiltersScores:
       type: boolean
       description: Determines how to calculate the total score for filtering.
@@ -164,6 +147,8 @@ baseSearchParams:
       type: boolean
       description: Whether this search should use AI Re-Ranking.
       default: true
+    reRankingApplyFilter:
+      $ref: '#/reRankingApplyFilter'
 
 searchParamsString:
   type: object
@@ -202,3 +187,47 @@ aroundRadius:
 aroundRadiusAll:
   type: string
   enum: [all]
+
+# There is duplicated logic here because we want to keep a correct description
+# and using `$ref` override everything.
+searchFiltersArrayString:
+  type: array
+  items:
+    type: string
+
+searchFiltersNestedArrayString:
+  type: array
+  items:
+    type: array
+    items:
+      type: string
+
+facetFilters:
+  description: Filter hits by facet value.
+  oneOf:
+    - $ref: '#/searchFiltersArrayString'
+    - $ref: '#/searchFiltersNestedArrayString'
+
+reRankingApplyFilter:
+  description: When Dynamic Re-Ranking is enabled, only records that match these filters will be impacted by Dynamic Re-Ranking.
+  oneOf:
+    - $ref: '#/searchFiltersArrayString'
+    - $ref: '#/searchFiltersNestedArrayString'
+
+tagFilters:
+  description: Filter hits by tags.
+  oneOf:
+    - $ref: '#/searchFiltersArrayString'
+    - $ref: '#/searchFiltersNestedArrayString'
+
+numericFilters:
+  description: Filter on numeric attributes.
+  oneOf:
+    - $ref: '#/searchFiltersArrayString'
+    - $ref: '#/searchFiltersNestedArrayString'
+
+optionalFilters:
+  description: Create filters for ranking purposes, where records that match the filter are ranked higher, or lower in the case of a negative optional filter.
+  oneOf:
+    - $ref: '#/searchFiltersArrayString'
+    - $ref: '#/searchFiltersNestedArrayString'
