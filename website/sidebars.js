@@ -10,15 +10,15 @@ const sidebars = {
       label: 'Getting Started',
       collapsed: false,
       items: [
-        'automation/setupRepository',
+        'automation/setup-repository',
         {
           type: 'category',
           label: 'CLI',
           collapsed: false,
           items: [
-            'automation/CLI/specsCommands',
-            'automation/CLI/clientsCommands',
-            'automation/CLI/ctsCommands',
+            'automation/CLI/specs-commands',
+            'automation/CLI/clients-commands',
+            'automation/CLI/cts-commands',
           ],
         },
       ],
@@ -28,24 +28,24 @@ const sidebars = {
       label: 'Contributing',
       collapsed: false,
       items: [
-        'automation/addNewApiClient',
-        'automation/addNewLanguage',
+        'automation/add-new-api-client',
+        'automation/add-new-language',
         {
           type: 'category',
           label: 'Testing',
           collapsed: false,
           items: [
-            'automation/testing/commonTestSuite',
+            'automation/testing/common-test-suite',
             'automation/testing/playground',
           ],
         },
-        'automation/commitAndPullRequest',
-        'automation/releaseProcess',
+        'automation/commit-and-pull-request',
+        'automation/release-process',
       ],
     },
   ],
   // Everything related to the generated clients usage
-  clients: ['api-clients/introduction', 'api-clients/gettingStarted'],
+  clients: ['api-clients/introduction', 'api-clients/getting-started'],
 };
 
 // eslint-disable-next-line import/no-commonjs

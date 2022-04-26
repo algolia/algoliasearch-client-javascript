@@ -11,7 +11,7 @@ It is automaticaly generated for all languages, from a JSON entry point.
 
 Common Test Suite requires all clients to be built.
 
-[CLI commands for the Common Test Suite](/docs/automation/CLI/ctsCommands)
+[CLI commands for the Common Test Suite](/docs/automation/CLI/cts-commands)
 
 :::
 

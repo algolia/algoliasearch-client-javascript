@@ -6,7 +6,7 @@ title: Support a new language
 
 :::info
 
-Make sure to first [setup the repository tooling](/docs/automation/setupRepository) to ease your journey!
+Make sure to first [setup the repository tooling](/docs/automation/setup-repository) to ease your journey!
 
 You will also need to have the [openapi-generator](https://openapi-generator.tech/docs/installation/) installed.
 
@@ -36,7 +36,7 @@ openapi-generator author template -g typescript-node -o templates/javascript/
 
 Add each client in the file [`openapitools.json`](https://github.com/algolia/api-clients-automation/blob/main/openapitools.json), following the others client structure.
 
-> See [`add a new client`](/docs/automation/addNewApiClient) for informations on how to structure your new client.
+> See [`add a new client`](/docs/automation/add-new-api-client) for informations on how to structure your new client.
 
 ### Algolia requirements
 
@@ -77,7 +77,7 @@ The retry strategy cannot be generated and needs to be implemented outside of th
 
 Some Algolia clients (search and recommend) targets the default appId host (`${appId}-dsn.algolia.net`, `${appId}.algolia.net`, etc.), while clients like `personalization` have their own regional `host` (`eu` | `us` | `de`).
 
-As the generator does not support reading `servers` in a spec file **yet**, hosts methods and variables are extracted with a custom script and create variables for you to use in the mustache templates, [read more here](/docs/automation/addNewApiClient#generators).
+As the generator does not support reading `servers` in a spec file **yet**, hosts methods and variables are extracted with a custom script and create variables for you to use in the mustache templates, [read more here](/docs/automation/add-new-api-client#generators).
 
 ### User Agent
 

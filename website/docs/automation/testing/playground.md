@@ -8,7 +8,7 @@ All of the existing clients should have an active playground for you to test gen
 
 :::info
 
-Make sure to first [setup the repository tooling](/docs/automation/setupRepository) to ease your journey!
+Make sure to first [setup the repository tooling](/docs/automation/setup-repository) to ease your journey!
 
 :::
 

@@ -16,7 +16,7 @@ Generated code in production can be find on repository of the clients.
 
 ## Usage
 
-See [the getting started](/docs/api-clients/gettingStarted) page.
+See [the getting started](/docs/api-clients/getting-started) page.
 
 You can also check the [playground](/docs/automation/testing/playground) if you'd like to test clients locally.
 
