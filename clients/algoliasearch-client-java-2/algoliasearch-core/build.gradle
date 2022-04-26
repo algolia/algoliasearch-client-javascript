@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'com.vanniktech.maven.publish'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
 }
 
 description = 'algoliasearch-client-java-2'
