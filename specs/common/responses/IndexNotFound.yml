@@ -1,5 +1,0 @@
-description: Index not found.
-content:
-  application/json:
-    schema:
-      $ref: '../schemas/ErrorBase.yml'

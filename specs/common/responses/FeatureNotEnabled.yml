@@ -1,5 +1,0 @@
-description: This feature is not enabled on your Algolia account.
-content:
-  application/json:
-    schema:
-      $ref: '../schemas/ErrorBase.yml'

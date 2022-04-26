@@ -1,4 +1,0 @@
-eventType:
-  type: string
-  description: An eventType can be a click, a conversion, or a view.
-  enum: [click, conversion, view]

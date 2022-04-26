@@ -1,5 +1,0 @@
-description: Status unprocessable entity.
-content:
-  application/json:
-    schema:
-      $ref: '../schemas/ErrorBase.yml'

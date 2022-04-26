@@ -1,5 +1,0 @@
-description: User not found.
-content:
-  application/json:
-    schema:
-      $ref: '../../common/schemas/ErrorBase.yml'

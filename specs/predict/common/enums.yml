@@ -1,7 +1,0 @@
-modelsToRetrieve:
-  type: string
-  enum: [funnel_stage, order_value, affinities]
-
-typesToRetrieve:
-  type: string
-  enum: [properties, segments]

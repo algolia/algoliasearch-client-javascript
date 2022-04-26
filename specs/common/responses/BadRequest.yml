@@ -1,5 +1,0 @@
-description: Bad request or request arguments.
-content:
-  application/json:
-    schema:
-      $ref: '../schemas/ErrorBase.yml'
