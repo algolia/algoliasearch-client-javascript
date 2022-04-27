@@ -1161,9 +1161,9 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Retrieve dictionaries settings.
+     * Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
      *
-     * @summary Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
+     * @summary Retrieve dictionaries settings.
      */
     getDictionarySettings(
       requestOptions?: RequestOptions
