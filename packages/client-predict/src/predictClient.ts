@@ -21,7 +21,7 @@ export const apiClientVersion = '0.0.5';
 function getDefaultHosts(): Host[] {
   return [
     {
-      url: 'predict-api-oslcbws3zq-ew.a.run.app',
+      url: 'predict-api-432xa6wemq-ew.a.run.app',
       accept: 'readWrite',
       protocol: 'https',
     },
