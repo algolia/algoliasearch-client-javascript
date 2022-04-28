@@ -16,7 +16,7 @@ import type { FetchUserProfileResponse } from '../model/fetchUserProfileResponse
 import type { Params } from '../model/params';
 
 export * from '../model';
-export const apiClientVersion = '0.0.5';
+export const apiClientVersion = '0.1.0';
 
 function getDefaultHosts(): Host[] {
   return [

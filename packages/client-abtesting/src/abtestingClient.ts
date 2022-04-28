@@ -18,7 +18,7 @@ import type { AddABTestsRequest } from '../model/addABTestsRequest';
 import type { ListABTestsResponse } from '../model/listABTestsResponse';
 
 export * from '../model';
-export const apiClientVersion = '0.0.5';
+export const apiClientVersion = '0.1.0';
 
 export type Region = 'de' | 'us';
 
