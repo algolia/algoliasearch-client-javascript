@@ -87,9 +87,9 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
   return {
     addUserAgent,
     /**
-     * Get search results for the given requests.
+     * Perform a search operation targeting one or many indices.
      *
-     * @summary Get search results for the given requests.
+     * @summary Search multiple indices.
      * @param multipleQueriesParams - The multipleQueriesParams object.
      */
     multipleQueries(
@@ -166,9 +166,9 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
     },
 
     /**
-     * Get search results.
+     * Perform a search operation targeting one specific index.
      *
-     * @summary Get search results.
+     * @summary Search in an index.
      * @param search - The search object.
      * @param search.indexName - The index in which to perform the request.
      * @param search.searchParams - The searchParams object.

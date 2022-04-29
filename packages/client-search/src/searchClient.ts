@@ -141,7 +141,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * Add a new API Key with specific permissions/restrictions.
      *
-     * @summary Create a new API key.
+     * @summary Create an API key.
      * @param apiKey - The apiKey object.
      */
     addApiKey(
@@ -183,7 +183,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * Add or replace an object with a given object ID. If the object does not exist, it will be created. If it already exists, it will be replaced.
      *
-     * @summary Add or replace an object with a given object ID.
+     * @summary Add or replace an object.
      * @param addOrUpdateObject - The addOrUpdateObject object.
      * @param addOrUpdateObject.indexName - The index in which to perform the request.
      * @param addOrUpdateObject.objectID - Unique identifier of an object.
@@ -324,9 +324,9 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Performs multiple write operations in a single API call.
+     * Perform multiple write operations targeting one index, in a single API call.
      *
-     * @summary Performs multiple write operations in a single API call.
+     * @summary Batch operations to one index.
      * @param batch - The batch object.
      * @param batch.indexName - The index in which to perform the request.
      * @param batch.batchWriteParams - The batchWriteParams object.
@@ -432,7 +432,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * Send a batch of dictionary entries.
      *
-     * @summary Send a batch of dictionary entries.
+     * @summary Batch dictionary entries.
      * @param batchDictionaryEntries - The batchDictionaryEntries object.
      * @param batchDictionaryEntries.dictionaryName - The dictionary to search in.
      * @param batchDictionaryEntries.batchDictionaryEntriesParams - The batchDictionaryEntriesParams object.
@@ -878,7 +878,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * Delete an existing object.
      *
-     * @summary Delete object.
+     * @summary Delete an object.
      * @param deleteObject - The deleteObject object.
      * @param deleteObject.indexName - The index in which to perform the request.
      * @param deleteObject.objectID - Unique identifier of an object.
@@ -1136,7 +1136,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * List dictionaries supported per language.
      *
-     * @summary List dictionaries supported per language.
+     * @summary List available languages.
      */
     getDictionaryLanguages(
       requestOptions?: RequestOptions
@@ -1188,9 +1188,9 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Return the lastest log entries.
+     * Return the latest log entries.
      *
-     * @summary Return the lastest log entries.
+     * @summary Return the latest log entries.
      * @param getLogs - The getLogs object.
      * @param getLogs.offset - First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry.
      * @param getLogs.length - Maximum number of entries to retrieve. The maximum allowed value is 1000.
@@ -1239,7 +1239,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * Retrieve one object from the index.
      *
-     * @summary Retrieve one object from the index.
+     * @summary Retrieve an object.
      * @param getObject - The getObject object.
      * @param getObject.indexName - The index in which to perform the request.
      * @param getObject.objectID - Unique identifier of an object.
@@ -1368,9 +1368,9 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Retrieve settings of a given indexName.
+     * Retrieve settings of an index.
      *
-     * @summary Retrieve settings of a given indexName.
+     * @summary Retrieve settings of an index.
      * @param getSettings - The getSettings object.
      * @param getSettings.indexName - The index in which to perform the request.
      */
@@ -1479,7 +1479,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * Check the current status of a given task.
      *
-     * @summary Check the current status of a given task.
+     * @summary Check the status of a task.
      * @param getTask - The getTask object.
      * @param getTask.indexName - The index in which to perform the request.
      * @param getTask.taskID - Unique identifier of an task. Numeric value (up to 64bits).
@@ -1590,7 +1590,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * Get the status of your clusters\' migrations or user creations. Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it\'s done. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable.
      *
-     * @summary Has pending mappings.
+     * @summary Get migration status.
      * @param hasPendingMappings - The hasPendingMappings object.
      * @param hasPendingMappings.getClusters - Whether to get clusters or not.
      */
@@ -1624,7 +1624,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * List API keys, along with their associated rights.
      *
-     * @summary Get the full list of API Keys.
+     * @summary List API Keys.
      */
     listApiKeys(requestOptions?: RequestOptions): Promise<ListApiKeysResponse> {
       const requestPath = '/1/keys';
@@ -1749,7 +1749,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * Perform multiple write operations, potentially targeting multiple indices, in a single API call.
      *
-     * @summary Perform multiple write operations.
+     * @summary Batch operations to many indices.
      * @param batchParams - The batchParams object.
      */
     multipleBatch(
@@ -1783,9 +1783,9 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Get search results for the given requests.
+     * Perform a search operation targeting one or many indices.
      *
-     * @summary Get search results for the given requests.
+     * @summary Search multiple indices.
      * @param multipleQueriesParams - The multipleQueriesParams object.
      */
     multipleQueries(
@@ -2378,9 +2378,9 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Get search results.
+     * Perform a search operation targeting one specific index.
      *
-     * @summary Get search results.
+     * @summary Search in an index.
      * @param search - The search object.
      * @param search.indexName - The index in which to perform the request.
      * @param search.searchParams - The searchParams object.
@@ -2427,7 +2427,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * Search the dictionary entries.
      *
-     * @summary Search the dictionary entries.
+     * @summary Search a dictionary entries.
      * @param searchDictionaryEntries - The searchDictionaryEntries object.
      * @param searchDictionaryEntries.dictionaryName - The dictionary to search in.
      * @param searchDictionaryEntries.searchDictionaryEntriesParams - The searchDictionaryEntriesParams object.
@@ -2581,7 +2581,7 @@ export function createSearchClient(options: CreateClientOptions) {
     /**
      * Search or browse all synonyms, optionally filtering them by type.
      *
-     * @summary Get all synonyms that match a query.
+     * @summary Search synonyms.
      * @param searchSynonyms - The searchSynonyms object.
      * @param searchSynonyms.indexName - The index in which to perform the request.
      * @param searchSynonyms.query - Search for specific synonyms matching this string.
@@ -2680,9 +2680,9 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Set dictionary settings.
+     * Set dictionaries settings.
      *
-     * @summary Set dictionary settings.
+     * @summary Set dictionaries settings.
      * @param dictionarySettingsParams - The dictionarySettingsParams object.
      */
     setDictionarySettings(
@@ -2722,9 +2722,9 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Update settings of a given indexName. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
+     * Update settings of an index. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
      *
-     * @summary Update settings of a given indexName.
+     * @summary Update settings of an index.
      * @param setSettings - The setSettings object.
      * @param setSettings.indexName - The index in which to perform the request.
      * @param setSettings.indexSettings - The indexSettings object.
