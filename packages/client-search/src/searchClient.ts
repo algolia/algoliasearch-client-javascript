@@ -73,7 +73,7 @@ import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
 export * from '../model';
-export const apiClientVersion = '0.1.0';
+export const apiClientVersion = '0.1.1';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

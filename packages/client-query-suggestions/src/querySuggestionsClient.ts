@@ -20,7 +20,7 @@ import type { Status } from '../model/status';
 import type { SucessResponse } from '../model/sucessResponse';
 
 export * from '../model';
-export const apiClientVersion = '0.1.0';
+export const apiClientVersion = '0.1.1';
 
 export type Region = 'eu' | 'us';
 
