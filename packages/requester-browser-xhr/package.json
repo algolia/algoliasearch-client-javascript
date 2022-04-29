@@ -1,6 +1,6 @@
 {
   "name": "@experimental-api-clients-automation/requester-browser-xhr",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Promise-based request library for browser using xhr.",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "clean": "rm -rf dist/"
   },
   "dependencies": {
-    "@experimental-api-clients-automation/client-common": "0.1.0"
+    "@experimental-api-clients-automation/client-common": "0.2.0"
   },
   "devDependencies": {
     "@types/node": "16.11.26",

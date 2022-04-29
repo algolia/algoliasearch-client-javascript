@@ -33,7 +33,7 @@ import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 import type { OrderBy } from '../model/orderBy';
 
 export * from '../model';
-export const apiClientVersion = '0.1.0';
+export const apiClientVersion = '0.2.0';
 
 export type Region = 'de' | 'us';
 
