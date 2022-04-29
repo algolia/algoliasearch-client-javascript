@@ -1,6 +1,6 @@
 {
   "name": "@experimental-api-clients-automation/client-query-suggestions",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "description": "JavaScript client for @experimental-api-clients-automation/client-query-suggestions",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -21,9 +21,9 @@
     "clean": "rm -rf ./dist"
   },
   "dependencies": {
-    "@experimental-api-clients-automation/client-common": "0.1.1",
-    "@experimental-api-clients-automation/requester-browser-xhr": "0.1.1",
-    "@experimental-api-clients-automation/requester-node-http": "0.1.1"
+    "@experimental-api-clients-automation/client-common": "0.1.0",
+    "@experimental-api-clients-automation/requester-browser-xhr": "0.1.0",
+    "@experimental-api-clients-automation/requester-node-http": "0.1.0"
   },
   "devDependencies": {
     "@types/node": "16.11.26",
