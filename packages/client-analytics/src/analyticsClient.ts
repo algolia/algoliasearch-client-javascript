@@ -38,15 +38,11 @@ export const apiClientVersion = '0.2.0';
 export type Region = 'de' | 'us';
 
 function getDefaultHosts(region?: Region): Host[] {
-  const regionHost = region ? `.${region}.` : '.';
+  const url = !region
+    ? 'analytics.algolia.com'
+    : 'analytics.{region}.algolia.com'.replace('{region}', region);
 
-  return [
-    {
-      url: `analytics${regionHost}algolia.com`,
-      accept: 'readWrite',
-      protocol: 'https',
-    },
-  ];
+  return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

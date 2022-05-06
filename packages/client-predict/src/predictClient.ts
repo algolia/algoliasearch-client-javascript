@@ -18,21 +18,24 @@ import type { Params } from '../model/params';
 export * from '../model';
 export const apiClientVersion = '0.2.0';
 
-function getDefaultHosts(): Host[] {
-  return [
-    {
-      url: 'predict-api-432xa6wemq-ew.a.run.app',
-      accept: 'readWrite',
-      protocol: 'https',
-    },
-  ];
+export type Region = 'ew';
+
+function getDefaultHosts(region: Region): Host[] {
+  const url = 'predict-api-432xa6wemq-{region}.a.run.app'.replace(
+    '{region}',
+    region
+  );
+
+  return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createPredictClient(options: CreateClientOptions) {
+export function createPredictClient(
+  options: CreateClientOptions & { region: Region }
+) {
   const auth = createAuth(options.appId, options.apiKey, options.authMode);
   const transporter = createTransporter({
-    hosts: options?.hosts ?? getDefaultHosts(),
+    hosts: options?.hosts ?? getDefaultHosts(options.region),
     hostsCache: options.hostsCache,
     requestsCache: options.requestsCache,
     responsesCache: options.responsesCache,

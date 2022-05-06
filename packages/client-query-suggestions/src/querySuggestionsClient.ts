@@ -25,13 +25,12 @@ export const apiClientVersion = '0.2.0';
 export type Region = 'eu' | 'us';
 
 function getDefaultHosts(region: Region): Host[] {
-  return [
-    {
-      url: `query-suggestions.${region}.algolia.com`,
-      accept: 'readWrite',
-      protocol: 'https',
-    },
-  ];
+  const url = 'query-suggestions.{region}.algolia.com'.replace(
+    '{region}',
+    region
+  );
+
+  return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

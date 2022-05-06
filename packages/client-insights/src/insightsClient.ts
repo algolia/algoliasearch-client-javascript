@@ -21,15 +21,11 @@ export const apiClientVersion = '0.2.0';
 export type Region = 'de' | 'us';
 
 function getDefaultHosts(region?: Region): Host[] {
-  const regionHost = region ? `.${region}.` : '.';
+  const url = !region
+    ? 'insights.algolia.io'
+    : 'insights.{region}.algolia.io'.replace('{region}', region);
 
-  return [
-    {
-      url: `insights${regionHost}algolia.io`,
-      accept: 'readWrite',
-      protocol: 'https',
-    },
-  ];
+  return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
