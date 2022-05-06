@@ -152,7 +152,7 @@ export function createAnalyticsClient(
     /**
      * Returns the average click position. The endpoint returns a value for the complete given time range, as well as a value per day.
      *
-     * @summary Returns the average click position.
+     * @summary Get average click position.
      * @param getAverageClickPosition - The getAverageClickPosition object.
      * @param getAverageClickPosition.index - The index name to target.
      * @param getAverageClickPosition.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -205,9 +205,9 @@ export function createAnalyticsClient(
     },
 
     /**
-     * Returns the distribution of clicks per range of positions.
+     * Returns the distribution of clicks per range of positions.  If the groups all have a count of 0, it means Algolia didn’t receive any click events for the queries with the clickAnalytics search parameter set to true. The count is 0 until Algolia receives at least one click event.
      *
-     * @summary Returns the distribution of clicks per range of positions.
+     * @summary Get clicks per positions.
      * @param getClickPositions - The getClickPositions object.
      * @param getClickPositions.index - The index name to target.
      * @param getClickPositions.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -262,7 +262,7 @@ export function createAnalyticsClient(
     /**
      * Returns a click-through rate (CTR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of clicks and searches used to compute the rates.
      *
-     * @summary Returns a click-through rate (CTR).
+     * @summary Get click-through rate (CTR).
      * @param getClickThroughRate - The getClickThroughRate object.
      * @param getClickThroughRate.index - The index name to target.
      * @param getClickThroughRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -317,7 +317,7 @@ export function createAnalyticsClient(
     /**
      * Returns a conversion rate (CR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of conversion and searches used to compute the rates.
      *
-     * @summary Returns a conversion rate (CR).
+     * @summary Get conversion rate (CR).
      * @param getConversationRate - The getConversationRate object.
      * @param getConversationRate.index - The index name to target.
      * @param getConversationRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -372,7 +372,7 @@ export function createAnalyticsClient(
     /**
      * Returns the rate at which searches didn\'t lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
      *
-     * @summary Returns the rate at which searches didn\'t lead to any clicks.
+     * @summary Get no click rate.
      * @param getNoClickRate - The getNoClickRate object.
      * @param getNoClickRate.index - The index name to target.
      * @param getNoClickRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -427,7 +427,7 @@ export function createAnalyticsClient(
     /**
      * Returns the rate at which searches didn\'t return any results. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without results used to compute the rates.
      *
-     * @summary Returns the rate at which searches didn\'t return any results.
+     * @summary Get no results rate.
      * @param getNoResultsRate - The getNoResultsRate object.
      * @param getNoResultsRate.index - The index name to target.
      * @param getNoResultsRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -482,7 +482,7 @@ export function createAnalyticsClient(
     /**
      * Returns the number of searches across the given time range. The endpoint returns a value for the complete given time range, as well as a value per day.
      *
-     * @summary Returns the number of searches across the given time range.
+     * @summary Get searches count.
      * @param getSearchesCount - The getSearchesCount object.
      * @param getSearchesCount.index - The index name to target.
      * @param getSearchesCount.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -537,7 +537,7 @@ export function createAnalyticsClient(
     /**
      * Returns top searches that didn\'t lead to any clicks. Limited to the 1000 most frequent ones. For each search, also returns the average number of found hits.
      *
-     * @summary Returns top searches that didn\'t lead to any clicks.
+     * @summary Get top searches with no clicks.
      * @param getSearchesNoClicks - The getSearchesNoClicks object.
      * @param getSearchesNoClicks.index - The index name to target.
      * @param getSearchesNoClicks.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -609,7 +609,7 @@ export function createAnalyticsClient(
     /**
      * Returns top searches that didn\'t return any results. Limited to the 1000 most frequent ones.
      *
-     * @summary Returns top searches that didn\'t return any results.
+     * @summary Get top searches with no results.
      * @param getSearchesNoResults - The getSearchesNoResults object.
      * @param getSearchesNoResults.index - The index name to target.
      * @param getSearchesNoResults.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -681,7 +681,7 @@ export function createAnalyticsClient(
     /**
      * Returns the latest update time of the analytics API for a given index. If the index has been recently created and/or no search has been performed yet the updated time will be null.
      *
-     * @summary Get latest update time of the analytics API.
+     * @summary Get Analytics API status.
      * @param getStatus - The getStatus object.
      * @param getStatus.index - The index name to target.
      */
@@ -721,7 +721,7 @@ export function createAnalyticsClient(
     /**
      * Returns top countries. Limited to the 1000 most frequent ones.
      *
-     * @summary Returns top countries.
+     * @summary Get top countries.
      * @param getTopCountries - The getTopCountries object.
      * @param getTopCountries.index - The index name to target.
      * @param getTopCountries.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
@@ -786,7 +786,7 @@ export function createAnalyticsClient(
     /**
      * Returns top filter attributes. Limited to the 1000 most used filters.
      *
-     * @summary Returns top filter attributes.
+     * @summary Get top filter attributes.
      * @param getTopFilterAttributes - The getTopFilterAttributes object.
      * @param getTopFilterAttributes.index - The index name to target.
      * @param getTopFilterAttributes.search - The query term to search for. Must match the exact user input.
@@ -864,7 +864,7 @@ export function createAnalyticsClient(
     /**
      * Returns top filters for the given attribute. Limited to the 1000 most used filters.
      *
-     * @summary Returns top filters for the given attribute.
+     * @summary Get top filters for the an attribute.
      * @param getTopFilterForAttribute - The getTopFilterForAttribute object.
      * @param getTopFilterForAttribute.attribute - The exact name of the attribute.
      * @param getTopFilterForAttribute.index - The index name to target.
@@ -953,7 +953,7 @@ export function createAnalyticsClient(
     /**
      * Returns top filters with no results. Limited to the 1000 most used filters.
      *
-     * @summary Returns top filters with no results.
+     * @summary Get top filters for a no result search.
      * @param getTopFiltersNoResults - The getTopFiltersNoResults object.
      * @param getTopFiltersNoResults.index - The index name to target.
      * @param getTopFiltersNoResults.search - The query term to search for. Must match the exact user input.
@@ -1031,7 +1031,7 @@ export function createAnalyticsClient(
     /**
      * Returns top hits. Limited to the 1000 most frequent ones.
      *
-     * @summary Returns top hits.
+     * @summary Get top hits.
      * @param getTopHits - The getTopHits object.
      * @param getTopHits.index - The index name to target.
      * @param getTopHits.search - The query term to search for. Must match the exact user input.
@@ -1115,7 +1115,7 @@ export function createAnalyticsClient(
     /**
      * Returns top searches. Limited to the 1000 most frequent ones. For each search, also returns the average number of hits returned.
      *
-     * @summary Returns top searches.
+     * @summary Get top searches.
      * @param getTopSearches - The getTopSearches object.
      * @param getTopSearches.index - The index name to target.
      * @param getTopSearches.clickAnalytics - Whether to include the click-through and conversion rates for a search.
@@ -1205,7 +1205,7 @@ export function createAnalyticsClient(
     /**
      * Returns the distinct count of users across the given time range. The endpoint returns a value for the complete given time range, as well as a value per day.
      *
-     * @summary Returns the distinct count of users across the given time range.
+     * @summary Get users count.
      * @param getUsersCount - The getUsersCount object.
      * @param getUsersCount.index - The index name to target.
      * @param getUsersCount.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.

@@ -14,7 +14,7 @@ export type InsightEvent = {
    */
   index: string;
   /**
-   * A user identifier. Depending if the user is logged-in or not, several strategies can be used from a sessionId to a technical identifier.
+   * A user identifier. Depending if the user is logged-in or not, several strategies can be used from a sessionId to a technical identifier. You should always send pseudonymous or anonymous userTokens.
    */
   userToken: string;
   /**
