@@ -66,7 +66,7 @@ export function createQuerySuggestionsClient(
     /**
      * Create a configuration of a Query Suggestions index. There\'s a limit of 100 configurations per application.
      *
-     * @summary Create a configuration of a Query Suggestions index.
+     * @summary Create a configuration.
      * @param querySuggestionsIndexWithIndexParam - The querySuggestionsIndexWithIndexParam object.
      */
     createConfig(
@@ -137,7 +137,7 @@ export function createQuerySuggestionsClient(
     /**
      * Delete a configuration of a Query Suggestion\'s index. By deleting a configuraton, you stop all updates to the underlying query suggestion index. Note that when doing this, the underlying index does not change - existing suggestions remain untouched.
      *
-     * @summary Delete a configuration of a Query Suggestion\'s index.
+     * @summary Delete a configuration.
      * @param deleteConfig - The deleteConfig object.
      * @param deleteConfig.indexName - The index in which to perform the request.
      */
@@ -211,7 +211,7 @@ export function createQuerySuggestionsClient(
     /**
      * Get all the configurations of Query Suggestions. For each index, you get a block of JSON with a list of its configuration settings.
      *
-     * @summary Get all the configurations of Query Suggestions.
+     * @summary List configurations.
      */
     getAllConfigs(
       requestOptions?: RequestOptions
@@ -238,7 +238,7 @@ export function createQuerySuggestionsClient(
     /**
      * Get the configuration of a single Query Suggestions index.
      *
-     * @summary Get the configuration of a single Query Suggestions index.
+     * @summary Get a single configuration.
      * @param getConfig - The getConfig object.
      * @param getConfig.indexName - The index in which to perform the request.
      */
@@ -277,7 +277,7 @@ export function createQuerySuggestionsClient(
     /**
      * Get the status of a Query Suggestion\'s index. The status includes whether the Query Suggestions index is currently in the process of being built, and the last build time.
      *
-     * @summary Get the status of a Query Suggestion\'s index.
+     * @summary Get configuration status.
      * @param getConfigStatus - The getConfigStatus object.
      * @param getConfigStatus.indexName - The index in which to perform the request.
      */
@@ -316,7 +316,7 @@ export function createQuerySuggestionsClient(
     /**
      * Get the log file of the last build of a single Query Suggestion index.
      *
-     * @summary Get the log file of the last build of a single Query Suggestion index.
+     * @summary Get a log file.
      * @param getLogFile - The getLogFile object.
      * @param getLogFile.indexName - The index in which to perform the request.
      */
@@ -429,7 +429,7 @@ export function createQuerySuggestionsClient(
     /**
      * Update the configuration of a Query Suggestions index.
      *
-     * @summary Update the configuration of a Query Suggestions index.
+     * @summary Update a configuration.
      * @param updateConfig - The updateConfig object.
      * @param updateConfig.indexName - The index in which to perform the request.
      * @param updateConfig.querySuggestionsIndexParam - The querySuggestionsIndexParam object.

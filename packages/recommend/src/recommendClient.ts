@@ -153,9 +153,9 @@ export function createRecommendClient(options: CreateClientOptions) {
     },
 
     /**
-     * Returns recommendations for a specific model and objectID.
+     * Returns recommendations or trending results, for a specific model and `objectID`.
      *
-     * @summary Returns recommendations for a specific model and objectID.
+     * @summary Get results.
      * @param getRecommendationsParams - The getRecommendationsParams object.
      */
     getRecommendations(

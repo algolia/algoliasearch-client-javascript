@@ -166,7 +166,7 @@ export function createSourcesClient(
     /**
      * Add an ingestion job that will fetch data from an URL.
      *
-     * @summary Create a new ingestion job via URL.
+     * @summary Create fetch URL job.
      * @param postURLJob - The postURLJob object.
      */
     postIngestUrl(
