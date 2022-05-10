@@ -143,6 +143,7 @@ export function createSearchClient(options: CreateClientOptions) {
      *
      * @summary Create an API key.
      * @param apiKey - The apiKey object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     addApiKey(
       apiKey: ApiKey,
@@ -188,6 +189,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param addOrUpdateObject.indexName - The index in which to perform the request.
      * @param addOrUpdateObject.objectID - Unique identifier of an object.
      * @param addOrUpdateObject.body - The Algolia object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     addOrUpdateObject(
       { indexName, objectID, body }: AddOrUpdateObjectProps,
@@ -238,6 +240,7 @@ export function createSearchClient(options: CreateClientOptions) {
      *
      * @summary Add a single source.
      * @param source - The source to add.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     appendSource(
       source: Source,
@@ -276,6 +279,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param assignUserId - The assignUserId object.
      * @param assignUserId.xAlgoliaUserID - UserID to assign.
      * @param assignUserId.assignUserIdParams - The assignUserIdParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     assignUserId(
       { xAlgoliaUserID, assignUserIdParams }: AssignUserIdProps,
@@ -330,6 +334,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param batch - The batch object.
      * @param batch.indexName - The index in which to perform the request.
      * @param batch.batchWriteParams - The batchWriteParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     batch(
       { indexName, batchWriteParams }: BatchProps,
@@ -377,6 +382,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param batchAssignUserIds - The batchAssignUserIds object.
      * @param batchAssignUserIds.xAlgoliaUserID - UserID to assign.
      * @param batchAssignUserIds.batchAssignUserIdsParams - The batchAssignUserIdsParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     batchAssignUserIds(
       { xAlgoliaUserID, batchAssignUserIdsParams }: BatchAssignUserIdsProps,
@@ -436,6 +442,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param batchDictionaryEntries - The batchDictionaryEntries object.
      * @param batchDictionaryEntries.dictionaryName - The dictionary to search in.
      * @param batchDictionaryEntries.batchDictionaryEntriesParams - The batchDictionaryEntriesParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     batchDictionaryEntries(
       {
@@ -494,6 +501,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param batchRules.rule - The rule object.
      * @param batchRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
      * @param batchRules.clearExistingRules - When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     batchRules(
       {
@@ -554,6 +562,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param browse - The browse object.
      * @param browse.indexName - The index in which to perform the request.
      * @param browse.browseRequest - The browseRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     browse(
       { indexName, browseRequest }: BrowseProps,
@@ -595,6 +604,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param clearAllSynonyms - The clearAllSynonyms object.
      * @param clearAllSynonyms.indexName - The index in which to perform the request.
      * @param clearAllSynonyms.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     clearAllSynonyms(
       { indexName, forwardToReplicas }: ClearAllSynonymsProps,
@@ -638,6 +648,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary Clear all objects from an index.
      * @param clearObjects - The clearObjects object.
      * @param clearObjects.indexName - The index in which to perform the request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     clearObjects(
       { indexName }: ClearObjectsProps,
@@ -678,6 +689,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param clearRules - The clearRules object.
      * @param clearRules.indexName - The index in which to perform the request.
      * @param clearRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     clearRules(
       { indexName, forwardToReplicas }: ClearRulesProps,
@@ -722,6 +734,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param del - The del object.
      * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param del.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     del(
       { path, parameters }: DelProps,
@@ -756,6 +769,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary Delete an API key.
      * @param deleteApiKey - The deleteApiKey object.
      * @param deleteApiKey.key - API Key string.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteApiKey(
       { key }: DeleteApiKeyProps,
@@ -796,6 +810,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param deleteBy - The deleteBy object.
      * @param deleteBy.indexName - The index in which to perform the request.
      * @param deleteBy.searchParams - The searchParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteBy(
       { indexName, searchParams }: DeleteByProps,
@@ -842,6 +857,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary Delete index.
      * @param deleteIndex - The deleteIndex object.
      * @param deleteIndex.indexName - The index in which to perform the request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteIndex(
       { indexName }: DeleteIndexProps,
@@ -882,6 +898,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param deleteObject - The deleteObject object.
      * @param deleteObject.indexName - The index in which to perform the request.
      * @param deleteObject.objectID - Unique identifier of an object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteObject(
       { indexName, objectID }: DeleteObjectProps,
@@ -928,6 +945,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param deleteRule.indexName - The index in which to perform the request.
      * @param deleteRule.objectID - Unique identifier of an object.
      * @param deleteRule.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteRule(
       { indexName, objectID, forwardToReplicas }: DeleteRuleProps,
@@ -976,6 +994,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary Remove a single source.
      * @param deleteSource - The deleteSource object.
      * @param deleteSource.source - The IP range of the source.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteSource(
       { source }: DeleteSourceProps,
@@ -1017,6 +1036,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param deleteSynonym.indexName - The index in which to perform the request.
      * @param deleteSynonym.objectID - Unique identifier of an object.
      * @param deleteSynonym.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteSynonym(
       { indexName, objectID, forwardToReplicas }: DeleteSynonymProps,
@@ -1066,6 +1086,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param get - The get object.
      * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param get.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     get(
       { path, parameters }: GetProps,
@@ -1100,6 +1121,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary Get an API key.
      * @param getApiKey - The getApiKey object.
      * @param getApiKey.key - API Key string.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getApiKey(
       { key }: GetApiKeyProps,
@@ -1137,6 +1159,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * List dictionaries supported per language.
      *
      * @summary List available languages.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDictionaryLanguages(
       requestOptions?: RequestOptions
@@ -1164,6 +1187,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
      *
      * @summary Retrieve dictionaries settings.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDictionarySettings(
       requestOptions?: RequestOptions
@@ -1196,6 +1220,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param getLogs.length - Maximum number of entries to retrieve. The maximum allowed value is 1000.
      * @param getLogs.indexName - Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices.
      * @param getLogs.type - Type of log entries to retrieve. When omitted, all log entries are retrieved.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getLogs(
       { offset, length, indexName, type }: GetLogsProps,
@@ -1244,6 +1269,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param getObject.indexName - The index in which to perform the request.
      * @param getObject.objectID - Unique identifier of an object.
      * @param getObject.attributesToRetrieve - List of attributes to retrieve. If not specified, all retrievable attributes are returned.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getObject(
       { indexName, objectID, attributesToRetrieve }: GetObjectProps,
@@ -1291,6 +1317,7 @@ export function createSearchClient(options: CreateClientOptions) {
      *
      * @summary Retrieve one or more objects.
      * @param getObjectsParams - The getObjectsParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getObjects(
       getObjectsParams: GetObjectsParams,
@@ -1329,6 +1356,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param getRule - The getRule object.
      * @param getRule.indexName - The index in which to perform the request.
      * @param getRule.objectID - Unique identifier of an object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRule(
       { indexName, objectID }: GetRuleProps,
@@ -1373,6 +1401,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary Retrieve settings of an index.
      * @param getSettings - The getSettings object.
      * @param getSettings.indexName - The index in which to perform the request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSettings(
       { indexName }: GetSettingsProps,
@@ -1410,6 +1439,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * List all allowed sources.
      *
      * @summary List all allowed sources.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSources(requestOptions?: RequestOptions): Promise<Source[]> {
       const requestPath = '/1/security/sources';
@@ -1438,6 +1468,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param getSynonym - The getSynonym object.
      * @param getSynonym.indexName - The index in which to perform the request.
      * @param getSynonym.objectID - Unique identifier of an object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSynonym(
       { indexName, objectID }: GetSynonymProps,
@@ -1483,6 +1514,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param getTask - The getTask object.
      * @param getTask.indexName - The index in which to perform the request.
      * @param getTask.taskID - Unique identifier of an task. Numeric value (up to 64bits).
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTask(
       { indexName, taskID }: GetTaskProps,
@@ -1525,6 +1557,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * Get the top 10 userIDs with the highest number of records per cluster. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following array of userIDs and clusters.
      *
      * @summary Get top userID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopUserIds(
       requestOptions?: RequestOptions
@@ -1554,6 +1587,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary Get userID.
      * @param getUserId - The getUserId object.
      * @param getUserId.userID - UserID to assign.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getUserId(
       { userID }: GetUserIdProps,
@@ -1593,6 +1627,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary Get migration status.
      * @param hasPendingMappings - The hasPendingMappings object.
      * @param hasPendingMappings.getClusters - Whether to get clusters or not.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     hasPendingMappings(
       { getClusters }: HasPendingMappingsProps,
@@ -1625,6 +1660,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * List API keys, along with their associated rights.
      *
      * @summary List API Keys.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listApiKeys(requestOptions?: RequestOptions): Promise<ListApiKeysResponse> {
       const requestPath = '/1/keys';
@@ -1650,6 +1686,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * List the clusters available in a multi-clusters setup for a single appID. Upon success, the response is 200 OK and contains the following clusters.
      *
      * @summary List clusters.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listClusters(
       requestOptions?: RequestOptions
@@ -1679,6 +1716,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary List existing indexes.
      * @param listIndices - The listIndices object.
      * @param listIndices.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listIndices(
       { page }: ListIndicesProps,
@@ -1714,6 +1752,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param listUserIds - The listUserIds object.
      * @param listUserIds.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
      * @param listUserIds.hitsPerPage - Maximum number of objects to retrieve.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listUserIds(
       { page, hitsPerPage }: ListUserIdsProps,
@@ -1751,6 +1790,7 @@ export function createSearchClient(options: CreateClientOptions) {
      *
      * @summary Batch operations to many indices.
      * @param batchParams - The batchParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     multipleBatch(
       batchParams: BatchParams,
@@ -1787,6 +1827,7 @@ export function createSearchClient(options: CreateClientOptions) {
      *
      * @summary Search multiple indices.
      * @param multipleQueriesParams - The multipleQueriesParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     multipleQueries(
       multipleQueriesParams: MultipleQueriesParams,
@@ -1831,6 +1872,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param operationIndex - The operationIndex object.
      * @param operationIndex.indexName - The index in which to perform the request.
      * @param operationIndex.operationIndexParams - The operationIndexParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     operationIndex(
       { indexName, operationIndexParams }: OperationIndexProps,
@@ -1891,6 +1933,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param partialUpdateObject.objectID - Unique identifier of an object.
      * @param partialUpdateObject.attributeOrBuiltInOperation - List of attributes to update.
      * @param partialUpdateObject.createIfNotExists - Creates the record if it does not exist yet.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     partialUpdateObject(
       {
@@ -1953,6 +1996,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param post.parameters - Query parameters to be applied to the current query.
      * @param post.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
       { path, parameters, body }: PostProps,
@@ -1990,6 +2034,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param put.parameters - Query parameters to be applied to the current query.
      * @param put.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     put(
       { path, parameters, body }: PutProps,
@@ -2025,6 +2070,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary Remove userID.
      * @param removeUserId - The removeUserId object.
      * @param removeUserId.userID - UserID to assign.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     removeUserId(
       { userID }: RemoveUserIdProps,
@@ -2064,6 +2110,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary Replace all allowed sources.
      * @param replaceSources - The replaceSources object.
      * @param replaceSources.source - The sources to allow.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     replaceSources(
       { source }: ReplaceSourcesProps,
@@ -2101,6 +2148,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @summary Restore an API key.
      * @param restoreApiKey - The restoreApiKey object.
      * @param restoreApiKey.key - API Key string.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     restoreApiKey(
       { key }: RestoreApiKeyProps,
@@ -2141,6 +2189,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param saveObject - The saveObject object.
      * @param saveObject.indexName - The index in which to perform the request.
      * @param saveObject.body - The Algolia record.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     saveObject(
       { indexName, body }: SaveObjectProps,
@@ -2190,6 +2239,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param saveRule.objectID - Unique identifier of an object.
      * @param saveRule.rule - The rule object.
      * @param saveRule.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     saveRule(
       { indexName, objectID, rule, forwardToReplicas }: SaveRuleProps,
@@ -2259,6 +2309,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param saveSynonym.objectID - Unique identifier of an object.
      * @param saveSynonym.synonymHit - The synonymHit object.
      * @param saveSynonym.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     saveSynonym(
       { indexName, objectID, synonymHit, forwardToReplicas }: SaveSynonymProps,
@@ -2323,6 +2374,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param saveSynonyms.synonymHit - The synonymHit object.
      * @param saveSynonyms.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
      * @param saveSynonyms.replaceExistingSynonyms - Replace all synonyms of the index with the ones sent with this request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     saveSynonyms(
       {
@@ -2384,6 +2436,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param search - The search object.
      * @param search.indexName - The index in which to perform the request.
      * @param search.searchParams - The searchParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     search(
       { indexName, searchParams }: SearchProps,
@@ -2431,6 +2484,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param searchDictionaryEntries - The searchDictionaryEntries object.
      * @param searchDictionaryEntries.dictionaryName - The dictionary to search in.
      * @param searchDictionaryEntries.searchDictionaryEntriesParams - The searchDictionaryEntriesParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchDictionaryEntries(
       {
@@ -2488,6 +2542,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param searchForFacetValues.indexName - The index in which to perform the request.
      * @param searchForFacetValues.facetName - The facet name.
      * @param searchForFacetValues.searchForFacetValuesRequest - The searchForFacetValuesRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchForFacetValues(
       {
@@ -2538,6 +2593,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param searchRules - The searchRules object.
      * @param searchRules.indexName - The index in which to perform the request.
      * @param searchRules.searchRulesParams - The searchRulesParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchRules(
       { indexName, searchRulesParams }: SearchRulesProps,
@@ -2588,6 +2644,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param searchSynonyms.type - Only search for specific types of synonyms.
      * @param searchSynonyms.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
      * @param searchSynonyms.hitsPerPage - Maximum number of objects to retrieve.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchSynonyms(
       { indexName, query, type, page, hitsPerPage }: SearchSynonymsProps,
@@ -2642,6 +2699,7 @@ export function createSearchClient(options: CreateClientOptions) {
      *
      * @summary Search userID.
      * @param searchUserIdsParams - The searchUserIdsParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchUserIds(
       searchUserIdsParams: SearchUserIdsParams,
@@ -2684,6 +2742,7 @@ export function createSearchClient(options: CreateClientOptions) {
      *
      * @summary Set dictionaries settings.
      * @param dictionarySettingsParams - The dictionarySettingsParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     setDictionarySettings(
       dictionarySettingsParams: DictionarySettingsParams,
@@ -2729,6 +2788,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param setSettings.indexName - The index in which to perform the request.
      * @param setSettings.indexSettings - The indexSettings object.
      * @param setSettings.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     setSettings(
       { indexName, indexSettings, forwardToReplicas }: SetSettingsProps,
@@ -2780,6 +2840,7 @@ export function createSearchClient(options: CreateClientOptions) {
      * @param updateApiKey - The updateApiKey object.
      * @param updateApiKey.key - API Key string.
      * @param updateApiKey.apiKey - The apiKey object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     updateApiKey(
       { key, apiKey }: UpdateApiKeyProps,

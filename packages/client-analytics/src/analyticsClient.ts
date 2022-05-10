@@ -82,6 +82,7 @@ export function createAnalyticsClient(
      * @param del - The del object.
      * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param del.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     del(
       { path, parameters }: DelProps,
@@ -117,6 +118,7 @@ export function createAnalyticsClient(
      * @param get - The get object.
      * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param get.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     get(
       { path, parameters }: GetProps,
@@ -154,6 +156,7 @@ export function createAnalyticsClient(
      * @param getAverageClickPosition.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getAverageClickPosition.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getAverageClickPosition.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAverageClickPosition(
       { index, startDate, endDate, tags }: GetAverageClickPositionProps,
@@ -209,6 +212,7 @@ export function createAnalyticsClient(
      * @param getClickPositions.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getClickPositions.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getClickPositions.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getClickPositions(
       { index, startDate, endDate, tags }: GetClickPositionsProps,
@@ -264,6 +268,7 @@ export function createAnalyticsClient(
      * @param getClickThroughRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getClickThroughRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getClickThroughRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getClickThroughRate(
       { index, startDate, endDate, tags }: GetClickThroughRateProps,
@@ -319,6 +324,7 @@ export function createAnalyticsClient(
      * @param getConversationRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getConversationRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getConversationRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getConversationRate(
       { index, startDate, endDate, tags }: GetConversationRateProps,
@@ -374,6 +380,7 @@ export function createAnalyticsClient(
      * @param getNoClickRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getNoClickRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getNoClickRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getNoClickRate(
       { index, startDate, endDate, tags }: GetNoClickRateProps,
@@ -429,6 +436,7 @@ export function createAnalyticsClient(
      * @param getNoResultsRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getNoResultsRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getNoResultsRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getNoResultsRate(
       { index, startDate, endDate, tags }: GetNoResultsRateProps,
@@ -484,6 +492,7 @@ export function createAnalyticsClient(
      * @param getSearchesCount.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getSearchesCount.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getSearchesCount.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSearchesCount(
       { index, startDate, endDate, tags }: GetSearchesCountProps,
@@ -541,6 +550,7 @@ export function createAnalyticsClient(
      * @param getSearchesNoClicks.limit - Number of records to return. Limit is the size of the page.
      * @param getSearchesNoClicks.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param getSearchesNoClicks.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSearchesNoClicks(
       {
@@ -613,6 +623,7 @@ export function createAnalyticsClient(
      * @param getSearchesNoResults.limit - Number of records to return. Limit is the size of the page.
      * @param getSearchesNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param getSearchesNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSearchesNoResults(
       {
@@ -680,6 +691,7 @@ export function createAnalyticsClient(
      * @summary Get Analytics API status.
      * @param getStatus - The getStatus object.
      * @param getStatus.index - The index name to target.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getStatus(
       { index }: GetStatusProps,
@@ -725,6 +737,7 @@ export function createAnalyticsClient(
      * @param getTopCountries.limit - Number of records to return. Limit is the size of the page.
      * @param getTopCountries.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param getTopCountries.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopCountries(
       { index, startDate, endDate, limit, offset, tags }: GetTopCountriesProps,
@@ -791,6 +804,7 @@ export function createAnalyticsClient(
      * @param getTopFilterAttributes.limit - Number of records to return. Limit is the size of the page.
      * @param getTopFilterAttributes.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param getTopFilterAttributes.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopFilterAttributes(
       {
@@ -870,6 +884,7 @@ export function createAnalyticsClient(
      * @param getTopFilterForAttribute.limit - Number of records to return. Limit is the size of the page.
      * @param getTopFilterForAttribute.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param getTopFilterForAttribute.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopFilterForAttribute(
       {
@@ -958,6 +973,7 @@ export function createAnalyticsClient(
      * @param getTopFiltersNoResults.limit - Number of records to return. Limit is the size of the page.
      * @param getTopFiltersNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param getTopFiltersNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopFiltersNoResults(
       {
@@ -1037,6 +1053,7 @@ export function createAnalyticsClient(
      * @param getTopHits.limit - Number of records to return. Limit is the size of the page.
      * @param getTopHits.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param getTopHits.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopHits(
       {
@@ -1122,6 +1139,7 @@ export function createAnalyticsClient(
      * @param getTopSearches.limit - Number of records to return. Limit is the size of the page.
      * @param getTopSearches.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param getTopSearches.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopSearches(
       {
@@ -1207,6 +1225,7 @@ export function createAnalyticsClient(
      * @param getUsersCount.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getUsersCount.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
      * @param getUsersCount.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getUsersCount(
       { index, startDate, endDate, tags }: GetUsersCountProps,
@@ -1261,6 +1280,7 @@ export function createAnalyticsClient(
      * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param post.parameters - Query parameters to be applied to the current query.
      * @param post.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
       { path, parameters, body }: PostProps,
@@ -1298,6 +1318,7 @@ export function createAnalyticsClient(
      * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param put.parameters - Query parameters to be applied to the current query.
      * @param put.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     put(
       { path, parameters, body }: PutProps,

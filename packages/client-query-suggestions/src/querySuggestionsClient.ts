@@ -68,6 +68,7 @@ export function createQuerySuggestionsClient(
      *
      * @summary Create a configuration.
      * @param querySuggestionsIndexWithIndexParam - The querySuggestionsIndexWithIndexParam object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     createConfig(
       querySuggestionsIndexWithIndexParam: QuerySuggestionsIndexWithIndexParam,
@@ -106,6 +107,7 @@ export function createQuerySuggestionsClient(
      * @param del - The del object.
      * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param del.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     del(
       { path, parameters }: DelProps,
@@ -140,6 +142,7 @@ export function createQuerySuggestionsClient(
      * @summary Delete a configuration.
      * @param deleteConfig - The deleteConfig object.
      * @param deleteConfig.indexName - The index in which to perform the request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteConfig(
       { indexName }: DeleteConfigProps,
@@ -180,6 +183,7 @@ export function createQuerySuggestionsClient(
      * @param get - The get object.
      * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param get.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     get(
       { path, parameters }: GetProps,
@@ -212,6 +216,7 @@ export function createQuerySuggestionsClient(
      * Get all the configurations of Query Suggestions. For each index, you get a block of JSON with a list of its configuration settings.
      *
      * @summary List configurations.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAllConfigs(
       requestOptions?: RequestOptions
@@ -241,6 +246,7 @@ export function createQuerySuggestionsClient(
      * @summary Get a single configuration.
      * @param getConfig - The getConfig object.
      * @param getConfig.indexName - The index in which to perform the request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getConfig(
       { indexName }: GetConfigProps,
@@ -280,6 +286,7 @@ export function createQuerySuggestionsClient(
      * @summary Get configuration status.
      * @param getConfigStatus - The getConfigStatus object.
      * @param getConfigStatus.indexName - The index in which to perform the request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getConfigStatus(
       { indexName }: GetConfigStatusProps,
@@ -319,6 +326,7 @@ export function createQuerySuggestionsClient(
      * @summary Get a log file.
      * @param getLogFile - The getLogFile object.
      * @param getLogFile.indexName - The index in which to perform the request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getLogFile(
       { indexName }: GetLogFileProps,
@@ -360,6 +368,7 @@ export function createQuerySuggestionsClient(
      * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param post.parameters - Query parameters to be applied to the current query.
      * @param post.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
       { path, parameters, body }: PostProps,
@@ -397,6 +406,7 @@ export function createQuerySuggestionsClient(
      * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param put.parameters - Query parameters to be applied to the current query.
      * @param put.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     put(
       { path, parameters, body }: PutProps,
@@ -433,6 +443,7 @@ export function createQuerySuggestionsClient(
      * @param updateConfig - The updateConfig object.
      * @param updateConfig.indexName - The index in which to perform the request.
      * @param updateConfig.querySuggestionsIndexParam - The querySuggestionsIndexParam object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     updateConfig(
       { indexName, querySuggestionsIndexParam }: UpdateConfigProps,

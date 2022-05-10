@@ -91,6 +91,7 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
      *
      * @summary Search multiple indices.
      * @param multipleQueriesParams - The multipleQueriesParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     multipleQueries(
       multipleQueriesParams: MultipleQueriesParams,
@@ -136,6 +137,7 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
      * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param post.parameters - Query parameters to be applied to the current query.
      * @param post.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
       { path, parameters, body }: PostProps,
@@ -172,6 +174,7 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
      * @param search - The search object.
      * @param search.indexName - The index in which to perform the request.
      * @param search.searchParams - The searchParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     search(
       { indexName, searchParams }: SearchProps,
@@ -220,6 +223,7 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
      * @param searchForFacetValues.indexName - The index in which to perform the request.
      * @param searchForFacetValues.facetName - The facet name.
      * @param searchForFacetValues.searchForFacetValuesRequest - The searchForFacetValuesRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchForFacetValues(
       {

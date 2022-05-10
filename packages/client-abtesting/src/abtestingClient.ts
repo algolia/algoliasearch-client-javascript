@@ -65,6 +65,7 @@ export function createAbtestingClient(
      *
      * @summary Create a test.
      * @param addABTestsRequest - The addABTestsRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     addABTests(
       addABTestsRequest: AddABTestsRequest,
@@ -119,6 +120,7 @@ export function createAbtestingClient(
      * @param del - The del object.
      * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param del.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     del(
       { path, parameters }: DelProps,
@@ -153,6 +155,7 @@ export function createAbtestingClient(
      * @summary Delete a test.
      * @param deleteABTest - The deleteABTest object.
      * @param deleteABTest.id - The A/B test ID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteABTest(
       { id }: DeleteABTestProps,
@@ -193,6 +196,7 @@ export function createAbtestingClient(
      * @param get - The get object.
      * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param get.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     get(
       { path, parameters }: GetProps,
@@ -227,6 +231,7 @@ export function createAbtestingClient(
      * @summary Get a test.
      * @param getABTest - The getABTest object.
      * @param getABTest.id - The A/B test ID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getABTest(
       { id }: GetABTestProps,
@@ -265,6 +270,7 @@ export function createAbtestingClient(
      * @param listABTests - The listABTests object.
      * @param listABTests.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param listABTests.limit - Number of records to return. Limit is the size of the page.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listABTests(
       { offset, limit }: ListABTestsProps,
@@ -305,6 +311,7 @@ export function createAbtestingClient(
      * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param post.parameters - Query parameters to be applied to the current query.
      * @param post.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
       { path, parameters, body }: PostProps,
@@ -342,6 +349,7 @@ export function createAbtestingClient(
      * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
      * @param put.parameters - Query parameters to be applied to the current query.
      * @param put.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     put(
       { path, parameters, body }: PutProps,
@@ -377,6 +385,7 @@ export function createAbtestingClient(
      * @summary Stop a test.
      * @param stopABTest - The stopABTest object.
      * @param stopABTest.id - The A/B test ID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     stopABTest(
       { id }: StopABTestProps,
