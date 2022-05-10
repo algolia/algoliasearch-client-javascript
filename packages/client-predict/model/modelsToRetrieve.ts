@@ -1,1 +1,5 @@
-export type ModelsToRetrieve = 'affinities' | 'funnel_stage' | 'order_value';
+import type { ModelsToRetrieveEnum } from './modelsToRetrieveEnum';
+
+export type ModelsToRetrieve = {
+  modelsToRetrieve: ModelsToRetrieveEnum[];
+};

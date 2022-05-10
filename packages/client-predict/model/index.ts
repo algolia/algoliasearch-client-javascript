@@ -1,8 +1,10 @@
 export * from './affinities';
+export * from './allParams';
 export * from './errorBase';
 export * from './fetchUserProfileResponse';
 export * from './funnelStage';
 export * from './modelsToRetrieve';
+export * from './modelsToRetrieveEnum';
 export * from './params';
 export * from './predictions';
 export * from './predictionsAffinities';
@@ -11,3 +13,4 @@ export * from './predictionsOrderValue';
 export * from './properties';
 export * from './segments';
 export * from './typesToRetrieve';
+export * from './typesToRetrieveEnum';
