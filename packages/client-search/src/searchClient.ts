@@ -308,7 +308,7 @@ export function createSearchClient(options: CreateClientOptions) {
       const queryParameters: QueryParameters = {};
 
       if (xAlgoliaUserID !== undefined) {
-        queryParameters['X-Algolia-User-ID'] = xAlgoliaUserID.toString();
+        headers['X-Algolia-User-ID'] = xAlgoliaUserID.toString();
       }
 
       const request: Request = {
@@ -416,7 +416,7 @@ export function createSearchClient(options: CreateClientOptions) {
       const queryParameters: QueryParameters = {};
 
       if (xAlgoliaUserID !== undefined) {
-        queryParameters['X-Algolia-User-ID'] = xAlgoliaUserID.toString();
+        headers['X-Algolia-User-ID'] = xAlgoliaUserID.toString();
       }
 
       const request: Request = {
