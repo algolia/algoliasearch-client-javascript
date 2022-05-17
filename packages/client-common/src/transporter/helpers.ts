@@ -1,9 +1,9 @@
 import type {
   Headers,
   Host,
+  QueryParameters,
   Request,
   RequestOptions,
-  QueryParameters,
   Response,
   StackFrame,
 } from '../types';
