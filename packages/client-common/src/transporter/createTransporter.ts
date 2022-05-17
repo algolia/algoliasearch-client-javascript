@@ -106,12 +106,29 @@ export function createTransporter({
         }
       : {};
 
-    const queryParameters = {
+    const queryParameters: QueryParameters = {
       'x-algolia-agent': userAgent.value,
       ...baseQueryParameters,
       ...dataQueryParameters,
-      ...requestOptions.queryParameters,
     };
+
+    if (requestOptions?.queryParameters) {
+      for (const [key, value] of Object.entries(
+        requestOptions.queryParameters
+      )) {
+        // We want to keep `undefined` and `null` values,
+        // but also avoid stringifying `object`s, as they are
+        // handled in the `serializeUrl` step right after.
+        if (
+          !value ||
+          Object.prototype.toString.call(value) === '[object Object]'
+        ) {
+          queryParameters[key] = value;
+        } else {
+          queryParameters[key] = value.toString();
+        }
+      }
+    }
 
     let timeoutsCount = 0;
 

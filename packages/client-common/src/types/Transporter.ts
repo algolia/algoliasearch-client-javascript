@@ -3,8 +3,7 @@ import type { Host } from './Host';
 import type { Request, Requester, EndRequest, Response } from './Requester';
 
 export type Headers = Record<string, string>;
-
-export type QueryParameters = Record<string, string>;
+export type QueryParameters = Record<string, any>;
 
 export type RequestOptions = {
   /**
