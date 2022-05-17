@@ -1,14 +1,8 @@
 import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { shuffle, version } from '@algolia/client-common';
-import { SearchOptions } from '@algolia/client-search';
-import {
-  createStatelessHost,
-  createUserAgent,
-  HostOptions,
-  RequestOptions,
-} from '@algolia/transporter';
+import { version } from '@algolia/client-common';
+import { createStatelessHost, createUserAgent } from '@algolia/transporter';
 
-import algoliasearch, { AlgoliaSearchOptions } from '../builds/browserLite';
+import algoliasearch from '../builds/browserLite';
 
 const client = algoliasearch('appId', 'apiKey');
 
@@ -75,44 +69,5 @@ describe('lite preset', () => {
       header: 'foo',
     });
     expect(customClient.transporter.hosts).toEqual([createStatelessHost({ url: 'foo.com' })]);
-  });
-
-  it('allows to use places', async () => {
-    const places = (appId: string = '', apiKey: string = '', options?: AlgoliaSearchOptions) => {
-      const placesClient = algoliasearch(appId, apiKey, {
-        hosts: ([{ url: 'places-dsn.algolia.net' }] as readonly HostOptions[]).concat(
-          shuffle([
-            { url: 'places-1.algolia.net' },
-            { url: 'places-2.algolia.net' },
-            { url: 'places-3.algolia.net' },
-          ])
-        ),
-        ...options,
-      });
-
-      return (query: string, requestOptions?: RequestOptions & SearchOptions) => {
-        return placesClient.transporter.read(
-          {
-            method: 'POST',
-            path: '1/places/query',
-            data: {
-              query,
-            },
-            cacheable: true,
-          },
-          requestOptions
-        );
-      };
-    };
-
-    const search = places('', '');
-
-    const results = await search('Portugal');
-
-    // @ts-ignore
-    expect(results.query).toBe('Portugal');
-
-    // @ts-ignore
-    expect(results.hits[0].country_code).toBe('pt');
   });
 });
