@@ -368,4 +368,9 @@ export type SearchOptions = {
     | readonly string[]
     | ReadonlyArray<readonly string[] | string>
     | null;
+
+  /**
+   * Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
+   */
+  readonly queryLanguages?: readonly string[];
 };
