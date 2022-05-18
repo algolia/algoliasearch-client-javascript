@@ -1,3 +1,10 @@
+## [v4.13.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.13.0...4.13.1)
+
+* feat(search): add type for queryLanguages (#1406) ([61c2976](https://github.com/algolia/algoliasearch-client-javascript/commit/61c2976)), closes [#1406](https://github.com/algolia/algoliasearch-client-javascript/issues/1406) [#1405](https://github.com/algolia/algoliasearch-client-javascript/issues/1405)
+* chore: remove places tests (#1407) ([283e38c](https://github.com/algolia/algoliasearch-client-javascript/commit/283e38c)), closes [#1407](https://github.com/algolia/algoliasearch-client-javascript/issues/1407)
+
+
+
 ## [v4.13.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.12.2...4.13.0)
 
 - feat(recommend): Add trending types and methods (#1396) ([6882ec8](https://github.com/algolia/algoliasearch-client-javascript/commit/6882ec8)), closes [#1396](https://github.com/algolia/algoliasearch-client-javascript/issues/1396)
