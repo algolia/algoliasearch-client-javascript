@@ -3,7 +3,7 @@ import type { Host } from './Host';
 import type { Requester } from './Requester';
 import type {
   Timeouts,
-  UserAgentOptions,
+  AlgoliaAgentOptions,
   TransporterOptions,
 } from './Transporter';
 
@@ -17,7 +17,7 @@ export type CreateClientOptions = Pick<
   apiKey: string;
   requester: Requester;
   timeouts: Timeouts;
-  userAgents: UserAgentOptions[];
+  algoliaAgents: AlgoliaAgentOptions[];
   hosts?: Host[];
   authMode?: AuthMode;
 };

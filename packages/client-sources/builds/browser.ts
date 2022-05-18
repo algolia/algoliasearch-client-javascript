@@ -39,7 +39,7 @@ export function sourcesClient(
       write: 30,
     },
     requester: options?.requester ?? createXhrRequester(),
-    userAgents: [{ segment: 'Browser' }],
+    algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
     responsesCache: options?.responsesCache ?? createMemoryCache(),
     requestsCache:

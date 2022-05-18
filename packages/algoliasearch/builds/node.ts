@@ -41,7 +41,7 @@ export function algoliasearch(
       write: 30,
     },
     requester: options?.requester ?? createHttpRequester(),
-    userAgents: [{ segment: 'Node.js', version: process.versions.node }],
+    algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),
     hostsCache: createMemoryCache(),

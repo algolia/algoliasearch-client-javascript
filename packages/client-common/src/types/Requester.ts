@@ -37,5 +37,5 @@ export type EchoResponse = Request & {
   headers: Headers;
   responseTimeout: number;
   searchParams?: Record<string, string>;
-  userAgent?: string;
+  algoliaAgent?: string;
 };

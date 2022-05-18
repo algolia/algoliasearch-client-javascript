@@ -1,7 +1,7 @@
 import {
   createAuth,
   createTransporter,
-  getUserAgent,
+  getAlgoliaAgent,
 } from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
@@ -48,8 +48,8 @@ export function createQuerySuggestionsClient(
       ...auth.headers(),
     },
     baseQueryParameters: auth.queryParameters(),
-    userAgent: getUserAgent({
-      userAgents: options.userAgents,
+    algoliaAgent: getAlgoliaAgent({
+      algoliaAgents: options.algoliaAgents,
       client: 'QuerySuggestions',
       version: apiClientVersion,
     }),
@@ -57,12 +57,12 @@ export function createQuerySuggestionsClient(
     requester: options.requester,
   });
 
-  function addUserAgent(segment: string, version?: string): void {
-    transporter.userAgent.add({ segment, version });
+  function addAlgoliaAgent(segment: string, version?: string): void {
+    transporter.algoliaAgent.add({ segment, version });
   }
 
   return {
-    addUserAgent,
+    addAlgoliaAgent,
     /**
      * Create a configuration of a Query Suggestions index. There\'s a limit of 100 configurations per application.
      *

@@ -45,7 +45,7 @@ export type StackFrame = {
   triesLeft: number;
 };
 
-export type UserAgentOptions = {
+export type AlgoliaAgentOptions = {
   /**
    * The segment. Usually the integration name.
    */
@@ -57,7 +57,7 @@ export type UserAgentOptions = {
   version?: string;
 };
 
-export type UserAgent = {
+export type AlgoliaAgent = {
   /**
    * The raw value of the user agent.
    */
@@ -66,7 +66,7 @@ export type UserAgent = {
   /**
    * Mutates the current user agent ading the given user agent options.
    */
-  add: (options: UserAgentOptions) => UserAgent;
+  add: (options: AlgoliaAgentOptions) => AlgoliaAgent;
 };
 
 export type Timeouts = {
@@ -133,7 +133,7 @@ export type TransporterOptions = {
   /**
    * The user agent used. Sent on query parameters.
    */
-  userAgent: UserAgent;
+  algoliaAgent: AlgoliaAgent;
 };
 
 export type Transporter = {
@@ -175,7 +175,7 @@ export type Transporter = {
   /**
    * The user agent used. Sent on query parameters.
    */
-  userAgent: UserAgent;
+  algoliaAgent: AlgoliaAgent;
 
   /**
    * The headers used on each request.

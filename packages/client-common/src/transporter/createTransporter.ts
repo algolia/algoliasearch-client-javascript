@@ -36,7 +36,7 @@ export function createTransporter({
   hostsCache,
   baseHeaders,
   baseQueryParameters,
-  userAgent,
+  algoliaAgent,
   timeouts,
   requester,
   requestsCache,
@@ -107,7 +107,7 @@ export function createTransporter({
       : {};
 
     const queryParameters: QueryParameters = {
-      'x-algolia-agent': userAgent.value,
+      'x-algolia-agent': algoliaAgent.value,
       ...baseQueryParameters,
       ...dataQueryParameters,
     };
@@ -355,7 +355,7 @@ export function createTransporter({
     hostsCache,
     requester,
     timeouts,
-    userAgent,
+    algoliaAgent,
     baseHeaders,
     baseQueryParameters,
     hosts,

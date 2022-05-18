@@ -1,7 +1,7 @@
 import {
   createAuth,
   createTransporter,
-  getUserAgent,
+  getAlgoliaAgent,
 } from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
@@ -46,8 +46,8 @@ export function createPersonalizationClient(
       ...auth.headers(),
     },
     baseQueryParameters: auth.queryParameters(),
-    userAgent: getUserAgent({
-      userAgents: options.userAgents,
+    algoliaAgent: getAlgoliaAgent({
+      algoliaAgents: options.algoliaAgents,
       client: 'Personalization',
       version: apiClientVersion,
     }),
@@ -55,12 +55,12 @@ export function createPersonalizationClient(
     requester: options.requester,
   });
 
-  function addUserAgent(segment: string, version?: string): void {
-    transporter.userAgent.add({ segment, version });
+  function addAlgoliaAgent(segment: string, version?: string): void {
+    transporter.algoliaAgent.add({ segment, version });
   }
 
   return {
-    addUserAgent,
+    addAlgoliaAgent,
     /**
      * This method allow you to send requests to the Algolia REST API.
      *

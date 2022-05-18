@@ -45,7 +45,7 @@ export function algoliasearch(
       write: 30,
     },
     requester: options?.requester ?? createXhrRequester(),
-    userAgents: [{ segment: 'Browser' }],
+    algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),

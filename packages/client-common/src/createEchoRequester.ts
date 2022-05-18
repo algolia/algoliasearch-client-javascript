@@ -2,7 +2,7 @@ import type { EchoResponse, EndRequest, Request, Response } from './types';
 
 export type UrlParams = {
   host: string;
-  userAgent: string;
+  algoliaAgent: string;
   searchParams: EchoResponse['searchParams'];
 };
 
@@ -20,7 +20,7 @@ export function createEchoRequester({
     { headers, url, connectTimeout, responseTimeout }: EndRequest,
     { data, ...originalRequest }: Request
   ): Promise<Response> {
-    const { host, searchParams, userAgent } = getUrlParams(url);
+    const { host, searchParams, algoliaAgent } = getUrlParams(url);
     const originalData =
       data && Object.entries(data).length > 0 ? data : undefined;
 
@@ -31,7 +31,7 @@ export function createEchoRequester({
         headers,
         connectTimeout,
         responseTimeout,
-        userAgent: userAgent ? encodeURI(userAgent) : undefined,
+        algoliaAgent: algoliaAgent ? encodeURI(algoliaAgent) : undefined,
         searchParams,
         data: originalData,
       }),

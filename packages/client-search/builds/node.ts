@@ -32,7 +32,7 @@ export function searchClient(
       write: 30,
     },
     requester: options?.requester ?? createHttpRequester(),
-    userAgents: [{ segment: 'Node.js', version: process.versions.node }],
+    algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
     responsesCache: options?.responsesCache ?? createNullCache(),
     requestsCache: options?.requestsCache ?? createNullCache(),
     hostsCache: options?.hostsCache ?? createMemoryCache(),

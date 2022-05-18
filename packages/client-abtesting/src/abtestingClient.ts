@@ -1,7 +1,7 @@
 import {
   createAuth,
   createTransporter,
-  getUserAgent,
+  getAlgoliaAgent,
 } from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
@@ -45,8 +45,8 @@ export function createAbtestingClient(
       ...auth.headers(),
     },
     baseQueryParameters: auth.queryParameters(),
-    userAgent: getUserAgent({
-      userAgents: options.userAgents,
+    algoliaAgent: getAlgoliaAgent({
+      algoliaAgents: options.algoliaAgents,
       client: 'Abtesting',
       version: apiClientVersion,
     }),
@@ -54,12 +54,12 @@ export function createAbtestingClient(
     requester: options.requester,
   });
 
-  function addUserAgent(segment: string, version?: string): void {
-    transporter.userAgent.add({ segment, version });
+  function addAlgoliaAgent(segment: string, version?: string): void {
+    transporter.algoliaAgent.add({ segment, version });
   }
 
   return {
-    addUserAgent,
+    addAlgoliaAgent,
     /**
      * Creates a new A/B test with provided configuration. You can set an A/B test on two different indices with different settings, or on the same index with different search parameters by providing a customSearchParameters setting on one of the variants.
      *

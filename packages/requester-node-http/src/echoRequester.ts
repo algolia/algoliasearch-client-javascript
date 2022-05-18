@@ -5,7 +5,7 @@ import type { UrlParams } from '@experimental-api-clients-automation/client-comm
 
 function getUrlParams(url: string): UrlParams {
   const { host, searchParams: urlSearchParams } = new URL(url);
-  const userAgent = urlSearchParams.get('x-algolia-agent') || '';
+  const algoliaAgent = urlSearchParams.get('x-algolia-agent') || '';
   const searchParams = {};
 
   for (const [k, v] of urlSearchParams) {
@@ -18,7 +18,7 @@ function getUrlParams(url: string): UrlParams {
 
   return {
     host,
-    userAgent,
+    algoliaAgent,
     searchParams:
       Object.entries(searchParams).length === 0 ? undefined : searchParams,
   };

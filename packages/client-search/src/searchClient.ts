@@ -1,7 +1,7 @@
 import {
   createAuth,
   createTransporter,
-  getUserAgent,
+  getAlgoliaAgent,
   shuffle,
 } from '@experimental-api-clients-automation/client-common';
 import type {
@@ -123,8 +123,8 @@ export function createSearchClient(options: CreateClientOptions) {
       ...auth.headers(),
     },
     baseQueryParameters: auth.queryParameters(),
-    userAgent: getUserAgent({
-      userAgents: options.userAgents,
+    algoliaAgent: getAlgoliaAgent({
+      algoliaAgents: options.algoliaAgents,
       client: 'Search',
       version: apiClientVersion,
     }),
@@ -132,12 +132,12 @@ export function createSearchClient(options: CreateClientOptions) {
     requester: options.requester,
   });
 
-  function addUserAgent(segment: string, version?: string): void {
-    transporter.userAgent.add({ segment, version });
+  function addAlgoliaAgent(segment: string, version?: string): void {
+    transporter.algoliaAgent.add({ segment, version });
   }
 
   return {
-    addUserAgent,
+    addAlgoliaAgent,
     /**
      * Add a new API Key with specific permissions/restrictions.
      *
