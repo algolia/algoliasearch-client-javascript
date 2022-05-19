@@ -3,6 +3,7 @@ import {
   createTransporter,
   getAlgoliaAgent,
   shuffle,
+  createRetryablePromise,
 } from '@experimental-api-clients-automation/client-common';
 import type {
   CreateClientOptions,
@@ -11,6 +12,7 @@ import type {
   Request,
   RequestOptions,
   QueryParameters,
+  CreateRetryablePromiseOptions,
 } from '@experimental-api-clients-automation/client-common';
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
@@ -138,6 +140,35 @@ export function createSearchClient(options: CreateClientOptions) {
 
   return {
     addAlgoliaAgent,
+    /**
+     * Wait for a task to complete with `indexName` and `taskID`.
+     *
+     * @summary Wait for a task to complete.
+     * @param waitForTaskProps - The waitForTaskProps object.
+     * @param waitForTaskProps.indexName - The index in which to perform the request.
+     * @param waitForTaskProps.taskID - The unique identifier of the task to wait for.
+     */
+    waitForTask({
+      indexName,
+      taskID,
+      ...createRetryablePromiseOptions
+    }: Omit<
+      CreateRetryablePromiseOptions<GetTaskResponse>,
+      'func' | 'validate'
+    > & {
+      indexName: string;
+      taskID: number;
+    }): Promise<void> {
+      return new Promise<void>((resolve, reject) => {
+        createRetryablePromise<GetTaskResponse>({
+          ...createRetryablePromiseOptions,
+          func: () => this.getTask({ indexName, taskID }),
+          validate: (response) => response.status === 'published',
+        })
+          .then(() => resolve())
+          .catch(reject);
+      });
+    },
     /**
      * Add a new API Key with specific permissions/restrictions.
      *
