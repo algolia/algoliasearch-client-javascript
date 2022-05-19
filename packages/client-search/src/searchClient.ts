@@ -45,8 +45,6 @@ import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
 import type { LogType } from '../model/logType';
 import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
-import type { MultipleQueriesParams } from '../model/multipleQueriesParams';
-import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import type { OperationIndexParams } from '../model/operationIndexParams';
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
 import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
@@ -56,8 +54,10 @@ import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
 import type { SearchDictionaryEntriesParams } from '../model/searchDictionaryEntriesParams';
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
+import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchParams } from '../model/searchParams';
 import type { SearchResponse } from '../model/searchResponse';
+import type { SearchResponses } from '../model/searchResponses';
 import type { SearchRulesParams } from '../model/searchRulesParams';
 import type { SearchRulesResponse } from '../model/searchRulesResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
@@ -1823,49 +1823,6 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Perform a search operation targeting one or many indices.
-     *
-     * @summary Search multiple indices.
-     * @param multipleQueriesParams - The multipleQueriesParams object.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    multipleQueries(
-      multipleQueriesParams: MultipleQueriesParams,
-      requestOptions?: RequestOptions
-    ): Promise<MultipleQueriesResponse> {
-      if (!multipleQueriesParams) {
-        throw new Error(
-          'Parameter `multipleQueriesParams` is required when calling `multipleQueries`.'
-        );
-      }
-
-      if (!multipleQueriesParams.requests) {
-        throw new Error(
-          'Parameter `multipleQueriesParams.requests` is required when calling `multipleQueries`.'
-        );
-      }
-
-      const requestPath = '/1/indexes/*/queries';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'POST',
-        path: requestPath,
-        data: multipleQueriesParams,
-      };
-
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
-    },
-
-    /**
      * Performs a copy or a move operation on a index.
      *
      * @summary Copy/move index.
@@ -2430,41 +2387,36 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Perform a search operation targeting one specific index.
+     * Perform a search operation targeting one or many indices.
      *
-     * @summary Search in an index.
-     * @param search - The search object.
-     * @param search.indexName - The index in which to perform the request.
-     * @param search.searchParams - The searchParams object.
+     * @summary Search multiple indices.
+     * @param searchMethodParams - The searchMethodParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     search(
-      { indexName, searchParams }: SearchProps,
+      searchMethodParams: SearchMethodParams,
       requestOptions?: RequestOptions
-    ): Promise<SearchResponse> {
-      if (!indexName) {
+    ): Promise<SearchResponses> {
+      if (!searchMethodParams) {
         throw new Error(
-          'Parameter `indexName` is required when calling `search`.'
+          'Parameter `searchMethodParams` is required when calling `search`.'
         );
       }
 
-      if (!searchParams) {
+      if (!searchMethodParams.requests) {
         throw new Error(
-          'Parameter `searchParams` is required when calling `search`.'
+          'Parameter `searchMethodParams.requests` is required when calling `search`.'
         );
       }
 
-      const requestPath = '/1/indexes/{indexName}/query'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/*/queries';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
         path: requestPath,
-        data: searchParams,
+        data: searchMethodParams,
       };
 
       return transporter.request(
@@ -2622,6 +2574,54 @@ export function createSearchClient(options: CreateClientOptions) {
         method: 'POST',
         path: requestPath,
         data: searchRulesParams,
+      };
+
+      return transporter.request(
+        request,
+        {
+          queryParameters,
+          headers,
+        },
+        requestOptions
+      );
+    },
+
+    /**
+     * Perform a search operation targeting one specific index.
+     *
+     * @summary Search in a single index.
+     * @param searchSingleIndex - The searchSingleIndex object.
+     * @param searchSingleIndex.indexName - The index in which to perform the request.
+     * @param searchSingleIndex.searchParams - The searchParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchSingleIndex(
+      { indexName, searchParams }: SearchSingleIndexProps,
+      requestOptions?: RequestOptions
+    ): Promise<SearchResponse> {
+      if (!indexName) {
+        throw new Error(
+          'Parameter `indexName` is required when calling `searchSingleIndex`.'
+        );
+      }
+
+      if (!searchParams) {
+        throw new Error(
+          'Parameter `searchParams` is required when calling `searchSingleIndex`.'
+        );
+      }
+
+      const requestPath = '/1/indexes/{indexName}/query'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        data: searchParams,
       };
 
       return transporter.request(
@@ -3335,14 +3335,6 @@ export type SaveSynonymsProps = {
   replaceExistingSynonyms?: boolean;
 };
 
-export type SearchProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  searchParams: SearchParams;
-};
-
 export type SearchDictionaryEntriesProps = {
   /**
    * The dictionary to search in.
@@ -3369,6 +3361,14 @@ export type SearchRulesProps = {
    */
   indexName: string;
   searchRulesParams: SearchRulesParams;
+};
+
+export type SearchSingleIndexProps = {
+  /**
+   * The index in which to perform the request.
+   */
+  indexName: string;
+  searchParams: SearchParams;
 };
 
 export type SearchSynonymsProps = {

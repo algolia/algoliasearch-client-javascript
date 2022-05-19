@@ -7,6 +7,10 @@ import type { TagFilters } from './tagFilters';
 
 export type BaseSearchParams = {
   /**
+   * The text to search in the index.
+   */
+  query?: string;
+  /**
    * Overrides the query parameter and performs a more generic search that can be used to find \"similar\" results.
    */
   similarQuery?: string;

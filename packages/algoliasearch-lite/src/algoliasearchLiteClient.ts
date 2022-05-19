@@ -13,12 +13,10 @@ import type {
   QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
-import type { MultipleQueriesParams } from '../model/multipleQueriesParams';
-import type { MultipleQueriesResponse } from '../model/multipleQueriesResponse';
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
-import type { SearchParams } from '../model/searchParams';
-import type { SearchResponse } from '../model/searchResponse';
+import type { SearchMethodParams } from '../model/searchMethodParams';
+import type { SearchResponses } from '../model/searchResponses';
 
 export * from '../model';
 export const apiClientVersion = '0.2.0';
@@ -87,49 +85,6 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
   return {
     addAlgoliaAgent,
     /**
-     * Perform a search operation targeting one or many indices.
-     *
-     * @summary Search multiple indices.
-     * @param multipleQueriesParams - The multipleQueriesParams object.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    multipleQueries(
-      multipleQueriesParams: MultipleQueriesParams,
-      requestOptions?: RequestOptions
-    ): Promise<MultipleQueriesResponse> {
-      if (!multipleQueriesParams) {
-        throw new Error(
-          'Parameter `multipleQueriesParams` is required when calling `multipleQueries`.'
-        );
-      }
-
-      if (!multipleQueriesParams.requests) {
-        throw new Error(
-          'Parameter `multipleQueriesParams.requests` is required when calling `multipleQueries`.'
-        );
-      }
-
-      const requestPath = '/1/indexes/*/queries';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'POST',
-        path: requestPath,
-        data: multipleQueriesParams,
-      };
-
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
-    },
-
-    /**
      * This method allow you to send requests to the Algolia REST API.
      *
      * @summary Send requests to the Algolia REST API.
@@ -168,41 +123,36 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
     },
 
     /**
-     * Perform a search operation targeting one specific index.
+     * Perform a search operation targeting one or many indices.
      *
-     * @summary Search in an index.
-     * @param search - The search object.
-     * @param search.indexName - The index in which to perform the request.
-     * @param search.searchParams - The searchParams object.
+     * @summary Search multiple indices.
+     * @param searchMethodParams - The searchMethodParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     search(
-      { indexName, searchParams }: SearchProps,
+      searchMethodParams: SearchMethodParams,
       requestOptions?: RequestOptions
-    ): Promise<SearchResponse> {
-      if (!indexName) {
+    ): Promise<SearchResponses> {
+      if (!searchMethodParams) {
         throw new Error(
-          'Parameter `indexName` is required when calling `search`.'
+          'Parameter `searchMethodParams` is required when calling `search`.'
         );
       }
 
-      if (!searchParams) {
+      if (!searchMethodParams.requests) {
         throw new Error(
-          'Parameter `searchParams` is required when calling `search`.'
+          'Parameter `searchMethodParams.requests` is required when calling `search`.'
         );
       }
 
-      const requestPath = '/1/indexes/{indexName}/query'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
+      const requestPath = '/1/indexes/*/queries';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'POST',
         path: requestPath,
-        data: searchParams,
+        data: searchMethodParams,
       };
 
       return transporter.request(
@@ -286,14 +236,6 @@ export type PostProps = {
    * The parameters to send with the custom request.
    */
   body?: Record<string, any>;
-};
-
-export type SearchProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  searchParams: SearchParams;
 };
 
 export type SearchForFacetValuesProps = {

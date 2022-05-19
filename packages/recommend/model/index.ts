@@ -30,7 +30,6 @@ export * from './recommendationRequest';
 export * from './recommendationsRequest';
 export * from './recommendationsResponse';
 export * from './removeWordsIfNoResults';
-export * from './requiredSearchParams';
 export * from './searchParamsObject';
 export * from './snippetResult';
 export * from './tagFilters';
