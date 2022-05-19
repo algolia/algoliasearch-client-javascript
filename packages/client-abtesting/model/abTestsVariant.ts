@@ -4,7 +4,7 @@ export type AbTestsVariant = {
    */
   index: string;
   /**
-   * The traffic perfecentage for the A/B test.
+   * The traffic percentage for the A/B test.
    */
   trafficPercentage: number;
   /**

@@ -7,7 +7,7 @@ export type QueryParameters = Record<string, any>;
 
 export type RequestOptions = {
   /**
-   * Custom timeout for the request. Note that, in normal situacions
+   * Custom timeout for the request. Note that, in normal situations
    * the given timeout will be applied. But the transporter layer may
    * increase this timeout if there is need for it.
    */
@@ -64,7 +64,7 @@ export type AlgoliaAgent = {
   value: string;
 
   /**
-   * Mutates the current user agent ading the given user agent options.
+   * Mutates the current user agent adding the given user agent options.
    */
   add: (options: AlgoliaAgentOptions) => AlgoliaAgent;
 };
@@ -84,7 +84,7 @@ export type TransporterOptions = {
 
   /**
    * The underlying requester used. Should differ
-   * depending of the enviroment where the client
+   * depending of the environment where the client
    * will be used.
    */
   requester: Requester;
@@ -92,7 +92,7 @@ export type TransporterOptions = {
   /**
    * The cache of the requests. When requests are
    * `cacheable`, the returned promised persists
-   * in this cache to shared in similar resquests
+   * in this cache to shared in similar requests
    * before being resolved.
    */
   requestsCache: Cache;
@@ -100,7 +100,7 @@ export type TransporterOptions = {
   /**
    * The cache of the responses. When requests are
    * `cacheable`, the returned responses persists
-   * in this cache to shared in similar resquests.
+   * in this cache to shared in similar requests.
    */
   responsesCache: Cache;
 
@@ -145,7 +145,7 @@ export type Transporter = {
 
   /**
    * The underlying requester used. Should differ
-   * depending of the enviroment where the client
+   * depending of the environment where the client
    * will be used.
    */
   requester: Requester;
@@ -153,7 +153,7 @@ export type Transporter = {
   /**
    * The cache of the requests. When requests are
    * `cacheable`, the returned promised persists
-   * in this cache to shared in similar resquests
+   * in this cache to shared in similar requests
    * before being resolved.
    */
   requestsCache: Cache;
@@ -161,7 +161,7 @@ export type Transporter = {
   /**
    * The cache of the responses. When requests are
    * `cacheable`, the returned responses persists
-   * in this cache to shared in similar resquests.
+   * in this cache to shared in similar requests.
    */
   responsesCache: Cache;
 
@@ -194,7 +194,7 @@ export type Transporter = {
 
   /**
    * Performs a request.
-   * The `baseRequest` and `baseRequestOptions` will be merged accordignly.
+   * The `baseRequest` and `baseRequestOptions` will be merged accordingly.
    */
   request: <TResponse>(
     baseRequest: Request,

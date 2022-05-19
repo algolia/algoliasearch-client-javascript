@@ -6,7 +6,7 @@ export type GetLogsResponseLogs = {
    */
   timestamp: string;
   /**
-   * HTTP method of the perfomed request.
+   * HTTP method of the performed request.
    */
   method: string;
   /**
@@ -26,7 +26,7 @@ export type GetLogsResponseLogs = {
    */
   url: string;
   /**
-   * IP of the client which perfomed the request.
+   * IP of the client which performed the request.
    */
   ip: string;
   /**

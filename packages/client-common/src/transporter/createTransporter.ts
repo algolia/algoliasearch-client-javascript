@@ -292,7 +292,7 @@ export function createTransporter({
     const cacheable = Boolean(requestOptions.cacheable || request.cacheable);
 
     /**
-     * If is not "cacheable", we immediatly trigger the retryable request, no
+     * If is not "cacheable", we immediately trigger the retryable request, no
      * need to check cache implementations.
      */
     if (cacheable !== true) {
@@ -315,7 +315,7 @@ export function createTransporter({
 
     /**
      * With the computed key, we first ask the responses cache
-     * implemention if this request was been resolved before.
+     * implementation if this request was been resolved before.
      */
     return responsesCache.get(
       key,

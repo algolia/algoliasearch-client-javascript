@@ -17,7 +17,7 @@ import type { QuerySuggestionsIndex } from '../model/querySuggestionsIndex';
 import type { QuerySuggestionsIndexParam } from '../model/querySuggestionsIndexParam';
 import type { QuerySuggestionsIndexWithIndexParam } from '../model/querySuggestionsIndexWithIndexParam';
 import type { Status } from '../model/status';
-import type { SucessResponse } from '../model/sucessResponse';
+import type { SuccessResponse } from '../model/successResponse';
 
 export * from '../model';
 export const apiClientVersion = '0.2.0';
@@ -73,7 +73,7 @@ export function createQuerySuggestionsClient(
     createConfig(
       querySuggestionsIndexWithIndexParam: QuerySuggestionsIndexWithIndexParam,
       requestOptions?: RequestOptions
-    ): Promise<SucessResponse> {
+    ): Promise<SuccessResponse> {
       if (!querySuggestionsIndexWithIndexParam) {
         throw new Error(
           'Parameter `querySuggestionsIndexWithIndexParam` is required when calling `createConfig`.'
@@ -137,7 +137,7 @@ export function createQuerySuggestionsClient(
     },
 
     /**
-     * Delete a configuration of a Query Suggestion\'s index. By deleting a configuraton, you stop all updates to the underlying query suggestion index. Note that when doing this, the underlying index does not change - existing suggestions remain untouched.
+     * Delete a configuration of a Query Suggestion\'s index. By deleting a configuration, you stop all updates to the underlying query suggestion index. Note that when doing this, the underlying index does not change - existing suggestions remain untouched.
      *
      * @summary Delete a configuration.
      * @param deleteConfig - The deleteConfig object.
@@ -147,7 +147,7 @@ export function createQuerySuggestionsClient(
     deleteConfig(
       { indexName }: DeleteConfigProps,
       requestOptions?: RequestOptions
-    ): Promise<SucessResponse> {
+    ): Promise<SuccessResponse> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `deleteConfig`.'
@@ -448,7 +448,7 @@ export function createQuerySuggestionsClient(
     updateConfig(
       { indexName, querySuggestionsIndexParam }: UpdateConfigProps,
       requestOptions?: RequestOptions
-    ): Promise<SucessResponse> {
+    ): Promise<SuccessResponse> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `updateConfig`.'

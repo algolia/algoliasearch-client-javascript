@@ -7,6 +7,6 @@ export * from './querySuggestionsIndexParam';
 export * from './querySuggestionsIndexWithIndexParam';
 export * from './sourceIndex';
 export * from './sourceIndexExternal';
-export * from './sourceIndiceWithReplicas';
+export * from './sourceIndexWithReplicas';
 export * from './status';
-export * from './sucessResponse';
+export * from './successResponse';

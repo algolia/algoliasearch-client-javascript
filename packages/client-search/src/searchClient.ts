@@ -1866,7 +1866,7 @@ export function createSearchClient(options: CreateClientOptions) {
     },
 
     /**
-     * Peforms a copy or a move operation on a index.
+     * Performs a copy or a move operation on a index.
      *
      * @summary Copy/move index.
      * @param operationIndex - The operationIndex object.

@@ -26,7 +26,7 @@ export type BaseSearchResponse = {
    */
   exhaustiveNbHits: boolean;
   /**
-   * Indicate if the typo-tolerence search was exhaustive or approximate (only included when typo-tolerance is enabled).
+   * Indicate if the typo-tolerance search was exhaustive or approximate (only included when typo-tolerance is enabled).
    */
   exhaustiveTypo: boolean;
   /**
