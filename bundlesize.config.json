@@ -2,11 +2,11 @@
   "files": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.browser.js",
-      "maxSize": "7.05KB"
+      "maxSize": "7.40KB"
     },
     {
       "path": "packages/algoliasearch-lite/dist/algoliasearch-lite.umd.browser.js",
-      "maxSize": "3.80KB"
+      "maxSize": "3.70KB"
     },
     {
       "path": "packages/client-abtesting/dist/client-abtesting.umd.browser.js",
@@ -30,7 +30,7 @@
     },
     {
       "path": "packages/client-search/dist/client-search.umd.browser.js",
-      "maxSize": "5.85KB"
+      "maxSize": "6.30KB"
     },
     {
       "path": "packages/client-sources/dist/client-sources.umd.browser.js",

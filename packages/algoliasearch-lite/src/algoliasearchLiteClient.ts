@@ -13,8 +13,6 @@ import type {
   QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
-import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
-import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponses } from '../model/searchResponses';
 
@@ -164,58 +162,6 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
         requestOptions
       );
     },
-
-    /**
-     * Search for values of a given facet, optionally restricting the returned values to those contained in objects matching other search criteria.
-     *
-     * @summary Search for values of a given facet.
-     * @param searchForFacetValues - The searchForFacetValues object.
-     * @param searchForFacetValues.indexName - The index in which to perform the request.
-     * @param searchForFacetValues.facetName - The facet name.
-     * @param searchForFacetValues.searchForFacetValuesRequest - The searchForFacetValuesRequest object.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    searchForFacetValues(
-      {
-        indexName,
-        facetName,
-        searchForFacetValuesRequest,
-      }: SearchForFacetValuesProps,
-      requestOptions?: RequestOptions
-    ): Promise<SearchForFacetValuesResponse> {
-      if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `searchForFacetValues`.'
-        );
-      }
-
-      if (!facetName) {
-        throw new Error(
-          'Parameter `facetName` is required when calling `searchForFacetValues`.'
-        );
-      }
-
-      const requestPath = '/1/indexes/{indexName}/facets/{facetName}/query'
-        .replace('{indexName}', encodeURIComponent(indexName))
-        .replace('{facetName}', encodeURIComponent(facetName));
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'POST',
-        path: requestPath,
-        data: searchForFacetValuesRequest,
-      };
-
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
-    },
   };
 }
 
@@ -236,16 +182,4 @@ export type PostProps = {
    * The parameters to send with the custom request.
    */
   body?: Record<string, any>;
-};
-
-export type SearchForFacetValuesProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * The facet name.
-   */
-  facetName: string;
-  searchForFacetValuesRequest?: SearchForFacetValuesRequest;
 };
