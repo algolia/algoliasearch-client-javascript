@@ -1,5 +1,9 @@
 import type { CreateRetryablePromiseOptions } from './types/CreateRetryablePromise';
 
+export const DEFAULT_MAX_TRIAL = 50;
+export const DEFAULT_TIMEOUT = (retryCount: number): number =>
+  Math.min(retryCount * 200, 5000);
+
 /**
  * Return a promise that retry a task until it meets the condition.
  *
@@ -12,8 +16,8 @@ import type { CreateRetryablePromiseOptions } from './types/CreateRetryablePromi
 export function createRetryablePromise<TResponse>({
   func,
   validate,
-  maxTrial = 10,
-  timeout = (retryCount: number): number => Math.min(retryCount * 10, 1000),
+  maxTrial = DEFAULT_MAX_TRIAL,
+  timeout = DEFAULT_TIMEOUT,
 }: CreateRetryablePromiseOptions<TResponse>): Promise<TResponse> {
   let retryCount = 0;
   const retry = (): Promise<TResponse> => {
