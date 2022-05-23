@@ -4,6 +4,8 @@ import type {
   Response,
 } from '@experimental-api-clients-automation/client-common';
 
+type Timeout = ReturnType<typeof setTimeout>;
+
 export function createXhrRequester(): Requester {
   function send(request: EndRequest): Promise<Response> {
     return new Promise((resolve) => {
@@ -14,10 +16,7 @@ export function createXhrRequester(): Requester {
         baseRequester.setRequestHeader(key, request.headers[key])
       );
 
-      const createTimeout = (
-        timeout: number,
-        content: string
-      ): NodeJS.Timeout => {
+      const createTimeout = (timeout: number, content: string): Timeout => {
         return setTimeout(() => {
           baseRequester.abort();
 
@@ -34,7 +33,7 @@ export function createXhrRequester(): Requester {
         'Connection timeout'
       );
 
-      let responseTimeout: NodeJS.Timeout | undefined;
+      let responseTimeout: Timeout | undefined;
 
       baseRequester.onreadystatechange = (): void => {
         if (
@@ -54,7 +53,7 @@ export function createXhrRequester(): Requester {
         // istanbul ignore next
         if (baseRequester.status === 0) {
           clearTimeout(connectTimeout);
-          clearTimeout(responseTimeout as NodeJS.Timeout);
+          clearTimeout(responseTimeout!);
 
           resolve({
             content: baseRequester.responseText || 'Network request failed',
@@ -66,7 +65,7 @@ export function createXhrRequester(): Requester {
 
       baseRequester.onload = (): void => {
         clearTimeout(connectTimeout);
-        clearTimeout(responseTimeout as NodeJS.Timeout);
+        clearTimeout(responseTimeout!);
 
         resolve({
           content: baseRequester.responseText,
