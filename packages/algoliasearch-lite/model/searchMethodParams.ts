@@ -1,7 +1,7 @@
-import type { SearchQueries } from './searchQueries';
+import type { SearchQuery } from './searchQuery';
 import type { SearchStrategy } from './searchStrategy';
 
 export type SearchMethodParams = {
-  requests: SearchQueries[];
+  requests: SearchQuery[];
   strategy?: SearchStrategy;
 };
