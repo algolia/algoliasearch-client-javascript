@@ -18,7 +18,7 @@ import type { PersonalizationStrategyParams } from '../model/personalizationStra
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';
 
 export * from '../model';
-export const apiClientVersion = '0.2.0';
+export const apiClientVersion = '0.3.0';
 
 export type Region = 'eu' | 'us';
 
