@@ -7,6 +7,11 @@ export type Request = {
   path: string;
   data?: Array<Record<string, any>> | Record<string, any>;
   cacheable?: boolean;
+  /**
+   * Some POST methods in the Algolia REST API uses the `read` transporter.
+   * This information is defined at the spec level.
+   */
+  useReadTransporter?: boolean;
 };
 
 export type EndRequest = {

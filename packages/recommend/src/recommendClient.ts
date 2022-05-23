@@ -185,6 +185,7 @@ export function createRecommendClient(options: CreateClientOptions) {
         method: 'POST',
         path: requestPath,
         data: getRecommendationsParams,
+        useReadTransporter: true,
       };
 
       return transporter.request(

@@ -151,6 +151,7 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
         method: 'POST',
         path: requestPath,
         data: searchMethodParams,
+        useReadTransporter: true,
       };
 
       return transporter.request(

@@ -89,7 +89,7 @@ export function createTransporter({
     requestOptions: RequestOptions
   ): Promise<TResponse> {
     const stackTrace: StackFrame[] = [];
-    const isRead = request.method === 'GET';
+    const isRead = request.useReadTransporter || request.method === 'GET';
 
     /**
      * First we prepare the payload that do not depend from hosts.
@@ -99,12 +99,13 @@ export function createTransporter({
     const method = request.method;
 
     // On `GET`, the data is proxied to query parameters.
-    const dataQueryParameters: Record<string, any> = isRead
-      ? {
-          ...request.data,
-          ...requestOptions.data,
-        }
-      : {};
+    const dataQueryParameters: Record<string, any> =
+      request.method === 'GET'
+        ? {
+            ...request.data,
+            ...requestOptions.data,
+          }
+        : {};
 
     const queryParameters: QueryParameters = {
       'x-algolia-agent': algoliaAgent.value,
