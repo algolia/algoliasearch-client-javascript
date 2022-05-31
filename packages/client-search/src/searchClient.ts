@@ -1369,6 +1369,7 @@ export function createSearchClient(options: CreateClientOptions) {
         path: requestPath,
         data: getObjectsParams,
         useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(
@@ -2450,6 +2451,7 @@ export function createSearchClient(options: CreateClientOptions) {
         path: requestPath,
         data: searchMethodParams,
         useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(
@@ -2508,6 +2510,7 @@ export function createSearchClient(options: CreateClientOptions) {
         path: requestPath,
         data: searchDictionaryEntriesParams,
         useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(
@@ -2561,6 +2564,7 @@ export function createSearchClient(options: CreateClientOptions) {
         path: requestPath,
         data: searchForFacetValuesRequest,
         useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(
@@ -2610,6 +2614,7 @@ export function createSearchClient(options: CreateClientOptions) {
         path: requestPath,
         data: searchRulesParams,
         useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(
@@ -2659,6 +2664,7 @@ export function createSearchClient(options: CreateClientOptions) {
         path: requestPath,
         data: searchParams,
         useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(
@@ -2720,6 +2726,7 @@ export function createSearchClient(options: CreateClientOptions) {
         method: 'POST',
         path: requestPath,
         useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(
@@ -2764,6 +2771,7 @@ export function createSearchClient(options: CreateClientOptions) {
         path: requestPath,
         data: searchUserIdsParams,
         useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(

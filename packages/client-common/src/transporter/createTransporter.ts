@@ -268,7 +268,9 @@ export function createTransporter({
       },
     };
 
-    if (request.method !== 'GET') {
+    const isRead = request.useReadTransporter || request.method === 'GET';
+
+    if (!isRead) {
       /**
        * On write requests, no cache mechanisms are applied, and we
        * proxy the request immediately to the requester.

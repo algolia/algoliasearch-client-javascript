@@ -186,6 +186,7 @@ export function createRecommendClient(options: CreateClientOptions) {
         path: requestPath,
         data: getRecommendationsParams,
         useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(
