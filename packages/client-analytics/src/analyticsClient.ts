@@ -56,7 +56,7 @@ export function createAnalyticsClient(
     requestsCache: options.requestsCache,
     responsesCache: options.responsesCache,
     baseHeaders: {
-      'content-type': 'application/x-www-form-urlencoded',
+      'content-type': 'text/plain',
       ...auth.headers(),
     },
     baseQueryParameters: auth.queryParameters(),
