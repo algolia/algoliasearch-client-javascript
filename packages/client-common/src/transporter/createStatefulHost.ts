@@ -14,9 +14,11 @@ export function createStatefulHost(
     return status === 'up' || Date.now() - lastUpdate > EXPIRATION_DELAY;
   }
 
-  function isTimedout(): boolean {
-    return status === 'timedout' && Date.now() - lastUpdate <= EXPIRATION_DELAY;
+  function isTimedOut(): boolean {
+    return (
+      status === 'timed out' && Date.now() - lastUpdate <= EXPIRATION_DELAY
+    );
   }
 
-  return { ...host, status, lastUpdate, isUp, isTimedout };
+  return { ...host, status, lastUpdate, isUp, isTimedOut };
 }

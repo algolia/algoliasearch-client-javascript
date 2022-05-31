@@ -5,8 +5,8 @@ export type Host = {
 };
 
 export type StatefulHost = Host & {
-  status: 'down' | 'timedout' | 'up';
+  status: 'down' | 'timed out' | 'up';
   lastUpdate: number;
   isUp: () => boolean;
-  isTimedout: () => boolean;
+  isTimedOut: () => boolean;
 };

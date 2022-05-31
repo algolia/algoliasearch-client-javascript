@@ -30,7 +30,7 @@ export function createRetryablePromise<TResponse>({
           } else if (retryCount + 1 >= maxTrial) {
             reject(
               new Error(
-                `The maximum number of trials exceeded. (${
+                `The maximum number of retries exceeded. (${
                   retryCount + 1
                 }/${maxTrial})`
               )

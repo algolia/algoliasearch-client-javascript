@@ -53,10 +53,10 @@ export function createTransporter({
       })
     );
     const hostsUp = statefulHosts.filter((host) => host.isUp());
-    const hostsTimeouted = statefulHosts.filter((host) => host.isTimedout());
+    const hostsTimedOut = statefulHosts.filter((host) => host.isTimedOut());
 
-    // Note, we put the hosts that previously timeouted on the end of the list.
-    const hostsAvailable = [...hostsUp, ...hostsTimeouted];
+    // Note, we put the hosts that previously timed out on the end of the list.
+    const hostsAvailable = [...hostsUp, ...hostsTimedOut];
     const compatibleHostsAvailable =
       hostsAvailable.length > 0 ? hostsAvailable : compatibleHosts;
 
@@ -65,19 +65,19 @@ export function createTransporter({
       getTimeout(timeoutsCount: number, baseTimeout: number): number {
         /**
          * Imagine that you have 4 hosts, if timeouts will increase
-         * on the following way: 1 (timeouted) > 4 (timeouted) > 5 (200).
+         * on the following way: 1 (timed out) > 4 (timed out) > 5 (200).
          *
          * Note that, the very next request, we start from the previous timeout.
          *
-         *  5 (timeouted) > 6 (timeouted) > 7 ...
+         *  5 (timed out) > 6 (timed out) > 7 ...
          *
          * This strategy may need to be reviewed, but is the strategy on the our
          * current v3 version.
          */
         const timeoutMultiplier =
-          hostsTimeouted.length === 0 && timeoutsCount === 0
+          hostsTimedOut.length === 0 && timeoutsCount === 0
             ? 1
-            : hostsTimeouted.length + 3 + timeoutsCount;
+            : hostsTimedOut.length + 3 + timeoutsCount;
 
         return timeoutMultiplier * baseTimeout;
       },
@@ -204,7 +204,7 @@ export function createTransporter({
          */
         await hostsCache.set(
           host,
-          createStatefulHost(host, response.isTimedOut ? 'timedout' : 'down')
+          createStatefulHost(host, response.isTimedOut ? 'timed out' : 'down')
         );
 
         return retry(retryableHosts, getTimeout);
