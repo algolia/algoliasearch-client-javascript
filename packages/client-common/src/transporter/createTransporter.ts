@@ -7,7 +7,6 @@ import type {
   StackFrame,
   TransporterOptions,
   Transporter,
-  Headers,
   QueryParameters,
 } from '../types';
 
@@ -99,7 +98,7 @@ export function createTransporter({
     const method = request.method;
 
     // On `GET`, the data is proxied to query parameters.
-    const dataQueryParameters: Record<string, any> =
+    const dataQueryParameters: QueryParameters =
       request.method === 'GET'
         ? {
             ...request.data,
@@ -238,10 +237,6 @@ export function createTransporter({
 
   function createRequest<TResponse>(
     baseRequest: Request,
-    methodOptions: {
-      headers: Headers;
-      queryParameters: QueryParameters;
-    },
     baseRequestOptions?: RequestOptions
   ): Promise<TResponse> {
     const mergedData: Request['data'] = Array.isArray(baseRequest.data)
@@ -258,12 +253,12 @@ export function createTransporter({
       cacheable: baseRequestOptions?.cacheable,
       timeout: baseRequestOptions?.timeout,
       queryParameters: {
-        ...methodOptions.queryParameters,
+        ...baseRequest.queryParameters,
         ...baseRequestOptions?.queryParameters,
       },
       headers: {
         Accept: 'application/json',
-        ...methodOptions.headers,
+        ...baseRequest.headers,
         ...baseRequestOptions?.headers,
       },
     };

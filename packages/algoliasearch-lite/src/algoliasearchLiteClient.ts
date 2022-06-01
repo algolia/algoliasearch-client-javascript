@@ -107,17 +107,12 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: body,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -150,19 +145,14 @@ export function createAlgoliasearchLiteClient(options: CreateClientOptions) {
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: searchMethodParams,
         useReadTransporter: true,
         cacheable: true,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
   };
 }

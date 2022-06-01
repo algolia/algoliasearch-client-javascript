@@ -198,10 +198,6 @@ export type Transporter = {
    */
   request: <TResponse>(
     baseRequest: Request,
-    methodOptions: {
-      headers: Headers;
-      queryParameters: QueryParameters;
-    },
     baseRequestOptions?: RequestOptions
   ) => Promise<TResponse>;
 };

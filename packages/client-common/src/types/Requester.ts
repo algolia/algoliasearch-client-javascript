@@ -1,11 +1,13 @@
-import type { Headers } from './Transporter';
+import type { Headers, QueryParameters } from './Transporter';
 
 export type Method = 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
 
 export type Request = {
   method: Method;
   path: string;
+  queryParameters: QueryParameters;
   data?: Array<Record<string, any>> | Record<string, any>;
+  headers: Headers;
   cacheable?: boolean;
   /**
    * Some POST methods in the Algolia REST API uses the `read` transporter.

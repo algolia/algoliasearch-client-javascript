@@ -80,16 +80,11 @@ export function createSourcesClient(
       const request: Request = {
         method: 'DELETE',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -116,16 +111,11 @@ export function createSourcesClient(
       const request: Request = {
         method: 'GET',
         path: requestPath,
+        queryParameters,
+        headers,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -153,17 +143,12 @@ export function createSourcesClient(
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: body,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -206,17 +191,12 @@ export function createSourcesClient(
       const request: Request = {
         method: 'POST',
         path: requestPath,
+        queryParameters,
+        headers,
         data: postURLJob,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -244,17 +224,12 @@ export function createSourcesClient(
       const request: Request = {
         method: 'PUT',
         path: requestPath,
+        queryParameters,
+        headers,
         data: body,
       };
 
-      return transporter.request(
-        request,
-        {
-          queryParameters,
-          headers,
-        },
-        requestOptions
-      );
+      return transporter.request(request, requestOptions);
     },
   };
 }
