@@ -7888,8 +7888,8 @@ __metadata:
   linkType: hard
 
 "pacote@npm:^13.0.3, pacote@npm:^13.0.5, pacote@npm:^13.4.1":
-  version: 13.5.0
-  resolution: "pacote@npm:13.5.0"
+  version: 13.6.0
+  resolution: "pacote@npm:13.6.0"
   dependencies:
     "@npmcli/git": ^3.0.0
     "@npmcli/installed-package-contents": ^1.0.7
@@ -7914,7 +7914,7 @@ __metadata:
     tar: ^6.1.11
   bin:
     pacote: lib/bin.js
-  checksum: 76dfaa940c680e44c2c88699a5f43608bad3489d7d7d1306ff3c37203ce11bf95dc433ee13b4bcd1fa8823b5929960ebf2c716586fde4356758bdf24411dc421
+  checksum: 9e68300fbe35d4f004444f949b88ce3f5a92c44b92b63e57514962b228ef78bb1a92208f8f2a5fc8066e639c76a442e1cf6fad2a1d29efa63f07aece3cccc6f7
   languageName: node
   linkType: hard
 
