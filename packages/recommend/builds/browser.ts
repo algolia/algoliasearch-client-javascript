@@ -35,22 +35,17 @@ export function recommendClient(
       read: 2,
       write: 30,
     },
-    requester: options?.requester ?? createXhrRequester(),
+    requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
-    responsesCache: options?.responsesCache ?? createMemoryCache(),
-    requestsCache:
-      options?.requestsCache ?? createMemoryCache({ serializable: false }),
-    hostsCache:
-      options?.hostsCache ??
-      createFallbackableCache({
-        caches: [
-          createBrowserLocalStorageCache({
-            key: `${apiClientVersion}-${appId}`,
-          }),
-          createMemoryCache(),
-        ],
-      }),
+    responsesCache: createMemoryCache(),
+    requestsCache: createMemoryCache({ serializable: false }),
+    hostsCache: createFallbackableCache({
+      caches: [
+        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
+        createMemoryCache(),
+      ],
+    }),
     ...options,
   });
 }

@@ -1,31 +1,23 @@
-import type { Cache } from './Cache';
-import type { Host } from './Host';
-import type { Requester } from './Requester';
-import type {
-  Timeouts,
-  AlgoliaAgentOptions,
-  TransporterOptions,
-} from './Transporter';
+import type { AlgoliaAgentOptions, TransporterOptions } from './Transporter';
 
 export type AuthMode = 'WithinHeaders' | 'WithinQueryParameters';
 
-export type CreateClientOptions = Pick<
-  TransporterOptions,
-  'hostsCache' | 'requestsCache' | 'responsesCache'
-> & {
-  appId: string;
-  apiKey: string;
-  requester: Requester;
-  timeouts: Timeouts;
-  algoliaAgents: AlgoliaAgentOptions[];
-  hosts?: Host[];
-  authMode?: AuthMode;
-};
+type OverriddenTransporterOptions =
+  | 'baseHeaders'
+  | 'baseQueryParameters'
+  | 'hosts';
 
-export type InitClientOptions = Partial<{
-  requester: Requester;
-  hosts: Host[];
-  responsesCache: Cache;
-  requestsCache: Cache;
-  hostsCache: Cache;
-}>;
+export type CreateClientOptions = Omit<
+  TransporterOptions,
+  OverriddenTransporterOptions | 'algoliaAgent'
+> &
+  Partial<Pick<TransporterOptions, OverriddenTransporterOptions>> & {
+    appId: string;
+    apiKey: string;
+    authMode?: AuthMode;
+    algoliaAgents: AlgoliaAgentOptions[];
+  };
+
+export type InitClientOptions = Partial<
+  Omit<CreateClientOptions, 'apiKey' | 'appId'>
+>;

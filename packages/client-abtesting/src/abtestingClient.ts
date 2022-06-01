@@ -31,27 +31,32 @@ function getDefaultHosts(region?: Region): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createAbtestingClient(
-  options: CreateClientOptions & { region?: Region }
-) {
-  const auth = createAuth(options.appId, options.apiKey, options.authMode);
+export function createAbtestingClient({
+  appId: appIdOption,
+  apiKey: apiKeyOption,
+  authMode,
+  algoliaAgents,
+  region: regionOption,
+  ...options
+}: CreateClientOptions & { region?: Region }) {
+  const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
-    hosts: options?.hosts ?? getDefaultHosts(options.region),
-    hostsCache: options.hostsCache,
-    requestsCache: options.requestsCache,
-    responsesCache: options.responsesCache,
-    baseHeaders: {
-      'content-type': 'text/plain',
-      ...auth.headers(),
-    },
-    baseQueryParameters: auth.queryParameters(),
+    hosts: getDefaultHosts(regionOption),
+    ...options,
     algoliaAgent: getAlgoliaAgent({
-      algoliaAgents: options.algoliaAgents,
+      algoliaAgents,
       client: 'Abtesting',
       version: apiClientVersion,
     }),
-    timeouts: options.timeouts,
-    requester: options.requester,
+    baseHeaders: {
+      'content-type': 'text/plain',
+      ...auth.headers(),
+      ...options.baseHeaders,
+    },
+    baseQueryParameters: {
+      ...auth.queryParameters(),
+      ...options.baseQueryParameters,
+    },
   });
 
   function addAlgoliaAgent(segment: string, version?: string): void {

@@ -40,11 +40,11 @@ export function querySuggestionsClient(
       read: 5,
       write: 30,
     },
-    requester: options?.requester ?? createHttpRequester(),
+    requester: createHttpRequester(),
     algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
-    responsesCache: options?.responsesCache ?? createNullCache(),
-    requestsCache: options?.requestsCache ?? createNullCache(),
-    hostsCache: options?.hostsCache ?? createMemoryCache(),
+    responsesCache: createNullCache(),
+    requestsCache: createNullCache(),
+    hostsCache: createMemoryCache(),
     ...options,
   });
 }
