@@ -6,13 +6,14 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
-import {
-  createPersonalizationClient,
-  apiClientVersion,
-} from '../src/personalizationClient';
 import type {
   PersonalizationClient,
   Region,
+} from '../src/personalizationClient';
+import {
+  createPersonalizationClient,
+  apiClientVersion,
+  REGIONS,
 } from '../src/personalizationClient';
 
 export * from '../src/personalizationClient';
@@ -23,16 +24,21 @@ export function personalizationClient(
   region: Region,
   options?: InitClientOptions
 ): PersonalizationClient {
-  if (!appId) {
+  if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
 
-  if (!apiKey) {
+  if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
 
   if (!region) {
     throw new Error('`region` is missing.');
+  }
+  if (typeof region !== 'string' || !REGIONS.includes(region)) {
+    throw new Error(
+      `\`region\` must be one of the following: ${REGIONS.join(', ')}`
+    );
   }
 
   return createPersonalizationClient({

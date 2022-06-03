@@ -20,11 +20,11 @@ export function analyticsClient(
   region?: Region,
   options?: InitClientOptions
 ): AnalyticsClient {
-  if (!appId) {
+  if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
 
-  if (!apiKey) {
+  if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
 

@@ -22,7 +22,8 @@ import type { SuccessResponse } from '../model/successResponse';
 export * from '../model';
 export const apiClientVersion = '0.3.0';
 
-export type Region = 'eu' | 'us';
+export const REGIONS = ['eu', 'us'] as const;
+export type Region = typeof REGIONS[number];
 
 function getDefaultHosts(region: Region): Host[] {
   const url = 'query-suggestions.{region}.algolia.com'.replace(

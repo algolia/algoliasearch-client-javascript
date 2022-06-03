@@ -16,11 +16,11 @@ export function searchClient(
   apiKey: string,
   options?: InitClientOptions
 ): SearchClient {
-  if (!appId) {
+  if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
 
-  if (!apiKey) {
+  if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
 

@@ -18,7 +18,8 @@ import type { PushEventsResponse } from '../model/pushEventsResponse';
 export * from '../model';
 export const apiClientVersion = '0.3.0';
 
-export type Region = 'de' | 'us';
+export const REGIONS = ['de', 'us'] as const;
+export type Region = typeof REGIONS[number];
 
 function getDefaultHosts(region?: Region): Host[] {
   const url = !region

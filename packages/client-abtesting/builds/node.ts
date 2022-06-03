@@ -5,8 +5,8 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
-import { createAbtestingClient } from '../src/abtestingClient';
 import type { AbtestingClient, Region } from '../src/abtestingClient';
+import { createAbtestingClient } from '../src/abtestingClient';
 
 export * from '../src/abtestingClient';
 
@@ -16,11 +16,11 @@ export function abtestingClient(
   region?: Region,
   options?: InitClientOptions
 ): AbtestingClient {
-  if (!appId) {
+  if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
 
-  if (!apiKey) {
+  if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
 

@@ -6,8 +6,12 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
-import { createPredictClient, apiClientVersion } from '../src/predictClient';
 import type { PredictClient, Region } from '../src/predictClient';
+import {
+  createPredictClient,
+  apiClientVersion,
+  REGIONS,
+} from '../src/predictClient';
 
 export * from '../src/predictClient';
 
@@ -17,16 +21,21 @@ export function predictClient(
   region: Region,
   options?: InitClientOptions
 ): PredictClient {
-  if (!appId) {
+  if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
 
-  if (!apiKey) {
+  if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
 
   if (!region) {
     throw new Error('`region` is missing.');
+  }
+  if (typeof region !== 'string' || !REGIONS.includes(region)) {
+    throw new Error(
+      `\`region\` must be one of the following: ${REGIONS.join(', ')}`
+    );
   }
 
   return createPredictClient({

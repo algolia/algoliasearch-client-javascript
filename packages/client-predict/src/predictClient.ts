@@ -18,7 +18,8 @@ import type { Params } from '../model/params';
 export * from '../model';
 export const apiClientVersion = '0.3.0';
 
-export type Region = 'ew' | 'ue';
+export const REGIONS = ['ue', 'ew'] as const;
+export type Region = typeof REGIONS[number];
 
 function getDefaultHosts(region: Region): Host[] {
   const url = 'predict-api-432xa6wemq-{region}.a.run.app'.replace(

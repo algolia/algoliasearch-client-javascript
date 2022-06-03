@@ -5,8 +5,8 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
-import { createInsightsClient } from '../src/insightsClient';
 import type { InsightsClient, Region } from '../src/insightsClient';
+import { createInsightsClient } from '../src/insightsClient';
 
 export * from '../src/insightsClient';
 
@@ -16,11 +16,11 @@ export function insightsClient(
   region?: Region,
   options?: InitClientOptions
 ): InsightsClient {
-  if (!appId) {
+  if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
 
-  if (!apiKey) {
+  if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
 

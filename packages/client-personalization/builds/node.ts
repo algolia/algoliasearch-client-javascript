@@ -5,10 +5,13 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
-import { createPersonalizationClient } from '../src/personalizationClient';
 import type {
   PersonalizationClient,
   Region,
+} from '../src/personalizationClient';
+import {
+  createPersonalizationClient,
+  REGIONS,
 } from '../src/personalizationClient';
 
 export * from '../src/personalizationClient';
@@ -19,16 +22,21 @@ export function personalizationClient(
   region: Region,
   options?: InitClientOptions
 ): PersonalizationClient {
-  if (!appId) {
+  if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
 
-  if (!apiKey) {
+  if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
 
   if (!region) {
     throw new Error('`region` is missing.');
+  }
+  if (typeof region !== 'string' || !REGIONS.includes(region)) {
+    throw new Error(
+      `\`region\` must be one of the following: ${REGIONS.join(', ')}`
+    );
   }
 
   return createPersonalizationClient({

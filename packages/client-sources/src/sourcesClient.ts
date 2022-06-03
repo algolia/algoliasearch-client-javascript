@@ -18,7 +18,8 @@ import type { PostURLJob } from '../model/postURLJob';
 export * from '../model';
 export const apiClientVersion = '0.3.0';
 
-export type Region = 'de' | 'us';
+export const REGIONS = ['de', 'us'] as const;
+export type Region = typeof REGIONS[number];
 
 function getDefaultHosts(region: Region): Host[] {
   const url = 'data.{region}.algolia.com'.replace('{region}', region);
