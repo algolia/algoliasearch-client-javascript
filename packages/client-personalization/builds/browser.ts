@@ -16,7 +16,11 @@ import {
   REGIONS,
 } from '../src/personalizationClient';
 
-export * from '../src/personalizationClient';
+export {
+  apiClientVersion,
+  PersonalizationClient,
+} from '../src/personalizationClient';
+export * from '../model';
 
 export function personalizationClient(
   appId: string,
@@ -35,6 +39,7 @@ export function personalizationClient(
   if (!region) {
     throw new Error('`region` is missing.');
   }
+
   if (typeof region !== 'string' || !REGIONS.includes(region)) {
     throw new Error(
       `\`region\` must be one of the following: ${REGIONS.join(', ')}`

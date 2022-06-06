@@ -13,10 +13,15 @@ import type {
   QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
+import type {
+  DelProps,
+  GetProps,
+  PostProps,
+  PutProps,
+} from '../model/clientMethodProps';
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
 
-export * from '../model';
 export const apiClientVersion = '0.3.0';
 
 function getDefaultHosts(appId: string): Host[] {
@@ -259,55 +264,3 @@ export function createRecommendClient({
 }
 
 export type RecommendClient = ReturnType<typeof createRecommendClient>;
-
-export type DelProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-};
-
-export type GetProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-};
-
-export type PostProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};
-
-export type PutProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};

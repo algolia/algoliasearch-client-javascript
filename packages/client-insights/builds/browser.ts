@@ -9,7 +9,8 @@ import { createXhrRequester } from '@experimental-api-clients-automation/request
 import type { InsightsClient, Region } from '../src/insightsClient';
 import { createInsightsClient, apiClientVersion } from '../src/insightsClient';
 
-export * from '../src/insightsClient';
+export { apiClientVersion, InsightsClient } from '../src/insightsClient';
+export * from '../model';
 
 export function insightsClient(
   appId: string,

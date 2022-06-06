@@ -8,7 +8,8 @@ import { createHttpRequester } from '@experimental-api-clients-automation/reques
 import type { AbtestingClient, Region } from '../src/abtestingClient';
 import { createAbtestingClient } from '../src/abtestingClient';
 
-export * from '../src/abtestingClient';
+export { apiClientVersion, AbtestingClient } from '../src/abtestingClient';
+export * from '../model';
 
 export function abtestingClient(
   appId: string,

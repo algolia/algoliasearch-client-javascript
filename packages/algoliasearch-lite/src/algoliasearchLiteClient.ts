@@ -13,10 +13,10 @@ import type {
   QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
+import type { PostProps } from '../model/clientMethodProps';
 import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponses } from '../model/searchResponses';
 
-export * from '../model';
 export const apiClientVersion = '0.3.0';
 
 function getDefaultHosts(appId: string): Host[] {
@@ -166,18 +166,3 @@ export function createAlgoliasearchLiteClient({
 export type AlgoliasearchLiteClient = ReturnType<
   typeof createAlgoliasearchLiteClient
 >;
-
-export type PostProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};

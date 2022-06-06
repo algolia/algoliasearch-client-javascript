@@ -12,7 +12,11 @@ import {
 } from '../src/algoliasearchLiteClient';
 import type { AlgoliasearchLiteClient } from '../src/algoliasearchLiteClient';
 
-export * from '../src/algoliasearchLiteClient';
+export {
+  apiClientVersion,
+  AlgoliasearchLiteClient,
+} from '../src/algoliasearchLiteClient';
+export * from '../model';
 
 export function algoliasearchLiteClient(
   appId: string,

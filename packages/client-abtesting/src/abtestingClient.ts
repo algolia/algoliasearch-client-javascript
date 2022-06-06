@@ -15,9 +15,18 @@ import type {
 import type { ABTest } from '../model/aBTest';
 import type { ABTestResponse } from '../model/aBTestResponse';
 import type { AddABTestsRequest } from '../model/addABTestsRequest';
+import type {
+  DelProps,
+  DeleteABTestProps,
+  GetProps,
+  GetABTestProps,
+  ListABTestsProps,
+  PostProps,
+  PutProps,
+  StopABTestProps,
+} from '../model/clientMethodProps';
 import type { ListABTestsResponse } from '../model/listABTestsResponse';
 
-export * from '../model';
 export const apiClientVersion = '0.3.0';
 
 export const REGIONS = ['de', 'us'] as const;
@@ -383,87 +392,3 @@ export function createAbtestingClient({
 }
 
 export type AbtestingClient = ReturnType<typeof createAbtestingClient>;
-
-export type DelProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-};
-
-export type DeleteABTestProps = {
-  /**
-   * The A/B test ID.
-   */
-  id: number;
-};
-
-export type GetProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-};
-
-export type GetABTestProps = {
-  /**
-   * The A/B test ID.
-   */
-  id: number;
-};
-
-export type ListABTestsProps = {
-  /**
-   * Position of the starting record. Used for paging. 0 is the first record.
-   */
-  offset?: number;
-  /**
-   * Number of records to return. Limit is the size of the page.
-   */
-  limit?: number;
-};
-
-export type PostProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};
-
-export type PutProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};
-
-export type StopABTestProps = {
-  /**
-   * The A/B test ID.
-   */
-  id: number;
-};

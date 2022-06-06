@@ -13,7 +13,8 @@ import {
   REGIONS,
 } from '../src/predictClient';
 
-export * from '../src/predictClient';
+export { apiClientVersion, PredictClient } from '../src/predictClient';
+export * from '../model';
 
 export function predictClient(
   appId: string,
@@ -32,6 +33,7 @@ export function predictClient(
   if (!region) {
     throw new Error('`region` is missing.');
   }
+
   if (typeof region !== 'string' || !REGIONS.includes(region)) {
     throw new Error(
       `\`region\` must be one of the following: ${REGIONS.join(', ')}`

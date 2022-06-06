@@ -10,3 +10,4 @@ export * from './postURLJobTarget';
 export * from './productType';
 export * from './task';
 export * from './taskType';
+export * from './clientMethodProps';

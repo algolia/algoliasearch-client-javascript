@@ -14,3 +14,4 @@ export * from './properties';
 export * from './segments';
 export * from './typesToRetrieve';
 export * from './typesToRetrieveEnum';
+export * from './clientMethodProps';

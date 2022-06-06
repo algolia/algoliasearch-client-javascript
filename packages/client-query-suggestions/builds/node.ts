@@ -14,7 +14,11 @@ import {
   REGIONS,
 } from '../src/querySuggestionsClient';
 
-export * from '../src/querySuggestionsClient';
+export {
+  apiClientVersion,
+  QuerySuggestionsClient,
+} from '../src/querySuggestionsClient';
+export * from '../model';
 
 export function querySuggestionsClient(
   appId: string,
@@ -33,6 +37,7 @@ export function querySuggestionsClient(
   if (!region) {
     throw new Error('`region` is missing.');
   }
+
   if (typeof region !== 'string' || !REGIONS.includes(region)) {
     throw new Error(
       `\`region\` must be one of the following: ${REGIONS.join(', ')}`

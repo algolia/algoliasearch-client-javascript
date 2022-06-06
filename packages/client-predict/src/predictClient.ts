@@ -12,10 +12,15 @@ import type {
   QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
+import type {
+  DelProps,
+  FetchUserProfileProps,
+  GetProps,
+  PostProps,
+  PutProps,
+} from '../model/clientMethodProps';
 import type { FetchUserProfileResponse } from '../model/fetchUserProfileResponse';
-import type { Params } from '../model/params';
 
-export * from '../model';
 export const apiClientVersion = '0.3.0';
 
 export const REGIONS = ['ue', 'ew'] as const;
@@ -239,63 +244,3 @@ export function createPredictClient({
 }
 
 export type PredictClient = ReturnType<typeof createPredictClient>;
-
-export type DelProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-};
-
-export type FetchUserProfileProps = {
-  /**
-   * User ID for authenticated users or cookie ID for non-authenticated repeated users (visitors).
-   */
-  userID: string;
-  params: Params;
-};
-
-export type GetProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-};
-
-export type PostProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};
-
-export type PutProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};

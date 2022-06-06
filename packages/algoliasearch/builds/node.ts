@@ -17,8 +17,13 @@ import type {
   Region as PersonalizationRegion,
 } from '@experimental-api-clients-automation/client-personalization/src/personalizationClient';
 import { createPersonalizationClient } from '@experimental-api-clients-automation/client-personalization/src/personalizationClient';
-import { createSearchClient } from '@experimental-api-clients-automation/client-search/src/searchClient';
+import {
+  createSearchClient,
+  apiClientVersion as searchClientVersion,
+} from '@experimental-api-clients-automation/client-search/src/searchClient';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
+
+export const apiClientVersion = searchClientVersion;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function algoliasearch(
@@ -88,3 +93,5 @@ export function algoliasearch(
     initPersonalization,
   };
 }
+
+export type Algoliasearch = ReturnType<typeof algoliasearch>;

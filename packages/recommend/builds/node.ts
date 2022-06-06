@@ -8,7 +8,8 @@ import { createHttpRequester } from '@experimental-api-clients-automation/reques
 import { createRecommendClient } from '../src/recommendClient';
 import type { RecommendClient } from '../src/recommendClient';
 
-export * from '../src/recommendClient';
+export { apiClientVersion, RecommendClient } from '../src/recommendClient';
+export * from '../model';
 
 export function recommendClient(
   appId: string,

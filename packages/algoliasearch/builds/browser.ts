@@ -20,9 +20,11 @@ import type {
 import { createPersonalizationClient } from '@experimental-api-clients-automation/client-personalization/src/personalizationClient';
 import {
   createSearchClient,
-  apiClientVersion,
+  apiClientVersion as searchClientVersion,
 } from '@experimental-api-clients-automation/client-search/src/searchClient';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
+
+export const apiClientVersion = searchClientVersion;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function algoliasearch(
@@ -98,3 +100,5 @@ export function algoliasearch(
     initPersonalization,
   };
 }
+
+export type Algoliasearch = ReturnType<typeof algoliasearch>;

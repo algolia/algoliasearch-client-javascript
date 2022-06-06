@@ -81,3 +81,4 @@ export * from './timeRange';
 export * from './typoTolerance';
 export * from './updatedRuleResponse';
 export * from './userId';
+export * from './clientMethodProps';

@@ -36,3 +36,4 @@ export * from './tagFilters';
 export * from './trendingModels';
 export * from './trendingRequest';
 export * from './typoTolerance';
+export * from './clientMethodProps';

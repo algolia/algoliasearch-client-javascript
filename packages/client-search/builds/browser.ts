@@ -9,7 +9,8 @@ import { createXhrRequester } from '@experimental-api-clients-automation/request
 import { createSearchClient, apiClientVersion } from '../src/searchClient';
 import type { SearchClient } from '../src/searchClient';
 
-export * from '../src/searchClient';
+export { apiClientVersion, SearchClient } from '../src/searchClient';
+export * from '../model';
 
 export function searchClient(
   appId: string,

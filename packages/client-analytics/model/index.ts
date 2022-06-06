@@ -39,3 +39,4 @@ export * from './topHitsResponseWithAnalyticsHits';
 export * from './topSearchesResponse';
 export * from './topSearchesResponseWithAnalytics';
 export * from './topSearchesResponseWithAnalyticsSearches';
+export * from './clientMethodProps';

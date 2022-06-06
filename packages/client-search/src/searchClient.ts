@@ -17,21 +17,64 @@ import type {
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { ApiKey } from '../model/apiKey';
-import type { AssignUserIdParams } from '../model/assignUserIdParams';
-import type { AttributeOrBuiltInOperation } from '../model/attributeOrBuiltInOperation';
-import type { BatchAssignUserIdsParams } from '../model/batchAssignUserIdsParams';
-import type { BatchDictionaryEntriesParams } from '../model/batchDictionaryEntriesParams';
 import type { BatchParams } from '../model/batchParams';
 import type { BatchResponse } from '../model/batchResponse';
-import type { BatchWriteParams } from '../model/batchWriteParams';
-import type { BrowseRequest } from '../model/browseRequest';
 import type { BrowseResponse } from '../model/browseResponse';
+import type {
+  AddOrUpdateObjectProps,
+  AssignUserIdProps,
+  BatchProps,
+  BatchAssignUserIdsProps,
+  BatchDictionaryEntriesProps,
+  BatchRulesProps,
+  BrowseProps,
+  ClearAllSynonymsProps,
+  ClearObjectsProps,
+  ClearRulesProps,
+  DelProps,
+  DeleteApiKeyProps,
+  DeleteByProps,
+  DeleteIndexProps,
+  DeleteObjectProps,
+  DeleteRuleProps,
+  DeleteSourceProps,
+  DeleteSynonymProps,
+  GetProps,
+  GetApiKeyProps,
+  GetLogsProps,
+  GetObjectProps,
+  GetRuleProps,
+  GetSettingsProps,
+  GetSynonymProps,
+  GetTaskProps,
+  GetUserIdProps,
+  HasPendingMappingsProps,
+  ListIndicesProps,
+  ListUserIdsProps,
+  OperationIndexProps,
+  PartialUpdateObjectProps,
+  PostProps,
+  PutProps,
+  RemoveUserIdProps,
+  ReplaceSourcesProps,
+  RestoreApiKeyProps,
+  SaveObjectProps,
+  SaveRuleProps,
+  SaveSynonymProps,
+  SaveSynonymsProps,
+  SearchDictionaryEntriesProps,
+  SearchForFacetValuesProps,
+  SearchRulesProps,
+  SearchSingleIndexProps,
+  SearchSynonymsProps,
+  SetSettingsProps,
+  UpdateApiKeyProps,
+} from '../model/clientMethodProps';
 import type { CreatedAtResponse } from '../model/createdAtResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
 import type { DeletedAtResponse } from '../model/deletedAtResponse';
 import type { DictionarySettingsParams } from '../model/dictionarySettingsParams';
-import type { DictionaryType } from '../model/dictionaryType';
 import type { GetDictionarySettingsResponse } from '../model/getDictionarySettingsResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
 import type { GetObjectsParams } from '../model/getObjectsParams';
@@ -45,36 +88,28 @@ import type { ListApiKeysResponse } from '../model/listApiKeysResponse';
 import type { ListClustersResponse } from '../model/listClustersResponse';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
-import type { LogType } from '../model/logType';
 import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
-import type { OperationIndexParams } from '../model/operationIndexParams';
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
 import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
 import type { Rule } from '../model/rule';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
-import type { SearchDictionaryEntriesParams } from '../model/searchDictionaryEntriesParams';
-import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchMethodParams } from '../model/searchMethodParams';
-import type { SearchParams } from '../model/searchParams';
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchResponses } from '../model/searchResponses';
-import type { SearchRulesParams } from '../model/searchRulesParams';
 import type { SearchRulesResponse } from '../model/searchRulesResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SearchUserIdsParams } from '../model/searchUserIdsParams';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
-import type { SynonymType } from '../model/synonymType';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
 import type { UpdatedAtResponse } from '../model/updatedAtResponse';
 import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObjectIdResponse';
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export * from '../model';
 export const apiClientVersion = '0.3.0';
 
 function getDefaultHosts(appId: string): Host[] {
@@ -2638,526 +2673,3 @@ export function createSearchClient({
 }
 
 export type SearchClient = ReturnType<typeof createSearchClient>;
-
-export type AddOrUpdateObjectProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Unique identifier of an object.
-   */
-  objectID: string;
-  /**
-   * The Algolia object.
-   */
-  body: Record<string, any>;
-};
-
-export type AssignUserIdProps = {
-  /**
-   * UserID to assign.
-   */
-  xAlgoliaUserID: string;
-  assignUserIdParams: AssignUserIdParams;
-};
-
-export type BatchProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  batchWriteParams: BatchWriteParams;
-};
-
-export type BatchAssignUserIdsProps = {
-  /**
-   * UserID to assign.
-   */
-  xAlgoliaUserID: string;
-  batchAssignUserIdsParams: BatchAssignUserIdsParams;
-};
-
-export type BatchDictionaryEntriesProps = {
-  /**
-   * The dictionary to search in.
-   */
-  dictionaryName: DictionaryType;
-  batchDictionaryEntriesParams: BatchDictionaryEntriesParams;
-};
-
-export type BatchRulesProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  rule: Rule[];
-  /**
-   * When true, changes are also propagated to replicas of the given indexName.
-   */
-  forwardToReplicas?: boolean;
-  /**
-   * When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
-   */
-  clearExistingRules?: boolean;
-};
-
-export type BrowseProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  browseRequest?: BrowseRequest;
-};
-
-export type ClearAllSynonymsProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * When true, changes are also propagated to replicas of the given indexName.
-   */
-  forwardToReplicas?: boolean;
-};
-
-export type ClearObjectsProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-};
-
-export type ClearRulesProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * When true, changes are also propagated to replicas of the given indexName.
-   */
-  forwardToReplicas?: boolean;
-};
-
-export type DelProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-};
-
-export type DeleteApiKeyProps = {
-  /**
-   * API Key string.
-   */
-  key: string;
-};
-
-export type DeleteByProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  searchParams: SearchParams;
-};
-
-export type DeleteIndexProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-};
-
-export type DeleteObjectProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Unique identifier of an object.
-   */
-  objectID: string;
-};
-
-export type DeleteRuleProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Unique identifier of an object.
-   */
-  objectID: string;
-  /**
-   * When true, changes are also propagated to replicas of the given indexName.
-   */
-  forwardToReplicas?: boolean;
-};
-
-export type DeleteSourceProps = {
-  /**
-   * The IP range of the source.
-   */
-  source: string;
-};
-
-export type DeleteSynonymProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Unique identifier of an object.
-   */
-  objectID: string;
-  /**
-   * When true, changes are also propagated to replicas of the given indexName.
-   */
-  forwardToReplicas?: boolean;
-};
-
-export type GetProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-};
-
-export type GetApiKeyProps = {
-  /**
-   * API Key string.
-   */
-  key: string;
-};
-
-export type GetLogsProps = {
-  /**
-   * First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry.
-   */
-  offset?: number;
-  /**
-   * Maximum number of entries to retrieve. The maximum allowed value is 1000.
-   */
-  length?: number;
-  /**
-   * Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices.
-   */
-  indexName?: string;
-  /**
-   * Type of log entries to retrieve. When omitted, all log entries are retrieved.
-   */
-  type?: LogType;
-};
-
-export type GetObjectProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Unique identifier of an object.
-   */
-  objectID: string;
-  /**
-   * List of attributes to retrieve. If not specified, all retrievable attributes are returned.
-   */
-  attributesToRetrieve?: string[];
-};
-
-export type GetRuleProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Unique identifier of an object.
-   */
-  objectID: string;
-};
-
-export type GetSettingsProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-};
-
-export type GetSynonymProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Unique identifier of an object.
-   */
-  objectID: string;
-};
-
-export type GetTaskProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Unique identifier of an task. Numeric value (up to 64bits).
-   */
-  taskID: number;
-};
-
-export type GetUserIdProps = {
-  /**
-   * UserID to assign.
-   */
-  userID: string;
-};
-
-export type HasPendingMappingsProps = {
-  /**
-   * Whether to get clusters or not.
-   */
-  getClusters?: boolean;
-};
-
-export type ListIndicesProps = {
-  /**
-   * Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
-   */
-  page?: number;
-};
-
-export type ListUserIdsProps = {
-  /**
-   * Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
-   */
-  page?: number;
-  /**
-   * Maximum number of objects to retrieve.
-   */
-  hitsPerPage?: number;
-};
-
-export type OperationIndexProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  operationIndexParams: OperationIndexParams;
-};
-
-export type PartialUpdateObjectProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Unique identifier of an object.
-   */
-  objectID: string;
-  /**
-   * List of attributes to update.
-   */
-  attributeOrBuiltInOperation: Array<{
-    [key: string]: AttributeOrBuiltInOperation;
-  }>;
-  /**
-   * Creates the record if it does not exist yet.
-   */
-  createIfNotExists?: boolean;
-};
-
-export type PostProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};
-
-export type PutProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};
-
-export type RemoveUserIdProps = {
-  /**
-   * UserID to assign.
-   */
-  userID: string;
-};
-
-export type ReplaceSourcesProps = {
-  /**
-   * The sources to allow.
-   */
-  source: Source[];
-};
-
-export type RestoreApiKeyProps = {
-  /**
-   * API Key string.
-   */
-  key: string;
-};
-
-export type SaveObjectProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * The Algolia record.
-   */
-  body: Record<string, any>;
-};
-
-export type SaveRuleProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Unique identifier of an object.
-   */
-  objectID: string;
-  rule: Rule;
-  /**
-   * When true, changes are also propagated to replicas of the given indexName.
-   */
-  forwardToReplicas?: boolean;
-};
-
-export type SaveSynonymProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Unique identifier of an object.
-   */
-  objectID: string;
-  synonymHit: SynonymHit;
-  /**
-   * When true, changes are also propagated to replicas of the given indexName.
-   */
-  forwardToReplicas?: boolean;
-};
-
-export type SaveSynonymsProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  synonymHit: SynonymHit[];
-  /**
-   * When true, changes are also propagated to replicas of the given indexName.
-   */
-  forwardToReplicas?: boolean;
-  /**
-   * Replace all synonyms of the index with the ones sent with this request.
-   */
-  replaceExistingSynonyms?: boolean;
-};
-
-export type SearchDictionaryEntriesProps = {
-  /**
-   * The dictionary to search in.
-   */
-  dictionaryName: DictionaryType;
-  searchDictionaryEntriesParams: SearchDictionaryEntriesParams;
-};
-
-export type SearchForFacetValuesProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * The facet name.
-   */
-  facetName: string;
-  searchForFacetValuesRequest?: SearchForFacetValuesRequest;
-};
-
-export type SearchRulesProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  searchRulesParams: SearchRulesParams;
-};
-
-export type SearchSingleIndexProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  searchParams: SearchParams;
-};
-
-export type SearchSynonymsProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Search for specific synonyms matching this string.
-   */
-  query?: string;
-  /**
-   * Only search for specific types of synonyms.
-   */
-  type?: SynonymType;
-  /**
-   * Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
-   */
-  page?: number;
-  /**
-   * Maximum number of objects to retrieve.
-   */
-  hitsPerPage?: number;
-};
-
-export type SetSettingsProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  indexSettings: IndexSettings;
-  /**
-   * When true, changes are also propagated to replicas of the given indexName.
-   */
-  forwardToReplicas?: boolean;
-};
-
-export type UpdateApiKeyProps = {
-  /**
-   * API Key string.
-   */
-  key: string;
-  apiKey: ApiKey;
-};

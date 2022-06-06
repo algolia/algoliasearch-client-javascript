@@ -12,12 +12,19 @@ import type {
   QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
+import type {
+  DelProps,
+  DeleteUserProfileProps,
+  GetProps,
+  GetUserTokenProfileProps,
+  PostProps,
+  PutProps,
+} from '../model/clientMethodProps';
 import type { DeleteUserProfileResponse } from '../model/deleteUserProfileResponse';
 import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
 import type { PersonalizationStrategyParams } from '../model/personalizationStrategyParams';
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';
 
-export * from '../model';
 export const apiClientVersion = '0.3.0';
 
 export const REGIONS = ['eu', 'us'] as const;
@@ -341,69 +348,3 @@ export function createPersonalizationClient({
 export type PersonalizationClient = ReturnType<
   typeof createPersonalizationClient
 >;
-
-export type DelProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-};
-
-export type DeleteUserProfileProps = {
-  /**
-   * UserToken representing the user for which to fetch the Personalization profile.
-   */
-  userToken: string;
-};
-
-export type GetProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-};
-
-export type GetUserTokenProfileProps = {
-  /**
-   * UserToken representing the user for which to fetch the Personalization profile.
-   */
-  userToken: string;
-};
-
-export type PostProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};
-
-export type PutProps = {
-  /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to be applied to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * The parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};

@@ -12,7 +12,8 @@ import {
 } from '../src/analyticsClient';
 import type { AnalyticsClient, Region } from '../src/analyticsClient';
 
-export * from '../src/analyticsClient';
+export { apiClientVersion, AnalyticsClient } from '../src/analyticsClient';
+export * from '../model';
 
 export function analyticsClient(
   appId: string,

@@ -8,7 +8,8 @@ import { createHttpRequester } from '@experimental-api-clients-automation/reques
 import type { AnalyticsClient, Region } from '../src/analyticsClient';
 import { createAnalyticsClient } from '../src/analyticsClient';
 
-export * from '../src/analyticsClient';
+export { apiClientVersion, AnalyticsClient } from '../src/analyticsClient';
+export * from '../model';
 
 export function analyticsClient(
   appId: string,

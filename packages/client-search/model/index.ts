@@ -127,3 +127,4 @@ export * from './updatedAtResponse';
 export * from './updatedAtWithObjectIdResponse';
 export * from './updatedRuleResponse';
 export * from './userId';
+export * from './clientMethodProps';

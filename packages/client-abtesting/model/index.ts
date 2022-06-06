@@ -8,3 +8,4 @@ export * from './customSearchParams';
 export * from './errorBase';
 export * from './listABTestsResponse';
 export * from './variant';
+export * from './clientMethodProps';

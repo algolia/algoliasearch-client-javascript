@@ -10,3 +10,4 @@ export * from './sourceIndexExternal';
 export * from './sourceIndexWithReplicas';
 export * from './status';
 export * from './successResponse';
+export * from './clientMethodProps';
