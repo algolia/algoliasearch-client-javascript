@@ -1,4 +1,4 @@
-import type { StackFrame } from '../types';
+import type { Headers, StackFrame } from '../types';
 
 export function stackTraceWithoutCredentials(
   stackTrace: StackFrame[]
@@ -11,7 +11,7 @@ export function stackTraceWithoutCredentials(
 export function stackFrameWithoutCredentials(
   stackFrame: StackFrame
 ): StackFrame {
-  const modifiedHeaders: Record<string, string> = stackFrame.request.headers[
+  const modifiedHeaders: Headers = stackFrame.request.headers[
     'x-algolia-api-key'
   ]
     ? { 'x-algolia-api-key': '*****' }

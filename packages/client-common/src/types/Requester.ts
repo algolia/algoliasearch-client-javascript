@@ -8,6 +8,10 @@ export type Request = {
   queryParameters: QueryParameters;
   data?: Array<Record<string, any>> | Record<string, any>;
   headers: Headers;
+  /**
+   * If the given request should persist on the cache. Keep in mind,
+   * that some methods may have this option enabled by default.
+   */
   cacheable?: boolean;
   /**
    * Some POST methods in the Algolia REST API uses the `read` transporter.

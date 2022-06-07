@@ -5,7 +5,7 @@ import type { Request, Requester, EndRequest, Response } from './Requester';
 export type Headers = Record<string, string>;
 export type QueryParameters = Record<string, any>;
 
-export type RequestOptions = {
+export type RequestOptions = Pick<Request, 'cacheable'> & {
   /**
    * Custom timeout for the request. Note that, in normal situations
    * the given timeout will be applied. But the transporter layer may
@@ -30,12 +30,6 @@ export type RequestOptions = {
    * going to be merged the transporter data.
    */
   data?: Array<Record<string, any>> | Record<string, any>;
-
-  /**
-   * If the given request should persist on the cache. Keep in mind,
-   * that some methods may have this option enabled by default.
-   */
-  cacheable?: boolean;
 };
 
 export type StackFrame = {
@@ -147,62 +141,7 @@ export type TransporterOptions = {
   algoliaAgent: AlgoliaAgent;
 };
 
-export type Transporter = {
-  /**
-   * The cache of the hosts. Usually used to persist
-   * the state of the host when its down.
-   */
-  hostsCache: Cache;
-
-  /**
-   * The underlying requester used. Should differ
-   * depending of the environment where the client
-   * will be used.
-   */
-  requester: Requester;
-
-  /**
-   * The cache of the requests. When requests are
-   * `cacheable`, the returned promised persists
-   * in this cache to shared in similar requests
-   * before being resolved.
-   */
-  requestsCache: Cache;
-
-  /**
-   * The cache of the responses. When requests are
-   * `cacheable`, the returned responses persists
-   * in this cache to shared in similar requests.
-   */
-  responsesCache: Cache;
-
-  /**
-   * The timeouts used by the requester (in milliseconds). The transporter
-   * layer may increase this timeouts as defined on the
-   * retry strategy.
-   */
-  timeouts: Timeouts;
-
-  /**
-   * The user agent used. Sent on query parameters.
-   */
-  algoliaAgent: AlgoliaAgent;
-
-  /**
-   * The headers used on each request.
-   */
-  baseHeaders: Headers;
-
-  /**
-   * The query parameters used on each request.
-   */
-  baseQueryParameters: QueryParameters;
-
-  /**
-   * The hosts used by the retry strategy.
-   */
-  hosts: Host[];
-
+export type Transporter = TransporterOptions & {
   /**
    * Performs a request.
    * The `baseRequest` and `baseRequestOptions` will be merged accordingly.

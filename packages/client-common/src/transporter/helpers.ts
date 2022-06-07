@@ -27,7 +27,7 @@ export function shuffle<TData>(array: TData[]): TData[] {
 export function serializeUrl(
   host: Host,
   path: string,
-  queryParameters: Readonly<Record<string, string>>
+  queryParameters: QueryParameters
 ): string {
   const queryParametersAsString = serializeQueryParameters(queryParameters);
   let url = `${host.protocol}://${host.url}/${

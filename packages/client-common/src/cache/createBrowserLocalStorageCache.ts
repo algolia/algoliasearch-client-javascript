@@ -4,7 +4,8 @@ export function createBrowserLocalStorageCache(
   options: BrowserLocalStorageOptions
 ): Cache {
   let storage: Storage;
-  const namespaceKey = `algoliasearch-client-js-${options.key}`;
+  // We've changed the namespace to avoid conflicts with v4, as this version is a huge breaking change
+  const namespaceKey = `algolia-client-js-${options.key}`;
 
   function getStorage(): Storage {
     if (storage === undefined) {
