@@ -9,6 +9,9 @@ import type {
   Requester,
 } from '@experimental-api-clients-automation/client-common';
 import {
+  DEFAULT_CONNECT_TIMEOUT_NODE,
+  DEFAULT_READ_TIMEOUT_NODE,
+  DEFAULT_WRITE_TIMEOUT_NODE,
   createMemoryCache,
   createNullCache,
 } from '@experimental-api-clients-automation/client-common';
@@ -31,19 +34,19 @@ export function algoliasearch(
   apiKey: string,
   options?: { requester?: Requester; hosts?: Host[] }
 ) {
-  if (!appId) {
+  if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
 
-  if (!apiKey) {
+  if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
 
   const commonOptions: Omit<CreateClientOptions, 'apiKey' | 'appId'> = {
     timeouts: {
-      connect: 2,
-      read: 5,
-      write: 30,
+      connect: DEFAULT_CONNECT_TIMEOUT_NODE,
+      read: DEFAULT_READ_TIMEOUT_NODE,
+      write: DEFAULT_WRITE_TIMEOUT_NODE,
     },
     requester: options?.requester ?? createHttpRequester(),
     algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],

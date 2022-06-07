@@ -1,5 +1,8 @@
 import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
 import {
+  DEFAULT_CONNECT_TIMEOUT_NODE,
+  DEFAULT_READ_TIMEOUT_NODE,
+  DEFAULT_WRITE_TIMEOUT_NODE,
   createMemoryCache,
   createNullCache,
 } from '@experimental-api-clients-automation/client-common';
@@ -28,9 +31,9 @@ export function recommendClient(
     appId,
     apiKey,
     timeouts: {
-      connect: 2,
-      read: 5,
-      write: 30,
+      connect: DEFAULT_CONNECT_TIMEOUT_NODE,
+      read: DEFAULT_READ_TIMEOUT_NODE,
+      write: DEFAULT_WRITE_TIMEOUT_NODE,
     },
     requester: createHttpRequester(),
     algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],

@@ -70,8 +70,19 @@ export type AlgoliaAgent = {
 };
 
 export type Timeouts = {
+  /**
+   * Timeout in milliseconds before the connection is established.
+   */
   connect: number;
+
+  /**
+   * Timeout in milliseconds before reading the response on a read request.
+   */
   read: number;
+
+  /**
+   * Timeout in milliseconds before reading the response on a write request.
+   */
   write: number;
 };
 
@@ -166,7 +177,7 @@ export type Transporter = {
   responsesCache: Cache;
 
   /**
-   * The timeouts used by the requester. The transporter
+   * The timeouts used by the requester (in milliseconds). The transporter
    * layer may increase this timeouts as defined on the
    * retry strategy.
    */

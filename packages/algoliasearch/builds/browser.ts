@@ -12,6 +12,9 @@ import {
   createMemoryCache,
   createFallbackableCache,
   createBrowserLocalStorageCache,
+  DEFAULT_CONNECT_TIMEOUT_BROWSER,
+  DEFAULT_READ_TIMEOUT_BROWSER,
+  DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@experimental-api-clients-automation/client-common';
 import type {
   PersonalizationClient,
@@ -32,19 +35,19 @@ export function algoliasearch(
   apiKey: string,
   options?: { requester?: Requester; hosts?: Host[] }
 ) {
-  if (!appId) {
+  if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
 
-  if (!apiKey) {
+  if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
 
   const commonOptions: Omit<CreateClientOptions, 'apiKey' | 'appId'> = {
     timeouts: {
-      connect: 1,
-      read: 2,
-      write: 30,
+      connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
+      read: DEFAULT_READ_TIMEOUT_BROWSER,
+      write: DEFAULT_WRITE_TIMEOUT_BROWSER,
     },
     requester: options?.requester ?? createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],

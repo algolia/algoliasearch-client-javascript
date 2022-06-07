@@ -1,5 +1,8 @@
 import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
 import {
+  DEFAULT_CONNECT_TIMEOUT_BROWSER,
+  DEFAULT_READ_TIMEOUT_BROWSER,
+  DEFAULT_WRITE_TIMEOUT_BROWSER,
   createMemoryCache,
   createFallbackableCache,
   createBrowserLocalStorageCache,
@@ -32,9 +35,9 @@ export function recommendClient(
     appId,
     apiKey,
     timeouts: {
-      connect: 1,
-      read: 2,
-      write: 30,
+      connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
+      read: DEFAULT_READ_TIMEOUT_BROWSER,
+      write: DEFAULT_WRITE_TIMEOUT_BROWSER,
     },
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],

@@ -25,7 +25,7 @@ export function createXhrRequester(): Requester {
             content,
             isTimedOut: true,
           });
-        }, timeout * 1000);
+        }, timeout);
       };
 
       const connectTimeout = createTimeout(

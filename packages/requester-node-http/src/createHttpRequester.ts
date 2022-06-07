@@ -65,7 +65,7 @@ export function createHttpRequester(): Requester {
             content,
             isTimedOut: true,
           });
-        }, timeout * 1000);
+        }, timeout);
       };
 
       connectTimeout = createTimeout(
