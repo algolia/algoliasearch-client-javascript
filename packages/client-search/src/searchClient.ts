@@ -26,7 +26,6 @@ import type {
   BatchProps,
   BatchAssignUserIdsProps,
   BatchDictionaryEntriesProps,
-  BatchRulesProps,
   BrowseProps,
   ClearAllSynonymsProps,
   ClearObjectsProps,
@@ -60,6 +59,7 @@ import type {
   RestoreApiKeyProps,
   SaveObjectProps,
   SaveRuleProps,
+  SaveRulesProps,
   SaveSynonymProps,
   SaveSynonymsProps,
   SearchDictionaryEntriesProps,
@@ -524,64 +524,6 @@ export function createSearchClient({
         queryParameters,
         headers,
         data: batchDictionaryEntriesParams,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
-     * Create or update a batch of Rules.
-     *
-     * @summary Batch Rules.
-     * @param batchRules - The batchRules object.
-     * @param batchRules.indexName - The index in which to perform the request.
-     * @param batchRules.rule - The rule object.
-     * @param batchRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
-     * @param batchRules.clearExistingRules - When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    batchRules(
-      {
-        indexName,
-        rule,
-        forwardToReplicas,
-        clearExistingRules,
-      }: BatchRulesProps,
-      requestOptions?: RequestOptions
-    ): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `batchRules`.'
-        );
-      }
-
-      if (!rule) {
-        throw new Error(
-          'Parameter `rule` is required when calling `batchRules`.'
-        );
-      }
-
-      const requestPath = '/1/indexes/{indexName}/rules/batch'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      if (forwardToReplicas !== undefined) {
-        queryParameters.forwardToReplicas = forwardToReplicas.toString();
-      }
-
-      if (clearExistingRules !== undefined) {
-        queryParameters.clearExistingRules = clearExistingRules.toString();
-      }
-
-      const request: Request = {
-        method: 'POST',
-        path: requestPath,
-        queryParameters,
-        headers,
-        data: rule,
       };
 
       return transporter.request(request, requestOptions);
@@ -2077,6 +2019,64 @@ export function createSearchClient({
 
       const request: Request = {
         method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: rule,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Create/update multiple rules objects at once.
+     *
+     * @summary Save a batch of rules.
+     * @param saveRules - The saveRules object.
+     * @param saveRules.indexName - The index in which to perform the request.
+     * @param saveRules.rule - The rule object.
+     * @param saveRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param saveRules.clearExistingRules - When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    saveRules(
+      {
+        indexName,
+        rule,
+        forwardToReplicas,
+        clearExistingRules,
+      }: SaveRulesProps,
+      requestOptions?: RequestOptions
+    ): Promise<UpdatedAtResponse> {
+      if (!indexName) {
+        throw new Error(
+          'Parameter `indexName` is required when calling `saveRules`.'
+        );
+      }
+
+      if (!rule) {
+        throw new Error(
+          'Parameter `rule` is required when calling `saveRules`.'
+        );
+      }
+
+      const requestPath = '/1/indexes/{indexName}/rules/batch'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (forwardToReplicas !== undefined) {
+        queryParameters.forwardToReplicas = forwardToReplicas.toString();
+      }
+
+      if (clearExistingRules !== undefined) {
+        queryParameters.clearExistingRules = clearExistingRules.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
         path: requestPath,
         queryParameters,
         headers,

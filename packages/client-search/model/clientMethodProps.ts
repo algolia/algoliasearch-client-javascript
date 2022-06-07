@@ -81,25 +81,6 @@ export type BatchDictionaryEntriesProps = {
 };
 
 /**
- * Properties for the `batchRules` method.
- */
-export type BatchRulesProps = {
-  /**
-   * The index in which to perform the request.
-   */
-  indexName: string;
-  rule: Rule[];
-  /**
-   * When true, changes are also propagated to replicas of the given indexName.
-   */
-  forwardToReplicas?: boolean;
-  /**
-   * When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
-   */
-  clearExistingRules?: boolean;
-};
-
-/**
  * Properties for the `browse` method.
  */
 export type BrowseProps = {
@@ -545,6 +526,25 @@ export type SaveRuleProps = {
    * When true, changes are also propagated to replicas of the given indexName.
    */
   forwardToReplicas?: boolean;
+};
+
+/**
+ * Properties for the `saveRules` method.
+ */
+export type SaveRulesProps = {
+  /**
+   * The index in which to perform the request.
+   */
+  indexName: string;
+  rule: Rule[];
+  /**
+   * When true, changes are also propagated to replicas of the given indexName.
+   */
+  forwardToReplicas?: boolean;
+  /**
+   * When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
+   */
+  clearExistingRules?: boolean;
 };
 
 /**
