@@ -1,26 +1,43 @@
 import type { EchoResponse, EndRequest, Request, Response } from './types';
 
-export type UrlParams = {
-  host: string;
-  algoliaAgent: string;
-  searchParams: EchoResponse['searchParams'];
-};
-
 export type EchoRequesterParams = {
-  getUrlParams: (url: string) => UrlParams;
+  getURL: (url: string) => URL;
   status?: number;
 };
 
+function getUrlParams({
+  host,
+  searchParams: urlSearchParams,
+}: URL): Pick<EchoResponse, 'algoliaAgent' | 'host' | 'searchParams'> {
+  const algoliaAgent = urlSearchParams.get('x-algolia-agent') || '';
+  const searchParams = {};
+
+  for (const [k, v] of urlSearchParams) {
+    if (k === 'x-algolia-agent') {
+      continue;
+    }
+
+    searchParams[k] = v;
+  }
+
+  return {
+    host,
+    algoliaAgent,
+    searchParams:
+      Object.entries(searchParams).length === 0 ? undefined : searchParams,
+  };
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createEchoRequester({
-  getUrlParams,
+  getURL,
   status = 200,
 }: EchoRequesterParams) {
   function send(
     { headers, url, connectTimeout, responseTimeout }: EndRequest,
     { data, ...originalRequest }: Request
   ): Promise<Response> {
-    const { host, searchParams, algoliaAgent } = getUrlParams(url);
+    const { host, searchParams, algoliaAgent } = getUrlParams(getURL(url));
     const originalData =
       data && Object.entries(data).length > 0 ? data : undefined;
 
@@ -31,7 +48,7 @@ export function createEchoRequester({
         headers,
         connectTimeout,
         responseTimeout,
-        algoliaAgent: algoliaAgent ? encodeURI(algoliaAgent) : undefined,
+        algoliaAgent: encodeURI(algoliaAgent),
         searchParams,
         data: originalData,
       }),
@@ -42,3 +59,5 @@ export function createEchoRequester({
 
   return { send };
 }
+
+export type EchoRequester = ReturnType<typeof createEchoRequester>;

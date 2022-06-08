@@ -14,7 +14,8 @@ const client = process.env.CLIENT?.replace(
   ''
 );
 const UTILS = ['client-common', 'requester-browser-xhr', 'requester-node-http'];
-
+const BROWSER_FORMATS = ['umd-browser', 'esm-browser', 'cjs-browser'];
+const NODE_FORMATS = ['cjs-node', 'esm-node'];
 const CLIENT_ALL = 'all';
 const CLIENT_UTILS = 'utils';
 
@@ -61,9 +62,9 @@ function getAvailableClients() {
 function getUtilConfigs() {
   const commonOptions = {
     input: 'index.ts',
-    formats: ['cjs-node', 'esm-node'],
+    formats: NODE_FORMATS,
     external: [],
-    dependencies: [],
+    dependencies: ['@experimental-api-clients-automation/client-common'],
   };
 
   return [
@@ -73,6 +74,7 @@ function getUtilConfigs() {
       output: 'client-common',
       package: 'client-common',
       name: '@experimental-api-clients-automation/client-common',
+      dependencies: [],
     },
     // Browser requester
     {
@@ -81,7 +83,6 @@ function getUtilConfigs() {
       package: 'requester-browser-xhr',
       name: '@experimental-api-clients-automation/requester-browser-xhr',
       external: ['dom'],
-      dependencies: ['@experimental-api-clients-automation/client-common'],
     },
     // Node requester
     {
@@ -90,7 +91,6 @@ function getUtilConfigs() {
       package: 'requester-node-http',
       name: '@experimental-api-clients-automation/requester-node-http',
       external: ['https', 'http', 'url'],
-      dependencies: ['@experimental-api-clients-automation/client-common'],
     },
   ];
 }
@@ -142,14 +142,12 @@ function getPackageConfigs() {
         : ['@experimental-api-clients-automation/client-common'],
       external: [],
     };
-    const browserFormats = ['umd-browser', 'esm-browser', 'cjs-browser'];
-    const nodeFormats = ['cjs-node', 'esm-node'];
 
     return [
       {
         ...commonConfig,
         input: 'builds/browser.ts',
-        formats: browserFormats,
+        formats: BROWSER_FORMATS,
         external: ['dom'],
         dependencies: [
           ...commonConfig.dependencies,
@@ -166,7 +164,7 @@ function getPackageConfigs() {
           ...commonConfig.dependencies,
           '@experimental-api-clients-automation/requester-node-http',
         ],
-        formats: nodeFormats,
+        formats: NODE_FORMATS,
       },
     ];
   });
