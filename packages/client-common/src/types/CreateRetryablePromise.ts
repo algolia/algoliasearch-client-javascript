@@ -10,9 +10,9 @@ export type CreateRetryablePromiseOptions<TResponse> = {
   validate: (response: TResponse) => boolean;
 
   /**
-   * The maximum number of trials. 10 by default.
+   * The maximum number of retry. 50 by default.
    */
-  maxTrial?: number;
+  maxRetries?: number;
 
   /**
    * The function to decide how long to wait between tries.

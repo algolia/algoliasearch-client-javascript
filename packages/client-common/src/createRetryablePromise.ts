@@ -1,6 +1,6 @@
 import type { CreateRetryablePromiseOptions } from './types/CreateRetryablePromise';
 
-export const DEFAULT_MAX_TRIAL = 50;
+export const DEFAULT_MAX_RETRIES = 50;
 export const DEFAULT_TIMEOUT = (retryCount: number): number =>
   Math.min(retryCount * 200, 5000);
 
@@ -10,13 +10,13 @@ export const DEFAULT_TIMEOUT = (retryCount: number): number =>
  * @param createRetryablePromiseOptions - The createRetryablePromise options.
  * @param createRetryablePromiseOptions.func - The function to run, which returns a promise.
  * @param createRetryablePromiseOptions.validate - The validator function. It receives the resolved return of `func`.
- * @param createRetryablePromiseOptions.maxTrial - The maximum number of trials. 10 by default.
+ * @param createRetryablePromiseOptions.maxRetries - The maximum number of retries. 50 by default.
  * @param createRetryablePromiseOptions.timeout - The function to decide how long to wait between tries.
  */
 export function createRetryablePromise<TResponse>({
   func,
   validate,
-  maxTrial = DEFAULT_MAX_TRIAL,
+  maxRetries = DEFAULT_MAX_RETRIES,
   timeout = DEFAULT_TIMEOUT,
 }: CreateRetryablePromiseOptions<TResponse>): Promise<TResponse> {
   let retryCount = 0;
@@ -27,12 +27,12 @@ export function createRetryablePromise<TResponse>({
           const isValid = validate(response);
           if (isValid) {
             resolve(response);
-          } else if (retryCount + 1 >= maxTrial) {
+          } else if (retryCount + 1 >= maxRetries) {
             reject(
               new Error(
                 `The maximum number of retries exceeded. (${
                   retryCount + 1
-                }/${maxTrial})`
+                }/${maxRetries})`
               )
             );
           } else {

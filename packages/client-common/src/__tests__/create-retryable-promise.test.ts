@@ -61,8 +61,8 @@ describe('createRetryablePromise', () => {
     );
   });
 
-  it('gets the rejection when it exceeds the max trial number', async () => {
-    const MAX_TRIAL = 3;
+  it('gets the rejection when it exceeds the max retries number', async () => {
+    const MAX_RETRIES = 3;
     let calls = 0;
 
     const promise = createRetryablePromise({
@@ -73,14 +73,14 @@ describe('createRetryablePromise', () => {
         });
       },
       validate: () => false,
-      maxTrial: MAX_TRIAL,
+      maxRetries: MAX_RETRIES,
     });
 
     await expect(promise).rejects.toEqual(
       expect.objectContaining({
-        message: 'The maximum number of trials exceeded. (3/3)',
+        message: 'The maximum number of retries exceeded. (3/3)',
       })
     );
-    expect(calls).toBe(MAX_TRIAL);
+    expect(calls).toBe(MAX_RETRIES);
   });
 });

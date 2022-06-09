@@ -123,13 +123,11 @@ describe('browser local storage cache', () => {
     const key = { foo: 'bar' };
     const value = 'foo';
 
-    expect(
-      localStorage.getItem(`algoliasearch-client-js-${version}`)
-    ).toBeNull();
+    expect(localStorage.getItem(`algolia-client-js-${version}`)).toBeNull();
 
     await cache.set(key, value);
 
-    expect(localStorage.getItem(`algoliasearch-client-js-${version}`)).toBe(
+    expect(localStorage.getItem(`algolia-client-js-${version}`)).toBe(
       '{"{\\"foo\\":\\"bar\\"}":"foo"}'
     );
   });
