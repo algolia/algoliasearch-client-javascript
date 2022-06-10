@@ -10,7 +10,11 @@ import {
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
 import type { InsightsClient, Region } from '../src/insightsClient';
-import { createInsightsClient, apiClientVersion } from '../src/insightsClient';
+import {
+  createInsightsClient,
+  apiClientVersion,
+  REGIONS,
+} from '../src/insightsClient';
 
 export { apiClientVersion, InsightsClient } from '../src/insightsClient';
 export * from '../model';
@@ -27,6 +31,12 @@ export function insightsClient(
 
   if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
+  }
+
+  if (region && (typeof region !== 'string' || !REGIONS.includes(region))) {
+    throw new Error(
+      `\`region\` must be one of the following: ${REGIONS.join(', ')}`
+    );
   }
 
   return createInsightsClient({

@@ -9,7 +9,7 @@ import {
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 import type { AbtestingClient, Region } from '../src/abtestingClient';
-import { createAbtestingClient } from '../src/abtestingClient';
+import { createAbtestingClient, REGIONS } from '../src/abtestingClient';
 
 export { apiClientVersion, AbtestingClient } from '../src/abtestingClient';
 export * from '../model';
@@ -26,6 +26,12 @@ export function abtestingClient(
 
   if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
+  }
+
+  if (region && (typeof region !== 'string' || !REGIONS.includes(region))) {
+    throw new Error(
+      `\`region\` must be one of the following: ${REGIONS.join(', ')}`
+    );
   }
 
   return createAbtestingClient({

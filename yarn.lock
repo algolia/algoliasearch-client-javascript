@@ -4950,9 +4950,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.147":
-  version: 1.4.150
-  resolution: "electron-to-chromium@npm:1.4.150"
-  checksum: d89c4db96c7d8d23c619772b787b7c036ccf48289c36c9e0d0938c137b7d3934234825161e9cc9e918ad83b9a23145e605181544a80034df4d2c0fc880881304
+  version: 1.4.151
+  resolution: "electron-to-chromium@npm:1.4.151"
+  checksum: 03be4f1f1f08da6962a2983ae7a092a61edc736010ed10e42c612ce3fa13d47e360313230ddc101bec71f5da5689546d7eee541ea5e1fe4082b09355b30311ec
   languageName: node
   linkType: hard
 
@@ -10429,8 +10429,8 @@ __metadata:
   linkType: hard
 
 "ws@npm:^8.2.3":
-  version: 8.7.0
-  resolution: "ws@npm:8.7.0"
+  version: 8.8.0
+  resolution: "ws@npm:8.8.0"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ^5.0.2
@@ -10439,7 +10439,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 078fa2dbc06b31a45e0057b19e2930d26c222622e355955afe019c9b9b25f62eb2a8eff7cceabdad04910ecd2bd6ef4fa48e6f3673f2fdddff02a6e4c2459584
+  checksum: 6ceed1ca1cb800ef60c7fc8346c7d5d73d73be754228eb958765abf5d714519338efa20ffe674167039486eb3a813aae5a497f8d319e16b4d96216a31df5bd95
   languageName: node
   linkType: hard
 

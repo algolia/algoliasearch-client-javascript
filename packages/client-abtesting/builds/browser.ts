@@ -9,11 +9,12 @@ import {
 } from '@experimental-api-clients-automation/client-common';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
+import type { AbtestingClient, Region } from '../src/abtestingClient';
 import {
   createAbtestingClient,
   apiClientVersion,
+  REGIONS,
 } from '../src/abtestingClient';
-import type { AbtestingClient, Region } from '../src/abtestingClient';
 
 export { apiClientVersion, AbtestingClient } from '../src/abtestingClient';
 export * from '../model';
@@ -30,6 +31,12 @@ export function abtestingClient(
 
   if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
+  }
+
+  if (region && (typeof region !== 'string' || !REGIONS.includes(region))) {
+    throw new Error(
+      `\`region\` must be one of the following: ${REGIONS.join(', ')}`
+    );
   }
 
   return createAbtestingClient({
