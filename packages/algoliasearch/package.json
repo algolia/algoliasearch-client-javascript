@@ -1,6 +1,6 @@
 {
   "name": "@experimental-api-clients-automation/algoliasearch",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -16,12 +16,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "@experimental-api-clients-automation/client-analytics": "0.4.0",
-    "@experimental-api-clients-automation/client-common": "0.4.0",
-    "@experimental-api-clients-automation/client-personalization": "0.4.0",
-    "@experimental-api-clients-automation/client-search": "0.4.0",
-    "@experimental-api-clients-automation/requester-browser-xhr": "0.4.0",
-    "@experimental-api-clients-automation/requester-node-http": "0.4.0"
+    "@experimental-api-clients-automation/client-analytics": "0.5.0",
+    "@experimental-api-clients-automation/client-common": "0.5.0",
+    "@experimental-api-clients-automation/client-personalization": "0.5.0",
+    "@experimental-api-clients-automation/client-search": "0.5.0",
+    "@experimental-api-clients-automation/requester-browser-xhr": "0.5.0",
+    "@experimental-api-clients-automation/requester-node-http": "0.5.0"
   },
   "devDependencies": {
     "@types/jest": "28.1.1",

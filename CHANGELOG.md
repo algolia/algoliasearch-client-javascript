@@ -1,3 +1,8 @@
+## [0.5.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.4.0...0.5.0)
+
+- 98b40e87 feat(javascript): allow legacy signature for `search` method (#665)
+- ad27abc1 test(clients): test more region param and timeouts (#663)
+
 ## [0.4.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.3.0...0.4.0)
 
 - baaf7674 fix(clients): rename `maxTrial` to `maxRetries` (#659)
