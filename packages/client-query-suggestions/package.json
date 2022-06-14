@@ -1,7 +1,7 @@
 {
   "name": "@experimental-api-clients-automation/client-query-suggestions",
   "version": "0.5.0",
-  "description": "JavaScript client for @experimental-api-clients-automation/client-query-suggestions",
+  "description": "JavaScript client for client-query-suggestions",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
