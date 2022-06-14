@@ -13,7 +13,10 @@ import type {
   QueryParameters,
 } from '@experimental-api-clients-automation/client-common';
 
-import type { PostProps } from '../model/clientMethodProps';
+import type {
+  PostProps,
+  LegacySearchMethodProps,
+} from '../model/clientMethodProps';
 import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponses } from '../model/searchResponses';
 
@@ -129,9 +132,34 @@ export function createAlgoliasearchLiteClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     search(
-      searchMethodParams: SearchMethodParams,
+      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
       requestOptions?: RequestOptions
     ): Promise<SearchResponses> {
+      if (searchMethodParams && Array.isArray(searchMethodParams)) {
+        const newSignatureRequest: SearchMethodParams = {
+          requests: searchMethodParams.map(({ params, ...legacyRequest }) => {
+            if (legacyRequest.type === 'facet') {
+              return {
+                ...legacyRequest,
+                ...params,
+                type: 'facet',
+              };
+            }
+
+            return {
+              ...legacyRequest,
+              ...params,
+              facet: undefined,
+              maxFacetHits: undefined,
+              facetQuery: undefined,
+            };
+          }),
+        };
+
+        // eslint-disable-next-line no-param-reassign
+        searchMethodParams = newSignatureRequest;
+      }
+
       if (!searchMethodParams) {
         throw new Error(
           'Parameter `searchMethodParams` is required when calling `search`.'

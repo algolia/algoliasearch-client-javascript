@@ -12,7 +12,10 @@ import type { OperationIndexParams } from './operationIndexParams';
 import type { Rule } from './rule';
 import type { SearchDictionaryEntriesParams } from './searchDictionaryEntriesParams';
 import type { SearchForFacetValuesRequest } from './searchForFacetValuesRequest';
+import type { SearchForFacetsOptions } from './searchForFacetsOptions';
+import type { SearchForHitsOptions } from './searchForHitsOptions';
 import type { SearchParams } from './searchParams';
+import type { SearchParamsObject } from './searchParamsObject';
 import type { SearchRulesParams } from './searchRulesParams';
 import type { Source } from './source';
 import type { SynonymHit } from './synonymHit';
@@ -584,6 +587,38 @@ export type SaveSynonymsProps = {
    */
   replaceExistingSynonyms?: boolean;
 };
+
+/**
+ * In v4, the search parameters are wrapped in a `params` parameter.
+ *
+ * @deprecated The `search` method now accepts flat `searchParams` at the root of the method.
+ */
+type LegacySearchParams = {
+  params?: SearchParamsObject;
+};
+
+/**
+ * In v4, the search parameters are wrapped in a `params` parameter.
+ *
+ * @deprecated The `search` method now accepts flat `searchParams` at the root of the method.
+ */
+type LegacySearchForFacets = LegacySearchParams & SearchForFacetsOptions;
+
+/**
+ * In v4, the search parameters are wrapped in a `params` parameter.
+ *
+ * @deprecated The `search` method now accepts flat `searchParams` at the root of the method.
+ */
+type LegacySearchForHits = LegacySearchParams & SearchForHitsOptions;
+
+type LegacySearchQuery = LegacySearchForFacets | LegacySearchForHits;
+
+/**
+ * Search method signature compatible with the `algoliasearch` v4 package. When using this signature, extra computation will be required to make it match the new signature.
+ *
+ * @deprecated This signature will be removed from the next major version, we recommend using the `SearchMethodParams` type for performances and future proof reasons.
+ */
+export type LegacySearchMethodProps = LegacySearchQuery[];
 
 /**
  * Properties for the `searchDictionaryEntries` method.

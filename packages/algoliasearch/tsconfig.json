@@ -1,8 +1,9 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "types": ["node", "jest"],
     "outDir": "dist"
   },
   "include": ["builds/node.ts", "builds/browser.ts"],
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules", "__tests__"]
 }
