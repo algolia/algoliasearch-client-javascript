@@ -1,4 +1,4 @@
-import type { GetConversationRateResponseDates } from './getConversationRateResponseDates';
+import type { ConversionRateEvent } from './conversionRateEvent';
 
 export type GetConversationRateResponse = {
   /**
@@ -16,5 +16,5 @@ export type GetConversationRateResponse = {
   /**
    * A list of conversion events with their date.
    */
-  dates: GetConversationRateResponseDates[];
+  dates: ConversionRateEvent[];
 };

@@ -1,4 +1,4 @@
-export type GetNoResultsRateResponseDates = {
+export type NoResultsRateEvent = {
   /**
    * Date of the event.
    */

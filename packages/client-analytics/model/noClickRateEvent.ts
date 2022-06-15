@@ -1,4 +1,4 @@
-export type GetNoClickRateResponseDates = {
+export type NoClickRateEvent = {
   /**
    * The click-through rate.
    */

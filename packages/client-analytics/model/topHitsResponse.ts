@@ -1,8 +1,8 @@
-import type { TopHitsResponseHits } from './topHitsResponseHits';
+import type { TopHit } from './topHit';
 
 export type TopHitsResponse = {
   /**
    * A list of top hits with their count.
    */
-  hits: TopHitsResponseHits[];
+  hits: TopHit[];
 };

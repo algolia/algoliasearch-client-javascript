@@ -7,5 +7,5 @@ export type GetTopUserIdsResponse = {
   /**
    * Mapping of cluster names to top users.
    */
-  topUsers: Array<{ [key: string]: UserId[] }>;
+  topUsers: Array<Record<string, UserId[]>>;
 };

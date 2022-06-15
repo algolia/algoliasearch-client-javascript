@@ -1,8 +1,8 @@
-import type { GetTopCountriesResponseCountries } from './getTopCountriesResponseCountries';
+import type { TopCountry } from './topCountry';
 
 export type GetTopCountriesResponse = {
   /**
    * A list of countries with their count.
    */
-  countries: GetTopCountriesResponseCountries[];
+  countries: TopCountry[];
 };

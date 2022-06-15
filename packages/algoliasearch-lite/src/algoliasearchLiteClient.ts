@@ -128,7 +128,7 @@ export function createAlgoliasearchLiteClient({
      * Perform a search operation targeting one or many indices.
      *
      * @summary Search multiple indices.
-     * @param searchMethodParams - The searchMethodParams object.
+     * @param searchMethodParams - The `search` requests and strategy.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     search(

@@ -1,4 +1,4 @@
-export type GetConversationRateResponseDates = {
+export type ConversionRateEvent = {
   /**
    * The click-through rate.
    */

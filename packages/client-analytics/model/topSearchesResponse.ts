@@ -1,8 +1,8 @@
-import type { GetSearchesNoResultsResponseSearches } from './getSearchesNoResultsResponseSearches';
+import type { TopSearch } from './topSearch';
 
 export type TopSearchesResponse = {
   /**
    * A list of top searches with their count.
    */
-  searches: GetSearchesNoResultsResponseSearches[];
+  searches: TopSearch[];
 };

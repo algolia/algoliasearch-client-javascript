@@ -14,7 +14,7 @@ const notAvailableStorage = new Proxy(window.localStorage, {
   },
 });
 
-type DefaultValue = Promise<{ [k: number]: number }>;
+type DefaultValue = Promise<Record<number, number>>;
 
 describe('fallbackable cache', () => {
   const key = { 1: 2 };

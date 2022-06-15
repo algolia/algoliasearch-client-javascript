@@ -1,8 +1,8 @@
-export type TopHitsResponseHits = {
+export type TopCountry = {
   /**
-   * The hit.
+   * The country.
    */
-  hit: string;
+  country: string;
   /**
    * The number of occurrences.
    */

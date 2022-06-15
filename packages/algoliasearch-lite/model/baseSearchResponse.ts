@@ -1,4 +1,4 @@
-import type { BaseSearchResponseFacetsStats } from './baseSearchResponseFacetsStats';
+import type { FacetsStats } from './facetsStats';
 
 export type BaseSearchResponse = {
   /**
@@ -32,11 +32,11 @@ export type BaseSearchResponse = {
   /**
    * A mapping of each facet name to the corresponding facet counts.
    */
-  facets?: { [key: string]: { [key: string]: string } };
+  facets?: Record<string, Record<string, string>>;
   /**
    * Statistics for numerical facets.
    */
-  facets_stats?: { [key: string]: BaseSearchResponseFacetsStats };
+  facets_stats?: Record<string, FacetsStats>;
   /**
    * Set the number of hits per page.
    */

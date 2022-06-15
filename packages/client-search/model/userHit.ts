@@ -1,6 +1,6 @@
-import type { SearchUserIdsResponseHighlightResult } from './searchUserIdsResponseHighlightResult';
+import type { UserHighlightResult } from './userHighlightResult';
 
-export type SearchUserIdsResponseHits = {
+export type UserHit = {
   /**
    * UserID of the user.
    */
@@ -21,5 +21,5 @@ export type SearchUserIdsResponseHits = {
    * UserID of the requested user. Same as userID.
    */
   objectID: string;
-  _highlightResult: SearchUserIdsResponseHighlightResult;
+  _highlightResult: UserHighlightResult;
 };

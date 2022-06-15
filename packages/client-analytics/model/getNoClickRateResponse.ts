@@ -1,4 +1,4 @@
-import type { GetNoClickRateResponseDates } from './getNoClickRateResponseDates';
+import type { NoClickRateEvent } from './noClickRateEvent';
 
 export type GetNoClickRateResponse = {
   /**
@@ -16,5 +16,5 @@ export type GetNoClickRateResponse = {
   /**
    * A list of searches without clicks with their date, rate and counts.
    */
-  dates: GetNoClickRateResponseDates[];
+  dates: NoClickRateEvent[];
 };

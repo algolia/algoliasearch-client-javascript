@@ -1,4 +1,4 @@
-export type GetAverageClickPositionResponseDates = {
+export type AverageClickEvent = {
   /**
    * The average of all the click count event.
    */

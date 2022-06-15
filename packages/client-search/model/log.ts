@@ -1,6 +1,6 @@
-import type { GetLogsResponseInnerQueries } from './getLogsResponseInnerQueries';
+import type { LogQuery } from './logQuery';
 
-export type GetLogsResponseLogs = {
+export type Log = {
   /**
    * Timestamp in ISO-8601 format.
    */
@@ -60,5 +60,5 @@ export type GetLogsResponseLogs = {
   /**
    * Array of all performed queries for the given request.
    */
-  inner_queries?: GetLogsResponseInnerQueries[];
+  inner_queries?: LogQuery[];
 };

@@ -1,5 +1,5 @@
-import type { SearchForFacetValuesResponseFacetHits } from './searchForFacetValuesResponseFacetHits';
+import type { FacetHits } from './facetHits';
 
 export type SearchForFacetValuesResponse = {
-  facetHits: SearchForFacetValuesResponseFacetHits[];
+  facetHits: FacetHits[];
 };

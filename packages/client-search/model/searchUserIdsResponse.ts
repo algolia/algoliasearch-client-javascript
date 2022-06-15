@@ -1,4 +1,4 @@
-import type { SearchUserIdsResponseHits } from './searchUserIdsResponseHits';
+import type { UserHit } from './userHit';
 
 /**
  * UserIDs data.
@@ -7,7 +7,7 @@ export type SearchUserIdsResponse = {
   /**
    * List of user object matching the query.
    */
-  hits: SearchUserIdsResponseHits[];
+  hits: UserHit[];
   /**
    * Number of hits that the search query matched.
    */

@@ -1068,7 +1068,7 @@ export function createSearchClient({
      */
     getDictionaryLanguages(
       requestOptions?: RequestOptions
-    ): Promise<{ [key: string]: Languages }> {
+    ): Promise<Record<string, Languages>> {
       const requestPath = '/1/dictionaries/*/languages';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1164,7 +1164,7 @@ export function createSearchClient({
     getObject(
       { indexName, objectID, attributesToRetrieve }: GetObjectProps,
       requestOptions?: RequestOptions
-    ): Promise<{ [key: string]: string }> {
+    ): Promise<Record<string, string>> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getObject`.'
@@ -1201,7 +1201,7 @@ export function createSearchClient({
      * Retrieve one or more objects, potentially from different indices, in a single API call.
      *
      * @summary Retrieve one or more objects.
-     * @param getObjectsParams - The getObjectsParams object.
+     * @param getObjectsParams - The Algolia object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getObjects(
@@ -2210,7 +2210,7 @@ export function createSearchClient({
      * Perform a search operation targeting one or many indices.
      *
      * @summary Search multiple indices.
-     * @param searchMethodParams - The searchMethodParams object.
+     * @param searchMethodParams - The `search` requests and strategy.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     search(

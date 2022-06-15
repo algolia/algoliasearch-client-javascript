@@ -1,4 +1,4 @@
-export type GetLogsResponseInnerQueries = {
+export type LogQuery = {
   /**
    * Index targeted by the query.
    */

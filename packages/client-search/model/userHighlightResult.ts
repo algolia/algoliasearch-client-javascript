@@ -1,6 +1,6 @@
 import type { HighlightResult } from './highlightResult';
 
-export type SearchUserIdsResponseHighlightResult = {
+export type UserHighlightResult = {
   userID: HighlightResult;
   clusterName: HighlightResult;
 };

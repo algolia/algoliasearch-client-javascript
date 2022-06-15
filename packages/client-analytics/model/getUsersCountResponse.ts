@@ -1,4 +1,4 @@
-import type { GetSearchesCountResponseDates } from './getSearchesCountResponseDates';
+import type { UserWithDate } from './userWithDate';
 
 export type GetUsersCountResponse = {
   /**
@@ -8,5 +8,5 @@ export type GetUsersCountResponse = {
   /**
    * A list of users count with their date.
    */
-  dates: GetSearchesCountResponseDates[];
+  dates: UserWithDate[];
 };

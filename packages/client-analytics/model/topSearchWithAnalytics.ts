@@ -1,4 +1,4 @@
-export type TopSearchesResponseWithAnalyticsSearches = {
+export type TopSearchWithAnalytics = {
   /**
    * The search query.
    */

@@ -1,4 +1,4 @@
-import type { GetClickThroughRateResponseDates } from './getClickThroughRateResponseDates';
+import type { ClickThroughRateEvent } from './clickThroughRateEvent';
 
 export type GetClickThroughRateResponse = {
   /**
@@ -16,5 +16,5 @@ export type GetClickThroughRateResponse = {
   /**
    * A list of click-through rate events with their date.
    */
-  dates: GetClickThroughRateResponseDates[];
+  dates: ClickThroughRateEvent[];
 };

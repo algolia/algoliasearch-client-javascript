@@ -1,8 +1,8 @@
-import type { TopHitsResponseWithAnalyticsHits } from './topHitsResponseWithAnalyticsHits';
+import type { TopHitWithAnalytics } from './topHitWithAnalytics';
 
 export type TopHitsResponseWithAnalytics = {
   /**
    * A list of top hits with their count and analytics.
    */
-  hits: TopHitsResponseWithAnalyticsHits[];
+  hits: TopHitWithAnalytics[];
 };

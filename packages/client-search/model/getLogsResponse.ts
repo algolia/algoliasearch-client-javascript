@@ -1,5 +1,5 @@
-import type { GetLogsResponseLogs } from './getLogsResponseLogs';
+import type { Log } from './log';
 
 export type GetLogsResponse = {
-  logs: GetLogsResponseLogs[];
+  logs: Log[];
 };

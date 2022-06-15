@@ -1,4 +1,4 @@
-import type { GetAverageClickPositionResponseDates } from './getAverageClickPositionResponseDates';
+import type { AverageClickEvent } from './averageClickEvent';
 
 export type GetAverageClickPositionResponse = {
   /**
@@ -12,5 +12,5 @@ export type GetAverageClickPositionResponse = {
   /**
    * A list of average click position with their date.
    */
-  dates: GetAverageClickPositionResponseDates[];
+  dates: AverageClickEvent[];
 };

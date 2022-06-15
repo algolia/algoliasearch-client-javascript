@@ -1,4 +1,4 @@
-import type { GetSearchesCountResponseDates } from './getSearchesCountResponseDates';
+import type { SearchEvent } from './searchEvent';
 
 export type GetSearchesCountResponse = {
   /**
@@ -8,5 +8,5 @@ export type GetSearchesCountResponse = {
   /**
    * A list of search events with their date and count.
    */
-  dates: GetSearchesCountResponseDates[];
+  dates: SearchEvent[];
 };

@@ -1,8 +1,8 @@
-import type { GetClickPositionsResponsePositions } from './getClickPositionsResponsePositions';
+import type { ClickPosition } from './clickPosition';
 
 export type GetClickPositionsResponse = {
   /**
    * A list of the click positions with their click count.
    */
-  positions: GetClickPositionsResponsePositions[];
+  positions: ClickPosition[];
 };

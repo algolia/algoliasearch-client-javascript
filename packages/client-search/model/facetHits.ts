@@ -1,4 +1,4 @@
-export type SearchForFacetValuesResponseFacetHits = {
+export type FacetHits = {
   /**
    * Raw value of the facet.
    */

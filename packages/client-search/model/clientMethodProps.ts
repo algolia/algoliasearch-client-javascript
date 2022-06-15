@@ -423,9 +423,9 @@ export type PartialUpdateObjectProps = {
   /**
    * List of attributes to update.
    */
-  attributeOrBuiltInOperation: Array<{
-    [key: string]: AttributeOrBuiltInOperation;
-  }>;
+  attributeOrBuiltInOperation: Array<
+    Record<string, AttributeOrBuiltInOperation>
+  >;
   /**
    * Creates the record if it does not exist yet.
    */
