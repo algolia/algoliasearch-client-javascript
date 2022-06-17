@@ -4,8 +4,8 @@ import fs from 'fs';
 const NPM_ORG = '@experimental-api-clients-automation/';
 
 // Output formats
-const BROWSER_FORMATS = ['umd-browser', 'esm-browser', 'cjs-browser'];
-const NODE_FORMATS = ['cjs-node', 'esm-node'];
+const BROWSER_FORMATS = ['esm-browser', 'cjs-browser', 'umd-browser'];
+const NODE_FORMATS = ['esm-node', 'cjs-node'];
 
 // Utils package with default options
 const UTILS = {
@@ -125,7 +125,7 @@ export function getPackageConfigs() {
         external: ['dom'],
         dependencies: [
           ...commonConfig.dependencies,
-          `${NPM_ORG}/requester-browser-xhr`,
+          `${NPM_ORG}requester-browser-xhr`,
         ],
         globals: {
           [packageName]: packageName,
@@ -138,7 +138,7 @@ export function getPackageConfigs() {
         formats: NODE_FORMATS,
         dependencies: [
           ...commonConfig.dependencies,
-          `${NPM_ORG}/requester-node-http`,
+          `${NPM_ORG}requester-node-http`,
         ],
       },
     ];
@@ -161,24 +161,34 @@ export function createLicense(name, version) {
  * Bundlers with their output format and file name for the given client.
  */
 export function createBundlers({ output, clientPath }) {
+  const commonOptions = {
+    exports: 'named',
+  };
+
   return {
     'esm-node': {
+      ...commonOptions,
       file: `${clientPath}/dist/${output}.esm.node.js`,
       format: 'es',
     },
     'esm-browser': {
+      ...commonOptions,
       file: `${clientPath}/dist/${output}.esm.browser.js`,
       format: 'es',
     },
     'umd-browser': {
+      ...commonOptions,
       file: `${clientPath}/dist/${output}.umd.browser.js`,
       format: 'umd',
+      esModule: false,
     },
     'cjs-node': {
+      ...commonOptions,
       file: `${clientPath}/dist/${output}.cjs.node.js`,
       format: 'cjs',
     },
     'cjs-browser': {
+      ...commonOptions,
       file: `${clientPath}/dist/${output}.cjs.browser.js`,
       format: 'cjs',
     },

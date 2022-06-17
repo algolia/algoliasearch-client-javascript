@@ -27,6 +27,8 @@ import {
 } from '@experimental-api-clients-automation/client-search/src/searchClient';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
 
+export * from './models';
+
 export const apiClientVersion = searchClientVersion;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

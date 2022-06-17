@@ -26,6 +26,8 @@ import {
 } from '@experimental-api-clients-automation/client-search/src/searchClient';
 import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
 
+export * from './models';
+
 export const apiClientVersion = searchClientVersion;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

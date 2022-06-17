@@ -17,6 +17,7 @@ const packageConfigs = getPackageConfigs();
 const rollupConfig = [];
 
 packageConfigs.forEach((packageConfig) => {
+  let checkForTypes = true;
   const clientPath = path.resolve('packages', packageConfig.package);
   const clientPackageJson = JSON.parse(
     fs.readFileSync(path.resolve(clientPath, 'package.json'))
@@ -32,19 +33,8 @@ packageConfigs.forEach((packageConfig) => {
   });
 
   packageConfig.formats.forEach((format) => {
-    // Avoid generating types multiple times.
-    let areTypesGenerated = false;
     const isUmdBuild = format === 'umd-browser';
     const isEsmBrowserBuild = format === 'esm-browser';
-
-    if (isUmdBuild) {
-      bundlers[format].name = packageConfig.name;
-      bundlers[format].banner = createLicense(
-        packageConfig.package,
-        clientPackageJson.version
-      );
-    }
-
     const umdConfig = {
       compressorPlugins: [],
       transpilerPlugins: [],
@@ -56,6 +46,12 @@ packageConfigs.forEach((packageConfig) => {
     }
 
     if (isUmdBuild) {
+      bundlers[format].name = packageConfig.name;
+      bundlers[format].banner = createLicense(
+        packageConfig.package,
+        clientPackageJson.version
+      );
+
       umdConfig.compressorPlugins = [terser()];
       umdConfig.transpilerPlugins = [
         babel({
@@ -87,12 +83,13 @@ packageConfigs.forEach((packageConfig) => {
         }),
         nodeResolve(),
         ts({
-          check: !areTypesGenerated,
+          check: checkForTypes,
           tsconfig: path.resolve(clientPath, 'tsconfig.json'),
           tsconfigOverride: {
             compilerOptions: {
-              declaration: !areTypesGenerated,
-              declarationMap: !areTypesGenerated,
+              declaration: checkForTypes,
+              declarationMap: checkForTypes,
+              noEmit: !checkForTypes,
             },
           },
         }),
@@ -107,7 +104,7 @@ packageConfigs.forEach((packageConfig) => {
       },
     });
 
-    areTypesGenerated = true;
+    checkForTypes = false;
   });
 });
 
