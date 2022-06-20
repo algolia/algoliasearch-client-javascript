@@ -122,6 +122,7 @@ export * from './tagFilters';
 export * from './taskStatus';
 export * from './timeRange';
 export * from './typoTolerance';
+export * from './typoToleranceEnum';
 export * from './updateApiKeyResponse';
 export * from './updatedAtResponse';
 export * from './updatedAtWithObjectIdResponse';

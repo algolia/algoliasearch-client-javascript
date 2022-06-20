@@ -81,6 +81,7 @@ export * from './tagFilters';
 export * from './taskStatus';
 export * from './timeRange';
 export * from './typoTolerance';
+export * from './typoToleranceEnum';
 export * from './updatedRuleResponse';
 export * from './userId';
 export * from './clientMethodProps';
