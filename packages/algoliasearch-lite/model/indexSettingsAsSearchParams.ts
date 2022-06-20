@@ -1,15 +1,13 @@
 import type { AdvancedSyntaxFeatures } from './advancedSyntaxFeatures';
 import type { AlternativesAsExact } from './alternativesAsExact';
 import type { ExactOnSingleWordQuery } from './exactOnSingleWordQuery';
+import type { IgnorePlurals } from './ignorePlurals';
 import type { QueryType } from './queryType';
+import type { RemoveStopWords } from './removeStopWords';
 import type { RemoveWordsIfNoResults } from './removeWordsIfNoResults';
 import type { TypoTolerance } from './typoTolerance';
 
 export type IndexSettingsAsSearchParams = {
-  /**
-   * The complete list of attributes used for searching.
-   */
-  searchableAttributes?: string[];
   /**
    * The complete list of attributes that will be used for faceting.
    */
@@ -83,18 +81,8 @@ export type IndexSettingsAsSearchParams = {
    * List of attributes on which you want to disable typo tolerance.
    */
   disableTypoToleranceOnAttributes?: string[];
-  /**
-   * Control which separators are indexed.
-   */
-  separatorsToIndex?: string;
-  /**
-   * Treats singular, plurals, and other forms of declensions as matching terms.
-   */
-  ignorePlurals?: string;
-  /**
-   * Removes stop (common) words from the query before executing it.
-   */
-  removeStopWords?: string;
+  ignorePlurals?: IgnorePlurals;
+  removeStopWords?: RemoveStopWords;
   /**
    * List of characters that the engine shouldn\'t automatically normalize.
    */

@@ -28,10 +28,6 @@ export type BaseIndexSettings = {
    */
   indexLanguages?: string[];
   /**
-   * Whether promoted results should match the filters of the current search, except for geographic filters.
-   */
-  filterPromotes?: boolean;
-  /**
    * List of attributes on which you want to disable prefix matching.
    */
   disablePrefixOnAttributes?: string[];
@@ -43,6 +39,14 @@ export type BaseIndexSettings = {
    * List of numeric attributes that can be used as numerical filters.
    */
   numericAttributesForFiltering?: string[];
+  /**
+   * Control which separators are indexed.
+   */
+  separatorsToIndex?: string;
+  /**
+   * The complete list of attributes used for searching.
+   */
+  searchableAttributes?: string[];
   /**
    * Lets you store custom data in your indices.
    */
