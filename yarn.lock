@@ -2883,10 +2883,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/openapi-types@npm:^12.1.0":
-  version: 12.1.0
-  resolution: "@octokit/openapi-types@npm:12.1.0"
-  checksum: 449f21166d53bb6c88f9b01b45d8ac730aa4ce1aa4d8ca86fc7c06b552c94e7f01281c9a73b2902a4cd2e5ce88d24766e0338109d5aa35a8e0bfc514c6cfd2d7
+"@octokit/openapi-types@npm:^12.2.0":
+  version: 12.3.0
+  resolution: "@octokit/openapi-types@npm:12.3.0"
+  checksum: 2f568d2e1dcf26f786b3d4ff424ec266a60bbe7fac457e338203f72f58a65cb3f5695f50721d1f587da6387b9fadaa741b4090da566547bad2977c19d4dc0b26
   languageName: node
   linkType: hard
 
@@ -2898,13 +2898,13 @@ __metadata:
   linkType: hard
 
 "@octokit/plugin-paginate-rest@npm:^2.16.8":
-  version: 2.18.0
-  resolution: "@octokit/plugin-paginate-rest@npm:2.18.0"
+  version: 2.19.0
+  resolution: "@octokit/plugin-paginate-rest@npm:2.19.0"
   dependencies:
-    "@octokit/types": ^6.35.0
+    "@octokit/types": ^6.36.0
   peerDependencies:
     "@octokit/core": ">=2"
-  checksum: e804e44f92a16a0cf5b32a4a05e1acb908d96c63b0e4340355a7f99876b2aee998f636b5ac11a360a4e33ab05ee1c1a384fa48c7f63a78ea5992bc2d8a55e4ce
+  checksum: f91a4374addbd6366eab46fbe91bbee9bb24975f1ff35db6b0f570bb24340cb4f2e456f4456c1e92acff68ab09418311414642e960cb2512f3db438b4b9639bf
   languageName: node
   linkType: hard
 
@@ -2918,14 +2918,14 @@ __metadata:
   linkType: hard
 
 "@octokit/plugin-rest-endpoint-methods@npm:^5.12.0":
-  version: 5.14.0
-  resolution: "@octokit/plugin-rest-endpoint-methods@npm:5.14.0"
+  version: 5.14.1
+  resolution: "@octokit/plugin-rest-endpoint-methods@npm:5.14.1"
   dependencies:
     "@octokit/types": ^6.35.0
     deprecation: ^2.3.1
   peerDependencies:
     "@octokit/core": ">=3"
-  checksum: 3fbd33aadcd136dbf45175fe24795d2aaab39a3ae6d6832bf49883089f08fb000d1b97ddd293e4a6d694f44c62cc1abaa239551b613b7a226f6f62a074ece6dc
+  checksum: 7a3dd0b45853b1d4a3b61dc8f2d53c84cc35c9b8852d8a612243751dbd822feff031f61fb953f64534672f67e8f9a8f3981d44f9ba63b57bd8a241148eb751a2
   languageName: node
   linkType: hard
 
@@ -2966,12 +2966,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/types@npm:^6.0.3, @octokit/types@npm:^6.16.1, @octokit/types@npm:^6.35.0":
-  version: 6.35.0
-  resolution: "@octokit/types@npm:6.35.0"
+"@octokit/types@npm:^6.0.3, @octokit/types@npm:^6.16.1, @octokit/types@npm:^6.35.0, @octokit/types@npm:^6.36.0":
+  version: 6.36.0
+  resolution: "@octokit/types@npm:6.36.0"
   dependencies:
-    "@octokit/openapi-types": ^12.1.0
-  checksum: 0f1949aece03733d1a45a9ee1c2162f8f35d58814e66ed2e00929b0fbb7cb315625203bf748ea7cb855b20b1c794c7f1add7203508a186289f489b7fb1143924
+    "@octokit/openapi-types": ^12.2.0
+  checksum: b2802c2ab1657113ab4b657c916649c4991e117cc8f052f9869b1dd597e621cff680b975d64526800162d53c6efffbcd171c79b66f475e4de7d5f9453a939b47
   languageName: node
   linkType: hard
 
@@ -6714,8 +6714,8 @@ __metadata:
   linkType: hard
 
 "make-fetch-happen@npm:^10.0.3, make-fetch-happen@npm:^10.0.6":
-  version: 10.1.7
-  resolution: "make-fetch-happen@npm:10.1.7"
+  version: 10.1.8
+  resolution: "make-fetch-happen@npm:10.1.8"
   dependencies:
     agentkeepalive: ^4.2.1
     cacache: ^16.1.0
@@ -6733,7 +6733,7 @@ __metadata:
     promise-retry: ^2.0.1
     socks-proxy-agent: ^7.0.0
     ssri: ^9.0.0
-  checksum: 2b7301256e18a2f825c1c3cad14e11492428531ecdea04d846dc12c2d69658d65832746ce965e67c7f98b0d0506115674cf43676c3322709278620bfc886cf4a
+  checksum: 5fe9fd9da5368a8a4fe9a3ea5b9aa15f1e91c9ab703cd9027a6b33840ecc8a57c182fbe1c767c139330a88c46a448b1f00da5e32065cec373aff2450b3da54ee
   languageName: node
   linkType: hard
 
