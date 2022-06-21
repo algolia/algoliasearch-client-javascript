@@ -1,3 +1,10 @@
+## [0.5.1](https://github.com/algolia/algoliasearch-client-javascript/compare/0.5.0...0.5.1)
+
+- 61343d52 fix(specs): correct type for `typoTolerance` (#722)
+- c917710b fix(specs): types and parameters (#708)
+- 33cffcbb fix(javascript): export types for `algoliasearch` (#706)
+- e93a31cd fix(javascript): clean rollup config (#700)
+
 ## [0.5.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.4.0...0.5.0)
 
 - 98b40e87 feat(javascript): allow legacy signature for `search` method (#665)
