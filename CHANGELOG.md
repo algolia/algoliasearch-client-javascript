@@ -1,3 +1,7 @@
+## [0.6.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.5.1...0.6.0)
+
+- 7ff32bfe feat(javascript): nest `lite` package in `algoliasearch` (#729)
+
 ## [0.5.1](https://github.com/algolia/algoliasearch-client-javascript/compare/0.5.0...0.5.1)
 
 - 61343d52 fix(specs): correct type for `typoTolerance` (#722)
