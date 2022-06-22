@@ -4,6 +4,6 @@
     "types": ["node", "jest"],
     "outDir": "dist"
   },
-  "include": ["builds/node.ts", "builds/browser.ts", "builds/models.ts"],
+  "include": ["builds", "lite"],
   "exclude": ["dist", "node_modules", "__tests__"]
 }

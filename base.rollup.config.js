@@ -4,8 +4,8 @@ import fs from 'fs';
 const NPM_ORG = '@experimental-api-clients-automation/';
 
 // Output formats
-const BROWSER_FORMATS = ['esm-browser', 'cjs-browser', 'umd-browser'];
-const NODE_FORMATS = ['esm-node', 'cjs-node'];
+const BROWSER_FORMATS = ['esm-browser', 'umd'];
+const NODE_FORMATS = ['esm-node', 'cjs'];
 
 // Utils package with default options
 const UTILS = {
@@ -103,10 +103,46 @@ export function getPackageConfigs() {
       dependencies: [`${NPM_ORG}client-common`],
       external: [],
     };
+    let liteBuildConfig = [];
 
     // This non-generated client is an aggregation of client, hence does not follow
     // the same build process.
     if (isAlgoliasearchClient) {
+      const litePackageName = `${packageName}/lite`;
+      // `algoliasearch/lite` related
+      liteBuildConfig = [
+        {
+          ...commonConfig,
+          package: litePackageName,
+          name: litePackageName,
+          output: 'lite',
+          input: 'lite/builds/browser.ts',
+          formats: BROWSER_FORMATS,
+          external: ['dom'],
+          dependencies: [
+            ...commonConfig.dependencies,
+            `${NPM_ORG}requester-browser-xhr`,
+          ],
+          globals: {
+            [litePackageName]: litePackageName,
+          },
+        },
+        // Node build
+        {
+          ...commonConfig,
+          package: litePackageName,
+          name: litePackageName,
+          output: 'lite',
+          input: 'lite/builds/node.ts',
+          formats: NODE_FORMATS,
+          dependencies: [
+            ...commonConfig.dependencies,
+            `${NPM_ORG}requester-node-http`,
+          ],
+        },
+      ];
+
+      // `algoliasearch` related
       commonConfig.name = packageName;
       commonConfig.dependencies = [
         `${NPM_ORG}client-analytics`,
@@ -117,6 +153,7 @@ export function getPackageConfigs() {
     }
 
     return [
+      ...liteBuildConfig,
       // Browser build
       {
         ...commonConfig,
@@ -160,36 +197,33 @@ export function createLicense(name, version) {
 /**
  * Bundlers with their output format and file name for the given client.
  */
-export function createBundlers({ output, clientPath }) {
+export function createBundlers({ output, clientPath, isLiteClient }) {
   const commonOptions = {
     exports: 'named',
   };
 
+  const path = isLiteClient ? `${clientPath}/dist/lite` : `${clientPath}/dist`;
+
   return {
     'esm-node': {
       ...commonOptions,
-      file: `${clientPath}/dist/${output}.esm.node.js`,
+      file: `${path}/${output}.esm.node.js`,
       format: 'es',
     },
     'esm-browser': {
       ...commonOptions,
-      file: `${clientPath}/dist/${output}.esm.browser.js`,
+      file: `${path}/${output}.esm.browser.js`,
       format: 'es',
     },
-    'umd-browser': {
+    umd: {
       ...commonOptions,
-      file: `${clientPath}/dist/${output}.umd.browser.js`,
+      file: `${path}/${output}.umd.js`,
       format: 'umd',
       esModule: false,
     },
-    'cjs-node': {
+    cjs: {
       ...commonOptions,
-      file: `${clientPath}/dist/${output}.cjs.node.js`,
-      format: 'cjs',
-    },
-    'cjs-browser': {
-      ...commonOptions,
-      file: `${clientPath}/dist/${output}.cjs.browser.js`,
+      file: `${path}/${output}.cjs.js`,
       format: 'cjs',
     },
   };

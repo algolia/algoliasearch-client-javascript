@@ -6,10 +6,10 @@
   "license": "MIT",
   "author": "Algolia",
   "main": "index.js",
-  "jsdelivr": "dist/client-search.umd.browser.js",
-  "unpkg": "dist/client-search.umd.browser.js",
+  "jsdelivr": "dist/client-search.umd.js",
+  "unpkg": "dist/client-search.umd.js",
   "module": "dist/client-search.esm.node.js",
-  "browser": "dist/client-search.cjs.browser.js",
+  "browser": "dist/client-search.umd.js",
   "types": "index.d.ts",
   "files": [
     "dist",

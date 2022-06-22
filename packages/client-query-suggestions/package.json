@@ -6,10 +6,10 @@
   "license": "MIT",
   "author": "Algolia",
   "main": "index.js",
-  "jsdelivr": "dist/client-query-suggestions.umd.browser.js",
-  "unpkg": "dist/client-query-suggestions.umd.browser.js",
+  "jsdelivr": "dist/client-query-suggestions.umd.js",
+  "unpkg": "dist/client-query-suggestions.umd.js",
   "module": "dist/client-query-suggestions.esm.node.js",
-  "browser": "dist/client-query-suggestions.cjs.browser.js",
+  "browser": "dist/client-query-suggestions.umd.js",
   "types": "index.d.ts",
   "files": [
     "dist",

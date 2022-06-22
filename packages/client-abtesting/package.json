@@ -6,10 +6,10 @@
   "license": "MIT",
   "author": "Algolia",
   "main": "index.js",
-  "jsdelivr": "dist/client-abtesting.umd.browser.js",
-  "unpkg": "dist/client-abtesting.umd.browser.js",
+  "jsdelivr": "dist/client-abtesting.umd.js",
+  "unpkg": "dist/client-abtesting.umd.js",
   "module": "dist/client-abtesting.esm.node.js",
-  "browser": "dist/client-abtesting.cjs.browser.js",
+  "browser": "dist/client-abtesting.umd.js",
   "types": "index.d.ts",
   "files": [
     "dist",

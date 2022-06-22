@@ -6,10 +6,10 @@
   "license": "MIT",
   "author": "Algolia",
   "main": "index.js",
-  "jsdelivr": "dist/client-insights.umd.browser.js",
-  "unpkg": "dist/client-insights.umd.browser.js",
+  "jsdelivr": "dist/client-insights.umd.js",
+  "unpkg": "dist/client-insights.umd.js",
   "module": "dist/client-insights.esm.node.js",
-  "browser": "dist/client-insights.cjs.browser.js",
+  "browser": "dist/client-insights.umd.js",
   "types": "index.d.ts",
   "files": [
     "dist",

@@ -1,43 +1,43 @@
 {
   "files": [
     {
-      "path": "packages/algoliasearch/dist/algoliasearch.umd.browser.js",
+      "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
       "maxSize": "7.60KB"
     },
     {
-      "path": "packages/algoliasearch-lite/dist/algoliasearch-lite.umd.browser.js",
-      "maxSize": "3.85KB"
+      "path": "packages/algoliasearch/dist/lite/lite.umd.js",
+      "maxSize": "3.80KB"
     },
     {
-      "path": "packages/client-abtesting/dist/client-abtesting.umd.browser.js",
+      "path": "packages/client-abtesting/dist/client-abtesting.umd.js",
       "maxSize": "3.95KB"
     },
     {
-      "path": "packages/client-analytics/dist/client-analytics.umd.browser.js",
+      "path": "packages/client-analytics/dist/client-analytics.umd.js",
       "maxSize": "4.55KB"
     },
     {
-      "path": "packages/client-insights/dist/client-insights.umd.browser.js",
+      "path": "packages/client-insights/dist/client-insights.umd.js",
       "maxSize": "3.80KB"
     },
     {
-      "path": "packages/client-personalization/dist/client-personalization.umd.browser.js",
+      "path": "packages/client-personalization/dist/client-personalization.umd.js",
       "maxSize": "3.95KB"
     },
     {
-      "path": "packages/client-query-suggestions/dist/client-query-suggestions.umd.browser.js",
+      "path": "packages/client-query-suggestions/dist/client-query-suggestions.umd.js",
       "maxSize": "4.00KB"
     },
     {
-      "path": "packages/client-search/dist/client-search.umd.browser.js",
+      "path": "packages/client-search/dist/client-search.umd.js",
       "maxSize": "6.30KB"
     },
     {
-      "path": "packages/client-sources/dist/client-sources.umd.browser.js",
+      "path": "packages/client-sources/dist/client-sources.umd.js",
       "maxSize": "3.80KB"
     },
     {
-      "path": "packages/recommend/dist/recommend.umd.browser.js",
+      "path": "packages/recommend/dist/recommend.umd.js",
       "maxSize": "3.80KB"
     }
   ]

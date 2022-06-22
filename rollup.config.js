@@ -17,8 +17,13 @@ const packageConfigs = getPackageConfigs();
 const rollupConfig = [];
 
 packageConfigs.forEach((packageConfig) => {
+  const isLiteClient = packageConfig.package === 'algoliasearch/lite';
   let checkForTypes = true;
-  const clientPath = path.resolve('packages', packageConfig.package);
+  const clientPath = path.resolve(
+    'packages',
+    packageConfig.package,
+    isLiteClient ? '..' : ''
+  );
   const clientPackageJson = JSON.parse(
     fs.readFileSync(path.resolve(clientPath, 'package.json'))
   );
@@ -30,10 +35,11 @@ packageConfigs.forEach((packageConfig) => {
   const bundlers = createBundlers({
     output: packageConfig.output,
     clientPath,
+    isLiteClient,
   });
 
   packageConfig.formats.forEach((format) => {
-    const isUmdBuild = format === 'umd-browser';
+    const isUmdBuild = format === 'umd';
     const isEsmBrowserBuild = format === 'esm-browser';
     const umdConfig = {
       compressorPlugins: [],

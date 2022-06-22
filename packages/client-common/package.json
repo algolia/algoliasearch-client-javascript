@@ -5,7 +5,7 @@
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
-  "main": "dist/client-common.cjs.node.js",
+  "main": "dist/client-common.cjs.js",
   "module": "dist/client-common.esm.node.js",
   "types": "dist/index.d.ts",
   "scripts": {

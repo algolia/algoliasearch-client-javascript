@@ -5,12 +5,43 @@
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
-  "main": "index.js",
-  "jsdelivr": "dist/algoliasearch.umd.browser.js",
-  "unpkg": "dist/algoliasearch.umd.browser.js",
-  "module": "dist/algoliasearch.esm.node.js",
-  "browser": "dist/algoliasearch.cjs.browser.js",
-  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/algoliasearch.esm.node.js",
+        "module": "./dist/algoliasearch.esm.node.js",
+        "require": "./dist/algoliasearch.cjs.js",
+        "default": "./dist/algoliasearch.cjs.js"
+      },
+      "browser": {
+        "umd": "./dist/algoliasearch.umd.js",
+        "module": "./dist/algoliasearch.esm.browser.js",
+        "import": "./dist/algoliasearch.esm.browser.js",
+        "default": "./dist/algoliasearch.umd.js"
+      }
+    },
+    "./lite": {
+      "node": {
+        "import": "./dist/lite/lite.esm.node.js",
+        "module": "./dist/lite/lite.esm.node.js",
+        "require": "./dist/lite/lite.cjs.js",
+        "default": "./dist/lite/lite.cjs.js"
+      },
+      "browser": {
+        "umd": "./dist/lite/lite.umd.js",
+        "module": "./dist/lite/lite.esm.browser.js",
+        "import": "./dist/lite/lite.esm.browser.js",
+        "default": "./dist/lite/lite.umd.js"
+      }
+    }
+  },
+  "jsdelivr": "./dist/algoliasearch.umd.js",
+  "unpkg": "./dist/algoliasearch.umd.js",
+  "browser": {
+    "./index.js": "./dist/algoliasearch.umd.js",
+    "./lite/index.js": "./dist/lite/lite.umd.js"
+  },
+  "types": "./index.d.ts",
   "scripts": {
     "clean": "rm -rf ./dist",
     "test": "jest"

@@ -2,6 +2,7 @@ import type { EchoResponse } from '@experimental-api-clients-automation/client-c
 import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
 
 import { algoliasearch, apiClientVersion } from '../builds/node';
+import { liteClient } from '../lite/builds/node';
 
 const client = algoliasearch('APP_ID', 'API_KEY', {
   requester: echoRequester(),
@@ -44,6 +45,13 @@ describe('api', () => {
 
   it('provides an init method for the personalization client', () => {
     expect(client.initPersonalization).not.toBeUndefined();
+  });
+});
+
+describe('bundle', () => {
+  it('expose both a full bundled package and a lite one', () => {
+    expect(liteClient).not.toBeUndefined();
+    expect(algoliasearch).not.toBeUndefined();
   });
 });
 

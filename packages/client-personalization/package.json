@@ -6,10 +6,10 @@
   "license": "MIT",
   "author": "Algolia",
   "main": "index.js",
-  "jsdelivr": "dist/client-personalization.umd.browser.js",
-  "unpkg": "dist/client-personalization.umd.browser.js",
+  "jsdelivr": "dist/client-personalization.umd.js",
+  "unpkg": "dist/client-personalization.umd.js",
   "module": "dist/client-personalization.esm.node.js",
-  "browser": "dist/client-personalization.cjs.browser.js",
+  "browser": "dist/client-personalization.umd.js",
   "types": "index.d.ts",
   "files": [
     "dist",

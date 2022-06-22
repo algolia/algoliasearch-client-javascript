@@ -1308,18 +1308,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@experimental-api-clients-automation/algoliasearch-lite@workspace:packages/algoliasearch-lite":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/algoliasearch-lite@workspace:packages/algoliasearch-lite"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.5.1
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.5.1
-    "@experimental-api-clients-automation/requester-node-http": 0.5.1
-    "@types/node": 16.11.41
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
 "@experimental-api-clients-automation/algoliasearch@workspace:packages/algoliasearch":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/algoliasearch@workspace:packages/algoliasearch"
@@ -2825,7 +2813,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@npmcli/run-script@npm:^3.0.0, @npmcli/run-script@npm:^3.0.1, @npmcli/run-script@npm:^3.0.2":
+"@npmcli/run-script@npm:^3.0.0, @npmcli/run-script@npm:^3.0.2":
   version: 3.0.3
   resolution: "@npmcli/run-script@npm:3.0.3"
   dependencies:
@@ -2834,6 +2822,18 @@ __metadata:
     node-gyp: ^8.4.1
     read-package-json-fast: ^2.0.3
   checksum: 3d0540a95620420d6e77c796a9e9d4fdf2600b5cf5b8d1ceabda15b1dd1d88cc5abf11e28b0494f03eee79c075a1549127bcfa550eb758b08f3948557d77b27a
+  languageName: node
+  linkType: hard
+
+"@npmcli/run-script@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "@npmcli/run-script@npm:4.1.0"
+  dependencies:
+    "@npmcli/node-gyp": ^2.0.0
+    "@npmcli/promise-spawn": ^3.0.0
+    node-gyp: ^9.0.0
+    read-package-json-fast: ^2.0.3
+  checksum: d96c9c1d1b431d24ea6246a05d7d399abb5cfc479ef7469a16769c8146141a83920d6035e3c329f67dc0284141edcac3696122861146bd0ea41e3731a0e3794f
   languageName: node
   linkType: hard
 
@@ -3779,17 +3779,16 @@ __metadata:
   linkType: hard
 
 "browserslist@npm:^4.20.2, browserslist@npm:^4.20.4":
-  version: 4.20.4
-  resolution: "browserslist@npm:4.20.4"
+  version: 4.21.0
+  resolution: "browserslist@npm:4.21.0"
   dependencies:
-    caniuse-lite: ^1.0.30001349
-    electron-to-chromium: ^1.4.147
-    escalade: ^3.1.1
+    caniuse-lite: ^1.0.30001358
+    electron-to-chromium: ^1.4.164
     node-releases: ^2.0.5
-    picocolors: ^1.0.0
+    update-browserslist-db: ^1.0.0
   bin:
     browserslist: cli.js
-  checksum: 0e56c42da765524e5c31bc9a1f08afaa8d5dba085071137cf21e56dc78d0cf0283764143df4c7d1c0cd18c3187fc9494e1d93fa0255004f0be493251a28635f9
+  checksum: dfad21090d0a4745f55c4c126172bc4d5743a500440791c731773f215a16f201a0b8a114c040fa5788ce2d1a13076601f751e54ee6c5f9de59f0cee3ce9875e3
   languageName: node
   linkType: hard
 
@@ -3993,7 +3992,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001349":
+"caniuse-lite@npm:^1.0.30001358":
   version: 1.0.30001358
   resolution: "caniuse-lite@npm:1.0.30001358"
   checksum: dd8d8e6b1f5e24b97d38bb110c35b96f701f8a303e7066e9d0dc4d0ae99d741e89d56688d4e811e260c5fe573835f2bedd49a6f35f3f43e9fa7e5d154b1fad0e
@@ -4713,10 +4712,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-to-chromium@npm:^1.4.147":
-  version: 1.4.163
-  resolution: "electron-to-chromium@npm:1.4.163"
-  checksum: dbb8bdb6c06d03ae45224dc70e6ce2e377baea6d5d56cac6b0eb5247b775282d795fa03bc167ab2eac935ad9d6f37932b17be8cff9568857aac6eb77e7a44116
+"electron-to-chromium@npm:^1.4.164":
+  version: 1.4.165
+  resolution: "electron-to-chromium@npm:1.4.165"
+  checksum: dbbb2e825df41cd012401e36b3c0ff934607c5ddee59402763b19093ead6ca20a87656474189de01dafb088e8e73792685bd01f50a62e9b86687d717179dca65
   languageName: node
   linkType: hard
 
@@ -7127,7 +7126,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-gyp@npm:latest":
+"node-gyp@npm:^9.0.0, node-gyp@npm:latest":
   version: 9.0.0
   resolution: "node-gyp@npm:9.0.0"
   dependencies:
@@ -7563,13 +7562,13 @@ __metadata:
   linkType: hard
 
 "pacote@npm:^13.0.3, pacote@npm:^13.0.5, pacote@npm:^13.4.1":
-  version: 13.6.0
-  resolution: "pacote@npm:13.6.0"
+  version: 13.6.1
+  resolution: "pacote@npm:13.6.1"
   dependencies:
     "@npmcli/git": ^3.0.0
     "@npmcli/installed-package-contents": ^1.0.7
     "@npmcli/promise-spawn": ^3.0.0
-    "@npmcli/run-script": ^3.0.1
+    "@npmcli/run-script": ^4.1.0
     cacache: ^16.0.0
     chownr: ^2.0.0
     fs-minipass: ^2.1.0
@@ -7589,7 +7588,7 @@ __metadata:
     tar: ^6.1.11
   bin:
     pacote: lib/bin.js
-  checksum: 9e68300fbe35d4f004444f949b88ce3f5a92c44b92b63e57514962b228ef78bb1a92208f8f2a5fc8066e639c76a442e1cf6fad2a1d29efa63f07aece3cccc6f7
+  checksum: 26cebb59aea93d03ad051d82c4f2300beb333ded0f16ba92cfe976b5600157bd1ee034afe1c86406bbe5eacd51d413797939b08aa58adcf73f7680aead9e667f
   languageName: node
   linkType: hard
 
@@ -9286,6 +9285,20 @@ __metadata:
   version: 2.0.1
   resolution: "upath@npm:2.0.1"
   checksum: 2db04f24a03ef72204c7b969d6991abec9e2cb06fb4c13a1fd1c59bc33b46526b16c3325e55930a11ff86a77a8cbbcda8f6399bf914087028c5beae21ecdb33c
+  languageName: node
+  linkType: hard
+
+"update-browserslist-db@npm:^1.0.0":
+  version: 1.0.3
+  resolution: "update-browserslist-db@npm:1.0.3"
+  dependencies:
+    escalade: ^3.1.1
+    picocolors: ^1.0.0
+  peerDependencies:
+    browserslist: ">= 4.21.0"
+  bin:
+    browserslist-lint: cli.js
+  checksum: 7ffbb87405efddd34d69f7d5929b44a3c4c7d72751542eb9e494536cafb0d57290d261af25986584dabc5b76ddd719061b5efb4ddf26af092bf35b095f20ce90
   languageName: node
   linkType: hard
 

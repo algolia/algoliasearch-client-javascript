@@ -5,7 +5,7 @@
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
-  "main": "dist/requester-browser-xhr.cjs.node.js",
+  "main": "dist/requester-browser-xhr.cjs.js",
   "module": "dist/requester-browser-xhr.esm.node.js",
   "types": "dist/index.d.ts",
   "files": [

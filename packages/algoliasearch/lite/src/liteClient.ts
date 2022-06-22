@@ -58,7 +58,7 @@ function getDefaultHosts(appId: string): Host[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function createAlgoliasearchLiteClient({
+export function createLiteClient({
   appId: appIdOption,
   apiKey: apiKeyOption,
   authMode,
@@ -71,7 +71,7 @@ export function createAlgoliasearchLiteClient({
     ...options,
     algoliaAgent: getAlgoliaAgent({
       algoliaAgents,
-      client: 'AlgoliasearchLite',
+      client: 'Lite',
       version: apiClientVersion,
     }),
     baseHeaders: {
@@ -191,6 +191,4 @@ export function createAlgoliasearchLiteClient({
   };
 }
 
-export type AlgoliasearchLiteClient = ReturnType<
-  typeof createAlgoliasearchLiteClient
->;
+export type LiteClient = ReturnType<typeof createLiteClient>;
