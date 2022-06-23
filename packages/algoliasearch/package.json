@@ -42,6 +42,13 @@
     "./lite/index.js": "./dist/lite/lite.umd.js"
   },
   "types": "./index.d.ts",
+  "files": [
+    "dist",
+    "builds",
+    "lite",
+    "index.js",
+    "index.d.ts"
+  ],
   "scripts": {
     "clean": "rm -rf ./dist",
     "test": "jest"

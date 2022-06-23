@@ -2826,14 +2826,14 @@ __metadata:
   linkType: hard
 
 "@npmcli/run-script@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "@npmcli/run-script@npm:4.1.0"
+  version: 4.1.2
+  resolution: "@npmcli/run-script@npm:4.1.2"
   dependencies:
     "@npmcli/node-gyp": ^2.0.0
     "@npmcli/promise-spawn": ^3.0.0
     node-gyp: ^9.0.0
     read-package-json-fast: ^2.0.3
-  checksum: d96c9c1d1b431d24ea6246a05d7d399abb5cfc479ef7469a16769c8146141a83920d6035e3c329f67dc0284141edcac3696122861146bd0ea41e3731a0e3794f
+  checksum: f2f0ced60a4228db194950127c2202665836fc1ce23514303119f362ed2e965989589e8389571b6002449fa27158844df2a4aaaaaadff3e3688c5c37fefa5cea
   languageName: node
   linkType: hard
 
@@ -4713,9 +4713,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.164":
-  version: 1.4.165
-  resolution: "electron-to-chromium@npm:1.4.165"
-  checksum: dbbb2e825df41cd012401e36b3c0ff934607c5ddee59402763b19093ead6ca20a87656474189de01dafb088e8e73792685bd01f50a62e9b86687d717179dca65
+  version: 1.4.167
+  resolution: "electron-to-chromium@npm:1.4.167"
+  checksum: bee148bccefe025fae5c53af8cf121e2e91e94ad4f554539eaed4d0d8a5869c824eef347283b01d55b87bc27b523d26930182f9d25040410541b0398c0b1f8f4
   languageName: node
   linkType: hard
 
@@ -7258,13 +7258,14 @@ __metadata:
   linkType: hard
 
 "npm-package-arg@npm:^9.0.0, npm-package-arg@npm:^9.0.1":
-  version: 9.0.2
-  resolution: "npm-package-arg@npm:9.0.2"
+  version: 9.1.0
+  resolution: "npm-package-arg@npm:9.1.0"
   dependencies:
     hosted-git-info: ^5.0.0
+    proc-log: ^2.0.1
     semver: ^7.3.5
     validate-npm-package-name: ^4.0.0
-  checksum: 07828f330f611214a0aa1e87f402b30b3dc90388671470ad8dc1551f28b0cb886f1f75fa7c37e894a9598640a555c05643642994ecacb9a6c68f655e571968f7
+  checksum: 277c21477731a4f1e31bde36f0db5f5470deb2a008db2aaf1b015d588b23cb225c75f90291ea241235e86682a03de972bbe69fc805c921a786ea9616955990b9
   languageName: node
   linkType: hard
 
@@ -7802,7 +7803,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proc-log@npm:^2.0.0":
+"proc-log@npm:^2.0.0, proc-log@npm:^2.0.1":
   version: 2.0.1
   resolution: "proc-log@npm:2.0.1"
   checksum: f6f23564ff759097db37443e6e2765af84979a703d2c52c1b9df506ee9f87caa101ba49d8fdc115c1a313ec78e37e8134704e9069e6a870f3499d98bb24c436f

@@ -8,6 +8,11 @@
   "main": "dist/client-common.cjs.js",
   "module": "dist/client-common.esm.node.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "index.ts"
+  ],
   "scripts": {
     "clean": "rm -rf dist/",
     "test": "jest"
