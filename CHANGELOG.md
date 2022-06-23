@@ -1,3 +1,7 @@
+## [0.6.1](https://github.com/algolia/algoliasearch-client-javascript/compare/0.6.0...0.6.1)
+
+- 5b70ec1a fix(javascript): publish `algoliasearch` dist (#735)
+
 ## [0.6.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.5.1...0.6.0)
 
 - 7ff32bfe feat(javascript): nest `lite` package in `algoliasearch` (#729)
