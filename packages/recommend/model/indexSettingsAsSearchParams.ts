@@ -5,6 +5,7 @@ import type { IgnorePlurals } from './ignorePlurals';
 import type { QueryType } from './queryType';
 import type { RemoveStopWords } from './removeStopWords';
 import type { RemoveWordsIfNoResults } from './removeWordsIfNoResults';
+import type { RenderingContent } from './renderingContent';
 import type { TypoTolerance } from './typoTolerance';
 
 export type IndexSettingsAsSearchParams = {
@@ -154,8 +155,5 @@ export type IndexSettingsAsSearchParams = {
    * When attribute is ranked above proximity in your ranking formula, proximity is used to select which searchable attribute is matched in the attribute ranking stage.
    */
   attributeCriteriaComputedByMinProximity?: boolean;
-  /**
-   * Content defining how the search interface should be rendered. Can be set via the settings for a default value and can be overridden via rules.
-   */
-  renderingContent?: Record<string, any>;
+  renderingContent?: RenderingContent;
 };
