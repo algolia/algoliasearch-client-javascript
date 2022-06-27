@@ -1,3 +1,5 @@
+import type { CreateRetryablePromiseOptions } from '@experimental-api-clients-automation/client-common';
+
 import type { ApiKey } from './apiKey';
 import type { AssignUserIdParams } from './assignUserIdParams';
 import type { AttributeOrBuiltInOperation } from './attributeOrBuiltInOperation';
@@ -6,7 +8,9 @@ import type { BatchDictionaryEntriesParams } from './batchDictionaryEntriesParam
 import type { BatchWriteParams } from './batchWriteParams';
 import type { BrowseRequest } from './browseRequest';
 import type { DictionaryType } from './dictionaryType';
+import type { GetTaskResponse } from './getTaskResponse';
 import type { IndexSettings } from './indexSettings';
+import type { Key } from './key';
 import type { LogType } from './logType';
 import type { OperationIndexParams } from './operationIndexParams';
 import type { Rule } from './rule';
@@ -719,3 +723,44 @@ export type UpdateApiKeyProps = {
   key: string;
   apiKey: ApiKey;
 };
+
+type WaitForOptions<T> = Omit<
+  CreateRetryablePromiseOptions<T>,
+  'func' | 'validate'
+>;
+
+export type WaitForTaskOptions = WaitForOptions<GetTaskResponse> & {
+  /**
+   * The `indexName` where the operation was performed.
+   */
+  indexName: string;
+  /**
+   * The `taskID` returned by the method response.
+   */
+  taskID: number;
+};
+
+export type WaitForApiKeyOptions = WaitForOptions<Key> & {
+  /**
+   * The API Key.
+   */
+  key: string;
+} & (
+    | {
+        /**
+         * The operation that has been performed, used to compute the stop condition.
+         */
+        operation: 'add' | 'delete';
+        apiKey?: never;
+      }
+    | {
+        /**
+         * The operation that has been performed, used to compute the stop condition.
+         */
+        operation: 'update';
+        /**
+         * The updated fields, used to compute the stop condition.
+         */
+        apiKey: Partial<ApiKey>;
+      }
+  );

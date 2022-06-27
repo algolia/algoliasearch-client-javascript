@@ -12,7 +12,7 @@ import type {
   Request,
   RequestOptions,
   QueryParameters,
-  CreateRetryablePromiseOptions,
+  ApiError,
 } from '@experimental-api-clients-automation/client-common';
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
@@ -21,6 +21,8 @@ import type { BatchParams } from '../model/batchParams';
 import type { BatchResponse } from '../model/batchResponse';
 import type { BrowseResponse } from '../model/browseResponse';
 import type {
+  WaitForTaskOptions,
+  WaitForApiKeyOptions,
   AddOrUpdateObjectProps,
   AssignUserIdProps,
   BatchProps,
@@ -183,34 +185,71 @@ export function createSearchClient({
   return {
     addAlgoliaAgent,
     /**
-     * Wait for a task to complete with `indexName` and `taskID`.
+     * Helper: Wait for a task to complete with `indexName` and `taskID`.
      *
      * @summary Wait for a task to complete.
-     * @param waitForTaskProps - The waitForTaskProps object.
-     * @param waitForTaskProps.indexName - The index in which to perform the request.
-     * @param waitForTaskProps.taskID - The unique identifier of the task to wait for.
+     * @param waitForTaskOptions - The waitForTaskOptions object.
+     * @param waitForTaskOptions.indexName - The `indexName` where the operation was performed.
+     * @param waitForTaskOptions.taskID - The `taskID` returned in the method response.
      */
     waitForTask({
       indexName,
       taskID,
       ...createRetryablePromiseOptions
-    }: Omit<
-      CreateRetryablePromiseOptions<GetTaskResponse>,
-      'func' | 'validate'
-    > & {
-      indexName: string;
-      taskID: number;
-    }): Promise<void> {
-      return new Promise<void>((resolve, reject) => {
-        createRetryablePromise<GetTaskResponse>({
-          ...createRetryablePromiseOptions,
-          func: () => this.getTask({ indexName, taskID }),
-          validate: (response) => response.status === 'published',
-        })
-          .then(() => resolve())
-          .catch(reject);
+    }: WaitForTaskOptions): Promise<GetTaskResponse> {
+      return createRetryablePromise({
+        ...createRetryablePromiseOptions,
+        func: () => this.getTask({ indexName, taskID }),
+        validate: (response) => response.status === 'published',
       });
     },
+
+    /**
+     * Helper: Wait for an API key to be valid, updated or deleted based on a given `operation`.
+     *
+     * @summary Wait for an API key task to be processed.
+     * @param waitForApiKeyOptions - The waitForApiKeyOptions object.
+     * @param waitForApiKeyOptions.operation - The `operation` that was done on a `key`.
+     * @param waitForApiKeyOptions.key - The `key` that has been added, deleted or updated.
+     * @param waitForApiKeyOptions.apiKey - Necessary to know if an `update` operation has been processed, compare fields of the response with it.
+     */
+    waitForApiKey({
+      operation,
+      key,
+      apiKey,
+      ...createRetryablePromiseOptions
+    }: WaitForApiKeyOptions): Promise<ApiError | Key> {
+      if (operation === 'update') {
+        return createRetryablePromise({
+          ...createRetryablePromiseOptions,
+          func: () => this.getApiKey({ key }),
+          validate: (response) => {
+            for (const [entry, values] of Object.entries(apiKey)) {
+              if (Array.isArray(values)) {
+                if (
+                  values.length !== response[entry].length ||
+                  values.some((val, index) => val !== response[entry][index])
+                ) {
+                  return false;
+                }
+              } else if (values !== response[entry]) {
+                return false;
+              }
+            }
+
+            return true;
+          },
+        });
+      }
+
+      return createRetryablePromise({
+        ...createRetryablePromiseOptions,
+        func: () => this.getApiKey({ key }).catch((error) => error),
+        validate: (error: ApiError) =>
+          operation === 'add' ? error.status !== 404 : error.status === 404,
+      });
+    },
+
     /**
      * Add a new API Key with specific permissions/restrictions.
      *
