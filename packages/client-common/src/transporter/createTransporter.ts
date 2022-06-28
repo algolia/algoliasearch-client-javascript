@@ -113,19 +113,19 @@ export function createTransporter({
     };
 
     if (requestOptions?.queryParameters) {
-      for (const [key, value] of Object.entries(
-        requestOptions.queryParameters
-      )) {
+      for (const key of Object.keys(requestOptions.queryParameters)) {
         // We want to keep `undefined` and `null` values,
         // but also avoid stringifying `object`s, as they are
         // handled in the `serializeUrl` step right after.
         if (
-          !value ||
-          Object.prototype.toString.call(value) === '[object Object]'
+          !requestOptions.queryParameters[key] ||
+          Object.prototype.toString.call(
+            requestOptions.queryParameters[key]
+          ) === '[object Object]'
         ) {
-          queryParameters[key] = value;
+          queryParameters[key] = requestOptions.queryParameters[key];
         } else {
-          queryParameters[key] = value.toString();
+          queryParameters[key] = requestOptions.queryParameters[key].toString();
         }
       }
     }

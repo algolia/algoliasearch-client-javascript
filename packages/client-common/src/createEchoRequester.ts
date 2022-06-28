@@ -24,7 +24,7 @@ function getUrlParams({
     host,
     algoliaAgent,
     searchParams:
-      Object.entries(searchParams).length === 0 ? undefined : searchParams,
+      Object.keys(searchParams).length === 0 ? undefined : searchParams,
   };
 }
 
@@ -39,7 +39,7 @@ export function createEchoRequester({
   ): Promise<Response> {
     const { host, searchParams, algoliaAgent } = getUrlParams(getURL(url));
     const originalData =
-      data && Object.entries(data).length > 0 ? data : undefined;
+      data && Object.keys(data).length > 0 ? data : undefined;
 
     return Promise.resolve({
       content: JSON.stringify({
