@@ -1,3 +1,10 @@
+## [0.7.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.6.1...0.7.0)
+
+- b9c4145d fix(javascript): improve bundlesize, add check to CI (#762)
+- 7a858225 fix(specs): correct type for `renderingContent` and `consequenceParams` (#759)
+- 2288d170 feat(javascript): add `waitForApiKey` helper method (#738)
+- d7fcc6d3 fix(javascript): import lite resolution (#737)
+
 ## [0.6.1](https://github.com/algolia/algoliasearch-client-javascript/compare/0.6.0...0.6.1)
 
 - 5b70ec1a fix(javascript): publish `algoliasearch` dist (#735)
