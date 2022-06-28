@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/no-unresolved
-export * from '../dist/lite/lite/builds/node';
+export * from './dist/lite/lite/builds/node';

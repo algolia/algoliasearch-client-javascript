@@ -3,11 +3,6 @@ import type {
   Region as AnalyticsRegion,
 } from '@experimental-api-clients-automation/client-analytics/src/analyticsClient';
 import { createAnalyticsClient } from '@experimental-api-clients-automation/client-analytics/src/analyticsClient';
-import type {
-  CreateClientOptions,
-  Host,
-  Requester,
-} from '@experimental-api-clients-automation/client-common';
 import {
   createMemoryCache,
   createFallbackableCache,
@@ -15,6 +10,11 @@ import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
   DEFAULT_READ_TIMEOUT_BROWSER,
   DEFAULT_WRITE_TIMEOUT_BROWSER,
+} from '@experimental-api-clients-automation/client-common';
+import type {
+  CreateClientOptions,
+  Host,
+  Requester,
 } from '@experimental-api-clients-automation/client-common';
 import type {
   PersonalizationClient,
@@ -30,6 +30,8 @@ import { createXhrRequester } from '@experimental-api-clients-automation/request
 export * from './models';
 
 export const apiClientVersion = searchClientVersion;
+
+export type Algoliasearch = ReturnType<typeof algoliasearch>;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function algoliasearch(
@@ -105,5 +107,3 @@ export function algoliasearch(
     initPersonalization,
   };
 }
-
-export type Algoliasearch = ReturnType<typeof algoliasearch>;

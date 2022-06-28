@@ -7,6 +7,7 @@
   "author": "Algolia",
   "exports": {
     ".": {
+      "types": "./index.d.ts",
       "node": {
         "import": "./dist/algoliasearch.esm.node.js",
         "module": "./dist/algoliasearch.esm.node.js",
@@ -21,6 +22,7 @@
       }
     },
     "./lite": {
+      "types": "./lite.d.ts",
       "node": {
         "import": "./dist/lite/lite.esm.node.js",
         "module": "./dist/lite/lite.esm.node.js",
@@ -39,17 +41,17 @@
   "unpkg": "./dist/algoliasearch.umd.js",
   "browser": {
     "./index.js": "./dist/algoliasearch.umd.js",
-    "./lite.js": "./dist/lite/lite.umd.js",
-    "./lite/index.js": "./dist/lite/lite.umd.js"
+    "./lite.js": "./dist/lite/lite.umd.js"
   },
-  "types": "./index.d.ts",
+  "types": "index.d.ts",
   "files": [
     "dist",
     "builds",
-    "lite",
     "index.js",
+    "index.d.ts",
+    "lite",
     "lite.js",
-    "index.d.ts"
+    "lite.d.ts"
   ],
   "scripts": {
     "clean": "rm -rf ./dist",
