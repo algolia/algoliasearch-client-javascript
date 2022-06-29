@@ -3,6 +3,7 @@ import type { Config } from '@jest/types';
 const baseConfig: Config.InitialOptions = {
   preset: 'ts-jest',
   roots: ['src/__tests__'],
+  moduleDirectories: ['../../node_modules'],
 };
 
 const config: Config.InitialOptions = {
