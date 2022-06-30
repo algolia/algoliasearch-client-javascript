@@ -22,7 +22,7 @@ import type {
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
 
-export const apiClientVersion = '0.7.1';
+export const apiClientVersion = '0.7.2';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

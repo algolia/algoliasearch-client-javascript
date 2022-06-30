@@ -21,7 +21,7 @@ import type {
 } from '../model/clientMethodProps';
 import type { FetchUserProfileResponse } from '../model/fetchUserProfileResponse';
 
-export const apiClientVersion = '0.7.1';
+export const apiClientVersion = '0.7.2';
 
 export const REGIONS = ['ue', 'ew'] as const;
 export type Region = typeof REGIONS[number];
