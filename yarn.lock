@@ -1594,12 +1594,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/algoliasearch@workspace:packages/algoliasearch"
   dependencies:
-    "@experimental-api-clients-automation/client-analytics": 0.7.0
-    "@experimental-api-clients-automation/client-common": 0.7.0
-    "@experimental-api-clients-automation/client-personalization": 0.7.0
-    "@experimental-api-clients-automation/client-search": 0.7.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.0
-    "@experimental-api-clients-automation/requester-node-http": 0.7.0
+    "@experimental-api-clients-automation/client-analytics": 0.7.1
+    "@experimental-api-clients-automation/client-common": 0.7.1
+    "@experimental-api-clients-automation/client-personalization": 0.7.1
+    "@experimental-api-clients-automation/client-search": 0.7.1
+    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.1
+    "@experimental-api-clients-automation/requester-node-http": 0.7.1
     "@types/jest": 28.1.3
     "@types/node": 16.11.41
     jest: 28.1.1
@@ -1612,27 +1612,27 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-abtesting@workspace:packages/client-abtesting"
   dependencies:
-    "@experimental-api-clients-automation/client-common": 0.7.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.0
-    "@experimental-api-clients-automation/requester-node-http": 0.7.0
+    "@experimental-api-clients-automation/client-common": 0.7.1
+    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.1
+    "@experimental-api-clients-automation/requester-node-http": 0.7.1
     "@types/node": 16.11.41
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
 
-"@experimental-api-clients-automation/client-analytics@0.7.0, @experimental-api-clients-automation/client-analytics@workspace:packages/client-analytics":
+"@experimental-api-clients-automation/client-analytics@0.7.1, @experimental-api-clients-automation/client-analytics@workspace:packages/client-analytics":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-analytics@workspace:packages/client-analytics"
   dependencies:
-    "@experimental-api-clients-automation/client-common": 0.7.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.0
-    "@experimental-api-clients-automation/requester-node-http": 0.7.0
+    "@experimental-api-clients-automation/client-common": 0.7.1
+    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.1
+    "@experimental-api-clients-automation/requester-node-http": 0.7.1
     "@types/node": 16.11.41
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
 
-"@experimental-api-clients-automation/client-common@0.7.0, @experimental-api-clients-automation/client-common@workspace:packages/client-common":
+"@experimental-api-clients-automation/client-common@0.7.1, @experimental-api-clients-automation/client-common@workspace:packages/client-common":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-common@workspace:packages/client-common"
   dependencies:
@@ -1649,21 +1649,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-insights@workspace:packages/client-insights"
   dependencies:
-    "@experimental-api-clients-automation/client-common": 0.7.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.0
-    "@experimental-api-clients-automation/requester-node-http": 0.7.0
+    "@experimental-api-clients-automation/client-common": 0.7.1
+    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.1
+    "@experimental-api-clients-automation/requester-node-http": 0.7.1
     "@types/node": 16.11.41
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
 
-"@experimental-api-clients-automation/client-personalization@0.7.0, @experimental-api-clients-automation/client-personalization@workspace:packages/client-personalization":
+"@experimental-api-clients-automation/client-personalization@0.7.1, @experimental-api-clients-automation/client-personalization@workspace:packages/client-personalization":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-personalization@workspace:packages/client-personalization"
   dependencies:
-    "@experimental-api-clients-automation/client-common": 0.7.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.0
-    "@experimental-api-clients-automation/requester-node-http": 0.7.0
+    "@experimental-api-clients-automation/client-common": 0.7.1
+    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.1
+    "@experimental-api-clients-automation/requester-node-http": 0.7.1
     "@types/node": 16.11.41
     typescript: 4.7.4
   languageName: unknown
@@ -1673,9 +1673,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-predict@workspace:packages/client-predict"
   dependencies:
-    "@experimental-api-clients-automation/client-common": 0.7.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.0
-    "@experimental-api-clients-automation/requester-node-http": 0.7.0
+    "@experimental-api-clients-automation/client-common": 0.7.1
+    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.1
+    "@experimental-api-clients-automation/requester-node-http": 0.7.1
     "@types/node": 16.11.41
     typescript: 4.7.4
   languageName: unknown
@@ -1685,21 +1685,21 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-query-suggestions@workspace:packages/client-query-suggestions"
   dependencies:
-    "@experimental-api-clients-automation/client-common": 0.7.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.0
-    "@experimental-api-clients-automation/requester-node-http": 0.7.0
+    "@experimental-api-clients-automation/client-common": 0.7.1
+    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.1
+    "@experimental-api-clients-automation/requester-node-http": 0.7.1
     "@types/node": 16.11.41
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
 
-"@experimental-api-clients-automation/client-search@0.7.0, @experimental-api-clients-automation/client-search@workspace:packages/client-search":
+"@experimental-api-clients-automation/client-search@0.7.1, @experimental-api-clients-automation/client-search@workspace:packages/client-search":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-search@workspace:packages/client-search"
   dependencies:
-    "@experimental-api-clients-automation/client-common": 0.7.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.0
-    "@experimental-api-clients-automation/requester-node-http": 0.7.0
+    "@experimental-api-clients-automation/client-common": 0.7.1
+    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.1
+    "@experimental-api-clients-automation/requester-node-http": 0.7.1
     "@types/node": 16.11.41
     typescript: 4.7.4
   languageName: unknown
@@ -1709,9 +1709,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-sources@workspace:packages/client-sources"
   dependencies:
-    "@experimental-api-clients-automation/client-common": 0.7.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.0
-    "@experimental-api-clients-automation/requester-node-http": 0.7.0
+    "@experimental-api-clients-automation/client-common": 0.7.1
+    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.1
+    "@experimental-api-clients-automation/requester-node-http": 0.7.1
     "@types/node": 16.11.41
     typescript: 4.7.4
   languageName: unknown
@@ -1721,29 +1721,29 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/recommend@workspace:packages/recommend"
   dependencies:
-    "@experimental-api-clients-automation/client-common": 0.7.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.0
-    "@experimental-api-clients-automation/requester-node-http": 0.7.0
+    "@experimental-api-clients-automation/client-common": 0.7.1
+    "@experimental-api-clients-automation/requester-browser-xhr": 0.7.1
+    "@experimental-api-clients-automation/requester-node-http": 0.7.1
     "@types/node": 16.11.41
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
 
-"@experimental-api-clients-automation/requester-browser-xhr@0.7.0, @experimental-api-clients-automation/requester-browser-xhr@workspace:packages/requester-browser-xhr":
+"@experimental-api-clients-automation/requester-browser-xhr@0.7.1, @experimental-api-clients-automation/requester-browser-xhr@workspace:packages/requester-browser-xhr":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/requester-browser-xhr@workspace:packages/requester-browser-xhr"
   dependencies:
-    "@experimental-api-clients-automation/client-common": 0.7.0
+    "@experimental-api-clients-automation/client-common": 0.7.1
     "@types/node": 16.11.41
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
 
-"@experimental-api-clients-automation/requester-node-http@0.7.0, @experimental-api-clients-automation/requester-node-http@workspace:packages/requester-node-http":
+"@experimental-api-clients-automation/requester-node-http@0.7.1, @experimental-api-clients-automation/requester-node-http@workspace:packages/requester-node-http":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/requester-node-http@workspace:packages/requester-node-http"
   dependencies:
-    "@experimental-api-clients-automation/client-common": 0.7.0
+    "@experimental-api-clients-automation/client-common": 0.7.1
     "@types/node": 16.11.41
     typescript: 4.7.4
   languageName: unknown

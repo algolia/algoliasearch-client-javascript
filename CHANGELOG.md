@@ -1,3 +1,7 @@
+## [0.7.1](https://github.com/algolia/algoliasearch-client-javascript/compare/0.7.0...0.7.1)
+
+- 77c80e20 fix(javascript): add class-proposal plugin for `client-common` (#765)
+
 ## [0.7.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.6.1...0.7.0)
 
 - b9c4145d fix(javascript): improve bundlesize, add check to CI (#762)
