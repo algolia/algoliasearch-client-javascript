@@ -1,12 +1,6 @@
-import type { Edit } from './edit';
+import type { ConsequenceQueryObject } from './consequenceQueryObject';
 
-export type ConsequenceQuery = {
-  /**
-   * Words to remove.
-   */
-  remove?: string[];
-  /**
-   * Edits to apply.
-   */
-  edits?: Edit[];
-};
+/**
+ * When providing a string, it replaces the entire query string. When providing an object, it describes incremental edits to be made to the query string (but you can\'t do both).
+ */
+export type ConsequenceQuery = ConsequenceQueryObject | string;

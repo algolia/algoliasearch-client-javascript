@@ -84,6 +84,7 @@ import type { GetObjectsParams } from '../model/getObjectsParams';
 import type { GetObjectsResponse } from '../model/getObjectsResponse';
 import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
+import type { HasPendingMappingsResponse } from '../model/hasPendingMappingsResponse';
 import type { IndexSettings } from '../model/indexSettings';
 import type { Key } from '../model/key';
 import type { Languages } from '../model/languages';
@@ -1519,13 +1520,13 @@ export function createSearchClient({
      *
      * @summary Get migration status.
      * @param hasPendingMappings - The hasPendingMappings object.
-     * @param hasPendingMappings.getClusters - Whether to get clusters or not.
+     * @param hasPendingMappings.getClusters - If the clusters pending mapping state should be on the response.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     hasPendingMappings(
       { getClusters }: HasPendingMappingsProps,
       requestOptions?: RequestOptions
-    ): Promise<CreatedAtResponse> {
+    ): Promise<HasPendingMappingsResponse> {
       const requestPath = '/1/clusters/mapping/pending';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -2046,11 +2047,6 @@ export function createSearchClient({
       if (!rule.objectID) {
         throw new Error(
           'Parameter `rule.objectID` is required when calling `saveRule`.'
-        );
-      }
-      if (!rule.consequence) {
-        throw new Error(
-          'Parameter `rule.consequence` is required when calling `saveRule`.'
         );
       }
 

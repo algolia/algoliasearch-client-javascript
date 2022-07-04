@@ -12,7 +12,7 @@ export type BaseIndexSettings = {
    */
   disableTypoToleranceOnWords?: string[];
   /**
-   * Specify on which attributes to apply transliteration.
+   * Specify on which attributes in your index Algolia should apply Japanese transliteration to make words indexed in Katakana or Kanji searchable in Hiragana.
    */
   attributesToTransliterate?: string[];
   /**
@@ -51,4 +51,8 @@ export type BaseIndexSettings = {
    * Lets you store custom data in your indices.
    */
   userData?: Record<string, any>;
+  /**
+   * Overrides Algolia\'s default normalization.
+   */
+  customNormalization?: Record<string, Record<string, string>>;
 };

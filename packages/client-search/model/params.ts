@@ -1,12 +1,12 @@
 import type { AutomaticFacetFilters } from './automaticFacetFilters';
+import type { ConsequenceQuery } from './consequenceQuery';
 import type { RenderingContent } from './renderingContent';
-import type { SchemasQuery } from './schemasQuery';
 
 /**
  * Additional search parameters. Any valid search parameter is allowed.
  */
 export type Params = {
-  query?: SchemasQuery;
+  query?: ConsequenceQuery;
   automaticFacetFilters?: AutomaticFacetFilters;
   automaticOptionalFacetFilters?: AutomaticFacetFilters;
   renderingContent?: RenderingContent;

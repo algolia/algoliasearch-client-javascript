@@ -14,7 +14,7 @@ export type Rule = {
    * A list of conditions that should apply to activate a Rule. You can use up to 25 conditions per Rule.
    */
   conditions?: Condition[];
-  consequence: Consequence;
+  consequence?: Consequence;
   /**
    * This field is intended for Rule management purposes, in particular to ease searching for Rules and presenting them to human readers. It\'s not interpreted by the API.
    */

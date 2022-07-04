@@ -372,7 +372,7 @@ export type GetUserIdProps = {
  */
 export type HasPendingMappingsProps = {
   /**
-   * Whether to get clusters or not.
+   * If the clusters pending mapping state should be on the response.
    */
   getClusters?: boolean;
 };
