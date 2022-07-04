@@ -1,9 +1,3 @@
-import type { MatchLevel } from './matchLevel';
+import type { SnippetResultOption } from './snippetResultOption';
 
-export type SnippetResult = {
-  /**
-   * Markup text with occurrences highlighted.
-   */
-  value?: string;
-  matchLevel?: MatchLevel;
-};
+export type SnippetResult = SnippetResultOption | SnippetResultOption[];
