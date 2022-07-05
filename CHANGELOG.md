@@ -1,3 +1,9 @@
+## [0.8.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.7.2...0.8.0)
+
+- 23a72c39 fix(specs): correct type for highlightResult and snippetResult (#783)
+- a11e84da fix(specs): fix missing params and types (#772)
+- bc14a8c5 feat(specs): Add tags to the settings and search params (#768)
+
 ## [0.7.2](https://github.com/algolia/algoliasearch-client-javascript/compare/0.7.0...0.7.2)
 
 - 77c80e20 fix(javascript): add class-proposal plugin for `client-common` (#765)
