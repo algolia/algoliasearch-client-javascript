@@ -1,4 +1,5 @@
 import type { FacetsStats } from './facetsStats';
+import type { RenderingContent } from './renderingContent';
 
 export type BaseSearchResponse = {
   /**
@@ -97,4 +98,5 @@ export type BaseSearchResponse = {
    * Lets you store custom data in your indices.
    */
   userData?: Record<string, any>;
+  renderingContent?: RenderingContent;
 };
