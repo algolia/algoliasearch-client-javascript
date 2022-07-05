@@ -58,6 +58,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@experimental-api-clients-automation/client-abtesting": "0.8.0",
     "@experimental-api-clients-automation/client-analytics": "0.8.0",
     "@experimental-api-clients-automation/client-common": "0.8.0",
     "@experimental-api-clients-automation/client-personalization": "0.8.0",

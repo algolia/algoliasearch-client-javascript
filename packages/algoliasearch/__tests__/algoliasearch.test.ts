@@ -39,12 +39,100 @@ describe('api', () => {
     expect(client.search).not.toBeUndefined();
   });
 
-  it('provides an init method for the analytics client', () => {
-    expect(client.initAnalytics).not.toBeUndefined();
-  });
+  describe('init clients', () => {
+    it('provides an init method for the analytics client', () => {
+      expect(client.initAnalytics).not.toBeUndefined();
+    });
 
-  it('provides an init method for the personalization client', () => {
-    expect(client.initPersonalization).not.toBeUndefined();
+    it('provides an init method for the abtesting client', () => {
+      expect(client.initAbtesting).not.toBeUndefined();
+    });
+
+    it('provides an init method for the personalization client', () => {
+      expect(client.initPersonalization).not.toBeUndefined();
+    });
+
+    it('default `init` clients to the root `algoliasearch` credentials', async () => {
+      const abtestingClient = client.initAbtesting();
+      const analyticsClient = client.initAnalytics();
+      const personalizationClient = client.initPersonalization({
+        region: 'eu',
+      });
+
+      const res1 = (await abtestingClient.get({
+        path: 'abtestingClient',
+      })) as unknown as EchoResponse;
+      const res2 = (await analyticsClient.get({
+        path: 'analyticsClient',
+      })) as unknown as EchoResponse;
+      const res3 = (await personalizationClient.get({
+        path: 'personalizationClient',
+      })) as unknown as EchoResponse;
+
+      expect(res1.headers).toEqual(
+        expect.objectContaining({
+          'x-algolia-application-id': 'APP_ID',
+          'x-algolia-api-key': 'API_KEY',
+        })
+      );
+      expect(res2.headers).toEqual(
+        expect.objectContaining({
+          'x-algolia-application-id': 'APP_ID',
+          'x-algolia-api-key': 'API_KEY',
+        })
+      );
+      expect(res3.headers).toEqual(
+        expect.objectContaining({
+          'x-algolia-application-id': 'APP_ID',
+          'x-algolia-api-key': 'API_KEY',
+        })
+      );
+    });
+
+    it('`init` clients accept different credentials', async () => {
+      const abtestingClient = client.initAbtesting({
+        appId: 'appId1',
+        apiKey: 'apiKey1',
+      });
+      const analyticsClient = client.initAnalytics({
+        appId: 'appId2',
+        apiKey: 'apiKey2',
+      });
+      const personalizationClient = client.initPersonalization({
+        appId: 'appId3',
+        apiKey: 'apiKey3',
+        region: 'eu',
+      });
+
+      const res1 = (await abtestingClient.get({
+        path: 'abtestingClient',
+      })) as unknown as EchoResponse;
+      const res2 = (await analyticsClient.get({
+        path: 'analyticsClient',
+      })) as unknown as EchoResponse;
+      const res3 = (await personalizationClient.get({
+        path: 'personalizationClient',
+      })) as unknown as EchoResponse;
+
+      expect(res1.headers).toEqual(
+        expect.objectContaining({
+          'x-algolia-application-id': 'appId1',
+          'x-algolia-api-key': 'apiKey1',
+        })
+      );
+      expect(res2.headers).toEqual(
+        expect.objectContaining({
+          'x-algolia-application-id': 'appId2',
+          'x-algolia-api-key': 'apiKey2',
+        })
+      );
+      expect(res3.headers).toEqual(
+        expect.objectContaining({
+          'x-algolia-application-id': 'appId3',
+          'x-algolia-api-key': 'apiKey3',
+        })
+      );
+    });
   });
 });
 

@@ -1316,6 +1316,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/algoliasearch@workspace:packages/algoliasearch"
   dependencies:
+    "@experimental-api-clients-automation/client-abtesting": 0.8.0
     "@experimental-api-clients-automation/client-analytics": 0.8.0
     "@experimental-api-clients-automation/client-common": 0.8.0
     "@experimental-api-clients-automation/client-personalization": 0.8.0
@@ -1330,7 +1331,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@experimental-api-clients-automation/client-abtesting@workspace:packages/client-abtesting":
+"@experimental-api-clients-automation/client-abtesting@0.8.0, @experimental-api-clients-automation/client-abtesting@workspace:packages/client-abtesting":
   version: 0.0.0-use.local
   resolution: "@experimental-api-clients-automation/client-abtesting@workspace:packages/client-abtesting"
   dependencies:

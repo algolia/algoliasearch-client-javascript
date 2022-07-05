@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-      "maxSize": "7.85KB"
+      "maxSize": "8.40KB"
     },
     {
       "path": "packages/algoliasearch/dist/lite/lite.umd.js",

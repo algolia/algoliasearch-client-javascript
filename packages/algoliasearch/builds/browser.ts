@@ -1,8 +1,19 @@
 import type {
-  AnalyticsClient,
+  Region as AbtestingRegion,
+  AbtestingClient,
+} from '@experimental-api-clients-automation/client-abtesting/src/abtestingClient';
+import {
+  createAbtestingClient,
+  REGIONS as abtestingRegions,
+} from '@experimental-api-clients-automation/client-abtesting/src/abtestingClient';
+import type {
   Region as AnalyticsRegion,
+  AnalyticsClient,
 } from '@experimental-api-clients-automation/client-analytics/src/analyticsClient';
-import { createAnalyticsClient } from '@experimental-api-clients-automation/client-analytics/src/analyticsClient';
+import {
+  createAnalyticsClient,
+  REGIONS as analyticsRegions,
+} from '@experimental-api-clients-automation/client-analytics/src/analyticsClient';
 import {
   createMemoryCache,
   createFallbackableCache,
@@ -11,21 +22,26 @@ import {
   DEFAULT_READ_TIMEOUT_BROWSER,
   DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@experimental-api-clients-automation/client-common';
-import type {
-  CreateClientOptions,
-  Host,
-  Requester,
-} from '@experimental-api-clients-automation/client-common';
-import type {
-  PersonalizationClient,
-  Region as PersonalizationRegion,
+import type { CreateClientOptions } from '@experimental-api-clients-automation/client-common';
+import {
+  createPersonalizationClient,
+  REGIONS as personalizationRegions,
 } from '@experimental-api-clients-automation/client-personalization/src/personalizationClient';
-import { createPersonalizationClient } from '@experimental-api-clients-automation/client-personalization/src/personalizationClient';
+import type {
+  Region as PersonalizationRegion,
+  PersonalizationClient,
+} from '@experimental-api-clients-automation/client-personalization/src/personalizationClient';
 import {
   createSearchClient,
   apiClientVersion as searchClientVersion,
 } from '@experimental-api-clients-automation/client-search/src/searchClient';
 import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
+
+import type {
+  CommonInitOptions,
+  InitRegion,
+  CommonClientOptions,
+} from './models';
 
 export * from './models';
 
@@ -37,7 +53,7 @@ export type Algoliasearch = ReturnType<typeof algoliasearch>;
 export function algoliasearch(
   appId: string,
   apiKey: string,
-  options?: { requester?: Requester; hosts?: Host[] }
+  options?: CommonClientOptions
 ) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
@@ -68,36 +84,78 @@ export function algoliasearch(
   };
 
   function initAnalytics(
-    analyticsAppId: string,
-    analyticsApiKey: string,
-    region?: AnalyticsRegion,
-    analyticsOptions?: { requester?: Requester; hosts?: Host[] }
+    initOptions: CommonInitOptions & InitRegion<AnalyticsRegion> = {}
   ): AnalyticsClient {
+    if (
+      initOptions.region &&
+      (typeof initOptions.region !== 'string' ||
+        !analyticsRegions.includes(initOptions.region))
+    ) {
+      throw new Error(
+        `\`region\` must be one of the following: ${analyticsRegions.join(
+          ', '
+        )}`
+      );
+    }
+
     return createAnalyticsClient({
-      appId: analyticsAppId,
-      apiKey: analyticsApiKey,
-      region,
-      ...analyticsOptions,
+      ...initOptions.options,
       ...commonOptions,
+      appId: initOptions.appId ?? appId,
+      apiKey: initOptions.apiKey ?? apiKey,
+      region: initOptions.region,
+    });
+  }
+
+  function initAbtesting(
+    initOptions: CommonInitOptions & InitRegion<AbtestingRegion> = {}
+  ): AbtestingClient {
+    if (
+      initOptions.region &&
+      (typeof initOptions.region !== 'string' ||
+        !abtestingRegions.includes(initOptions.region))
+    ) {
+      throw new Error(
+        `\`region\` must be one of the following: ${abtestingRegions.join(
+          ', '
+        )}`
+      );
+    }
+
+    return createAbtestingClient({
+      ...initOptions.options,
+      ...commonOptions,
+      appId: initOptions.appId ?? appId,
+      apiKey: initOptions.apiKey ?? apiKey,
+      region: initOptions.region,
     });
   }
 
   function initPersonalization(
-    personalizationAppId: string,
-    personalizationApiKey: string,
-    region: PersonalizationRegion,
-    personalizationOptions?: { requester?: Requester; hosts?: Host[] }
+    initOptions: CommonInitOptions & Required<InitRegion<PersonalizationRegion>>
   ): PersonalizationClient {
-    if (!region) {
+    if (!initOptions.region) {
       throw new Error('`region` is missing.');
     }
 
+    if (
+      initOptions.region &&
+      (typeof initOptions.region !== 'string' ||
+        !personalizationRegions.includes(initOptions.region))
+    ) {
+      throw new Error(
+        `\`region\` must be one of the following: ${personalizationRegions.join(
+          ', '
+        )}`
+      );
+    }
+
     return createPersonalizationClient({
-      appId: personalizationAppId,
-      apiKey: personalizationApiKey,
-      region,
-      ...personalizationOptions,
+      ...initOptions.options,
       ...commonOptions,
+      appId: initOptions.appId ?? appId,
+      apiKey: initOptions.apiKey ?? apiKey,
+      region: initOptions.region,
     });
   }
 
@@ -105,5 +163,6 @@ export function algoliasearch(
     ...createSearchClient({ appId, apiKey, ...commonOptions }),
     initAnalytics,
     initPersonalization,
+    initAbtesting,
   };
 }
