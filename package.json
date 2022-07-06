@@ -50,6 +50,7 @@
     "@wdio/static-server-service": "5.16.10",
     "barrelsby": "2.2.0",
     "bundlesize": "0.18.0",
+    "cross-fetch": "3.1.5",
     "dotenv": "8.2.0",
     "eslint": "6.8.0",
     "eslint-config-algolia": "15.0.0",

@@ -52,7 +52,7 @@ packagesConfig.push({
   external: ['crypto'],
 });
 
-['cache-browser-local-storage', 'requester-browser-xhr'].forEach(packageId => {
+['cache-browser-local-storage', 'requester-browser-xhr', 'requester-fetch'].forEach(packageId => {
   packagesConfig.push({
     output: packageId,
     package: packageId,
