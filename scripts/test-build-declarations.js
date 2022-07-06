@@ -2,7 +2,7 @@
 const glob = require('glob');
 const execa = require('execa');
 
-const NUMBER_OF_DECLARATIONS = 21;
+const NUMBER_OF_DECLARATIONS = 22;
 
 (async () => {
   const declarations = await new Promise(resolve => {
