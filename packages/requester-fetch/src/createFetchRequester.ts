@@ -1,12 +1,7 @@
 import { Request, Requester, Response as AlgoliaResponse } from '@algolia/requester-common';
 
 function isAbortError(error: unknown): boolean {
-  return (
-    // browser fetch
-    (error instanceof DOMException && error.name === 'AbortError') ||
-    // node-fetch or undici
-    (error instanceof Error && error.name === 'AbortError')
-  );
+  return error instanceof Error && error.name === 'AbortError';
 }
 
 function getErrorMessage(error: unknown, abortContent: string): string {
