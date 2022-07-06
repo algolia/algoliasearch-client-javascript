@@ -2,7 +2,7 @@ import {
   createAuth,
   createTransporter,
   getAlgoliaAgent,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -10,7 +10,7 @@ import type {
   Request,
   RequestOptions,
   QueryParameters,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 
 import type {
   DelProps,
@@ -21,7 +21,7 @@ import type {
 import type { PostIngestUrlResponse } from '../model/postIngestUrlResponse';
 import type { PostURLJob } from '../model/postURLJob';
 
-export const apiClientVersion = '0.8.0';
+export const apiClientVersion = '1.0.0-alpha.0';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = typeof REGIONS[number];

@@ -2,7 +2,7 @@ import {
   createAuth,
   createTransporter,
   getAlgoliaAgent,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -10,7 +10,7 @@ import type {
   Request,
   RequestOptions,
   QueryParameters,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 
 import type {
   DelProps,
@@ -29,7 +29,7 @@ import type { QuerySuggestionsIndexWithIndexParam } from '../model/querySuggesti
 import type { Status } from '../model/status';
 import type { SuccessResponse } from '../model/successResponse';
 
-export const apiClientVersion = '0.8.0';
+export const apiClientVersion = '5.0.0-alpha.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = typeof REGIONS[number];

@@ -1,12 +1,12 @@
-import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
+import type { InitClientOptions } from '@algolia/client-common';
 import {
   DEFAULT_CONNECT_TIMEOUT_NODE,
   DEFAULT_READ_TIMEOUT_NODE,
   DEFAULT_WRITE_TIMEOUT_NODE,
   createMemoryCache,
   createNullCache,
-} from '@experimental-api-clients-automation/client-common';
-import { createHttpRequester } from '@experimental-api-clients-automation/requester-node-http';
+} from '@algolia/client-common';
+import { createHttpRequester } from '@algolia/requester-node-http';
 
 import type {
   QuerySuggestionsClient,

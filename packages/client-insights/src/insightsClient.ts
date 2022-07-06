@@ -2,7 +2,7 @@ import {
   createAuth,
   createTransporter,
   getAlgoliaAgent,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -10,7 +10,7 @@ import type {
   Request,
   RequestOptions,
   QueryParameters,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 
 import type {
   DelProps,
@@ -21,7 +21,7 @@ import type {
 import type { InsightEvents } from '../model/insightEvents';
 import type { PushEventsResponse } from '../model/pushEventsResponse';
 
-export const apiClientVersion = '0.8.0';
+export const apiClientVersion = '5.0.0-alpha.0';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = typeof REGIONS[number];

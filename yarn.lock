@@ -5,6 +5,147 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@algolia/client-abtesting@5.0.0-alpha.0, @algolia/client-abtesting@workspace:packages/client-abtesting":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-abtesting@workspace:packages/client-abtesting"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@algolia/requester-browser-xhr": 5.0.0-alpha.0
+    "@algolia/requester-node-http": 5.0.0-alpha.0
+    "@types/node": 16.11.43
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/client-analytics@5.0.0-alpha.0, @algolia/client-analytics@workspace:packages/client-analytics":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-analytics@workspace:packages/client-analytics"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@algolia/requester-browser-xhr": 5.0.0-alpha.0
+    "@algolia/requester-node-http": 5.0.0-alpha.0
+    "@types/node": 16.11.43
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/client-common@5.0.0-alpha.0, @algolia/client-common@workspace:packages/client-common":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-common@workspace:packages/client-common"
+  dependencies:
+    "@types/jest": 28.1.4
+    "@types/node": 16.11.43
+    jest: 28.1.2
+    jest-environment-jsdom: 28.1.2
+    ts-jest: 28.0.5
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/client-insights@workspace:packages/client-insights":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-insights@workspace:packages/client-insights"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@algolia/requester-browser-xhr": 5.0.0-alpha.0
+    "@algolia/requester-node-http": 5.0.0-alpha.0
+    "@types/node": 16.11.43
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/client-personalization@5.0.0-alpha.0, @algolia/client-personalization@workspace:packages/client-personalization":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-personalization@workspace:packages/client-personalization"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@algolia/requester-browser-xhr": 5.0.0-alpha.0
+    "@algolia/requester-node-http": 5.0.0-alpha.0
+    "@types/node": 16.11.43
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/client-predict@workspace:packages/client-predict":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-predict@workspace:packages/client-predict"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@algolia/requester-browser-xhr": 5.0.0-alpha.0
+    "@algolia/requester-node-http": 5.0.0-alpha.0
+    "@types/node": 16.11.43
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/client-query-suggestions@workspace:packages/client-query-suggestions":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-query-suggestions@workspace:packages/client-query-suggestions"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@algolia/requester-browser-xhr": 5.0.0-alpha.0
+    "@algolia/requester-node-http": 5.0.0-alpha.0
+    "@types/node": 16.11.43
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/client-search@5.0.0-alpha.0, @algolia/client-search@workspace:packages/client-search":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-search@workspace:packages/client-search"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@algolia/requester-browser-xhr": 5.0.0-alpha.0
+    "@algolia/requester-node-http": 5.0.0-alpha.0
+    "@types/node": 16.11.43
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/client-sources@workspace:packages/client-sources":
+  version: 0.0.0-use.local
+  resolution: "@algolia/client-sources@workspace:packages/client-sources"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@algolia/requester-browser-xhr": 5.0.0-alpha.0
+    "@algolia/requester-node-http": 5.0.0-alpha.0
+    "@types/node": 16.11.43
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/recommend@workspace:packages/recommend":
+  version: 0.0.0-use.local
+  resolution: "@algolia/recommend@workspace:packages/recommend"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@algolia/requester-browser-xhr": 5.0.0-alpha.0
+    "@algolia/requester-node-http": 5.0.0-alpha.0
+    "@types/node": 16.11.43
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/requester-browser-xhr@5.0.0-alpha.0, @algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr":
+  version: 0.0.0-use.local
+  resolution: "@algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@types/node": 16.11.43
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@algolia/requester-node-http@5.0.0-alpha.0, @algolia/requester-node-http@workspace:packages/requester-node-http":
+  version: 0.0.0-use.local
+  resolution: "@algolia/requester-node-http@workspace:packages/requester-node-http"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@types/node": 16.11.43
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
 "@ampproject/remapping@npm:^2.1.0":
   version: 2.2.0
   resolution: "@ampproject/remapping@npm:2.2.0"
@@ -1311,166 +1452,6 @@ __metadata:
   checksum: 5718f267085ed8edb3e7ef210137241775e607ee18b77d95aa5bd7514f47f5019aa2d82d96b3bf342ef7aa890a346fa1044532ff7cc3009e7d24fce3ce6200fa
   languageName: node
   linkType: hard
-
-"@experimental-api-clients-automation/algoliasearch@workspace:packages/algoliasearch":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/algoliasearch@workspace:packages/algoliasearch"
-  dependencies:
-    "@experimental-api-clients-automation/client-abtesting": 0.8.0
-    "@experimental-api-clients-automation/client-analytics": 0.8.0
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@experimental-api-clients-automation/client-personalization": 0.8.0
-    "@experimental-api-clients-automation/client-search": 0.8.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.8.0
-    "@experimental-api-clients-automation/requester-node-http": 0.8.0
-    "@types/jest": 28.1.4
-    "@types/node": 16.11.43
-    jest: 28.1.2
-    ts-jest: 28.0.5
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/client-abtesting@0.8.0, @experimental-api-clients-automation/client-abtesting@workspace:packages/client-abtesting":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/client-abtesting@workspace:packages/client-abtesting"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.8.0
-    "@experimental-api-clients-automation/requester-node-http": 0.8.0
-    "@types/node": 16.11.43
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/client-analytics@0.8.0, @experimental-api-clients-automation/client-analytics@workspace:packages/client-analytics":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/client-analytics@workspace:packages/client-analytics"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.8.0
-    "@experimental-api-clients-automation/requester-node-http": 0.8.0
-    "@types/node": 16.11.43
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/client-common@0.8.0, @experimental-api-clients-automation/client-common@workspace:packages/client-common":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/client-common@workspace:packages/client-common"
-  dependencies:
-    "@types/jest": 28.1.4
-    "@types/node": 16.11.43
-    jest: 28.1.2
-    jest-environment-jsdom: 28.1.2
-    ts-jest: 28.0.5
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/client-insights@workspace:packages/client-insights":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/client-insights@workspace:packages/client-insights"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.8.0
-    "@experimental-api-clients-automation/requester-node-http": 0.8.0
-    "@types/node": 16.11.43
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/client-personalization@0.8.0, @experimental-api-clients-automation/client-personalization@workspace:packages/client-personalization":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/client-personalization@workspace:packages/client-personalization"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.8.0
-    "@experimental-api-clients-automation/requester-node-http": 0.8.0
-    "@types/node": 16.11.43
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/client-predict@workspace:packages/client-predict":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/client-predict@workspace:packages/client-predict"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.8.0
-    "@experimental-api-clients-automation/requester-node-http": 0.8.0
-    "@types/node": 16.11.43
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/client-query-suggestions@workspace:packages/client-query-suggestions":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/client-query-suggestions@workspace:packages/client-query-suggestions"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.8.0
-    "@experimental-api-clients-automation/requester-node-http": 0.8.0
-    "@types/node": 16.11.43
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/client-search@0.8.0, @experimental-api-clients-automation/client-search@workspace:packages/client-search":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/client-search@workspace:packages/client-search"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.8.0
-    "@experimental-api-clients-automation/requester-node-http": 0.8.0
-    "@types/node": 16.11.43
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/client-sources@workspace:packages/client-sources":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/client-sources@workspace:packages/client-sources"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.8.0
-    "@experimental-api-clients-automation/requester-node-http": 0.8.0
-    "@types/node": 16.11.43
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/recommend@workspace:packages/recommend":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/recommend@workspace:packages/recommend"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@experimental-api-clients-automation/requester-browser-xhr": 0.8.0
-    "@experimental-api-clients-automation/requester-node-http": 0.8.0
-    "@types/node": 16.11.43
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/requester-browser-xhr@0.8.0, @experimental-api-clients-automation/requester-browser-xhr@workspace:packages/requester-browser-xhr":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/requester-browser-xhr@workspace:packages/requester-browser-xhr"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@types/node": 16.11.43
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
-
-"@experimental-api-clients-automation/requester-node-http@0.8.0, @experimental-api-clients-automation/requester-node-http@workspace:packages/requester-node-http":
-  version: 0.0.0-use.local
-  resolution: "@experimental-api-clients-automation/requester-node-http@workspace:packages/requester-node-http"
-  dependencies:
-    "@experimental-api-clients-automation/client-common": 0.8.0
-    "@types/node": 16.11.43
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
 
 "@gar/promisify@npm:^1.0.1, @gar/promisify@npm:^1.1.3":
   version: 1.1.3
@@ -3459,6 +3440,25 @@ __metadata:
     rollup-plugin-typescript2: 0.32.1
     semver: 7.3.7
     ts-node: 10.8.2
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"algoliasearch@workspace:packages/algoliasearch":
+  version: 0.0.0-use.local
+  resolution: "algoliasearch@workspace:packages/algoliasearch"
+  dependencies:
+    "@algolia/client-abtesting": 5.0.0-alpha.0
+    "@algolia/client-analytics": 5.0.0-alpha.0
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@algolia/client-personalization": 5.0.0-alpha.0
+    "@algolia/client-search": 5.0.0-alpha.0
+    "@algolia/requester-browser-xhr": 5.0.0-alpha.0
+    "@algolia/requester-node-http": 5.0.0-alpha.0
+    "@types/jest": 28.1.4
+    "@types/node": 16.11.43
+    jest: 28.1.2
+    ts-jest: 28.0.5
     typescript: 4.7.4
   languageName: unknown
   linkType: soft

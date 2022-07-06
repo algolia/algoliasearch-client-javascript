@@ -1,19 +1,19 @@
 import type {
   Region as AbtestingRegion,
   AbtestingClient,
-} from '@experimental-api-clients-automation/client-abtesting/src/abtestingClient';
+} from '@algolia/client-abtesting/src/abtestingClient';
 import {
   createAbtestingClient,
   REGIONS as abtestingRegions,
-} from '@experimental-api-clients-automation/client-abtesting/src/abtestingClient';
+} from '@algolia/client-abtesting/src/abtestingClient';
 import type {
   Region as AnalyticsRegion,
   AnalyticsClient,
-} from '@experimental-api-clients-automation/client-analytics/src/analyticsClient';
+} from '@algolia/client-analytics/src/analyticsClient';
 import {
   createAnalyticsClient,
   REGIONS as analyticsRegions,
-} from '@experimental-api-clients-automation/client-analytics/src/analyticsClient';
+} from '@algolia/client-analytics/src/analyticsClient';
 import {
   createMemoryCache,
   createFallbackableCache,
@@ -21,21 +21,21 @@ import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
   DEFAULT_READ_TIMEOUT_BROWSER,
   DEFAULT_WRITE_TIMEOUT_BROWSER,
-} from '@experimental-api-clients-automation/client-common';
-import type { CreateClientOptions } from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
+import type { CreateClientOptions } from '@algolia/client-common';
 import {
   createPersonalizationClient,
   REGIONS as personalizationRegions,
-} from '@experimental-api-clients-automation/client-personalization/src/personalizationClient';
+} from '@algolia/client-personalization/src/personalizationClient';
 import type {
   Region as PersonalizationRegion,
   PersonalizationClient,
-} from '@experimental-api-clients-automation/client-personalization/src/personalizationClient';
+} from '@algolia/client-personalization/src/personalizationClient';
 import {
   createSearchClient,
   apiClientVersion as searchClientVersion,
-} from '@experimental-api-clients-automation/client-search/src/searchClient';
-import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
+} from '@algolia/client-search/src/searchClient';
+import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import type {
   CommonInitOptions,

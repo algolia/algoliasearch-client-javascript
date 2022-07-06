@@ -1,19 +1,16 @@
-import type {
-  Host,
-  Requester,
-} from '@experimental-api-clients-automation/client-common';
+import type { Host, Requester } from '@algolia/client-common';
 import {
   ErrorBase,
   PutProps,
   PostProps,
   DelProps,
   GetProps,
-} from '@experimental-api-clients-automation/client-search/model';
+} from '@algolia/client-search/model';
 
-export * from '@experimental-api-clients-automation/client-search/model';
-export * from '@experimental-api-clients-automation/client-personalization/model';
-export * from '@experimental-api-clients-automation/client-analytics/model';
-export * from '@experimental-api-clients-automation/client-abtesting/model';
+export * from '@algolia/client-search/model';
+export * from '@algolia/client-personalization/model';
+export * from '@algolia/client-analytics/model';
+export * from '@algolia/client-abtesting/model';
 
 export { ErrorBase, PutProps, PostProps, DelProps, GetProps };
 

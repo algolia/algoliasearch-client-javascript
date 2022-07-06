@@ -1,4 +1,4 @@
-import type { InitClientOptions } from '@experimental-api-clients-automation/client-common';
+import type { InitClientOptions } from '@algolia/client-common';
 import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
   DEFAULT_READ_TIMEOUT_BROWSER,
@@ -6,8 +6,8 @@ import {
   createMemoryCache,
   createFallbackableCache,
   createBrowserLocalStorageCache,
-} from '@experimental-api-clients-automation/client-common';
-import { createXhrRequester } from '@experimental-api-clients-automation/requester-browser-xhr';
+} from '@algolia/client-common';
+import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import type { AbtestingClient, Region } from '../src/abtestingClient';
 import {

@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 // Org where the packages are pushed
-const NPM_ORG = '@experimental-api-clients-automation/';
+const NPM_ORG = '@algolia/';
 
 // Output formats
 const BROWSER_FORMATS = ['esm-browser', 'umd'];

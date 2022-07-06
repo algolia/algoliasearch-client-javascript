@@ -1,5 +1,5 @@
-import type { EchoResponse } from '@experimental-api-clients-automation/client-common';
-import { echoRequester } from '@experimental-api-clients-automation/requester-node-http';
+import type { EchoResponse } from '@algolia/client-common';
+import { echoRequester } from '@algolia/requester-node-http';
 
 import { algoliasearch, apiClientVersion } from '../builds/node';
 import { liteClient } from '../lite/builds/node';

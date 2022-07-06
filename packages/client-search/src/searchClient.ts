@@ -4,7 +4,7 @@ import {
   getAlgoliaAgent,
   shuffle,
   createRetryablePromise,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -13,7 +13,7 @@ import type {
   RequestOptions,
   QueryParameters,
   ApiError,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { ApiKey } from '../model/apiKey';
@@ -114,7 +114,7 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export const apiClientVersion = '0.8.0';
+export const apiClientVersion = '5.0.0-alpha.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

@@ -3,7 +3,7 @@ import {
   createTransporter,
   getAlgoliaAgent,
   shuffle,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 import type {
   CreateClientOptions,
   Headers,
@@ -11,7 +11,7 @@ import type {
   Request,
   RequestOptions,
   QueryParameters,
-} from '@experimental-api-clients-automation/client-common';
+} from '@algolia/client-common';
 
 import type {
   PostProps,
@@ -20,7 +20,7 @@ import type {
 import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponses } from '../model/searchResponses';
 
-export const apiClientVersion = '0.8.0';
+export const apiClientVersion = '5.0.0-alpha.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

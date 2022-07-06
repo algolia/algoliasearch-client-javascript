@@ -1,4 +1,4 @@
-import type { CreateRetryablePromiseOptions } from '@experimental-api-clients-automation/client-common';
+import type { CreateRetryablePromiseOptions } from '@algolia/client-common';
 
 import type { ApiKey } from './apiKey';
 import type { AssignUserIdParams } from './assignUserIdParams';

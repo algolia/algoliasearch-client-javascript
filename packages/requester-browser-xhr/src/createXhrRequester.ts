@@ -1,8 +1,4 @@
-import type {
-  EndRequest,
-  Requester,
-  Response,
-} from '@experimental-api-clients-automation/client-common';
+import type { EndRequest, Requester, Response } from '@algolia/client-common';
 
 type Timeout = ReturnType<typeof setTimeout>;
 
