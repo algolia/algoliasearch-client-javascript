@@ -206,7 +206,7 @@ export function createSearchClient({
     },
 
     /**
-     * Helper: Wait for an API key to be valid, updated or deleted based on a given `operation`.
+     * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
      *
      * @summary Wait for an API key task to be processed.
      * @param waitForApiKeyOptions - The waitForApiKeyOptions object.
