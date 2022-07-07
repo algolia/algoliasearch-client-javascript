@@ -11,7 +11,7 @@ export const DEFAULT_TIMEOUT = (retryCount: number): number =>
  * @param createRetryablePromiseOptions.func - The function to run, which returns a promise.
  * @param createRetryablePromiseOptions.validate - The validator function. It receives the resolved return of `func`.
  * @param createRetryablePromiseOptions.maxRetries - The maximum number of retries. 50 by default.
- * @param createRetryablePromiseOptions.timeout - The function to decide how long to wait between tries.
+ * @param createRetryablePromiseOptions.timeout - The function to decide how long to wait between retries.
  */
 export function createRetryablePromise<TResponse>({
   func,

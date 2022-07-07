@@ -15,7 +15,7 @@ export type CreateRetryablePromiseOptions<TResponse> = {
   maxRetries?: number;
 
   /**
-   * The function to decide how long to wait between tries.
+   * The function to decide how long to wait between retries.
    */
   timeout?: (retryCount: number) => number;
 };
