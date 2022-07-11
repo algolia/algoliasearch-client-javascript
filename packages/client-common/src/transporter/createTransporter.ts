@@ -112,7 +112,7 @@ export function createTransporter({
       ...dataQueryParameters,
     };
 
-    if (requestOptions?.queryParameters) {
+    if (requestOptions && requestOptions.queryParameters) {
       for (const key of Object.keys(requestOptions.queryParameters)) {
         // We want to keep `undefined` and `null` values,
         // but also avoid stringifying `object`s, as they are
@@ -237,29 +237,29 @@ export function createTransporter({
 
   function createRequest<TResponse>(
     baseRequest: Request,
-    baseRequestOptions?: RequestOptions
+    baseRequestOptions: RequestOptions = {}
   ): Promise<TResponse> {
     const mergedData: Request['data'] = Array.isArray(baseRequest.data)
       ? baseRequest.data
       : {
           ...baseRequest.data,
-          ...baseRequestOptions?.data,
+          ...baseRequestOptions.data,
         };
     const request: Request = {
       ...baseRequest,
       data: mergedData,
     };
     const requestOptions: RequestOptions = {
-      cacheable: baseRequestOptions?.cacheable,
-      timeout: baseRequestOptions?.timeout,
+      cacheable: baseRequestOptions.cacheable,
+      timeout: baseRequestOptions.timeout,
       queryParameters: {
         ...baseRequest.queryParameters,
-        ...baseRequestOptions?.queryParameters,
+        ...baseRequestOptions.queryParameters,
       },
       headers: {
         Accept: 'application/json',
         ...baseRequest.headers,
-        ...baseRequestOptions?.headers,
+        ...baseRequestOptions.headers,
       },
     };
 

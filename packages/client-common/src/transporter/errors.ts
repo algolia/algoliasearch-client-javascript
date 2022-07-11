@@ -1,11 +1,14 @@
 import type { Response, StackFrame } from '../types';
 
 export class AlgoliaError extends Error {
-  name: string;
+  name: string = 'AlgoliaError';
 
   constructor(message: string, name: string) {
     super(message);
-    this.name = name ?? 'AlgoliaError';
+
+    if (name) {
+      this.name = name;
+    }
   }
 }
 

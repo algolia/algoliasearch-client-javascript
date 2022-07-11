@@ -1,4 +1,9 @@
 import type { EchoResponse } from '@algolia/client-common';
+import {
+  DEFAULT_CONNECT_TIMEOUT_NODE,
+  DEFAULT_READ_TIMEOUT_NODE,
+  DEFAULT_WRITE_TIMEOUT_NODE,
+} from '@algolia/client-common';
 import { echoRequester } from '@algolia/requester-node-http';
 
 import { algoliasearch, apiClientVersion } from '../builds/node';
@@ -37,6 +42,100 @@ describe('api', () => {
 
   it('provides the search client at the root of the API', () => {
     expect(client.search).not.toBeUndefined();
+  });
+
+  describe('_ua', () => {
+    it('provides a backward compatible `_ua` variable at the root of the client', () => {
+      expect(client._ua).toEqual(
+        expect.stringContaining(
+          `Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion});`
+        )
+      );
+    });
+
+    it('keeps `_ua` updated with the transporter algolia agent', () => {
+      expect(client._ua).toEqual(
+        expect.stringMatching(/.*; Node\.js \(.*\)$/g)
+      );
+
+      client.addAlgoliaAgent('Jest', '0.0.1');
+
+      expect(client._ua).toEqual(
+        expect.stringMatching(/.*; Jest \(0\.0\.1\)$/g)
+      );
+    });
+  });
+
+  it('exposes the search client transporter for the algoliasearch client', () => {
+    expect(client.transporter).not.toBeUndefined();
+    expect(client.transporter).toEqual({
+      algoliaAgent: {
+        add: expect.any(Function),
+        value: expect.stringContaining(
+          `Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion});`
+        ),
+      },
+      baseHeaders: {
+        'content-type': 'text/plain',
+        'x-algolia-api-key': 'API_KEY',
+        'x-algolia-application-id': 'APP_ID',
+      },
+      baseQueryParameters: {},
+      hosts: expect.arrayContaining([
+        {
+          accept: 'read',
+          protocol: 'https',
+          url: 'APP_ID-dsn.algolia.net',
+        },
+        {
+          accept: 'write',
+          protocol: 'https',
+          url: 'APP_ID.algolia.net',
+        },
+        {
+          accept: 'readWrite',
+          protocol: 'https',
+          url: 'APP_ID-3.algolianet.com',
+        },
+        {
+          accept: 'readWrite',
+          protocol: 'https',
+          url: 'APP_ID-1.algolianet.com',
+        },
+        {
+          accept: 'readWrite',
+          protocol: 'https',
+          url: 'APP_ID-2.algolianet.com',
+        },
+      ]),
+      hostsCache: {
+        clear: expect.any(Function),
+        delete: expect.any(Function),
+        get: expect.any(Function),
+        set: expect.any(Function),
+      },
+      request: expect.any(Function),
+      requester: {
+        send: expect.any(Function),
+      },
+      requestsCache: {
+        clear: expect.any(Function),
+        delete: expect.any(Function),
+        get: expect.any(Function),
+        set: expect.any(Function),
+      },
+      responsesCache: {
+        clear: expect.any(Function),
+        delete: expect.any(Function),
+        get: expect.any(Function),
+        set: expect.any(Function),
+      },
+      timeouts: {
+        connect: DEFAULT_CONNECT_TIMEOUT_NODE,
+        read: DEFAULT_READ_TIMEOUT_NODE,
+        write: DEFAULT_WRITE_TIMEOUT_NODE,
+      },
+    });
   });
 
   describe('init clients', () => {

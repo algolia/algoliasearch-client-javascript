@@ -63,13 +63,15 @@ export function algoliasearch(
     throw new Error('`apiKey` is missing.');
   }
 
-  const commonOptions: Omit<CreateClientOptions, 'apiKey' | 'appId'> = {
+  const commonOptions: CreateClientOptions = {
+    apiKey,
+    appId,
     timeouts: {
       connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
       read: DEFAULT_READ_TIMEOUT_BROWSER,
       write: DEFAULT_WRITE_TIMEOUT_BROWSER,
     },
-    requester: options?.requester ?? createXhrRequester(),
+    requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
     responsesCache: createMemoryCache(),
@@ -99,11 +101,9 @@ export function algoliasearch(
     }
 
     return createAnalyticsClient({
-      ...initOptions.options,
       ...commonOptions,
-      appId: initOptions.appId ?? appId,
-      apiKey: initOptions.apiKey ?? apiKey,
-      region: initOptions.region,
+      ...initOptions.options,
+      ...initOptions,
     });
   }
 
@@ -123,11 +123,9 @@ export function algoliasearch(
     }
 
     return createAbtestingClient({
-      ...initOptions.options,
       ...commonOptions,
-      appId: initOptions.appId ?? appId,
-      apiKey: initOptions.apiKey ?? apiKey,
-      region: initOptions.region,
+      ...initOptions.options,
+      ...initOptions,
     });
   }
 
@@ -151,16 +149,20 @@ export function algoliasearch(
     }
 
     return createPersonalizationClient({
-      ...initOptions.options,
       ...commonOptions,
-      appId: initOptions.appId ?? appId,
-      apiKey: initOptions.apiKey ?? apiKey,
-      region: initOptions.region,
+      ...initOptions.options,
+      ...initOptions,
     });
   }
 
   return {
-    ...createSearchClient({ appId, apiKey, ...commonOptions }),
+    ...createSearchClient(commonOptions),
+    /**
+     * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
+     */
+    get _ua(): string {
+      return this.transporter.algoliaAgent.value;
+    },
     initAnalytics,
     initPersonalization,
     initAbtesting,

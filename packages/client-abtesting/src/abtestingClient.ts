@@ -69,12 +69,23 @@ export function createAbtestingClient({
     },
   });
 
-  function addAlgoliaAgent(segment: string, version?: string): void {
-    transporter.algoliaAgent.add({ segment, version });
-  }
-
   return {
-    addAlgoliaAgent,
+    transporter,
+    /**
+     * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
+     */
+    get _ua(): string {
+      return transporter.algoliaAgent.value;
+    },
+    /**
+     * Adds a `segment` to the `x-algolia-agent` sent with every requests.
+     *
+     * @param segment - The algolia agent (user-agent) segment to add.
+     * @param version - The version of the agent.
+     */
+    addAlgoliaAgent(segment: string, version?: string): void {
+      transporter.algoliaAgent.add({ segment, version });
+    },
     /**
      * Creates a new A/B test with provided configuration. You can set an A/B test on two different indices with different settings, or on the same index with different search parameters by providing a customSearchParameters setting on one of the variants.
      *

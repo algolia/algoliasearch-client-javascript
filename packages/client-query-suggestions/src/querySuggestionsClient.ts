@@ -72,12 +72,23 @@ export function createQuerySuggestionsClient({
     },
   });
 
-  function addAlgoliaAgent(segment: string, version?: string): void {
-    transporter.algoliaAgent.add({ segment, version });
-  }
-
   return {
-    addAlgoliaAgent,
+    transporter,
+    /**
+     * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
+     */
+    get _ua(): string {
+      return transporter.algoliaAgent.value;
+    },
+    /**
+     * Adds a `segment` to the `x-algolia-agent` sent with every requests.
+     *
+     * @param segment - The algolia agent (user-agent) segment to add.
+     * @param version - The version of the agent.
+     */
+    addAlgoliaAgent(segment: string, version?: string): void {
+      transporter.algoliaAgent.add({ segment, version });
+    },
     /**
      * Create a configuration of a Query Suggestions index. There\'s a limit of 100 configurations per application.
      *
