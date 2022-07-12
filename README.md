@@ -36,7 +36,7 @@
 
 ## ⏭ Next
 
-The [`next` branch](https://github.com/algolia/algoliasearch-client-javascript/tree/next) hosts the output of the new major version (`v5`). This version is generated from the [`API Clients Automation` monorepo](https://github.com/algolia/api-clients-automation/) and is where you can follow the development and make contributions.
+The [`next` branch](https://github.com/algolia/algoliasearch-client-javascript/tree/next) hosts the code of the new major version (`v5`). This version is generated from the [`API Clients Automation` monorepo](https://github.com/algolia/api-clients-automation/) and is where you can follow the development and make contributions.
 
 ## 💡 Getting Started
 
