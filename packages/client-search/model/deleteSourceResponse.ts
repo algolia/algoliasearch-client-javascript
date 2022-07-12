@@ -1,3 +1,5 @@
+// This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
+
 export type DeleteSourceResponse = {
   /**
    * Date of deletion (ISO-8601 format).

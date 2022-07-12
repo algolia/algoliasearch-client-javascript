@@ -1,3 +1,5 @@
+// This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
+
 import type { InitClientOptions } from '@algolia/client-common';
 import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
