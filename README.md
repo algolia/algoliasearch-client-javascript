@@ -34,6 +34,10 @@
 - **UMD compatible**, you can use it with any module loader
 - Built with TypeScript
 
+## ⏭ Next
+
+The [`next` branch](https://github.com/algolia/algoliasearch-client-javascript/tree/next) hosts the code of the new major version (`v5`). This version is generated from the [`API Clients Automation` monorepo](https://github.com/algolia/api-clients-automation/) which is where you can follow the development and make contributions.
+
 ## 💡 Getting Started
 
 First, install Algolia JavaScript API Client via the [npm](https://www.npmjs.com/get-npm) package manager:
@@ -45,16 +49,16 @@ npm install algoliasearch
 Then, create objects on your index:
 
 ```js
-const algoliasearch = require("algoliasearch");
+const algoliasearch = require('algoliasearch');
 
-const client = algoliasearch("YourApplicationID", "YourAdminAPIKey");
-const index = client.initIndex("your_index_name");
+const client = algoliasearch('YourApplicationID', 'YourAdminAPIKey');
+const index = client.initIndex('your_index_name');
 
 const objects = [
   {
     objectID: 1,
-    name: "Foo"
-  }
+    name: 'Foo',
+  },
 ];
 
 index
@@ -71,7 +75,7 @@ Finally, let's actually search using the `search` method:
 
 ```js
 index
-  .search("Fo")
+  .search('Fo')
   .then(({ hits }) => {
     console.log(hits);
   })
