@@ -373,4 +373,9 @@ export type SearchOptions = {
    * Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
    */
   readonly queryLanguages?: readonly string[];
+
+  /**
+   * Enriches the API’s response with meta-information as to how the query was processed.
+   */
+  readonly explain?: readonly string[];
 };
