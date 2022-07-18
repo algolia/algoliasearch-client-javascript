@@ -373,4 +373,11 @@ export type SearchOptions = {
    * Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
    */
   readonly queryLanguages?: readonly string[];
+
+  /**
+   * Enriches the API’s response with meta-information as to how the query was processed. This attirbute powers the 'Query Alternatives' explanation.
+   * There is currently no official documentation on the API for this attribute.
+   * @link RFC: https://docs.google.com/document/d/1Z58mZks5EiF1z0tbswLpKMSw-rRngRpESdBqGoAAzDo
+   */
+  readonly explain?: readonly string[];
 };
