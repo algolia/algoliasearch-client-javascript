@@ -375,9 +375,7 @@ export type SearchOptions = {
   readonly queryLanguages?: readonly string[];
 
   /**
-   * Enriches the API’s response with meta-information as to how the query was processed. This attirbute powers the 'Query Alternatives' explanation.
-   * There is currently no official documentation on the API for this attribute.
-   * @link RFC: https://docs.google.com/document/d/1Z58mZks5EiF1z0tbswLpKMSw-rRngRpESdBqGoAAzDo
+   * Enriches the API’s response with meta-information as to how the query was processed.
    */
   readonly explain?: readonly string[];
 };
