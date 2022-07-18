@@ -1,8 +1,6 @@
 ## [v4.14.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.13.1...4.14.0)
 
 * chore: mention `next` version in `README` (#1413) ([100d180](https://github.com/algolia/algoliasearch-client-javascript/commit/100d180)), closes [#1413](https://github.com/algolia/algoliasearch-client-javascript/issues/1413)
-* fix(fetch): avoid throwing error on polyfilled envs ([5e4dad5](https://github.com/algolia/algoliasearch-client-javascript/commit/5e4dad5))
-* ci: update number of allowed declarations ([5fa7d65](https://github.com/algolia/algoliasearch-client-javascript/commit/5fa7d65))
 * feat(fetch-requester): add `@algolia/requester-fetch` (#1411) ([7b62403](https://github.com/algolia/algoliasearch-client-javascript/commit/7b62403)), closes [#1411](https://github.com/algolia/algoliasearch-client-javascript/issues/1411)
 
 
