@@ -1,3 +1,8 @@
+## [v4.14.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.13.1...4.14.0)
+
+* chore: mention `next` version in `README` (#1413) ([100d180](https://github.com/algolia/algoliasearch-client-javascript/commit/100d180)), closes [#1413](https://github.com/algolia/algoliasearch-client-javascript/issues/1413)
+* feat(fetch-requester): add `@algolia/requester-fetch` (#1411) ([7b62403](https://github.com/algolia/algoliasearch-client-javascript/commit/7b62403)), closes [#1411](https://github.com/algolia/algoliasearch-client-javascript/issues/1411)
+
 ## [v4.13.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.13.0...4.13.1)
 
 * fix(search): add type for queryLanguages (#1406) ([61c2976](https://github.com/algolia/algoliasearch-client-javascript/commit/61c2976)), closes [#1406](https://github.com/algolia/algoliasearch-client-javascript/issues/1406) [#1405](https://github.com/algolia/algoliasearch-client-javascript/issues/1405)

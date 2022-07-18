@@ -1,6 +1,6 @@
 {
   "name": "@algolia/recommend",
-  "version": "4.13.1",
+  "version": "4.14.0",
   "private": false,
   "description": "The perfect starting point to integrate Algolia Recommend within your JavaScript project.",
   "repository": {
@@ -22,16 +22,16 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "@algolia/cache-browser-local-storage": "4.13.1",
-    "@algolia/cache-common": "4.13.1",
-    "@algolia/cache-in-memory": "4.13.1",
-    "@algolia/client-common": "4.13.1",
-    "@algolia/client-search": "4.13.1",
-    "@algolia/logger-common": "4.13.1",
-    "@algolia/logger-console": "4.13.1",
-    "@algolia/requester-browser-xhr": "4.13.1",
-    "@algolia/requester-common": "4.13.1",
-    "@algolia/requester-node-http": "4.13.1",
-    "@algolia/transporter": "4.13.1"
+    "@algolia/cache-browser-local-storage": "4.14.0",
+    "@algolia/cache-common": "4.14.0",
+    "@algolia/cache-in-memory": "4.14.0",
+    "@algolia/client-common": "4.14.0",
+    "@algolia/client-search": "4.14.0",
+    "@algolia/logger-common": "4.14.0",
+    "@algolia/logger-console": "4.14.0",
+    "@algolia/requester-browser-xhr": "4.14.0",
+    "@algolia/requester-common": "4.14.0",
+    "@algolia/requester-node-http": "4.14.0",
+    "@algolia/transporter": "4.14.0"
   }
 }
