@@ -78,11 +78,14 @@ export function serializeData(
 
 export function serializeHeaders(
   baseHeaders: Headers,
-  requestOptions: RequestOptions
+  requestHeaders: Headers,
+  requestOptionsHeaders?: Headers
 ): Headers {
   const headers: Headers = {
+    Accept: 'application/json',
     ...baseHeaders,
-    ...requestOptions.headers,
+    ...requestHeaders,
+    ...requestOptionsHeaders,
   };
   const serializedHeaders: Headers = {};
 

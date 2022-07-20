@@ -106,7 +106,7 @@ export function createPersonalizationClient({
 
       const requestPath = '/1{path}'.replace('{path}', path);
       const headers: Headers = {};
-      const queryParameters: QueryParameters = parameters || {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
 
       const request: Request = {
         method: 'DELETE',
@@ -172,7 +172,7 @@ export function createPersonalizationClient({
 
       const requestPath = '/1{path}'.replace('{path}', path);
       const headers: Headers = {};
-      const queryParameters: QueryParameters = parameters || {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
 
       const request: Request = {
         method: 'GET',
@@ -262,14 +262,14 @@ export function createPersonalizationClient({
 
       const requestPath = '/1{path}'.replace('{path}', path);
       const headers: Headers = {};
-      const queryParameters: QueryParameters = parameters || {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
 
       const request: Request = {
         method: 'POST',
         path: requestPath,
         queryParameters,
         headers,
-        data: body,
+        data: body ? body : {},
       };
 
       return transporter.request(request, requestOptions);
@@ -295,14 +295,14 @@ export function createPersonalizationClient({
 
       const requestPath = '/1{path}'.replace('{path}', path);
       const headers: Headers = {};
-      const queryParameters: QueryParameters = parameters || {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
 
       const request: Request = {
         method: 'PUT',
         path: requestPath,
         queryParameters,
         headers,
-        data: body,
+        data: body ? body : {},
       };
 
       return transporter.request(request, requestOptions);

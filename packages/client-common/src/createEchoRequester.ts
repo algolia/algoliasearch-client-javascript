@@ -1,4 +1,4 @@
-import type { EchoResponse, EndRequest, Request, Response } from './types';
+import type { EchoResponse, EndRequest, Requester, Response } from './types';
 
 export type EchoRequesterParams = {
   getURL: (url: string) => URL;
@@ -8,7 +8,8 @@ export type EchoRequesterParams = {
 function getUrlParams({
   host,
   searchParams: urlSearchParams,
-}: URL): Pick<EchoResponse, 'algoliaAgent' | 'host' | 'searchParams'> {
+  pathname,
+}: URL): Pick<EchoResponse, 'algoliaAgent' | 'host' | 'path' | 'searchParams'> {
   const algoliaAgent = urlSearchParams.get('x-algolia-agent') || '';
   const searchParams = {};
 
@@ -25,33 +26,30 @@ function getUrlParams({
     algoliaAgent,
     searchParams:
       Object.keys(searchParams).length === 0 ? undefined : searchParams,
+    path: pathname,
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createEchoRequester({
   getURL,
   status = 200,
-}: EchoRequesterParams) {
-  function send(
-    { headers, url, connectTimeout, responseTimeout }: EndRequest,
-    { data, ...originalRequest }: Request
-  ): Promise<Response> {
-    const { host, searchParams, algoliaAgent } = getUrlParams(getURL(url));
-    const originalData =
-      data && Object.keys(data).length > 0 ? data : undefined;
+}: EchoRequesterParams): Requester {
+  function send(request: EndRequest): Promise<Response> {
+    const { host, searchParams, algoliaAgent, path } = getUrlParams(
+      getURL(request.url)
+    );
+
+    const content: EchoResponse = {
+      ...request,
+      data: request.data ? JSON.parse(request.data) : undefined,
+      path,
+      host,
+      algoliaAgent: encodeURI(algoliaAgent),
+      searchParams,
+    };
 
     return Promise.resolve({
-      content: JSON.stringify({
-        ...originalRequest,
-        host,
-        headers,
-        connectTimeout,
-        responseTimeout,
-        algoliaAgent: encodeURI(algoliaAgent),
-        searchParams,
-        data: originalData,
-      }),
+      content: JSON.stringify(content),
       isTimedOut: false,
       status,
     });
@@ -59,5 +57,3 @@ export function createEchoRequester({
 
   return { send };
 }
-
-export type EchoRequester = ReturnType<typeof createEchoRequester>;

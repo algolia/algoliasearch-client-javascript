@@ -42,11 +42,9 @@ export type Requester = {
   send: (request: EndRequest, originalRequest: Request) => Promise<Response>;
 };
 
-export type EchoResponse = Request & {
-  connectTimeout: number;
-  host: string;
-  headers: Headers;
-  responseTimeout: number;
-  algoliaAgent: string;
-  searchParams?: Record<string, string>;
-};
+export type EchoResponse = Omit<EndRequest, 'data'> &
+  Pick<Request, 'data' | 'path'> & {
+    host: string;
+    algoliaAgent: string;
+    searchParams?: Record<string, string>;
+  };

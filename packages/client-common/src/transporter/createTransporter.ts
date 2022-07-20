@@ -85,17 +85,20 @@ export function createTransporter({
 
   async function retryableRequest<TResponse>(
     request: Request,
-    requestOptions: RequestOptions
+    requestOptions: RequestOptions,
+    isRead = true
   ): Promise<TResponse> {
     const stackTrace: StackFrame[] = [];
-    const isRead = request.useReadTransporter || request.method === 'GET';
 
     /**
      * First we prepare the payload that do not depend from hosts.
      */
     const data = serializeData(request, requestOptions);
-    const headers = serializeHeaders(baseHeaders, requestOptions);
-    const method = request.method;
+    const headers = serializeHeaders(
+      baseHeaders,
+      request.headers,
+      requestOptions.headers
+    );
 
     // On `GET`, the data is proxied to query parameters.
     const dataQueryParameters: QueryParameters =
@@ -109,6 +112,7 @@ export function createTransporter({
     const queryParameters: QueryParameters = {
       'x-algolia-agent': algoliaAgent.value,
       ...baseQueryParameters,
+      ...request.queryParameters,
       ...dataQueryParameters,
     };
 
@@ -152,7 +156,7 @@ export function createTransporter({
       const payload: EndRequest = {
         data,
         headers,
-        method,
+        method: request.method,
         url: serializeUrl(host, request.path, queryParameters),
         connectTimeout: getTimeout(timeoutsCount, timeouts.connect),
         responseTimeout: getTimeout(timeoutsCount, responseTimeout),
@@ -236,41 +240,20 @@ export function createTransporter({
   }
 
   function createRequest<TResponse>(
-    baseRequest: Request,
-    baseRequestOptions: RequestOptions = {}
+    request: Request,
+    requestOptions: RequestOptions = {}
   ): Promise<TResponse> {
-    const mergedData: Request['data'] = Array.isArray(baseRequest.data)
-      ? baseRequest.data
-      : {
-          ...baseRequest.data,
-          ...baseRequestOptions.data,
-        };
-    const request: Request = {
-      ...baseRequest,
-      data: mergedData,
-    };
-    const requestOptions: RequestOptions = {
-      cacheable: baseRequestOptions.cacheable,
-      timeout: baseRequestOptions.timeout,
-      queryParameters: {
-        ...baseRequest.queryParameters,
-        ...baseRequestOptions.queryParameters,
-      },
-      headers: {
-        Accept: 'application/json',
-        ...baseRequest.headers,
-        ...baseRequestOptions.headers,
-      },
-    };
-
+    /**
+     * A read request is either a `GET` request, or a request that we make
+     * via the `read` transporter (e.g. `search`).
+     */
     const isRead = request.useReadTransporter || request.method === 'GET';
-
     if (!isRead) {
       /**
        * On write requests, no cache mechanisms are applied, and we
        * proxy the request immediately to the requester.
        */
-      return retryableRequest<TResponse>(request, requestOptions);
+      return retryableRequest<TResponse>(request, requestOptions, isRead);
     }
 
     const createRetryableRequest = (): Promise<TResponse> => {
@@ -287,7 +270,7 @@ export function createTransporter({
      * request is "cacheable" - should be cached. Note that, once again,
      * the user can force this option.
      */
-    const cacheable = Boolean(requestOptions.cacheable || request.cacheable);
+    const cacheable = requestOptions.cacheable || request.cacheable;
 
     /**
      * If is not "cacheable", we immediately trigger the retryable request, no
@@ -306,8 +289,8 @@ export function createTransporter({
       request,
       requestOptions,
       transporter: {
-        queryParameters: requestOptions.queryParameters,
-        headers: requestOptions.headers,
+        queryParameters: baseQueryParameters,
+        headers: baseHeaders,
       },
     };
 

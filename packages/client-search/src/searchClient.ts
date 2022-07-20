@@ -630,7 +630,7 @@ export function createSearchClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: browseRequest,
+        data: browseRequest ? browseRequest : {},
       };
 
       return transporter.request(request, requestOptions);
@@ -770,7 +770,7 @@ export function createSearchClient({
 
       const requestPath = '/1{path}'.replace('{path}', path);
       const headers: Headers = {};
-      const queryParameters: QueryParameters = parameters || {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
 
       const request: Request = {
         method: 'DELETE',
@@ -1082,7 +1082,7 @@ export function createSearchClient({
 
       const requestPath = '/1{path}'.replace('{path}', path);
       const headers: Headers = {};
-      const queryParameters: QueryParameters = parameters || {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
 
       const request: Request = {
         method: 'GET',
@@ -1841,14 +1841,14 @@ export function createSearchClient({
 
       const requestPath = '/1{path}'.replace('{path}', path);
       const headers: Headers = {};
-      const queryParameters: QueryParameters = parameters || {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
 
       const request: Request = {
         method: 'POST',
         path: requestPath,
         queryParameters,
         headers,
-        data: body,
+        data: body ? body : {},
       };
 
       return transporter.request(request, requestOptions);
@@ -1874,14 +1874,14 @@ export function createSearchClient({
 
       const requestPath = '/1{path}'.replace('{path}', path);
       const headers: Headers = {};
-      const queryParameters: QueryParameters = parameters || {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
 
       const request: Request = {
         method: 'PUT',
         path: requestPath,
         queryParameters,
         headers,
-        data: body,
+        data: body ? body : {},
       };
 
       return transporter.request(request, requestOptions);
@@ -2430,7 +2430,7 @@ export function createSearchClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: searchForFacetValuesRequest,
+        data: searchForFacetValuesRequest ? searchForFacetValuesRequest : {},
         useReadTransporter: true,
         cacheable: true,
       };
@@ -2580,7 +2580,7 @@ export function createSearchClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: searchSynonymsParams,
+        data: searchSynonymsParams ? searchSynonymsParams : {},
         useReadTransporter: true,
         cacheable: true,
       };
