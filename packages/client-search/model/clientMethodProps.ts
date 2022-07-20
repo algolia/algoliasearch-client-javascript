@@ -23,6 +23,7 @@ import type { SearchForHitsOptions } from './searchForHitsOptions';
 import type { SearchParams } from './searchParams';
 import type { SearchParamsObject } from './searchParamsObject';
 import type { SearchRulesParams } from './searchRulesParams';
+import type { SearchSynonymsParams } from './searchSynonymsParams';
 import type { Source } from './source';
 import type { SynonymHit } from './synonymHit';
 import type { SynonymType } from './synonymType';
@@ -683,10 +684,6 @@ export type SearchSynonymsProps = {
    */
   indexName: string;
   /**
-   * Search for specific synonyms matching this string.
-   */
-  query?: string;
-  /**
    * Only search for specific types of synonyms.
    */
   type?: SynonymType;
@@ -698,6 +695,10 @@ export type SearchSynonymsProps = {
    * Maximum number of objects to retrieve.
    */
   hitsPerPage?: number;
+  /**
+   * The body of the the `searchSynonyms` method.
+   */
+  searchSynonymsParams?: SearchSynonymsParams;
 };
 
 /**

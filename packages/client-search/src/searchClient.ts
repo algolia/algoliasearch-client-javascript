@@ -2534,14 +2534,20 @@ export function createSearchClient({
      * @summary Search synonyms.
      * @param searchSynonyms - The searchSynonyms object.
      * @param searchSynonyms.indexName - The index in which to perform the request.
-     * @param searchSynonyms.query - Search for specific synonyms matching this string.
      * @param searchSynonyms.type - Only search for specific types of synonyms.
      * @param searchSynonyms.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
      * @param searchSynonyms.hitsPerPage - Maximum number of objects to retrieve.
+     * @param searchSynonyms.searchSynonymsParams - The body of the the `searchSynonyms` method.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchSynonyms(
-      { indexName, query, type, page, hitsPerPage }: SearchSynonymsProps,
+      {
+        indexName,
+        type,
+        page,
+        hitsPerPage,
+        searchSynonymsParams,
+      }: SearchSynonymsProps,
       requestOptions?: RequestOptions
     ): Promise<SearchSynonymsResponse> {
       if (!indexName) {
@@ -2556,10 +2562,6 @@ export function createSearchClient({
       );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
-      if (query !== undefined) {
-        queryParameters.query = query.toString();
-      }
 
       if (type !== undefined) {
         queryParameters.type = type.toString();
@@ -2578,6 +2580,7 @@ export function createSearchClient({
         path: requestPath,
         queryParameters,
         headers,
+        data: searchSynonymsParams,
         useReadTransporter: true,
         cacheable: true,
       };

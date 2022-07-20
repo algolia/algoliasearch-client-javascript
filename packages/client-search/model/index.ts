@@ -124,6 +124,7 @@ export * from './searchResponses';
 export * from './searchRulesParams';
 export * from './searchRulesResponse';
 export * from './searchStrategy';
+export * from './searchSynonymsParams';
 export * from './searchSynonymsResponse';
 export * from './searchTypeDefault';
 export * from './searchTypeFacet';
