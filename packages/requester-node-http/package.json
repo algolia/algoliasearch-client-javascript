@@ -14,13 +14,18 @@
     "index.ts"
   ],
   "scripts": {
-    "clean": "rm -rf dist/"
+    "clean": "rm -rf dist/",
+    "test": "jest"
   },
   "dependencies": {
     "@algolia/client-common": "5.0.0-alpha.0"
   },
   "devDependencies": {
+    "@types/jest": "28.1.4",
     "@types/node": "16.11.45",
+    "jest": "28.1.2",
+    "nock": "13.2.8",
+    "ts-jest": "28.0.5",
     "typescript": "4.7.4"
   },
   "engines": {

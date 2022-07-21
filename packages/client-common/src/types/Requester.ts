@@ -1,9 +1,15 @@
 import type { Headers, QueryParameters } from './Transporter';
 
+/**
+ * The method of the request.
+ */
 export type Method = 'DELETE' | 'GET' | 'PATCH' | 'POST' | 'PUT';
 
 export type Request = {
   method: Method;
+  /**
+   * The path of the REST API to send the request to.
+   */
   path: string;
   queryParameters: QueryParameters;
   data?: Array<Record<string, any>> | Record<string, any>;
@@ -20,18 +26,34 @@ export type Request = {
   useReadTransporter?: boolean;
 };
 
-export type EndRequest = {
-  method: Method;
+export type EndRequest = Pick<Request, 'headers' | 'method'> & {
+  /**
+   * The full URL of the REST API.
+   */
   url: string;
+  /**
+   * The connection timeout, in milliseconds.
+   */
   connectTimeout: number;
+  /**
+   * The response timeout, in milliseconds.
+   */
   responseTimeout: number;
-  headers: Headers;
   data?: string;
 };
 
 export type Response = {
+  /**
+   * The body of the response.
+   */
   content: string;
+  /**
+   * Whether the API call is timed out or not.
+   */
   isTimedOut: boolean;
+  /**
+   * The HTTP status code of the response.
+   */
   status: number;
 };
 
@@ -39,7 +61,7 @@ export type Requester = {
   /**
    * Sends the given `request` to the server.
    */
-  send: (request: EndRequest, originalRequest: Request) => Promise<Response>;
+  send: (request: EndRequest) => Promise<Response>;
 };
 
 export type EchoResponse = Omit<EndRequest, 'data'> &

@@ -14,15 +14,20 @@
     "index.ts"
   ],
   "scripts": {
-    "build": "tsc",
-    "clean": "rm -rf dist/"
+    "clean": "rm -rf dist/",
+    "test": "jest"
   },
   "dependencies": {
     "@algolia/client-common": "5.0.0-alpha.0"
   },
   "devDependencies": {
+    "@types/jest": "28.1.4",
     "@types/node": "16.11.45",
-    "typescript": "4.7.4"
+    "jest": "28.1.2",
+    "jest-environment-jsdom": "28.1.2",
+    "ts-jest": "28.0.5",
+    "typescript": "4.7.4",
+    "xhr-mock": "2.5.1"
   },
   "engines": {
     "node": ">= 14.0.0"

@@ -180,7 +180,7 @@ export function createTransporter({
         return stackFrame;
       };
 
-      const response = await requester.send(payload, request);
+      const response = await requester.send(payload);
 
       if (isRetryable(response)) {
         const stackFrame = pushToStackTrace(response);

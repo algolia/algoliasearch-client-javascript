@@ -26,7 +26,7 @@ export type RequestOptions = Pick<Request, 'cacheable'> & {
   queryParameters?: QueryParameters;
 
   /**
-   * Custom data for the request. This data are
+   * Custom data for the request. This data is
    * going to be merged the transporter data.
    */
   data?: Array<Record<string, any>> | Record<string, any>;
