@@ -16,6 +16,10 @@ const UTILS = {
     external: ['dom'],
     dependencies: [`${NPM_ORG}client-common`],
   },
+  'requester-fetch': {
+    external: ['dom'],
+    dependencies: [`${NPM_ORG}client-common`],
+  },
   'requester-node-http': {
     external: ['https', 'http', 'url'],
     dependencies: [`${NPM_ORG}client-common`],

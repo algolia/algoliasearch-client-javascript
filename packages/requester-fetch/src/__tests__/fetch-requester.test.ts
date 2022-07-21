@@ -1,44 +1,54 @@
 import type http from 'http';
+import { Readable } from 'stream';
 
 import type { EndRequest } from '@algolia/client-common';
-import type { MockRequest, MockResponse } from 'xhr-mock';
-import mock from 'xhr-mock';
+import crossFetch from 'cross-fetch';
+import nock from 'nock';
 
-import { createXhrRequester } from '../..';
+import { createFetchRequester } from '../..';
 import {
-  BASE_URL,
   headers,
   timeoutRequest,
   requestStub,
+  testQueryHeader,
+  testQueryBaseUrl,
   getStringifiedBody,
   createTestServer,
 } from '../../../../tests/utils';
 
-const requester = createXhrRequester();
+const originalFetch = window.fetch;
+
+beforeEach(() => {
+  window.fetch = crossFetch;
+});
+
+afterEach(() => {
+  window.fetch = originalFetch;
+});
+
+const requester = createFetchRequester();
 
 describe('status code handling', () => {
-  beforeEach(() => mock.setup());
-  afterEach(() => mock.teardown());
-
   it('sends requests', async () => {
-    mock.post(BASE_URL, (req: MockRequest, res: MockResponse): MockResponse => {
-      expect(req.method()).toEqual('POST');
-      expect(req.header('content-type')).toEqual('text/plain');
-      expect(req.body()).toEqual(JSON.stringify({ foo: 'bar' }));
+    const body = getStringifiedBody();
 
-      return res.status(200);
-    });
+    nock(testQueryBaseUrl, { reqheaders: headers })
+      .post('/foo')
+      .query(testQueryHeader)
+      .reply(200, body);
 
-    await requester.send(requestStub);
+    const response = await requester.send(requestStub);
+
+    expect(response.content).toEqual(body);
   });
 
   it('resolves status 200', async () => {
     const body = getStringifiedBody();
 
-    mock.post(BASE_URL, {
-      status: 200,
-      body: requestStub.data,
-    });
+    nock(testQueryBaseUrl, { reqheaders: headers })
+      .post('/foo')
+      .query(testQueryHeader)
+      .reply(200, body);
 
     const response = await requester.send(requestStub);
 
@@ -50,15 +60,15 @@ describe('status code handling', () => {
   it('resolves status 300', async () => {
     const reason = 'Multiple Choices';
 
-    mock.post(BASE_URL, {
-      status: 300,
-      reason,
-    });
+    nock(testQueryBaseUrl, { reqheaders: headers })
+      .post('/foo')
+      .query(testQueryHeader)
+      .reply(300, reason);
 
     const response = await requester.send(requestStub);
 
     expect(response.status).toBe(300);
-    expect(response.content).toBe(''); // No body returned here on xhr
+    expect(response.content).toBe(reason);
     expect(response.isTimedOut).toBe(false);
   });
 
@@ -67,10 +77,10 @@ describe('status code handling', () => {
       message: 'Invalid Application-Id or API-Key',
     });
 
-    mock.post(BASE_URL, {
-      status: 400,
-      body,
-    });
+    nock(testQueryBaseUrl, { reqheaders: headers })
+      .post('/foo')
+      .query(testQueryHeader)
+      .reply(400, body);
 
     const response = await requester.send(requestStub);
 
@@ -79,22 +89,26 @@ describe('status code handling', () => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('handles the protocol', async () => {
-    const body = getStringifiedBody();
+  it('handles chunked responses inside unicode character boundaries', async () => {
+    const data = Buffer.from('äöü');
 
-    mock.post('http://localhost/', {
-      status: 200,
-      body,
-    });
+    // create a test response stream that is chunked inside a unicode character
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    function* generate() {
+      yield data.slice(0, 3);
+      yield data.slice(3);
+    }
 
-    const response = await requester.send({
-      ...requestStub,
-      url: 'http://localhost',
-    });
+    const testStream = Readable.from(generate());
 
-    expect(response.status).toBe(200);
-    expect(response.content).toBe(body);
-    expect(response.isTimedOut).toBe(false);
+    nock(testQueryBaseUrl, { reqheaders: headers })
+      .post('/foo')
+      .query(testQueryHeader)
+      .reply(200, testStream);
+
+    const response = await requester.send(requestStub);
+
+    expect(response.content).toEqual(data.toString());
   });
 });
 
@@ -111,7 +125,7 @@ describe('timeout handling', () => {
     server.close(() => done());
   });
 
-  it('connection timeouts with the given 1 seconds connection timeout', async () => {
+  it('timeouts with the given 1 seconds connection timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
@@ -137,7 +151,7 @@ describe('timeout handling', () => {
     const now = Date.now();
 
     expect(response.content).toBe('Connection timeout');
-    expect(now - before).toBeGreaterThan(1990);
+    expect(now - before).toBeGreaterThan(1999);
     expect(now - before).toBeLessThan(2200);
   });
 
@@ -153,13 +167,12 @@ describe('timeout handling', () => {
     const now = Date.now();
 
     expect(response.content).toBe('Socket timeout');
-    expect(now - before).toBeGreaterThan(1990);
+    expect(now - before).toBeGreaterThan(1999);
     expect(now - before).toBeLessThan(2200);
   });
 
   it("socket timeouts if response don't appears before the timeout with 3 seconds timeout", async () => {
     const before = Date.now();
-
     const response = await requester.send({
       ...timeoutRequest,
       responseTimeout: 3000,
@@ -177,8 +190,8 @@ describe('timeout handling', () => {
     const before = Date.now();
     const response = await requester.send({
       ...requestStub,
-      responseTimeout: 6000,
       url: 'http://localhost:1111',
+      responseTimeout: 6000,
     });
 
     const now = Date.now();
@@ -191,7 +204,7 @@ describe('timeout handling', () => {
   }, 10000); // This is a long-running test, default server timeout is set to 5000ms
 });
 
-describe('error handling', () => {
+describe('error handling', (): void => {
   it('resolves dns not found', async () => {
     const request: EndRequest = {
       url: 'https://this-dont-exist.algolia.com',
@@ -205,19 +218,73 @@ describe('error handling', () => {
     const response = await requester.send(request);
 
     expect(response.status).toBe(0);
-    expect(response.content).toBe('Network request failed');
+    expect(response.content).toContain('');
     expect(response.isTimedOut).toBe(false);
   });
 
   it('resolves general network errors', async () => {
-    mock.post(BASE_URL, () =>
-      Promise.reject(new Error('This is a general error'))
-    );
+    nock(testQueryBaseUrl, { reqheaders: headers })
+      .post('/foo')
+      .query(testQueryHeader)
+      .replyWithError('This is a general error');
 
     const response = await requester.send(requestStub);
 
     expect(response.status).toBe(0);
-    expect(response.content).toBe('Network request failed');
+    expect(response.content).toBe(
+      'request to https://algolia-dns.net/foo?x-algolia-header=bar failed, reason: This is a general error'
+    );
     expect(response.isTimedOut).toBe(false);
+  });
+});
+
+describe('requesterOptions', () => {
+  it('allows to pass requesterOptions', async () => {
+    const body = getStringifiedBody();
+    const requesterTmp = createFetchRequester({
+      requesterOptions: {
+        headers: testQueryHeader,
+      },
+    });
+
+    nock(testQueryBaseUrl, {
+      reqheaders: {
+        ...headers,
+        ...testQueryHeader,
+      },
+    })
+      .post('/foo')
+      .query(testQueryHeader)
+      .reply(200, body);
+
+    const response = await requesterTmp.send(requestStub);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe(body);
+  });
+
+  it('allows overriding default requesterOptions', async () => {
+    const body = getStringifiedBody();
+    const requesterTmp = createFetchRequester({
+      requesterOptions: {
+        headers: testQueryHeader,
+        mode: 'no-cors',
+      },
+    });
+
+    nock(testQueryBaseUrl, {
+      reqheaders: {
+        ...headers,
+        ...testQueryHeader,
+      },
+    })
+      .post('/foo')
+      .query(testQueryHeader)
+      .reply(200, body);
+
+    const response = await requesterTmp.send(requestStub);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe(body);
   });
 });

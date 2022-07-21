@@ -141,6 +141,21 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/requester-fetch@workspace:packages/requester-fetch":
+  version: 0.0.0-use.local
+  resolution: "@algolia/requester-fetch@workspace:packages/requester-fetch"
+  dependencies:
+    "@algolia/client-common": 5.0.0-alpha.0
+    "@types/jest": 28.1.4
+    "@types/node": 16.11.45
+    cross-fetch: 3.1.5
+    jest: 28.1.2
+    nock: 13.2.8
+    ts-jest: 28.0.5
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
 "@algolia/requester-node-http@5.0.0-alpha.0, @algolia/requester-node-http@workspace:packages/requester-node-http":
   version: 0.0.0-use.local
   resolution: "@algolia/requester-node-http@workspace:packages/requester-node-http"
@@ -4688,6 +4703,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cross-fetch@npm:3.1.5":
+  version: 3.1.5
+  resolution: "cross-fetch@npm:3.1.5"
+  dependencies:
+    node-fetch: 2.6.7
+  checksum: f6b8c6ee3ef993ace6277fd789c71b6acf1b504fd5f5c7128df4ef2f125a429e29cd62dc8c127523f04a5f2fa4771ed80e3f3d9695617f441425045f505cf3bb
+  languageName: node
+  linkType: hard
+
 "cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
@@ -7437,7 +7461,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.7":
+"node-fetch@npm:2.6.7, node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.7":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
   dependencies:

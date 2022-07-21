@@ -1,52 +1,29 @@
-import http from 'http';
+import type http from 'http';
 import { Readable } from 'stream';
 
-import type { EndRequest, Headers } from '@algolia/client-common';
+import type { EndRequest } from '@algolia/client-common';
 import nock from 'nock';
 
 import { createHttpRequester } from '../..';
+import {
+  headers,
+  timeoutRequest,
+  requestStub,
+  testQueryHeader,
+  testQueryBaseUrl,
+  getStringifiedBody,
+  createTestServer,
+} from '../../../../tests/utils';
 
 const requester = createHttpRequester();
-const BASE_URL = 'https://algolia-dns.net/foo?x-algolia-header=bar';
-
-function getStringifiedBody(
-  body: Record<string, any> = { foo: 'bar' }
-): string {
-  return JSON.stringify(body);
-}
-
-const headers = {
-  'content-type': 'text/plain',
-};
-
-const timeoutRequest: EndRequest = {
-  url: 'missing-url-here',
-  data: '',
-  headers: {},
-  method: 'GET',
-  responseTimeout: 5000,
-  connectTimeout: 2000,
-};
-
-const requestStub: EndRequest = {
-  url: BASE_URL,
-  method: 'POST',
-  headers,
-  data: getStringifiedBody(),
-  responseTimeout: 2000,
-  connectTimeout: 1000,
-};
 
 describe('status code handling', () => {
-  const queryHeader: Headers = { 'x-algolia-header': 'bar' };
-  const queryBaseUrl = 'https://algolia-dns.net';
-
   it('sends requests', async () => {
     const body = getStringifiedBody();
 
-    nock(queryBaseUrl, { reqheaders: headers })
+    nock(testQueryBaseUrl, { reqheaders: headers })
       .post('/foo')
-      .query(queryHeader)
+      .query(testQueryHeader)
       .reply(200, body);
 
     const response = await requester.send(requestStub);
@@ -57,9 +34,9 @@ describe('status code handling', () => {
   it('resolves status 200', async () => {
     const body = getStringifiedBody();
 
-    nock(queryBaseUrl, { reqheaders: headers })
+    nock(testQueryBaseUrl, { reqheaders: headers })
       .post('/foo')
-      .query(queryHeader)
+      .query(testQueryHeader)
       .reply(200, body);
 
     const response = await requester.send(requestStub);
@@ -72,9 +49,9 @@ describe('status code handling', () => {
   it('resolves status 300', async () => {
     const reason = 'Multiple Choices';
 
-    nock(queryBaseUrl, { reqheaders: headers })
+    nock(testQueryBaseUrl, { reqheaders: headers })
       .post('/foo')
-      .query(queryHeader)
+      .query(testQueryHeader)
       .reply(300, reason);
 
     const response = await requester.send(requestStub);
@@ -89,9 +66,9 @@ describe('status code handling', () => {
       message: 'Invalid Application-Id or API-Key',
     });
 
-    nock(queryBaseUrl, { reqheaders: headers })
+    nock(testQueryBaseUrl, { reqheaders: headers })
       .post('/foo')
-      .query(queryHeader)
+      .query(testQueryHeader)
       .reply(400, body);
 
     const response = await requester.send(requestStub);
@@ -113,9 +90,9 @@ describe('status code handling', () => {
 
     const testStream = Readable.from(generate());
 
-    nock('https://algolia-dns.net', { reqheaders: headers })
+    nock(testQueryBaseUrl, { reqheaders: headers })
       .post('/foo')
-      .query(queryHeader)
+      .query(testQueryHeader)
       .reply(200, testStream);
 
     const response = await requester.send(requestStub);
@@ -128,24 +105,7 @@ describe('timeout handling', () => {
   let server: http.Server;
   // setup http server to test timeout
   beforeAll(() => {
-    server = http.createServer(function (_req, res) {
-      res.writeHead(200, {
-        'content-type': 'text/plain',
-        'access-control-allow-origin': '*',
-        'x-powered-by': 'nodejs',
-      });
-
-      res.write('{"foo":');
-
-      setTimeout(() => {
-        res.write(' "bar"');
-      }, 1000);
-
-      setTimeout(() => {
-        res.write('}');
-        res.end();
-      }, 5000);
-    });
+    server = createTestServer();
 
     server.listen('1111');
   });
@@ -238,9 +198,7 @@ describe('error handling', (): void => {
     const request: EndRequest = {
       url: 'https://this-dont-exist.algolia.com',
       method: 'POST',
-      headers: {
-        'content-type': 'text/plain',
-      },
+      headers,
       data: getStringifiedBody(),
       responseTimeout: 2000,
       connectTimeout: 1000,
@@ -254,9 +212,9 @@ describe('error handling', (): void => {
   });
 
   it('resolves general network errors', async () => {
-    nock('https://algolia-dns.net', { reqheaders: headers })
+    nock(testQueryBaseUrl, { reqheaders: headers })
       .post('/foo')
-      .query({ 'x-algolia-header': 'bar' })
+      .query(testQueryHeader)
       .replyWithError('This is a general error');
 
     const response = await requester.send(requestStub);
