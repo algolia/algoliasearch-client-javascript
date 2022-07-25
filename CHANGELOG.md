@@ -1,42 +1,37 @@
-## [0.8.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.7.2...0.8.0)
+## [5.0.0-alpha.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.0...5.0.0-alpha.1)
 
+- [d18cbc4a](https://github.com/algolia/api-clients-automation/commit/d18cbc4a) feat(javascript): support generic for hits ([#854](https://github.com/algolia/api-clients-automation/pull/854)) by [@millotp](https://github.com/millotp/)
+- [d93227c7](https://github.com/algolia/api-clients-automation/commit/d93227c7) feat(javascript): add `requester-fetch` ([#855](https://github.com/algolia/api-clients-automation/pull/855)) by [@shortcuts](https://github.com/shortcuts/)
+- [da6474fb](https://github.com/algolia/api-clients-automation/commit/da6474fb) fix(javascript): ensure requesters work as in v4 ([#823](https://github.com/algolia/api-clients-automation/pull/823)) by [@shortcuts](https://github.com/shortcuts/)
+- [a4346a72](https://github.com/algolia/api-clients-automation/commit/a4346a72) fix(clients): make POST body related to the endpoint, assert body in tests ([#849](https://github.com/algolia/api-clients-automation/pull/849)) by [@shortcuts](https://github.com/shortcuts/)
+- [22bf1c39](https://github.com/algolia/api-clients-automation/commit/22bf1c39) fix(specs): wrong parameters for `searchSynonyms` ([#852](https://github.com/algolia/api-clients-automation/pull/852)) by [@shortcuts](https://github.com/shortcuts/)
+- [4b557380](https://github.com/algolia/api-clients-automation/commit/4b557380) fix(clients): add generation banner to generated files ([#816](https://github.com/algolia/api-clients-automation/pull/816)) by [@shortcuts](https://github.com/shortcuts/)
+- [7bb39283](https://github.com/algolia/api-clients-automation/commit/7bb39283) feat(javascript): expose transporter, remove nullish coalescing and optional chaining ([#799](https://github.com/algolia/api-clients-automation/pull/799)) by [@shortcuts](https://github.com/shortcuts/)
+- [750721d0](https://github.com/algolia/api-clients-automation/commit/750721d0) fix(javascript): provide `requestOptions` to helper methods ([#797](https://github.com/algolia/api-clients-automation/pull/797)) by [@shortcuts](https://github.com/shortcuts/)
+- [0076edcc](https://github.com/algolia/api-clients-automation/commit/0076edcc) fix(javascript): rename `predict` package ([#796](https://github.com/algolia/api-clients-automation/pull/796)) by [@shortcuts](https://github.com/shortcuts/)
+- [df222d7c](https://github.com/algolia/api-clients-automation/commit/df222d7c) feat(javascript): use `@algolia` NPM namespace ([#785](https://github.com/algolia/api-clients-automation/pull/785)) by [@shortcuts](https://github.com/shortcuts/)
+- [5a499849](https://github.com/algolia/api-clients-automation/commit/5a499849) fix(specs): add renderingContent to search response ([#787](https://github.com/algolia/api-clients-automation/pull/787)) by [@millotp](https://github.com/millotp/)
+- [6b50ef0b](https://github.com/algolia/api-clients-automation/commit/6b50ef0b) feat(javascript): add `abtesting` client, better `init` usage ([#784](https://github.com/algolia/api-clients-automation/pull/784)) by [@shortcuts](https://github.com/shortcuts/)
 - [23a72c39](https://github.com/algolia/api-clients-automation/commit/23a72c39) fix(specs): correct type for highlightResult and snippetResult ([#783](https://github.com/algolia/api-clients-automation/pull/783)) by [@millotp](https://github.com/millotp/)
 - [a11e84da](https://github.com/algolia/api-clients-automation/commit/a11e84da) fix(specs): fix missing params and types ([#772](https://github.com/algolia/api-clients-automation/pull/772)) by [@shortcuts](https://github.com/shortcuts/)
 - [bc14a8c5](https://github.com/algolia/api-clients-automation/commit/bc14a8c5) feat(specs): Add tags to the settings and search params ([#768](https://github.com/algolia/api-clients-automation/pull/768)) by [@clemfromspace](https://github.com/clemfromspace/)
-
-## [0.7.2](https://github.com/algolia/algoliasearch-client-javascript/compare/0.7.0...0.7.2)
-
 - [77c80e20](https://github.com/algolia/api-clients-automation/commit/77c80e20) fix(javascript): add class-proposal plugin for `client-common` ([#765](https://github.com/algolia/api-clients-automation/pull/765)) by [@shortcuts](https://github.com/shortcuts/)
-
-## [0.7.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.6.1...0.7.0)
-
+- [23a72c39](https://github.com/algolia/api-clients-automation/commit/23a72c39) fix(specs): correct type for highlightResult and snippetResult ([#783](https://github.com/algolia/api-clients-automation/pull/783)) by [@millotp](https://github.com/millotp/)
+- [a11e84da](https://github.com/algolia/api-clients-automation/commit/a11e84da) fix(specs): fix missing params and types ([#772](https://github.com/algolia/api-clients-automation/pull/772)) by [@shortcuts](https://github.com/shortcuts/)
+- [bc14a8c5](https://github.com/algolia/api-clients-automation/commit/bc14a8c5) feat(specs): Add tags to the settings and search params ([#768](https://github.com/algolia/api-clients-automation/pull/768)) by [@clemfromspace](https://github.com/clemfromspace/)
+- [77c80e20](https://github.com/algolia/api-clients-automation/commit/77c80e20) fix(javascript): add class-proposal plugin for `client-common` ([#765](https://github.com/algolia/api-clients-automation/pull/765)) by [@shortcuts](https://github.com/shortcuts/)
 - [b9c4145d](https://github.com/algolia/api-clients-automation/commit/b9c4145d) fix(javascript): improve bundlesize, add check to CI ([#762](https://github.com/algolia/api-clients-automation/pull/762)) by [@shortcuts](https://github.com/shortcuts/)
 - [7a858225](https://github.com/algolia/api-clients-automation/commit/7a858225) fix(specs): correct type for `renderingContent` and `consequenceParams` ([#759](https://github.com/algolia/api-clients-automation/pull/759)) by [@shortcuts](https://github.com/shortcuts/)
 - [2288d170](https://github.com/algolia/api-clients-automation/commit/2288d170) feat(javascript): add `waitForApiKey` helper method ([#738](https://github.com/algolia/api-clients-automation/pull/738)) by [@shortcuts](https://github.com/shortcuts/)
 - [d7fcc6d3](https://github.com/algolia/api-clients-automation/commit/d7fcc6d3) fix(javascript): import lite resolution ([#737](https://github.com/algolia/api-clients-automation/pull/737)) by [@shortcuts](https://github.com/shortcuts/)
-
-## [0.6.1](https://github.com/algolia/algoliasearch-client-javascript/compare/0.6.0...0.6.1)
-
 - [5b70ec1a](https://github.com/algolia/api-clients-automation/commit/5b70ec1a) fix(javascript): publish `algoliasearch` dist ([#735](https://github.com/algolia/api-clients-automation/pull/735)) by [@shortcuts](https://github.com/shortcuts/)
-
-## [0.6.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.5.1...0.6.0)
-
 - [7ff32bfe](https://github.com/algolia/api-clients-automation/commit/7ff32bfe) feat(javascript): nest `lite` package in `algoliasearch` ([#729](https://github.com/algolia/api-clients-automation/pull/729)) by [@shortcuts](https://github.com/shortcuts/)
-
-## [0.5.1](https://github.com/algolia/algoliasearch-client-javascript/compare/0.5.0...0.5.1)
-
 - [61343d52](https://github.com/algolia/api-clients-automation/commit/61343d52) fix(specs): correct type for `typoTolerance` ([#722](https://github.com/algolia/api-clients-automation/pull/722)) by [@shortcuts](https://github.com/shortcuts/)
 - [c917710b](https://github.com/algolia/api-clients-automation/commit/c917710b) fix(specs): types and parameters ([#708](https://github.com/algolia/api-clients-automation/pull/708)) by [@shortcuts](https://github.com/shortcuts/)
 - [33cffcbb](https://github.com/algolia/api-clients-automation/commit/33cffcbb) fix(javascript): export types for `algoliasearch` ([#706](https://github.com/algolia/api-clients-automation/pull/706)) by [@shortcuts](https://github.com/shortcuts/)
 - [e93a31cd](https://github.com/algolia/api-clients-automation/commit/e93a31cd) fix(javascript): clean rollup config ([#700](https://github.com/algolia/api-clients-automation/pull/700)) by [@shortcuts](https://github.com/shortcuts/)
-
-## [0.5.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.4.0...0.5.0)
-
 - [98b40e87](https://github.com/algolia/api-clients-automation/commit/98b40e87) feat(javascript): allow legacy signature for `search` method ([#665](https://github.com/algolia/api-clients-automation/pull/665)) by [@shortcuts](https://github.com/shortcuts/)
 - [ad27abc1](https://github.com/algolia/api-clients-automation/commit/ad27abc1) test(clients): test more region param and timeouts ([#663](https://github.com/algolia/api-clients-automation/pull/663)) by [@millotp](https://github.com/millotp/)
-
-## [0.4.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.3.0...0.4.0)
-
 - [baaf7674](https://github.com/algolia/api-clients-automation/commit/baaf7674) fix(clients): rename `maxTrial` to `maxRetries` ([#659](https://github.com/algolia/api-clients-automation/pull/659)) by [@shortcuts](https://github.com/shortcuts/)
 - [faba7214](https://github.com/algolia/api-clients-automation/commit/faba7214) fix(javascript): remove duplicate `echoRequester` logic ([#650](https://github.com/algolia/api-clients-automation/pull/650)) by [@shortcuts](https://github.com/shortcuts/)
 - [19dc9185](https://github.com/algolia/api-clients-automation/commit/19dc9185) fix(javascript): remove duplicate types, add some type descriptions ([#644](https://github.com/algolia/api-clients-automation/pull/644)) by [@shortcuts](https://github.com/shortcuts/)
@@ -106,9 +101,6 @@
 - [c1ac7bea](https://github.com/algolia/api-clients-automation/commit/c1ac7bea) feat(specs): add `personalizaton` spec and client ([#27](https://github.com/algolia/api-clients-automation/pull/27)) by [@shortcuts](https://github.com/shortcuts/)
 - [ef603fbf](https://github.com/algolia/api-clients-automation/commit/ef603fbf) feat(specs): add `recommend` spec and client ([#19](https://github.com/algolia/api-clients-automation/pull/19)) by [@shortcuts](https://github.com/shortcuts/)
 - [47f71b96](https://github.com/algolia/api-clients-automation/commit/47f71b96) feat(specs): add `settings` spec ([#17](https://github.com/algolia/api-clients-automation/pull/17)) by [@shortcuts](https://github.com/shortcuts/)
-
-## [0.3.0](https://github.com/algolia/algoliasearch-client-javascript/compare/0.2.0...0.3.0)
-
 - [b8e6be72](https://github.com/algolia/api-clients-automation/commit/b8e6be72) fix(specs): correctly pass `searchParams` to the request ([#531](https://github.com/algolia/api-clients-automation/pull/531)) by [@shortcuts](https://github.com/shortcuts/)
 - [000f62d9](https://github.com/algolia/api-clients-automation/commit/000f62d9) refactor(javascript): type setTimeout in a way compatible with node & browser ([#527](https://github.com/algolia/api-clients-automation/pull/527)) by [@Haroenv](https://github.com/Haroenv/)
 - [bf427124](https://github.com/algolia/api-clients-automation/commit/bf427124) fix(specs): allow `POST` methods to send `read` requests ([#525](https://github.com/algolia/api-clients-automation/pull/525)) by [@shortcuts](https://github.com/shortcuts/)
@@ -119,9 +111,6 @@
 - [6361b602](https://github.com/algolia/api-clients-automation/commit/6361b602) style(specs): add out-of-line-one-of rule (and allOf and anyOf) APIC-418 ([#512](https://github.com/algolia/api-clients-automation/pull/512)) by [@millotp](https://github.com/millotp/)
 - [340b7bd5](https://github.com/algolia/api-clients-automation/commit/340b7bd5) fix(specs): correct type for taskID APIC-478 ([#504](https://github.com/algolia/api-clients-automation/pull/504)) by [@millotp](https://github.com/millotp/)
 - [f516c247](https://github.com/algolia/api-clients-automation/commit/f516c247) fix(javascript): move logic to custom gens ([#486](https://github.com/algolia/api-clients-automation/pull/486)) by [@shortcuts](https://github.com/shortcuts/)
-
-## [0.1.1](https://github.com/algolia/algoliasearch-client-javascript/compare/0.1.0...0.1.1)
-
 - [c80d0647](https://github.com/algolia/api-clients-automation/commit/c80d0647) fix(spec): predict server ([#441](https://github.com/algolia/api-clients-automation/pull/441)) by [@shortcuts](https://github.com/shortcuts/)
 - [12f246e7](https://github.com/algolia/api-clients-automation/commit/12f246e7) chore: use `Client` suffix ([#386](https://github.com/algolia/api-clients-automation/pull/386)) by [@shortcuts](https://github.com/shortcuts/)
 - [be7400be](https://github.com/algolia/api-clients-automation/commit/be7400be) fix(javascript): update version ([#448](https://github.com/algolia/api-clients-automation/pull/448)) by [@shortcuts](https://github.com/shortcuts/)
