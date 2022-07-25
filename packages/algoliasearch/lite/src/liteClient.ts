@@ -144,10 +144,10 @@ export function createLiteClient({
      * @param searchMethodParams - The `search` requests and strategy.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    search(
+    search<T>(
       searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
       requestOptions?: RequestOptions
-    ): Promise<SearchResponses> {
+    ): Promise<SearchResponses<T>> {
       if (searchMethodParams && Array.isArray(searchMethodParams)) {
         const newSignatureRequest: SearchMethodParams = {
           requests: searchMethodParams.map(({ params, ...legacyRequest }) => {

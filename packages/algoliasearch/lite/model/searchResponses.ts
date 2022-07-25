@@ -2,6 +2,6 @@
 
 import type { SearchResponse } from './searchResponse';
 
-export type SearchResponses = {
-  results: SearchResponse[];
+export type SearchResponses<T> = {
+  results: Array<SearchResponse<T>>;
 };

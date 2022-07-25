@@ -608,10 +608,10 @@ export function createSearchClient({
      * @param browse.browseRequest - The browseRequest object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    browse(
+    browse<T>(
       { indexName, browseRequest }: BrowseProps,
       requestOptions?: RequestOptions
-    ): Promise<BrowseResponse> {
+    ): Promise<BrowseResponse<T>> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `browse`.'
@@ -2277,10 +2277,10 @@ export function createSearchClient({
      * @param searchMethodParams - The `search` requests and strategy.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    search(
+    search<T>(
       searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
       requestOptions?: RequestOptions
-    ): Promise<SearchResponses> {
+    ): Promise<SearchResponses<T>> {
       if (searchMethodParams && Array.isArray(searchMethodParams)) {
         const newSignatureRequest: SearchMethodParams = {
           requests: searchMethodParams.map(({ params, ...legacyRequest }) => {
@@ -2492,10 +2492,10 @@ export function createSearchClient({
      * @param searchSingleIndex.searchParams - The searchParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    searchSingleIndex(
+    searchSingleIndex<T>(
       { indexName, searchParams }: SearchSingleIndexProps,
       requestOptions?: RequestOptions
-    ): Promise<SearchResponse> {
+    ): Promise<SearchResponse<T>> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `searchSingleIndex`.'

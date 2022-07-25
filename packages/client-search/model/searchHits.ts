@@ -2,6 +2,6 @@
 
 import type { Hit } from './hit';
 
-export type SearchHits = {
-  hits?: Hit[];
+export type SearchHits<T> = {
+  hits?: Array<Hit<T>>;
 };
