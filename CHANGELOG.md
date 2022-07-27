@@ -1,3 +1,9 @@
+## [v4.14.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.14.1...4.14.2)
+
+* fix(types): add `abTestID` to `SearchResponse` (#1419) ([05059f2](https://github.com/algolia/algoliasearch-client-javascript/commit/05059f2)), closes [#1419](https://github.com/algolia/algoliasearch-client-javascript/issues/1419)
+
+
+
 ## [v4.14.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.14.0...4.14.1)
 
 * fix(types): Updating searchoptions with explain attribute (#1415) ([c46932e](https://github.com/algolia/algoliasearch-client-javascript/commit/c46932e)), closes [#1415](https://github.com/algolia/algoliasearch-client-javascript/issues/1415)
