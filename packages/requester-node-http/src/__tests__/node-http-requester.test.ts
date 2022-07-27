@@ -1,4 +1,5 @@
-import type http from 'http';
+import http from 'http';
+import https from 'https';
 import { Readable } from 'stream';
 
 import type { EndRequest } from '@algolia/client-common';
@@ -16,6 +17,72 @@ import {
 } from '../../../../tests/utils';
 
 const requester = createHttpRequester();
+
+const httpsBaseRequest = https.request;
+const httpBaseRequest = http.request;
+
+describe('api', () => {
+  const mockedRequestResponse = {
+    destroy: jest.fn(),
+    on: jest.fn(),
+    once: jest.fn(),
+    write: jest.fn(),
+    end: jest.fn(),
+  };
+
+  beforeAll(() => {
+    // @ts-expect-error we don't care about the response for those tests
+    https.request = jest.fn(() => mockedRequestResponse);
+  });
+
+  afterAll(() => {
+    https.request = httpsBaseRequest;
+    http.request = httpBaseRequest;
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it('allow init without parameters', () => {
+    expect(() => createHttpRequester()).not.toThrow();
+  });
+
+  it('allow providing custom agent', async () => {
+    const agent = new http.Agent();
+    // @ts-expect-error we don't care about the response for those tests
+    http.request = jest.fn(() => mockedRequestResponse);
+    const tmpRequester = createHttpRequester({
+      agent,
+    });
+
+    await tmpRequester.send({
+      ...requestStub,
+      url: 'http://algolia-dns.net/foo?x-algolia-header=bar',
+    });
+
+    expect(http.request).toHaveBeenCalled();
+  });
+
+  it('allow overriding default options', async () => {
+    const tmpRequester = createHttpRequester({
+      requesterOptions: {
+        headers: {
+          'my-extra-header': 'algolia',
+        },
+      },
+    });
+
+    await tmpRequester.send(requestStub);
+
+    expect(https.request).toHaveBeenCalledWith(
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          'my-extra-header': 'algolia',
+        }),
+      }),
+      expect.any(Function)
+    );
+  });
+});
 
 describe('status code handling', () => {
   it('sends requests', async () => {

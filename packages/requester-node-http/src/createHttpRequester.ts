@@ -4,12 +4,30 @@ import { URL } from 'url';
 
 import type { EndRequest, Requester, Response } from '@algolia/client-common';
 
+export type CreateHttpRequesterOptions = Partial<{
+  agent: http.Agent | https.Agent;
+  httpAgent: http.Agent;
+  httpsAgent: https.Agent;
+  /**
+   * RequestOptions to be merged with the end request, it will override default options if provided.
+   */
+  requesterOptions: https.RequestOptions;
+}>;
+
 // Global agents allow us to reuse the TCP protocol with multiple clients
 const agentOptions = { keepAlive: true };
-const httpAgent = new http.Agent(agentOptions);
-const httpsAgent = new https.Agent(agentOptions);
+const defaultHttpAgent = new http.Agent(agentOptions);
+const defaultHttpsAgent = new https.Agent(agentOptions);
 
-export function createHttpRequester(): Requester {
+export function createHttpRequester({
+  agent: userGlobalAgent,
+  httpAgent: userHttpAgent,
+  httpsAgent: userHttpsAgent,
+  requesterOptions = {},
+}: CreateHttpRequesterOptions = {}): Requester {
+  const httpAgent = userHttpAgent || userGlobalAgent || defaultHttpAgent;
+  const httpsAgent = userHttpsAgent || userGlobalAgent || defaultHttpsAgent;
+
   function send(request: EndRequest): Promise<Response> {
     return new Promise((resolve) => {
       let responseTimeout: NodeJS.Timeout | undefined;
@@ -23,9 +41,16 @@ export function createHttpRequester(): Requester {
         hostname: url.hostname,
         path,
         method: request.method,
-        headers: request.headers,
-        ...(url.port !== undefined ? { port: url.port || '' } : {}),
+        ...requesterOptions,
+        headers: {
+          ...request.headers,
+          ...requesterOptions.headers,
+        },
       };
+
+      if (url.port && !requesterOptions.port) {
+        options.port = url.port;
+      }
 
       const req = (url.protocol === 'https:' ? https : http).request(
         options,
