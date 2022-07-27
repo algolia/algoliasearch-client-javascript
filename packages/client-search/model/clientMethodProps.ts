@@ -672,7 +672,7 @@ export type SearchSingleIndexProps = {
    * The index in which to perform the request.
    */
   indexName: string;
-  searchParams: SearchParams;
+  searchParams?: SearchParams;
 };
 
 /**

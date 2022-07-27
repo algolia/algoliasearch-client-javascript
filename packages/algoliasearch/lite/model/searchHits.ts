@@ -3,5 +3,5 @@
 import type { Hit } from './hit';
 
 export type SearchHits<T> = {
-  hits?: Array<Hit<T>>;
+  hits: Array<Hit<T>>;
 };

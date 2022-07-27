@@ -9,7 +9,7 @@ export type BaseSearchResponse = {
    */
   abTestID?: number;
   /**
-   * If a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used.
+   * If a search encounters an index that is being A/B tested, abTestVariantID reports the variant ID of the index used (starting at 1).
    */
   abTestVariantID?: number;
   /**
@@ -35,7 +35,7 @@ export type BaseSearchResponse = {
   /**
    * A mapping of each facet name to the corresponding facet counts.
    */
-  facets?: Record<string, Record<string, string>>;
+  facets?: Record<string, Record<string, number>>;
   /**
    * Statistics for numerical facets.
    */

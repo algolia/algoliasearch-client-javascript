@@ -2502,12 +2502,6 @@ export function createSearchClient({
         );
       }
 
-      if (!searchParams) {
-        throw new Error(
-          'Parameter `searchParams` is required when calling `searchSingleIndex`.'
-        );
-      }
-
       const requestPath = '/1/indexes/{indexName}/query'.replace(
         '{indexName}',
         encodeURIComponent(indexName)
@@ -2520,7 +2514,7 @@ export function createSearchClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: searchParams,
+        data: searchParams ? searchParams : {},
         useReadTransporter: true,
         cacheable: true,
       };
