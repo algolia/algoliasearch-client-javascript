@@ -156,6 +156,11 @@ export type SearchResponse<TObject = {}> = {
   indexUsed?: string;
 
   /**
+   * If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID.
+   */
+  abTestID?: number;
+
+  /**
    * In case of AB test, reports the variant ID used. The variant ID is the position in the array of variants (starting at 1).
    */
   abTestVariantID?: number;
