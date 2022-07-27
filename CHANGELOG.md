@@ -1,3 +1,9 @@
+## [5.0.0-alpha.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.1...5.0.0-alpha.2)
+
+- [b7e3c642](https://github.com/algolia/api-clients-automation/commit/b7e3c642) fix(javascript): expose sub `algoliasearch` client's type ([#873](https://github.com/algolia/api-clients-automation/pull/873)) by [@shortcuts](https://github.com/shortcuts/)
+- [0d988f9f](https://github.com/algolia/api-clients-automation/commit/0d988f9f) feat(javascript): allow providing options for node requester ([#872](https://github.com/algolia/api-clients-automation/pull/872)) by [@shortcuts](https://github.com/shortcuts/)
+- [6bdc94f5](https://github.com/algolia/api-clients-automation/commit/6bdc94f5) fix(specs): make `hits` required, `facets` count as an integer, `searchParams` as optional ([#868](https://github.com/algolia/api-clients-automation/pull/868)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.0...5.0.0-alpha.1)
 
 - [d18cbc4a](https://github.com/algolia/api-clients-automation/commit/d18cbc4a) feat(javascript): support generic for hits ([#854](https://github.com/algolia/api-clients-automation/pull/854)) by [@millotp](https://github.com/millotp/)
