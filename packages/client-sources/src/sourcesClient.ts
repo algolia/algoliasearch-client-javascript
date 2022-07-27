@@ -258,4 +258,7 @@ export function createSourcesClient({
   };
 }
 
+/**
+ * The client type.
+ */
 export type SourcesClient = ReturnType<typeof createSourcesClient>;

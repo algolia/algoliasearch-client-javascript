@@ -204,4 +204,7 @@ export function createLiteClient({
   };
 }
 
+/**
+ * The client type.
+ */
 export type LiteClient = ReturnType<typeof createLiteClient>;

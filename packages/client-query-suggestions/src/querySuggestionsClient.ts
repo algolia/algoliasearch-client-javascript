@@ -465,6 +465,9 @@ export function createQuerySuggestionsClient({
   };
 }
 
+/**
+ * The client type.
+ */
 export type QuerySuggestionsClient = ReturnType<
   typeof createQuerySuggestionsClient
 >;

@@ -256,4 +256,7 @@ export function createPredictClient({
   };
 }
 
+/**
+ * The client type.
+ */
 export type PredictClient = ReturnType<typeof createPredictClient>;

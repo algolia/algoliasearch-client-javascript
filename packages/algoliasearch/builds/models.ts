@@ -14,6 +14,11 @@ export * from '@algolia/client-personalization/model';
 export * from '@algolia/client-analytics/model';
 export * from '@algolia/client-abtesting/model';
 
+export { SearchClient } from '@algolia/client-search';
+export { PersonalizationClient } from '@algolia/client-personalization';
+export { AnalyticsClient } from '@algolia/client-analytics';
+export { AbtestingClient } from '@algolia/client-abtesting';
+
 export { ErrorBase, PutProps, PostProps, DelProps, GetProps };
 
 export type CommonClientOptions = { requester?: Requester; hosts?: Host[] };

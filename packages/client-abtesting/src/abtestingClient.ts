@@ -404,4 +404,7 @@ export function createAbtestingClient({
   };
 }
 
+/**
+ * The client type.
+ */
 export type AbtestingClient = ReturnType<typeof createAbtestingClient>;

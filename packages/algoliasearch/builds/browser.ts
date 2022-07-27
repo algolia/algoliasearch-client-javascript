@@ -49,6 +49,9 @@ export * from './models';
 
 export const apiClientVersion = searchClientVersion;
 
+/**
+ * The client type.
+ */
 export type Algoliasearch = ReturnType<typeof algoliasearch>;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

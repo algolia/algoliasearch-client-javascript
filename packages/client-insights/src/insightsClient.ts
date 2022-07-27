@@ -250,4 +250,7 @@ export function createInsightsClient({
   };
 }
 
+/**
+ * The client type.
+ */
 export type InsightsClient = ReturnType<typeof createInsightsClient>;

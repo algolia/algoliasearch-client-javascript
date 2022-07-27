@@ -2759,4 +2759,7 @@ export function createSearchClient({
   };
 }
 
+/**
+ * The client type.
+ */
 export type SearchClient = ReturnType<typeof createSearchClient>;
