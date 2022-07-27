@@ -1,17 +1,19 @@
+## [v4.14.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.14.1...4.14.2)
+
+- fix(types): add `abTestID` to `SearchResponse` (#1419) ([05059f2](https://github.com/algolia/algoliasearch-client-javascript/commit/05059f2)), closes [#1419](https://github.com/algolia/algoliasearch-client-javascript/issues/1419)
+
 ## [v4.14.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.14.0...4.14.1)
 
-* fix(types): Updating searchoptions with explain attribute (#1415) ([c46932e](https://github.com/algolia/algoliasearch-client-javascript/commit/c46932e)), closes [#1415](https://github.com/algolia/algoliasearch-client-javascript/issues/1415)
-
-
+- fix(types): Updating searchoptions with explain attribute (#1415) ([c46932e](https://github.com/algolia/algoliasearch-client-javascript/commit/c46932e)), closes [#1415](https://github.com/algolia/algoliasearch-client-javascript/issues/1415)
 
 ## [v4.14.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.13.1...4.14.0)
 
-* chore: mention `next` version in `README` (#1413) ([100d180](https://github.com/algolia/algoliasearch-client-javascript/commit/100d180)), closes [#1413](https://github.com/algolia/algoliasearch-client-javascript/issues/1413)
-* feat(fetch-requester): add `@algolia/requester-fetch` (#1411) ([7b62403](https://github.com/algolia/algoliasearch-client-javascript/commit/7b62403)), closes [#1411](https://github.com/algolia/algoliasearch-client-javascript/issues/1411)
+- chore: mention `next` version in `README` (#1413) ([100d180](https://github.com/algolia/algoliasearch-client-javascript/commit/100d180)), closes [#1413](https://github.com/algolia/algoliasearch-client-javascript/issues/1413)
+- feat(fetch-requester): add `@algolia/requester-fetch` (#1411) ([7b62403](https://github.com/algolia/algoliasearch-client-javascript/commit/7b62403)), closes [#1411](https://github.com/algolia/algoliasearch-client-javascript/issues/1411)
 
 ## [v4.13.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.13.0...4.13.1)
 
-* fix(search): add type for queryLanguages (#1406) ([61c2976](https://github.com/algolia/algoliasearch-client-javascript/commit/61c2976)), closes [#1406](https://github.com/algolia/algoliasearch-client-javascript/issues/1406) [#1405](https://github.com/algolia/algoliasearch-client-javascript/issues/1405)
+- fix(search): add type for queryLanguages (#1406) ([61c2976](https://github.com/algolia/algoliasearch-client-javascript/commit/61c2976)), closes [#1406](https://github.com/algolia/algoliasearch-client-javascript/issues/1406) [#1405](https://github.com/algolia/algoliasearch-client-javascript/issues/1405)
 
 ## [v4.13.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.12.2...4.13.0)
 
