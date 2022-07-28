@@ -3,4 +3,5 @@
 import type { BaseSearchResponse } from './baseSearchResponse';
 import type { SearchHits } from './searchHits';
 
-export type SearchResponse<T> = BaseSearchResponse & SearchHits<T>;
+export type SearchResponse<T = Record<string, any>> = BaseSearchResponse &
+  SearchHits<T>;

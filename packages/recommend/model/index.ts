@@ -10,6 +10,7 @@ export * from './baseSearchParams';
 export * from './baseSearchParamsWithoutQuery';
 export * from './baseSearchResponse';
 export * from './baseTrendingRequest';
+export * from './distinct';
 export * from './errorBase';
 export * from './exactOnSingleWordQuery';
 export * from './facetFilters';

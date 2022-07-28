@@ -6,7 +6,8 @@ export type ListIndicesResponse = {
   /**
    * List of the fetched indices.
    */
-  items?: FetchedIndex[];
+  items: FetchedIndex[];
+
   /**
    * Number of pages.
    */

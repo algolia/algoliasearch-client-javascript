@@ -7,10 +7,12 @@ import type { AuthenticationType } from './authenticationType';
  */
 export type PostURLJobAuth = {
   type: AuthenticationType;
+
   /**
    * The login to use for Basic Auth.
    */
   login: string;
+
   /**
    * The password to use for Basic Auth.
    */

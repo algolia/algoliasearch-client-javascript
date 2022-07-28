@@ -7,6 +7,7 @@ export type ConsequenceQueryObject = {
    * Words to remove.
    */
   remove?: string[];
+
   /**
    * Edits to apply.
    */

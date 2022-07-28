@@ -8,6 +8,7 @@ import type { Value } from './value';
  */
 export type FacetOrdering = {
   facets?: Facets;
+
   /**
    * The ordering of facet values, within an individual list.
    */

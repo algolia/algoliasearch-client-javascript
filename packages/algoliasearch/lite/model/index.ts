@@ -32,6 +32,7 @@ export * from './dictionaryEntry';
 export * from './dictionaryEntryState';
 export * from './dictionaryLanguage';
 export * from './dictionaryType';
+export * from './distinct';
 export * from './edit';
 export * from './editType';
 export * from './errorBase';

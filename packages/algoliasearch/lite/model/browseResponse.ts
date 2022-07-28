@@ -4,6 +4,6 @@ import type { BaseBrowseResponse } from './baseBrowseResponse';
 import type { BaseSearchResponse } from './baseSearchResponse';
 import type { SearchHits } from './searchHits';
 
-export type BrowseResponse<T> = BaseBrowseResponse &
+export type BrowseResponse<T = Record<string, any>> = BaseBrowseResponse &
   BaseSearchResponse &
   SearchHits<T>;

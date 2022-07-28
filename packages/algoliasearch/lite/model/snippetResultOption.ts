@@ -10,5 +10,6 @@ export type SnippetResultOption = {
    * Markup text with occurrences highlighted.
    */
   value: string;
+
   matchLevel: MatchLevel;
 };

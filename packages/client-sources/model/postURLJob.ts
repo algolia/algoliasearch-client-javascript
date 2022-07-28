@@ -9,10 +9,13 @@ import type { TaskType } from './taskType';
  */
 export type PostURLJob = {
   type: TaskType;
+
   /**
    * The name of the column that hold the unique identifier.
    */
   uniqueIDColumn?: string;
+
   input: PostURLJobInput;
+
   target: PostURLJobTarget;
 };

@@ -6,6 +6,8 @@ import type { PredictionsOrderValue } from './predictionsOrderValue';
 
 export type Predictions = {
   funnel_stage?: PredictionsFunnelStage;
+
   order_value?: PredictionsOrderValue;
+
   affinities?: PredictionsAffinities;
 };

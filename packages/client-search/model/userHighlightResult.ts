@@ -7,6 +7,7 @@ export type UserHighlightResult = {
    * Show highlighted section and words matched on a query.
    */
   userID: Record<string, HighlightResult>;
+
   /**
    * Show highlighted section and words matched on a query.
    */

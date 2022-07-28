@@ -7,5 +7,6 @@ import type { Affinities } from './affinities';
  */
 export type PredictionsAffinities = {
   value?: Affinities[];
+
   lastUpdatedAt?: string;
 };

@@ -7,5 +7,6 @@ import type { FunnelStage } from './funnelStage';
  */
 export type PredictionsFunnelStage = {
   value?: FunnelStage[];
+
   lastUpdatedAt?: string;
 };

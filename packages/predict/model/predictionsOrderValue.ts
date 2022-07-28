@@ -5,5 +5,6 @@
  */
 export type PredictionsOrderValue = {
   value?: number;
+
   lastUpdatedAt?: string;
 };

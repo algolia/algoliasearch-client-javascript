@@ -8,9 +8,11 @@ import type { ProductType } from './productType';
  */
 export type PostURLJobTarget = {
   type: ProductType;
+
   /**
    * The index name of the product.
    */
   indexName: string;
+
   operation: OperationType;
 };

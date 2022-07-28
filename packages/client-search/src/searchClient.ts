@@ -1273,10 +1273,10 @@ export function createSearchClient({
      * @param getObjectsParams - The Algolia object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getObjects(
+    getObjects<T>(
       getObjectsParams: GetObjectsParams,
       requestOptions?: RequestOptions
-    ): Promise<GetObjectsResponse> {
+    ): Promise<GetObjectsResponse<T>> {
       if (!getObjectsParams) {
         throw new Error(
           'Parameter `getObjectsParams` is required when calling `getObjects`.'

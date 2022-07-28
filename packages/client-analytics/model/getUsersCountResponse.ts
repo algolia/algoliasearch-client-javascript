@@ -7,6 +7,7 @@ export type GetUsersCountResponse = {
    * The number of occurrences.
    */
   count: number;
+
   /**
    * A list of users count with their date.
    */

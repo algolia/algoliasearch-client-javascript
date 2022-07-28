@@ -7,6 +7,7 @@ import type { BuiltInOperationType } from './builtInOperationType';
  */
 export type BuiltInOperation = {
   _operation: BuiltInOperationType;
+
   /**
    * The right-hand side argument to the operation, for example, increment or decrement step, value to add or remove.
    */

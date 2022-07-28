@@ -8,6 +8,7 @@ export type UpdatedAtResponse = {
    * TaskID of the task to wait for.
    */
   taskID: number;
+
   /**
    * Date of last update (ISO-8601 format).
    */

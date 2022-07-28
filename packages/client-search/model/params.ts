@@ -9,7 +9,10 @@ import type { RenderingContent } from './renderingContent';
  */
 export type Params = {
   query?: ConsequenceQuery;
+
   automaticFacetFilters?: AutomaticFacetFilters;
+
   automaticOptionalFacetFilters?: AutomaticFacetFilters;
+
   renderingContent?: RenderingContent;
 };

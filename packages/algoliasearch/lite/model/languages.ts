@@ -7,6 +7,8 @@ import type { DictionaryLanguage } from './dictionaryLanguage';
  */
 export type Languages = {
   plurals: DictionaryLanguage | null;
+
   stopwords: DictionaryLanguage | null;
+
   compounds: DictionaryLanguage | null;
 };

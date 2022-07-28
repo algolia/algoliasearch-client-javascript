@@ -8,10 +8,12 @@ export type StandardEntries = {
    * Language ISO code.
    */
   plurals?: Record<string, boolean> | null;
+
   /**
    * Language ISO code.
    */
   stopwords?: Record<string, boolean> | null;
+
   /**
    * Language ISO code.
    */
