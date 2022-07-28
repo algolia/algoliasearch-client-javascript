@@ -1,3 +1,8 @@
+## [5.0.0-alpha.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.2...5.0.0-alpha.3)
+
+- [eb108de7](https://github.com/algolia/api-clients-automation/commit/eb108de7) fix(javascript): provide more options to `algoliasearch` ([#877](https://github.com/algolia/api-clients-automation/pull/877)) by [@shortcuts](https://github.com/shortcuts/)
+- [95ba0016](https://github.com/algolia/api-clients-automation/commit/95ba0016) fix(specs): `rules` and `objects` parameters/responses ([#876](https://github.com/algolia/api-clients-automation/pull/876)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.1...5.0.0-alpha.2)
 
 - [b7e3c642](https://github.com/algolia/api-clients-automation/commit/b7e3c642) fix(javascript): expose sub `algoliasearch` client's type ([#873](https://github.com/algolia/api-clients-automation/pull/873)) by [@shortcuts](https://github.com/shortcuts/)
