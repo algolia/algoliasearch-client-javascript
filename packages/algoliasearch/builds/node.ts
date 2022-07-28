@@ -23,7 +23,10 @@ import {
   createMemoryCache,
   createNullCache,
 } from '@algolia/client-common';
-import type { CreateClientOptions } from '@algolia/client-common';
+import type {
+  CreateClientOptions,
+  ClientOptions,
+} from '@algolia/client-common';
 import {
   createPersonalizationClient,
   REGIONS as personalizationRegions,
@@ -38,11 +41,7 @@ import {
 } from '@algolia/client-search/src/searchClient';
 import { createHttpRequester } from '@algolia/requester-node-http';
 
-import type {
-  CommonInitOptions,
-  InitRegion,
-  CommonClientOptions,
-} from './models';
+import type { InitClientOptions, InitClientRegion } from './models';
 
 export * from './models';
 
@@ -57,7 +56,7 @@ export type Algoliasearch = ReturnType<typeof algoliasearch>;
 export function algoliasearch(
   appId: string,
   apiKey: string,
-  options?: CommonClientOptions
+  options?: ClientOptions
 ) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
@@ -84,7 +83,7 @@ export function algoliasearch(
   };
 
   function initAnalytics(
-    initOptions: CommonInitOptions & InitRegion<AnalyticsRegion> = {}
+    initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion> = {}
   ): AnalyticsClient {
     if (
       initOptions.region &&
@@ -106,7 +105,7 @@ export function algoliasearch(
   }
 
   function initAbtesting(
-    initOptions: CommonInitOptions & InitRegion<AbtestingRegion> = {}
+    initOptions: InitClientOptions & InitClientRegion<AbtestingRegion> = {}
   ): AbtestingClient {
     if (
       initOptions.region &&
@@ -128,7 +127,8 @@ export function algoliasearch(
   }
 
   function initPersonalization(
-    initOptions: CommonInitOptions & Required<InitRegion<PersonalizationRegion>>
+    initOptions: InitClientOptions &
+      Required<InitClientRegion<PersonalizationRegion>>
   ): PersonalizationClient {
     if (!initOptions.region) {
       throw new Error('`region` is missing.');

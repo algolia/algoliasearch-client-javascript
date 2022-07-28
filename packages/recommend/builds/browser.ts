@@ -1,6 +1,6 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
-import type { InitClientOptions } from '@algolia/client-common';
+import type { ClientOptions } from '@algolia/client-common';
 import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
   DEFAULT_READ_TIMEOUT_BROWSER,
@@ -23,7 +23,7 @@ export * from '../model';
 export function recommendClient(
   appId: string,
   apiKey: string,
-  options?: InitClientOptions
+  options?: ClientOptions
 ): RecommendClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');

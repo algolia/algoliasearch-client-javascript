@@ -18,6 +18,6 @@ export type CreateClientOptions = Omit<
     algoliaAgents: AlgoliaAgentOptions[];
   };
 
-export type InitClientOptions = Partial<
+export type ClientOptions = Partial<
   Omit<CreateClientOptions, 'apiKey' | 'appId'>
 >;

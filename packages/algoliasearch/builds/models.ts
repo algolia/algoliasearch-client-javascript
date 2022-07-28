@@ -1,6 +1,6 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
-import type { Host, Requester } from '@algolia/client-common';
+import type { ClientOptions } from '@algolia/client-common';
 import {
   ErrorBase,
   PutProps,
@@ -21,9 +21,10 @@ export { AbtestingClient } from '@algolia/client-abtesting';
 
 export { ErrorBase, PutProps, PostProps, DelProps, GetProps };
 
-export type CommonClientOptions = { requester?: Requester; hosts?: Host[] };
-
-export type CommonInitOptions = Partial<{
+/**
+ * Options forwarded to the client initialized via the `init` method.
+ */
+export type InitClientOptions = Partial<{
   /**
    * App to target with the initialized client, defaults to the `algoliasearch` appId.
    */
@@ -32,10 +33,10 @@ export type CommonInitOptions = Partial<{
    * API key of the targeted app ID, defaults to the `algoliasearch` apiKey.
    */
   apiKey: string;
-  options: CommonClientOptions;
+  options: ClientOptions;
 }>;
 
-export type InitRegion<TRegion> = Partial<{
+export type InitClientRegion<TRegion> = Partial<{
   /**
    * Available regions of the initialized client.
    */
