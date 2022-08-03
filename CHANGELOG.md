@@ -1,3 +1,10 @@
+## [5.0.0-alpha.4](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.3...5.0.0-alpha.4)
+
+- [193fb73d](https://github.com/algolia/api-clients-automation/commit/193fb73d) fix(specs): `getApiKeyResponse`, `multipleBatch`, `partialUpdateObject` ([#889](https://github.com/algolia/api-clients-automation/pull/889)) by [@shortcuts](https://github.com/shortcuts/)
+- [2c7cd9c5](https://github.com/algolia/api-clients-automation/commit/2c7cd9c5) fix(javascript): make type filename consistent ([#890](https://github.com/algolia/api-clients-automation/pull/890)) by [@shortcuts](https://github.com/shortcuts/)
+- [fd3e2261](https://github.com/algolia/api-clients-automation/commit/fd3e2261) fix(javascript): expose `clearCache` and `appId` at the root of the client ([#892](https://github.com/algolia/api-clients-automation/pull/892)) by [@shortcuts](https://github.com/shortcuts/)
+- [46c1526f](https://github.com/algolia/api-clients-automation/commit/46c1526f) feat(javascript): provide `browseObjects`, `browseRules` and `browseSynonyms` helper methods ([#887](https://github.com/algolia/api-clients-automation/pull/887)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.2...5.0.0-alpha.3)
 
 - [eb108de7](https://github.com/algolia/api-clients-automation/commit/eb108de7) fix(javascript): provide more options to `algoliasearch` ([#877](https://github.com/algolia/api-clients-automation/pull/877)) by [@shortcuts](https://github.com/shortcuts/)

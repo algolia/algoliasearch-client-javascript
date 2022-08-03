@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-insights",
-  "version": "5.0.0-alpha.3",
+  "version": "5.0.0-alpha.4",
   "description": "JavaScript client for client-insights",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -21,9 +21,9 @@
     "clean": "rm -rf ./dist"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.3",
-    "@algolia/requester-browser-xhr": "5.0.0-alpha.3",
-    "@algolia/requester-node-http": "5.0.0-alpha.3"
+    "@algolia/client-common": "5.0.0-alpha.4",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.4",
+    "@algolia/requester-node-http": "5.0.0-alpha.4"
   },
   "devDependencies": {
     "@types/node": "16.11.47",
