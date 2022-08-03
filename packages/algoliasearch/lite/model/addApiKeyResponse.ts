@@ -2,7 +2,7 @@
 
 export type AddApiKeyResponse = {
   /**
-   * Key string.
+   * The API key.
    */
   key: string;
 

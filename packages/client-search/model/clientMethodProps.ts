@@ -4,15 +4,15 @@ import type { CreateIterablePromise } from '@algolia/client-common';
 
 import type { ApiKey } from './apiKey';
 import type { AssignUserIdParams } from './assignUserIdParams';
-import type { AttributeOrBuiltInOperation } from './attributeOrBuiltInOperation';
+import type { AttributeToUpdate } from './attributeToUpdate';
 import type { BatchAssignUserIdsParams } from './batchAssignUserIdsParams';
 import type { BatchDictionaryEntriesParams } from './batchDictionaryEntriesParams';
 import type { BatchWriteParams } from './batchWriteParams';
 import type { BrowseRequest } from './browseRequest';
 import type { DictionaryType } from './dictionaryType';
+import type { GetApiKeyResponse } from './getApiKeyResponse';
 import type { GetTaskResponse } from './getTaskResponse';
 import type { IndexSettings } from './indexSettings';
-import type { Key } from './key';
 import type { LogType } from './logType';
 import type { OperationIndexParams } from './operationIndexParams';
 import type { Rule } from './rule';
@@ -430,9 +430,7 @@ export type PartialUpdateObjectProps = {
   /**
    * List of attributes to update.
    */
-  attributeOrBuiltInOperation: Array<
-    Record<string, AttributeOrBuiltInOperation>
-  >;
+  attributeToUpdate: Array<Record<string, AttributeToUpdate>>;
   /**
    * Creates the record if it does not exist yet.
    */
@@ -761,7 +759,7 @@ export type WaitForTaskOptions = WaitForOptions<GetTaskResponse> & {
   taskID: number;
 };
 
-export type WaitForApiKeyOptions = WaitForOptions<Key> & {
+export type WaitForApiKeyOptions = WaitForOptions<GetApiKeyResponse> & {
   /**
    * The API Key.
    */

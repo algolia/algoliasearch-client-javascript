@@ -1,13 +1,13 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
-export type UpdateApiKeyResponse = {
+export type BaseGetApiKeyResponse = {
   /**
    * The API key.
    */
-  key: string;
+  value?: string;
 
   /**
-   * Date of last update (ISO-8601 format).
+   * Time of the event expressed in milliseconds since the Unix epoch.
    */
-  updatedAt: string;
+  createdAt: number;
 };

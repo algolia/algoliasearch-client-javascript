@@ -82,6 +82,7 @@ import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
 import type { DeletedAtResponse } from '../model/deletedAtResponse';
 import type { DictionarySettingsParams } from '../model/dictionarySettingsParams';
+import type { GetApiKeyResponse } from '../model/getApiKeyResponse';
 import type { GetDictionarySettingsResponse } from '../model/getDictionarySettingsResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
 import type { GetObjectsParams } from '../model/getObjectsParams';
@@ -90,7 +91,6 @@ import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
 import type { HasPendingMappingsResponse } from '../model/hasPendingMappingsResponse';
 import type { IndexSettings } from '../model/indexSettings';
-import type { Key } from '../model/key';
 import type { Languages } from '../model/languages';
 import type { ListApiKeysResponse } from '../model/listApiKeysResponse';
 import type { ListClustersResponse } from '../model/listClustersResponse';
@@ -276,17 +276,18 @@ export function createSearchClient({
           Math.min(retryCount * 200, 5000),
       }: WaitForApiKeyOptions,
       requestOptions?: RequestOptions
-    ): Promise<ApiError | Key> {
+    ): Promise<ApiError | GetApiKeyResponse> {
       let retryCount = 0;
-      const baseIteratorOptions: IterableOptions<ApiError | Key> = {
-        aggregator: () => (retryCount += 1),
-        error: {
-          validate: () => retryCount >= maxRetries,
-          message: () =>
-            `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
-        },
-        timeout: () => timeout(retryCount),
-      };
+      const baseIteratorOptions: IterableOptions<ApiError | GetApiKeyResponse> =
+        {
+          aggregator: () => (retryCount += 1),
+          error: {
+            validate: () => retryCount >= maxRetries,
+            message: () =>
+              `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+          },
+          timeout: () => timeout(retryCount),
+        };
 
       if (operation === 'update') {
         if (!apiKey) {
@@ -1275,7 +1276,7 @@ export function createSearchClient({
     getApiKey(
       { key }: GetApiKeyProps,
       requestOptions?: RequestOptions
-    ): Promise<Key> {
+    ): Promise<GetApiKeyResponse> {
       if (!key) {
         throw new Error(
           'Parameter `key` is required when calling `getApiKey`.'
@@ -1450,6 +1451,12 @@ export function createSearchClient({
       if (!getObjectsParams) {
         throw new Error(
           'Parameter `getObjectsParams` is required when calling `getObjects`.'
+        );
+      }
+
+      if (!getObjectsParams.requests) {
+        throw new Error(
+          'Parameter `getObjectsParams.requests` is required when calling `getObjects`.'
         );
       }
 
@@ -1863,6 +1870,12 @@ export function createSearchClient({
         );
       }
 
+      if (!batchParams.requests) {
+        throw new Error(
+          'Parameter `batchParams.requests` is required when calling `multipleBatch`.'
+        );
+      }
+
       const requestPath = '/1/indexes/*/batch';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1939,7 +1952,7 @@ export function createSearchClient({
      * @param partialUpdateObject - The partialUpdateObject object.
      * @param partialUpdateObject.indexName - The index in which to perform the request.
      * @param partialUpdateObject.objectID - Unique identifier of an object.
-     * @param partialUpdateObject.attributeOrBuiltInOperation - List of attributes to update.
+     * @param partialUpdateObject.attributeToUpdate - List of attributes to update.
      * @param partialUpdateObject.createIfNotExists - Creates the record if it does not exist yet.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1947,7 +1960,7 @@ export function createSearchClient({
       {
         indexName,
         objectID,
-        attributeOrBuiltInOperation,
+        attributeToUpdate,
         createIfNotExists,
       }: PartialUpdateObjectProps,
       requestOptions?: RequestOptions
@@ -1964,9 +1977,9 @@ export function createSearchClient({
         );
       }
 
-      if (!attributeOrBuiltInOperation) {
+      if (!attributeToUpdate) {
         throw new Error(
-          'Parameter `attributeOrBuiltInOperation` is required when calling `partialUpdateObject`.'
+          'Parameter `attributeToUpdate` is required when calling `partialUpdateObject`.'
         );
       }
 
@@ -1985,7 +1998,7 @@ export function createSearchClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: attributeOrBuiltInOperation,
+        data: attributeToUpdate,
       };
 
       return transporter.request(request, requestOptions);
