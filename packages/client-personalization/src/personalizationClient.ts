@@ -72,12 +72,14 @@ export function createPersonalizationClient({
 
   return {
     transporter,
+
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
       return transporter.algoliaAgent.value;
     },
+
     /**
      * Adds a `segment` to the `x-algolia-agent` sent with every requests.
      *
@@ -87,6 +89,7 @@ export function createPersonalizationClient({
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.algoliaAgent.add({ segment, version });
     },
+
     /**
      * This method allow you to send requests to the Algolia REST API.
      *

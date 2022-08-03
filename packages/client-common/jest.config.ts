@@ -14,6 +14,7 @@ const config: Config.InitialOptions = {
       testPathIgnorePatterns: [
         'src/__tests__/cache/null-cache.test.ts',
         'src/__tests__/cache/memory-cache.test.ts',
+        'src/__tests__/create-iterable-promise.test.ts',
       ],
     },
     {

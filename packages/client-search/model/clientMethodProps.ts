@@ -1,6 +1,6 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
-import type { CreateRetryablePromiseOptions } from '@algolia/client-common';
+import type { CreateIterablePromise } from '@algolia/client-common';
 
 import type { ApiKey } from './apiKey';
 import type { AssignUserIdParams } from './assignUserIdParams';
@@ -661,7 +661,7 @@ export type SearchRulesProps = {
    * The index in which to perform the request.
    */
   indexName: string;
-  searchRulesParams: SearchRulesParams;
+  searchRulesParams?: SearchRulesParams;
 };
 
 /**
@@ -727,10 +727,28 @@ export type UpdateApiKeyProps = {
   apiKey: ApiKey;
 };
 
+/**
+ * The `browseObjects`, `browseRules`, `browseSynonyms` options.
+ */
+export type BrowseOptions<T> = Partial<
+  Pick<CreateIterablePromise<T>, 'validate'>
+> &
+  Required<Pick<CreateIterablePromise<T>, 'aggregator'>>;
+
 type WaitForOptions<T> = Omit<
-  CreateRetryablePromiseOptions<T>,
-  'func' | 'validate'
->;
+  CreateIterablePromise<T>,
+  'func' | 'timeout' | 'validate'
+> & {
+  /**
+   * The maximum number of retries. 50 by default.
+   */
+  maxRetries: number;
+
+  /**
+   * The function to decide how long to wait between retries.
+   */
+  timeout: (retryCount: number) => number;
+};
 
 export type WaitForTaskOptions = WaitForOptions<GetTaskResponse> & {
   /**

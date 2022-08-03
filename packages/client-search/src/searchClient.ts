@@ -5,7 +5,7 @@ import {
   createTransporter,
   getAlgoliaAgent,
   shuffle,
-  createRetryablePromise,
+  createIterablePromise,
 } from '@algolia/client-common';
 import type {
   CreateClientOptions,
@@ -15,6 +15,7 @@ import type {
   RequestOptions,
   QueryParameters,
   ApiError,
+  IterableOptions,
 } from '@algolia/client-common';
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
@@ -23,6 +24,7 @@ import type { BatchParams } from '../model/batchParams';
 import type { BatchResponse } from '../model/batchResponse';
 import type { BrowseResponse } from '../model/browseResponse';
 import type {
+  BrowseOptions,
   WaitForTaskOptions,
   WaitForApiKeyOptions,
   AddOrUpdateObjectProps,
@@ -183,12 +185,14 @@ export function createSearchClient({
 
   return {
     transporter,
+
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
       return transporter.algoliaAgent.value;
     },
+
     /**
      * Adds a `segment` to the `x-algolia-agent` sent with every requests.
      *
@@ -198,38 +202,53 @@ export function createSearchClient({
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.algoliaAgent.add({ segment, version });
     },
+
     /**
-     * Helper: Wait for a task to complete with `indexName` and `taskID`.
+     * Helper: Wait for a task to be published (completed) for a given `indexName` and `taskID`.
      *
-     * @summary Wait for a task to complete.
+     * @summary Helper method that waits for a task to be published (completed).
      * @param waitForTaskOptions - The waitForTaskOptions object.
      * @param waitForTaskOptions.indexName - The `indexName` where the operation was performed.
      * @param waitForTaskOptions.taskID - The `taskID` returned in the method response.
+     * @param waitForTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param waitForTaskOptions.timeout - The function to decide how long to wait between retries.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     waitForTask(
       {
         indexName,
         taskID,
-        ...createRetryablePromiseOptions
+        maxRetries = 50,
+        timeout = (retryCount: number): number =>
+          Math.min(retryCount * 200, 5000),
       }: WaitForTaskOptions,
       requestOptions?: RequestOptions
     ): Promise<GetTaskResponse> {
-      return createRetryablePromise({
-        ...createRetryablePromiseOptions,
+      let retryCount = 0;
+
+      return createIterablePromise({
         func: () => this.getTask({ indexName, taskID }, requestOptions),
         validate: (response) => response.status === 'published',
+        aggregator: () => (retryCount += 1),
+        error: {
+          validate: () => retryCount >= maxRetries,
+          message: () =>
+            `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+        },
+        timeout: () => timeout(retryCount),
       });
     },
 
     /**
      * Helper: Wait for an API key to be added, updated or deleted based on a given `operation`.
      *
-     * @summary Wait for an API key task to be processed.
+     * @summary Helper method that waits for an API key task to be processed.
      * @param waitForApiKeyOptions - The waitForApiKeyOptions object.
      * @param waitForApiKeyOptions.operation - The `operation` that was done on a `key`.
      * @param waitForApiKeyOptions.key - The `key` that has been added, deleted or updated.
      * @param waitForApiKeyOptions.apiKey - Necessary to know if an `update` operation has been processed, compare fields of the response with it.
+     * @param waitForApiKeyOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param waitForApiKeyOptions.timeout - The function to decide how long to wait between retries.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
      */
     waitForApiKey(
@@ -237,10 +256,23 @@ export function createSearchClient({
         operation,
         key,
         apiKey,
-        ...createRetryablePromiseOptions
+        maxRetries = 50,
+        timeout = (retryCount: number): number =>
+          Math.min(retryCount * 200, 5000),
       }: WaitForApiKeyOptions,
       requestOptions?: RequestOptions
     ): Promise<ApiError | Key> {
+      let retryCount = 0;
+      const baseIteratorOptions: IterableOptions<ApiError | Key> = {
+        aggregator: () => (retryCount += 1),
+        error: {
+          validate: () => retryCount >= maxRetries,
+          message: () =>
+            `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+        },
+        timeout: () => timeout(retryCount),
+      };
+
       if (operation === 'update') {
         if (!apiKey) {
           throw new Error(
@@ -248,8 +280,8 @@ export function createSearchClient({
           );
         }
 
-        return createRetryablePromise({
-          ...createRetryablePromiseOptions,
+        return createIterablePromise({
+          ...baseIteratorOptions,
           func: () => this.getApiKey({ key }, requestOptions),
           validate: (response) => {
             for (const field of Object.keys(apiKey)) {
@@ -271,12 +303,135 @@ export function createSearchClient({
         });
       }
 
-      return createRetryablePromise({
-        ...createRetryablePromiseOptions,
+      return createIterablePromise({
+        ...baseIteratorOptions,
         func: () =>
           this.getApiKey({ key }, requestOptions).catch((error) => error),
         validate: (error: ApiError) =>
           operation === 'add' ? error.status !== 404 : error.status === 404,
+      });
+    },
+
+    /**
+     * Helper: Iterate on the `browse` method of the client to allow aggregating objects of an index.
+     *
+     * @summary Helper method that iterates on the `browse` method.
+     * @param browseObjects - The browseObjects object.
+     * @param browseObjects.indexName - The index in which to perform the request.
+     * @param browseObjects.browseRequest - The `browse` method parameters.
+     * @param browseObjects.validate - The validator function. It receive the resolved return of the API call.
+     * @param browseObjects.aggregator - The function that runs right after the API call has been resolved, allows you to do anything with the response before `validate`.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `browse` method and merged with the transporter requestOptions.
+     */
+    browseObjects<T>(
+      {
+        indexName,
+        browseRequest,
+        ...browseObjectsOptions
+      }: BrowseOptions<BrowseResponse<T>> & BrowseProps,
+      requestOptions?: RequestOptions
+    ): Promise<BrowseResponse<T>> {
+      return createIterablePromise<BrowseResponse<T>>({
+        func: (previousResponse) => {
+          return this.browse(
+            {
+              indexName,
+              browseRequest: {
+                cursor: previousResponse ? previousResponse.cursor : undefined,
+                ...browseRequest,
+              },
+            },
+            requestOptions
+          );
+        },
+        validate: (response) => response.cursor === undefined,
+        ...browseObjectsOptions,
+      });
+    },
+
+    /**
+     * Helper: Iterate on the `searchRules` method of the client to allow aggregating rules of an index.
+     *
+     * @summary Helper method that iterates on the `searchRules` method.
+     * @param browseObjects - The browseObjects object.
+     * @param browseObjects.indexName - The index in which to perform the request.
+     * @param browseObjects.searchRulesParams - The `searchRules` method parameters.
+     * @param browseObjects.validate - The validator function. It receive the resolved return of the API call.
+     * @param browseObjects.aggregator - The function that runs right after the API call has been resolved, allows you to do anything with the response before `validate`.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `searchRules` method and merged with the transporter requestOptions.
+     */
+    browseRules(
+      {
+        indexName,
+        searchRulesParams,
+        ...browseRulesOptions
+      }: BrowseOptions<SearchRulesResponse> & SearchRulesProps,
+      requestOptions?: RequestOptions
+    ): Promise<SearchRulesResponse> {
+      const params = {
+        hitsPerPage: 1000,
+        ...searchRulesParams,
+      };
+
+      return createIterablePromise<SearchRulesResponse>({
+        func: (previousResponse) => {
+          return this.searchRules(
+            {
+              indexName,
+              searchRulesParams: {
+                ...params,
+                page: previousResponse
+                  ? previousResponse.page + 1
+                  : params.page || 0,
+              },
+            },
+            requestOptions
+          );
+        },
+        validate: (response) => response.nbHits < params.hitsPerPage,
+        ...browseRulesOptions,
+      });
+    },
+
+    /**
+     * Helper: Iterate on the `searchSynonyms` method of the client to allow aggregating rules of an index.
+     *
+     * @summary Helper method that iterates on the `searchSynonyms` method.
+     * @param browseObjects - The browseObjects object.
+     * @param browseObjects.indexName - The index in which to perform the request.
+     * @param browseObjects.validate - The validator function. It receive the resolved return of the API call.
+     * @param browseObjects.aggregator - The function that runs right after the API call has been resolved, allows you to do anything with the response before `validate`.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `searchSynonyms` method and merged with the transporter requestOptions.
+     */
+    browseSynonyms(
+      {
+        indexName,
+        validate,
+        aggregator,
+        ...browseSynonymsOptions
+      }: BrowseOptions<SearchSynonymsResponse> & SearchSynonymsProps,
+      requestOptions?: RequestOptions
+    ): Promise<SearchSynonymsResponse> {
+      const params = {
+        hitsPerPage: 1000,
+        ...browseSynonymsOptions,
+      };
+
+      return createIterablePromise<SearchSynonymsResponse>({
+        func: (previousResponse) => {
+          return this.searchSynonyms(
+            {
+              ...params,
+              indexName,
+              page: previousResponse
+                ? previousResponse.page + 1
+                : browseSynonymsOptions.page || 0,
+            },
+            requestOptions
+          );
+        },
+        validate: (response) => response.nbHits < params.hitsPerPage,
+        ...browseSynonymsOptions,
       });
     },
 
@@ -2457,12 +2612,6 @@ export function createSearchClient({
         );
       }
 
-      if (!searchRulesParams) {
-        throw new Error(
-          'Parameter `searchRulesParams` is required when calling `searchRules`.'
-        );
-      }
-
       const requestPath = '/1/indexes/{indexName}/rules/search'.replace(
         '{indexName}',
         encodeURIComponent(indexName)
@@ -2475,7 +2624,7 @@ export function createSearchClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: searchRulesParams,
+        data: searchRulesParams ? searchRulesParams : {},
         useReadTransporter: true,
         cacheable: true,
       };
