@@ -1,6 +1,6 @@
-import type { Cache } from './Cache';
-import type { Host } from './Host';
-import type { Request, Requester, EndRequest, Response } from './Requester';
+import type { Cache } from './cache';
+import type { Host } from './host';
+import type { Request, Requester, EndRequest, Response } from './requester';
 
 export type Headers = Record<string, string>;
 export type QueryParameters = Record<string, any>;

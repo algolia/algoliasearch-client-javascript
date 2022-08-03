@@ -14,6 +14,14 @@ const client = algoliasearch('APP_ID', 'API_KEY', {
 });
 
 describe('api', () => {
+  it('exposes the `appId` currently in use at the root of the API', () => {
+    expect(client.appId).toEqual('APP_ID');
+  });
+
+  it('provides a `clearCache` method', () => {
+    expect(client.clearCache).not.toBeUndefined();
+  });
+
   it('sets the user agent', async () => {
     const req = (await client.post({
       path: '/test',

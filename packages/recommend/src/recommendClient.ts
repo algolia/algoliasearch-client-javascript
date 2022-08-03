@@ -93,6 +93,21 @@ export function createRecommendClient({
     transporter,
 
     /**
+     * The `appId` currently in use.
+     */
+    appId: appIdOption,
+
+    /**
+     * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
+     */
+    clearCache(): Promise<void> {
+      return Promise.all([
+        transporter.requestsCache.clear(),
+        transporter.responsesCache.clear(),
+      ]).then(() => undefined);
+    },
+
+    /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {

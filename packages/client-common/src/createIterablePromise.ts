@@ -1,4 +1,4 @@
-import type { CreateIterablePromise } from './types/CreateIterablePromise';
+import type { CreateIterablePromise } from './types/createIterablePromise';
 
 /**
  * Helper: Returns the promise of a given `func` to iterate on, based on a given `validate` condition.

@@ -1,4 +1,4 @@
-import type { Headers, QueryParameters } from './Transporter';
+import type { Headers, QueryParameters } from './transporter';
 
 /**
  * The method of the request.

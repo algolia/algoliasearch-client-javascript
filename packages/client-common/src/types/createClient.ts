@@ -1,4 +1,4 @@
-import type { AlgoliaAgentOptions, TransporterOptions } from './Transporter';
+import type { AlgoliaAgentOptions, TransporterOptions } from './transporter';
 
 export type AuthMode = 'WithinHeaders' | 'WithinQueryParameters';
 
