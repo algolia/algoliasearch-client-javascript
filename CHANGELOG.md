@@ -1,3 +1,8 @@
+## [5.0.0-alpha.5](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.4...5.0.0-alpha.5)
+
+- [005f9ed3](https://github.com/algolia/api-clients-automation/commit/005f9ed3) fix(specs): wrong body parameter name ([#896](https://github.com/algolia/api-clients-automation/pull/896)) by [@shortcuts](https://github.com/shortcuts/)
+- [9753e2db](https://github.com/algolia/api-clients-automation/commit/9753e2db) fix(javascript): helpers type options ([#895](https://github.com/algolia/api-clients-automation/pull/895)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.4](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.3...5.0.0-alpha.4)
 
 - [193fb73d](https://github.com/algolia/api-clients-automation/commit/193fb73d) fix(specs): `getApiKeyResponse`, `multipleBatch`, `partialUpdateObject` ([#889](https://github.com/algolia/api-clients-automation/pull/889)) by [@shortcuts](https://github.com/shortcuts/)
