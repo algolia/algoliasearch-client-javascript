@@ -10,8 +10,6 @@ import type { BatchDictionaryEntriesParams } from './batchDictionaryEntriesParam
 import type { BatchWriteParams } from './batchWriteParams';
 import type { BrowseRequest } from './browseRequest';
 import type { DictionaryType } from './dictionaryType';
-import type { GetApiKeyResponse } from './getApiKeyResponse';
-import type { GetTaskResponse } from './getTaskResponse';
 import type { IndexSettings } from './indexSettings';
 import type { LogType } from './logType';
 import type { OperationIndexParams } from './operationIndexParams';
@@ -733,10 +731,7 @@ export type BrowseOptions<T> = Partial<
 > &
   Required<Pick<CreateIterablePromise<T>, 'aggregator'>>;
 
-type WaitForOptions<T> = Omit<
-  CreateIterablePromise<T>,
-  'func' | 'timeout' | 'validate'
-> & {
+type WaitForOptions = Partial<{
   /**
    * The maximum number of retries. 50 by default.
    */
@@ -746,9 +741,9 @@ type WaitForOptions<T> = Omit<
    * The function to decide how long to wait between retries.
    */
   timeout: (retryCount: number) => number;
-};
+}>;
 
-export type WaitForTaskOptions = WaitForOptions<GetTaskResponse> & {
+export type WaitForTaskOptions = WaitForOptions & {
   /**
    * The `indexName` where the operation was performed.
    */
@@ -759,7 +754,7 @@ export type WaitForTaskOptions = WaitForOptions<GetTaskResponse> & {
   taskID: number;
 };
 
-export type WaitForApiKeyOptions = WaitForOptions<GetApiKeyResponse> & {
+export type WaitForApiKeyOptions = WaitForOptions & {
   /**
    * The API Key.
    */

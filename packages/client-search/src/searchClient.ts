@@ -335,7 +335,7 @@ export function createSearchClient({
      * @param browseObjects - The browseObjects object.
      * @param browseObjects.indexName - The index in which to perform the request.
      * @param browseObjects.browseRequest - The `browse` method parameters.
-     * @param browseObjects.validate - The validator function. It receive the resolved return of the API call.
+     * @param browseObjects.validate - The validator function. It receive the resolved return of the API call. By default, stops when there is no `cursor` in the response.
      * @param browseObjects.aggregator - The function that runs right after the API call has been resolved, allows you to do anything with the response before `validate`.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `browse` method and merged with the transporter requestOptions.
      */
@@ -372,7 +372,7 @@ export function createSearchClient({
      * @param browseObjects - The browseObjects object.
      * @param browseObjects.indexName - The index in which to perform the request.
      * @param browseObjects.searchRulesParams - The `searchRules` method parameters.
-     * @param browseObjects.validate - The validator function. It receive the resolved return of the API call.
+     * @param browseObjects.validate - The validator function. It receive the resolved return of the API call. By default, stops when there is less hits returned than the number of maximum hits (1000).
      * @param browseObjects.aggregator - The function that runs right after the API call has been resolved, allows you to do anything with the response before `validate`.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `searchRules` method and merged with the transporter requestOptions.
      */
@@ -415,7 +415,7 @@ export function createSearchClient({
      * @summary Helper method that iterates on the `searchSynonyms` method.
      * @param browseObjects - The browseObjects object.
      * @param browseObjects.indexName - The index in which to perform the request.
-     * @param browseObjects.validate - The validator function. It receive the resolved return of the API call.
+     * @param browseObjects.validate - The validator function. It receive the resolved return of the API call. By default, stops when there is less hits returned than the number of maximum hits (1000).
      * @param browseObjects.aggregator - The function that runs right after the API call has been resolved, allows you to do anything with the response before `validate`.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `searchSynonyms` method and merged with the transporter requestOptions.
      */
