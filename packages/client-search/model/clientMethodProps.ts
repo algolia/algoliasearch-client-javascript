@@ -426,9 +426,9 @@ export type PartialUpdateObjectProps = {
    */
   objectID: string;
   /**
-   * List of attributes to update.
+   * Map of attribute(s) to update.
    */
-  attributeToUpdate: Array<Record<string, AttributeToUpdate>>;
+  attributesToUpdate: Record<string, AttributeToUpdate>;
   /**
    * Creates the record if it does not exist yet.
    */
@@ -542,7 +542,7 @@ export type SaveRulesProps = {
    * The index in which to perform the request.
    */
   indexName: string;
-  rule: Rule[];
+  rules: Rule[];
   /**
    * When true, changes are also propagated to replicas of the given indexName.
    */

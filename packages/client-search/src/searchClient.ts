@@ -1952,7 +1952,7 @@ export function createSearchClient({
      * @param partialUpdateObject - The partialUpdateObject object.
      * @param partialUpdateObject.indexName - The index in which to perform the request.
      * @param partialUpdateObject.objectID - Unique identifier of an object.
-     * @param partialUpdateObject.attributeToUpdate - List of attributes to update.
+     * @param partialUpdateObject.attributesToUpdate - Map of attribute(s) to update.
      * @param partialUpdateObject.createIfNotExists - Creates the record if it does not exist yet.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1960,7 +1960,7 @@ export function createSearchClient({
       {
         indexName,
         objectID,
-        attributeToUpdate,
+        attributesToUpdate,
         createIfNotExists,
       }: PartialUpdateObjectProps,
       requestOptions?: RequestOptions
@@ -1977,9 +1977,9 @@ export function createSearchClient({
         );
       }
 
-      if (!attributeToUpdate) {
+      if (!attributesToUpdate) {
         throw new Error(
-          'Parameter `attributeToUpdate` is required when calling `partialUpdateObject`.'
+          'Parameter `attributesToUpdate` is required when calling `partialUpdateObject`.'
         );
       }
 
@@ -1998,7 +1998,7 @@ export function createSearchClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: attributeToUpdate,
+        data: attributesToUpdate,
       };
 
       return transporter.request(request, requestOptions);
@@ -2282,7 +2282,7 @@ export function createSearchClient({
      * @summary Save a batch of rules.
      * @param saveRules - The saveRules object.
      * @param saveRules.indexName - The index in which to perform the request.
-     * @param saveRules.rule - The rule object.
+     * @param saveRules.rules - The rules object.
      * @param saveRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
      * @param saveRules.clearExistingRules - When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2290,7 +2290,7 @@ export function createSearchClient({
     saveRules(
       {
         indexName,
-        rule,
+        rules,
         forwardToReplicas,
         clearExistingRules,
       }: SaveRulesProps,
@@ -2302,9 +2302,9 @@ export function createSearchClient({
         );
       }
 
-      if (!rule) {
+      if (!rules) {
         throw new Error(
-          'Parameter `rule` is required when calling `saveRules`.'
+          'Parameter `rules` is required when calling `saveRules`.'
         );
       }
 
@@ -2328,7 +2328,7 @@ export function createSearchClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: rule,
+        data: rules,
       };
 
       return transporter.request(request, requestOptions);
