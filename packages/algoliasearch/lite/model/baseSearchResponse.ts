@@ -37,7 +37,7 @@ export type BaseSearchResponse = {
   /**
    * Indicate if the typo-tolerance search was exhaustive or approximate (only included when typo-tolerance is enabled).
    */
-  exhaustiveTypo: boolean;
+  exhaustiveTypo?: boolean;
 
   /**
    * A mapping of each facet name to the corresponding facet counts.

@@ -167,6 +167,11 @@ export type IndexSettingsAsSearchParams = {
   distinct?: Distinct;
 
   /**
+   * Name of the de-duplication attribute to be used with the distinct feature.
+   */
+  attributeForDistinct?: string;
+
+  /**
    * Whether to take into account an index\'s synonyms for a particular search.
    */
   synonyms?: boolean;
