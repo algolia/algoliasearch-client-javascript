@@ -1,3 +1,8 @@
+## [5.0.0-alpha.6](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.5...5.0.0-alpha.6)
+
+- [07c169f5](https://github.com/algolia/api-clients-automation/commit/07c169f5) fix(specs): browseResponse, IndexSettings and searchResponse ([#900](https://github.com/algolia/api-clients-automation/pull/900)) by [@shortcuts](https://github.com/shortcuts/)
+- [f829d142](https://github.com/algolia/api-clients-automation/commit/f829d142) fix(javascript): utils tests run time ([#908](https://github.com/algolia/api-clients-automation/pull/908)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.5](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.4...5.0.0-alpha.5)
 
 - [005f9ed3](https://github.com/algolia/api-clients-automation/commit/005f9ed3) fix(specs): wrong body parameter name ([#896](https://github.com/algolia/api-clients-automation/pull/896)) by [@shortcuts](https://github.com/shortcuts/)
