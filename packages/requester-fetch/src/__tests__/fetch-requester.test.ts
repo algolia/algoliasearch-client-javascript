@@ -136,8 +136,8 @@ describe('timeout handling', () => {
     const now = Date.now();
 
     expect(response.content).toBe('Connection timeout');
-    expect(now - before).toBeGreaterThan(999);
-    expect(now - before).toBeLessThan(1200);
+    expect(now - before).toBeGreaterThanOrEqual(999);
+    expect(now - before).toBeLessThanOrEqual(1200);
   });
 
   it('connection timeouts with the given 2 seconds connection timeout', async () => {
@@ -151,8 +151,8 @@ describe('timeout handling', () => {
     const now = Date.now();
 
     expect(response.content).toBe('Connection timeout');
-    expect(now - before).toBeGreaterThan(1999);
-    expect(now - before).toBeLessThan(2200);
+    expect(now - before).toBeGreaterThanOrEqual(1999);
+    expect(now - before).toBeLessThanOrEqual(2200);
   });
 
   it("socket timeouts if response don't appears before the timeout with 2 seconds timeout", async () => {
@@ -167,8 +167,8 @@ describe('timeout handling', () => {
     const now = Date.now();
 
     expect(response.content).toBe('Socket timeout');
-    expect(now - before).toBeGreaterThan(1999);
-    expect(now - before).toBeLessThan(2200);
+    expect(now - before).toBeGreaterThanOrEqual(1999);
+    expect(now - before).toBeLessThanOrEqual(2200);
   });
 
   it("socket timeouts if response don't appears before the timeout with 3 seconds timeout", async () => {
@@ -182,8 +182,8 @@ describe('timeout handling', () => {
     const now = Date.now();
 
     expect(response.content).toBe('Socket timeout');
-    expect(now - before).toBeGreaterThan(2999);
-    expect(now - before).toBeLessThan(3200);
+    expect(now - before).toBeGreaterThanOrEqual(2999);
+    expect(now - before).toBeLessThanOrEqual(3200);
   });
 
   it('do not timeouts if response appears before the timeout', async () => {
@@ -199,8 +199,8 @@ describe('timeout handling', () => {
     expect(response.isTimedOut).toBe(false);
     expect(response.status).toBe(200);
     expect(response.content).toBe('{"foo": "bar"}');
-    expect(now - before).toBeGreaterThan(4999);
-    expect(now - before).toBeLessThan(5200);
+    expect(now - before).toBeGreaterThanOrEqual(4999);
+    expect(now - before).toBeLessThanOrEqual(5200);
   }, 10000); // This is a long-running test, default server timeout is set to 5000ms
 });
 

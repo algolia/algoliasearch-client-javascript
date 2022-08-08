@@ -112,7 +112,7 @@ describe('createIterablePromise', () => {
       await expect(promise).resolves.toEqual('success #2');
 
       expect(Date.now() - before).toBeGreaterThanOrEqual(0);
-      expect(Date.now() - before).toBeLessThan(10);
+      expect(Date.now() - before).toBeLessThanOrEqual(10);
       expect(calls).toBe(2);
     });
 
@@ -133,7 +133,7 @@ describe('createIterablePromise', () => {
       await expect(promise).resolves.toEqual('success #2');
 
       expect(Date.now() - before).toBeGreaterThanOrEqual(2000);
-      expect(Date.now() - before).toBeLessThan(2010);
+      expect(Date.now() - before).toBeLessThanOrEqual(2010);
       expect(calls).toBe(2);
     });
   });
