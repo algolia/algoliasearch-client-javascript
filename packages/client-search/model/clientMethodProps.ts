@@ -8,7 +8,7 @@ import type { AttributeToUpdate } from './attributeToUpdate';
 import type { BatchAssignUserIdsParams } from './batchAssignUserIdsParams';
 import type { BatchDictionaryEntriesParams } from './batchDictionaryEntriesParams';
 import type { BatchWriteParams } from './batchWriteParams';
-import type { BrowseRequest } from './browseRequest';
+import type { BrowseParams } from './browseParams';
 import type { DictionaryType } from './dictionaryType';
 import type { IndexSettings } from './indexSettings';
 import type { LogType } from './logType';
@@ -96,7 +96,7 @@ export type BrowseProps = {
    * The index in which to perform the request.
    */
   indexName: string;
-  browseRequest?: BrowseRequest;
+  browseParams?: BrowseParams;
 };
 
 /**
