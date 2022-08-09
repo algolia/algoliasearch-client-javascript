@@ -8,3 +8,5 @@ yarn-error.log
 !.yarn/plugins
 
 node_modules
+
+node_

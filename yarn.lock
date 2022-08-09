@@ -13,6 +13,7 @@ __metadata:
     "@algolia/requester-browser-xhr": 5.0.0-alpha.7
     "@algolia/requester-node-http": 5.0.0-alpha.7
     "@types/node": 16.11.47
+    rollup: 2.77.2
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -25,6 +26,7 @@ __metadata:
     "@algolia/requester-browser-xhr": 5.0.0-alpha.7
     "@algolia/requester-node-http": 5.0.0-alpha.7
     "@types/node": 16.11.47
+    rollup: 2.77.2
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -50,6 +52,7 @@ __metadata:
     "@algolia/requester-browser-xhr": 5.0.0-alpha.7
     "@algolia/requester-node-http": 5.0.0-alpha.7
     "@types/node": 16.11.47
+    rollup: 2.77.2
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -62,6 +65,7 @@ __metadata:
     "@algolia/requester-browser-xhr": 5.0.0-alpha.7
     "@algolia/requester-node-http": 5.0.0-alpha.7
     "@types/node": 16.11.47
+    rollup: 2.77.2
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -74,6 +78,7 @@ __metadata:
     "@algolia/requester-browser-xhr": 5.0.0-alpha.7
     "@algolia/requester-node-http": 5.0.0-alpha.7
     "@types/node": 16.11.47
+    rollup: 2.77.2
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -86,6 +91,7 @@ __metadata:
     "@algolia/requester-browser-xhr": 5.0.0-alpha.7
     "@algolia/requester-node-http": 5.0.0-alpha.7
     "@types/node": 16.11.47
+    rollup: 2.77.2
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -98,6 +104,7 @@ __metadata:
     "@algolia/requester-browser-xhr": 5.0.0-alpha.7
     "@algolia/requester-node-http": 5.0.0-alpha.7
     "@types/node": 16.11.47
+    rollup: 2.77.2
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -110,6 +117,7 @@ __metadata:
     "@algolia/requester-browser-xhr": 5.0.0-alpha.7
     "@algolia/requester-node-http": 5.0.0-alpha.7
     "@types/node": 16.11.47
+    rollup: 2.77.2
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -122,6 +130,7 @@ __metadata:
     "@algolia/requester-browser-xhr": 5.0.0-alpha.7
     "@algolia/requester-node-http": 5.0.0-alpha.7
     "@types/node": 16.11.47
+    rollup: 2.77.2
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -3123,6 +3132,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nrwl/cli@npm:14.5.4":
+  version: 14.5.4
+  resolution: "@nrwl/cli@npm:14.5.4"
+  dependencies:
+    nx: 14.5.4
+  checksum: 13ec59473c0b40e1c314c7103b2790b0d9d12187fbe1c0e22e8a882273a620bf9ab8c95da4de0b8a98e10bb090628f0250b77ec91270c0cd59b7e999a14ed0b9
+  languageName: node
+  linkType: hard
+
 "@nrwl/tao@npm:14.4.3":
   version: 14.4.3
   resolution: "@nrwl/tao@npm:14.4.3"
@@ -3131,6 +3149,17 @@ __metadata:
   bin:
     tao: index.js
   checksum: 261ba6c57402f6634d1af06862de5c33159da9a767cda29beac2d3f5aea6f05d76922ece41284fb4f7a767cf25b1418c48a1899ab750b34dc4a8b17c158cdd1f
+  languageName: node
+  linkType: hard
+
+"@nrwl/tao@npm:14.5.4":
+  version: 14.5.4
+  resolution: "@nrwl/tao@npm:14.5.4"
+  dependencies:
+    nx: 14.5.4
+  bin:
+    tao: index.js
+  checksum: 53d75b6c354fe0fafe1e766ece828af94f0fc620acca58d52624d55099e24178dae3fe661e1c55a45f2ed4e2d5a709f388db2d2cb68e9b4eee6073fa30056be1
   languageName: node
   linkType: hard
 
@@ -3776,6 +3805,7 @@ __metadata:
     bundlesize2: 0.0.31
     execa: 5.1.1
     lerna: 5.3.0
+    nx: 14.5.4
     rollup: 2.77.2
     rollup-plugin-node-globals: 1.4.0
     rollup-plugin-terser: 7.0.2
@@ -3800,6 +3830,7 @@ __metadata:
     "@types/jest": 28.1.6
     "@types/node": 16.11.47
     jest: 28.1.3
+    rollup: 2.77.2
     ts-jest: 28.0.7
     typescript: 4.7.4
   languageName: unknown
@@ -7994,6 +8025,54 @@ __metadata:
   bin:
     nx: bin/nx.js
   checksum: ee5dd89edb614c069ce822e6b3fb996fc41beb111cf5cf86f4929c6e61999a4857135a9a6fc95fd0b842fed00effbecb22235aa7e8f370cc5ed3ed4a3bb20740
+  languageName: node
+  linkType: hard
+
+"nx@npm:14.5.4":
+  version: 14.5.4
+  resolution: "nx@npm:14.5.4"
+  dependencies:
+    "@nrwl/cli": 14.5.4
+    "@nrwl/tao": 14.5.4
+    "@parcel/watcher": 2.0.4
+    chalk: 4.1.0
+    chokidar: ^3.5.1
+    cli-cursor: 3.1.0
+    cli-spinners: 2.6.1
+    cliui: ^7.0.2
+    dotenv: ~10.0.0
+    enquirer: ~2.3.6
+    fast-glob: 3.2.7
+    figures: 3.2.0
+    flat: ^5.0.2
+    fs-extra: ^10.1.0
+    glob: 7.1.4
+    ignore: ^5.0.4
+    js-yaml: 4.1.0
+    jsonc-parser: 3.0.0
+    minimatch: 3.0.5
+    npm-run-path: ^4.0.1
+    open: ^8.4.0
+    semver: 7.3.4
+    string-width: ^4.2.3
+    tar-stream: ~2.2.0
+    tmp: ~0.2.1
+    tsconfig-paths: ^3.9.0
+    tslib: ^2.3.0
+    v8-compile-cache: 2.3.0
+    yargs: ^17.4.0
+    yargs-parser: 21.0.1
+  peerDependencies:
+    "@swc-node/register": ^1.4.2
+    "@swc/core": ^1.2.173
+  peerDependenciesMeta:
+    "@swc-node/register":
+      optional: true
+    "@swc/core":
+      optional: true
+  bin:
+    nx: bin/nx.js
+  checksum: 769636e609b8ed7da601c534a377cc00a5ecce96f9e0819e5c47cf0615795c0199fd85bcc00d99c39e4fa4fdc08fb683624237f6b5a5ea937614ca83286f2ebc
   languageName: node
   linkType: hard
 

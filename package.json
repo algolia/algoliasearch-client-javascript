@@ -5,11 +5,9 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "CLIENT=${0:-all} yarn rollup -c rollup.config.js",
-    "build:all": "./scripts/build_all.sh",
-    "build:utils": "yarn build utils",
-    "clean": "rm -rf packages/*/dist || true",
-    "clean:utils": "yarn workspace @algolia/client-common clean && yarn workspace @algolia/requester-node-http clean && yarn workspace @algolia/requester-browser-xhr clean && yarn workspace @algolia/requester-fetch clean",
+    "build:all": "lerna run build --parallel",
+    "build:many": "lerna run build --parallel --scope ${0:-'{@algolia/*,algoliasearch}'}",
+    "clean": "lerna run clean --parallel",
     "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --force-publish --yes",
     "release:publish": "ts-node --project tsconfig.script.json scripts/publish.ts",
     "test:lint": "eslint . --ext .js,.ts",
@@ -31,6 +29,7 @@
     "bundlesize2": "0.0.31",
     "execa": "5.1.1",
     "lerna": "5.3.0",
+    "nx": "14.5.4",
     "rollup": "2.77.2",
     "rollup-plugin-node-globals": "1.4.0",
     "rollup-plugin-terser": "7.0.2",

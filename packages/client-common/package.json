@@ -14,7 +14,8 @@
     "index.ts"
   ],
   "scripts": {
-    "clean": "rm -rf dist/",
+    "build": "yarn clean && rollup --config",
+    "clean": "rm -rf ./dist || true",
     "test": "jest"
   },
   "devDependencies": {

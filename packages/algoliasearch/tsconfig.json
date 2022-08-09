@@ -4,6 +4,6 @@
     "types": ["node", "jest"],
     "outDir": "dist"
   },
-  "include": ["builds", "lite"],
-  "exclude": ["dist", "node_modules", "__tests__"]
+  "include": ["*.ts"],
+  "exclude": ["dist", "node_modules", "__tests__", "lite"]
 }

@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "outDir": "dist/lite"
+  },
+  "include": ["builds", "model", "src"],
+  "exclude": ["dist", "node_modules"]
+}
