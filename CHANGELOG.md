@@ -1,3 +1,7 @@
+## [5.0.0-alpha.7](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.6...5.0.0-alpha.7)
+
+- [c2a054fa](https://github.com/algolia/api-clients-automation/commit/c2a054fa) fix(specs): allow `searchParams` in `browse` method ([#911](https://github.com/algolia/api-clients-automation/pull/911)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.6](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.5...5.0.0-alpha.6)
 
 - [07c169f5](https://github.com/algolia/api-clients-automation/commit/07c169f5) fix(specs): browseResponse, IndexSettings and searchResponse ([#900](https://github.com/algolia/api-clients-automation/pull/900)) by [@shortcuts](https://github.com/shortcuts/)
