@@ -1,3 +1,9 @@
+## [5.0.0-alpha.8](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.7...5.0.0-alpha.8)
+
+- [4c1596df](https://github.com/algolia/api-clients-automation/commit/4c1596df) fix(clients): list available regions when region is missing ([#916](https://github.com/algolia/api-clients-automation/pull/916)) by [@shortcuts](https://github.com/shortcuts/)
+- [be45fc4e](https://github.com/algolia/api-clients-automation/commit/be45fc4e) fix(specs): make `batch` body parameters required ([#917](https://github.com/algolia/api-clients-automation/pull/917)) by [@shortcuts](https://github.com/shortcuts/)
+- [27b78d93](https://github.com/algolia/api-clients-automation/commit/27b78d93) fix(javascript): build ([#867](https://github.com/algolia/api-clients-automation/pull/867)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.7](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.6...5.0.0-alpha.7)
 
 - [c2a054fa](https://github.com/algolia/api-clients-automation/commit/c2a054fa) fix(specs): allow `searchParams` in `browse` method ([#911](https://github.com/algolia/api-clients-automation/pull/911)) by [@shortcuts](https://github.com/shortcuts/)
