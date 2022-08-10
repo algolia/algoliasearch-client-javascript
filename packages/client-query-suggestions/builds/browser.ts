@@ -41,13 +41,14 @@ export function querySuggestionsClient(
     throw new Error('`apiKey` is missing.');
   }
 
-  if (!region) {
-    throw new Error('`region` is missing.');
-  }
-
-  if (region && (typeof region !== 'string' || !REGIONS.includes(region))) {
+  if (
+    !region ||
+    (region && (typeof region !== 'string' || !REGIONS.includes(region)))
+  ) {
     throw new Error(
-      `\`region\` must be one of the following: ${REGIONS.join(', ')}`
+      `\`region\` is required and must be one of the following: ${REGIONS.join(
+        ', '
+      )}`
     );
   }
 

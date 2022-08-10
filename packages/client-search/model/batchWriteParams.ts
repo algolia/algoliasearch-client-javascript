@@ -6,5 +6,5 @@ import type { BatchRequest } from './batchRequest';
  * The `batch` parameters.
  */
 export type BatchWriteParams = {
-  requests?: BatchRequest[];
+  requests: BatchRequest[];
 };

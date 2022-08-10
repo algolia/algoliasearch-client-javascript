@@ -3,10 +3,10 @@
 import type { Action } from './action';
 
 export type BatchRequest = {
-  action?: Action;
+  action: Action;
 
   /**
    * Arguments to the operation (depends on the type of the operation).
    */
-  body?: Record<string, any>;
+  body: Record<string, any>;
 };

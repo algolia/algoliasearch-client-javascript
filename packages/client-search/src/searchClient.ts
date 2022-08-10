@@ -645,6 +645,12 @@ export function createSearchClient({
         );
       }
 
+      if (!batchWriteParams.requests) {
+        throw new Error(
+          'Parameter `batchWriteParams.requests` is required when calling `batch`.'
+        );
+      }
+
       const requestPath = '/1/indexes/{indexName}/batch'.replace(
         '{indexName}',
         encodeURIComponent(indexName)

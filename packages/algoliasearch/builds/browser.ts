@@ -137,17 +137,14 @@ export function algoliasearch(
     initOptions: InitClientOptions &
       Required<InitClientRegion<PersonalizationRegion>>
   ): PersonalizationClient {
-    if (!initOptions.region) {
-      throw new Error('`region` is missing.');
-    }
-
     if (
-      initOptions.region &&
-      (typeof initOptions.region !== 'string' ||
-        !personalizationRegions.includes(initOptions.region))
+      !initOptions.region ||
+      (initOptions.region &&
+        (typeof initOptions.region !== 'string' ||
+          !personalizationRegions.includes(initOptions.region)))
     ) {
       throw new Error(
-        `\`region\` must be one of the following: ${personalizationRegions.join(
+        `\`region\` is required and must be one of the following: ${personalizationRegions.join(
           ', '
         )}`
       );
