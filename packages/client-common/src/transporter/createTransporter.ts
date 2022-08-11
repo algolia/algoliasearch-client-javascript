@@ -110,11 +110,14 @@ export function createTransporter({
         : {};
 
     const queryParameters: QueryParameters = {
-      'x-algolia-agent': algoliaAgent.value,
       ...baseQueryParameters,
       ...request.queryParameters,
       ...dataQueryParameters,
     };
+
+    if (algoliaAgent.value) {
+      queryParameters['x-algolia-agent'] = algoliaAgent.value;
+    }
 
     if (requestOptions && requestOptions.queryParameters) {
       for (const key of Object.keys(requestOptions.queryParameters)) {
