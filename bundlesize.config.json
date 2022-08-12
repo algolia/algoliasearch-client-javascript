@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-      "maxSize": "7.75KB"
+      "maxSize": "7.80KB"
     },
     {
       "path": "packages/algoliasearch/dist/lite/lite.umd.js",
@@ -26,7 +26,7 @@
     },
     {
       "path": "packages/client-query-suggestions/dist/client-query-suggestions.umd.js",
-      "maxSize": "3.65KB"
+      "maxSize": "3.70KB"
     },
     {
       "path": "packages/client-search/dist/client-search.umd.js",

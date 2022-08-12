@@ -294,8 +294,8 @@ export function createAbtestingClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listABTests(
-      { offset, limit }: ListABTestsProps,
-      requestOptions?: RequestOptions
+      { offset, limit }: ListABTestsProps = {},
+      requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListABTestsResponse> {
       const requestPath = '/2/abtests';
       const headers: Headers = {};

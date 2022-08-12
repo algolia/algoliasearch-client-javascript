@@ -1364,8 +1364,8 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getLogs(
-      { offset, length, indexName, type }: GetLogsProps,
-      requestOptions?: RequestOptions
+      { offset, length, indexName, type }: GetLogsProps = {},
+      requestOptions: RequestOptions | undefined = undefined
     ): Promise<GetLogsResponse> {
       const requestPath = '/1/logs';
       const headers: Headers = {};
@@ -1729,8 +1729,8 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     hasPendingMappings(
-      { getClusters }: HasPendingMappingsProps,
-      requestOptions?: RequestOptions
+      { getClusters }: HasPendingMappingsProps = {},
+      requestOptions: RequestOptions | undefined = undefined
     ): Promise<HasPendingMappingsResponse> {
       const requestPath = '/1/clusters/mapping/pending';
       const headers: Headers = {};
@@ -1803,8 +1803,8 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listIndices(
-      { page }: ListIndicesProps,
-      requestOptions?: RequestOptions
+      { page }: ListIndicesProps = {},
+      requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListIndicesResponse> {
       const requestPath = '/1/indexes';
       const headers: Headers = {};
@@ -1834,8 +1834,8 @@ export function createSearchClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listUserIds(
-      { page, hitsPerPage }: ListUserIdsProps,
-      requestOptions?: RequestOptions
+      { page, hitsPerPage }: ListUserIdsProps = {},
+      requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListUserIdsResponse> {
       const requestPath = '/1/clusters/mapping';
       const headers: Headers = {};
