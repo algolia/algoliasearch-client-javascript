@@ -1,3 +1,7 @@
+## [5.0.0-alpha.10](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.9...5.0.0-alpha.10)
+
+- [51002048](https://github.com/algolia/api-clients-automation/commit/51002048) fix(javascript): allow undefined object when all parameters are optional ([#922](https://github.com/algolia/api-clients-automation/pull/922)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.9](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.8...5.0.0-alpha.9)
 
 - [dc43c2ad](https://github.com/algolia/api-clients-automation/commit/dc43c2ad) fix(javascript): do not send user-agent for Predict ([#919](https://github.com/algolia/api-clients-automation/pull/919)) by [@shortcuts](https://github.com/shortcuts/)
