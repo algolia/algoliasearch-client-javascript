@@ -5,12 +5,28 @@
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
-  "main": "index.js",
-  "jsdelivr": "dist/client-insights.umd.js",
-  "unpkg": "dist/client-insights.umd.js",
-  "module": "dist/client-insights.esm.node.js",
-  "browser": "dist/client-insights.umd.js",
-  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/client-insights.esm.node.js",
+        "module": "./dist/client-insights.esm.node.js",
+        "require": "./dist/client-insights.cjs.js",
+        "default": "./dist/client-insights.cjs.js"
+      },
+      "default": {
+        "umd": "./dist/client-insights.umd.js",
+        "module": "./dist/client-insights.esm.browser.js",
+        "import": "./dist/client-insights.esm.browser.js",
+        "default": "./dist/client-insights.umd.js"
+      }
+    },
+    "./src/*": "./src/*.ts",
+    "./model": "./model/index.ts"
+  },
+  "jsdelivr": "./dist/client-insights.umd.js",
+  "unpkg": "./dist/client-insights.umd.js",
+  "browser": "./dist/client-insights.umd.js",
+  "types": "./index.d.ts",
   "files": [
     "dist",
     "model",

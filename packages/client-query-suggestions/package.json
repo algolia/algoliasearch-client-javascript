@@ -5,12 +5,28 @@
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
-  "main": "index.js",
-  "jsdelivr": "dist/client-query-suggestions.umd.js",
-  "unpkg": "dist/client-query-suggestions.umd.js",
-  "module": "dist/client-query-suggestions.esm.node.js",
-  "browser": "dist/client-query-suggestions.umd.js",
-  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/client-query-suggestions.esm.node.js",
+        "module": "./dist/client-query-suggestions.esm.node.js",
+        "require": "./dist/client-query-suggestions.cjs.js",
+        "default": "./dist/client-query-suggestions.cjs.js"
+      },
+      "default": {
+        "umd": "./dist/client-query-suggestions.umd.js",
+        "module": "./dist/client-query-suggestions.esm.browser.js",
+        "import": "./dist/client-query-suggestions.esm.browser.js",
+        "default": "./dist/client-query-suggestions.umd.js"
+      }
+    },
+    "./src/*": "./src/*.ts",
+    "./model": "./model/index.ts"
+  },
+  "jsdelivr": "./dist/client-query-suggestions.umd.js",
+  "unpkg": "./dist/client-query-suggestions.umd.js",
+  "browser": "./dist/client-query-suggestions.umd.js",
+  "types": "./index.d.ts",
   "files": [
     "dist",
     "model",

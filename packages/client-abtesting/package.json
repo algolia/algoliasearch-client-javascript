@@ -5,12 +5,28 @@
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
-  "main": "index.js",
-  "jsdelivr": "dist/client-abtesting.umd.js",
-  "unpkg": "dist/client-abtesting.umd.js",
-  "module": "dist/client-abtesting.esm.node.js",
-  "browser": "dist/client-abtesting.umd.js",
-  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/client-abtesting.esm.node.js",
+        "module": "./dist/client-abtesting.esm.node.js",
+        "require": "./dist/client-abtesting.cjs.js",
+        "default": "./dist/client-abtesting.cjs.js"
+      },
+      "default": {
+        "umd": "./dist/client-abtesting.umd.js",
+        "module": "./dist/client-abtesting.esm.browser.js",
+        "import": "./dist/client-abtesting.esm.browser.js",
+        "default": "./dist/client-abtesting.umd.js"
+      }
+    },
+    "./src/*": "./src/*.ts",
+    "./model": "./model/index.ts"
+  },
+  "jsdelivr": "./dist/client-abtesting.umd.js",
+  "unpkg": "./dist/client-abtesting.umd.js",
+  "browser": "./dist/client-abtesting.umd.js",
+  "types": "./index.d.ts",
   "files": [
     "dist",
     "model",

@@ -14,7 +14,7 @@
         "require": "./dist/algoliasearch.cjs.js",
         "default": "./dist/algoliasearch.cjs.js"
       },
-      "browser": {
+      "default": {
         "umd": "./dist/algoliasearch.umd.js",
         "module": "./dist/algoliasearch.esm.browser.js",
         "import": "./dist/algoliasearch.esm.browser.js",
@@ -29,7 +29,7 @@
         "require": "./dist/lite/lite.cjs.js",
         "default": "./dist/lite/lite.cjs.js"
       },
-      "browser": {
+      "default": {
         "umd": "./dist/lite/lite.umd.js",
         "module": "./dist/lite/lite.esm.browser.js",
         "import": "./dist/lite/lite.esm.browser.js",
@@ -43,7 +43,7 @@
     "./index.js": "./dist/algoliasearch.umd.js",
     "./lite.js": "./dist/lite/lite.umd.js"
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "files": [
     "dist",
     "builds",
