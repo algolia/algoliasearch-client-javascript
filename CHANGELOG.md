@@ -1,3 +1,7 @@
+## [5.0.0-alpha.11](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.10...5.0.0-alpha.11)
+
+- [3b85c763](https://github.com/algolia/api-clients-automation/commit/3b85c763) fix(javascript): use `exports` field to pick correct bundle ([#947](https://github.com/algolia/api-clients-automation/pull/947)) by [@francoischalifour](https://github.com/francoischalifour/)
+
 ## [5.0.0-alpha.10](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.9...5.0.0-alpha.10)
 
 - [51002048](https://github.com/algolia/api-clients-automation/commit/51002048) fix(javascript): allow undefined object when all parameters are optional ([#922](https://github.com/algolia/api-clients-automation/pull/922)) by [@shortcuts](https://github.com/shortcuts/)
