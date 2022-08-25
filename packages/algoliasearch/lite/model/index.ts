@@ -96,7 +96,6 @@ export * from './sortRemainingBy';
 export * from './source';
 export * from './standardEntries';
 export * from './synonymHit';
-export * from './synonymHitHighlightResult';
 export * from './synonymType';
 export * from './tagFilters';
 export * from './taskStatus';
