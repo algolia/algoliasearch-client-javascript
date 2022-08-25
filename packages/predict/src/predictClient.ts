@@ -50,14 +50,11 @@ export function createPredictClient({
   const transporter = createTransporter({
     hosts: getDefaultHosts(regionOption),
     ...options,
-    algoliaAgent: {
-      ...getAlgoliaAgent({
-        algoliaAgents,
-        client: 'Predict',
-        version: apiClientVersion,
-      }),
-      value: '',
-    },
+    algoliaAgent: getAlgoliaAgent({
+      algoliaAgents,
+      client: 'Predict',
+      version: apiClientVersion,
+    }),
     baseHeaders: {
       'content-type': 'text/plain',
       ...auth.headers(),
