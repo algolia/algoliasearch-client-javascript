@@ -1,3 +1,7 @@
+## [5.0.0-alpha.13](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.12...5.0.0-alpha.13)
+
+- [a5ee875f](https://github.com/algolia/api-clients-automation/commit/a5ee875f) fix(javascript): update Predict type exports ([#953](https://github.com/algolia/api-clients-automation/pull/953)) by [@francoischalifour](https://github.com/francoischalifour/)
+
 ## [5.0.0-alpha.12](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.11...5.0.0-alpha.12)
 
 - [ff02ba09](https://github.com/algolia/api-clients-automation/commit/ff02ba09) fix(javascript): revert: do not send user-agent for Predict  (#957) ([#919](https://github.com/algolia/api-clients-automation/pull/919)) by [@shortcuts](https://github.com/shortcuts/)
