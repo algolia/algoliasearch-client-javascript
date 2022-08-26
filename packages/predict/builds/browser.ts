@@ -18,7 +18,7 @@ import {
   REGIONS,
 } from '../src/predictClient';
 
-export { apiClientVersion, PredictClient } from '../src/predictClient';
+export { apiClientVersion, PredictClient, Region } from '../src/predictClient';
 export * from '../model';
 
 export function predictClient(

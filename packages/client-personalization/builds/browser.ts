@@ -24,6 +24,7 @@ import {
 export {
   apiClientVersion,
   PersonalizationClient,
+  Region,
 } from '../src/personalizationClient';
 export * from '../model';
 

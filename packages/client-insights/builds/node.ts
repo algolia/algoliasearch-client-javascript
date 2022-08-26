@@ -13,7 +13,11 @@ import { createHttpRequester } from '@algolia/requester-node-http';
 import type { InsightsClient, Region } from '../src/insightsClient';
 import { createInsightsClient, REGIONS } from '../src/insightsClient';
 
-export { apiClientVersion, InsightsClient } from '../src/insightsClient';
+export {
+  apiClientVersion,
+  InsightsClient,
+  Region,
+} from '../src/insightsClient';
 export * from '../model';
 
 export function insightsClient(

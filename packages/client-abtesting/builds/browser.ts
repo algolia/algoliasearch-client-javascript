@@ -18,7 +18,11 @@ import {
   REGIONS,
 } from '../src/abtestingClient';
 
-export { apiClientVersion, AbtestingClient } from '../src/abtestingClient';
+export {
+  apiClientVersion,
+  AbtestingClient,
+  Region,
+} from '../src/abtestingClient';
 export * from '../model';
 
 export function abtestingClient(

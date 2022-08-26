@@ -13,7 +13,7 @@ import { createHttpRequester } from '@algolia/requester-node-http';
 import type { PredictClient, Region } from '../src/predictClient';
 import { createPredictClient, REGIONS } from '../src/predictClient';
 
-export { apiClientVersion, PredictClient } from '../src/predictClient';
+export { apiClientVersion, PredictClient, Region } from '../src/predictClient';
 export * from '../model';
 
 export function predictClient(

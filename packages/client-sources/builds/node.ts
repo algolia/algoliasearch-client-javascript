@@ -13,7 +13,7 @@ import { createHttpRequester } from '@algolia/requester-node-http';
 import type { SourcesClient, Region } from '../src/sourcesClient';
 import { createSourcesClient, REGIONS } from '../src/sourcesClient';
 
-export { apiClientVersion, SourcesClient } from '../src/sourcesClient';
+export { apiClientVersion, SourcesClient, Region } from '../src/sourcesClient';
 export * from '../model';
 
 export function sourcesClient(

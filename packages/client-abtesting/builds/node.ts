@@ -13,7 +13,11 @@ import { createHttpRequester } from '@algolia/requester-node-http';
 import type { AbtestingClient, Region } from '../src/abtestingClient';
 import { createAbtestingClient, REGIONS } from '../src/abtestingClient';
 
-export { apiClientVersion, AbtestingClient } from '../src/abtestingClient';
+export {
+  apiClientVersion,
+  AbtestingClient,
+  Region,
+} from '../src/abtestingClient';
 export * from '../model';
 
 export function abtestingClient(

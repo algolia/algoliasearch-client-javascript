@@ -1,12 +1,12 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
-export * from './affinities';
+export * from './affinity';
 export * from './allParams';
 export * from './errorBase';
 export * from './fetchUserProfileResponse';
 export * from './funnelStage';
 export * from './modelsToRetrieve';
-export * from './modelsToRetrieveEnum';
+export * from './modelsToRetrieveParam';
 export * from './params';
 export * from './predictions';
 export * from './predictionsAffinities';
@@ -15,5 +15,5 @@ export * from './predictionsOrderValue';
 export * from './properties';
 export * from './segments';
 export * from './typesToRetrieve';
-export * from './typesToRetrieveEnum';
+export * from './typesToRetrieveParam';
 export * from './clientMethodProps';

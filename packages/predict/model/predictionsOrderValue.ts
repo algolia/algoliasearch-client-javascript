@@ -4,7 +4,7 @@
  * Prediction for the **order_value** model.
  */
 export type PredictionsOrderValue = {
-  value?: number;
+  value: number;
 
-  lastUpdatedAt?: string;
+  lastUpdatedAt: string;
 };

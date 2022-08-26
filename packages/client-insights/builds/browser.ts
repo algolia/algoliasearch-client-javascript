@@ -18,7 +18,11 @@ import {
   REGIONS,
 } from '../src/insightsClient';
 
-export { apiClientVersion, InsightsClient } from '../src/insightsClient';
+export {
+  apiClientVersion,
+  InsightsClient,
+  Region,
+} from '../src/insightsClient';
 export * from '../model';
 
 export function insightsClient(

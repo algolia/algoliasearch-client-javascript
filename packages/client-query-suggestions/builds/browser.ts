@@ -24,6 +24,7 @@ import {
 export {
   apiClientVersion,
   QuerySuggestionsClient,
+  Region,
 } from '../src/querySuggestionsClient';
 export * from '../model';
 
