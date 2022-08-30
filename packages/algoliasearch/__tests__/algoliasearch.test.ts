@@ -28,7 +28,7 @@ describe('api', () => {
     })) as unknown as EchoResponse;
 
     expect(req.algoliaAgent).toMatchInlineSnapshot(
-      `"Algolia%20for%20JavaScript%20(${apiClientVersion});%20Search%20(${apiClientVersion});%20Node.js%20(${process.versions.node})"`
+      `"Algolia%20for%20JavaScript%20(${apiClientVersion})%3B%20Search%20(${apiClientVersion})%3B%20Node.js%20(${process.versions.node})"`
     );
   });
 

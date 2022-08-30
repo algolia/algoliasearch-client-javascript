@@ -49,11 +49,11 @@ export function serializeQueryParameters(parameters: QueryParameters): string {
   return Object.keys(parameters)
     .map(
       (key) =>
-        `${key}=${
+        `${key}=${encodeURIComponent(
           isObjectOrArray(parameters[key])
             ? JSON.stringify(parameters[key])
             : parameters[key]
-        }`
+        )}`
     )
     .join('&');
 }

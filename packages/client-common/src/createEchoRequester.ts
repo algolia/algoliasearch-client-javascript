@@ -44,7 +44,7 @@ export function createEchoRequester({
       data: request.data ? JSON.parse(request.data) : undefined,
       path,
       host,
-      algoliaAgent: encodeURI(algoliaAgent),
+      algoliaAgent: encodeURIComponent(algoliaAgent),
       searchParams,
     };
 
