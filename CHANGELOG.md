@@ -1,3 +1,7 @@
+## [5.0.0-alpha.14](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.13...5.0.0-alpha.14)
+
+- [0df4fb28](https://github.com/algolia/api-clients-automation/commit/0df4fb28) fix(javascript): encode query parameters ([#973](https://github.com/algolia/api-clients-automation/pull/973)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.13](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.12...5.0.0-alpha.13)
 
 - [a5ee875f](https://github.com/algolia/api-clients-automation/commit/a5ee875f) fix(javascript): update Predict type exports ([#953](https://github.com/algolia/api-clients-automation/pull/953)) by [@francoischalifour](https://github.com/francoischalifour/)
