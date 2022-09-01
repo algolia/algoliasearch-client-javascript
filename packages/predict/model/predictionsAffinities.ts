@@ -1,12 +1,6 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
-import type { Affinity } from './affinity';
+import type { AffinitiesSuccess } from './affinitiesSuccess';
+import type { ModelError } from './modelError';
 
-/**
- * Prediction for the **affinities** model.
- */
-export type PredictionsAffinities = {
-  value: Affinity[];
-
-  lastUpdatedAt: string;
-};
+export type PredictionsAffinities = AffinitiesSuccess | ModelError;
