@@ -7,10 +7,10 @@ export type Segments = {
   /**
    * List of computed segments IDs.
    */
-  computed?: string[];
+  computed: string[];
 
   /**
    * List of custom segments IDs.
    */
-  custom?: string[];
+  custom: string[];
 };

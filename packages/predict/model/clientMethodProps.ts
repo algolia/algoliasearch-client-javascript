@@ -17,6 +17,16 @@ export type DelProps = {
 };
 
 /**
+ * Properties for the `deleteUserProfile` method.
+ */
+export type DeleteUserProfileProps = {
+  /**
+   * User ID for authenticated users or cookie ID for non-authenticated repeated users (visitors).
+   */
+  userID: string;
+};
+
+/**
  * Properties for the `fetchUserProfile` method.
  */
 export type FetchUserProfileProps = {

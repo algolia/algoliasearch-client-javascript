@@ -16,12 +16,16 @@ import type {
 
 import type {
   DelProps,
+  DeleteUserProfileProps,
   FetchUserProfileProps,
   GetProps,
   PostProps,
   PutProps,
 } from '../model/clientMethodProps';
-import type { FetchUserProfileResponse } from '../model/fetchUserProfileResponse';
+import type { DeleteUserProfileResponse } from '../model/deleteUserProfileResponse';
+import type { FetchAllUserProfilesParams } from '../model/fetchAllUserProfilesParams';
+import type { FetchAllUserProfilesResponse } from '../model/fetchAllUserProfilesResponse';
+import type { UserProfile } from '../model/userProfile';
 
 export const apiClientVersion = '1.0.0-alpha.14';
 
@@ -133,6 +137,73 @@ export function createPredictClient({
     },
 
     /**
+     * Delete all data and predictions associated with an authenticated user (userID) or an anonymous user (cookieID, sessionID).
+     *
+     * @summary Delete user profile.
+     * @param deleteUserProfile - The deleteUserProfile object.
+     * @param deleteUserProfile.userID - User ID for authenticated users or cookie ID for non-authenticated repeated users (visitors).
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    deleteUserProfile(
+      { userID }: DeleteUserProfileProps,
+      requestOptions?: RequestOptions
+    ): Promise<DeleteUserProfileResponse> {
+      if (!userID) {
+        throw new Error(
+          'Parameter `userID` is required when calling `deleteUserProfile`.'
+        );
+      }
+
+      const requestPath = '/1/users/{userID}'.replace(
+        '{userID}',
+        encodeURIComponent(userID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Get all users with predictions in the provided application.
+     *
+     * @summary Get all user profiles.
+     * @param fetchAllUserProfilesParams - The fetchAllUserProfilesParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    fetchAllUserProfiles(
+      fetchAllUserProfilesParams: FetchAllUserProfilesParams,
+      requestOptions?: RequestOptions
+    ): Promise<FetchAllUserProfilesResponse> {
+      if (!fetchAllUserProfilesParams) {
+        throw new Error(
+          'Parameter `fetchAllUserProfilesParams` is required when calling `fetchAllUserProfiles`.'
+        );
+      }
+
+      const requestPath = '/1/users';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: fetchAllUserProfilesParams,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Get predictions, properties (raw, computed or custom) and segments (computed or custom) for a user profile.
      *
      * @summary Get user profile.
@@ -144,7 +215,7 @@ export function createPredictClient({
     fetchUserProfile(
       { userID, params }: FetchUserProfileProps,
       requestOptions?: RequestOptions
-    ): Promise<FetchUserProfileResponse> {
+    ): Promise<UserProfile> {
       if (!userID) {
         throw new Error(
           'Parameter `userID` is required when calling `fetchUserProfile`.'
