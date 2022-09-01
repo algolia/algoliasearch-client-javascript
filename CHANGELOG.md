@@ -1,3 +1,7 @@
+## [5.0.0-alpha.16](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.15...5.0.0-alpha.16)
+
+- [988040c4](https://github.com/algolia/api-clients-automation/commit/988040c4) fix(javascript): fix funnel stage type casing ([#982](https://github.com/algolia/api-clients-automation/pull/982)) by [@francoischalifour](https://github.com/francoischalifour/)
+
 ## [5.0.0-alpha.15](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.14...5.0.0-alpha.15)
 
 - [14d22254](https://github.com/algolia/api-clients-automation/commit/14d22254) fix(javascript): update Predict models error spec ([#980](https://github.com/algolia/api-clients-automation/pull/980)) by [@francoischalifour](https://github.com/francoischalifour/)
