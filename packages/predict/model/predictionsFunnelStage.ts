@@ -3,4 +3,4 @@
 import type { FunnelStageSuccess } from './funnelStageSuccess';
 import type { ModelError } from './modelError';
 
-export type PredictionsfunnelStage = FunnelStageSuccess | ModelError;
+export type PredictionsFunnelStage = FunnelStageSuccess | ModelError;
