@@ -1,3 +1,8 @@
+## [5.0.0-alpha.15](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.14...5.0.0-alpha.15)
+
+- [14d22254](https://github.com/algolia/api-clients-automation/commit/14d22254) fix(javascript): update Predict models error spec ([#980](https://github.com/algolia/api-clients-automation/pull/980)) by [@francoischalifour](https://github.com/francoischalifour/)
+- [80724c1f](https://github.com/algolia/api-clients-automation/commit/80724c1f) feat(specs): create new methods ([#974](https://github.com/algolia/api-clients-automation/pull/974)) by [@bengreenbank](https://github.com/bengreenbank/)
+
 ## [5.0.0-alpha.14](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.13...5.0.0-alpha.14)
 
 - [0df4fb28](https://github.com/algolia/api-clients-automation/commit/0df4fb28) fix(javascript): encode query parameters ([#973](https://github.com/algolia/api-clients-automation/pull/973)) by [@shortcuts](https://github.com/shortcuts/)

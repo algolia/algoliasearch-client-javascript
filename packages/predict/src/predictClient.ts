@@ -27,7 +27,7 @@ import type { FetchAllUserProfilesParams } from '../model/fetchAllUserProfilesPa
 import type { FetchAllUserProfilesResponse } from '../model/fetchAllUserProfilesResponse';
 import type { UserProfile } from '../model/userProfile';
 
-export const apiClientVersion = '1.0.0-alpha.14';
+export const apiClientVersion = '1.0.0-alpha.15';
 
 export const REGIONS = ['ue', 'ew'] as const;
 export type Region = typeof REGIONS[number];
