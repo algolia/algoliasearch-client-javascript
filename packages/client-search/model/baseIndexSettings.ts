@@ -12,6 +12,11 @@ export type BaseIndexSettings = {
   paginationLimitedTo?: number;
 
   /**
+   * List of attributes that can\'t be retrieved at query time.
+   */
+  unretrievableAttributes?: string[];
+
+  /**
    * A list of words for which you want to turn off typo tolerance.
    */
   disableTypoToleranceOnWords?: string[];

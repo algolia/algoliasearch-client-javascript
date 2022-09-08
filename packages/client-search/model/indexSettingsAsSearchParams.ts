@@ -18,11 +18,6 @@ export type IndexSettingsAsSearchParams = {
   attributesForFaceting?: string[];
 
   /**
-   * List of attributes that can\'t be retrieved at query time.
-   */
-  unretrievableAttributes?: string[];
-
-  /**
    * This parameter controls which attributes to retrieve and which not to retrieve.
    */
   attributesToRetrieve?: string[];
