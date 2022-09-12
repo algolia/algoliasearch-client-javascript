@@ -1,3 +1,7 @@
+## [5.0.0-alpha.18](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.17...5.0.0-alpha.18)
+
+- [d68089e0](https://github.com/algolia/api-clients-automation/commit/d68089e0) feat(specs): update predict client API URL ([#1010](https://github.com/algolia/api-clients-automation/pull/1010)) by [@bengreenbank](https://github.com/bengreenbank/)
+
 ## [5.0.0-alpha.17](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.16...5.0.0-alpha.17)
 
 - [e227d8a6](https://github.com/algolia/api-clients-automation/commit/e227d8a6) fix(specs): remove unretrievableAttributes from searchParams ([#988](https://github.com/algolia/api-clients-automation/pull/988)) by [@loicsay](https://github.com/loicsay/)
