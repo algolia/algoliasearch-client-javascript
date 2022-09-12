@@ -29,14 +29,11 @@ import type { UserProfile } from '../model/userProfile';
 
 export const apiClientVersion = '1.0.0-alpha.17';
 
-export const REGIONS = ['ue', 'ew'] as const;
+export const REGIONS = ['eu', 'us'] as const;
 export type Region = typeof REGIONS[number];
 
 function getDefaultHosts(region: Region): Host[] {
-  const url = 'predict-api-432xa6wemq-{region}.a.run.app'.replace(
-    '{region}',
-    region
-  );
+  const url = 'predict.{region}.algolia.com'.replace('{region}', region);
 
   return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
