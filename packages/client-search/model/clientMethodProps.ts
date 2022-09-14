@@ -9,6 +9,7 @@ import type { BatchAssignUserIdsParams } from './batchAssignUserIdsParams';
 import type { BatchDictionaryEntriesParams } from './batchDictionaryEntriesParams';
 import type { BatchWriteParams } from './batchWriteParams';
 import type { BrowseParams } from './browseParams';
+import type { DeleteByParams } from './deleteByParams';
 import type { DictionaryType } from './dictionaryType';
 import type { IndexSettings } from './indexSettings';
 import type { LogType } from './logType';
@@ -169,7 +170,7 @@ export type DeleteByProps = {
    * The index in which to perform the request.
    */
   indexName: string;
-  searchParams: SearchParams;
+  deleteByParams: DeleteByParams;
 };
 
 /**

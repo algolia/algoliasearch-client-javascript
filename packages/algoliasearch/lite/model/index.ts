@@ -29,6 +29,7 @@ export * from './consequenceParams';
 export * from './consequenceQuery';
 export * from './consequenceQueryObject';
 export * from './cursor';
+export * from './deleteByParams';
 export * from './dictionaryAction';
 export * from './dictionaryEntry';
 export * from './dictionaryEntryState';

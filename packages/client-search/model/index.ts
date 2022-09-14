@@ -39,6 +39,7 @@ export * from './consequenceQueryObject';
 export * from './createdAtResponse';
 export * from './cursor';
 export * from './deleteApiKeyResponse';
+export * from './deleteByParams';
 export * from './deleteSourceResponse';
 export * from './deletedAtResponse';
 export * from './dictionaryAction';

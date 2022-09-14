@@ -1000,11 +1000,11 @@ export function createSearchClient({
      * @summary Delete all records matching the query.
      * @param deleteBy - The deleteBy object.
      * @param deleteBy.indexName - The index in which to perform the request.
-     * @param deleteBy.searchParams - The searchParams object.
+     * @param deleteBy.deleteByParams - The deleteByParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteBy(
-      { indexName, searchParams }: DeleteByProps,
+      { indexName, deleteByParams }: DeleteByProps,
       requestOptions?: RequestOptions
     ): Promise<DeletedAtResponse> {
       if (!indexName) {
@@ -1013,9 +1013,9 @@ export function createSearchClient({
         );
       }
 
-      if (!searchParams) {
+      if (!deleteByParams) {
         throw new Error(
-          'Parameter `searchParams` is required when calling `deleteBy`.'
+          'Parameter `deleteByParams` is required when calling `deleteBy`.'
         );
       }
 
@@ -1031,7 +1031,7 @@ export function createSearchClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: searchParams,
+        data: deleteByParams,
       };
 
       return transporter.request(request, requestOptions);
