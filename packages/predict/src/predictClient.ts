@@ -38,7 +38,7 @@ import type { ModelMetrics } from '../model/modelMetrics';
 import type { UpdateModelInstanceResponse } from '../model/updateModelInstanceResponse';
 import type { UserProfile } from '../model/userProfile';
 
-export const apiClientVersion = '1.0.0-alpha.18';
+export const apiClientVersion = '1.0.0-alpha.19';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = typeof REGIONS[number];
