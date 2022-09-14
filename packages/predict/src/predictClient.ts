@@ -14,17 +14,28 @@ import type {
   QueryParameters,
 } from '@algolia/client-common';
 
+import type { ActivateModelInstanceResponse } from '../model/activateModelInstanceResponse';
+import type { ActivateModelParams } from '../model/activateModelParams';
 import type {
   DelProps,
+  DeleteModelInstanceProps,
   DeleteUserProfileProps,
   FetchUserProfileProps,
   GetProps,
+  GetModelInstanceConfigProps,
+  GetModelMetricsProps,
   PostProps,
   PutProps,
+  UpdateModelInstanceProps,
 } from '../model/clientMethodProps';
+import type { DeleteModelInstanceResponse } from '../model/deleteModelInstanceResponse';
 import type { DeleteUserProfileResponse } from '../model/deleteUserProfileResponse';
 import type { FetchAllUserProfilesParams } from '../model/fetchAllUserProfilesParams';
 import type { FetchAllUserProfilesResponse } from '../model/fetchAllUserProfilesResponse';
+import type { GetAvailableModelTypesResponseInner } from '../model/getAvailableModelTypesResponseInner';
+import type { ModelInstance } from '../model/modelInstance';
+import type { ModelMetrics } from '../model/modelMetrics';
+import type { UpdateModelInstanceResponse } from '../model/updateModelInstanceResponse';
 import type { UserProfile } from '../model/userProfile';
 
 export const apiClientVersion = '1.0.0-alpha.18';
@@ -103,6 +114,59 @@ export function createPredictClient({
     },
 
     /**
+     * Activate an existing model template. This action triggers the training and inference pipelines for the selected model.  The model is added with `status=pending`. If a model with the exact same source & index already exists, the API endpoint returns an error.
+     *
+     * @summary Activate a model instance.
+     * @param activateModelParams - The activateModelParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    activateModelInstance(
+      activateModelParams: ActivateModelParams,
+      requestOptions?: RequestOptions
+    ): Promise<ActivateModelInstanceResponse> {
+      if (!activateModelParams) {
+        throw new Error(
+          'Parameter `activateModelParams` is required when calling `activateModelInstance`.'
+        );
+      }
+
+      if (!activateModelParams.type) {
+        throw new Error(
+          'Parameter `activateModelParams.type` is required when calling `activateModelInstance`.'
+        );
+      }
+      if (!activateModelParams.name) {
+        throw new Error(
+          'Parameter `activateModelParams.name` is required when calling `activateModelInstance`.'
+        );
+      }
+      if (!activateModelParams.sourceID) {
+        throw new Error(
+          'Parameter `activateModelParams.sourceID` is required when calling `activateModelInstance`.'
+        );
+      }
+      if (!activateModelParams.index) {
+        throw new Error(
+          'Parameter `activateModelParams.index` is required when calling `activateModelInstance`.'
+        );
+      }
+
+      const requestPath = '/1/predict/models';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: activateModelParams,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * This method allow you to send requests to the Algolia REST API.
      *
      * @summary Send requests to the Algolia REST API.
@@ -122,6 +186,41 @@ export function createPredictClient({
       const requestPath = '/1{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Delete the model’s configuration, pipelines and generated predictions.
+     *
+     * @summary Delete a model instance.
+     * @param deleteModelInstance - The deleteModelInstance object.
+     * @param deleteModelInstance.modelID - The ID of the model to retrieve.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    deleteModelInstance(
+      { modelID }: DeleteModelInstanceProps,
+      requestOptions?: RequestOptions
+    ): Promise<DeleteModelInstanceResponse> {
+      if (!modelID) {
+        throw new Error(
+          'Parameter `modelID` is required when calling `deleteModelInstance`.'
+        );
+      }
+
+      const requestPath = '/1/predict/models/{modelID}'.replace(
+        '{modelID}',
+        encodeURIComponent(modelID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'DELETE',
@@ -275,6 +374,122 @@ export function createPredictClient({
     },
 
     /**
+     * Get a list of all available model types. Each model type can be activated more than once, by selecting a different data source.
+     *
+     * @summary Get a list of available model types.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getAvailableModelTypes(
+      requestOptions?: RequestOptions
+    ): Promise<GetAvailableModelTypesResponseInner[]> {
+      const requestPath = '/1/predict/modeltypes';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Get the configuration for a model that was activated.
+     *
+     * @summary Get a model’s instance configuration.
+     * @param getModelInstanceConfig - The getModelInstanceConfig object.
+     * @param getModelInstanceConfig.modelID - The ID of the model to retrieve.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getModelInstanceConfig(
+      { modelID }: GetModelInstanceConfigProps,
+      requestOptions?: RequestOptions
+    ): Promise<ModelInstance> {
+      if (!modelID) {
+        throw new Error(
+          'Parameter `modelID` is required when calling `getModelInstanceConfig`.'
+        );
+      }
+
+      const requestPath = '/1/predict/models/{modelID}'.replace(
+        '{modelID}',
+        encodeURIComponent(modelID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Get a list of all model instances.
+     *
+     * @summary Get model instances.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getModelInstances(
+      requestOptions?: RequestOptions
+    ): Promise<ModelInstance[]> {
+      const requestPath = '/1/predict/models';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Get the model instance’ training metrics.
+     *
+     * @summary Get a model’s instance metrics.
+     * @param getModelMetrics - The getModelMetrics object.
+     * @param getModelMetrics.modelID - The ID of the model to retrieve.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getModelMetrics(
+      { modelID }: GetModelMetricsProps,
+      requestOptions?: RequestOptions
+    ): Promise<ModelMetrics[]> {
+      if (!modelID) {
+        throw new Error(
+          'Parameter `modelID` is required when calling `getModelMetrics`.'
+        );
+      }
+
+      const requestPath = '/1/predict/models/{modelID}/metrics'.replace(
+        '{modelID}',
+        encodeURIComponent(modelID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * This method allow you to send requests to the Algolia REST API.
      *
      * @summary Send requests to the Algolia REST API.
@@ -335,6 +550,55 @@ export function createPredictClient({
         queryParameters,
         headers,
         data: body ? body : {},
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Update a model’s configuration.
+     *
+     * @summary Update a model instance.
+     * @param updateModelInstance - The updateModelInstance object.
+     * @param updateModelInstance.modelID - The ID of the model to retrieve.
+     * @param updateModelInstance.updateModelParams - The updateModelParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    updateModelInstance(
+      { modelID, updateModelParams }: UpdateModelInstanceProps,
+      requestOptions?: RequestOptions
+    ): Promise<UpdateModelInstanceResponse> {
+      if (!modelID) {
+        throw new Error(
+          'Parameter `modelID` is required when calling `updateModelInstance`.'
+        );
+      }
+
+      if (!updateModelParams) {
+        throw new Error(
+          'Parameter `updateModelParams` is required when calling `updateModelInstance`.'
+        );
+      }
+
+      if (!updateModelParams.name) {
+        throw new Error(
+          'Parameter `updateModelParams.name` is required when calling `updateModelInstance`.'
+        );
+      }
+
+      const requestPath = '/1/predict/models/{modelID}'.replace(
+        '{modelID}',
+        encodeURIComponent(modelID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: updateModelParams,
       };
 
       return transporter.request(request, requestOptions);

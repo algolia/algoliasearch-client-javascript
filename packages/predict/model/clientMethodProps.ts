@@ -1,6 +1,7 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
 import type { Params } from './params';
+import type { UpdateModelParams } from './updateModelParams';
 
 /**
  * Properties for the `del` method.
@@ -14,6 +15,16 @@ export type DelProps = {
    * Query parameters to be applied to the current query.
    */
   parameters?: Record<string, any>;
+};
+
+/**
+ * Properties for the `deleteModelInstance` method.
+ */
+export type DeleteModelInstanceProps = {
+  /**
+   * The ID of the model to retrieve.
+   */
+  modelID: string;
 };
 
 /**
@@ -52,6 +63,26 @@ export type GetProps = {
 };
 
 /**
+ * Properties for the `getModelInstanceConfig` method.
+ */
+export type GetModelInstanceConfigProps = {
+  /**
+   * The ID of the model to retrieve.
+   */
+  modelID: string;
+};
+
+/**
+ * Properties for the `getModelMetrics` method.
+ */
+export type GetModelMetricsProps = {
+  /**
+   * The ID of the model to retrieve.
+   */
+  modelID: string;
+};
+
+/**
  * Properties for the `post` method.
  */
 export type PostProps = {
@@ -85,4 +116,15 @@ export type PutProps = {
    * The parameters to send with the custom request.
    */
   body?: Record<string, any>;
+};
+
+/**
+ * Properties for the `updateModelInstance` method.
+ */
+export type UpdateModelInstanceProps = {
+  /**
+   * The ID of the model to retrieve.
+   */
+  modelID: string;
+  updateModelParams: UpdateModelParams;
 };

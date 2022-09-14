@@ -1,16 +1,25 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
+export * from './activateModelInstanceResponse';
+export * from './activateModelParams';
 export * from './affinitiesSuccess';
 export * from './affinity';
 export * from './allParams';
+export * from './compatibleSources';
+export * from './deleteModelInstanceResponse';
 export * from './deleteUserProfileResponse';
 export * from './errorBase';
 export * from './fetchAllUserProfilesParams';
 export * from './fetchAllUserProfilesResponse';
 export * from './funnelStage';
 export * from './funnelStageSuccess';
+export * from './getAvailableModelTypesResponseInner';
+export * from './getAvailableModelTypesResponseInnerDataRequirements';
+export * from './getModelInstanceConfigStatus';
 export * from './limitParam';
 export * from './modelError';
+export * from './modelInstance';
+export * from './modelMetrics';
 export * from './modelsToRetrieve';
 export * from './modelsToRetrieveParam';
 export * from './nextPageTokenParam';
@@ -23,7 +32,10 @@ export * from './predictionsOrderValue';
 export * from './previousPageTokenParam';
 export * from './properties';
 export * from './segments';
+export * from './status';
 export * from './typesToRetrieve';
 export * from './typesToRetrieveParam';
+export * from './updateModelInstanceResponse';
+export * from './updateModelParams';
 export * from './userProfile';
 export * from './clientMethodProps';
