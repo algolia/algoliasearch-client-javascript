@@ -1,7 +1,10 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
+import type { FetchAllUserProfilesParams } from './fetchAllUserProfilesParams';
 import type { Params } from './params';
+import type { SegmentType } from './segmentType';
 import type { UpdateModelParams } from './updateModelParams';
+import type { UpdateSegmentParams } from './updateSegmentParams';
 
 /**
  * Properties for the `del` method.
@@ -28,6 +31,16 @@ export type DeleteModelInstanceProps = {
 };
 
 /**
+ * Properties for the `deleteSegment` method.
+ */
+export type DeleteSegmentProps = {
+  /**
+   * The ID of the Segment to fetch.
+   */
+  segmentID: string;
+};
+
+/**
  * Properties for the `deleteUserProfile` method.
  */
 export type DeleteUserProfileProps = {
@@ -35,6 +48,26 @@ export type DeleteUserProfileProps = {
    * User ID for authenticated users or cookie ID for non-authenticated repeated users (visitors).
    */
   userID: string;
+};
+
+/**
+ * Properties for the `fetchAllSegments` method.
+ */
+export type FetchAllSegmentsProps = {
+  /**
+   * The type of segments to fetch.
+   */
+  type?: SegmentType;
+};
+
+/**
+ * Properties for the `fetchSegment` method.
+ */
+export type FetchSegmentProps = {
+  /**
+   * The ID of the Segment to fetch.
+   */
+  segmentID: string;
 };
 
 /**
@@ -83,6 +116,17 @@ export type GetModelMetricsProps = {
 };
 
 /**
+ * Properties for the `getSegmentUsers` method.
+ */
+export type GetSegmentUsersProps = {
+  /**
+   * The ID of the Segment to fetch.
+   */
+  segmentID: string;
+  fetchAllUserProfilesParams: FetchAllUserProfilesParams;
+};
+
+/**
  * Properties for the `post` method.
  */
 export type PostProps = {
@@ -127,4 +171,15 @@ export type UpdateModelInstanceProps = {
    */
   modelID: string;
   updateModelParams: UpdateModelParams;
+};
+
+/**
+ * Properties for the `updateSegment` method.
+ */
+export type UpdateSegmentProps = {
+  /**
+   * The ID of the Segment to fetch.
+   */
+  segmentID: string;
+  updateSegmentParams: UpdateSegmentParams;
 };
