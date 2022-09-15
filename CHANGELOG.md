@@ -1,3 +1,8 @@
+## [5.0.0-alpha.20](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.19...5.0.0-alpha.20)
+
+- [07a2e936](https://github.com/algolia/api-clients-automation/commit/07a2e936) feat(specs): predict segments ([#1013](https://github.com/algolia/api-clients-automation/pull/1013)) by [@bengreenbank](https://github.com/bengreenbank/)
+- [362cd6b1](https://github.com/algolia/api-clients-automation/commit/362cd6b1) feat(specs): deleteByParams ([#1016](https://github.com/algolia/api-clients-automation/pull/1016)) by [@clemfromspace](https://github.com/clemfromspace/)
+
 ## [5.0.0-alpha.19](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.18...5.0.0-alpha.19)
 
 - [bf539a7e](https://github.com/algolia/api-clients-automation/commit/bf539a7e) feat(specs): predict model endpoints ([#1014](https://github.com/algolia/api-clients-automation/pull/1014)) by [@writeens](https://github.com/writeens/)
