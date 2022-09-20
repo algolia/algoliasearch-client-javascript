@@ -1,6 +1,6 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
-import type { FunnelStageSuccess } from './funnelStageSuccess';
 import type { ModelError } from './modelError';
+import type { PredictionsFunnelStageSuccess } from './predictionsFunnelStageSuccess';
 
-export type PredictionsFunnelStage = FunnelStageSuccess | ModelError;
+export type PredictionsFunnelStage = ModelError | PredictionsFunnelStageSuccess;
