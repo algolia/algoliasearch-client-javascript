@@ -1,3 +1,7 @@
+## [5.0.0-alpha.21](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.20...5.0.0-alpha.21)
+
+- [b56b2b49](https://github.com/algolia/api-clients-automation/commit/b56b2b49) fix(specs): prefix Predict predictions success types ([#1032](https://github.com/algolia/api-clients-automation/pull/1032)) by [@francoischalifour](https://github.com/francoischalifour/)
+
 ## [5.0.0-alpha.20](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.19...5.0.0-alpha.20)
 
 - [07a2e936](https://github.com/algolia/api-clients-automation/commit/07a2e936) feat(specs): predict segments ([#1013](https://github.com/algolia/api-clients-automation/pull/1013)) by [@bengreenbank](https://github.com/bengreenbank/)
