@@ -36,7 +36,7 @@ export type ModelInstance = {
    */
   lastInference: string;
 
-  error?: string;
+  errorMessage?: string;
 
-  status: GetModelInstanceConfigStatus;
+  modelStatus?: GetModelInstanceConfigStatus;
 };
