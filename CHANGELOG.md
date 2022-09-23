@@ -1,3 +1,7 @@
+## [5.0.0-alpha.22](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.21...5.0.0-alpha.22)
+
+- [09a235cd](https://github.com/algolia/api-clients-automation/commit/09a235cd) fix(specs): update model response ([#1034](https://github.com/algolia/api-clients-automation/pull/1034)) by [@writeens](https://github.com/writeens/)
+
 ## [5.0.0-alpha.21](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.20...5.0.0-alpha.21)
 
 - [b56b2b49](https://github.com/algolia/api-clients-automation/commit/b56b2b49) fix(specs): prefix Predict predictions success types ([#1032](https://github.com/algolia/api-clients-automation/pull/1032)) by [@francoischalifour](https://github.com/francoischalifour/)
