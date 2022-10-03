@@ -23,7 +23,7 @@ import type {
 import type { PostIngestUrlResponse } from '../model/postIngestUrlResponse';
 import type { PostURLJob } from '../model/postURLJob';
 
-export const apiClientVersion = '1.0.0-alpha.23';
+export const apiClientVersion = '1.0.0-alpha.24';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = typeof REGIONS[number];
