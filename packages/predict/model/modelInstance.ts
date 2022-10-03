@@ -1,6 +1,7 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
 import type { GetModelInstanceConfigStatus } from './getModelInstanceConfigStatus';
+import type { ModelAttributes } from './modelAttributes';
 
 export type ModelInstance = {
   /**
@@ -22,7 +23,7 @@ export type ModelInstance = {
 
   index: string;
 
-  affinities: string[];
+  modelAttributes: ModelAttributes;
 
   contentAttributes: string[];
 
@@ -38,5 +39,5 @@ export type ModelInstance = {
 
   errorMessage?: string;
 
-  modelStatus?: GetModelInstanceConfigStatus;
+  modelStatus: GetModelInstanceConfigStatus;
 };

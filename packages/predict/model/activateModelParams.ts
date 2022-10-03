@@ -20,7 +20,7 @@ export type ActivateModelParams = {
    */
   index: string;
 
-  affinities?: string[];
+  modelAttributes?: string[];
 
   contentAttributes?: string[];
 };

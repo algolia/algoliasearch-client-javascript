@@ -125,7 +125,7 @@ export function createPredictClient({
     },
 
     /**
-     * Activate an existing model template. This action triggers the training and inference pipelines for the selected model.  The model is added with `status=pending`. If a model with the exact same source & index already exists, the API endpoint returns an error.
+     * Activate an existing model template. This action triggers the training and inference pipelines for the selected model.  The model is added with `modelStatus=pending`. If a model with the exact same source & index already exists, the API endpoint returns an error.
      *
      * @summary Activate a model instance.
      * @param activateModelParams - The activateModelParams object.
