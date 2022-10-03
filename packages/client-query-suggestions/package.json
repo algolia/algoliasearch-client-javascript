@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-query-suggestions",
-  "version": "5.0.0-alpha.22",
+  "version": "5.0.0-alpha.23",
   "description": "JavaScript client for client-query-suggestions",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -38,9 +38,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.22",
-    "@algolia/requester-browser-xhr": "5.0.0-alpha.22",
-    "@algolia/requester-node-http": "5.0.0-alpha.22"
+    "@algolia/client-common": "5.0.0-alpha.23",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.23",
+    "@algolia/requester-node-http": "5.0.0-alpha.23"
   },
   "devDependencies": {
     "@types/node": "16.11.59",

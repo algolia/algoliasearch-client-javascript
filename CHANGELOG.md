@@ -1,3 +1,7 @@
+## [5.0.0-alpha.23](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.22...5.0.0-alpha.23)
+
+- [6ba25e25](https://github.com/algolia/api-clients-automation/commit/6ba25e25) chore(specs): setup revised predict model spec ([#1045](https://github.com/algolia/api-clients-automation/pull/1045)) by [@writeens](https://github.com/writeens/)
+
 ## [5.0.0-alpha.22](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.21...5.0.0-alpha.22)
 
 - [09a235cd](https://github.com/algolia/api-clients-automation/commit/09a235cd) fix(specs): update model response ([#1034](https://github.com/algolia/api-clients-automation/pull/1034)) by [@writeens](https://github.com/writeens/)
