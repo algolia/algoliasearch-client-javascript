@@ -23,7 +23,7 @@ export type ModelInstance = {
 
   index: string;
 
-  modelAttributes: ModelAttributes;
+  modelAttributes: ModelAttributes[];
 
   contentAttributes: string[];
 
