@@ -23,9 +23,9 @@ export type ModelInstance = {
 
   index: string;
 
-  modelAttributes: ModelAttributes[];
+  modelAttributes?: ModelAttributes[];
 
-  contentAttributes: string[];
+  contentAttributes?: string[];
 
   /**
    * The date and time this model instance was last trained.
