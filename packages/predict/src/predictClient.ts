@@ -41,9 +41,9 @@ import type { DeleteUserProfileResponse } from '../model/deleteUserProfileRespon
 import type { FetchAllUserProfilesParams } from '../model/fetchAllUserProfilesParams';
 import type { FetchAllUserProfilesResponse } from '../model/fetchAllUserProfilesResponse';
 import type { GetAvailableModelTypesResponseInner } from '../model/getAvailableModelTypesResponseInner';
+import type { GetModelMetricsResponse } from '../model/getModelMetricsResponse';
 import type { GetSegmentUsersResponse } from '../model/getSegmentUsersResponse';
 import type { ModelInstance } from '../model/modelInstance';
-import type { ModelMetrics } from '../model/modelMetrics';
 import type { Segment } from '../model/segment';
 import type { UpdateModelInstanceResponse } from '../model/updateModelInstanceResponse';
 import type { UpdateSegmentResponse } from '../model/updateSegmentResponse';
@@ -619,7 +619,7 @@ export function createPredictClient({
     getModelMetrics(
       { modelID }: GetModelMetricsProps,
       requestOptions?: RequestOptions
-    ): Promise<ModelMetrics[]> {
+    ): Promise<GetModelMetricsResponse> {
       if (!modelID) {
         throw new Error(
           'Parameter `modelID` is required when calling `getModelMetrics`.'

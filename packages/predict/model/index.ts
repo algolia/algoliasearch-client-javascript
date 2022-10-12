@@ -18,6 +18,7 @@ export * from './funnelStage';
 export * from './getAvailableModelTypesResponseInner';
 export * from './getAvailableModelTypesResponseInnerDataRequirements';
 export * from './getModelInstanceConfigStatus';
+export * from './getModelMetricsResponse';
 export * from './getSegmentUsersResponse';
 export * from './limitParam';
 export * from './modelAttributes';
