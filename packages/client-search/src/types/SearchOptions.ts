@@ -273,7 +273,7 @@ export type SearchOptions = {
   readonly aroundLatLngViaIP?: boolean;
 
   /**
-   * Search for entries around a given location automatically computed from the requester’s IP address.
+   * Define the maximum radius for a geo search (in meters).
    */
   readonly aroundRadius?: number | 'all';
 
