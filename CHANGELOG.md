@@ -1,3 +1,7 @@
+## [5.0.0-alpha.26](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.25...5.0.0-alpha.26)
+
+- [e84584dd](https://github.com/algolia/api-clients-automation/commit/e84584dd) feat(specs): add modelID as part of getModelMetrics response ([#1075](https://github.com/algolia/api-clients-automation/pull/1075)) by [@writeens](https://github.com/writeens/)
+
 ## [5.0.0-alpha.25](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.24...5.0.0-alpha.25)
 
 - [8151e945](https://github.com/algolia/api-clients-automation/commit/8151e945) feat(specs): attributes no longer required in model instance response ([#1065](https://github.com/algolia/api-clients-automation/pull/1065)) by [@writeens](https://github.com/writeens/)
