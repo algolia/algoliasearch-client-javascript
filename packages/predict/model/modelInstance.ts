@@ -2,6 +2,7 @@
 
 import type { GetModelInstanceConfigStatus } from './getModelInstanceConfigStatus';
 import type { ModelAttributes } from './modelAttributes';
+import type { ModelsToRetrieve } from './modelsToRetrieve';
 
 export type ModelInstance = {
   /**
@@ -14,10 +15,7 @@ export type ModelInstance = {
    */
   name: string;
 
-  /**
-   * Type of the model.
-   */
-  type: string;
+  type: ModelsToRetrieve;
 
   sourceID: string;
 

@@ -6,7 +6,7 @@ export type GetModelMetricsResponse = {
   /**
    * The ID of the model.
    */
-  modelID?: string;
+  modelID: string;
 
-  metrics?: ModelMetrics[];
+  metrics: ModelMetrics[];
 };
