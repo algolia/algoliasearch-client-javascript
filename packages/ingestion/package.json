@@ -1,0 +1,53 @@
+{
+  "name": "@algolia/ingestion",
+  "version": "1.0.0-alpha.1",
+  "description": "JavaScript client for ingestion",
+  "repository": "algolia/algoliasearch-client-javascript",
+  "license": "MIT",
+  "author": "Algolia",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/ingestion.esm.node.js",
+        "module": "./dist/ingestion.esm.node.js",
+        "require": "./dist/ingestion.cjs.js",
+        "default": "./dist/ingestion.cjs.js"
+      },
+      "default": {
+        "umd": "./dist/ingestion.umd.js",
+        "module": "./dist/ingestion.esm.browser.js",
+        "import": "./dist/ingestion.esm.browser.js",
+        "default": "./dist/ingestion.umd.js"
+      }
+    },
+    "./src/*": "./src/*.ts",
+    "./model": "./model/index.ts"
+  },
+  "jsdelivr": "./dist/ingestion.umd.js",
+  "unpkg": "./dist/ingestion.umd.js",
+  "browser": "./dist/ingestion.umd.js",
+  "types": "./index.d.ts",
+  "files": [
+    "dist",
+    "model",
+    "index.js",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "build": "yarn clean && rollup --config",
+    "clean": "rm -rf ./dist || true"
+  },
+  "dependencies": {
+    "@algolia/client-common": "5.0.0-alpha.27",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.27",
+    "@algolia/requester-node-http": "5.0.0-alpha.27"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.59",
+    "rollup": "2.79.1",
+    "typescript": "4.8.3"
+  },
+  "engines": {
+    "node": ">= 14.0.0"
+  }
+}
