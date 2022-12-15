@@ -1,3 +1,6 @@
 import { TrendingQuery } from './TrendingQuery';
 
-export type TrendingFacetsQuery = Omit<TrendingQuery, 'model' | 'facetValue' | 'fallbackParameters' | 'queryParameters'>;
+export type TrendingFacetsQuery = Omit<
+  TrendingQuery,
+  'model' | 'facetValue' | 'fallbackParameters' | 'queryParameters'
+>;
