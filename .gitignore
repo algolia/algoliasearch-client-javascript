@@ -6,3 +6,5 @@ dist
 *.umd.js
 yarn-error.log
 .env
+
+.idea/
