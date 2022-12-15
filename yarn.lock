@@ -96,19 +96,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-sources@workspace:packages/client-sources":
-  version: 0.0.0-use.local
-  resolution: "@algolia/client-sources@workspace:packages/client-sources"
-  dependencies:
-    "@algolia/client-common": 5.0.0-alpha.27
-    "@algolia/requester-browser-xhr": 5.0.0-alpha.27
-    "@algolia/requester-node-http": 5.0.0-alpha.27
-    "@types/node": 16.11.59
-    rollup: 2.79.1
-    typescript: 4.8.3
-  languageName: unknown
-  linkType: soft
-
 "@algolia/ingestion@workspace:packages/ingestion":
   version: 0.0.0-use.local
   resolution: "@algolia/ingestion@workspace:packages/ingestion"

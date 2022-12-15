@@ -33,7 +33,7 @@
       "maxSize": "6.35KB"
     },
     {
-      "path": "packages/client-sources/dist/client-sources.umd.js",
+      "path": "packages/ingestion/dist/ingestion.umd.js",
       "maxSize": "3.50KB"
     },
     {
