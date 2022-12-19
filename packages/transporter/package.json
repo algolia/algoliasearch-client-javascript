@@ -1,6 +1,6 @@
 {
   "name": "@algolia/transporter",
-  "version": "4.14.2",
+  "version": "4.14.3",
   "private": false,
   "description": "Promise-based transporter layer with embedded retry strategy.",
   "repository": {
@@ -17,8 +17,8 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/cache-common": "4.14.2",
-    "@algolia/logger-common": "4.14.2",
-    "@algolia/requester-common": "4.14.2"
+    "@algolia/cache-common": "4.14.3",
+    "@algolia/logger-common": "4.14.3",
+    "@algolia/requester-common": "4.14.3"
   }
 }
