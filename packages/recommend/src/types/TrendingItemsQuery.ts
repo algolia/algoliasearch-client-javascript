@@ -29,12 +29,12 @@ export type TrendingItemsQuery = {
   readonly fallbackParameters?: RecommendSearchOptions;
 
   /**
-   * Used for trending model
+   * The facet attribute to get recommendations for.
    */
   readonly facetName?: string;
 
   /**
-   * Used for trending model
+   * The value of the target facet.
    */
   readonly facetValue?: string;
 };

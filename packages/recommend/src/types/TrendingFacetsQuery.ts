@@ -15,7 +15,7 @@ export type TrendingFacetsQuery = {
   readonly maxRecommendations?: number;
 
   /**
-   * Used for trending model
+   * The facet attribute to get recommendations for.
    */
   readonly facetName: string;
 };
