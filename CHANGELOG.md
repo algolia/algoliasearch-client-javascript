@@ -1,3 +1,10 @@
+## [5.0.0-alpha.29](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.28...5.0.0-alpha.29)
+
+- [494c2b77](https://github.com/algolia/api-clients-automation/commit/494c2b77) fix(javascript): update ingestion specs ([#1192](https://github.com/algolia/api-clients-automation/pull/1192)) by [@shortcuts](https://github.com/shortcuts/)
+- [5938b05f](https://github.com/algolia/api-clients-automation/commit/5938b05f) fix(javascript): pass with no tests ([#1191](https://github.com/algolia/api-clients-automation/pull/1191)) by [@shortcuts](https://github.com/shortcuts/)
+- [ec370af5](https://github.com/algolia/api-clients-automation/commit/ec370af5) fix(specs): new CT source input ([#1190](https://github.com/algolia/api-clients-automation/pull/1190)) by [@shortcuts](https://github.com/shortcuts/)
+- [377e091d](https://github.com/algolia/api-clients-automation/commit/377e091d) fix(specs): Algolia Search hostnames ([#1189](https://github.com/algolia/api-clients-automation/pull/1189)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0-alpha.28](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.27...5.0.0-alpha.28)
 
 - [19552886](https://github.com/algolia/api-clients-automation/commit/19552886) fix(clients): replace sources client with ingestion ([#1178](https://github.com/algolia/api-clients-automation/pull/1178)) by [@millotp](https://github.com/millotp/)
