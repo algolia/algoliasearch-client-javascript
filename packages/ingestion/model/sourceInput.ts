@@ -2,5 +2,6 @@
 
 import type { SourceBigCommerce } from './sourceBigCommerce';
 import type { SourceCommercetools } from './sourceCommercetools';
+import type { SourceJson } from './sourceJson';
 
-export type SourceInput = SourceBigCommerce | SourceCommercetools;
+export type SourceInput = SourceBigCommerce | SourceCommercetools | SourceJson;
