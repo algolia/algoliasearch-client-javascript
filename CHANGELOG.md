@@ -1,3 +1,7 @@
+## [5.0.0-alpha.30](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.29...5.0.0-alpha.30)
+
+- [dd4fdefd](https://github.com/algolia/api-clients-automation/commit/dd4fdefd) feat(specs): add source json to ingestion client ([#1200](https://github.com/algolia/api-clients-automation/pull/1200)) by [@morganleroi](https://github.com/morganleroi/)
+
 ## [5.0.0-alpha.29](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.28...5.0.0-alpha.29)
 
 - [494c2b77](https://github.com/algolia/api-clients-automation/commit/494c2b77) fix(javascript): update ingestion specs ([#1192](https://github.com/algolia/api-clients-automation/pull/1192)) by [@shortcuts](https://github.com/shortcuts/)
