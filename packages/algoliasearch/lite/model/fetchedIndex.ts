@@ -39,7 +39,7 @@ export type FetchedIndex = {
   /**
    * Number of pending indexing operations. This value is deprecated and should not be used.
    */
-  numberOfPendingTask?: number;
+  numberOfPendingTasks: number;
 
   /**
    * A boolean which says whether the index has pending tasks. This value is deprecated and should not be used.
