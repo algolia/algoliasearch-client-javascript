@@ -31,7 +31,7 @@ export type SearchRulesParams = {
   /**
    * When specified, restricts matches to rules with a specific enabled status. When absent (default), all rules are retrieved, regardless of their enabled status.
    */
-  enabled?: boolean;
+  enabled?: boolean | null;
 
   /**
    * A mapping of requestOptions to send along with the request.
