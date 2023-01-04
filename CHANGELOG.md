@@ -1,3 +1,8 @@
+## [5.0.0-alpha.31](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.30...5.0.0-alpha.31)
+
+- [75c9a862](https://github.com/algolia/api-clients-automation/commit/75c9a862) fix(specs): numberOfPendingTasks is plural ([#1211](https://github.com/algolia/api-clients-automation/pull/1211)) by [@kai687](https://github.com/kai687/)
+- [e77a46b9](https://github.com/algolia/api-clients-automation/commit/e77a46b9) fix(specs): example should be integer ([#1210](https://github.com/algolia/api-clients-automation/pull/1210)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0-alpha.30](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.29...5.0.0-alpha.30)
 
 - [dd4fdefd](https://github.com/algolia/api-clients-automation/commit/dd4fdefd) feat(specs): add source json to ingestion client ([#1200](https://github.com/algolia/api-clients-automation/pull/1200)) by [@morganleroi](https://github.com/morganleroi/)
