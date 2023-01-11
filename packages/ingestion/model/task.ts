@@ -16,10 +16,6 @@ export type Task = {
 
   action: ActionType;
 
-  lastRun?: string;
-
-  nextRun?: string;
-
   /**
    * Date of creation (RFC3339 format).
    */

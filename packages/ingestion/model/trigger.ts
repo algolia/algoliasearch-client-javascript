@@ -5,5 +5,15 @@ import type { TriggerType } from './triggerType';
 export type Trigger = {
   type: TriggerType;
 
-  frequency?: string;
+  cron?: string;
+
+  /**
+   * The last time the task ran (`scheduled` or `on-demand`).
+   */
+  lastRun?: string;
+
+  /**
+   * The next scheduled run for the task (`scheduled`).
+   */
+  nextRun?: string;
 };
