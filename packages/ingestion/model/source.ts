@@ -12,7 +12,7 @@ export type Source = {
 
   input: SourceInput;
 
-  authenticationID: string;
+  authenticationID?: string;
 
   /**
    * Date of creation (RFC3339 format).

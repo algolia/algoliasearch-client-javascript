@@ -22,5 +22,5 @@ export type Destination = {
    */
   updatedAt?: string;
 
-  authenticationID: string;
+  authenticationID?: string;
 };
