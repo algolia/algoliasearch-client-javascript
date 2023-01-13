@@ -1,3 +1,10 @@
+## [5.0.0-alpha.32](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.31...5.0.0-alpha.32)
+
+- [466cc0b3](https://github.com/algolia/api-clients-automation/commit/466cc0b3) fix(specs): remove input from auth list ([#1229](https://github.com/algolia/api-clients-automation/pull/1229)) by [@millotp](https://github.com/millotp/)
+- [28d82603](https://github.com/algolia/api-clients-automation/commit/28d82603) fix(specs): authenticationID is not required in source and destination ([#1203](https://github.com/algolia/api-clients-automation/pull/1203)) by [@morganleroi](https://github.com/morganleroi/)
+- [9acdc96b](https://github.com/algolia/api-clients-automation/commit/9acdc96b) fix(specs): move lastRun and nextRun to task.trigger ([#1228](https://github.com/algolia/api-clients-automation/pull/1228)) by [@millotp](https://github.com/millotp/)
+- [8fc33195](https://github.com/algolia/api-clients-automation/commit/8fc33195) fix(specs): make enabled nullable ([#1212](https://github.com/algolia/api-clients-automation/pull/1212)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0-alpha.31](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.30...5.0.0-alpha.31)
 
 - [75c9a862](https://github.com/algolia/api-clients-automation/commit/75c9a862) fix(specs): numberOfPendingTasks is plural ([#1211](https://github.com/algolia/api-clients-automation/pull/1211)) by [@kai687](https://github.com/kai687/)
