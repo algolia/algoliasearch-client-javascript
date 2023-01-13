@@ -1,14 +1,14 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
 import type { ActionType } from './actionType';
-import type { Trigger } from './trigger';
+import type { TriggerInput } from './triggerInput';
 
 export type TaskCreate = {
   sourceID: string;
 
   destinationID: string;
 
-  trigger: Trigger;
+  trigger: TriggerInput;
 
   action: ActionType;
 

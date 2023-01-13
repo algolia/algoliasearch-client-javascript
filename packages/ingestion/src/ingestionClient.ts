@@ -14,10 +14,10 @@ import type {
   QueryParameters,
 } from '@algolia/client-common';
 
-import type { Authentication } from '../model/authentication';
 import type { AuthenticationCreate } from '../model/authenticationCreate';
 import type { AuthenticationCreateResponse } from '../model/authenticationCreateResponse';
 import type { AuthenticationUpdateResponse } from '../model/authenticationUpdateResponse';
+import type { AuthenticationWithInput } from '../model/authenticationWithInput';
 import type {
   DeleteAuthenticationProps,
   DeleteDestinationProps,
@@ -505,7 +505,7 @@ export function createIngestionClient({
     getAuthentication(
       { authenticationID }: GetAuthenticationProps,
       requestOptions?: RequestOptions
-    ): Promise<Authentication> {
+    ): Promise<AuthenticationWithInput> {
       if (!authenticationID) {
         throw new Error(
           'Parameter `authenticationID` is required when calling `getAuthentication`.'

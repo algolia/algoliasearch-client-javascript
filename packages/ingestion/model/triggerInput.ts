@@ -1,11 +1,9 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
-export type AuthOAuth = {
-  url: string;
+import type { TriggerType } from './triggerType';
 
-  client_id: string;
+export type TriggerInput = {
+  type: TriggerType;
 
-  client_secret: string;
-
-  scope?: string;
+  cron?: string;
 };
