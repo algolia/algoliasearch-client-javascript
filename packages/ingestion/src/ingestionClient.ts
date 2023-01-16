@@ -945,10 +945,21 @@ export function createIngestionClient({
      * @param getTasks - The getTasks object.
      * @param getTasks.itemsPerPage - The number of items per page to return.
      * @param getTasks.page - The page number to fetch, starting at 1.
+     * @param getTasks.action - Which action the returned task should have. Can be a list of string separated with commas.
+     * @param getTasks.enabled - If the returned task should have its \'enabled\' property set to true.
+     * @param getTasks.destinationID - Which destinationID the returned task should have. Can be a list of string separated with commas.
+     * @param getTasks.triggerType - Which trigger type the returned task should have. Can be a list of string separated with commas.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTasks(
-      { itemsPerPage, page }: GetTasksProps = {},
+      {
+        itemsPerPage,
+        page,
+        action,
+        enabled,
+        destinationID,
+        triggerType,
+      }: GetTasksProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListTasksResponse> {
       const requestPath = '/1/tasks';
@@ -961,6 +972,22 @@ export function createIngestionClient({
 
       if (page !== undefined) {
         queryParameters.page = page.toString();
+      }
+
+      if (action !== undefined) {
+        queryParameters.action = action.toString();
+      }
+
+      if (enabled !== undefined) {
+        queryParameters.enabled = enabled.toString();
+      }
+
+      if (destinationID !== undefined) {
+        queryParameters.destinationID = destinationID.toString();
+      }
+
+      if (triggerType !== undefined) {
+        queryParameters.triggerType = triggerType.toString();
       }
 
       const request: Request = {

@@ -1,9 +1,11 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
+import type { ActionType } from './actionType';
 import type { AuthenticationUpdate } from './authenticationUpdate';
 import type { DestinationUpdate } from './destinationUpdate';
 import type { SourceUpdate } from './sourceUpdate';
 import type { TaskUpdate } from './taskUpdate';
+import type { TriggerType } from './triggerType';
 
 /**
  * Properties for the `deleteAuthentication` method.
@@ -233,6 +235,22 @@ export type GetTasksProps = {
    * The page number to fetch, starting at 1.
    */
   page?: number;
+  /**
+   * Which action the returned task should have. Can be a list of string separated with commas.
+   */
+  action?: ActionType[];
+  /**
+   * If the returned task should have its \'enabled\' property set to true.
+   */
+  enabled?: boolean;
+  /**
+   * Which destinationID the returned task should have. Can be a list of string separated with commas.
+   */
+  destinationID?: string[];
+  /**
+   * Which trigger type the returned task should have. Can be a list of string separated with commas.
+   */
+  triggerType?: TriggerType[];
 };
 
 /**
