@@ -67,7 +67,7 @@ import type { TaskCreate } from '../model/taskCreate';
 import type { TaskCreateResponse } from '../model/taskCreateResponse';
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
 
-export const apiClientVersion = '1.0.0-alpha.8';
+export const apiClientVersion = '1.0.0-alpha.9';
 
 export const REGIONS = ['us'] as const;
 export type Region = typeof REGIONS[number];
