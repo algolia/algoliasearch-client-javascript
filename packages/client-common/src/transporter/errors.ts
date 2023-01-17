@@ -35,8 +35,13 @@ export class RetryError extends ErrorWithStackTrace {
 export class ApiError extends ErrorWithStackTrace {
   status: number;
 
-  constructor(message: string, status: number, stackTrace: StackFrame[]) {
-    super(message, stackTrace, 'ApiError');
+  constructor(
+    message: string,
+    status: number,
+    stackTrace: StackFrame[],
+    name = 'ApiError'
+  ) {
+    super(message, stackTrace, name);
     this.status = status;
   }
 }
@@ -47,5 +52,36 @@ export class DeserializationError extends AlgoliaError {
   constructor(message: string, response: Response) {
     super(message, 'DeserializationError');
     this.response = response;
+  }
+}
+
+export type DetailedErrorWithMessage = {
+  message: string;
+  label: string;
+};
+
+export type DetailedErrorWithTypeID = {
+  id: string;
+  type: string;
+  name?: string;
+};
+
+export type DetailedError = {
+  code: string;
+  details?: DetailedErrorWithMessage[] | DetailedErrorWithTypeID[];
+};
+
+// DetailedApiError is only used by the ingestion client to return more informative error, other clients will use ApiClient.
+export class DetailedApiError extends ApiError {
+  error: DetailedError;
+
+  constructor(
+    message: string,
+    status: number,
+    error: DetailedError,
+    stackTrace: StackFrame[]
+  ) {
+    super(message, status, stackTrace, 'DetailedApiError');
+    this.error = error;
   }
 }

@@ -8,7 +8,7 @@ import type {
   StackFrame,
 } from '../types';
 
-import { ApiError, DeserializationError } from './errors';
+import { ApiError, DeserializationError, DetailedApiError } from './errors';
 
 export function shuffle<TData>(array: TData[]): TData[] {
   const shuffledArray = array;
@@ -109,11 +109,19 @@ export function deserializeFailure(
   { content, status }: Response,
   stackFrame: StackFrame[]
 ): Error {
-  let message = content;
   try {
-    message = JSON.parse(content).message;
+    const parsed = JSON.parse(content);
+    if ('error' in parsed) {
+      return new DetailedApiError(
+        parsed.message,
+        status,
+        parsed.error,
+        stackFrame
+      );
+    }
+    return new ApiError(parsed.message, status, stackFrame);
   } catch (e) {
     // ..
   }
-  return new ApiError(message, status, stackFrame);
+  return new ApiError(content, status, stackFrame);
 }
