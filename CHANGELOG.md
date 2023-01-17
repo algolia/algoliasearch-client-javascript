@@ -1,3 +1,7 @@
+## [5.0.0-alpha.34](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.33...5.0.0-alpha.34)
+
+- [010eed78](https://github.com/algolia/api-clients-automation/commit/010eed78) feat(javascript): add error to APIError if possible ([#1234](https://github.com/algolia/api-clients-automation/pull/1234)) by [@millotp](https://github.com/millotp/)
+
 ## [5.0.0-alpha.33](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.32...5.0.0-alpha.33)
 
 - [4b1f1fd3](https://github.com/algolia/api-clients-automation/commit/4b1f1fd3) feat(specs): add query params to task lists endpoint in Ingestion APIC ([#1233](https://github.com/algolia/api-clients-automation/pull/1233)) by [@Fluf22](https://github.com/Fluf22/)
