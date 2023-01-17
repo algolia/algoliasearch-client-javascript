@@ -1,3 +1,7 @@
+## [5.0.0-alpha.33](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.32...5.0.0-alpha.33)
+
+- [4b1f1fd3](https://github.com/algolia/api-clients-automation/commit/4b1f1fd3) feat(specs): add query params to task lists endpoint in Ingestion APIC ([#1233](https://github.com/algolia/api-clients-automation/pull/1233)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.0.0-alpha.32](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.31...5.0.0-alpha.32)
 
 - [466cc0b3](https://github.com/algolia/api-clients-automation/commit/466cc0b3) fix(specs): remove input from auth list ([#1229](https://github.com/algolia/api-clients-automation/pull/1229)) by [@millotp](https://github.com/millotp/)
