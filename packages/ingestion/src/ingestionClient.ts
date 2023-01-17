@@ -450,7 +450,7 @@ export function createIngestionClient({
       const queryParameters: QueryParameters = {};
 
       const request: Request = {
-        method: 'POST',
+        method: 'PUT',
         path: requestPath,
         queryParameters,
         headers,
@@ -485,7 +485,7 @@ export function createIngestionClient({
       const queryParameters: QueryParameters = {};
 
       const request: Request = {
-        method: 'POST',
+        method: 'PUT',
         path: requestPath,
         queryParameters,
         headers,
