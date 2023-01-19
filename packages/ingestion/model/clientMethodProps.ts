@@ -1,8 +1,12 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
 import type { ActionType } from './actionType';
+import type { AuthenticationTypeWithNone } from './authenticationTypeWithNone';
 import type { AuthenticationUpdate } from './authenticationUpdate';
+import type { DestinationType } from './destinationType';
 import type { DestinationUpdate } from './destinationUpdate';
+import type { PlatformType } from './platformType';
+import type { SourceType } from './sourceType';
 import type { SourceUpdate } from './sourceUpdate';
 import type { TaskUpdate } from './taskUpdate';
 import type { TriggerType } from './triggerType';
@@ -89,6 +93,14 @@ export type GetAuthenticationsProps = {
    * The page number to fetch, starting at 1.
    */
   page?: number;
+  /**
+   * Which type the returned authentication should have. Can be a list of string separated with commas.
+   */
+  type?: AuthenticationTypeWithNone[];
+  /**
+   * Which platform the returned authentication should have. Can be a list of string separated with commas.
+   */
+  platform?: PlatformType[];
 };
 
 /**
@@ -113,6 +125,14 @@ export type GetDestinationsProps = {
    * The page number to fetch, starting at 1.
    */
   page?: number;
+  /**
+   * Which type the returned destination should have. Can be a list of string separated with commas.
+   */
+  type?: DestinationType[];
+  /**
+   * Which authenticationID the returned destination should have. Can be a list of string separated with commas.
+   */
+  authenticationID?: string[];
 };
 
 /**
@@ -211,6 +231,14 @@ export type GetSourcesProps = {
    * The page number to fetch, starting at 1.
    */
   page?: number;
+  /**
+   * Which type the returned source should have. Can be a list of string separated with commas.
+   */
+  type?: SourceType[];
+  /**
+   * Which authenticationID the returned source should have. Can be a list of string separated with commas.
+   */
+  authenticationID?: string[];
 };
 
 /**

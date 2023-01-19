@@ -536,10 +536,12 @@ export function createIngestionClient({
      * @param getAuthentications - The getAuthentications object.
      * @param getAuthentications.itemsPerPage - The number of items per page to return.
      * @param getAuthentications.page - The page number to fetch, starting at 1.
+     * @param getAuthentications.type - Which type the returned authentication should have. Can be a list of string separated with commas.
+     * @param getAuthentications.platform - Which platform the returned authentication should have. Can be a list of string separated with commas.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAuthentications(
-      { itemsPerPage, page }: GetAuthenticationsProps = {},
+      { itemsPerPage, page, type, platform }: GetAuthenticationsProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListAuthenticationsResponse> {
       const requestPath = '/1/authentications';
@@ -552,6 +554,14 @@ export function createIngestionClient({
 
       if (page !== undefined) {
         queryParameters.page = page.toString();
+      }
+
+      if (type !== undefined) {
+        queryParameters.type = type.toString();
+      }
+
+      if (platform !== undefined) {
+        queryParameters.platform = platform.toString();
       }
 
       const request: Request = {
@@ -606,10 +616,12 @@ export function createIngestionClient({
      * @param getDestinations - The getDestinations object.
      * @param getDestinations.itemsPerPage - The number of items per page to return.
      * @param getDestinations.page - The page number to fetch, starting at 1.
+     * @param getDestinations.type - Which type the returned destination should have. Can be a list of string separated with commas.
+     * @param getDestinations.authenticationID - Which authenticationID the returned destination should have. Can be a list of string separated with commas.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDestinations(
-      { itemsPerPage, page }: GetDestinationsProps = {},
+      { itemsPerPage, page, type, authenticationID }: GetDestinationsProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListDestinationsResponse> {
       const requestPath = '/1/destinations';
@@ -622,6 +634,14 @@ export function createIngestionClient({
 
       if (page !== undefined) {
         queryParameters.page = page.toString();
+      }
+
+      if (type !== undefined) {
+        queryParameters.type = type.toString();
+      }
+
+      if (authenticationID !== undefined) {
+        queryParameters.authenticationID = authenticationID.toString();
       }
 
       const request: Request = {
@@ -875,10 +895,12 @@ export function createIngestionClient({
      * @param getSources - The getSources object.
      * @param getSources.itemsPerPage - The number of items per page to return.
      * @param getSources.page - The page number to fetch, starting at 1.
+     * @param getSources.type - Which type the returned source should have. Can be a list of string separated with commas.
+     * @param getSources.authenticationID - Which authenticationID the returned source should have. Can be a list of string separated with commas.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSources(
-      { itemsPerPage, page }: GetSourcesProps = {},
+      { itemsPerPage, page, type, authenticationID }: GetSourcesProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListSourcesResponse> {
       const requestPath = '/1/sources';
@@ -891,6 +913,14 @@ export function createIngestionClient({
 
       if (page !== undefined) {
         queryParameters.page = page.toString();
+      }
+
+      if (type !== undefined) {
+        queryParameters.type = type.toString();
+      }
+
+      if (authenticationID !== undefined) {
+        queryParameters.authenticationID = authenticationID.toString();
       }
 
       const request: Request = {
