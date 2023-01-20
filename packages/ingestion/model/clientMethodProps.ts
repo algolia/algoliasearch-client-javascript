@@ -5,7 +5,7 @@ import type { AuthenticationTypeWithNone } from './authenticationTypeWithNone';
 import type { AuthenticationUpdate } from './authenticationUpdate';
 import type { DestinationType } from './destinationType';
 import type { DestinationUpdate } from './destinationUpdate';
-import type { PlatformType } from './platformType';
+import type { Platform } from './platform';
 import type { SourceType } from './sourceType';
 import type { SourceUpdate } from './sourceUpdate';
 import type { TaskUpdate } from './taskUpdate';
@@ -100,7 +100,7 @@ export type GetAuthenticationsProps = {
   /**
    * Which platform the returned authentication should have. Can be a list of string separated with commas.
    */
-  platform?: PlatformType[];
+  platform?: Platform[];
 };
 
 /**

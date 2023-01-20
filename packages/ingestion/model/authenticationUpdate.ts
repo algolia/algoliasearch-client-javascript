@@ -2,14 +2,14 @@
 
 import type { AuthInput } from './authInput';
 import type { AuthenticationType } from './authenticationType';
-import type { PlatformType } from './platformType';
+import type { Platform } from './platform';
 
 export type AuthenticationUpdate = {
   type?: AuthenticationType;
 
   name?: string;
 
-  platform?: PlatformType;
+  platform?: Platform;
 
   input?: AuthInput;
 };

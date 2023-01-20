@@ -1,7 +1,7 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
 import type { AuthenticationType } from './authenticationType';
-import type { PlatformType } from './platformType';
+import type { Platform } from './platform';
 
 export type Authentication = {
   authenticationID: string;
@@ -10,7 +10,7 @@ export type Authentication = {
 
   name: string;
 
-  platform?: PlatformType;
+  platform?: Platform;
 
   /**
    * Date of creation (RFC3339 format).

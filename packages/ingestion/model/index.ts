@@ -38,7 +38,7 @@ export * from './listSourcesResponse';
 export * from './listTasksResponse';
 export * from './methodType';
 export * from './pagination';
-export * from './platformType';
+export * from './platform';
 export * from './run';
 export * from './runListResponse';
 export * from './runOutcome';
