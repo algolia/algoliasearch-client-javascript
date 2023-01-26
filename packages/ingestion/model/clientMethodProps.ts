@@ -1,11 +1,11 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
 import type { ActionType } from './actionType';
-import type { AuthenticationTypeWithNone } from './authenticationTypeWithNone';
+import type { AuthenticationType } from './authenticationType';
 import type { AuthenticationUpdate } from './authenticationUpdate';
 import type { DestinationType } from './destinationType';
 import type { DestinationUpdate } from './destinationUpdate';
-import type { Platform } from './platform';
+import type { PlatformWithNone } from './platformWithNone';
 import type { SourceType } from './sourceType';
 import type { SourceUpdate } from './sourceUpdate';
 import type { TaskUpdate } from './taskUpdate';
@@ -96,11 +96,11 @@ export type GetAuthenticationsProps = {
   /**
    * Which type the returned authentication should have. Can be a list of string separated with commas.
    */
-  type?: AuthenticationTypeWithNone[];
+  type?: AuthenticationType[];
   /**
    * Which platform the returned authentication should have. Can be a list of string separated with commas.
    */
-  platform?: Platform[];
+  platform?: PlatformWithNone[];
 };
 
 /**
@@ -236,7 +236,7 @@ export type GetSourcesProps = {
    */
   type?: SourceType[];
   /**
-   * Which authenticationID the returned source should have. Can be a list of string separated with commas.
+   * Which authenticationID the returned source should have. Can be a list of string separated with commas. Also supports \'none\' as a value to return sources that don\'t have any authentication.
    */
   authenticationID?: string[];
 };
@@ -271,6 +271,10 @@ export type GetTasksProps = {
    * If the returned task should have its \'enabled\' property set to true.
    */
   enabled?: boolean;
+  /**
+   * Which sourceID the returned task should have. Can be a list of string separated with commas.
+   */
+  sourceID?: string[];
   /**
    * Which destinationID the returned task should have. Can be a list of string separated with commas.
    */
