@@ -14,8 +14,10 @@ import type {
   QueryParameters,
 } from '@algolia/client-common';
 
+import type { Authentication } from '../model/authentication';
 import type { AuthenticationCreate } from '../model/authenticationCreate';
 import type { AuthenticationCreateResponse } from '../model/authenticationCreateResponse';
+import type { AuthenticationSearch } from '../model/authenticationSearch';
 import type { AuthenticationUpdateResponse } from '../model/authenticationUpdateResponse';
 import type { AuthenticationWithInput } from '../model/authenticationWithInput';
 import type {
@@ -48,6 +50,7 @@ import type { DeleteResponse } from '../model/deleteResponse';
 import type { Destination } from '../model/destination';
 import type { DestinationCreate } from '../model/destinationCreate';
 import type { DestinationCreateResponse } from '../model/destinationCreateResponse';
+import type { DestinationSearch } from '../model/destinationSearch';
 import type { DestinationUpdateResponse } from '../model/destinationUpdateResponse';
 import type { Event } from '../model/event';
 import type { ListAuthenticationsResponse } from '../model/listAuthenticationsResponse';
@@ -61,10 +64,12 @@ import type { RunResponse } from '../model/runResponse';
 import type { Source } from '../model/source';
 import type { SourceCreate } from '../model/sourceCreate';
 import type { SourceCreateResponse } from '../model/sourceCreateResponse';
+import type { SourceSearch } from '../model/sourceSearch';
 import type { SourceUpdateResponse } from '../model/sourceUpdateResponse';
 import type { Task } from '../model/task';
 import type { TaskCreate } from '../model/taskCreate';
 import type { TaskCreateResponse } from '../model/taskCreateResponse';
+import type { TaskSearch } from '../model/taskSearch';
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
 
 export const apiClientVersion = '1.0.0-alpha.11';
@@ -1066,6 +1071,158 @@ export function createIngestionClient({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Search among authentications with a defined set of parameters.
+     *
+     * @summary Search among authentications.
+     * @param authenticationSearch - The authenticationSearch object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchAuthentications(
+      authenticationSearch: AuthenticationSearch,
+      requestOptions?: RequestOptions
+    ): Promise<Authentication[]> {
+      if (!authenticationSearch) {
+        throw new Error(
+          'Parameter `authenticationSearch` is required when calling `searchAuthentications`.'
+        );
+      }
+
+      if (!authenticationSearch.authenticationIDs) {
+        throw new Error(
+          'Parameter `authenticationSearch.authenticationIDs` is required when calling `searchAuthentications`.'
+        );
+      }
+
+      const requestPath = '/1/authentications/search';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: authenticationSearch,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Search among destinations with a defined set of parameters.
+     *
+     * @summary Search among destinations.
+     * @param destinationSearch - The destinationSearch object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchDestinations(
+      destinationSearch: DestinationSearch,
+      requestOptions?: RequestOptions
+    ): Promise<Destination[]> {
+      if (!destinationSearch) {
+        throw new Error(
+          'Parameter `destinationSearch` is required when calling `searchDestinations`.'
+        );
+      }
+
+      if (!destinationSearch.destinationIDs) {
+        throw new Error(
+          'Parameter `destinationSearch.destinationIDs` is required when calling `searchDestinations`.'
+        );
+      }
+
+      const requestPath = '/1/destinations/search';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: destinationSearch,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Search among sources with a defined set of parameters.
+     *
+     * @summary Search among sources.
+     * @param sourceSearch - The sourceSearch object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchSources(
+      sourceSearch: SourceSearch,
+      requestOptions?: RequestOptions
+    ): Promise<Source[]> {
+      if (!sourceSearch) {
+        throw new Error(
+          'Parameter `sourceSearch` is required when calling `searchSources`.'
+        );
+      }
+
+      if (!sourceSearch.sourceIDs) {
+        throw new Error(
+          'Parameter `sourceSearch.sourceIDs` is required when calling `searchSources`.'
+        );
+      }
+
+      const requestPath = '/1/sources/search';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: sourceSearch,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Search among tasks with a defined set of parameters.
+     *
+     * @summary Search among tasks.
+     * @param taskSearch - The taskSearch object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchTasks(
+      taskSearch: TaskSearch,
+      requestOptions?: RequestOptions
+    ): Promise<Task[]> {
+      if (!taskSearch) {
+        throw new Error(
+          'Parameter `taskSearch` is required when calling `searchTasks`.'
+        );
+      }
+
+      if (!taskSearch.taskIDs) {
+        throw new Error(
+          'Parameter `taskSearch.taskIDs` is required when calling `searchTasks`.'
+        );
+      }
+
+      const requestPath = '/1/tasks/search';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: taskSearch,
       };
 
       return transporter.request(request, requestOptions);
