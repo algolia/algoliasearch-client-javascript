@@ -1,3 +1,7 @@
+## [5.0.0-alpha.38](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.37...5.0.0-alpha.38)
+
+- [46c1e2e9](https://github.com/algolia/api-clients-automation/commit/46c1e2e9) feat(specs): add search endpoint to every item type ([#1274](https://github.com/algolia/api-clients-automation/pull/1274)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.0.0-alpha.37](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.36...5.0.0-alpha.37)
 
 - [a60e6790](https://github.com/algolia/api-clients-automation/commit/a60e6790) feat(specs): add sourceID query param to task list endpoint ([#1250](https://github.com/algolia/api-clients-automation/pull/1250)) by [@Fluf22](https://github.com/Fluf22/)
