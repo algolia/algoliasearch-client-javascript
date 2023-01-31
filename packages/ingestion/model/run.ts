@@ -6,10 +6,16 @@ import type { RunStatus } from './runStatus';
 import type { RunType } from './runType';
 
 export type Run = {
+  /**
+   * The run UUID.
+   */
   runID: string;
 
   appID: string;
 
+  /**
+   * The task UUID.
+   */
   taskID: string;
 
   status: RunStatus;

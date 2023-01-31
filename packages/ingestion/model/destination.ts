@@ -3,11 +3,20 @@
 import type { DestinationInput } from './destinationInput';
 import type { DestinationType } from './destinationType';
 
+/**
+ * A destination describe how the data is indexed on the Algolia side.
+ */
 export type Destination = {
+  /**
+   * The destination UUID.
+   */
   destinationID: string;
 
   type: DestinationType;
 
+  /**
+   * An human readable name describing the object.
+   */
   name: string;
 
   input: DestinationInput;

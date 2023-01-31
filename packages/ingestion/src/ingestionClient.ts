@@ -278,6 +278,11 @@ export function createIngestionClient({
           'Parameter `taskCreate.sourceID` is required when calling `createTask`.'
         );
       }
+      if (!taskCreate.trigger) {
+        throw new Error(
+          'Parameter `taskCreate.trigger` is required when calling `createTask`.'
+        );
+      }
       if (!taskCreate.action) {
         throw new Error(
           'Parameter `taskCreate.action` is required when calling `createTask`.'
@@ -300,11 +305,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Soft delete a authentication.
+     * Soft delete the authentication of the given authenticationID.
      *
      * @summary Delete a authentication.
      * @param deleteAuthentication - The deleteAuthentication object.
-     * @param deleteAuthentication.authenticationID - The authentication uuid.
+     * @param deleteAuthentication.authenticationID - The authentication UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteAuthentication(
@@ -335,11 +340,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Soft delete a destination.
+     * Soft delete the destination of the given destinationID.
      *
      * @summary Delete a destination.
      * @param deleteDestination - The deleteDestination object.
-     * @param deleteDestination.destinationID - The destination uuid.
+     * @param deleteDestination.destinationID - The destination UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteDestination(
@@ -370,11 +375,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Soft delete a source.
+     * Soft delete the source of the given sourceID.
      *
      * @summary Delete a source.
      * @param deleteSource - The deleteSource object.
-     * @param deleteSource.sourceID - The source uuid.
+     * @param deleteSource.sourceID - The source UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteSource(
@@ -405,11 +410,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Soft delete a task.
+     * Soft delete the task of the given taskID.
      *
      * @summary Delete a task.
      * @param deleteTask - The deleteTask object.
-     * @param deleteTask.taskID - The task uuid.
+     * @param deleteTask.taskID - The task UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteTask(
@@ -440,11 +445,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Disable a task.
+     * Disable the task of the given taskID.
      *
      * @summary Disable a task.
      * @param disableTask - The disableTask object.
-     * @param disableTask.taskID - The task uuid.
+     * @param disableTask.taskID - The task UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     disableTask(
@@ -475,11 +480,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Enable a task.
+     * Enable the task of the given taskID.
      *
      * @summary Enable a task.
      * @param enableTask - The enableTask object.
-     * @param enableTask.taskID - The task uuid.
+     * @param enableTask.taskID - The task UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     enableTask(
@@ -510,11 +515,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a authentication.
+     * Get the authentication of the given authenticationID.
      *
      * @summary Get a authentication.
      * @param getAuthentication - The getAuthentication object.
-     * @param getAuthentication.authenticationID - The authentication uuid.
+     * @param getAuthentication.authenticationID - The authentication UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAuthentication(
@@ -545,14 +550,14 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of authentications.
+     * Get a list of authentications for the given query parameters, with pagination details.
      *
      * @summary Get a list of authentications.
      * @param getAuthentications - The getAuthentications object.
      * @param getAuthentications.itemsPerPage - The number of items per page to return.
      * @param getAuthentications.page - The page number to fetch, starting at 1.
-     * @param getAuthentications.type - Which type the returned authentication should have. Can be a list of string separated with commas.
-     * @param getAuthentications.platform - Which platform the returned authentication should have. Can be a list of string separated with commas.
+     * @param getAuthentications.type - The type of the authentications to retrieve.
+     * @param getAuthentications.platform - The platform of the authentications to retrieve.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAuthentications(
@@ -590,11 +595,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a destination.
+     * Get the destination of the given destinationID.
      *
      * @summary Get a destination.
      * @param getDestination - The getDestination object.
-     * @param getDestination.destinationID - The destination uuid.
+     * @param getDestination.destinationID - The destination UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDestination(
@@ -625,14 +630,14 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of destinations.
+     * Get a list of destinations for the given query parameters, with pagination details.
      *
      * @summary Get a list of destinations.
      * @param getDestinations - The getDestinations object.
      * @param getDestinations.itemsPerPage - The number of items per page to return.
      * @param getDestinations.page - The page number to fetch, starting at 1.
-     * @param getDestinations.type - Which type the returned destination should have. Can be a list of string separated with commas.
-     * @param getDestinations.authenticationID - Which authenticationID the returned destination should have. Can be a list of string separated with commas.
+     * @param getDestinations.type - The type of the destinations to retrive.
+     * @param getDestinations.authenticationID - The authenticationIDs of the destinations to retrive.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDestinations(
@@ -670,12 +675,12 @@ export function createIngestionClient({
     },
 
     /**
-     * Get an event in a specific run.
+     * Get a single event for a specific runID.
      *
-     * @summary Get an event in a specific run.
+     * @summary Get an event.
      * @param getEvent - The getEvent object.
-     * @param getEvent.runID - The run uuid.
-     * @param getEvent.eventID - The event uuid.
+     * @param getEvent.runID - The run UUID.
+     * @param getEvent.eventID - The event UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getEvent(
@@ -711,19 +716,17 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of events for a specific run.
+     * Get a list of events associated to the given runID, for the given query parameters.
      *
-     * @summary Get a list of events for a specific run.
+     * @summary Get a list of events.
      * @param getEvents - The getEvents object.
-     * @param getEvents.runID - The run uuid.
-     * @param getEvents.itemsPerPage - The number of items per page to return.
-     * @param getEvents.page - The page number to fetch, starting at 1.
+     * @param getEvents.runID - The run UUID.
      * @param getEvents.status - Filter the status of the events.
      * @param getEvents.type - Filter the type of the events.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getEvents(
-      { runID, itemsPerPage, page, status, type }: GetEventsProps,
+      { runID, status, type }: GetEventsProps,
       requestOptions?: RequestOptions
     ): Promise<ListEventsResponse> {
       if (!runID) {
@@ -738,14 +741,6 @@ export function createIngestionClient({
       );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
-      if (itemsPerPage !== undefined) {
-        queryParameters.itemsPerPage = itemsPerPage.toString();
-      }
-
-      if (page !== undefined) {
-        queryParameters.page = page.toString();
-      }
 
       if (status !== undefined) {
         queryParameters.status = status.toString();
@@ -766,11 +761,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a run.
+     * Get a single run for the given ID.
      *
      * @summary Get a run.
      * @param getRun - The getRun object.
-     * @param getRun.runID - The run uuid.
+     * @param getRun.runID - The run UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRun(
@@ -799,7 +794,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of runs.
+     * Get a list of runs for the given query parameters, with pagination details.
      *
      * @summary Get a list of runs.
      * @param getRuns - The getRuns object.
@@ -844,11 +839,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a source.
+     * Get the source of the given sourceID.
      *
      * @summary Get a source.
      * @param getSource - The getSource object.
-     * @param getSource.sourceID - The source uuid.
+     * @param getSource.sourceID - The source UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSource(
@@ -879,14 +874,14 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of sources.
+     * Get a list of sources for the given query parameters, with pagination details.
      *
      * @summary Get a list of sources.
      * @param getSources - The getSources object.
      * @param getSources.itemsPerPage - The number of items per page to return.
      * @param getSources.page - The page number to fetch, starting at 1.
-     * @param getSources.type - Which type the returned source should have. Can be a list of string separated with commas.
-     * @param getSources.authenticationID - Which authenticationID the returned source should have. Can be a list of string separated with commas. Also supports \'none\' as a value to return sources that don\'t have any authentication.
+     * @param getSources.type - The type of the sources to retrieve.
+     * @param getSources.authenticationID - The authenticationIDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSources(
@@ -924,11 +919,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a task.
+     * Get the task of the given taskID.
      *
      * @summary Get a task.
      * @param getTask - The getTask object.
-     * @param getTask.taskID - The task uuid.
+     * @param getTask.taskID - The task UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTask(
@@ -959,17 +954,17 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of tasks.
+     * Get a list of tasks for the given query parameters, with pagination details.
      *
      * @summary Get a list of tasks.
      * @param getTasks - The getTasks object.
      * @param getTasks.itemsPerPage - The number of items per page to return.
      * @param getTasks.page - The page number to fetch, starting at 1.
-     * @param getTasks.action - Which action the returned task should have. Can be a list of string separated with commas.
-     * @param getTasks.enabled - If the returned task should have its \'enabled\' property set to true.
-     * @param getTasks.sourceID - Which sourceID the returned task should have. Can be a list of string separated with commas.
-     * @param getTasks.destinationID - Which destinationID the returned task should have. Can be a list of string separated with commas.
-     * @param getTasks.triggerType - Which trigger type the returned task should have. Can be a list of string separated with commas.
+     * @param getTasks.action - The action of the tasks to retrieve.
+     * @param getTasks.enabled - Whether the task is enabled or not.
+     * @param getTasks.sourceID - The sourceIDs of the tasks to retrive.
+     * @param getTasks.destinationID - The destinationIDs of the tasks to retrive.
+     * @param getTasks.triggerType - The trigger type of the task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTasks(
@@ -1027,11 +1022,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Run a task.
+     * Run the task of the given taskID.
      *
      * @summary Run a task.
      * @param runTask - The runTask object.
-     * @param runTask.taskID - The task uuid.
+     * @param runTask.taskID - The task UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     runTask(
@@ -1214,11 +1209,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Update a authentication.
+     * Update the authentication of the given authenticationID.
      *
      * @summary Update a authentication.
      * @param updateAuthentication - The updateAuthentication object.
-     * @param updateAuthentication.authenticationID - The authentication uuid.
+     * @param updateAuthentication.authenticationID - The authentication UUID.
      * @param updateAuthentication.authenticationUpdate - The authenticationUpdate object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1257,11 +1252,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Update a destination.
+     * Update the destination of the given destinationID.
      *
      * @summary Update a destination.
      * @param updateDestination - The updateDestination object.
-     * @param updateDestination.destinationID - The destination uuid.
+     * @param updateDestination.destinationID - The destination UUID.
      * @param updateDestination.destinationUpdate - The destinationUpdate object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1300,11 +1295,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Update a source.
+     * Update the source of the given sourceID.
      *
      * @summary Update a source.
      * @param updateSource - The updateSource object.
-     * @param updateSource.sourceID - The source uuid.
+     * @param updateSource.sourceID - The source UUID.
      * @param updateSource.sourceUpdate - The sourceUpdate object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1343,11 +1338,11 @@ export function createIngestionClient({
     },
 
     /**
-     * Update a task.
+     * Update the task of the given taskID.
      *
      * @summary Update a task.
      * @param updateTask - The updateTask object.
-     * @param updateTask.taskID - The task uuid.
+     * @param updateTask.taskID - The task UUID.
      * @param updateTask.taskUpdate - The taskUpdate object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */

@@ -3,6 +3,9 @@
 import type { Pagination } from './pagination';
 import type { Task } from './task';
 
+/**
+ * A list of tasks with pagination details.
+ */
 export type ListTasksResponse = {
   tasks: Task[];
 

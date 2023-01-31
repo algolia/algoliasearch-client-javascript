@@ -10,5 +10,8 @@ export type SourceCreate = {
 
   input: SourceInput;
 
+  /**
+   * The authentication UUID.
+   */
   authenticationID: string;
 };

@@ -3,8 +3,13 @@
 import type { TriggerType } from './triggerType';
 
 /**
- * The trigger information of a task.
+ * The trigger input for a task of type \'schedule\'.
  */
-export type Trigger = {
+export type ScheduleTriggerInput = {
   type: TriggerType;
+
+  /**
+   * A cron expression that represent at which regularity the task should run.
+   */
+  cron: string;
 };

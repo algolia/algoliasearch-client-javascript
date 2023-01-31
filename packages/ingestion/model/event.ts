@@ -3,11 +3,23 @@
 import type { EventStatus } from './eventStatus';
 import type { EventType } from './eventType';
 
+/**
+ * An event describe a step of the task execution flow..
+ */
 export type Event = {
+  /**
+   * The event UUID.
+   */
   eventID: string;
 
+  /**
+   * The run UUID.
+   */
   runID: string;
 
+  /**
+   * The parent event, the cause of this event.
+   */
   parentID?: string;
 
   status: EventStatus;

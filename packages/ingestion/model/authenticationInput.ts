@@ -2,6 +2,9 @@
 
 import type { AuthInput } from './authInput';
 
+/**
+ * The authentication input property stores the (encrypted) credentials.
+ */
 export type AuthenticationInput = {
   input: AuthInput;
 };

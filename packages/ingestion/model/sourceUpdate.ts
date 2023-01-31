@@ -7,5 +7,8 @@ export type SourceUpdate = {
 
   input?: SourceUpdateInput;
 
+  /**
+   * The authentication UUID.
+   */
   authenticationID?: string;
 };

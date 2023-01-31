@@ -3,12 +3,21 @@
 import type { DestinationInput } from './destinationInput';
 import type { DestinationType } from './destinationType';
 
+/**
+ * The payload when creating a destination.
+ */
 export type DestinationCreate = {
   type: DestinationType;
 
+  /**
+   * An human readable name describing the object.
+   */
   name: string;
 
   input: DestinationInput;
 
+  /**
+   * The authentication UUID.
+   */
   authenticationID: string;
 };

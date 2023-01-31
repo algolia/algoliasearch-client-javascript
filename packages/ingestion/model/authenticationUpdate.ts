@@ -4,9 +4,15 @@ import type { AuthInput } from './authInput';
 import type { AuthenticationType } from './authenticationType';
 import type { Platform } from './platform';
 
+/**
+ * Payload to partialy update an Authentication.
+ */
 export type AuthenticationUpdate = {
   type?: AuthenticationType;
 
+  /**
+   * An human readable name describing the object.
+   */
   name?: string;
 
   platform?: Platform;

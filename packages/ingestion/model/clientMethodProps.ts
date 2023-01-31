@@ -19,7 +19,7 @@ import type { TriggerType } from './triggerType';
  */
 export type DeleteAuthenticationProps = {
   /**
-   * The authentication uuid.
+   * The authentication UUID.
    */
   authenticationID: string;
 };
@@ -29,7 +29,7 @@ export type DeleteAuthenticationProps = {
  */
 export type DeleteDestinationProps = {
   /**
-   * The destination uuid.
+   * The destination UUID.
    */
   destinationID: string;
 };
@@ -39,7 +39,7 @@ export type DeleteDestinationProps = {
  */
 export type DeleteSourceProps = {
   /**
-   * The source uuid.
+   * The source UUID.
    */
   sourceID: string;
 };
@@ -49,7 +49,7 @@ export type DeleteSourceProps = {
  */
 export type DeleteTaskProps = {
   /**
-   * The task uuid.
+   * The task UUID.
    */
   taskID: string;
 };
@@ -59,7 +59,7 @@ export type DeleteTaskProps = {
  */
 export type DisableTaskProps = {
   /**
-   * The task uuid.
+   * The task UUID.
    */
   taskID: string;
 };
@@ -69,7 +69,7 @@ export type DisableTaskProps = {
  */
 export type EnableTaskProps = {
   /**
-   * The task uuid.
+   * The task UUID.
    */
   taskID: string;
 };
@@ -79,7 +79,7 @@ export type EnableTaskProps = {
  */
 export type GetAuthenticationProps = {
   /**
-   * The authentication uuid.
+   * The authentication UUID.
    */
   authenticationID: string;
 };
@@ -97,11 +97,11 @@ export type GetAuthenticationsProps = {
    */
   page?: number;
   /**
-   * Which type the returned authentication should have. Can be a list of string separated with commas.
+   * The type of the authentications to retrieve.
    */
   type?: AuthenticationType[];
   /**
-   * Which platform the returned authentication should have. Can be a list of string separated with commas.
+   * The platform of the authentications to retrieve.
    */
   platform?: PlatformWithNone[];
 };
@@ -111,7 +111,7 @@ export type GetAuthenticationsProps = {
  */
 export type GetDestinationProps = {
   /**
-   * The destination uuid.
+   * The destination UUID.
    */
   destinationID: string;
 };
@@ -129,11 +129,11 @@ export type GetDestinationsProps = {
    */
   page?: number;
   /**
-   * Which type the returned destination should have. Can be a list of string separated with commas.
+   * The type of the destinations to retrive.
    */
   type?: DestinationType[];
   /**
-   * Which authenticationID the returned destination should have. Can be a list of string separated with commas.
+   * The authenticationIDs of the destinations to retrive.
    */
   authenticationID?: string[];
 };
@@ -143,11 +143,11 @@ export type GetDestinationsProps = {
  */
 export type GetEventProps = {
   /**
-   * The run uuid.
+   * The run UUID.
    */
   runID: string;
   /**
-   * The event uuid.
+   * The event UUID.
    */
   eventID: string;
 };
@@ -157,17 +157,9 @@ export type GetEventProps = {
  */
 export type GetEventsProps = {
   /**
-   * The run uuid.
+   * The run UUID.
    */
   runID: string;
-  /**
-   * The number of items per page to return.
-   */
-  itemsPerPage?: number;
-  /**
-   * The page number to fetch, starting at 1.
-   */
-  page?: number;
   /**
    * Filter the status of the events.
    */
@@ -183,7 +175,7 @@ export type GetEventsProps = {
  */
 export type GetRunProps = {
   /**
-   * The run uuid.
+   * The run UUID.
    */
   runID: string;
 };
@@ -215,7 +207,7 @@ export type GetRunsProps = {
  */
 export type GetSourceProps = {
   /**
-   * The source uuid.
+   * The source UUID.
    */
   sourceID: string;
 };
@@ -233,11 +225,11 @@ export type GetSourcesProps = {
    */
   page?: number;
   /**
-   * Which type the returned source should have. Can be a list of string separated with commas.
+   * The type of the sources to retrieve.
    */
   type?: SourceType[];
   /**
-   * Which authenticationID the returned source should have. Can be a list of string separated with commas. Also supports \'none\' as a value to return sources that don\'t have any authentication.
+   * The authenticationIDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication.
    */
   authenticationID?: string[];
 };
@@ -247,7 +239,7 @@ export type GetSourcesProps = {
  */
 export type GetTaskProps = {
   /**
-   * The task uuid.
+   * The task UUID.
    */
   taskID: string;
 };
@@ -265,23 +257,23 @@ export type GetTasksProps = {
    */
   page?: number;
   /**
-   * Which action the returned task should have. Can be a list of string separated with commas.
+   * The action of the tasks to retrieve.
    */
   action?: ActionType[];
   /**
-   * If the returned task should have its \'enabled\' property set to true.
+   * Whether the task is enabled or not.
    */
   enabled?: boolean;
   /**
-   * Which sourceID the returned task should have. Can be a list of string separated with commas.
+   * The sourceIDs of the tasks to retrive.
    */
   sourceID?: string[];
   /**
-   * Which destinationID the returned task should have. Can be a list of string separated with commas.
+   * The destinationIDs of the tasks to retrive.
    */
   destinationID?: string[];
   /**
-   * Which trigger type the returned task should have. Can be a list of string separated with commas.
+   * The trigger type of the task.
    */
   triggerType?: TriggerType[];
 };
@@ -291,7 +283,7 @@ export type GetTasksProps = {
  */
 export type RunTaskProps = {
   /**
-   * The task uuid.
+   * The task UUID.
    */
   taskID: string;
 };
@@ -301,7 +293,7 @@ export type RunTaskProps = {
  */
 export type UpdateAuthenticationProps = {
   /**
-   * The authentication uuid.
+   * The authentication UUID.
    */
   authenticationID: string;
   authenticationUpdate: AuthenticationUpdate;
@@ -312,7 +304,7 @@ export type UpdateAuthenticationProps = {
  */
 export type UpdateDestinationProps = {
   /**
-   * The destination uuid.
+   * The destination UUID.
    */
   destinationID: string;
   destinationUpdate: DestinationUpdate;
@@ -323,7 +315,7 @@ export type UpdateDestinationProps = {
  */
 export type UpdateSourceProps = {
   /**
-   * The source uuid.
+   * The source UUID.
    */
   sourceID: string;
   sourceUpdate: SourceUpdate;
@@ -334,7 +326,7 @@ export type UpdateSourceProps = {
  */
 export type UpdateTaskProps = {
   /**
-   * The task uuid.
+   * The task UUID.
    */
   taskID: string;
   taskUpdate: TaskUpdate;

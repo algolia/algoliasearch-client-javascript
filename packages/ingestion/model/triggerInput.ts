@@ -2,8 +2,9 @@
 
 import type { TriggerType } from './triggerType';
 
+/**
+ * The trigger input of a task.
+ */
 export type TriggerInput = {
   type: TriggerType;
-
-  cron?: string;
 };
