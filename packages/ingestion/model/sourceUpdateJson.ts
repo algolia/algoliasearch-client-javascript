@@ -2,7 +2,7 @@
 
 import type { MethodType } from './methodType';
 
-export type SourceJson = {
+export type SourceUpdateJson = {
   /**
    * The URL of the file.
    */

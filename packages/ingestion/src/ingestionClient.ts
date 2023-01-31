@@ -231,6 +231,17 @@ export function createIngestionClient({
         );
       }
 
+      if (!sourceCreate.type) {
+        throw new Error(
+          'Parameter `sourceCreate.type` is required when calling `createSource`.'
+        );
+      }
+      if (!sourceCreate.input) {
+        throw new Error(
+          'Parameter `sourceCreate.input` is required when calling `createSource`.'
+        );
+      }
+
       const requestPath = '/1/sources';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1347,7 +1358,7 @@ export function createIngestionClient({
       const queryParameters: QueryParameters = {};
 
       const request: Request = {
-        method: 'POST',
+        method: 'PUT',
         path: requestPath,
         queryParameters,
         headers,
