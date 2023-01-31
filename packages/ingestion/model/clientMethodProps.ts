@@ -5,7 +5,10 @@ import type { AuthenticationType } from './authenticationType';
 import type { AuthenticationUpdate } from './authenticationUpdate';
 import type { DestinationType } from './destinationType';
 import type { DestinationUpdate } from './destinationUpdate';
+import type { EventStatus } from './eventStatus';
+import type { EventType } from './eventType';
 import type { PlatformWithNone } from './platformWithNone';
+import type { RunStatus } from './runStatus';
 import type { SourceType } from './sourceType';
 import type { SourceUpdate } from './sourceUpdate';
 import type { TaskUpdate } from './taskUpdate';
@@ -165,6 +168,14 @@ export type GetEventsProps = {
    * The page number to fetch, starting at 1.
    */
   page?: number;
+  /**
+   * Filter the status of the events.
+   */
+  status?: EventStatus[];
+  /**
+   * Filter the type of the events.
+   */
+  type?: EventType[];
 };
 
 /**
@@ -189,24 +200,14 @@ export type GetRunsProps = {
    * The page number to fetch, starting at 1.
    */
   page?: number;
-};
-
-/**
- * Properties for the `getRunsByTaskID` method.
- */
-export type GetRunsByTaskIDProps = {
   /**
-   * The task uuid.
+   * Filter the status of the runs.
    */
-  taskID: string;
+  status?: RunStatus[];
   /**
-   * The number of items per page to return.
+   * Filter by taskID.
    */
-  itemsPerPage?: number;
-  /**
-   * The page number to fetch, starting at 1.
-   */
-  page?: number;
+  taskID?: string;
 };
 
 /**

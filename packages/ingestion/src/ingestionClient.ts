@@ -35,7 +35,6 @@ import type {
   GetEventsProps,
   GetRunProps,
   GetRunsProps,
-  GetRunsByTaskIDProps,
   GetSourceProps,
   GetSourcesProps,
   GetTaskProps,
@@ -719,10 +718,12 @@ export function createIngestionClient({
      * @param getEvents.runID - The run uuid.
      * @param getEvents.itemsPerPage - The number of items per page to return.
      * @param getEvents.page - The page number to fetch, starting at 1.
+     * @param getEvents.status - Filter the status of the events.
+     * @param getEvents.type - Filter the type of the events.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getEvents(
-      { runID, itemsPerPage, page }: GetEventsProps,
+      { runID, itemsPerPage, page, status, type }: GetEventsProps,
       requestOptions?: RequestOptions
     ): Promise<ListEventsResponse> {
       if (!runID) {
@@ -744,6 +745,14 @@ export function createIngestionClient({
 
       if (page !== undefined) {
         queryParameters.page = page.toString();
+      }
+
+      if (status !== undefined) {
+        queryParameters.status = status.toString();
+      }
+
+      if (type !== undefined) {
+        queryParameters.type = type.toString();
       }
 
       const request: Request = {
@@ -796,10 +805,12 @@ export function createIngestionClient({
      * @param getRuns - The getRuns object.
      * @param getRuns.itemsPerPage - The number of items per page to return.
      * @param getRuns.page - The page number to fetch, starting at 1.
+     * @param getRuns.status - Filter the status of the runs.
+     * @param getRuns.taskID - Filter by taskID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRuns(
-      { itemsPerPage, page }: GetRunsProps = {},
+      { itemsPerPage, page, status, taskID }: GetRunsProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<RunListResponse> {
       const requestPath = '/1/runs';
@@ -814,49 +825,12 @@ export function createIngestionClient({
         queryParameters.page = page.toString();
       }
 
-      const request: Request = {
-        method: 'GET',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
-     * Get a list of runs associated with a taskID.
-     *
-     * @summary Get a list of runs associated with a taskID.
-     * @param getRunsByTaskID - The getRunsByTaskID object.
-     * @param getRunsByTaskID.taskID - The task uuid.
-     * @param getRunsByTaskID.itemsPerPage - The number of items per page to return.
-     * @param getRunsByTaskID.page - The page number to fetch, starting at 1.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    getRunsByTaskID(
-      { taskID, itemsPerPage, page }: GetRunsByTaskIDProps,
-      requestOptions?: RequestOptions
-    ): Promise<RunListResponse> {
-      if (!taskID) {
-        throw new Error(
-          'Parameter `taskID` is required when calling `getRunsByTaskID`.'
-        );
+      if (status !== undefined) {
+        queryParameters.status = status.toString();
       }
 
-      const requestPath = '/1/runs/tasks/{taskID}'.replace(
-        '{taskID}',
-        encodeURIComponent(taskID)
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      if (itemsPerPage !== undefined) {
-        queryParameters.itemsPerPage = itemsPerPage.toString();
-      }
-
-      if (page !== undefined) {
-        queryParameters.page = page.toString();
+      if (taskID !== undefined) {
+        queryParameters.taskID = taskID.toString();
       }
 
       const request: Request = {
