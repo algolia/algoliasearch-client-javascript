@@ -342,6 +342,15 @@ export type Settings = {
         };
       };
     };
+    /**
+     * defining out-of-the-box redirect
+     */
+    readonly redirect?: {
+      /**
+       * the url for the client to redirect to
+       */
+      readonly url?: string;
+    };
   };
 
   /**
