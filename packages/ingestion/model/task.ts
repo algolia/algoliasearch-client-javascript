@@ -1,7 +1,7 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
 import type { ActionType } from './actionType';
-import type { TaskTrigger } from './taskTrigger';
+import type { Trigger } from './trigger';
 
 export type Task = {
   /**
@@ -19,7 +19,7 @@ export type Task = {
    */
   destinationID: string;
 
-  trigger?: TaskTrigger;
+  trigger?: Trigger;
 
   /**
    * Whether the task is enabled or not.
