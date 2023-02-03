@@ -1,3 +1,8 @@
+## [5.0.0-alpha.40](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.39...5.0.0-alpha.40)
+
+- [91f21487](https://github.com/algolia/api-clients-automation/commit/91f21487) feat(javascript): add task trigger type guards ([#1280](https://github.com/algolia/api-clients-automation/pull/1280)) by [@Fluf22](https://github.com/Fluf22/)
+- [a1c7c245](https://github.com/algolia/api-clients-automation/commit/a1c7c245) fix(specs): correct types for Tasks trigger ([#1279](https://github.com/algolia/api-clients-automation/pull/1279)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.39](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.38...5.0.0-alpha.39)
 
 - [aed20fe6](https://github.com/algolia/api-clients-automation/commit/aed20fe6) feat(specs): add more descriptions to the Ingestion API ([#1273](https://github.com/algolia/api-clients-automation/pull/1273)) by [@shortcuts](https://github.com/shortcuts/)
