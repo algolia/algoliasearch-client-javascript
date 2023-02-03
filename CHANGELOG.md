@@ -1,3 +1,7 @@
+## [5.0.0-alpha.41](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.40...5.0.0-alpha.41)
+
+- [dc5a22dd](https://github.com/algolia/api-clients-automation/commit/dc5a22dd) feat(javascript): improve on task trigger type guards ([#1286](https://github.com/algolia/api-clients-automation/pull/1286)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.0.0-alpha.40](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.39...5.0.0-alpha.40)
 
 - [91f21487](https://github.com/algolia/api-clients-automation/commit/91f21487) feat(javascript): add task trigger type guards ([#1280](https://github.com/algolia/api-clients-automation/pull/1280)) by [@Fluf22](https://github.com/Fluf22/)
