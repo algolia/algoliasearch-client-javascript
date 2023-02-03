@@ -19,7 +19,7 @@ export type Task = {
    */
   destinationID: string;
 
-  trigger?: Trigger;
+  trigger: Trigger;
 
   /**
    * Whether the task is enabled or not.

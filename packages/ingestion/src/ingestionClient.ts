@@ -86,6 +86,42 @@ function getDefaultHosts(region: Region): Host[] {
   return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 
+/**
+ * Guard: Return strongly typed specific OnDemandTrigger for a given Trigger.
+ *
+ * @summary Guard method that returns a strongly typed specific OnDemandTrigger for a given Trigger.
+ * @param trigger - The given Task Trigger.
+ */
+export function isOnDemandTrigger(
+  trigger: Trigger
+): trigger is OnDemandTrigger {
+  return trigger.type === 'on_demand';
+}
+
+/**
+ * Guard: Return strongly typed specific ScheduleTrigger for a given Trigger.
+ *
+ * @summary Guard method that returns a strongly typed specific ScheduleTrigger for a given Trigger.
+ * @param trigger - The given Task Trigger.
+ */
+export function isScheduleTrigger(
+  trigger: Trigger
+): trigger is ScheduleTrigger {
+  return trigger.type === 'schedule';
+}
+
+/**
+ * Guard: Return strongly typed specific SubscriptionTrigger for a given Trigger.
+ *
+ * @summary Guard method that returns a strongly typed specific SubscriptionTrigger for a given Trigger.
+ * @param trigger - The given Task Trigger.
+ */
+export function isSubscriptionTrigger(
+  trigger: Trigger
+): trigger is SubscriptionTrigger {
+  return trigger.type === 'subscription';
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createIngestionClient({
   appId: appIdOption,
@@ -151,36 +187,6 @@ export function createIngestionClient({
      */
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.algoliaAgent.add({ segment, version });
-    },
-
-    /**
-     * Guard: Return strongly typed specific OnDemandTrigger for a given Trigger.
-     *
-     * @summary Guard method that returns a strongly typed specific OnDemandTrigger for a given Trigger.
-     * @param trigger - The given Task Trigger.
-     */
-    isOnDemandTrigger(trigger: Trigger): trigger is OnDemandTrigger {
-      return trigger.type === 'on_demand';
-    },
-
-    /**
-     * Guard: Return strongly typed specific ScheduleTrigger for a given Trigger.
-     *
-     * @summary Guard method that returns a strongly typed specific ScheduleTrigger for a given Trigger.
-     * @param trigger - The given Task Trigger.
-     */
-    isScheduleTrigger(trigger: Trigger): trigger is ScheduleTrigger {
-      return trigger.type === 'schedule';
-    },
-
-    /**
-     * Guard: Return strongly typed specific SubscriptionTrigger for a given Trigger.
-     *
-     * @summary Guard method that returns a strongly typed specific SubscriptionTrigger for a given Trigger.
-     * @param trigger - The given Task Trigger.
-     */
-    isSubscriptionTrigger(trigger: Trigger): trigger is SubscriptionTrigger {
-      return trigger.type === 'subscription';
     },
 
     /**
