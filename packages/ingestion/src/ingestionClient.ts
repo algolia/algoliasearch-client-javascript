@@ -57,19 +57,23 @@ import type { ListDestinationsResponse } from '../model/listDestinationsResponse
 import type { ListEventsResponse } from '../model/listEventsResponse';
 import type { ListSourcesResponse } from '../model/listSourcesResponse';
 import type { ListTasksResponse } from '../model/listTasksResponse';
+import type { OnDemandTrigger } from '../model/onDemandTrigger';
 import type { Run } from '../model/run';
 import type { RunListResponse } from '../model/runListResponse';
 import type { RunResponse } from '../model/runResponse';
+import type { ScheduleTrigger } from '../model/scheduleTrigger';
 import type { Source } from '../model/source';
 import type { SourceCreate } from '../model/sourceCreate';
 import type { SourceCreateResponse } from '../model/sourceCreateResponse';
 import type { SourceSearch } from '../model/sourceSearch';
 import type { SourceUpdateResponse } from '../model/sourceUpdateResponse';
+import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { Task } from '../model/task';
 import type { TaskCreate } from '../model/taskCreate';
 import type { TaskCreateResponse } from '../model/taskCreateResponse';
 import type { TaskSearch } from '../model/taskSearch';
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
+import type { Trigger } from '../model/trigger';
 
 export const apiClientVersion = '1.0.0-alpha.13';
 
@@ -147,6 +151,36 @@ export function createIngestionClient({
      */
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.algoliaAgent.add({ segment, version });
+    },
+
+    /**
+     * Guard: Return strongly typed specific OnDemandTrigger for a given Trigger.
+     *
+     * @summary Guard method that returns a strongly typed specific OnDemandTrigger for a given Trigger.
+     * @param trigger - The given Task Trigger.
+     */
+    isOnDemandTrigger(trigger: Trigger): trigger is OnDemandTrigger {
+      return trigger.type === 'on_demand';
+    },
+
+    /**
+     * Guard: Return strongly typed specific ScheduleTrigger for a given Trigger.
+     *
+     * @summary Guard method that returns a strongly typed specific ScheduleTrigger for a given Trigger.
+     * @param trigger - The given Task Trigger.
+     */
+    isScheduleTrigger(trigger: Trigger): trigger is ScheduleTrigger {
+      return trigger.type === 'schedule';
+    },
+
+    /**
+     * Guard: Return strongly typed specific SubscriptionTrigger for a given Trigger.
+     *
+     * @summary Guard method that returns a strongly typed specific SubscriptionTrigger for a given Trigger.
+     * @param trigger - The given Task Trigger.
+     */
+    isSubscriptionTrigger(trigger: Trigger): trigger is SubscriptionTrigger {
+      return trigger.type === 'subscription';
     },
 
     /**
