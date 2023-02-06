@@ -95,7 +95,7 @@ function getDefaultHosts(region: Region): Host[] {
 export function isOnDemandTrigger(
   trigger: Trigger
 ): trigger is OnDemandTrigger {
-  return trigger.type === 'on_demand';
+  return trigger.type === 'onDemand';
 }
 
 /**

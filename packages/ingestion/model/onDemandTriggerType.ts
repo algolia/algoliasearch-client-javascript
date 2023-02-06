@@ -3,4 +3,4 @@
 /**
  * A task which is manually executed via the run task endpoint.
  */
-export type OnDemandTriggerType = 'on_demand';
+export type OnDemandTriggerType = 'onDemand';
