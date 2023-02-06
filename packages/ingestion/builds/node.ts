@@ -17,6 +17,9 @@ export {
   apiClientVersion,
   IngestionClient,
   Region,
+  isOnDemandTrigger,
+  isScheduleTrigger,
+  isSubscriptionTrigger,
 } from '../src/ingestionClient';
 export * from '../model';
 
