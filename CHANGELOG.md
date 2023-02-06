@@ -1,3 +1,8 @@
+## [5.0.0-alpha.42](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.41...5.0.0-alpha.42)
+
+- [9d04dc22](https://github.com/algolia/api-clients-automation/commit/9d04dc22) fix(specs): rename task type to `onDemand` ([#1299](https://github.com/algolia/api-clients-automation/pull/1299)) by [@shortcuts](https://github.com/shortcuts/)
+- [d39716c7](https://github.com/algolia/api-clients-automation/commit/d39716c7) feat(javascript): export task trigger guards from each build entrypoints ([#1289](https://github.com/algolia/api-clients-automation/pull/1289)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.0.0-alpha.41](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.40...5.0.0-alpha.41)
 
 - [dc5a22dd](https://github.com/algolia/api-clients-automation/commit/dc5a22dd) feat(javascript): improve on task trigger type guards ([#1286](https://github.com/algolia/api-clients-automation/pull/1286)) by [@Fluf22](https://github.com/Fluf22/)
