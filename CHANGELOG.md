@@ -1,3 +1,7 @@
+## [5.0.0-alpha.43](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.42...5.0.0-alpha.43)
+
+- [b9b4ba35](https://github.com/algolia/api-clients-automation/commit/b9b4ba35) feat(specs): add CSV source ([#1301](https://github.com/algolia/api-clients-automation/pull/1301)) by [@morganleroi](https://github.com/morganleroi/)
+
 ## [5.0.0-alpha.42](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.41...5.0.0-alpha.42)
 
 - [9d04dc22](https://github.com/algolia/api-clients-automation/commit/9d04dc22) fix(specs): rename task type to `onDemand` ([#1299](https://github.com/algolia/api-clients-automation/pull/1299)) by [@shortcuts](https://github.com/shortcuts/)
