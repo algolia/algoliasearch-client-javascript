@@ -75,7 +75,7 @@ import type { TaskSearch } from '../model/taskSearch';
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.0.0-alpha.17';
+export const apiClientVersion = '1.0.0-alpha.18';
 
 export const REGIONS = ['us'] as const;
 export type Region = typeof REGIONS[number];
