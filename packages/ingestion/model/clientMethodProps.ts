@@ -1,16 +1,23 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
 import type { ActionType } from './actionType';
+import type { AuthenticationSortKeys } from './authenticationSortKeys';
 import type { AuthenticationType } from './authenticationType';
 import type { AuthenticationUpdate } from './authenticationUpdate';
+import type { DestinationSortKeys } from './destinationSortKeys';
 import type { DestinationType } from './destinationType';
 import type { DestinationUpdate } from './destinationUpdate';
+import type { EventSortKeys } from './eventSortKeys';
 import type { EventStatus } from './eventStatus';
 import type { EventType } from './eventType';
+import type { OrderKeys } from './orderKeys';
 import type { PlatformWithNone } from './platformWithNone';
+import type { RunSortKeys } from './runSortKeys';
 import type { RunStatus } from './runStatus';
+import type { SourceSortKeys } from './sourceSortKeys';
 import type { SourceType } from './sourceType';
 import type { SourceUpdate } from './sourceUpdate';
+import type { TaskSortKeys } from './taskSortKeys';
 import type { TaskUpdate } from './taskUpdate';
 import type { TriggerType } from './triggerType';
 
@@ -104,6 +111,14 @@ export type GetAuthenticationsProps = {
    * The platform of the authentications to retrieve.
    */
   platform?: PlatformWithNone[];
+  /**
+   * The key by which the list should be sorted.
+   */
+  sort?: AuthenticationSortKeys;
+  /**
+   * The order of the returned list.
+   */
+  order?: OrderKeys;
 };
 
 /**
@@ -136,6 +151,14 @@ export type GetDestinationsProps = {
    * The authenticationIDs of the destinations to retrive.
    */
   authenticationID?: string[];
+  /**
+   * The key by which the list should be sorted.
+   */
+  sort?: DestinationSortKeys;
+  /**
+   * The order of the returned list.
+   */
+  order?: OrderKeys;
 };
 
 /**
@@ -168,6 +191,14 @@ export type GetEventsProps = {
    * Filter the type of the events.
    */
   type?: EventType[];
+  /**
+   * The key by which the list should be sorted.
+   */
+  sort?: EventSortKeys;
+  /**
+   * The order of the returned list.
+   */
+  order?: OrderKeys;
 };
 
 /**
@@ -200,6 +231,14 @@ export type GetRunsProps = {
    * Filter by taskID.
    */
   taskID?: string;
+  /**
+   * The key by which the list should be sorted.
+   */
+  sort?: RunSortKeys;
+  /**
+   * The order of the returned list.
+   */
+  order?: OrderKeys;
 };
 
 /**
@@ -232,6 +271,14 @@ export type GetSourcesProps = {
    * The authenticationIDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication.
    */
   authenticationID?: string[];
+  /**
+   * The key by which the list should be sorted.
+   */
+  sort?: SourceSortKeys;
+  /**
+   * The order of the returned list.
+   */
+  order?: OrderKeys;
 };
 
 /**
@@ -276,6 +323,14 @@ export type GetTasksProps = {
    * The trigger type of the task.
    */
   triggerType?: TriggerType[];
+  /**
+   * The key by which the list should be sorted.
+   */
+  sort?: TaskSortKeys;
+  /**
+   * The order of the returned list.
+   */
+  order?: OrderKeys;
 };
 
 /**

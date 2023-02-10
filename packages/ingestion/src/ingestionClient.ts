@@ -598,10 +598,19 @@ export function createIngestionClient({
      * @param getAuthentications.page - The page number to fetch, starting at 1.
      * @param getAuthentications.type - The type of the authentications to retrieve.
      * @param getAuthentications.platform - The platform of the authentications to retrieve.
+     * @param getAuthentications.sort - The key by which the list should be sorted.
+     * @param getAuthentications.order - The order of the returned list.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAuthentications(
-      { itemsPerPage, page, type, platform }: GetAuthenticationsProps = {},
+      {
+        itemsPerPage,
+        page,
+        type,
+        platform,
+        sort,
+        order,
+      }: GetAuthenticationsProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListAuthenticationsResponse> {
       const requestPath = '/1/authentications';
@@ -622,6 +631,14 @@ export function createIngestionClient({
 
       if (platform !== undefined) {
         queryParameters.platform = platform.toString();
+      }
+
+      if (sort !== undefined) {
+        queryParameters.sort = sort.toString();
+      }
+
+      if (order !== undefined) {
+        queryParameters.order = order.toString();
       }
 
       const request: Request = {
@@ -678,10 +695,19 @@ export function createIngestionClient({
      * @param getDestinations.page - The page number to fetch, starting at 1.
      * @param getDestinations.type - The type of the destinations to retrive.
      * @param getDestinations.authenticationID - The authenticationIDs of the destinations to retrive.
+     * @param getDestinations.sort - The key by which the list should be sorted.
+     * @param getDestinations.order - The order of the returned list.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDestinations(
-      { itemsPerPage, page, type, authenticationID }: GetDestinationsProps = {},
+      {
+        itemsPerPage,
+        page,
+        type,
+        authenticationID,
+        sort,
+        order,
+      }: GetDestinationsProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListDestinationsResponse> {
       const requestPath = '/1/destinations';
@@ -702,6 +728,14 @@ export function createIngestionClient({
 
       if (authenticationID !== undefined) {
         queryParameters.authenticationID = authenticationID.toString();
+      }
+
+      if (sort !== undefined) {
+        queryParameters.sort = sort.toString();
+      }
+
+      if (order !== undefined) {
+        queryParameters.order = order.toString();
       }
 
       const request: Request = {
@@ -763,10 +797,12 @@ export function createIngestionClient({
      * @param getEvents.runID - The run UUID.
      * @param getEvents.status - Filter the status of the events.
      * @param getEvents.type - Filter the type of the events.
+     * @param getEvents.sort - The key by which the list should be sorted.
+     * @param getEvents.order - The order of the returned list.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getEvents(
-      { runID, status, type }: GetEventsProps,
+      { runID, status, type, sort, order }: GetEventsProps,
       requestOptions?: RequestOptions
     ): Promise<ListEventsResponse> {
       if (!runID) {
@@ -788,6 +824,14 @@ export function createIngestionClient({
 
       if (type !== undefined) {
         queryParameters.type = type.toString();
+      }
+
+      if (sort !== undefined) {
+        queryParameters.sort = sort.toString();
+      }
+
+      if (order !== undefined) {
+        queryParameters.order = order.toString();
       }
 
       const request: Request = {
@@ -842,10 +886,12 @@ export function createIngestionClient({
      * @param getRuns.page - The page number to fetch, starting at 1.
      * @param getRuns.status - Filter the status of the runs.
      * @param getRuns.taskID - Filter by taskID.
+     * @param getRuns.sort - The key by which the list should be sorted.
+     * @param getRuns.order - The order of the returned list.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRuns(
-      { itemsPerPage, page, status, taskID }: GetRunsProps = {},
+      { itemsPerPage, page, status, taskID, sort, order }: GetRunsProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<RunListResponse> {
       const requestPath = '/1/runs';
@@ -866,6 +912,14 @@ export function createIngestionClient({
 
       if (taskID !== undefined) {
         queryParameters.taskID = taskID.toString();
+      }
+
+      if (sort !== undefined) {
+        queryParameters.sort = sort.toString();
+      }
+
+      if (order !== undefined) {
+        queryParameters.order = order.toString();
       }
 
       const request: Request = {
@@ -922,10 +976,19 @@ export function createIngestionClient({
      * @param getSources.page - The page number to fetch, starting at 1.
      * @param getSources.type - The type of the sources to retrieve.
      * @param getSources.authenticationID - The authenticationIDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication.
+     * @param getSources.sort - The key by which the list should be sorted.
+     * @param getSources.order - The order of the returned list.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSources(
-      { itemsPerPage, page, type, authenticationID }: GetSourcesProps = {},
+      {
+        itemsPerPage,
+        page,
+        type,
+        authenticationID,
+        sort,
+        order,
+      }: GetSourcesProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListSourcesResponse> {
       const requestPath = '/1/sources';
@@ -946,6 +1009,14 @@ export function createIngestionClient({
 
       if (authenticationID !== undefined) {
         queryParameters.authenticationID = authenticationID.toString();
+      }
+
+      if (sort !== undefined) {
+        queryParameters.sort = sort.toString();
+      }
+
+      if (order !== undefined) {
+        queryParameters.order = order.toString();
       }
 
       const request: Request = {
@@ -1005,6 +1076,8 @@ export function createIngestionClient({
      * @param getTasks.sourceID - The sourceIDs of the tasks to retrive.
      * @param getTasks.destinationID - The destinationIDs of the tasks to retrive.
      * @param getTasks.triggerType - The trigger type of the task.
+     * @param getTasks.sort - The key by which the list should be sorted.
+     * @param getTasks.order - The order of the returned list.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTasks(
@@ -1016,6 +1089,8 @@ export function createIngestionClient({
         sourceID,
         destinationID,
         triggerType,
+        sort,
+        order,
       }: GetTasksProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListTasksResponse> {
@@ -1049,6 +1124,14 @@ export function createIngestionClient({
 
       if (triggerType !== undefined) {
         queryParameters.triggerType = triggerType.toString();
+      }
+
+      if (sort !== undefined) {
+        queryParameters.sort = sort.toString();
+      }
+
+      if (order !== undefined) {
+        queryParameters.order = order.toString();
       }
 
       const request: Request = {
