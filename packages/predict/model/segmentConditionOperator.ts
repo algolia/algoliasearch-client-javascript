@@ -1,6 +1,6 @@
 // This file is generated, manual changes will be lost - read more on https://github.com/algolia/api-clients-automation.
 
 /**
- * The status of the segment.
+ * Operator used to combine the operands.
  */
-export type SegmentStatus = 'active' | 'failed' | 'pending';
+export type SegmentConditionOperator = 'AND' | 'OR';
