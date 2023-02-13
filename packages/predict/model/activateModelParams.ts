@@ -21,6 +21,4 @@ export type ActivateModelParams = {
   index: string;
 
   modelAttributes?: string[];
-
-  contentAttributes?: string[];
 };

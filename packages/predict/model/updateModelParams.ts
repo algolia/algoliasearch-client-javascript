@@ -10,7 +10,5 @@ export type UpdateModelParams = {
 
   modelAttributes?: string[];
 
-  contentAttributes?: string[];
-
   modelStatus?: ModelStatus;
 };
