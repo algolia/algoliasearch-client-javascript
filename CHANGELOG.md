@@ -1,3 +1,8 @@
+## [5.0.0-alpha.46](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.45...5.0.0-alpha.46)
+
+- [f7f0fbe8](https://github.com/algolia/api-clients-automation/commit/f7f0fbe8) feat(specs): make DELETE endpoints return a 200 OK ([#1314](https://github.com/algolia/api-clients-automation/pull/1314)) by [@Fluf22](https://github.com/Fluf22/)
+- [cb3001dd](https://github.com/algolia/api-clients-automation/commit/cb3001dd) fix(specs): remove segment version ([#1313](https://github.com/algolia/api-clients-automation/pull/1313)) by [@bengreenbank](https://github.com/bengreenbank/)
+
 ## [5.0.0-alpha.45](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.44...5.0.0-alpha.45)
 
 - [d3aead8a](https://github.com/algolia/api-clients-automation/commit/d3aead8a) refactor(specs): new predict segment condition syntax ([#1202](https://github.com/algolia/api-clients-automation/pull/1202)) by [@bengreenbank](https://github.com/bengreenbank/)
