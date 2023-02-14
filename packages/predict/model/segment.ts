@@ -6,11 +6,6 @@ import type { SegmentType } from './segmentType';
 
 export type Segment = {
   /**
-   * The segment syntax version.
-   */
-  version: number;
-
-  /**
    * The ID of the segment.
    */
   segmentID: string;
