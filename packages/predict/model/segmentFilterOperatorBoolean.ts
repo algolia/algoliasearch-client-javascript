@@ -3,4 +3,4 @@
 /**
  * The operator used on the boolean filter value.
  */
-export type SegmentFilterOperatorBoolean = '!=' | '=';
+export type SegmentFilterOperatorBoolean = 'EQ' | 'NEQ';

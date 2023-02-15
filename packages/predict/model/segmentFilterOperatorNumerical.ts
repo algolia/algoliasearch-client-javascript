@@ -4,9 +4,9 @@
  * The operator used on the numerical filter value.
  */
 export type SegmentFilterOperatorNumerical =
-  | '!='
-  | '<'
-  | '<='
-  | '='
-  | '>'
-  | '>=';
+  | 'EQ'
+  | 'GT'
+  | 'GTE'
+  | 'LT'
+  | 'LTE'
+  | 'NEQ';

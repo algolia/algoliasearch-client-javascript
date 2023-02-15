@@ -4,11 +4,11 @@
  * Probability of the filter.
  */
 export type SegmentFilterProbability = {
-  lt?: number;
+  LT?: number;
 
-  lte?: number;
+  LTE?: number;
 
-  gt?: number;
+  GT?: number;
 
-  gte?: number;
+  GTE?: number;
 };
