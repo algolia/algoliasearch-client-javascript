@@ -8,5 +8,10 @@ export type SourceJSON = {
    */
   url: string;
 
+  /**
+   * The name of the column that contains the unique ID, used as `objectID` in Algolia.
+   */
+  uniqueIDColumn?: string;
+
   method?: MethodType;
 };
