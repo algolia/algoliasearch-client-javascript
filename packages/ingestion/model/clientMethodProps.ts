@@ -184,6 +184,14 @@ export type GetEventsProps = {
    */
   runID: string;
   /**
+   * The number of items per page to return.
+   */
+  itemsPerPage?: number;
+  /**
+   * The page number to fetch, starting at 1.
+   */
+  page?: number;
+  /**
    * Filter the status of the events.
    */
   status?: EventStatus[];

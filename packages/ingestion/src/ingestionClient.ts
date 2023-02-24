@@ -795,6 +795,8 @@ export function createIngestionClient({
      * @summary Get a list of events.
      * @param getEvents - The getEvents object.
      * @param getEvents.runID - The run UUID.
+     * @param getEvents.itemsPerPage - The number of items per page to return.
+     * @param getEvents.page - The page number to fetch, starting at 1.
      * @param getEvents.status - Filter the status of the events.
      * @param getEvents.type - Filter the type of the events.
      * @param getEvents.sort - The key by which the list should be sorted.
@@ -802,7 +804,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getEvents(
-      { runID, status, type, sort, order }: GetEventsProps,
+      { runID, itemsPerPage, page, status, type, sort, order }: GetEventsProps,
       requestOptions?: RequestOptions
     ): Promise<ListEventsResponse> {
       if (!runID) {
@@ -817,6 +819,14 @@ export function createIngestionClient({
       );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
+      if (itemsPerPage !== undefined) {
+        queryParameters.itemsPerPage = itemsPerPage.toString();
+      }
+
+      if (page !== undefined) {
+        queryParameters.page = page.toString();
+      }
 
       if (status !== undefined) {
         queryParameters.status = status.toString();
