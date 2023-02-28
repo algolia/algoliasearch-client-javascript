@@ -24,6 +24,11 @@ export type Run = {
 
   outcome?: RunOutcome;
 
+  /**
+   * Explains the result of outcome.
+   */
+  reason?: string;
+
   type: RunType;
 
   /**
