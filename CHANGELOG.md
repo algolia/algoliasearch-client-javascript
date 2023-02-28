@@ -1,3 +1,7 @@
+## [5.0.0-alpha.50](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.49...5.0.0-alpha.50)
+
+- [33700b8c](https://github.com/algolia/api-clients-automation/commit/33700b8c) feat(specs): add a reason string to the run object ([#1347](https://github.com/algolia/api-clients-automation/pull/1347)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.0.0-alpha.49](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.48...5.0.0-alpha.49)
 
 - [b4d183fe](https://github.com/algolia/api-clients-automation/commit/b4d183fe) fix(specs): add pagination to events ([#1337](https://github.com/algolia/api-clients-automation/pull/1337)) by [@millotp](https://github.com/millotp/)
