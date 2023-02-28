@@ -30,7 +30,7 @@ import type { SetPersonalizationStrategyResponse } from '../model/setPersonaliza
 export const apiClientVersion = '5.0.0-alpha.50';
 
 export const REGIONS = ['eu', 'us'] as const;
-export type Region = typeof REGIONS[number];
+export type Region = (typeof REGIONS)[number];
 
 function getDefaultHosts(region: Region): Host[] {
   const url = 'personalization.{region}.algolia.com'.replace(

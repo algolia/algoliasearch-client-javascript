@@ -32,7 +32,7 @@ import type { ListABTestsResponse } from '../model/listABTestsResponse';
 export const apiClientVersion = '5.0.0-alpha.50';
 
 export const REGIONS = ['de', 'us'] as const;
-export type Region = typeof REGIONS[number];
+export type Region = (typeof REGIONS)[number];
 
 function getDefaultHosts(region?: Region): Host[] {
   const url = !region
