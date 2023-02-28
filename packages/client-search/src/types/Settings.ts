@@ -306,6 +306,11 @@ export type Settings = {
   readonly relevancyStrictness?: number;
 
   /**
+   * The search mode that the index will use to query for results.
+   */
+  readonly mode?: 'neuralSearch' | 'keywordSearch';
+
+  /**
    * Content defining how the search interface should be rendered.
    * This is set via the settings for a default value and can be overridden via rules
    */
