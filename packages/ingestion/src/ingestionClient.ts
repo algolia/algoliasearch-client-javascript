@@ -206,6 +206,22 @@ export function createIngestionClient({
         );
       }
 
+      if (!authenticationCreate.type) {
+        throw new Error(
+          'Parameter `authenticationCreate.type` is required when calling `createAuthentication`.'
+        );
+      }
+      if (!authenticationCreate.name) {
+        throw new Error(
+          'Parameter `authenticationCreate.name` is required when calling `createAuthentication`.'
+        );
+      }
+      if (!authenticationCreate.input) {
+        throw new Error(
+          'Parameter `authenticationCreate.input` is required when calling `createAuthentication`.'
+        );
+      }
+
       const requestPath = '/1/authentications';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -235,6 +251,27 @@ export function createIngestionClient({
       if (!destinationCreate) {
         throw new Error(
           'Parameter `destinationCreate` is required when calling `createDestination`.'
+        );
+      }
+
+      if (!destinationCreate.type) {
+        throw new Error(
+          'Parameter `destinationCreate.type` is required when calling `createDestination`.'
+        );
+      }
+      if (!destinationCreate.name) {
+        throw new Error(
+          'Parameter `destinationCreate.name` is required when calling `createDestination`.'
+        );
+      }
+      if (!destinationCreate.input) {
+        throw new Error(
+          'Parameter `destinationCreate.input` is required when calling `createDestination`.'
+        );
+      }
+      if (!destinationCreate.authenticationID) {
+        throw new Error(
+          'Parameter `destinationCreate.authenticationID` is required when calling `createDestination`.'
         );
       }
 
@@ -275,9 +312,19 @@ export function createIngestionClient({
           'Parameter `sourceCreate.type` is required when calling `createSource`.'
         );
       }
+      if (!sourceCreate.name) {
+        throw new Error(
+          'Parameter `sourceCreate.name` is required when calling `createSource`.'
+        );
+      }
       if (!sourceCreate.input) {
         throw new Error(
           'Parameter `sourceCreate.input` is required when calling `createSource`.'
+        );
+      }
+      if (!sourceCreate.authenticationID) {
+        throw new Error(
+          'Parameter `sourceCreate.authenticationID` is required when calling `createSource`.'
         );
       }
 
@@ -316,6 +363,11 @@ export function createIngestionClient({
       if (!taskCreate.sourceID) {
         throw new Error(
           'Parameter `taskCreate.sourceID` is required when calling `createTask`.'
+        );
+      }
+      if (!taskCreate.destinationID) {
+        throw new Error(
+          'Parameter `taskCreate.destinationID` is required when calling `createTask`.'
         );
       }
       if (!taskCreate.trigger) {

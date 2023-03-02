@@ -555,6 +555,12 @@ export function createSearchClient({
         );
       }
 
+      if (!source.source) {
+        throw new Error(
+          'Parameter `source.source` is required when calling `appendSource`.'
+        );
+      }
+
       const requestPath = '/1/security/sources/append';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -2376,6 +2382,11 @@ export function createSearchClient({
       if (!synonymHit.objectID) {
         throw new Error(
           'Parameter `synonymHit.objectID` is required when calling `saveSynonym`.'
+        );
+      }
+      if (!synonymHit.type) {
+        throw new Error(
+          'Parameter `synonymHit.type` is required when calling `saveSynonym`.'
         );
       }
 

@@ -777,12 +777,6 @@ export function createPredictClient({
         );
       }
 
-      if (!updateModelParams.name) {
-        throw new Error(
-          'Parameter `updateModelParams.name` is required when calling `updateModelInstance`.'
-        );
-      }
-
       const requestPath = '/1/predict/models/{modelID}'.replace(
         '{modelID}',
         encodeURIComponent(modelID)
