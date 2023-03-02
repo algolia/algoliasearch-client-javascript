@@ -2,15 +2,11 @@
 
 * feat: add mode to settings types (#1439) ([89fd80e](https://github.com/algolia/algoliasearch-client-javascript/commit/89fd80e)), closes [#1439](https://github.com/algolia/algoliasearch-client-javascript/issues/1439)
 
-
-
 ## [v4.14.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.14.2...4.14.3)
 
 * fix(recommend): remove unused trendingFacets props  (#1433) ([ffbfc05](https://github.com/algolia/algoliasearch-client-javascript/commit/ffbfc05)), closes [#1433](https://github.com/algolia/algoliasearch-client-javascript/issues/1433)
 * fix(recommend): update trending facets query props (RECO-1184) (#1434) ([913443f](https://github.com/algolia/algoliasearch-client-javascript/commit/913443f)), closes [#1434](https://github.com/algolia/algoliasearch-client-javascript/issues/1434)
 * docs: Fix incorrect property description (#1429) ([ba59b68](https://github.com/algolia/algoliasearch-client-javascript/commit/ba59b68)), closes [#1429](https://github.com/algolia/algoliasearch-client-javascript/issues/1429)
-
-
 
 ## [v4.14.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.14.1...4.14.2)
 
