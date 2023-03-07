@@ -1,4 +1,5 @@
 import { Hit, Settings } from '.';
+import { RedirectRuleIndexMetadata } from './RedirectRuleIndexMetadata';
 
 export type SearchResponse<TObject = {}> = {
   /**
@@ -224,6 +225,13 @@ export type SearchResponse<TObject = {}> = {
      * as a JSON object with one field per parameter.
      */
     params?: Record<string, any>;
+
+    /**
+     * This parameter is for internal use only.
+     */
+    redirect?: {
+      index?: RedirectRuleIndexMetadata[];
+    };
   };
 
   /**
