@@ -269,11 +269,6 @@ export function createIngestionClient({
           'Parameter `destinationCreate.input` is required when calling `createDestination`.'
         );
       }
-      if (!destinationCreate.authenticationID) {
-        throw new Error(
-          'Parameter `destinationCreate.authenticationID` is required when calling `createDestination`.'
-        );
-      }
 
       const requestPath = '/1/destinations';
       const headers: Headers = {};
@@ -320,11 +315,6 @@ export function createIngestionClient({
       if (!sourceCreate.input) {
         throw new Error(
           'Parameter `sourceCreate.input` is required when calling `createSource`.'
-        );
-      }
-      if (!sourceCreate.authenticationID) {
-        throw new Error(
-          'Parameter `sourceCreate.authenticationID` is required when calling `createSource`.'
         );
       }
 

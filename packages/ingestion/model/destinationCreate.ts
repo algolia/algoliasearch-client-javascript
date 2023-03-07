@@ -19,5 +19,5 @@ export type DestinationCreate = {
   /**
    * The authentication UUID.
    */
-  authenticationID: string;
+  authenticationID?: string;
 };
