@@ -30,6 +30,7 @@ export * from './modelsToRetrieve';
 export * from './modelsToRetrieveParam';
 export * from './nextPageTokenParam';
 export * from './params';
+export * from './predictionAffinityValue';
 export * from './predictions';
 export * from './predictionsAffinities';
 export * from './predictionsAffinitiesSuccess';
