@@ -77,7 +77,7 @@ import type { Trigger } from '../model/trigger';
 
 export const apiClientVersion = '1.0.0-alpha.26';
 
-export const REGIONS = ['us'] as const;
+export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
 
 function getDefaultHosts(region: Region): Host[] {
