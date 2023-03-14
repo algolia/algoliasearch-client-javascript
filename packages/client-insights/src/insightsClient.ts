@@ -23,7 +23,7 @@ import type {
 import type { InsightEvents } from '../model/insightEvents';
 import type { PushEventsResponse } from '../model/pushEventsResponse';
 
-export const apiClientVersion = '5.0.0-alpha.52';
+export const apiClientVersion = '5.0.0-alpha.53';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
