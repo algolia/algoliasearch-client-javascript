@@ -17,6 +17,7 @@ export * from './authenticationType';
 export * from './authenticationUpdate';
 export * from './authenticationUpdateResponse';
 export * from './authenticationWithInput';
+export * from './bigCommerceChannel';
 export * from './deleteResponse';
 export * from './destination';
 export * from './destinationCreate';
