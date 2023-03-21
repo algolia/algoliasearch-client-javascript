@@ -8,5 +8,5 @@ export type SourceBigCommerce = {
    */
   storeHash?: string;
 
-  channels?: BigCommerceChannel[];
+  channel?: BigCommerceChannel;
 };
