@@ -312,6 +312,7 @@ export type Settings = {
 
   /**
    * The settings relevant for configuration of the semantic search engine.
+   * These settings are only used when the mode is set to 'neuralSearch'.
    */
   readonly semanticSearch?: {
     readonly eventSources?: readonly string[];
