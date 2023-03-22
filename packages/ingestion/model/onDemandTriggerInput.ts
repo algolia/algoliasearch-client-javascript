@@ -5,11 +5,6 @@ import type { OnDemandTriggerType } from './onDemandTriggerType';
 /**
  * The trigger information of a task of type `onDemand`.
  */
-export type OnDemandTrigger = {
+export type OnDemandTriggerInput = {
   type: OnDemandTriggerType;
-
-  /**
-   * The last time the scheduled task ran (RFC3339 format).
-   */
-  lastRun?: string;
 };

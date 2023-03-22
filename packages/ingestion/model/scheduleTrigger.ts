@@ -14,12 +14,12 @@ export type ScheduleTrigger = {
   cron: string;
 
   /**
-   * The last time the scheduled task ran.
+   * The last time the scheduled task ran (RFC3339 format).
    */
   lastRun?: string;
 
   /**
-   * The next scheduled run of the task.
+   * The next scheduled run of the task (RFC3339 format).
    */
   nextRun: string;
 };

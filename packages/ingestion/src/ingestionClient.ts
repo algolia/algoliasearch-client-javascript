@@ -21,12 +21,14 @@ import type { AuthenticationSearch } from '../model/authenticationSearch';
 import type { AuthenticationUpdateResponse } from '../model/authenticationUpdateResponse';
 import type { AuthenticationWithInput } from '../model/authenticationWithInput';
 import type {
+  DelProps,
   DeleteAuthenticationProps,
   DeleteDestinationProps,
   DeleteSourceProps,
   DeleteTaskProps,
   DisableTaskProps,
   EnableTaskProps,
+  GetProps,
   GetAuthenticationProps,
   GetAuthenticationsProps,
   GetDestinationProps,
@@ -39,6 +41,8 @@ import type {
   GetSourcesProps,
   GetTaskProps,
   GetTasksProps,
+  PostProps,
+  PutProps,
   RunTaskProps,
   UpdateAuthenticationProps,
   UpdateDestinationProps,
@@ -387,6 +391,37 @@ export function createIngestionClient({
     },
 
     /**
+     * This method allow you to send requests to the Algolia REST API.
+     *
+     * @summary Send requests to the Algolia REST API.
+     * @param del - The del object.
+     * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+     * @param del.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    del(
+      { path, parameters }: DelProps,
+      requestOptions?: RequestOptions
+    ): Promise<Record<string, any>> {
+      if (!path) {
+        throw new Error('Parameter `path` is required when calling `del`.');
+      }
+
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Soft delete the authentication of the given authenticationID.
      *
      * @summary Delete a authentication.
@@ -588,6 +623,37 @@ export function createIngestionClient({
 
       const request: Request = {
         method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * This method allow you to send requests to the Algolia REST API.
+     *
+     * @summary Send requests to the Algolia REST API.
+     * @param get - The get object.
+     * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+     * @param get.parameters - Query parameters to be applied to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    get(
+      { path, parameters }: GetProps,
+      requestOptions?: RequestOptions
+    ): Promise<Record<string, any>> {
+      if (!path) {
+        throw new Error('Parameter `path` is required when calling `get`.');
+      }
+
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'GET',
         path: requestPath,
         queryParameters,
         headers,
@@ -1191,6 +1257,72 @@ export function createIngestionClient({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * This method allow you to send requests to the Algolia REST API.
+     *
+     * @summary Send requests to the Algolia REST API.
+     * @param post - The post object.
+     * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+     * @param post.parameters - Query parameters to be applied to the current query.
+     * @param post.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    post(
+      { path, parameters, body }: PostProps,
+      requestOptions?: RequestOptions
+    ): Promise<Record<string, any>> {
+      if (!path) {
+        throw new Error('Parameter `path` is required when calling `post`.');
+      }
+
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: body ? body : {},
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * This method allow you to send requests to the Algolia REST API.
+     *
+     * @summary Send requests to the Algolia REST API.
+     * @param put - The put object.
+     * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
+     * @param put.parameters - Query parameters to be applied to the current query.
+     * @param put.body - The parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    put(
+      { path, parameters, body }: PutProps,
+      requestOptions?: RequestOptions
+    ): Promise<Record<string, any>> {
+      if (!path) {
+        throw new Error('Parameter `path` is required when calling `put`.');
+      }
+
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: body ? body : {},
       };
 
       return transporter.request(request, requestOptions);
