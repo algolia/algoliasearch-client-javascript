@@ -1,3 +1,10 @@
+## [v4.16.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.15.0...4.16.0)
+
+* feat(neuralsearch): adding the semanticSearch settings to client-search (#1450) ([a478ffd](https://github.com/algolia/algoliasearch-client-javascript/commit/a478ffd)), closes [#1450](https://github.com/algolia/algoliasearch-client-javascript/issues/1450)
+* Fix for the redirect object in SearchResponse (#1443) ([6b0685c](https://github.com/algolia/algoliasearch-client-javascript/commit/6b0685c)), closes [#1443](https://github.com/algolia/algoliasearch-client-javascript/issues/1443)
+
+
+
 ## [v4.15.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.14.3...4.15.0)
 
 * feat: add mode to settings types (#1439) ([89fd80e](https://github.com/algolia/algoliasearch-client-javascript/commit/89fd80e)), closes [#1439](https://github.com/algolia/algoliasearch-client-javascript/issues/1439)
