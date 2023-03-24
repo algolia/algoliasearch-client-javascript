@@ -315,7 +315,10 @@ export type Settings = {
    * These settings are only used when the mode is set to 'neuralSearch'.
    */
   readonly semanticSearch?: {
-    readonly eventSources?: readonly string[];
+    /**
+     * When null, the current index / replica group will be used as the event source.
+     */
+    readonly eventSources?: readonly string[] | null;
   };
 
   /**
