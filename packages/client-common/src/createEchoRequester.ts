@@ -11,7 +11,7 @@ function getUrlParams({
   pathname,
 }: URL): Pick<EchoResponse, 'algoliaAgent' | 'host' | 'path' | 'searchParams'> {
   const algoliaAgent = urlSearchParams.get('x-algolia-agent') || '';
-  const searchParams = {};
+  const searchParams: Record<string, string> = {};
 
   for (const [k, v] of urlSearchParams) {
     if (k === 'x-algolia-agent') {

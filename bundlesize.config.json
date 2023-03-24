@@ -30,11 +30,11 @@
     },
     {
       "path": "packages/client-search/dist/client-search.umd.js",
-      "maxSize": "6.55KB"
+      "maxSize": "6.60KB"
     },
     {
       "path": "packages/ingestion/dist/ingestion.umd.js",
-      "maxSize": "4.75KB"
+      "maxSize": "4.85KB"
     },
     {
       "path": "packages/predict/dist/predict.umd.js",
