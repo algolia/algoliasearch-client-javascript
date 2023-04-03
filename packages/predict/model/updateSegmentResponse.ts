@@ -7,7 +7,7 @@ export type UpdateSegmentResponse = {
   segmentID: string;
 
   /**
-   * The date and time at which the segment was last updated (RFC3339).
+   * The date and time at which the segment was updated (RFC3339).
    */
   updatedAt: string;
 };

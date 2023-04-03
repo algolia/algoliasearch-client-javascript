@@ -21,5 +21,10 @@ export type Segment = {
 
   type: SegmentType;
 
+  /**
+   * The date and time at which the segment was last updated (RFC3339).
+   */
+  lastUpdatedAt: string;
+
   errorMessage?: string;
 };
