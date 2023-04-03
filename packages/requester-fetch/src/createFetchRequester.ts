@@ -44,7 +44,6 @@ export function createFetchRequester({
             ...request.headers,
           },
           body: request.data || null,
-          mode: 'cors',
           redirect: 'manual',
           signal,
         });
