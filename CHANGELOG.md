@@ -1,3 +1,7 @@
+## [5.0.0-alpha.55](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.54...5.0.0-alpha.55)
+
+- [33ec7bc7](https://github.com/algolia/api-clients-automation/commit/33ec7bc7) feat(specs): add `lastUpdatedAt` field to predict segments ([#1431](https://github.com/algolia/api-clients-automation/pull/1431)) by [@bengreenbank](https://github.com/bengreenbank/)
+
 ## [5.0.0-alpha.54](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.53...5.0.0-alpha.54)
 
 - [c49b6e6d](https://github.com/algolia/api-clients-automation/commit/c49b6e6d) fix(specs): add customRequest to ingestion and small fix ([#1418](https://github.com/algolia/api-clients-automation/pull/1418)) by [@millotp](https://github.com/millotp/)
