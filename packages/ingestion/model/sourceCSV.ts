@@ -20,4 +20,9 @@ export type SourceCSV = {
   mapping?: Record<string, MappingTypeCSV>;
 
   method?: MethodType;
+
+  /**
+   * The character used to split the value on each line, default to a comma (\\r, \\n, 0xFFFD, and space are forbidden).
+   */
+  delimiter?: string;
 };
