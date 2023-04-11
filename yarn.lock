@@ -39,7 +39,7 @@ __metadata:
     "@types/node": 18.15.11
     jest: 29.5.0
     jest-environment-jsdom: 29.5.0
-    ts-jest: 29.0.5
+    ts-jest: 29.1.0
     typescript: 5.0.3
   languageName: unknown
   linkType: soft
@@ -144,7 +144,7 @@ __metadata:
     "@types/node": 18.15.11
     jest: 29.5.0
     jest-environment-jsdom: 29.5.0
-    ts-jest: 29.0.5
+    ts-jest: 29.1.0
     typescript: 5.0.3
     xhr-mock: 2.5.1
   languageName: unknown
@@ -160,7 +160,7 @@ __metadata:
     cross-fetch: 3.1.5
     jest: 29.5.0
     nock: 13.3.0
-    ts-jest: 29.0.5
+    ts-jest: 29.1.0
     typescript: 5.0.3
   languageName: unknown
   linkType: soft
@@ -174,7 +174,7 @@ __metadata:
     "@types/node": 18.15.11
     jest: 29.5.0
     nock: 13.3.0
-    ts-jest: 29.0.5
+    ts-jest: 29.1.0
     typescript: 5.0.3
   languageName: unknown
   linkType: soft
@@ -2971,9 +2971,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nrwl/cli@npm:15.9.2":
+  version: 15.9.2
+  resolution: "@nrwl/cli@npm:15.9.2"
+  dependencies:
+    nx: 15.9.2
+  checksum: c41f0ec6f37e046711f3932d50eb9fc300efffa5a02e2cab35d72aaa52a87c64788e5030ba7fba983b6afe9fe5b4d44fb7e49ee4a88716b2bd542379bf70bab2
+  languageName: node
+  linkType: hard
+
 "@nrwl/nx-darwin-arm64@npm:15.8.9":
   version: 15.8.9
   resolution: "@nrwl/nx-darwin-arm64@npm:15.8.9"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@nrwl/nx-darwin-arm64@npm:15.9.2":
+  version: 15.9.2
+  resolution: "@nrwl/nx-darwin-arm64@npm:15.9.2"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
@@ -2985,9 +3001,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nrwl/nx-darwin-x64@npm:15.9.2":
+  version: 15.9.2
+  resolution: "@nrwl/nx-darwin-x64@npm:15.9.2"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@nrwl/nx-linux-arm-gnueabihf@npm:15.8.9":
   version: 15.8.9
   resolution: "@nrwl/nx-linux-arm-gnueabihf@npm:15.8.9"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@nrwl/nx-linux-arm-gnueabihf@npm:15.9.2":
+  version: 15.9.2
+  resolution: "@nrwl/nx-linux-arm-gnueabihf@npm:15.9.2"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
@@ -2999,9 +3029,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nrwl/nx-linux-arm64-gnu@npm:15.9.2":
+  version: 15.9.2
+  resolution: "@nrwl/nx-linux-arm64-gnu@npm:15.9.2"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
 "@nrwl/nx-linux-arm64-musl@npm:15.8.9":
   version: 15.8.9
   resolution: "@nrwl/nx-linux-arm64-musl@npm:15.8.9"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@nrwl/nx-linux-arm64-musl@npm:15.9.2":
+  version: 15.9.2
+  resolution: "@nrwl/nx-linux-arm64-musl@npm:15.9.2"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
@@ -3013,9 +3057,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nrwl/nx-linux-x64-gnu@npm:15.9.2":
+  version: 15.9.2
+  resolution: "@nrwl/nx-linux-x64-gnu@npm:15.9.2"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
 "@nrwl/nx-linux-x64-musl@npm:15.8.9":
   version: 15.8.9
   resolution: "@nrwl/nx-linux-x64-musl@npm:15.8.9"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@nrwl/nx-linux-x64-musl@npm:15.9.2":
+  version: 15.9.2
+  resolution: "@nrwl/nx-linux-x64-musl@npm:15.9.2"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
@@ -3027,9 +3085,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nrwl/nx-win32-arm64-msvc@npm:15.9.2":
+  version: 15.9.2
+  resolution: "@nrwl/nx-win32-arm64-msvc@npm:15.9.2"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@nrwl/nx-win32-x64-msvc@npm:15.8.9":
   version: 15.8.9
   resolution: "@nrwl/nx-win32-x64-msvc@npm:15.8.9"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@nrwl/nx-win32-x64-msvc@npm:15.9.2":
+  version: 15.9.2
+  resolution: "@nrwl/nx-win32-x64-msvc@npm:15.9.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -3042,6 +3114,17 @@ __metadata:
   bin:
     tao: index.js
   checksum: dbf0b187d41110211233ce4fc78f49933d52459a09dbf8c807ad58a02466424503c565b49081067a750aa42fdb4ea1090883dab9f2aa91ce968da434303dadf0
+  languageName: node
+  linkType: hard
+
+"@nrwl/tao@npm:15.9.2":
+  version: 15.9.2
+  resolution: "@nrwl/tao@npm:15.9.2"
+  dependencies:
+    nx: 15.9.2
+  bin:
+    tao: index.js
+  checksum: dca52e95004df7298dae2d7b167bbcb469d6a8baf9e01c6c2a58bbf99850b6805fd6630e654e042344f3c7480547aa1114b2d3afda2e976b5657a28d48902bd8
   languageName: node
   linkType: hard
 
@@ -3213,14 +3296,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-node-resolve@npm:15.0.1":
-  version: 15.0.1
-  resolution: "@rollup/plugin-node-resolve@npm:15.0.1"
+"@rollup/plugin-node-resolve@npm:15.0.2":
+  version: 15.0.2
+  resolution: "@rollup/plugin-node-resolve@npm:15.0.2"
   dependencies:
     "@rollup/pluginutils": ^5.0.1
     "@types/resolve": 1.20.2
     deepmerge: ^4.2.2
-    is-builtin-module: ^3.2.0
+    is-builtin-module: ^3.2.1
     is-module: ^1.0.0
     resolve: ^1.22.1
   peerDependencies:
@@ -3228,7 +3311,7 @@ __metadata:
   peerDependenciesMeta:
     rollup:
       optional: true
-  checksum: 90e30b41626a15ebf02746a83d34b15f9fe9051ddc156a9bf785504f489947980b3bdeb7bf2f80828a9becfe472a03a96d0238328a3e3e2198a482fcac7eb3aa
+  checksum: 328eafee06ff967a36441b55e77fbd0d4f599d256e5d1977800ee71915846c46bc1b6185df35c7b512ad2b4023b05b65a332be77b8b00b9d8a20f87d056b8166
   languageName: node
   linkType: hard
 
@@ -3667,7 +3750,7 @@ __metadata:
     "@babel/preset-env": 7.21.4
     "@babel/runtime": 7.21.0
     "@rollup/plugin-babel": 6.0.3
-    "@rollup/plugin-node-resolve": 15.0.1
+    "@rollup/plugin-node-resolve": 15.0.2
     "@types/jest": 29.5.0
     "@types/node": 18.15.11
     "@types/rollup-plugin-node-globals": 1.4.1
@@ -3675,7 +3758,7 @@ __metadata:
     bundlesize2: 0.0.31
     execa: 5.1.1
     lerna: 5.5.2
-    nx: 15.8.9
+    nx: 15.9.2
     rollup: 2.79.1
     rollup-plugin-node-globals: 1.4.0
     rollup-plugin-terser: 7.0.2
@@ -3701,7 +3784,7 @@ __metadata:
     "@types/node": 18.15.11
     jest: 29.5.0
     rollup: 2.79.1
-    ts-jest: 29.0.5
+    ts-jest: 29.1.0
     typescript: 5.0.3
   languageName: unknown
   linkType: soft
@@ -6007,7 +6090,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-builtin-module@npm:^3.2.0":
+"is-builtin-module@npm:^3.2.1":
   version: 3.2.1
   resolution: "is-builtin-module@npm:3.2.1"
   dependencies:
@@ -7871,6 +7954,87 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nx@npm:15.9.2":
+  version: 15.9.2
+  resolution: "nx@npm:15.9.2"
+  dependencies:
+    "@nrwl/cli": 15.9.2
+    "@nrwl/nx-darwin-arm64": 15.9.2
+    "@nrwl/nx-darwin-x64": 15.9.2
+    "@nrwl/nx-linux-arm-gnueabihf": 15.9.2
+    "@nrwl/nx-linux-arm64-gnu": 15.9.2
+    "@nrwl/nx-linux-arm64-musl": 15.9.2
+    "@nrwl/nx-linux-x64-gnu": 15.9.2
+    "@nrwl/nx-linux-x64-musl": 15.9.2
+    "@nrwl/nx-win32-arm64-msvc": 15.9.2
+    "@nrwl/nx-win32-x64-msvc": 15.9.2
+    "@nrwl/tao": 15.9.2
+    "@parcel/watcher": 2.0.4
+    "@yarnpkg/lockfile": ^1.1.0
+    "@yarnpkg/parsers": ^3.0.0-rc.18
+    "@zkochan/js-yaml": 0.0.6
+    axios: ^1.0.0
+    chalk: ^4.1.0
+    cli-cursor: 3.1.0
+    cli-spinners: 2.6.1
+    cliui: ^7.0.2
+    dotenv: ~10.0.0
+    enquirer: ~2.3.6
+    fast-glob: 3.2.7
+    figures: 3.2.0
+    flat: ^5.0.2
+    fs-extra: ^11.1.0
+    glob: 7.1.4
+    ignore: ^5.0.4
+    js-yaml: 4.1.0
+    jsonc-parser: 3.2.0
+    lines-and-columns: ~2.0.3
+    minimatch: 3.0.5
+    npm-run-path: ^4.0.1
+    open: ^8.4.0
+    semver: 7.3.4
+    string-width: ^4.2.3
+    strong-log-transformer: ^2.1.0
+    tar-stream: ~2.2.0
+    tmp: ~0.2.1
+    tsconfig-paths: ^4.1.2
+    tslib: ^2.3.0
+    v8-compile-cache: 2.3.0
+    yargs: ^17.6.2
+    yargs-parser: 21.1.1
+  peerDependencies:
+    "@swc-node/register": ^1.4.2
+    "@swc/core": ^1.2.173
+  dependenciesMeta:
+    "@nrwl/nx-darwin-arm64":
+      optional: true
+    "@nrwl/nx-darwin-x64":
+      optional: true
+    "@nrwl/nx-linux-arm-gnueabihf":
+      optional: true
+    "@nrwl/nx-linux-arm64-gnu":
+      optional: true
+    "@nrwl/nx-linux-arm64-musl":
+      optional: true
+    "@nrwl/nx-linux-x64-gnu":
+      optional: true
+    "@nrwl/nx-linux-x64-musl":
+      optional: true
+    "@nrwl/nx-win32-arm64-msvc":
+      optional: true
+    "@nrwl/nx-win32-x64-msvc":
+      optional: true
+  peerDependenciesMeta:
+    "@swc-node/register":
+      optional: true
+    "@swc/core":
+      optional: true
+  bin:
+    nx: bin/nx.js
+  checksum: 5154d8a764fdcccc6ace70aec0a111580b5346de0f67a78b3e62ea8d05a2363b63f9bbd3a6c4f68df5a8b8c72918ec068c56d258f173406636bd43119c8d5823
+  languageName: node
+  linkType: hard
+
 "once@npm:^1.3.0, once@npm:^1.4.0":
   version: 1.4.0
   resolution: "once@npm:1.4.0"
@@ -9489,9 +9653,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-jest@npm:29.0.5":
-  version: 29.0.5
-  resolution: "ts-jest@npm:29.0.5"
+"ts-jest@npm:29.1.0":
+  version: 29.1.0
+  resolution: "ts-jest@npm:29.1.0"
   dependencies:
     bs-logger: 0.x
     fast-json-stable-stringify: 2.x
@@ -9506,7 +9670,7 @@ __metadata:
     "@jest/types": ^29.0.0
     babel-jest: ^29.0.0
     jest: ^29.0.0
-    typescript: ">=4.3"
+    typescript: ">=4.3 <6"
   peerDependenciesMeta:
     "@babel/core":
       optional: true
@@ -9518,7 +9682,7 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: f60f129c2287f4c963d9ee2677132496c5c5a5d39c27ad234199a1140c26318a7d5bda34890ab0e30636ec42a8de28f84487c09e9dcec639c9c67812b3a38373
+  checksum: 535dc42ad523cbe1e387701fb2e448518419b515c082f09b25411f0b3dd0b854cf3e8141c316d6f4b99883aeb4a4f94159cbb1edfb06d7f77ea6229fadb2e1bf
   languageName: node
   linkType: hard
 
