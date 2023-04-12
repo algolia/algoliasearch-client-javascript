@@ -75,6 +75,7 @@ import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { Task } from '../model/task';
 import type { TaskCreate } from '../model/taskCreate';
 import type { TaskCreateResponse } from '../model/taskCreateResponse';
+import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
 import type { TaskSearch } from '../model/taskSearch';
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
 import type { Trigger } from '../model/trigger';
@@ -97,7 +98,7 @@ function getDefaultHosts(region: Region): Host[] {
  * @param trigger - The given Task Trigger.
  */
 export function isOnDemandTrigger(
-  trigger: Trigger
+  trigger: TaskCreateTrigger | Trigger
 ): trigger is OnDemandTrigger {
   return trigger.type === 'onDemand';
 }
@@ -109,7 +110,7 @@ export function isOnDemandTrigger(
  * @param trigger - The given Task Trigger.
  */
 export function isScheduleTrigger(
-  trigger: Trigger
+  trigger: TaskCreateTrigger | Trigger
 ): trigger is ScheduleTrigger {
   return trigger.type === 'schedule';
 }
@@ -121,7 +122,7 @@ export function isScheduleTrigger(
  * @param trigger - The given Task Trigger.
  */
 export function isSubscriptionTrigger(
-  trigger: Trigger
+  trigger: TaskCreateTrigger | Trigger
 ): trigger is SubscriptionTrigger {
   return trigger.type === 'subscription';
 }
