@@ -17,6 +17,11 @@ export type Segment = {
 
   conditions: SegmentParentConditions;
 
+  /**
+   * The approximate number of users that matched the segment conditions when it was created, last updated, or when model inference last ran.
+   */
+  size: number;
+
   segmentStatus: SegmentStatus;
 
   type: SegmentType;
