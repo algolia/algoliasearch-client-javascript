@@ -22,6 +22,11 @@ export type Task = {
   trigger: Trigger;
 
   /**
+   * The input that holds information specific to the task.
+   */
+  input?: Record<string, any>;
+
+  /**
    * Whether the task is enabled or not.
    */
   enabled: boolean;
