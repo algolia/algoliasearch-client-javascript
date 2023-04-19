@@ -39,7 +39,6 @@ export function createFetchRequester({
       fetchRes = await fetch(request.url, {
         method: request.method,
         body: request.data || null,
-        mode: 'cors',
         redirect: 'manual',
         signal,
         ...requesterOptions,
