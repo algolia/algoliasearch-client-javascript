@@ -291,10 +291,12 @@ export function createAbtestingClient({
      * @param listABTests - The listABTests object.
      * @param listABTests.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param listABTests.limit - Number of records to return. Limit is the size of the page.
+     * @param listABTests.indexPrefix - Filters the returned ab tests by any indices starting with the provided prefix that are assigned to either variant of an ab test.
+     * @param listABTests.indexSuffix - Filters the returned ab tests by any indices ending with the provided suffix that are assigned to either variant of an ab test.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listABTests(
-      { offset, limit }: ListABTestsProps = {},
+      { offset, limit, indexPrefix, indexSuffix }: ListABTestsProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListABTestsResponse> {
       const requestPath = '/2/abtests';
@@ -307,6 +309,14 @@ export function createAbtestingClient({
 
       if (limit !== undefined) {
         queryParameters.limit = limit.toString();
+      }
+
+      if (indexPrefix !== undefined) {
+        queryParameters.indexPrefix = indexPrefix.toString();
+      }
+
+      if (indexSuffix !== undefined) {
+        queryParameters.indexSuffix = indexSuffix.toString();
       }
 
       const request: Request = {

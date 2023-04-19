@@ -5,6 +5,8 @@ import type { AlternativesAsExact } from './alternativesAsExact';
 import type { Distinct } from './distinct';
 import type { ExactOnSingleWordQuery } from './exactOnSingleWordQuery';
 import type { IgnorePlurals } from './ignorePlurals';
+import type { IndexSettingsAsSearchParamsSemanticSearch } from './indexSettingsAsSearchParamsSemanticSearch';
+import type { Mode } from './mode';
 import type { QueryType } from './queryType';
 import type { RemoveStopWords } from './removeStopWords';
 import type { RemoveWordsIfNoResults } from './removeWordsIfNoResults';
@@ -132,6 +134,10 @@ export type IndexSettingsAsSearchParams = {
 
   removeWordsIfNoResults?: RemoveWordsIfNoResults;
 
+  mode?: Mode;
+
+  semanticSearch?: IndexSettingsAsSearchParamsSemanticSearch;
+
   /**
    * Enables the advanced query syntax.
    */
@@ -158,6 +164,11 @@ export type IndexSettingsAsSearchParams = {
    * Allows you to specify which advanced syntax features are active when ‘advancedSyntax\' is enabled.
    */
   advancedSyntaxFeatures?: AdvancedSyntaxFeatures[];
+
+  /**
+   * Enriches the API’s response with meta-information as to how the query was processed.
+   */
+  explain?: string[];
 
   distinct?: Distinct;
 

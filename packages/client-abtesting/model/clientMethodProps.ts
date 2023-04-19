@@ -60,6 +60,14 @@ export type ListABTestsProps = {
    * Number of records to return. Limit is the size of the page.
    */
   limit?: number;
+  /**
+   * Filters the returned ab tests by any indices starting with the provided prefix that are assigned to either variant of an ab test.
+   */
+  indexPrefix?: string;
+  /**
+   * Filters the returned ab tests by any indices ending with the provided suffix that are assigned to either variant of an ab test.
+   */
+  indexSuffix?: string;
 };
 
 /**
