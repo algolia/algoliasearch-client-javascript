@@ -1,3 +1,9 @@
+## [5.0.0-alpha.59](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.58...5.0.0-alpha.59)
+
+- [ad21cc75](https://github.com/algolia/api-clients-automation/commit/ad21cc75) feat(specs): add predict segment size to responses [PRED-1277] ([#1478](https://github.com/algolia/api-clients-automation/pull/1478)) by [@bengreenbank](https://github.com/bengreenbank/)
+- [13e7d170](https://github.com/algolia/api-clients-automation/commit/13e7d170) feat(specs): add `neuralSearch` options ([#1474](https://github.com/algolia/api-clients-automation/pull/1474)) by [@shortcuts](https://github.com/shortcuts/)
+- [fb9dc333](https://github.com/algolia/api-clients-automation/commit/fb9dc333) fix(javascript): remove `mode` from Fetch requester ([#1475](https://github.com/algolia/api-clients-automation/pull/1475)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.58](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.57...5.0.0-alpha.58)
 
 - [9a65a533](https://github.com/algolia/api-clients-automation/commit/9a65a533) feat(specs): add `size` to predict segment response ([#1434](https://github.com/algolia/api-clients-automation/pull/1434)) by [@bengreenbank](https://github.com/bengreenbank/)
