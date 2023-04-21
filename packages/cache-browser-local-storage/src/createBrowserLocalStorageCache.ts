@@ -35,9 +35,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
 
     setNamespace(filteredNamespaceWithoutOldFormattedCacheItems);
 
-    if (!timeToLive) {
-      return;
-    }
+    if (!timeToLive) return;
 
     const filteredNamespaceWithoutExpiredItems = Object.fromEntries(
       Object.entries(filteredNamespaceWithoutOldFormattedCacheItems).filter(([, cacheItem]) => {
