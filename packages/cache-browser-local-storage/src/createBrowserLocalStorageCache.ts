@@ -27,12 +27,20 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
     const timeToLive = options.ttl ? options.ttl * 1000 : null;
     const namespace = getNamespace<BrowserLocalStorageCacheItem>();
 
+    const filteredNamespaceWithoutOldFormattedCacheItems = Object.fromEntries(
+      Object.entries(namespace).filter(([, cacheItem]) => {
+        return cacheItem.timestamp !== undefined;
+      })
+    );
+
+    setNamespace(filteredNamespaceWithoutOldFormattedCacheItems);
+
     if (!timeToLive) {
       return;
     }
 
-    const filteredNamespace = Object.fromEntries(
-      Object.entries(namespace).filter(([, cacheItem]) => {
+    const filteredNamespaceWithoutExpiredItems = Object.fromEntries(
+      Object.entries(filteredNamespaceWithoutOldFormattedCacheItems).filter(([, cacheItem]) => {
         const currentTimestamp = new Date().getTime();
         const isExpired = cacheItem.timestamp + timeToLive < currentTimestamp;
 
@@ -40,7 +48,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
       })
     );
 
-    setNamespace(filteredNamespace);
+    setNamespace(filteredNamespaceWithoutExpiredItems);
   };
 
   return {
