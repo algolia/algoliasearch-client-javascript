@@ -24,7 +24,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
   };
 
   const removeOutdatedCacheItems = () => {
-    const timeToLive = options.ttl ? options.ttl * 1000 : null;
+    const timeToLive = options.timeToLive ? options.timeToLive * 1000 : null;
     const namespace = getNamespace<BrowserLocalStorageCacheItem>();
 
     const filteredNamespaceWithoutOldFormattedCacheItems = Object.fromEntries(

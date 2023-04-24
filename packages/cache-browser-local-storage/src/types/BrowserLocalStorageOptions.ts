@@ -7,7 +7,7 @@ export type BrowserLocalStorageOptions = {
   /**
    * The time to live for each cached item in seconds.
    */
-  readonly ttl?: number;
+  readonly timeToLive?: number;
 
   /**
    * The native local storage implementation.
