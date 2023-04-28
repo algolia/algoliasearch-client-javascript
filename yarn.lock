@@ -12,7 +12,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.59
     "@algolia/requester-browser-xhr": 5.0.0-alpha.59
     "@algolia/requester-node-http": 5.0.0-alpha.59
-    "@types/node": 18.15.11
+    "@types/node": 18.16.0
     rollup: 2.79.1
     typescript: 5.0.4
   languageName: unknown
@@ -25,7 +25,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.59
     "@algolia/requester-browser-xhr": 5.0.0-alpha.59
     "@algolia/requester-node-http": 5.0.0-alpha.59
-    "@types/node": 18.15.11
+    "@types/node": 18.16.0
     rollup: 2.79.1
     typescript: 5.0.4
   languageName: unknown
@@ -35,8 +35,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
-    "@types/jest": 29.5.0
-    "@types/node": 18.15.11
+    "@types/jest": 29.5.1
+    "@types/node": 18.16.0
     jest: 29.5.0
     jest-environment-jsdom: 29.5.0
     ts-jest: 29.1.0
@@ -51,7 +51,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.59
     "@algolia/requester-browser-xhr": 5.0.0-alpha.59
     "@algolia/requester-node-http": 5.0.0-alpha.59
-    "@types/node": 18.15.11
+    "@types/node": 18.16.0
     rollup: 2.79.1
     typescript: 5.0.4
   languageName: unknown
@@ -64,7 +64,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.59
     "@algolia/requester-browser-xhr": 5.0.0-alpha.59
     "@algolia/requester-node-http": 5.0.0-alpha.59
-    "@types/node": 18.15.11
+    "@types/node": 18.16.0
     rollup: 2.79.1
     typescript: 5.0.4
   languageName: unknown
@@ -77,7 +77,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.59
     "@algolia/requester-browser-xhr": 5.0.0-alpha.59
     "@algolia/requester-node-http": 5.0.0-alpha.59
-    "@types/node": 18.15.11
+    "@types/node": 18.16.0
     rollup: 2.79.1
     typescript: 5.0.4
   languageName: unknown
@@ -90,7 +90,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.59
     "@algolia/requester-browser-xhr": 5.0.0-alpha.59
     "@algolia/requester-node-http": 5.0.0-alpha.59
-    "@types/node": 18.15.11
+    "@types/node": 18.16.0
     rollup: 2.79.1
     typescript: 5.0.4
   languageName: unknown
@@ -103,7 +103,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.59
     "@algolia/requester-browser-xhr": 5.0.0-alpha.59
     "@algolia/requester-node-http": 5.0.0-alpha.59
-    "@types/node": 18.15.11
+    "@types/node": 18.16.0
     rollup: 2.79.1
     typescript: 5.0.4
   languageName: unknown
@@ -116,7 +116,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.59
     "@algolia/requester-browser-xhr": 5.0.0-alpha.59
     "@algolia/requester-node-http": 5.0.0-alpha.59
-    "@types/node": 18.15.11
+    "@types/node": 18.16.0
     rollup: 2.79.1
     typescript: 5.0.4
   languageName: unknown
@@ -129,7 +129,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.59
     "@algolia/requester-browser-xhr": 5.0.0-alpha.59
     "@algolia/requester-node-http": 5.0.0-alpha.59
-    "@types/node": 18.15.11
+    "@types/node": 18.16.0
     rollup: 2.79.1
     typescript: 5.0.4
   languageName: unknown
@@ -140,8 +140,8 @@ __metadata:
   resolution: "@algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr"
   dependencies:
     "@algolia/client-common": 5.0.0-alpha.59
-    "@types/jest": 29.5.0
-    "@types/node": 18.15.11
+    "@types/jest": 29.5.1
+    "@types/node": 18.16.0
     jest: 29.5.0
     jest-environment-jsdom: 29.5.0
     ts-jest: 29.1.0
@@ -155,8 +155,8 @@ __metadata:
   resolution: "@algolia/requester-fetch@workspace:packages/requester-fetch"
   dependencies:
     "@algolia/client-common": 5.0.0-alpha.59
-    "@types/jest": 29.5.0
-    "@types/node": 18.15.11
+    "@types/jest": 29.5.1
+    "@types/node": 18.16.0
     cross-fetch: 3.1.5
     jest: 29.5.0
     nock: 13.3.0
@@ -170,8 +170,8 @@ __metadata:
   resolution: "@algolia/requester-node-http@workspace:packages/requester-node-http"
   dependencies:
     "@algolia/client-common": 5.0.0-alpha.59
-    "@types/jest": 29.5.0
-    "@types/node": 18.15.11
+    "@types/jest": 29.5.1
+    "@types/node": 18.16.0
     jest: 29.5.0
     nock: 13.3.0
     ts-jest: 29.1.0
@@ -3490,13 +3490,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:29.5.0":
-  version: 29.5.0
-  resolution: "@types/jest@npm:29.5.0"
+"@types/jest@npm:29.5.1":
+  version: 29.5.1
+  resolution: "@types/jest@npm:29.5.1"
   dependencies:
     expect: ^29.0.0
     pretty-format: ^29.0.0
-  checksum: cd877e5c56d299cceb8bfdcbb1a77723c706750dd3c3bc47403bc3599b8faff590a3b009c68bb5b11bf7a8c77d1fb01de5e124329b4a08e65f1cdda28b0ecdb8
+  checksum: 0a22491dec86333c0e92b897be2c809c922a7b2b0aa5604ac369810d6b2360908b4a3f2c6892e8a237a54fa1f10ecefe0e823ec5fcb7915195af4dfe88d2197e
   languageName: node
   linkType: hard
 
@@ -3532,10 +3532,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.15.11":
-  version: 18.15.11
-  resolution: "@types/node@npm:18.15.11"
-  checksum: 977b4ad04708897ff0eb049ecf82246d210939c82461922d20f7d2dcfd81bbc661582ba3af28869210f7e8b1934529dcd46bff7d448551400f9d48b9d3bddec3
+"@types/node@npm:18.16.0":
+  version: 18.16.0
+  resolution: "@types/node@npm:18.16.0"
+  checksum: 63e0042136663b9e85ce503a4c65406cc6621fdba63ea66c74b4b1364a9aa9bdb57cadcb76696abab177f38a819b0fa6ace9e7f1647dcb990aedb1b4bd01012f
   languageName: node
   linkType: hard
 
@@ -3751,8 +3751,8 @@ __metadata:
     "@babel/runtime": 7.21.0
     "@rollup/plugin-babel": 6.0.3
     "@rollup/plugin-node-resolve": 15.0.2
-    "@types/jest": 29.5.0
-    "@types/node": 18.15.11
+    "@types/jest": 29.5.1
+    "@types/node": 18.16.0
     "@types/rollup-plugin-node-globals": 1.4.1
     "@types/semver": 7.3.13
     bundlesize2: 0.0.31
@@ -3763,7 +3763,7 @@ __metadata:
     rollup-plugin-node-globals: 1.4.0
     rollup-plugin-terser: 7.0.2
     rollup-plugin-typescript2: 0.34.1
-    semver: 7.4.0
+    semver: 7.5.0
     ts-node: 10.9.1
     typescript: 5.0.4
   languageName: unknown
@@ -3780,8 +3780,8 @@ __metadata:
     "@algolia/client-search": 5.0.0-alpha.59
     "@algolia/requester-browser-xhr": 5.0.0-alpha.59
     "@algolia/requester-node-http": 5.0.0-alpha.59
-    "@types/jest": 29.5.0
-    "@types/node": 18.15.11
+    "@types/jest": 29.5.1
+    "@types/node": 18.16.0
     jest: 29.5.0
     rollup: 2.79.1
     ts-jest: 29.1.0
@@ -9107,14 +9107,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.4.0":
-  version: 7.4.0
-  resolution: "semver@npm:7.4.0"
+"semver@npm:7.5.0":
+  version: 7.5.0
+  resolution: "semver@npm:7.5.0"
   dependencies:
     lru-cache: ^6.0.0
   bin:
     semver: bin/semver.js
-  checksum: debf7f4d6fa36fdc5ef82bd7fc3603b6412165c8a3963a30be0c45a587be1a49e7681e80aa109da1875765741af24edc6e021cee1ba16ae96f649d06c5df296d
+  checksum: 2d266937756689a76f124ffb4c1ea3e1bbb2b263219f90ada8a11aebebe1280b13bb76cca2ca96bdee3dbc554cbc0b24752eb895b2a51577aa644427e9229f2b
   languageName: node
   linkType: hard
 
