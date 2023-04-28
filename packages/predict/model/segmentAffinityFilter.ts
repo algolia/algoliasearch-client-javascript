@@ -8,9 +8,9 @@ import type { SegmentFilterProbability } from './segmentFilterProbability';
  * Filter for affinity model predictions.
  */
 export type SegmentAffinityFilter = {
-  operator?: SegmentFilterOperatorNumerical;
+  operator: SegmentFilterOperatorNumerical;
 
   value: SegmentAffinityFilterValue;
 
-  probability: SegmentFilterProbability;
+  probability?: SegmentFilterProbability;
 };
