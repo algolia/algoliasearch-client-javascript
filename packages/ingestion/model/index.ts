@@ -55,6 +55,7 @@ export * from './run';
 export * from './runListResponse';
 export * from './runOutcome';
 export * from './runProgress';
+export * from './runReasonCode';
 export * from './runResponse';
 export * from './runSortKeys';
 export * from './runStatus';

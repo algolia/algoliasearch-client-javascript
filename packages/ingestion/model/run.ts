@@ -2,6 +2,7 @@
 
 import type { RunOutcome } from './runOutcome';
 import type { RunProgress } from './runProgress';
+import type { RunReasonCode } from './runReasonCode';
 import type { RunStatus } from './runStatus';
 import type { RunType } from './runType';
 
@@ -28,6 +29,8 @@ export type Run = {
    * Explains the result of outcome.
    */
   reason?: string;
+
+  reasonCode?: RunReasonCode;
 
   type: RunType;
 
