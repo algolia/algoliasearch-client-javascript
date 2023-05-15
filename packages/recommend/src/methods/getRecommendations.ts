@@ -1,21 +1,11 @@
 import { MethodEnum } from '@algolia/requester-common';
 
-import {
-  BaseRecommendClient,
-  RecommendationsQuery,
-  TrendingFacetsQuery,
-  TrendingItemsQuery,
-  TrendingModel,
-  WithRecommendMethods,
-} from '../types';
+import { BaseRecommendClient, RecommendationsQuery, WithRecommendMethods } from '../types';
+import { TrendingQuery } from '../types/TrendingQuery';
 
 type GetRecommendations = (
   base: BaseRecommendClient
 ) => WithRecommendMethods<BaseRecommendClient>['getRecommendations'];
-
-type TrendingQuery =
-  | (TrendingItemsQuery & { readonly model: TrendingModel })
-  | (TrendingFacetsQuery & { readonly model: TrendingModel });
 
 export const getRecommendations: GetRecommendations = base => {
   return (queries: ReadonlyArray<RecommendationsQuery | TrendingQuery>, requestOptions) => {
