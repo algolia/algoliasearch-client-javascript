@@ -1,5 +1,4 @@
-import { SearchResponse } from '.';
-import { SearchForFacetValuesResponse } from './SearchForFacetValuesResponse';
+import { SearchForFacetValuesResponse, SearchResponse } from '.';
 
 export type MultipleQueriesResponse<TObject> = {
   /**

@@ -1,6 +1,12 @@
 import { BatchActionEnum, StrategyEnum } from '../..';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
-import { MultipleBatchRequest } from '../../types';
+import { MultipleBatchRequest, MultipleQueriesResponse, SearchResponse } from '../../types';
+
+function expectSearchResponse<TObject>(
+  results: MultipleQueriesResponse<TObject>['results'][number]
+): asserts results is SearchResponse<TObject> {
+  expect(results).toHaveProperty('hits');
+}
 
 const testSuite = new TestSuite('multiple_operations');
 
@@ -62,7 +68,9 @@ test(testSuite.testName, async () => {
     { strategy: StrategyEnum.None }
   );
 
+  expectSearchResponse(multipleQueriesResponse1.results[0]);
   expect(multipleQueriesResponse1.results[0].hits).toHaveLength(2);
+  expectSearchResponse(multipleQueriesResponse1.results[1]);
   expect(multipleQueriesResponse1.results[1].hits).toHaveLength(2);
 
   const multipleQueriesResponse2 = await client.search(
@@ -73,7 +81,9 @@ test(testSuite.testName, async () => {
     { strategy: StrategyEnum.StopIfEnoughMatches }
   );
 
+  expectSearchResponse(multipleQueriesResponse2.results[0]);
   expect(multipleQueriesResponse2.results[0].hits).toHaveLength(2);
+  expectSearchResponse(multipleQueriesResponse2.results[1]);
   expect(multipleQueriesResponse2.results[1].hits).toHaveLength(0);
 
   const searchForFacetValuesResponse = await client.searchForFacetValues([
