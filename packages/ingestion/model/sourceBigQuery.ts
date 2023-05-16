@@ -24,4 +24,9 @@ export type SourceBigQuery = {
    * Table prefix (for Google Analytics).
    */
   tablePrefix?: string;
+
+  /**
+   * Custom SQL request to extract data from the BigQuery table.
+   */
+  customSQLRequest?: string;
 };
