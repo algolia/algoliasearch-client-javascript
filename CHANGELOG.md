@@ -1,3 +1,7 @@
+## [5.0.0-alpha.62](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.61...5.0.0-alpha.62)
+
+- [49b4c00c](https://github.com/algolia/api-clients-automation/commit/49b4c00c) feat(specs): add property to BigQuery source input ([#1547](https://github.com/algolia/api-clients-automation/pull/1547)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.0.0-alpha.61](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.60...5.0.0-alpha.61)
 
 - [7c9cfb9b](https://github.com/algolia/api-clients-automation/commit/7c9cfb9b) feat(specs): add reason code to run outcome ([#1531](https://github.com/algolia/api-clients-automation/pull/1531)) by [@Fluf22](https://github.com/Fluf22/)

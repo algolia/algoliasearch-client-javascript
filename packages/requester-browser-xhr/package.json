@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-browser-xhr",
-  "version": "5.0.0-alpha.61",
+  "version": "5.0.0-alpha.62",
   "description": "Promise-based request library for browser using xhr.",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -19,7 +19,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.61"
+    "@algolia/client-common": "5.0.0-alpha.62"
   },
   "devDependencies": {
     "@types/jest": "29.5.1",
