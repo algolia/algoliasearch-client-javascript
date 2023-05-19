@@ -2,6 +2,7 @@
 
 import type { ActionType } from './actionType';
 import type { TaskCreateTrigger } from './taskCreateTrigger';
+import type { TaskInput } from './taskInput';
 
 /**
  * The payload for a task creation.
@@ -25,4 +26,6 @@ export type TaskCreate = {
    * Whether the task is enabled or not.
    */
   enabled?: boolean;
+
+  input?: TaskInput;
 };
