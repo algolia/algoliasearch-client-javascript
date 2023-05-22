@@ -6,13 +6,14 @@ import { RecommendationsQuery } from './RecommendationsQuery';
 import { RelatedProductsQuery } from './RelatedProductsQuery';
 import { TrendingFacetsQuery } from './TrendingFacetsQuery';
 import { TrendingItemsQuery } from './TrendingItemsQuery';
+import { TrendingQuery } from './TrendingQuery';
 
 export type WithRecommendMethods<TType> = TType & {
   /**
    * Returns recommendations.
    */
   readonly getRecommendations: <TObject>(
-    queries: readonly RecommendationsQuery[],
+    queries: ReadonlyArray<RecommendationsQuery | TrendingQuery>,
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
 

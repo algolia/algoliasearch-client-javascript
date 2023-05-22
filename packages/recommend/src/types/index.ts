@@ -12,4 +12,5 @@ export * from './RecommendationsQuery';
 export * from './RelatedProductsQuery';
 export * from './TrendingFacetsQuery';
 export * from './TrendingItemsQuery';
+export * from './TrendingQuery';
 export * from './WithRecommendMethods';
