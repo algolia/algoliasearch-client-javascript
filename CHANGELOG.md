@@ -1,3 +1,9 @@
+## [v4.17.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.17.0...4.17.1)
+
+* fix(recommend): Align `getRecommendations` type with actual implementation (#1459) ([d18391b](https://github.com/algolia/algoliasearch-client-javascript/commit/d18391b)), closes [#1459](https://github.com/algolia/algoliasearch-client-javascript/issues/1459)
+
+
+
 ## [v4.17.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.16.0...4.17.0)
 
 * feat: update ab test typing (#1455) ([f53c72c](https://github.com/algolia/algoliasearch-client-javascript/commit/f53c72c)), closes [#1455](https://github.com/algolia/algoliasearch-client-javascript/issues/1455)
