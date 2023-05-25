@@ -31,7 +31,7 @@ import type { QuerySuggestionsIndexWithIndexParam } from '../model/querySuggesti
 import type { Status } from '../model/status';
 import type { SuccessResponse } from '../model/successResponse';
 
-export const apiClientVersion = '5.0.0-alpha.64';
+export const apiClientVersion = '5.0.0-alpha.65';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];

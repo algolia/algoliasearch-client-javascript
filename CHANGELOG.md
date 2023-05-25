@@ -1,3 +1,7 @@
+## [5.0.0-alpha.65](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.64...5.0.0-alpha.65)
+
+- [635806cb](https://github.com/algolia/api-clients-automation/commit/635806cb) feat(specs): ingestion partial update method changed to patch ([#1564](https://github.com/algolia/api-clients-automation/pull/1564)) by [@mehmetaligok](https://github.com/mehmetaligok/)
+
 ## [5.0.0-alpha.64](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.63...5.0.0-alpha.64)
 
 - [6284a8bc](https://github.com/algolia/api-clients-automation/commit/6284a8bc) feat(specs): add task input for bigquery ([#1549](https://github.com/algolia/api-clients-automation/pull/1549)) by [@Fluf22](https://github.com/Fluf22/)
