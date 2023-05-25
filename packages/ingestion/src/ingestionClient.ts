@@ -1546,7 +1546,7 @@ export function createIngestionClient({
       const queryParameters: QueryParameters = {};
 
       const request: Request = {
-        method: 'PUT',
+        method: 'PATCH',
         path: requestPath,
         queryParameters,
         headers,
@@ -1589,7 +1589,7 @@ export function createIngestionClient({
       const queryParameters: QueryParameters = {};
 
       const request: Request = {
-        method: 'PUT',
+        method: 'PATCH',
         path: requestPath,
         queryParameters,
         headers,
@@ -1632,7 +1632,7 @@ export function createIngestionClient({
       const queryParameters: QueryParameters = {};
 
       const request: Request = {
-        method: 'PUT',
+        method: 'PATCH',
         path: requestPath,
         queryParameters,
         headers,
@@ -1675,7 +1675,7 @@ export function createIngestionClient({
       const queryParameters: QueryParameters = {};
 
       const request: Request = {
-        method: 'PUT',
+        method: 'PATCH',
         path: requestPath,
         queryParameters,
         headers,
