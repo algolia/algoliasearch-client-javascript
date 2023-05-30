@@ -253,7 +253,7 @@ export type SearchOptions = {
   readonly restrictSearchableAttributes?: readonly string[];
 
   /**
-   * Restricts a given query to look in only a subset of your searchable attributes.
+   * Controls how facet values are sorted.
    */
   readonly sortFacetValuesBy?: 'count' | 'alpha';
 
