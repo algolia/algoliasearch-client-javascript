@@ -29,4 +29,9 @@ export type SourceBigQuery = {
    * Custom SQL request to extract data from the BigQuery table.
    */
   customSQLRequest?: string;
+
+  /**
+   * The name of the column that contains the unique ID, used as `objectID` in Algolia.
+   */
+  uniqueIDColumn?: string;
 };
