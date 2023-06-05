@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-analytics",
-  "version": "5.0.0-alpha.66",
+  "version": "5.0.0-alpha.67",
   "description": "JavaScript client for client-analytics",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -38,9 +38,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.66",
-    "@algolia/requester-browser-xhr": "5.0.0-alpha.66",
-    "@algolia/requester-node-http": "5.0.0-alpha.66"
+    "@algolia/client-common": "5.0.0-alpha.67",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.67",
+    "@algolia/requester-node-http": "5.0.0-alpha.67"
   },
   "devDependencies": {
     "@types/node": "18.16.13",
