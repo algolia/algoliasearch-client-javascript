@@ -4,6 +4,7 @@ import type { SourceBigCommerce } from './sourceBigCommerce';
 import type { SourceBigQuery } from './sourceBigQuery';
 import type { SourceCSV } from './sourceCSV';
 import type { SourceCommercetools } from './sourceCommercetools';
+import type { SourceDocker } from './sourceDocker';
 import type { SourceJSON } from './sourceJSON';
 
 export type SourceInput =
@@ -11,4 +12,5 @@ export type SourceInput =
   | SourceBigQuery
   | SourceCommercetools
   | SourceCSV
+  | SourceDocker
   | SourceJSON;

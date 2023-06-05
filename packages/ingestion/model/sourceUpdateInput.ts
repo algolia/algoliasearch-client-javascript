@@ -2,11 +2,13 @@
 
 import type { SourceBigQuery } from './sourceBigQuery';
 import type { SourceCSV } from './sourceCSV';
+import type { SourceDocker } from './sourceDocker';
 import type { SourceJSON } from './sourceJSON';
 import type { SourceUpdateCommercetools } from './sourceUpdateCommercetools';
 
 export type SourceUpdateInput =
   | SourceBigQuery
   | SourceCSV
+  | SourceDocker
   | SourceJSON
   | SourceUpdateCommercetools;
