@@ -308,13 +308,13 @@ export function createSearchClient({
                   value.length !== resValue.length ||
                   value.some((v, index) => v !== resValue[index])
                 ) {
-                  return true;
+                  return false;
                 }
               } else if (value !== resValue) {
-                return true;
+                return false;
               }
             }
-            return false;
+            return true;
           },
         });
       }
@@ -450,6 +450,7 @@ export function createSearchClient({
         ...browseSynonymsOptions,
       });
     },
+
     /**
      * Add a new API Key with specific permissions/restrictions.
      *
