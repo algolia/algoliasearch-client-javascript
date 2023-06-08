@@ -1,3 +1,10 @@
+## [v4.17.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.17.1...4.17.2)
+
+* fix(search): fix wait method for updateApiKey request (#1464) ([edc629d](https://github.com/algolia/algoliasearch-client-javascript/commit/edc629d)), closes [#1464](https://github.com/algolia/algoliasearch-client-javascript/issues/1464)
+* docs(SearchOptions): fix jsdoc of sortFacetValuesBy (#1463) ([a4309c7](https://github.com/algolia/algoliasearch-client-javascript/commit/a4309c7)), closes [#1463](https://github.com/algolia/algoliasearch-client-javascript/issues/1463)
+
+
+
 ## [v4.17.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.17.0...4.17.1)
 
 * fix(recommend): Align `getRecommendations` type with actual implementation (#1459) ([d18391b](https://github.com/algolia/algoliasearch-client-javascript/commit/d18391b)), closes [#1459](https://github.com/algolia/algoliasearch-client-javascript/issues/1459)
