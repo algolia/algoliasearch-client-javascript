@@ -3,3 +3,4 @@
  */
 
 export * from './BrowserLocalStorageOptions';
+export * from './BrowserLocalStorageCacheItem';
