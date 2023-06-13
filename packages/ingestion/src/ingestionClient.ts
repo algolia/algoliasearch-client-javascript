@@ -1004,10 +1004,21 @@ export function createIngestionClient({
      * @param getRuns.taskID - Filter by taskID.
      * @param getRuns.sort - The key by which the list should be sorted.
      * @param getRuns.order - The order of the returned list.
+     * @param getRuns.startDate - The start date (in RFC3339 format) of the runs fetching window. Defaults to \'now\'-7 days if omitted. The timespan between `startDate` and `endDate` must be smaller than 7 days.
+     * @param getRuns.endDate - The end date (in RFC3339 format) of the runs fetching window. Defaults to \'now\' days if omitted. The timespan between `startDate` and `endDate` must be smaller than 7 days.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRuns(
-      { itemsPerPage, page, status, taskID, sort, order }: GetRunsProps = {},
+      {
+        itemsPerPage,
+        page,
+        status,
+        taskID,
+        sort,
+        order,
+        startDate,
+        endDate,
+      }: GetRunsProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<RunListResponse> {
       const requestPath = '/1/runs';
@@ -1036,6 +1047,14 @@ export function createIngestionClient({
 
       if (order !== undefined) {
         queryParameters.order = order.toString();
+      }
+
+      if (startDate !== undefined) {
+        queryParameters.startDate = startDate.toString();
+      }
+
+      if (endDate !== undefined) {
+        queryParameters.endDate = endDate.toString();
       }
 
       const request: Request = {

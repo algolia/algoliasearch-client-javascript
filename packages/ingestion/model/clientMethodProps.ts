@@ -275,6 +275,14 @@ export type GetRunsProps = {
    * The order of the returned list.
    */
   order?: OrderKeys;
+  /**
+   * The start date (in RFC3339 format) of the runs fetching window. Defaults to \'now\'-7 days if omitted. The timespan between `startDate` and `endDate` must be smaller than 7 days.
+   */
+  startDate?: string;
+  /**
+   * The end date (in RFC3339 format) of the runs fetching window. Defaults to \'now\' days if omitted. The timespan between `startDate` and `endDate` must be smaller than 7 days.
+   */
+  endDate?: string;
 };
 
 /**
