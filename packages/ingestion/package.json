@@ -1,6 +1,6 @@
 {
   "name": "@algolia/ingestion",
-  "version": "1.0.0-alpha.42",
+  "version": "1.0.0-alpha.43",
   "description": "JavaScript client for ingestion",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -38,9 +38,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.68",
-    "@algolia/requester-browser-xhr": "5.0.0-alpha.68",
-    "@algolia/requester-node-http": "5.0.0-alpha.68"
+    "@algolia/client-common": "5.0.0-alpha.69",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.69",
+    "@algolia/requester-node-http": "5.0.0-alpha.69"
   },
   "devDependencies": {
     "@types/node": "18.16.16",

@@ -1,3 +1,7 @@
+## [5.0.0-alpha.69](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.68...5.0.0-alpha.69)
+
+- [3cdb7495](https://github.com/algolia/api-clients-automation/commit/3cdb7495) fix(specs): add blocking run outcome ([#1619](https://github.com/algolia/api-clients-automation/pull/1619)) by [@damcou](https://github.com/damcou/)
+
 ## [5.0.0-alpha.68](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.67...5.0.0-alpha.68)
 
 - [81401eed](https://github.com/algolia/api-clients-automation/commit/81401eed) feat(specs): add `startDate` and `endDate` parameters to Ingestion API ([#1614](https://github.com/algolia/api-clients-automation/pull/1614)) by [@shortcuts](https://github.com/shortcuts/)
