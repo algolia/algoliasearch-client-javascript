@@ -4,6 +4,7 @@
  * An identifier that pairs with the outcome reason.
  */
 export type RunReasonCode =
+  | 'blocking'
   | 'critical'
   | 'discarded'
   | 'internal'
