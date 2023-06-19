@@ -3,4 +3,4 @@
 /**
  * The registry where the image is stored.
  */
-export type DockerRegistry = 'dockerhub' | 'gcr';
+export type DockerRegistry = 'dockerhub' | 'ghcr';
