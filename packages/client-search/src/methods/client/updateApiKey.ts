@@ -9,6 +9,7 @@ import { MethodEnum } from '@algolia/requester-common';
 import { RequestOptions } from '@algolia/transporter';
 
 import {
+  ApiKeyACLType,
   getApiKey,
   GetApiKeyResponse,
   SearchClient,
@@ -37,6 +38,7 @@ export const updateApiKey = (base: SearchClient) => {
       'maxHitsPerQuery',
     ] as const;
 
+    // Check that all the fields retrieved through getApiKey are the same as the ones we wanted to update
     const hasChanged = (getApiKeyResponse: GetApiKeyResponse): boolean => {
       return Object.keys(updatedFields)
         .filter(
@@ -44,7 +46,24 @@ export const updateApiKey = (base: SearchClient) => {
             apiKeyFields.indexOf(updatedField) !== -1
         )
         .every(updatedField => {
-          return getApiKeyResponse[updatedField] === updatedFields[updatedField];
+          // If the field is an array, we need to check that they are the same length and that all the values are the same
+          if (
+            Array.isArray(getApiKeyResponse[updatedField]) &&
+            Array.isArray(updatedFields[updatedField])
+          ) {
+            const getApiKeyResponseArray = getApiKeyResponse[updatedField] as
+              | readonly ApiKeyACLType[]
+              | readonly string[];
+
+            return (
+              getApiKeyResponseArray.length === updatedFields[updatedField].length &&
+              getApiKeyResponseArray.every(
+                (value, index) => value === updatedFields[updatedField][index]
+              )
+            );
+          } else {
+            return getApiKeyResponse[updatedField] === updatedFields[updatedField];
+          }
         });
     };
 

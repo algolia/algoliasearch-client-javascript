@@ -1,5 +1,5 @@
 {
-  "version": "4.17.1",
+  "version": "4.17.2",
   "private": true,
   "license": "MIT",
   "workspaces": [
@@ -98,15 +98,15 @@
   "bundlesize": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-      "maxSize": "7.95KB"
+      "maxSize": "8.2KB"
     },
     {
       "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.js",
-      "maxSize": "4.4KB"
+      "maxSize": "4.6KB"
     },
     {
       "path": "packages/recommend/dist/recommend.umd.js",
-      "maxSize": "4.2KB"
+      "maxSize": "4.3KB"
     }
   ]
 }
