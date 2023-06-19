@@ -1,3 +1,10 @@
+## [v4.18.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.17.2...4.18.0)
+
+* fix(types): union SearchForFacetValuesResponse type for multipleQueries (#1460) ([6a786f1](https://github.com/algolia/algoliasearch-client-javascript/commit/6a786f1)), closes [#1460](https://github.com/algolia/algoliasearch-client-javascript/issues/1460)
+* feat(cache-browser-local-storage): Implemented TTL support to cached items (#1457) ([9092414](https://github.com/algolia/algoliasearch-client-javascript/commit/9092414)), closes [#1457](https://github.com/algolia/algoliasearch-client-javascript/issues/1457)
+
+
+
 ## [v4.17.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.17.1...4.17.2)
 
 * fix(search): fix wait method for updateApiKey request (#1464) ([edc629d](https://github.com/algolia/algoliasearch-client-javascript/commit/edc629d)), closes [#1464](https://github.com/algolia/algoliasearch-client-javascript/issues/1464)
