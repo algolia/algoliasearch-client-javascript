@@ -49,7 +49,7 @@ import type { UpdateModelInstanceResponse } from '../model/updateModelInstanceRe
 import type { UpdateSegmentResponse } from '../model/updateSegmentResponse';
 import type { UserProfile } from '../model/userProfile';
 
-export const apiClientVersion = '1.0.0-alpha.71';
+export const apiClientVersion = '1.0.0-alpha.72';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
