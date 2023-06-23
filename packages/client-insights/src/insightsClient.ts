@@ -20,8 +20,8 @@ import type {
   PostProps,
   PutProps,
 } from '../model/clientMethodProps';
-import type { InsightEvents } from '../model/insightEvents';
-import type { PushEventsResponse } from '../model/pushEventsResponse';
+import type { EventsResponse } from '../model/eventsResponse';
+import type { InsightsEvents } from '../model/insightsEvents';
 
 export const apiClientVersion = '5.0.0-alpha.72';
 
@@ -196,25 +196,25 @@ export function createInsightsClient({
     },
 
     /**
-     * This command pushes an array of events.  An event is   - an action: `eventName`   - performed in a context: `eventType`   - at some point in time provided: `timestamp`   - by an end user: `userToken`   - on something: `index`   Notes:   - To be accepted, all events sent must be valid.   - The size of the body must be *less than 2 MB*.   - When an event is tied to an Algolia search, it must also provide a `queryID`. If that event is a `click`, their absolute `positions` should also be passed.   - We consider that an `index` provides access to 2 resources: objects and filters. An event can only interact with a single resource type, but not necessarily on a single item. As such an event will accept an array of `objectIDs` or `filters`.
+     * Send a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
      *
-     * @summary Push events.
-     * @param insightEvents - The insightEvents object.
+     * @summary Send events.
+     * @param insightsEvents - The insightsEvents object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     pushEvents(
-      insightEvents: InsightEvents,
+      insightsEvents: InsightsEvents,
       requestOptions?: RequestOptions
-    ): Promise<PushEventsResponse> {
-      if (!insightEvents) {
+    ): Promise<EventsResponse> {
+      if (!insightsEvents) {
         throw new Error(
-          'Parameter `insightEvents` is required when calling `pushEvents`.'
+          'Parameter `insightsEvents` is required when calling `pushEvents`.'
         );
       }
 
-      if (!insightEvents.events) {
+      if (!insightsEvents.events) {
         throw new Error(
-          'Parameter `insightEvents.events` is required when calling `pushEvents`.'
+          'Parameter `insightsEvents.events` is required when calling `pushEvents`.'
         );
       }
 
@@ -227,7 +227,7 @@ export function createInsightsClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: insightEvents,
+        data: insightsEvents,
       };
 
       return transporter.request(request, requestOptions);
