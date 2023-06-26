@@ -33,8 +33,8 @@
     "rollup": "2.79.1",
     "rollup-plugin-node-globals": "1.4.0",
     "rollup-plugin-terser": "7.0.2",
-    "rollup-plugin-typescript2": "0.34.1",
-    "semver": "7.5.2",
+    "rollup-plugin-typescript2": "0.35.0",
+    "semver": "7.5.3",
     "ts-node": "10.9.1",
     "typescript": "5.0.4"
   },
