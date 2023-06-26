@@ -42,6 +42,16 @@ export type Variant = {
   noResultCount: number;
 
   /**
+   * Count of the tracked searches attributed to outlier traffic that were removed from the A/B test.
+   */
+  outlierTrackedSearchesCount: number;
+
+  /**
+   * Count of users attributed to outlier traffic that were removed from the A/B test.
+   */
+  outlierUsersCount: number;
+
+  /**
    * The number of search during the A/B test.
    */
   searchCount: number;
