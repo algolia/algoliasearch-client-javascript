@@ -40,11 +40,6 @@ export type Run = {
   createdAt: string;
 
   /**
-   * Date of last update (RFC3339 format).
-   */
-  updatedAt: string;
-
-  /**
    * Date of start (RFC3339 format).
    */
   startedAt?: string;
