@@ -24,7 +24,7 @@ import type {
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
 
-export const apiClientVersion = '5.0.0-alpha.72';
+export const apiClientVersion = '5.0.0-alpha.73';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

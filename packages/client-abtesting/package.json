@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-abtesting",
-  "version": "5.0.0-alpha.72",
+  "version": "5.0.0-alpha.73",
   "description": "JavaScript client for client-abtesting",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -38,9 +38,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.72",
-    "@algolia/requester-browser-xhr": "5.0.0-alpha.72",
-    "@algolia/requester-node-http": "5.0.0-alpha.72"
+    "@algolia/client-common": "5.0.0-alpha.73",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.73",
+    "@algolia/requester-node-http": "5.0.0-alpha.73"
   },
   "devDependencies": {
     "@types/node": "18.16.18",
