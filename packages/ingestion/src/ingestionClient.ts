@@ -19,7 +19,6 @@ import type { AuthenticationCreate } from '../model/authenticationCreate';
 import type { AuthenticationCreateResponse } from '../model/authenticationCreateResponse';
 import type { AuthenticationSearch } from '../model/authenticationSearch';
 import type { AuthenticationUpdateResponse } from '../model/authenticationUpdateResponse';
-import type { AuthenticationWithInput } from '../model/authenticationWithInput';
 import type {
   DelProps,
   DeleteAuthenticationProps,
@@ -671,7 +670,7 @@ export function createIngestionClient({
     getAuthentication(
       { authenticationID }: GetAuthenticationProps,
       requestOptions?: RequestOptions
-    ): Promise<AuthenticationWithInput> {
+    ): Promise<Authentication> {
       if (!authenticationID) {
         throw new Error(
           'Parameter `authenticationID` is required when calling `getAuthentication`.'
