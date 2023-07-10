@@ -2,6 +2,7 @@ import { MultipleQueriesResponse, SearchOptions } from '@algolia/client-search';
 import { RequestOptions } from '@algolia/transporter';
 
 import { FrequentlyBoughtTogetherQuery } from './FrequentlyBoughtTogetherQuery';
+import { LookingSimilarQuery } from './LookingSimilarQuery';
 import { RecommendationsQuery } from './RecommendationsQuery';
 import { RelatedProductsQuery } from './RelatedProductsQuery';
 import { TrendingFacetsQuery } from './TrendingFacetsQuery';
@@ -46,6 +47,14 @@ export type WithRecommendMethods<TType> = TType & {
    */
   readonly getTrendingFacets: <TObject>(
     queries: readonly TrendingFacetsQuery[],
+    requestOptions?: RequestOptions & SearchOptions
+  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
+
+  /**
+   * Returns Looking Similar
+   */
+  readonly getLookingSimilar: <TObject>(
+    queries: readonly LookingSimilarQuery[],
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
 };
