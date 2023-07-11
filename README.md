@@ -93,3 +93,5 @@ Encountering an issue? Before reaching out to support, we recommend heading to o
 ## 📄 License
 
 Algolia JavaScript API Client is an open-sourced software licensed under the [MIT license](LICENSE.md).
+
+Will tests fail ?
