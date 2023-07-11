@@ -1,0 +1,53 @@
+{
+  "name": "@algolia/monitoring",
+  "version": "1.0.0-alpha.1",
+  "description": "JavaScript client for monitoring",
+  "repository": "algolia/algoliasearch-client-javascript",
+  "license": "MIT",
+  "author": "Algolia",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/monitoring.esm.node.js",
+        "module": "./dist/monitoring.esm.node.js",
+        "require": "./dist/monitoring.cjs.js",
+        "default": "./dist/monitoring.cjs.js"
+      },
+      "default": {
+        "umd": "./dist/monitoring.umd.js",
+        "module": "./dist/monitoring.esm.browser.js",
+        "import": "./dist/monitoring.esm.browser.js",
+        "default": "./dist/monitoring.umd.js"
+      }
+    },
+    "./src/*": "./src/*.ts",
+    "./model": "./model/index.ts"
+  },
+  "jsdelivr": "./dist/monitoring.umd.js",
+  "unpkg": "./dist/monitoring.umd.js",
+  "browser": "./dist/monitoring.umd.js",
+  "types": "./index.d.ts",
+  "files": [
+    "dist",
+    "model",
+    "index.js",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "build": "yarn clean && rollup --config",
+    "clean": "rm -rf ./dist || true"
+  },
+  "dependencies": {
+    "@algolia/client-common": "5.0.0-alpha.73",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.73",
+    "@algolia/requester-node-http": "5.0.0-alpha.73"
+  },
+  "devDependencies": {
+    "@types/node": "18.16.18",
+    "rollup": "2.79.1",
+    "typescript": "5.0.4"
+  },
+  "engines": {
+    "node": ">= 14.0.0"
+  }
+}
