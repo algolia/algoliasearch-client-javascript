@@ -1,6 +1,6 @@
 {
   "name": "@algolia/recommend",
-  "version": "4.18.1-rc.1",
+  "version": "4.18.0",
   "private": false,
   "description": "The perfect starting point to integrate Algolia Recommend within your JavaScript project.",
   "repository": {
