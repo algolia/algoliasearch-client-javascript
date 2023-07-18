@@ -1,3 +1,10 @@
+## [v4.19.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.18.0...4.19.0)
+
+* feat(abtests): add outlier count to variant response payload (#1467) ([b88a726](https://github.com/algolia/algoliasearch-client-javascript/commit/b88a726)), closes [#1467](https://github.com/algolia/algoliasearch-client-javascript/issues/1467)
+* feat(recommend): add "Looking Similar" model (#1469) ([01eac7f](https://github.com/algolia/algoliasearch-client-javascript/commit/01eac7f)), closes [#1469](https://github.com/algolia/algoliasearch-client-javascript/issues/1469)
+
+
+
 ## [v4.18.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.17.2...4.18.0)
 
 * fix(types): union SearchForFacetValuesResponse type for multipleQueries (#1460) ([6a786f1](https://github.com/algolia/algoliasearch-client-javascript/commit/6a786f1)), closes [#1460](https://github.com/algolia/algoliasearch-client-javascript/issues/1460)
