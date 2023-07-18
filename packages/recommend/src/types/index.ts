@@ -14,3 +14,4 @@ export * from './TrendingFacetsQuery';
 export * from './TrendingItemsQuery';
 export * from './TrendingQuery';
 export * from './WithRecommendMethods';
+export * from './LookingSimilarQuery';

@@ -9,6 +9,7 @@ import { createUserAgent } from '@algolia/transporter';
 import { createRecommendClient } from '../createRecommendClient';
 import {
   getFrequentlyBoughtTogether,
+  getLookingSimilar,
   getRecommendations,
   getRelatedProducts,
   getTrendingFacets,
@@ -49,6 +50,7 @@ export default function recommend(
       getRelatedProducts,
       getTrendingFacets,
       getTrendingItems,
+      getLookingSimilar,
     },
   });
 }
