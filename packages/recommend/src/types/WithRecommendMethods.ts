@@ -1,4 +1,4 @@
-import { MultipleQueriesResponse, SearchOptions } from '@algolia/client-search';
+import { SearchOptions, SearchResponse } from '@algolia/client-search';
 import { RequestOptions } from '@algolia/transporter';
 
 import { FrequentlyBoughtTogetherQuery } from './FrequentlyBoughtTogetherQuery';
@@ -8,6 +8,16 @@ import { RelatedProductsQuery } from './RelatedProductsQuery';
 import { TrendingFacetsQuery } from './TrendingFacetsQuery';
 import { TrendingItemsQuery } from './TrendingItemsQuery';
 import { TrendingQuery } from './TrendingQuery';
+
+/**
+ * This MultipleQueriesResponse type differs from MultipleQueriesResponse imported from @algolia/client-search as it omits "SearchForFacetValuesResponse" in results
+ */
+export type MultipleQueriesResponse<TObject> = {
+  /**
+   * The list of results.
+   */
+  readonly results: ReadonlyArray<SearchResponse<TObject>>;
+};
 
 export type WithRecommendMethods<TType> = TType & {
   /**
