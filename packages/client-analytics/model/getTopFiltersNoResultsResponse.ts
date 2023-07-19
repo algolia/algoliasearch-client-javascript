@@ -4,7 +4,7 @@ import type { GetTopFiltersNoResultsValues } from './getTopFiltersNoResultsValue
 
 export type GetTopFiltersNoResultsResponse = {
   /**
-   * A list of filters without results.
+   * Filters with no results.
    */
   values: GetTopFiltersNoResultsValues[];
 };

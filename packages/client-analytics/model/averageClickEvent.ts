@@ -2,17 +2,17 @@
 
 export type AverageClickEvent = {
   /**
-   * The average of all the click count event.
+   * Average count of all click events.
    */
   average: number;
 
   /**
-   * The number of click event.
+   * Number of click events.
    */
   clickCount: number;
 
   /**
-   * Date of the event.
+   * Date of the event in the format YYYY-MM-DD.
    */
   date: string;
 };

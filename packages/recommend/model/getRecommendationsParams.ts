@@ -3,11 +3,11 @@
 import type { RecommendationsRequest } from './recommendationsRequest';
 
 /**
- * The `getRecommendations` parameters.
+ * Recommend parameters.
  */
 export type GetRecommendationsParams = {
   /**
-   * The `getRecommendations` requests.
+   * Request parameters depend on the model (recommendations or trending).
    */
   requests: RecommendationsRequest[];
 };

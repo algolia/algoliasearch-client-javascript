@@ -2,12 +2,12 @@
 
 export type UserWithDate = {
   /**
-   * Date of the event.
+   * Date of the event in the format YYYY-MM-DD.
    */
   date: string;
 
   /**
-   * The number of occurrences.
+   * Number of occurrences.
    */
   count: number;
 };

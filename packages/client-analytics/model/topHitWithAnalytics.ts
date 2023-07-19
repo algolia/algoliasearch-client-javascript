@@ -2,37 +2,37 @@
 
 export type TopHitWithAnalytics = {
   /**
-   * The hit.
+   * Hit.
    */
   hit: string;
 
   /**
-   * The number of occurrences.
+   * Number of occurrences.
    */
   count: number;
 
   /**
-   * The click-through rate.
+   * [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    */
   clickThroughRate: number;
 
   /**
-   * The conversion rate.
+   * [Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    */
   conversionRate: number;
 
   /**
-   * The number of tracked search click.
+   * Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
    */
   trackedSearchCount: number;
 
   /**
-   * The number of click event.
+   * Number of click events.
    */
   clickCount: number;
 
   /**
-   * The number of converted clicks.
+   * Number of converted clicks.
    */
   conversionCount: number;
 };

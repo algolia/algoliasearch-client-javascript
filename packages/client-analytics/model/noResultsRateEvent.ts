@@ -2,22 +2,22 @@
 
 export type NoResultsRateEvent = {
   /**
-   * Date of the event.
+   * Date of the event in the format YYYY-MM-DD.
    */
   date: string;
 
   /**
-   * The number of occurrences.
+   * Number of occurences.
    */
   noResultCount: number;
 
   /**
-   * The number of occurrences.
+   * Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn\'t `true`).
    */
   count: number;
 
   /**
-   * The click-through rate.
+   * [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    */
   rate: number;
 };

@@ -9,7 +9,7 @@ import type { SnippetResult } from './snippetResult';
  */
 export type Hit<T = Record<string, any>> = T & {
   /**
-   * Unique identifier of the object.
+   * Unique object identifier.
    */
   objectID: string;
 

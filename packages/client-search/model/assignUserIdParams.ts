@@ -5,7 +5,7 @@
  */
 export type AssignUserIdParams = {
   /**
-   * Name of the cluster.
+   * Cluster name.
    */
   cluster: string;
 };

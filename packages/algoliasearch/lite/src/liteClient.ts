@@ -127,9 +127,9 @@ export function createLiteClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param post - The post object.
-     * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param post.parameters - Query parameters to be applied to the current query.
-     * @param post.body - The parameters to send with the custom request.
+     * @param post.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param post.parameters - Query parameters to apply to the current query.
+     * @param post.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
@@ -156,10 +156,10 @@ export function createLiteClient({
     },
 
     /**
-     * Perform a search operation targeting one or many indices.
+     * Send multiple search queries to one or more indices.
      *
      * @summary Search multiple indices.
-     * @param searchMethodParams - The `search` requests and strategy.
+     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     search<T>(

@@ -2,12 +2,12 @@
 
 export type GetTopFilterAttribute = {
   /**
-   * The attribute.
+   * Attribute name.
    */
   attribute: string;
 
   /**
-   * The number of occurrences.
+   * Number of occurrences.
    */
   count: number;
 };

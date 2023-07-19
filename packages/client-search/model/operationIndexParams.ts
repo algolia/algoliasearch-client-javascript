@@ -7,12 +7,12 @@ export type OperationIndexParams = {
   operation: OperationType;
 
   /**
-   * The Algolia index name.
+   * Algolia index name.
    */
   destination: string;
 
   /**
-   * Scope of the data to copy. When absent, a full copy is performed. When present, only the selected scopes are copied.
+   * **This only applies to the _copy_ operation.**  If you omit `scope`, the copy command copies all records, settings, synonyms, and rules.  If you specify `scope`, only the specified scopes are copied.
    */
   scope?: ScopeType[];
 };

@@ -2,12 +2,12 @@
 
 export type HasPendingMappingsResponse = {
   /**
-   * If there is any clusters with pending mapping state.
+   * Indicates whether there are clusters undergoing migration, creation, or deletion.
    */
   pending: boolean;
 
   /**
-   * Describe cluster pending (migrating, creating, deleting) mapping state.
+   * Cluster pending mapping state: migrating, creating, deleting.
    */
   clusters?: Record<string, string[]>;
 };

@@ -2,17 +2,17 @@
 
 export type SearchNoClickEvent = {
   /**
-   * The search query.
+   * User query.
    */
   search: string;
 
   /**
-   * The number of occurrences.
+   * Number of occurrences.
    */
   count: number;
 
   /**
-   * The number of occurrences.
+   * Number of occurrences.
    */
   withFilterCount: number;
 };

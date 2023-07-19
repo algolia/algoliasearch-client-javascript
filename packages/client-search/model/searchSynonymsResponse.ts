@@ -4,12 +4,12 @@ import type { SynonymHit } from './synonymHit';
 
 export type SearchSynonymsResponse = Record<string, any> & {
   /**
-   * Array of synonym objects.
+   * Synonym objects.
    */
   hits: SynonymHit[];
 
   /**
-   * Number of hits that the search query matched.
+   * Number of hits the search query matched.
    */
   nbHits: number;
 };

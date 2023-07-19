@@ -8,11 +8,11 @@ import type { OrderBy } from './orderBy';
  */
 export type DelProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
 };
@@ -22,11 +22,11 @@ export type DelProps = {
  */
 export type GetProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
 };
@@ -36,19 +36,19 @@ export type GetProps = {
  */
 export type GetAverageClickPositionProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -58,19 +58,19 @@ export type GetAverageClickPositionProps = {
  */
 export type GetClickPositionsProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -80,19 +80,19 @@ export type GetClickPositionsProps = {
  */
 export type GetClickThroughRateProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -102,19 +102,19 @@ export type GetClickThroughRateProps = {
  */
 export type GetConversationRateProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -124,19 +124,19 @@ export type GetConversationRateProps = {
  */
 export type GetNoClickRateProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -146,19 +146,19 @@ export type GetNoClickRateProps = {
  */
 export type GetNoResultsRateProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -168,19 +168,19 @@ export type GetNoResultsRateProps = {
  */
 export type GetSearchesCountProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -190,19 +190,19 @@ export type GetSearchesCountProps = {
  */
 export type GetSearchesNoClicksProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return. Limit is the size of the page.
+   * Number of records to return (page size).
    */
   limit?: number;
   /**
@@ -210,7 +210,7 @@ export type GetSearchesNoClicksProps = {
    */
   offset?: number;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -220,19 +220,19 @@ export type GetSearchesNoClicksProps = {
  */
 export type GetSearchesNoResultsProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return. Limit is the size of the page.
+   * Number of records to return (page size).
    */
   limit?: number;
   /**
@@ -240,7 +240,7 @@ export type GetSearchesNoResultsProps = {
    */
   offset?: number;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -250,7 +250,7 @@ export type GetSearchesNoResultsProps = {
  */
 export type GetStatusProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
 };
@@ -260,19 +260,19 @@ export type GetStatusProps = {
  */
 export type GetTopCountriesProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return. Limit is the size of the page.
+   * Number of records to return (page size).
    */
   limit?: number;
   /**
@@ -280,7 +280,7 @@ export type GetTopCountriesProps = {
    */
   offset?: number;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -290,23 +290,23 @@ export type GetTopCountriesProps = {
  */
 export type GetTopFilterAttributesProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The query term to search for. Must match the exact user input.
+   * User query.
    */
   search?: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return. Limit is the size of the page.
+   * Number of records to return (page size).
    */
   limit?: number;
   /**
@@ -314,7 +314,7 @@ export type GetTopFilterAttributesProps = {
    */
   offset?: number;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -324,27 +324,27 @@ export type GetTopFilterAttributesProps = {
  */
 export type GetTopFilterForAttributeProps = {
   /**
-   * The exact name of the attribute.
+   * Attribute name.
    */
   attribute: string;
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The query term to search for. Must match the exact user input.
+   * User query.
    */
   search?: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return. Limit is the size of the page.
+   * Number of records to return (page size).
    */
   limit?: number;
   /**
@@ -352,7 +352,7 @@ export type GetTopFilterForAttributeProps = {
    */
   offset?: number;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -362,23 +362,23 @@ export type GetTopFilterForAttributeProps = {
  */
 export type GetTopFiltersNoResultsProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The query term to search for. Must match the exact user input.
+   * User query.
    */
   search?: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return. Limit is the size of the page.
+   * Number of records to return (page size).
    */
   limit?: number;
   /**
@@ -386,7 +386,7 @@ export type GetTopFiltersNoResultsProps = {
    */
   offset?: number;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -396,27 +396,27 @@ export type GetTopFiltersNoResultsProps = {
  */
 export type GetTopHitsProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The query term to search for. Must match the exact user input.
+   * User query.
    */
   search?: string;
   /**
-   * Whether to include the click-through and conversion rates for a search.
+   * Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
    */
   clickAnalytics?: boolean;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return. Limit is the size of the page.
+   * Number of records to return (page size).
    */
   limit?: number;
   /**
@@ -424,7 +424,7 @@ export type GetTopHitsProps = {
    */
   offset?: number;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -434,19 +434,19 @@ export type GetTopHitsProps = {
  */
 export type GetTopSearchesProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * Whether to include the click-through and conversion rates for a search.
+   * Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
    */
   clickAnalytics?: boolean;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
@@ -454,11 +454,11 @@ export type GetTopSearchesProps = {
    */
   orderBy?: OrderBy;
   /**
-   * The sorting of the result.
+   * Sorting direction of the results: ascending or descending.
    */
   direction?: Direction;
   /**
-   * Number of records to return. Limit is the size of the page.
+   * Number of records to return (page size).
    */
   limit?: number;
   /**
@@ -466,7 +466,7 @@ export type GetTopSearchesProps = {
    */
   offset?: number;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -476,19 +476,19 @@ export type GetTopSearchesProps = {
  */
 export type GetUsersCountProps = {
   /**
-   * The index name to target.
+   * Index name to target.
    */
   index: string;
   /**
-   * The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
 };
@@ -498,15 +498,15 @@ export type GetUsersCountProps = {
  */
 export type PostProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
   /**
-   * The parameters to send with the custom request.
+   * Parameters to send with the custom request.
    */
   body?: Record<string, any>;
 };
@@ -516,15 +516,15 @@ export type PostProps = {
  */
 export type PutProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
   /**
-   * The parameters to send with the custom request.
+   * Parameters to send with the custom request.
    */
   body?: Record<string, any>;
 };

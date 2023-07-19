@@ -7,24 +7,24 @@ import type { SynonymType } from './synonymType';
  */
 export type SynonymHit = {
   /**
-   * Unique identifier of the synonym object to be created or updated.
+   * Unique identifier of a synonym object.
    */
   objectID: string;
 
   type: SynonymType;
 
   /**
-   * Words or phrases to be considered equivalent.
+   * Words or phrases considered equivalent.
    */
   synonyms?: string[];
 
   /**
-   * Word or phrase to appear in query strings (for onewaysynonym).
+   * Word or phrase to appear in query strings (for [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).
    */
   input?: string;
 
   /**
-   * Word or phrase to appear in query strings (for altcorrection1 and altcorrection2).
+   * Word or phrase to appear in query strings (for [`altcorrection1` and `altcorrection2`](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections/)).
    */
   word?: string;
 
@@ -34,12 +34,12 @@ export type SynonymHit = {
   corrections?: string[];
 
   /**
-   * Token to be put inside records.
+   * [Placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/) to be put inside records.
    */
   placeholder?: string;
 
   /**
-   * List of query words that will match the token.
+   * Query words that will match the [placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).
    */
   replacements?: string[];
 };

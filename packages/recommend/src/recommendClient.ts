@@ -17,12 +17,20 @@ import type {
 
 import type {
   DelProps,
+  DeleteRecommendRuleProps,
   GetProps,
+  GetRecommendRuleProps,
+  GetRecommendStatusProps,
   PostProps,
   PutProps,
+  SearchRecommendRulesProps,
 } from '../model/clientMethodProps';
+import type { DeletedAtResponse } from '../model/deletedAtResponse';
+import type { GetRecommendTaskResponse } from '../model/getRecommendTaskResponse';
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
+import type { RuleResponse } from '../model/ruleResponse';
+import type { SearchRecommendRulesResponse } from '../model/searchRecommendRulesResponse';
 
 export const apiClientVersion = '5.0.0-alpha.73';
 
@@ -129,8 +137,8 @@ export function createRecommendClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param del - The del object.
-     * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param del.parameters - Query parameters to be applied to the current query.
+     * @param del.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param del.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     del(
@@ -156,12 +164,62 @@ export function createRecommendClient({
     },
 
     /**
+     * Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+     *
+     * @summary Delete a Recommend rule.
+     * @param deleteRecommendRule - The deleteRecommendRule object.
+     * @param deleteRecommendRule.indexName - Index on which to perform the request.
+     * @param deleteRecommendRule.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+     * @param deleteRecommendRule.objectID - Unique record (object) identifier.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    deleteRecommendRule(
+      { indexName, model, objectID }: DeleteRecommendRuleProps,
+      requestOptions?: RequestOptions
+    ): Promise<DeletedAtResponse> {
+      if (!indexName) {
+        throw new Error(
+          'Parameter `indexName` is required when calling `deleteRecommendRule`.'
+        );
+      }
+
+      if (!model) {
+        throw new Error(
+          'Parameter `model` is required when calling `deleteRecommendRule`.'
+        );
+      }
+
+      if (!objectID) {
+        throw new Error(
+          'Parameter `objectID` is required when calling `deleteRecommendRule`.'
+        );
+      }
+
+      const requestPath =
+        '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'
+          .replace('{indexName}', encodeURIComponent(indexName))
+          .replace('{model}', encodeURIComponent(model))
+          .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * This method allow you to send requests to the Algolia REST API.
      *
      * @summary Send requests to the Algolia REST API.
      * @param get - The get object.
-     * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param get.parameters - Query parameters to be applied to the current query.
+     * @param get.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param get.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     get(
@@ -187,9 +245,108 @@ export function createRecommendClient({
     },
 
     /**
-     * Returns recommendations or trending results, for a specific model and `objectID`.
+     * Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
      *
-     * @summary Get results.
+     * @summary Get a Recommend rule.
+     * @param getRecommendRule - The getRecommendRule object.
+     * @param getRecommendRule.indexName - Index on which to perform the request.
+     * @param getRecommendRule.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+     * @param getRecommendRule.objectID - Unique record (object) identifier.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getRecommendRule(
+      { indexName, model, objectID }: GetRecommendRuleProps,
+      requestOptions?: RequestOptions
+    ): Promise<RuleResponse> {
+      if (!indexName) {
+        throw new Error(
+          'Parameter `indexName` is required when calling `getRecommendRule`.'
+        );
+      }
+
+      if (!model) {
+        throw new Error(
+          'Parameter `model` is required when calling `getRecommendRule`.'
+        );
+      }
+
+      if (!objectID) {
+        throw new Error(
+          'Parameter `objectID` is required when calling `getRecommendRule`.'
+        );
+      }
+
+      const requestPath =
+        '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'
+          .replace('{indexName}', encodeURIComponent(indexName))
+          .replace('{model}', encodeURIComponent(model))
+          .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.
+     *
+     * @summary Get a Recommend task\'s status.
+     * @param getRecommendStatus - The getRecommendStatus object.
+     * @param getRecommendStatus.indexName - Index on which to perform the request.
+     * @param getRecommendStatus.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+     * @param getRecommendStatus.taskID - Unique identifier of a task. Numeric value (up to 64bits).
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getRecommendStatus(
+      { indexName, model, taskID }: GetRecommendStatusProps,
+      requestOptions?: RequestOptions
+    ): Promise<GetRecommendTaskResponse> {
+      if (!indexName) {
+        throw new Error(
+          'Parameter `indexName` is required when calling `getRecommendStatus`.'
+        );
+      }
+
+      if (!model) {
+        throw new Error(
+          'Parameter `model` is required when calling `getRecommendStatus`.'
+        );
+      }
+
+      if (!taskID) {
+        throw new Error(
+          'Parameter `taskID` is required when calling `getRecommendStatus`.'
+        );
+      }
+
+      const requestPath = '/1/indexes/{indexName}/{model}/task/{taskID}'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{model}', encodeURIComponent(model))
+        .replace('{taskID}', encodeURIComponent(taskID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+     *
+     * @summary Get recommendations and trending items.
      * @param getRecommendationsParams - The getRecommendationsParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -231,9 +388,9 @@ export function createRecommendClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param post - The post object.
-     * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param post.parameters - Query parameters to be applied to the current query.
-     * @param post.body - The parameters to send with the custom request.
+     * @param post.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param post.parameters - Query parameters to apply to the current query.
+     * @param post.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
@@ -264,9 +421,9 @@ export function createRecommendClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param put - The put object.
-     * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param put.parameters - Query parameters to be applied to the current query.
-     * @param put.body - The parameters to send with the custom request.
+     * @param put.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param put.parameters - Query parameters to apply to the current query.
+     * @param put.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     put(
@@ -287,6 +444,56 @@ export function createRecommendClient({
         queryParameters,
         headers,
         data: body ? body : {},
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+     *
+     * @summary List Recommend rules.
+     * @param searchRecommendRules - The searchRecommendRules object.
+     * @param searchRecommendRules.indexName - Index on which to perform the request.
+     * @param searchRecommendRules.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+     * @param searchRecommendRules.searchRecommendRulesParams - The searchRecommendRulesParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchRecommendRules(
+      {
+        indexName,
+        model,
+        searchRecommendRulesParams,
+      }: SearchRecommendRulesProps,
+      requestOptions?: RequestOptions
+    ): Promise<SearchRecommendRulesResponse> {
+      if (!indexName) {
+        throw new Error(
+          'Parameter `indexName` is required when calling `searchRecommendRules`.'
+        );
+      }
+
+      if (!model) {
+        throw new Error(
+          'Parameter `model` is required when calling `searchRecommendRules`.'
+        );
+      }
+
+      const requestPath =
+        '/1/indexes/{indexName}/{model}/recommend/rules/search'
+          .replace('{indexName}', encodeURIComponent(indexName))
+          .replace('{model}', encodeURIComponent(model));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: searchRecommendRulesParams ? searchRecommendRulesParams : {},
+        useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(request, requestOptions);

@@ -4,22 +4,22 @@ import type { ClickThroughRateEvent } from './clickThroughRateEvent';
 
 export type GetClickThroughRateResponse = {
   /**
-   * The click-through rate.
+   * [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    */
   rate: number;
 
   /**
-   * The number of click event.
+   * Number of click events.
    */
   clickCount: number;
 
   /**
-   * The number of tracked search click.
+   * Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
    */
   trackedSearchCount: number;
 
   /**
-   * A list of click-through rate events with their date.
+   * Click-through rate events.
    */
   dates: ClickThroughRateEvent[];
 };

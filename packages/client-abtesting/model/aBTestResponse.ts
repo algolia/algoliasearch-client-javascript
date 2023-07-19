@@ -2,17 +2,17 @@
 
 export type ABTestResponse = {
   /**
-   * The index performing the A/B test.
+   * A/B test index.
    */
   index: string;
 
   /**
-   * The A/B test ID.
+   * Unique A/B test ID.
    */
   abTestID: number;
 
   /**
-   * TaskID of the task to wait for.
+   * Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task\'s progress with the `task` operation and this `taskID`.
    */
   taskID: number;
 };

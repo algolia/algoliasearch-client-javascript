@@ -2,72 +2,72 @@
 
 export type Variant = {
   /**
-   * Average click position for the variant.
+   * Variant\'s [average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
    */
   averageClickPosition: number;
 
   /**
-   * Distinct click count for the variant.
+   * Number of click events for this variant.
    */
   clickCount: number;
 
   /**
-   * Click through rate for the variant.
+   * Variant\'s [click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    */
   clickThroughRate: number;
 
   /**
-   * Distinct conversion count for the variant.
+   * Number of click events for this variant.
    */
   conversionCount: number;
 
   /**
-   * Conversion rate for the variant.
+   * Variant\'s [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    */
   conversionRate: number;
 
   /**
-   * The A/B test description.
+   * A/B test description.
    */
   description: string;
 
   /**
-   * The index performing the A/B test.
+   * A/B test index.
    */
   index: string;
 
   /**
-   * The number of occurrences.
+   * Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for that variant.
    */
   noResultCount: number;
 
   /**
-   * Count of the tracked searches attributed to outlier traffic that were removed from the A/B test.
+   * Number of tracked searches attributed to [outlier traffic](https://www.algolia.com/doc/guides/ab-testing/how-to-read-your-a-b-test-results/#is-the-split-off) that were removed from the A/B test. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
    */
   outlierTrackedSearchesCount: number;
 
   /**
-   * Count of users attributed to outlier traffic that were removed from the A/B test.
+   * Number of users attributed to [outlier traffic](https://www.algolia.com/doc/guides/ab-testing/how-to-read-your-a-b-test-results/#is-the-split-off) that were removed from the A/B test.
    */
   outlierUsersCount: number;
 
   /**
-   * The number of search during the A/B test.
+   * Number of searches carried out during the A/B test.
    */
   searchCount: number;
 
   /**
-   * The number of tracked search click.
+   * Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
    */
   trackedSearchCount: number;
 
   /**
-   * The traffic percentage for the A/B test.
+   * A/B test traffic percentage.
    */
   trafficPercentage: number;
 
   /**
-   * The number of user during the A/B test.
+   * Number of users during the A/B test.
    */
   userCount: number;
 };

@@ -4,7 +4,7 @@ import type { FetchedIndex } from './fetchedIndex';
 
 export type ListIndicesResponse = {
   /**
-   * List of the fetched indices.
+   * All indices in your Algolia application.
    */
   items: FetchedIndex[];
 

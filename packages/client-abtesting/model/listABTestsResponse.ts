@@ -4,17 +4,17 @@ import type { ABTest } from './aBTest';
 
 export type ListABTestsResponse = {
   /**
-   * List of A/B tests.
+   * A/B tests.
    */
   abtests: ABTest[];
 
   /**
-   * Number of A/B tests found for the app.
+   * Number of A/B tests implemented.
    */
   count: number;
 
   /**
-   * Number of A/B tests retrievable.
+   * Number of retrievable A/B tests.
    */
   total: number;
 };

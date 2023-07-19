@@ -4,22 +4,22 @@ import type { ConversionRateEvent } from './conversionRateEvent';
 
 export type GetConversationRateResponse = {
   /**
-   * The click-through rate.
+   * [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    */
   rate: number;
 
   /**
-   * The number of tracked search click.
+   * Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
    */
   trackedSearchCount: number;
 
   /**
-   * The number of converted clicks.
+   * Number of converted clicks.
    */
   conversionCount: number;
 
   /**
-   * A list of conversion events with their date.
+   * Conversion events.
    */
   dates: ConversionRateEvent[];
 };

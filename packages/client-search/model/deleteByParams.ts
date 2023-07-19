@@ -9,7 +9,7 @@ export type DeleteByParams = {
   facetFilters?: FacetFilters;
 
   /**
-   * Filter the query with numeric, facet and/or tag filters.
+   * [Filter](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) the query with numeric, facet, or tag filters.
    */
   filters?: string;
 
@@ -18,19 +18,19 @@ export type DeleteByParams = {
   tagFilters?: TagFilters;
 
   /**
-   * Search for entries around a central geolocation, enabling a geo search within a circular area.
+   * Search for entries [around a central location](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filter-around-a-central-point), enabling a geographical search within a circular area.
    */
   aroundLatLng?: string;
 
   aroundRadius?: AroundRadius;
 
   /**
-   * Search inside a rectangular area (in geo coordinates).
+   * Search inside a [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
    */
   insideBoundingBox?: number[];
 
   /**
-   * Search inside a polygon (in geo coordinates).
+   * Search inside a [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
    */
   insidePolygon?: number[];
 };

@@ -4,32 +4,27 @@ import type { Variant } from './variant';
 
 export type ABTest = {
   /**
-   * The A/B test ID.
+   * Unique A/B test ID.
    */
   abTestID: number;
 
   /**
-   * A/B test significance based on click data. Should be > 0.95 to be considered significant (no matter which variant is winning).
+   * [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on click data. A value of 0.95 or over is considered to be _significant_.
    */
   clickSignificance: number;
 
   /**
-   * A/B test significance based on conversion data. Should be > 0.95 to be considered significant (no matter which variant is winning).
+   * End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
    */
-  conversionSignificance: number;
+  conversionSignificance: string;
 
   /**
-   * End date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
-   */
-  endAt: string;
-
-  /**
-   * Update date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
+   * Update date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
    */
   updatedAt: string;
 
   /**
-   * Creation date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
+   * Creation date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
    */
   createdAt: string;
 
@@ -39,12 +34,12 @@ export type ABTest = {
   name: string;
 
   /**
-   * Status of the A/B test.
+   * A/B test status.
    */
   status: string;
 
   /**
-   * List of A/B test variant.
+   * A/B test variants.
    */
   variants: Variant[];
 };

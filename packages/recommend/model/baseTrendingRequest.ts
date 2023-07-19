@@ -6,12 +6,12 @@ export type BaseTrendingRequest = {
   model: TrendingModels;
 
   /**
-   * The facet name to use for trending models.
+   * Facet name for trending models.
    */
   facetName?: string;
 
   /**
-   * The facet value to use for trending models.
+   * Facet value for trending models.
    */
   facetValue?: string;
 };

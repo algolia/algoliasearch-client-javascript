@@ -2,12 +2,12 @@
 
 export type ClickPosition = {
   /**
-   * Range of positions with the following pattern: - Positions from 1 to 10 included are displayed in separated groups. - Positions from 11 to 20 included are grouped together. - Positions from 21 and up are grouped together.
+   * Range of positions with the following pattern: - For positions 1 to 10, the number of click events are shown for each position - For positions 11 to 20, all click events are grouped - For positions 21 and up, all click events are grouped.
    */
   position: number[];
 
   /**
-   * The number of click event.
+   * Number of click events.
    */
   clickCount: number;
 };

@@ -2,12 +2,12 @@
 
 export type TopCountry = {
   /**
-   * The country.
+   * Country.
    */
   country: string;
 
   /**
-   * The number of occurrences.
+   * Number of occurrences.
    */
   count: number;
 };

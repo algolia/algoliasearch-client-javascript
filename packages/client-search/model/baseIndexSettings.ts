@@ -2,67 +2,67 @@
 
 export type BaseIndexSettings = {
   /**
-   * Creates replicas, exact copies of an index.
+   * Creates [replicas](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/), which are copies of a primary index with the same records but different settings.
    */
   replicas?: string[];
 
   /**
-   * Set the maximum number of hits accessible via pagination.
+   * Maximum number of hits accessible through pagination.
    */
   paginationLimitedTo?: number;
 
   /**
-   * List of attributes that can\'t be retrieved at query time.
+   * Attributes that can\'t be retrieved at query time.
    */
   unretrievableAttributes?: string[];
 
   /**
-   * A list of words for which you want to turn off typo tolerance.
+   * Words for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/).
    */
   disableTypoToleranceOnWords?: string[];
 
   /**
-   * Specify on which attributes in your index Algolia should apply Japanese transliteration to make words indexed in Katakana or Kanji searchable in Hiragana.
+   * Attributes in your index to which [Japanese transliteration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#japanese-transliteration-and-type-ahead) applies. This will ensure that words indexed in Katakana or Kanji can also be searched in Hiragana.
    */
   attributesToTransliterate?: string[];
 
   /**
-   * List of attributes on which to do a decomposition of camel case words.
+   * Attributes on which to split [camel case](https://wikipedia.org/wiki/Camel_case) words.
    */
   camelCaseAttributes?: string[];
 
   /**
-   * Specify on which attributes in your index Algolia should apply word segmentation, also known as decompounding.
+   * Attributes in your index to which [word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) (decompounding) applies.
    */
   decompoundedAttributes?: Record<string, any>;
 
   /**
-   * Sets the languages at the index level for language-specific processing such as tokenization and normalization.
+   * Set the languages of your index, for language-specific processing steps such as [tokenization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/tokenization/) and [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
    */
   indexLanguages?: string[];
 
   /**
-   * List of attributes on which you want to disable prefix matching.
+   * Attributes for which you want to turn off [prefix matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search).
    */
   disablePrefixOnAttributes?: string[];
 
   /**
-   * Enables compression of large integer arrays.
+   * Incidates whether the engine compresses arrays with exclusively non-negative integers. When enabled, the compressed arrays may be reordered.
    */
   allowCompressionOfIntegerArray?: boolean;
 
   /**
-   * List of numeric attributes that can be used as numerical filters.
+   * Numeric attributes that can be used as [numerical filters](https://www.algolia.com/doc/guides/managing-results/rules/detecting-intent/how-to/applying-a-custom-filter-for-a-specific-query/#numerical-filters).
    */
   numericAttributesForFiltering?: string[];
 
   /**
-   * Control which separators are indexed.
+   * Controls which separators are added to an Algolia index as part of [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean). Separators are all non-letter characters except spaces and currency characters, such as $€£¥.
    */
   separatorsToIndex?: string;
 
   /**
-   * The complete list of attributes used for searching.
+   * [Attributes used for searching](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/), including determining [if matches at the beginning of a word are important (ordered) or not (unordered)](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/how-to/configuring-searchable-attributes-the-right-way/#understanding-word-position).
    */
   searchableAttributes?: string[];
 
@@ -72,7 +72,7 @@ export type BaseIndexSettings = {
   userData?: Record<string, any>;
 
   /**
-   * Overrides Algolia\'s default normalization.
+   * A list of characters and their normalized replacements to override Algolia\'s default [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
    */
   customNormalization?: Record<string, Record<string, string>>;
 };

@@ -3,6 +3,6 @@
 import type { MixedSearchFilters } from './mixedSearchFilters';
 
 /**
- * Filter hits by facet value.
+ * [Filter hits by facet value](https://www.algolia.com/doc/api-reference/api-parameters/facetFilters/).
  */
 export type FacetFilters = MixedSearchFilters[] | string;

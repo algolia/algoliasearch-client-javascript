@@ -6,7 +6,7 @@ export type BaseRecommendationRequest = {
   model: RecommendationModels;
 
   /**
-   * Unique identifier of the object.
+   * Unique object identifier.
    */
   objectID: string;
 };

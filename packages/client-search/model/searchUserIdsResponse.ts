@@ -7,27 +7,27 @@ import type { UserHit } from './userHit';
  */
 export type SearchUserIdsResponse = {
   /**
-   * List of user object matching the query.
+   * User objects that match the query.
    */
   hits: UserHit[];
 
   /**
-   * Number of hits that the search query matched.
+   * Number of hits the search query matched.
    */
   nbHits: number;
 
   /**
-   * Specify the page to retrieve.
+   * Page to retrieve (the first page is `0`, not `1`).
    */
   page: number;
 
   /**
-   * Maximum number of hits in a page. Minimum is 1, maximum is 1000.
+   * Maximum number of hits per page.
    */
   hitsPerPage: number;
 
   /**
-   * Date of last update (ISO-8601 format).
+   * Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
    */
   updatedAt: string;
 };

@@ -2,12 +2,12 @@
 
 export type TopHit = {
   /**
-   * The hit.
+   * Hit.
    */
   hit: string;
 
   /**
-   * The number of occurrences.
+   * Number of occurrences.
    */
   count: number;
 };

@@ -3,11 +3,11 @@
 import type { UserId } from './userId';
 
 /**
- * Array of userIDs and clusters.
+ * User IDs and clusters.
  */
 export type GetTopUserIdsResponse = {
   /**
-   * Mapping of cluster names to top users.
+   * Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values.
    */
   topUsers: Array<Record<string, UserId[]>>;
 };

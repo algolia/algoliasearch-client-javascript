@@ -7,11 +7,11 @@ import type { QuerySuggestionsIndexParam } from './querySuggestionsIndexParam';
  */
 export type DelProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
 };
@@ -21,7 +21,7 @@ export type DelProps = {
  */
 export type DeleteConfigProps = {
   /**
-   * The index in which to perform the request.
+   * Index on which to perform the request.
    */
   indexName: string;
 };
@@ -31,11 +31,11 @@ export type DeleteConfigProps = {
  */
 export type GetProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
 };
@@ -45,7 +45,7 @@ export type GetProps = {
  */
 export type GetConfigProps = {
   /**
-   * The index in which to perform the request.
+   * Index on which to perform the request.
    */
   indexName: string;
 };
@@ -55,7 +55,7 @@ export type GetConfigProps = {
  */
 export type GetConfigStatusProps = {
   /**
-   * The index in which to perform the request.
+   * Index on which to perform the request.
    */
   indexName: string;
 };
@@ -65,7 +65,7 @@ export type GetConfigStatusProps = {
  */
 export type GetLogFileProps = {
   /**
-   * The index in which to perform the request.
+   * Index on which to perform the request.
    */
   indexName: string;
 };
@@ -75,15 +75,15 @@ export type GetLogFileProps = {
  */
 export type PostProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
   /**
-   * The parameters to send with the custom request.
+   * Parameters to send with the custom request.
    */
   body?: Record<string, any>;
 };
@@ -93,15 +93,15 @@ export type PostProps = {
  */
 export type PutProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
   /**
-   * The parameters to send with the custom request.
+   * Parameters to send with the custom request.
    */
   body?: Record<string, any>;
 };
@@ -111,7 +111,7 @@ export type PutProps = {
  */
 export type UpdateConfigProps = {
   /**
-   * The index in which to perform the request.
+   * Index on which to perform the request.
    */
   indexName: string;
   querySuggestionsIndexParam: QuerySuggestionsIndexParam;

@@ -7,7 +7,7 @@ import type { MatchLevel } from './matchLevel';
  */
 export type HighlightResultOption = {
   /**
-   * Markup text with occurrences highlighted.
+   * Markup text with `facetQuery` matches highlighted.
    */
   value: string;
 

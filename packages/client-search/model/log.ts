@@ -4,7 +4,7 @@ import type { LogQuery } from './logQuery';
 
 export type Log = {
   /**
-   * Timestamp in ISO-8601 format.
+   * Timestamp in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
    */
   timestamp: string;
 
@@ -19,12 +19,12 @@ export type Log = {
   answer_code: string;
 
   /**
-   * Request body. Truncated after 1000 characters.
+   * Request body. Truncated after 1,000 characters.
    */
   query_body: string;
 
   /**
-   * Answer body. Truncated after 1000 characters.
+   * Answer body. Truncated after 1,000 characters.
    */
   answer: string;
 
@@ -34,12 +34,12 @@ export type Log = {
   url: string;
 
   /**
-   * IP of the client which performed the request.
+   * IP address of the client that performed the request.
    */
   ip: string;
 
   /**
-   * Request Headers (API Key is obfuscated).
+   * Request headers (API key is obfuscated).
    */
   query_headers: string;
 
@@ -54,7 +54,7 @@ export type Log = {
   nb_api_calls: string;
 
   /**
-   * Processing time for the query. It doesn\'t include network time.
+   * Processing time for the query. Doesn\'t include network time.
    */
   processing_time_ms: string;
 
@@ -74,7 +74,7 @@ export type Log = {
   query_nb_hits?: string;
 
   /**
-   * Array of all performed queries for the given request.
+   * Performed queries for the given request.
    */
   inner_queries?: LogQuery[];
 };

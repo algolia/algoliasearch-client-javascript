@@ -5,22 +5,22 @@
  */
 export type SearchUserIdsParams = {
   /**
-   * Query to search. The search is a prefix search with typoTolerance. Use empty query to retrieve all users.
+   * Query to search. The search is a prefix search with [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) enabled. An empty query will retrieve all users.
    */
   query: string;
 
   /**
-   * Name of the cluster.
+   * Cluster name.
    */
   clusterName?: string;
 
   /**
-   * Specify the page to retrieve.
+   * Page to retrieve (the first page is `0`, not `1`).
    */
   page?: number;
 
   /**
-   * Set the number of hits per page.
+   * Number of hits per page.
    */
   hitsPerPage?: number;
 };

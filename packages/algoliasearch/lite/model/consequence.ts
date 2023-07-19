@@ -5,23 +5,23 @@ import type { ConsequenceParams } from './consequenceParams';
 import type { Promote } from './promote';
 
 /**
- * Consequence of the Rule.
+ * [Consequences](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#consequences) of a rule.
  */
 export type Consequence = {
   params?: ConsequenceParams;
 
   /**
-   * Objects to promote as hits.
+   * Records to promote.
    */
   promote?: Promote[];
 
   /**
-   * Only use in combination with the promote consequence. When true, promoted results will be restricted to match the filters of the current search. When false, the promoted results will show up regardless of the filters.
+   * Only use in combination with the `promote` consequence. When `true`, promoted results will be restricted to match the filters of the current search. When `false`, the promoted results will show up regardless of the filters.
    */
   filterPromotes?: boolean;
 
   /**
-   * Objects to hide from hits. Each object must contain an objectID field. By default, you can hide up to 50 items per rule.
+   * Records to hide. By default, you can hide up to 50 records per rule.
    */
   hide?: ConsequenceHide[];
 

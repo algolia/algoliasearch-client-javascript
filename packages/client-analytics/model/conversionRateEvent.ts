@@ -2,22 +2,22 @@
 
 export type ConversionRateEvent = {
   /**
-   * The click-through rate.
+   * [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    */
   rate: number;
 
   /**
-   * The number of tracked search click.
+   * Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
    */
   trackedSearchCount: number;
 
   /**
-   * The number of converted clicks.
+   * Number of converted clicks.
    */
   conversionCount: number;
 
   /**
-   * Date of the event.
+   * Date of the event in the format YYYY-MM-DD.
    */
   date: string;
 };

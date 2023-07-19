@@ -4,12 +4,12 @@ import type { SearchEvent } from './searchEvent';
 
 export type GetSearchesCountResponse = {
   /**
-   * The number of occurrences.
+   * Number of occurrences.
    */
   count: number;
 
   /**
-   * A list of search events with their date and count.
+   * Search events with their associated dates and hit counts.
    */
   dates: SearchEvent[];
 };

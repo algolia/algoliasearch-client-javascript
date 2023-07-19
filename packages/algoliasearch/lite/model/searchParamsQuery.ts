@@ -2,7 +2,7 @@
 
 export type SearchParamsQuery = {
   /**
-   * The text to search in the index.
+   * Text to search for in an index.
    */
   query?: string;
 };

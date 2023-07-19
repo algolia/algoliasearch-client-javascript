@@ -9,12 +9,12 @@ export type AddABTestsRequest = {
   name: string;
 
   /**
-   * List of 2 variants for the A/B test.
+   * A/B test variants.
    */
-  variant: AddABTestsVariant[];
+  variants: AddABTestsVariant[];
 
   /**
-   * End date for the A/B test expressed as YYYY-MM-DDThh:mm:ssZ.
+   * End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
    */
   endAt: string;
 };

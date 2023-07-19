@@ -2,47 +2,47 @@
 
 export type TopSearchWithAnalytics = {
   /**
-   * The search query.
+   * User query.
    */
   search: string;
 
   /**
-   * The number of occurrences.
+   * Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn\'t `true`).
    */
   count: number;
 
   /**
-   * The click-through rate.
+   * [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    */
   clickThroughRate: number;
 
   /**
-   * The average position of all the click count event.
+   * Average [position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) of clicked search result.
    */
   averageClickPosition: number;
 
   /**
-   * The conversion rate.
+   * [Conversion rate (CR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    */
   conversionRate: number;
 
   /**
-   * The number of tracked search click.
+   * Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
    */
   trackedSearchCount: number;
 
   /**
-   * The number of click event.
+   * Number of click events.
    */
   clickCount: number;
 
   /**
-   * The number of converted clicks.
+   * Number of converted clicks.
    */
   conversionCount: number;
 
   /**
-   * Number of hits that the search query matched.
+   * Number of hits the search query matched.
    */
   nbHits: number;
 };

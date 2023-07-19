@@ -19,7 +19,7 @@ export type RedirectRuleIndexMetadata = {
   reason: string;
 
   /**
-   * Status for the redirect rule.
+   * Redirect rule status.
    */
   succeed: boolean;
 

@@ -5,12 +5,12 @@
  */
 export type BatchAssignUserIdsParams = {
   /**
-   * Name of the cluster.
+   * Cluster name.
    */
   cluster: string;
 
   /**
-   * UserIDs to assign. Note you cannot move users with this method.
+   * User IDs to assign.
    */
   users: string[];
 };

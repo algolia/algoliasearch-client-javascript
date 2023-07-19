@@ -4,17 +4,17 @@ import type { AverageClickEvent } from './averageClickEvent';
 
 export type GetAverageClickPositionResponse = {
   /**
-   * The average of all the click count event.
+   * Average count of all click events.
    */
   average: number;
 
   /**
-   * The number of click event.
+   * Number of click events.
    */
   clickCount: number;
 
   /**
-   * A list of average click position with their date.
+   * Average click positions.
    */
   dates: AverageClickEvent[];
 };

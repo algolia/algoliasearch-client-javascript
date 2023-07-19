@@ -2,17 +2,17 @@
 
 export type GetTopFiltersNoResultsValue = {
   /**
-   * The attribute.
+   * Attribute name.
    */
   attribute: string;
 
   /**
-   * The operator.
+   * Operator.
    */
   operator: string;
 
   /**
-   * The value of the attribute.
+   * Attribute value.
    */
   value: string;
 };

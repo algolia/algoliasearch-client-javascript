@@ -4,22 +4,22 @@ import type { NoClickRateEvent } from './noClickRateEvent';
 
 export type GetNoClickRateResponse = {
   /**
-   * The click-through rate.
+   * [Click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    */
   rate: number;
 
   /**
-   * The number of click event.
+   * Number of click events.
    */
   count: number;
 
   /**
-   * The number of click event.
+   * Number of click events.
    */
   noClickCount: number;
 
   /**
-   * A list of searches without clicks with their date, rate and counts.
+   * Overall count of searches without clicks plus a daily breakdown.
    */
   dates: NoClickRateEvent[];
 };

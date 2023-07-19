@@ -7,7 +7,7 @@ export type ActivateModelInstanceResponse = {
   modelID: string;
 
   /**
-   * Date of last update (ISO-8601 format).
+   * Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
    */
   updatedAt: string;
 };

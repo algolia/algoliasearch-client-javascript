@@ -2,7 +2,7 @@
 
 export type SearchParamsString = {
   /**
-   * Search parameters as URL-encoded query string.
+   * Search parameters as a URL-encoded query string.
    */
   params?: string;
 };

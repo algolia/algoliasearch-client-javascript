@@ -3,11 +3,11 @@
 import type { UserId } from './userId';
 
 /**
- * UserIDs data.
+ * User ID data.
  */
 export type ListUserIdsResponse = {
   /**
-   * List of userIDs.
+   * User IDs.
    */
   userIDs: UserId[];
 };

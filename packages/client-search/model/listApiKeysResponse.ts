@@ -4,7 +4,7 @@ import type { GetApiKeyResponse } from './getApiKeyResponse';
 
 export type ListApiKeysResponse = {
   /**
-   * List of api keys.
+   * API keys.
    */
   keys: GetApiKeyResponse[];
 };

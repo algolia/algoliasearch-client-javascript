@@ -137,8 +137,8 @@ export function createAnalyticsClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param del - The del object.
-     * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param del.parameters - Query parameters to be applied to the current query.
+     * @param del.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param del.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     del(
@@ -168,8 +168,8 @@ export function createAnalyticsClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param get - The get object.
-     * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param get.parameters - Query parameters to be applied to the current query.
+     * @param get.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param get.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     get(
@@ -195,14 +195,14 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the average click position. The endpoint returns a value for the complete given time range, as well as a value per day.
+     * Return the average click position for the complete time range and for individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn\'t receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
      *
      * @summary Get average click position.
      * @param getAverageClickPosition - The getAverageClickPosition object.
-     * @param getAverageClickPosition.index - The index name to target.
-     * @param getAverageClickPosition.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getAverageClickPosition.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getAverageClickPosition.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getAverageClickPosition.index - Index name to target.
+     * @param getAverageClickPosition.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getAverageClickPosition.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getAverageClickPosition.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAverageClickPosition(
@@ -246,14 +246,14 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the distribution of clicks per range of positions.  If the groups all have a count of 0, it means Algolia didn’t receive any click events for the queries with the clickAnalytics search parameter set to true. The count is 0 until Algolia receives at least one click event.
+     * Show the number of clicks events and their associated position in the search results.  > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn\'t receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
      *
-     * @summary Get clicks per positions.
+     * @summary Get click positions.
      * @param getClickPositions - The getClickPositions object.
-     * @param getClickPositions.index - The index name to target.
-     * @param getClickPositions.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getClickPositions.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getClickPositions.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getClickPositions.index - Index name to target.
+     * @param getClickPositions.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getClickPositions.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getClickPositions.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getClickPositions(
@@ -297,14 +297,14 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns a click-through rate (CTR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of clicks and searches used to compute the rates.
+     * Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
      *
      * @summary Get click-through rate (CTR).
      * @param getClickThroughRate - The getClickThroughRate object.
-     * @param getClickThroughRate.index - The index name to target.
-     * @param getClickThroughRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getClickThroughRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getClickThroughRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getClickThroughRate.index - Index name to target.
+     * @param getClickThroughRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getClickThroughRate.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getClickThroughRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getClickThroughRate(
@@ -348,14 +348,14 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns a conversion rate (CR). The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of conversion and searches used to compute the rates.
+     * Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
      *
      * @summary Get conversion rate (CR).
      * @param getConversationRate - The getConversationRate object.
-     * @param getConversationRate.index - The index name to target.
-     * @param getConversationRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getConversationRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getConversationRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getConversationRate.index - Index name to target.
+     * @param getConversationRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getConversationRate.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getConversationRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getConversationRate(
@@ -399,14 +399,14 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the rate at which searches didn\'t lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
+     * Returns the rate at which searches don\'t lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
      *
      * @summary Get no click rate.
      * @param getNoClickRate - The getNoClickRate object.
-     * @param getNoClickRate.index - The index name to target.
-     * @param getNoClickRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getNoClickRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getNoClickRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getNoClickRate.index - Index name to target.
+     * @param getNoClickRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getNoClickRate.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getNoClickRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getNoClickRate(
@@ -450,14 +450,14 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the rate at which searches didn\'t return any results. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without results used to compute the rates.
+     * Returns the rate at which searches didn\'t return any results.
      *
      * @summary Get no results rate.
      * @param getNoResultsRate - The getNoResultsRate object.
-     * @param getNoResultsRate.index - The index name to target.
-     * @param getNoResultsRate.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getNoResultsRate.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getNoResultsRate.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getNoResultsRate.index - Index name to target.
+     * @param getNoResultsRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getNoResultsRate.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getNoResultsRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getNoResultsRate(
@@ -501,14 +501,14 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the number of searches across the given time range. The endpoint returns a value for the complete given time range, as well as a value per day.
+     * Returns the number of searches within a time range.
      *
-     * @summary Get searches count.
+     * @summary Get number of searches.
      * @param getSearchesCount - The getSearchesCount object.
-     * @param getSearchesCount.index - The index name to target.
-     * @param getSearchesCount.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getSearchesCount.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getSearchesCount.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getSearchesCount.index - Index name to target.
+     * @param getSearchesCount.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesCount.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesCount.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSearchesCount(
@@ -552,16 +552,16 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns top searches that didn\'t lead to any clicks. Limited to the 1000 most frequent ones. For each search, also returns the average number of found hits.
+     * Return the most popular of the last 1,000 searches that didn\'t lead to any clicks.
      *
      * @summary Get top searches with no clicks.
      * @param getSearchesNoClicks - The getSearchesNoClicks object.
-     * @param getSearchesNoClicks.index - The index name to target.
-     * @param getSearchesNoClicks.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getSearchesNoClicks.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getSearchesNoClicks.limit - Number of records to return. Limit is the size of the page.
+     * @param getSearchesNoClicks.index - Index name to target.
+     * @param getSearchesNoClicks.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesNoClicks.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesNoClicks.limit - Number of records to return (page size).
      * @param getSearchesNoClicks.offset - Position of the starting record. Used for paging. 0 is the first record.
-     * @param getSearchesNoClicks.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getSearchesNoClicks.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSearchesNoClicks(
@@ -620,16 +620,16 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns top searches that didn\'t return any results. Limited to the 1000 most frequent ones.
+     * Returns the most popular of the latest 1,000 searches that didn\'t return any results.
      *
      * @summary Get top searches with no results.
      * @param getSearchesNoResults - The getSearchesNoResults object.
-     * @param getSearchesNoResults.index - The index name to target.
-     * @param getSearchesNoResults.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getSearchesNoResults.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getSearchesNoResults.limit - Number of records to return. Limit is the size of the page.
+     * @param getSearchesNoResults.index - Index name to target.
+     * @param getSearchesNoResults.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesNoResults.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesNoResults.limit - Number of records to return (page size).
      * @param getSearchesNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
-     * @param getSearchesNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getSearchesNoResults.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSearchesNoResults(
@@ -688,11 +688,11 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the latest update time of the analytics API for a given index. If the index has been recently created and/or no search has been performed yet the updated time will be null.
+     * Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The Analytics API is updated every 5&nbsp;minutes.
      *
      * @summary Get Analytics API status.
      * @param getStatus - The getStatus object.
-     * @param getStatus.index - The index name to target.
+     * @param getStatus.index - Index name to target.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getStatus(
@@ -724,16 +724,16 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns top countries. Limited to the 1000 most frequent ones.
+     * Returns top countries. Limited to the 1,000 most frequent ones.
      *
      * @summary Get top countries.
      * @param getTopCountries - The getTopCountries object.
-     * @param getTopCountries.index - The index name to target.
-     * @param getTopCountries.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getTopCountries.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getTopCountries.limit - Number of records to return. Limit is the size of the page.
+     * @param getTopCountries.index - Index name to target.
+     * @param getTopCountries.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopCountries.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopCountries.limit - Number of records to return (page size).
      * @param getTopCountries.offset - Position of the starting record. Used for paging. 0 is the first record.
-     * @param getTopCountries.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getTopCountries.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopCountries(
@@ -785,17 +785,17 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns top filter attributes. Limited to the 1000 most used filters.
+     * Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
      *
-     * @summary Get top filter attributes.
+     * @summary Get top filterable attributes.
      * @param getTopFilterAttributes - The getTopFilterAttributes object.
-     * @param getTopFilterAttributes.index - The index name to target.
-     * @param getTopFilterAttributes.search - The query term to search for. Must match the exact user input.
-     * @param getTopFilterAttributes.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getTopFilterAttributes.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getTopFilterAttributes.limit - Number of records to return. Limit is the size of the page.
+     * @param getTopFilterAttributes.index - Index name to target.
+     * @param getTopFilterAttributes.search - User query.
+     * @param getTopFilterAttributes.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFilterAttributes.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFilterAttributes.limit - Number of records to return (page size).
      * @param getTopFilterAttributes.offset - Position of the starting record. Used for paging. 0 is the first record.
-     * @param getTopFilterAttributes.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getTopFilterAttributes.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopFilterAttributes(
@@ -859,18 +859,18 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns top filters for the given attribute. Limited to the 1000 most used filters.
+     * Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
      *
-     * @summary Get top filters for the an attribute.
+     * @summary Get top filter values for an attribute.
      * @param getTopFilterForAttribute - The getTopFilterForAttribute object.
-     * @param getTopFilterForAttribute.attribute - The exact name of the attribute.
-     * @param getTopFilterForAttribute.index - The index name to target.
-     * @param getTopFilterForAttribute.search - The query term to search for. Must match the exact user input.
-     * @param getTopFilterForAttribute.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getTopFilterForAttribute.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getTopFilterForAttribute.limit - Number of records to return. Limit is the size of the page.
+     * @param getTopFilterForAttribute.attribute - Attribute name.
+     * @param getTopFilterForAttribute.index - Index name to target.
+     * @param getTopFilterForAttribute.search - User query.
+     * @param getTopFilterForAttribute.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFilterForAttribute.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFilterForAttribute.limit - Number of records to return (page size).
      * @param getTopFilterForAttribute.offset - Position of the starting record. Used for paging. 0 is the first record.
-     * @param getTopFilterForAttribute.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getTopFilterForAttribute.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopFilterForAttribute(
@@ -944,17 +944,17 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns top filters with no results. Limited to the 1000 most used filters.
+     * Returns top filters for filter-enabled searches that don\'t return results. Limited to the 1,000 most recently used filters.
      *
      * @summary Get top filters for a no result search.
      * @param getTopFiltersNoResults - The getTopFiltersNoResults object.
-     * @param getTopFiltersNoResults.index - The index name to target.
-     * @param getTopFiltersNoResults.search - The query term to search for. Must match the exact user input.
-     * @param getTopFiltersNoResults.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getTopFiltersNoResults.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getTopFiltersNoResults.limit - Number of records to return. Limit is the size of the page.
+     * @param getTopFiltersNoResults.index - Index name to target.
+     * @param getTopFiltersNoResults.search - User query.
+     * @param getTopFiltersNoResults.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFiltersNoResults.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFiltersNoResults.limit - Number of records to return (page size).
      * @param getTopFiltersNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
-     * @param getTopFiltersNoResults.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getTopFiltersNoResults.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopFiltersNoResults(
@@ -1018,18 +1018,18 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns top hits. Limited to the 1000 most frequent ones.
+     * Return the most popular clicked results in the last 1,000 searches.
      *
      * @summary Get top hits.
      * @param getTopHits - The getTopHits object.
-     * @param getTopHits.index - The index name to target.
-     * @param getTopHits.search - The query term to search for. Must match the exact user input.
-     * @param getTopHits.clickAnalytics - Whether to include the click-through and conversion rates for a search.
-     * @param getTopHits.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getTopHits.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getTopHits.limit - Number of records to return. Limit is the size of the page.
+     * @param getTopHits.index - Index name to target.
+     * @param getTopHits.search - User query.
+     * @param getTopHits.clickAnalytics - Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
+     * @param getTopHits.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopHits.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopHits.limit - Number of records to return (page size).
      * @param getTopHits.offset - Position of the starting record. Used for paging. 0 is the first record.
-     * @param getTopHits.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getTopHits.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopHits(
@@ -1098,19 +1098,19 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns top searches. Limited to the 1000 most frequent ones. For each search, also returns the average number of hits returned.
+     * Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
      *
      * @summary Get top searches.
      * @param getTopSearches - The getTopSearches object.
-     * @param getTopSearches.index - The index name to target.
-     * @param getTopSearches.clickAnalytics - Whether to include the click-through and conversion rates for a search.
-     * @param getTopSearches.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getTopSearches.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
+     * @param getTopSearches.index - Index name to target.
+     * @param getTopSearches.clickAnalytics - Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
+     * @param getTopSearches.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopSearches.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
      * @param getTopSearches.orderBy - Reorder the results.
-     * @param getTopSearches.direction - The sorting of the result.
-     * @param getTopSearches.limit - Number of records to return. Limit is the size of the page.
+     * @param getTopSearches.direction - Sorting direction of the results: ascending or descending.
+     * @param getTopSearches.limit - Number of records to return (page size).
      * @param getTopSearches.offset - Position of the starting record. Used for paging. 0 is the first record.
-     * @param getTopSearches.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getTopSearches.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopSearches(
@@ -1184,14 +1184,14 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the distinct count of users across the given time range. The endpoint returns a value for the complete given time range, as well as a value per day.
+     * Return the count of unique users.
      *
-     * @summary Get users count.
+     * @summary Get user count.
      * @param getUsersCount - The getUsersCount object.
-     * @param getUsersCount.index - The index name to target.
-     * @param getUsersCount.startDate - The lower bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getUsersCount.endDate - The upper bound timestamp (a date, a string like \"2006-01-02\") of the period to analyze.
-     * @param getUsersCount.tags - Filter metrics on the provided tags. Each tag must correspond to an analyticsTags set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it should be URL encoded.
+     * @param getUsersCount.index - Index name to target.
+     * @param getUsersCount.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getUsersCount.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getUsersCount.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getUsersCount(
@@ -1239,9 +1239,9 @@ export function createAnalyticsClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param post - The post object.
-     * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param post.parameters - Query parameters to be applied to the current query.
-     * @param post.body - The parameters to send with the custom request.
+     * @param post.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param post.parameters - Query parameters to apply to the current query.
+     * @param post.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
@@ -1272,9 +1272,9 @@ export function createAnalyticsClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param put - The put object.
-     * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param put.parameters - Query parameters to be applied to the current query.
-     * @param put.body - The parameters to send with the custom request.
+     * @param put.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param put.parameters - Query parameters to apply to the current query.
+     * @param put.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     put(

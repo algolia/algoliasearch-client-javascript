@@ -2,12 +2,12 @@
 
 export type SuccessResponse = {
   /**
-   * The status code.
+   * Status code.
    */
   status: number;
 
   /**
-   * Message of the response.
+   * Response message.
    */
   message: string;
 };

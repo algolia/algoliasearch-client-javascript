@@ -3,7 +3,7 @@
 import type { RedirectRuleIndexMetadata } from './redirectRuleIndexMetadata';
 
 /**
- * This parameter is for internal use only.
+ * [Redirect results to a URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects/).
  */
 export type BaseSearchResponseRedirect = {
   index?: RedirectRuleIndexMetadata[];

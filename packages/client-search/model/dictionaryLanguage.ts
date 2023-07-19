@@ -5,7 +5,7 @@
  */
 export type DictionaryLanguage = {
   /**
-   * When nbCustomEntries is set to 0, the user didn\'t customize the dictionary. The dictionary is still supported with standard, Algolia-provided entries.
+   * If `0`, the dictionary hasn\'t been customized and only contains standard entries provided by Algolia. If `null`, that feature isn\'t available or isn\'t supported for that language.
    */
-  nbCustomEntires?: number;
+  nbCustomEntries?: number;
 };

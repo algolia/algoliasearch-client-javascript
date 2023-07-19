@@ -5,11 +5,11 @@
  */
 export type DelProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
 };
@@ -19,7 +19,7 @@ export type DelProps = {
  */
 export type DeleteABTestProps = {
   /**
-   * The A/B test ID.
+   * Unique A/B test ID.
    */
   id: number;
 };
@@ -29,11 +29,11 @@ export type DeleteABTestProps = {
  */
 export type GetProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
 };
@@ -43,7 +43,7 @@ export type GetProps = {
  */
 export type GetABTestProps = {
   /**
-   * The A/B test ID.
+   * Unique A/B test ID.
    */
   id: number;
 };
@@ -57,15 +57,15 @@ export type ListABTestsProps = {
    */
   offset?: number;
   /**
-   * Number of records to return. Limit is the size of the page.
+   * Number of records to return (page size).
    */
   limit?: number;
   /**
-   * Filters the returned ab tests by any indices starting with the provided prefix that are assigned to either variant of an ab test.
+   * Only return A/B tests for indices starting with this prefix.
    */
   indexPrefix?: string;
   /**
-   * Filters the returned ab tests by any indices ending with the provided suffix that are assigned to either variant of an ab test.
+   * Only return A/B tests for indices ending with this suffix.
    */
   indexSuffix?: string;
 };
@@ -75,15 +75,15 @@ export type ListABTestsProps = {
  */
 export type PostProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
   /**
-   * The parameters to send with the custom request.
+   * Parameters to send with the custom request.
    */
   body?: Record<string, any>;
 };
@@ -93,15 +93,15 @@ export type PostProps = {
  */
 export type PutProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
   /**
-   * The parameters to send with the custom request.
+   * Parameters to send with the custom request.
    */
   body?: Record<string, any>;
 };
@@ -111,7 +111,7 @@ export type PutProps = {
  */
 export type StopABTestProps = {
   /**
-   * The A/B test ID.
+   * Unique A/B test ID.
    */
   id: number;
 };

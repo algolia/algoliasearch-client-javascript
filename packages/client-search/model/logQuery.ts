@@ -12,7 +12,7 @@ export type LogQuery = {
   user_token?: string;
 
   /**
-   * QueryID for the given query.
+   * Unique query identifier.
    */
   query_id?: string;
 };

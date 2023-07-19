@@ -146,8 +146,8 @@ export function createQuerySuggestionsClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param del - The del object.
-     * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param del.parameters - Query parameters to be applied to the current query.
+     * @param del.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param del.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     del(
@@ -177,7 +177,7 @@ export function createQuerySuggestionsClient({
      *
      * @summary Delete a configuration.
      * @param deleteConfig - The deleteConfig object.
-     * @param deleteConfig.indexName - The index in which to perform the request.
+     * @param deleteConfig.indexName - Index on which to perform the request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteConfig(
@@ -212,8 +212,8 @@ export function createQuerySuggestionsClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param get - The get object.
-     * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param get.parameters - Query parameters to be applied to the current query.
+     * @param get.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param get.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     get(
@@ -266,7 +266,7 @@ export function createQuerySuggestionsClient({
      *
      * @summary Get a single configuration.
      * @param getConfig - The getConfig object.
-     * @param getConfig.indexName - The index in which to perform the request.
+     * @param getConfig.indexName - Index on which to perform the request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getConfig(
@@ -301,7 +301,7 @@ export function createQuerySuggestionsClient({
      *
      * @summary Get configuration status.
      * @param getConfigStatus - The getConfigStatus object.
-     * @param getConfigStatus.indexName - The index in which to perform the request.
+     * @param getConfigStatus.indexName - Index on which to perform the request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getConfigStatus(
@@ -336,7 +336,7 @@ export function createQuerySuggestionsClient({
      *
      * @summary Get a log file.
      * @param getLogFile - The getLogFile object.
-     * @param getLogFile.indexName - The index in which to perform the request.
+     * @param getLogFile.indexName - Index on which to perform the request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getLogFile(
@@ -371,9 +371,9 @@ export function createQuerySuggestionsClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param post - The post object.
-     * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param post.parameters - Query parameters to be applied to the current query.
-     * @param post.body - The parameters to send with the custom request.
+     * @param post.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param post.parameters - Query parameters to apply to the current query.
+     * @param post.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
@@ -404,9 +404,9 @@ export function createQuerySuggestionsClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param put - The put object.
-     * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param put.parameters - Query parameters to be applied to the current query.
-     * @param put.body - The parameters to send with the custom request.
+     * @param put.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param put.parameters - Query parameters to apply to the current query.
+     * @param put.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     put(
@@ -437,7 +437,7 @@ export function createQuerySuggestionsClient({
      *
      * @summary Update a configuration.
      * @param updateConfig - The updateConfig object.
-     * @param updateConfig.indexName - The index in which to perform the request.
+     * @param updateConfig.indexName - Index on which to perform the request.
      * @param updateConfig.querySuggestionsIndexParam - The querySuggestionsIndexParam object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */

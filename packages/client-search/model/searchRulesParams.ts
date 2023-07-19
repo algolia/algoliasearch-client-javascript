@@ -3,38 +3,38 @@
 import type { Anchoring } from './anchoring';
 
 /**
- * Parameters for the search.
+ * Rules search parameters.
  */
 export type SearchRulesParams = {
   /**
-   * Full text query.
+   * Rule object query.
    */
   query?: string;
 
   anchoring?: Anchoring;
 
   /**
-   * Restricts matches to contextual rules with a specific context (exact match).
+   * Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
    */
   context?: string;
 
   /**
-   * Requested page (zero-based).
+   * Requested page (the first page is page 0).
    */
   page?: number;
 
   /**
-   * Maximum number of hits in a page. Minimum is 1, maximum is 1000.
+   * Maximum number of hits per page.
    */
   hitsPerPage?: number;
 
   /**
-   * When specified, restricts matches to rules with a specific enabled status. When absent (default), all rules are retrieved, regardless of their enabled status.
+   * Restricts responses to enabled rules. When not specified (default), _all_ rules are retrieved.
    */
   enabled?: boolean | null;
 
   /**
-   * A mapping of requestOptions to send along with the request.
+   * Request options to send with the API call.
    */
   requestOptions?: Array<Record<string, any>>;
 };

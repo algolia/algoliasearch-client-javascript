@@ -3,6 +3,6 @@
 import type { MixedSearchFilters } from './mixedSearchFilters';
 
 /**
- * Filter hits by tags.
+ * [Filter hits by tags](https://www.algolia.com/doc/api-reference/api-parameters/tagFilters/).
  */
 export type TagFilters = MixedSearchFilters[] | string;

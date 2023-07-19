@@ -2,17 +2,17 @@
 
 export type SearchNoResultEvent = {
   /**
-   * The search query.
+   * User query.
    */
   search: string;
 
   /**
-   * The number of occurrences.
+   * Number of occurrences.
    */
   count: number;
 
   /**
-   * Number of hits that the search query matched.
+   * Number of hits the search query matched.
    */
   nbHits: number;
 };

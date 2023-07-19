@@ -9,7 +9,7 @@ export type UserHit = {
   userID: string;
 
   /**
-   * Name of the cluster.
+   * Cluster name.
    */
   clusterName: string;
 

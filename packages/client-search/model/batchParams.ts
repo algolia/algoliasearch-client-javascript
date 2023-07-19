@@ -3,7 +3,7 @@
 import type { MultipleBatchRequest } from './multipleBatchRequest';
 
 /**
- * The `multipleBatch` parameters.
+ * Batch parameters.
  */
 export type BatchParams = {
   requests: MultipleBatchRequest[];

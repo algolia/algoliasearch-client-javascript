@@ -2,22 +2,22 @@
 
 export type FacetsStats = {
   /**
-   * The minimum value in the result set.
+   * Minimum value in the results.
    */
   min?: number;
 
   /**
-   * The maximum value in the result set.
+   * Maximum value in the results.
    */
   max?: number;
 
   /**
-   * The average facet value in the result set.
+   * Average facet value in the results.
    */
   avg?: number;
 
   /**
-   * The sum of all values in the result set.
+   * Sum of all values in the results.
    */
   sum?: number;
 };

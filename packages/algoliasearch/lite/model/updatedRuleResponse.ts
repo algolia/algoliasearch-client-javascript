@@ -2,17 +2,17 @@
 
 export type UpdatedRuleResponse = {
   /**
-   * Unique identifier of the object.
+   * Unique object identifier.
    */
   objectID: string;
 
   /**
-   * Date of last update (ISO-8601 format).
+   * Timestamp of the last update in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
    */
   updatedAt: string;
 
   /**
-   * TaskID of the task to wait for.
+   * Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You can check the task\'s progress with the `task` operation and this `taskID`.
    */
   taskID: number;
 };

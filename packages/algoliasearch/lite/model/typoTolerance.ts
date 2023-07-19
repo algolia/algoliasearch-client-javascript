@@ -3,6 +3,6 @@
 import type { TypoToleranceEnum } from './typoToleranceEnum';
 
 /**
- * Controls whether typo tolerance is enabled and how it is applied.
+ * Controls whether [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/) is enabled and how it is applied.
  */
 export type TypoTolerance = TypoToleranceEnum | boolean;

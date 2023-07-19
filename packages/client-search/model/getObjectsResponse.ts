@@ -2,7 +2,7 @@
 
 export type GetObjectsResponse<T = Record<string, any>> = {
   /**
-   * List of results fetched.
+   * Retrieved results.
    */
   results: T[];
 };

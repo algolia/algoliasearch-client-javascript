@@ -3,7 +3,7 @@
 import type { DictionaryLanguage } from './dictionaryLanguage';
 
 /**
- * A dictionary language.
+ * Dictionary language.
  */
 export type Languages = {
   plurals: DictionaryLanguage | null;

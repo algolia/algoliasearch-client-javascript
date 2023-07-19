@@ -5,11 +5,11 @@
  */
 export type DelProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
 };
@@ -29,11 +29,11 @@ export type DeleteUserProfileProps = {
  */
 export type GetProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
 };
@@ -53,15 +53,15 @@ export type GetUserTokenProfileProps = {
  */
 export type PostProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
   /**
-   * The parameters to send with the custom request.
+   * Parameters to send with the custom request.
    */
   body?: Record<string, any>;
 };
@@ -71,15 +71,15 @@ export type PostProps = {
  */
 export type PutProps = {
   /**
-   * The path of the API endpoint to target, anything after the /1 needs to be specified.
+   * Path of the endpoint, anything after \"/1\" must be specified.
    */
   path: string;
   /**
-   * Query parameters to be applied to the current query.
+   * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
   /**
-   * The parameters to send with the custom request.
+   * Parameters to send with the custom request.
    */
   body?: Record<string, any>;
 };

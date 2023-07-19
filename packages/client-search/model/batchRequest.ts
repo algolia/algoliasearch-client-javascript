@@ -6,7 +6,7 @@ export type BatchRequest = {
   action: Action;
 
   /**
-   * Arguments to the operation (depends on the type of the operation).
+   * Operation arguments (varies with specified `action`).
    */
   body: Record<string, any>;
 };

@@ -452,9 +452,9 @@ export function createSearchClient({
     },
 
     /**
-     * Add a new API Key with specific permissions/restrictions.
+     * Add a new API key with specific permissions and restrictions. The request must be authenticated with the admin API key. The response returns an API key string.
      *
-     * @summary Create an API key.
+     * @summary Add API key.
      * @param apiKey - The apiKey object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -490,13 +490,13 @@ export function createSearchClient({
     },
 
     /**
-     * Add or replace an object with a given object ID. If the object does not exist, it will be created. If it already exists, it will be replaced.
+     * If you use an existing `objectID`, the existing record will be replaced with the new one.  To update only some attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead.  To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
      *
-     * @summary Add or replace an object.
+     * @summary Add or update a record (using objectID).
      * @param addOrUpdateObject - The addOrUpdateObject object.
-     * @param addOrUpdateObject.indexName - The index in which to perform the request.
-     * @param addOrUpdateObject.objectID - Unique identifier of an object.
-     * @param addOrUpdateObject.body - The Algolia object.
+     * @param addOrUpdateObject.indexName - Index on which to perform the request.
+     * @param addOrUpdateObject.objectID - Unique record (object) identifier.
+     * @param addOrUpdateObject.body - Algolia record.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     addOrUpdateObject(
@@ -539,10 +539,10 @@ export function createSearchClient({
     },
 
     /**
-     * Add a single source to the list of allowed sources.
+     * Add a source to the list of allowed sources.
      *
-     * @summary Add a single source.
-     * @param source - The source to add.
+     * @summary Add a source.
+     * @param source - Source to add.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     appendSource(
@@ -577,9 +577,9 @@ export function createSearchClient({
     },
 
     /**
-     * Assign or Move a userID to a cluster. The time it takes to migrate (move) a user is proportional to the amount of data linked to the userID. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userID is directly usable.
+     * Assign or move a user ID to a cluster. The time it takes to move a user is proportional to the amount of data linked to the user ID.
      *
-     * @summary Assign or Move userID.
+     * @summary Assign or move a user ID.
      * @param assignUserId - The assignUserId object.
      * @param assignUserId.xAlgoliaUserID - UserID to assign.
      * @param assignUserId.assignUserIdParams - The assignUserIdParams object.
@@ -627,11 +627,11 @@ export function createSearchClient({
     },
 
     /**
-     * Perform multiple write operations targeting one index, in a single API call.
+     * To reduce the time spent on network round trips, you can perform several write actions in a single API call. Actions are applied in the order they are specified. The supported `action`s are equivalent to the individual operations of the same name.
      *
-     * @summary Batch operations to one index.
+     * @summary Batch write operations on one index.
      * @param batch - The batch object.
-     * @param batch.indexName - The index in which to perform the request.
+     * @param batch.indexName - Index on which to perform the request.
      * @param batch.batchWriteParams - The batchWriteParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -676,7 +676,7 @@ export function createSearchClient({
     },
 
     /**
-     * Assign multiple userIDs to a cluster. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable.
+     * Assign multiple user IDs to a cluster. **You can\'t _move_ users with this operation.**.
      *
      * @summary Batch assign userIDs.
      * @param batchAssignUserIds - The batchAssignUserIds object.
@@ -731,11 +731,11 @@ export function createSearchClient({
     },
 
     /**
-     * Send a batch of dictionary entries.
+     * Add or remove a batch of dictionary entries.
      *
      * @summary Batch dictionary entries.
      * @param batchDictionaryEntries - The batchDictionaryEntries object.
-     * @param batchDictionaryEntries.dictionaryName - The dictionary to search in.
+     * @param batchDictionaryEntries.dictionaryName - Dictionary to search in.
      * @param batchDictionaryEntries.batchDictionaryEntriesParams - The batchDictionaryEntriesParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -783,11 +783,11 @@ export function createSearchClient({
     },
 
     /**
-     * This method allows you to retrieve all index content. It can retrieve up to 1,000 records per call and supports full text search and filters. For performance reasons, some features are not supported, including `distinct`, sorting by `typos`, `words` or `geo distance`. When there is more content to be browsed, the response contains a cursor field. This cursor has to be passed to the subsequent call to browse in order to get the next page of results. When the end of the index has been reached, the cursor field is absent from the response.
+     * Retrieve up to 1,000 records per call. Supports full-text search and filters. For better performance, it doesn\'t support: - The `distinct` query parameter - Sorting by typos, proximity, words, or geographical distance.
      *
-     * @summary Retrieve all index content.
+     * @summary Get all records from an index.
      * @param browse - The browse object.
-     * @param browse.indexName - The index in which to perform the request.
+     * @param browse.indexName - Index on which to perform the request.
      * @param browse.browseParams - The browseParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -820,12 +820,12 @@ export function createSearchClient({
     },
 
     /**
-     * Remove all synonyms from an index.
+     * Delete all synonyms in the index.
      *
-     * @summary Clear all synonyms.
+     * @summary Delete all synonyms.
      * @param clearAllSynonyms - The clearAllSynonyms object.
-     * @param clearAllSynonyms.indexName - The index in which to perform the request.
-     * @param clearAllSynonyms.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param clearAllSynonyms.indexName - Index on which to perform the request.
+     * @param clearAllSynonyms.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     clearAllSynonyms(
@@ -860,11 +860,11 @@ export function createSearchClient({
     },
 
     /**
-     * Delete an index\'s content, but leave settings and index-specific API keys untouched.
+     * Delete the records but leave settings and index-specific API keys untouched.
      *
-     * @summary Clear all objects from an index.
+     * @summary Delete all records from an index.
      * @param clearObjects - The clearObjects object.
-     * @param clearObjects.indexName - The index in which to perform the request.
+     * @param clearObjects.indexName - Index on which to perform the request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     clearObjects(
@@ -895,12 +895,12 @@ export function createSearchClient({
     },
 
     /**
-     * Delete all Rules in the index.
+     * Delete all rules in the index.
      *
-     * @summary Clear Rules.
+     * @summary Delete all rules.
      * @param clearRules - The clearRules object.
-     * @param clearRules.indexName - The index in which to perform the request.
-     * @param clearRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param clearRules.indexName - Index on which to perform the request.
+     * @param clearRules.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     clearRules(
@@ -939,8 +939,8 @@ export function createSearchClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param del - The del object.
-     * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param del.parameters - Query parameters to be applied to the current query.
+     * @param del.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param del.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     del(
@@ -966,11 +966,11 @@ export function createSearchClient({
     },
 
     /**
-     * Delete an existing API Key.
+     * Delete an existing API key. The request must be authenticated with the admin API key.
      *
-     * @summary Delete an API key.
+     * @summary Delete API key.
      * @param deleteApiKey - The deleteApiKey object.
-     * @param deleteApiKey.key - API Key string.
+     * @param deleteApiKey.key - API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteApiKey(
@@ -1001,11 +1001,11 @@ export function createSearchClient({
     },
 
     /**
-     * Remove all objects matching a filter (including geo filters). This method enables you to delete one or more objects based on filters (numeric, facet, tag or geo queries). It doesn\'t accept empty filters or a query.
+     * This operation doesn\'t support all the query options, only its filters (numeric, facet, or tag) and geo queries. It doesn\'t accept empty filters or queries.
      *
-     * @summary Delete all records matching the query.
+     * @summary Delete all records matching a query.
      * @param deleteBy - The deleteBy object.
-     * @param deleteBy.indexName - The index in which to perform the request.
+     * @param deleteBy.indexName - Index on which to perform the request.
      * @param deleteBy.deleteByParams - The deleteByParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1048,7 +1048,7 @@ export function createSearchClient({
      *
      * @summary Delete index.
      * @param deleteIndex - The deleteIndex object.
-     * @param deleteIndex.indexName - The index in which to perform the request.
+     * @param deleteIndex.indexName - Index on which to perform the request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteIndex(
@@ -1079,12 +1079,12 @@ export function createSearchClient({
     },
 
     /**
-     * Delete an existing object.
+     * To delete a set of records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy) instead.
      *
-     * @summary Delete an object.
+     * @summary Delete a record.
      * @param deleteObject - The deleteObject object.
-     * @param deleteObject.indexName - The index in which to perform the request.
-     * @param deleteObject.objectID - Unique identifier of an object.
+     * @param deleteObject.indexName - Index on which to perform the request.
+     * @param deleteObject.objectID - Unique record (object) identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteObject(
@@ -1120,13 +1120,13 @@ export function createSearchClient({
     },
 
     /**
-     * Delete the Rule with the specified objectID.
+     * Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
      *
      * @summary Delete a rule.
      * @param deleteRule - The deleteRule object.
-     * @param deleteRule.indexName - The index in which to perform the request.
-     * @param deleteRule.objectID - Unique identifier of an object.
-     * @param deleteRule.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param deleteRule.indexName - Index on which to perform the request.
+     * @param deleteRule.objectID - Unique identifier of a rule object.
+     * @param deleteRule.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteRule(
@@ -1166,11 +1166,11 @@ export function createSearchClient({
     },
 
     /**
-     * Remove a single source from the list of allowed sources.
+     * Remove a source from the list of allowed sources.
      *
-     * @summary Remove a single source.
+     * @summary Remove a source.
      * @param deleteSource - The deleteSource object.
-     * @param deleteSource.source - The IP range of the source.
+     * @param deleteSource.source - IP address range of the source.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteSource(
@@ -1201,13 +1201,13 @@ export function createSearchClient({
     },
 
     /**
-     * Delete a single synonyms set, identified by the given objectID.
+     * Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
      *
-     * @summary Delete synonym.
+     * @summary Delete a synonym.
      * @param deleteSynonym - The deleteSynonym object.
-     * @param deleteSynonym.indexName - The index in which to perform the request.
-     * @param deleteSynonym.objectID - Unique identifier of an object.
-     * @param deleteSynonym.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param deleteSynonym.indexName - Index on which to perform the request.
+     * @param deleteSynonym.objectID - Unique identifier of a synonym object.
+     * @param deleteSynonym.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteSynonym(
@@ -1251,8 +1251,8 @@ export function createSearchClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param get - The get object.
-     * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param get.parameters - Query parameters to be applied to the current query.
+     * @param get.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param get.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     get(
@@ -1278,11 +1278,11 @@ export function createSearchClient({
     },
 
     /**
-     * Get the permissions of an API key.
+     * Get the permissions and restrictions of a specific API key. When authenticating with the admin API key, you can request information for any of your application\'s keys. When authenticating with other API keys, you can only retrieve information for that key.
      *
-     * @summary Get an API key.
+     * @summary Get API key permissions.
      * @param getApiKey - The getApiKey object.
-     * @param getApiKey.key - API Key string.
+     * @param getApiKey.key - API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getApiKey(
@@ -1313,7 +1313,7 @@ export function createSearchClient({
     },
 
     /**
-     * List dictionaries supported per language.
+     * Lists Algolia\'s [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language\'s [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
      *
      * @summary List available languages.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1336,9 +1336,9 @@ export function createSearchClient({
     },
 
     /**
-     * Retrieve dictionaries settings. The API stores languages whose standard entries are disabled. Fetch settings does not return false values.
+     * Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
      *
-     * @summary Retrieve dictionaries settings.
+     * @summary Get stop word settings.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDictionarySettings(
@@ -1359,13 +1359,13 @@ export function createSearchClient({
     },
 
     /**
-     * Return the latest log entries.
+     * The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are held for the last seven days. There\'s also a logging limit of 1,000 API calls per server. This request counts towards your [operations quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-) but doesn\'t appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search Network (DSN) cluster, target the [DSN\'s endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
      *
      * @summary Return the latest log entries.
      * @param getLogs - The getLogs object.
-     * @param getLogs.offset - First entry to retrieve (zero-based). Log entries are sorted by decreasing date, therefore 0 designates the most recent log entry.
-     * @param getLogs.length - Maximum number of entries to retrieve. The maximum allowed value is 1000.
-     * @param getLogs.indexName - Index for which log entries should be retrieved. When omitted, log entries are retrieved across all indices.
+     * @param getLogs.offset - First log entry to retrieve. Sorted by decreasing date with 0 being the most recent.
+     * @param getLogs.length - Maximum number of entries to retrieve.
+     * @param getLogs.indexName - Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices.
      * @param getLogs.type - Type of log entries to retrieve. When omitted, all log entries are retrieved.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1404,13 +1404,13 @@ export function createSearchClient({
     },
 
     /**
-     * Retrieve one object from the index.
+     * To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
      *
-     * @summary Retrieve an object.
+     * @summary Get a record.
      * @param getObject - The getObject object.
-     * @param getObject.indexName - The index in which to perform the request.
-     * @param getObject.objectID - Unique identifier of an object.
-     * @param getObject.attributesToRetrieve - List of attributes to retrieve. If not specified, all retrievable attributes are returned.
+     * @param getObject.indexName - Index on which to perform the request.
+     * @param getObject.objectID - Unique record (object) identifier.
+     * @param getObject.attributesToRetrieve - Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. `objectID` is always retrieved, even when not specified. [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won\'t be retrieved unless the request is authenticated with the admin API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getObject(
@@ -1450,10 +1450,10 @@ export function createSearchClient({
     },
 
     /**
-     * Retrieve one or more objects, potentially from different indices, in a single API call.
+     * Retrieve one or more records, potentially from different indices, in a single API operation. Results will be received in the same order as the requests.
      *
-     * @summary Retrieve one or more objects.
-     * @param getObjectsParams - The Algolia object.
+     * @summary Get multiple records.
+     * @param getObjectsParams - Request object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getObjects<T>(
@@ -1490,12 +1490,12 @@ export function createSearchClient({
     },
 
     /**
-     * Retrieve the Rule with the specified objectID.
+     * Get a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
      *
      * @summary Get a rule.
      * @param getRule - The getRule object.
-     * @param getRule.indexName - The index in which to perform the request.
-     * @param getRule.objectID - Unique identifier of an object.
+     * @param getRule.indexName - Index on which to perform the request.
+     * @param getRule.objectID - Unique identifier of a rule object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRule(
@@ -1531,11 +1531,11 @@ export function createSearchClient({
     },
 
     /**
-     * Retrieve settings of an index.
+     * Return an object containing an index\'s [configuration settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
      *
-     * @summary Retrieve settings of an index.
+     * @summary Get index settings.
      * @param getSettings - The getSettings object.
-     * @param getSettings.indexName - The index in which to perform the request.
+     * @param getSettings.indexName - Index on which to perform the request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSettings(
@@ -1566,9 +1566,9 @@ export function createSearchClient({
     },
 
     /**
-     * List all allowed sources.
+     * Get all allowed sources (IP addresses).
      *
-     * @summary List all allowed sources.
+     * @summary Get all allowed IP addresses.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSources(requestOptions?: RequestOptions): Promise<Source[]> {
@@ -1587,12 +1587,12 @@ export function createSearchClient({
     },
 
     /**
-     * Fetch a synonym object identified by its objectID.
+     * Get a syonym by its `objectID`. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
      *
-     * @summary Get synonym.
+     * @summary Get a synonym object.
      * @param getSynonym - The getSynonym object.
-     * @param getSynonym.indexName - The index in which to perform the request.
-     * @param getSynonym.objectID - Unique identifier of an object.
+     * @param getSynonym.indexName - Index on which to perform the request.
+     * @param getSynonym.objectID - Unique identifier of a synonym object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSynonym(
@@ -1628,12 +1628,12 @@ export function createSearchClient({
     },
 
     /**
-     * Check the current status of a given task.
+     * Some operations, such as copying an index, will respond with a `taskID` value. Use this value here to check the status of that task.
      *
-     * @summary Check the status of a task.
+     * @summary Check a task\'s status.
      * @param getTask - The getTask object.
-     * @param getTask.indexName - The index in which to perform the request.
-     * @param getTask.taskID - Unique identifier of an task. Numeric value (up to 64bits).
+     * @param getTask.indexName - Index on which to perform the request.
+     * @param getTask.taskID - Unique task identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTask(
@@ -1669,7 +1669,7 @@ export function createSearchClient({
     },
 
     /**
-     * Get the top 10 userIDs with the highest number of records per cluster. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following array of userIDs and clusters.
+     * Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn\'t real-time.
      *
      * @summary Get top userID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1692,7 +1692,7 @@ export function createSearchClient({
     },
 
     /**
-     * Returns the userID data stored in the mapping. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following userID data.
+     * Returns the userID data stored in the mapping. Since it can take up to a few seconds to get the data from the different clusters, the response isn\'t real-time.
      *
      * @summary Get userID.
      * @param getUserId - The getUserId object.
@@ -1727,11 +1727,11 @@ export function createSearchClient({
     },
 
     /**
-     * Get the status of your clusters\' migrations or user creations. Creating a large batch of users or migrating your multi-cluster may take quite some time. This method lets you retrieve the status of the migration, so you can know when it\'s done. Upon success, the response is 200 OK. A successful response indicates that the operation has been taken into account, and the userIDs are directly usable.
+     * To determine when the time-consuming process of creating a large batch of users or migrating users from one cluster to another is complete, this operation retrieves the status of the process.
      *
-     * @summary Get migration status.
+     * @summary Get migration and user mapping status.
      * @param hasPendingMappings - The hasPendingMappings object.
-     * @param hasPendingMappings.getClusters - If the clusters pending mapping state should be on the response.
+     * @param hasPendingMappings.getClusters - Indicates whether to include the cluster\'s pending mapping state in the response.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     hasPendingMappings(
@@ -1757,9 +1757,9 @@ export function createSearchClient({
     },
 
     /**
-     * List API keys, along with their associated rights.
+     * List all API keys associated with your Algolia application, including their permissions and restrictions.
      *
-     * @summary List API Keys.
+     * @summary List API keys.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listApiKeys(requestOptions?: RequestOptions): Promise<ListApiKeysResponse> {
@@ -1778,7 +1778,7 @@ export function createSearchClient({
     },
 
     /**
-     * List the clusters available in a multi-clusters setup for a single appID. Upon success, the response is 200 OK and contains the following clusters.
+     * List the available clusters in a multi-cluster setup.
      *
      * @summary List clusters.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1801,15 +1801,16 @@ export function createSearchClient({
     },
 
     /**
-     * List existing indexes from an application.
+     * List indices in an Algolia application.
      *
-     * @summary List existing indexes.
+     * @summary List indices.
      * @param listIndices - The listIndices object.
-     * @param listIndices.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
+     * @param listIndices.page - Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.
+     * @param listIndices.hitsPerPage - Maximum number of hits per page.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listIndices(
-      { page }: ListIndicesProps = {},
+      { page, hitsPerPage }: ListIndicesProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListIndicesResponse> {
       const requestPath = '/1/indexes';
@@ -1818,6 +1819,10 @@ export function createSearchClient({
 
       if (page !== undefined) {
         queryParameters.page = page.toString();
+      }
+
+      if (hitsPerPage !== undefined) {
+        queryParameters.hitsPerPage = hitsPerPage.toString();
       }
 
       const request: Request = {
@@ -1831,12 +1836,12 @@ export function createSearchClient({
     },
 
     /**
-     * List the userIDs assigned to a multi-clusters appID. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds to propagate to the different clusters. Upon success, the response is 200 OK and contains the following userIDs data.
+     * List the userIDs assigned to a multi-cluster application. Since it can take up to a few seconds to get the data from the different clusters, the response isn\'t real-time.
      *
      * @summary List userIDs.
      * @param listUserIds - The listUserIds object.
-     * @param listUserIds.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
-     * @param listUserIds.hitsPerPage - Maximum number of objects to retrieve.
+     * @param listUserIds.page - Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.
+     * @param listUserIds.hitsPerPage - Maximum number of hits per page.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listUserIds(
@@ -1866,9 +1871,9 @@ export function createSearchClient({
     },
 
     /**
-     * Perform multiple write operations, potentially targeting multiple indices, in a single API call.
+     * To reduce the time spent on network round trips, you can perform several write actions in a single request. It\'s a multi-index version of the [`batch` operation](#tag/Records/operation/batch). Actions are applied in the order they are specified. The supported actions are equivalent to the individual operations of the same name.
      *
-     * @summary Batch operations to many indices.
+     * @summary Batch write operations on multiple indices.
      * @param batchParams - The batchParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1904,11 +1909,11 @@ export function createSearchClient({
     },
 
     /**
-     * Performs a copy or a move operation on a index.
+     * This `operation`, _copy_ or _move_, will copy or move a source index\'s (`IndexName`) records, settings, synonyms, and rules to a `destination` index. If the destination index exists, it will be replaced, except for index-specific API keys and analytics data. If the destination index doesn\'t exist, it will be created.  The choice between moving or copying an index depends on your needs. Choose:  - **Move** to rename an index. - **Copy** to create a new index with the same records and configuration as an existing one.  > **Note**: When considering copying or moving, be aware of the [rate limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits) on these processes and the [impact on your analytics data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
      *
-     * @summary Copy/move index.
+     * @summary Copy, move, or rename an index.
      * @param operationIndex - The operationIndex object.
-     * @param operationIndex.indexName - The index in which to perform the request.
+     * @param operationIndex.indexName - Index on which to perform the request.
      * @param operationIndex.operationIndexParams - The operationIndexParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1958,14 +1963,14 @@ export function createSearchClient({
     },
 
     /**
-     * Update one or more attributes of an existing object. This method lets you update only a part of an existing object, either by adding new attributes or updating existing ones. You can partially update several objects in a single method call. If the index targeted by this operation doesn\'t exist yet, it\'s automatically created.
+     * Add new attributes or update current ones in an existing record. You can use any first-level attribute but not nested attributes. If you specify a [nested attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/), the engine treats it as a replacement for its first-level ancestor.
      *
-     * @summary Partially update an object.
+     * @summary Update record attributes.
      * @param partialUpdateObject - The partialUpdateObject object.
-     * @param partialUpdateObject.indexName - The index in which to perform the request.
-     * @param partialUpdateObject.objectID - Unique identifier of an object.
-     * @param partialUpdateObject.attributesToUpdate - Map of attribute(s) to update.
-     * @param partialUpdateObject.createIfNotExists - Creates the record if it does not exist yet.
+     * @param partialUpdateObject.indexName - Index on which to perform the request.
+     * @param partialUpdateObject.objectID - Unique record (object) identifier.
+     * @param partialUpdateObject.attributesToUpdate - Object with attributes to update.
+     * @param partialUpdateObject.createIfNotExists - Indicates whether to create a new record if it doesn\'t exist yet.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     partialUpdateObject(
@@ -2021,9 +2026,9 @@ export function createSearchClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param post - The post object.
-     * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param post.parameters - Query parameters to be applied to the current query.
-     * @param post.body - The parameters to send with the custom request.
+     * @param post.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param post.parameters - Query parameters to apply to the current query.
+     * @param post.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
@@ -2054,9 +2059,9 @@ export function createSearchClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param put - The put object.
-     * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param put.parameters - Query parameters to be applied to the current query.
-     * @param put.body - The parameters to send with the custom request.
+     * @param put.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param put.parameters - Query parameters to apply to the current query.
+     * @param put.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     put(
@@ -2083,7 +2088,7 @@ export function createSearchClient({
     },
 
     /**
-     * Remove a userID and its associated data from the multi-clusters. Upon success, the response is 200 OK and a task is created to remove the userID data and mapping.
+     * Remove a userID and its associated data from the multi-clusters.
      *
      * @summary Remove userID.
      * @param removeUserId - The removeUserId object.
@@ -2120,9 +2125,9 @@ export function createSearchClient({
     /**
      * Replace all allowed sources.
      *
-     * @summary Replace all allowed sources.
+     * @summary Replace all sources.
      * @param replaceSources - The replaceSources object.
-     * @param replaceSources.source - The sources to allow.
+     * @param replaceSources.source - Allowed sources.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     replaceSources(
@@ -2151,11 +2156,11 @@ export function createSearchClient({
     },
 
     /**
-     * Restore a deleted API key, along with its associated rights.
+     * Restore a deleted API key, along with its associated permissions. The request must be authenticated with the admin API key.
      *
-     * @summary Restore an API key.
+     * @summary Restore API key.
      * @param restoreApiKey - The restoreApiKey object.
-     * @param restoreApiKey.key - API Key string.
+     * @param restoreApiKey.key - API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     restoreApiKey(
@@ -2186,11 +2191,11 @@ export function createSearchClient({
     },
 
     /**
-     * Add an object to the index, automatically assigning it an object ID.
+     * Add a record (object) to an index or replace it. If the record doesn\'t contain an `objectID`, Algolia automatically adds it. If you use an existing `objectID`, the existing record is replaced with the new one. To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
      *
-     * @summary Add an object to the index.
+     * @summary Add or update a record.
      * @param saveObject - The saveObject object.
-     * @param saveObject.indexName - The index in which to perform the request.
+     * @param saveObject.indexName - Index on which to perform the request.
      * @param saveObject.body - The Algolia record.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2229,14 +2234,14 @@ export function createSearchClient({
     },
 
     /**
-     * Create or update the Rule with the specified objectID.
+     * To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
      *
-     * @summary Save/Update a rule.
+     * @summary Create or update a rule.
      * @param saveRule - The saveRule object.
-     * @param saveRule.indexName - The index in which to perform the request.
-     * @param saveRule.objectID - Unique identifier of an object.
+     * @param saveRule.indexName - Index on which to perform the request.
+     * @param saveRule.objectID - Unique identifier of a rule object.
      * @param saveRule.rule - The rule object.
-     * @param saveRule.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param saveRule.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     saveRule(
@@ -2289,14 +2294,14 @@ export function createSearchClient({
     },
 
     /**
-     * Create/update multiple rules objects at once.
+     * Create or update multiple rules.
      *
      * @summary Save a batch of rules.
      * @param saveRules - The saveRules object.
-     * @param saveRules.indexName - The index in which to perform the request.
+     * @param saveRules.indexName - Index on which to perform the request.
      * @param saveRules.rules - The rules object.
-     * @param saveRules.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
-     * @param saveRules.clearExistingRules - When true, existing Rules are cleared before adding this batch. When false, existing Rules are kept.
+     * @param saveRules.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
+     * @param saveRules.clearExistingRules - Indicates whether existing rules should be deleted before adding this batch.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     saveRules(
@@ -2347,14 +2352,14 @@ export function createSearchClient({
     },
 
     /**
-     * Create a new synonym object or update the existing synonym object with the given object ID.
+     * Add a [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms) to an index or replace it. If the synonym `objectID` doesn\'t exist, Algolia adds a new one. If you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To add multiple synonyms in a single API request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
      *
-     * @summary Save synonym.
+     * @summary Save a synonym.
      * @param saveSynonym - The saveSynonym object.
-     * @param saveSynonym.indexName - The index in which to perform the request.
-     * @param saveSynonym.objectID - Unique identifier of an object.
+     * @param saveSynonym.indexName - Index on which to perform the request.
+     * @param saveSynonym.objectID - Unique identifier of a synonym object.
      * @param saveSynonym.synonymHit - The synonymHit object.
-     * @param saveSynonym.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param saveSynonym.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     saveSynonym(
@@ -2412,14 +2417,14 @@ export function createSearchClient({
     },
 
     /**
-     * Create/update multiple synonym objects at once, potentially replacing the entire list of synonyms if replaceExistingSynonyms is true.
+     * Create or update multiple synonyms.
      *
      * @summary Save a batch of synonyms.
      * @param saveSynonyms - The saveSynonyms object.
-     * @param saveSynonyms.indexName - The index in which to perform the request.
+     * @param saveSynonyms.indexName - Index on which to perform the request.
      * @param saveSynonyms.synonymHit - The synonymHit object.
-     * @param saveSynonyms.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
-     * @param saveSynonyms.replaceExistingSynonyms - Replace all synonyms of the index with the ones sent with this request.
+     * @param saveSynonyms.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
+     * @param saveSynonyms.replaceExistingSynonyms - Indicates whether to replace all synonyms in the index with the ones sent with this request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     saveSynonyms(
@@ -2471,10 +2476,10 @@ export function createSearchClient({
     },
 
     /**
-     * Perform a search operation targeting one or many indices.
+     * Send multiple search queries to one or more indices.
      *
      * @summary Search multiple indices.
-     * @param searchMethodParams - The `search` requests and strategy.
+     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     search<T>(
@@ -2536,11 +2541,11 @@ export function createSearchClient({
     },
 
     /**
-     * Search the dictionary entries.
+     * Search for standard and [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) entries in the [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), or [segmentation (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) dictionaries.
      *
-     * @summary Search a dictionary entries.
+     * @summary Search dictionary entries.
      * @param searchDictionaryEntries - The searchDictionaryEntries object.
-     * @param searchDictionaryEntries.dictionaryName - The dictionary to search in.
+     * @param searchDictionaryEntries.dictionaryName - Dictionary to search in.
      * @param searchDictionaryEntries.searchDictionaryEntriesParams - The searchDictionaryEntriesParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2590,12 +2595,12 @@ export function createSearchClient({
     },
 
     /**
-     * Search for values of a given facet, optionally restricting the returned values to those contained in objects matching other search criteria.
+     * [Search for a facet\'s values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values), optionally restricting the returned values to those contained in records matching other search criteria. > **Note**: Pagination isn\'t supported (`page` and `hitsPerPage` are ignored). By default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
      *
-     * @summary Search for values of a given facet.
+     * @summary Search for facet values.
      * @param searchForFacetValues - The searchForFacetValues object.
-     * @param searchForFacetValues.indexName - The index in which to perform the request.
-     * @param searchForFacetValues.facetName - The facet name.
+     * @param searchForFacetValues.indexName - Index on which to perform the request.
+     * @param searchForFacetValues.facetName - Facet name.
      * @param searchForFacetValues.searchForFacetValuesRequest - The searchForFacetValuesRequest object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2639,11 +2644,11 @@ export function createSearchClient({
     },
 
     /**
-     * Search for rules matching various criteria.
+     * Search for rules in your index. You can control the search with parameters. To list all rules, send an empty request body.
      *
      * @summary Search for rules.
      * @param searchRules - The searchRules object.
-     * @param searchRules.indexName - The index in which to perform the request.
+     * @param searchRules.indexName - Index on which to perform the request.
      * @param searchRules.searchRulesParams - The searchRulesParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2678,11 +2683,11 @@ export function createSearchClient({
     },
 
     /**
-     * Perform a search operation targeting one specific index.
+     * Return records that match the query.
      *
-     * @summary Search in a single index.
+     * @summary Search an index.
      * @param searchSingleIndex - The searchSingleIndex object.
-     * @param searchSingleIndex.indexName - The index in which to perform the request.
+     * @param searchSingleIndex.indexName - Index on which to perform the request.
      * @param searchSingleIndex.searchParams - The searchParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2717,15 +2722,15 @@ export function createSearchClient({
     },
 
     /**
-     * Search or browse all synonyms, optionally filtering them by type.
+     * Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.
      *
-     * @summary Search synonyms.
+     * @summary Search for synonyms.
      * @param searchSynonyms - The searchSynonyms object.
-     * @param searchSynonyms.indexName - The index in which to perform the request.
-     * @param searchSynonyms.type - Only search for specific types of synonyms.
-     * @param searchSynonyms.page - Requested page (zero-based). When specified, will retrieve a specific page; the page size is implicitly set to 100. When null, will retrieve all indices (no pagination).
-     * @param searchSynonyms.hitsPerPage - Maximum number of objects to retrieve.
-     * @param searchSynonyms.searchSynonymsParams - The body of the the `searchSynonyms` method.
+     * @param searchSynonyms.indexName - Index on which to perform the request.
+     * @param searchSynonyms.type - Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
+     * @param searchSynonyms.page - Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there\'s no pagination.
+     * @param searchSynonyms.hitsPerPage - Maximum number of hits per page.
+     * @param searchSynonyms.searchSynonymsParams - Body of the `searchSynonyms` operation.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchSynonyms(
@@ -2777,9 +2782,9 @@ export function createSearchClient({
     },
 
     /**
-     * Search for userIDs. The data returned will usually be a few seconds behind real time, because userID usage may take up to a few seconds propagate to the different clusters. To keep updates moving quickly, the index of userIDs isn\'t built synchronously with the mapping. Instead, the index is built once every 12h, at the same time as the update of userID usage. For example, when you perform a modification like adding or moving a userID, the search will report an outdated value until the next rebuild of the mapping, which takes place every 12h. Upon success, the response is 200 OK and contains the following userIDs data.
+     * Since it can take up to a few seconds to get the data from the different clusters, the response isn\'t real-time. To ensure rapid updates, the user IDs index isn\'t built at the same time as the mapping. Instead, it\'s built every 12 hours, at the same time as the update of user ID usage. For example, if you add or move a user ID, the search will show an old value until the next time the mapping is rebuilt (every 12 hours).
      *
-     * @summary Search userID.
+     * @summary Search for a user ID.
      * @param searchUserIdsParams - The searchUserIdsParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2817,9 +2822,9 @@ export function createSearchClient({
     },
 
     /**
-     * Set dictionaries settings.
+     * Set stop word settings for a specific language.
      *
-     * @summary Set dictionaries settings.
+     * @summary Set stop word settings.
      * @param dictionarySettingsParams - The dictionarySettingsParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2855,13 +2860,13 @@ export function createSearchClient({
     },
 
     /**
-     * Update settings of an index. Only specified settings are overridden; unspecified settings are left unchanged. Specifying null for a setting resets it to its default value.
+     * Update the specified [index settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null for a setting resets it to its default value.
      *
-     * @summary Update settings of an index.
+     * @summary Update index settings.
      * @param setSettings - The setSettings object.
-     * @param setSettings.indexName - The index in which to perform the request.
+     * @param setSettings.indexName - Index on which to perform the request.
      * @param setSettings.indexSettings - The indexSettings object.
-     * @param setSettings.forwardToReplicas - When true, changes are also propagated to replicas of the given indexName.
+     * @param setSettings.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     setSettings(
@@ -2903,11 +2908,11 @@ export function createSearchClient({
     },
 
     /**
-     * Replace every permission of an existing API key.
+     * Replace the permissions of an existing API key. Any unspecified parameter resets that permission to its default value. The request must be authenticated with the admin API key.
      *
      * @summary Update an API key.
      * @param updateApiKey - The updateApiKey object.
-     * @param updateApiKey.key - API Key string.
+     * @param updateApiKey.key - API key.
      * @param updateApiKey.apiKey - The apiKey object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */

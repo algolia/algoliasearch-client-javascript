@@ -2,17 +2,17 @@
 
 export type AbTestsVariant = {
   /**
-   * The index performing the A/B test.
+   * A/B test index.
    */
   index: string;
 
   /**
-   * The traffic percentage for the A/B test.
+   * A/B test traffic percentage.
    */
   trafficPercentage: number;
 
   /**
-   * The A/B test description.
+   * A/B test description.
    */
   description?: string;
 };

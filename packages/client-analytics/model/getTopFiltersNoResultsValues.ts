@@ -4,12 +4,12 @@ import type { GetTopFiltersNoResultsValue } from './getTopFiltersNoResultsValue'
 
 export type GetTopFiltersNoResultsValues = {
   /**
-   * The number of occurrences.
+   * Number of occurrences.
    */
   count: number;
 
   /**
-   * A list of filters without results.
+   * Filters with no results.
    */
   values: GetTopFiltersNoResultsValue[];
 };

@@ -5,11 +5,11 @@ import type { RankingInfo } from './rankingInfo';
 import type { SnippetResult } from './snippetResult';
 
 /**
- * A Recommend hit.
+ * Recommend hit.
  */
 export type RecommendHit = Record<string, any> & {
   /**
-   * Unique identifier of the object.
+   * Unique object identifier.
    */
   objectID: string;
 
@@ -28,7 +28,7 @@ export type RecommendHit = Record<string, any> & {
   _distinctSeqID?: number;
 
   /**
-   * The recommendation score.
+   * Recommendation score.
    */
   _score: number;
 };

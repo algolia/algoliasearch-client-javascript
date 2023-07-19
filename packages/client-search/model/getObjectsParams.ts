@@ -3,7 +3,7 @@
 import type { GetObjectsRequest } from './getObjectsRequest';
 
 /**
- * The `getObjects` parameters.
+ * Request parameters.
  */
 export type GetObjectsParams = {
   requests: GetObjectsRequest[];

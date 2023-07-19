@@ -107,9 +107,9 @@ export function createAbtestingClient({
     },
 
     /**
-     * Creates a new A/B test with provided configuration. You can set an A/B test on two different indices with different settings, or on the same index with different search parameters by providing a customSearchParameters setting on one of the variants.
+     * Creates an A/B test.
      *
-     * @summary Create a test.
+     * @summary Create an A/B test.
      * @param addABTestsRequest - The addABTestsRequest object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -128,9 +128,9 @@ export function createAbtestingClient({
           'Parameter `addABTestsRequest.name` is required when calling `addABTests`.'
         );
       }
-      if (!addABTestsRequest.variant) {
+      if (!addABTestsRequest.variants) {
         throw new Error(
-          'Parameter `addABTestsRequest.variant` is required when calling `addABTests`.'
+          'Parameter `addABTestsRequest.variants` is required when calling `addABTests`.'
         );
       }
       if (!addABTestsRequest.endAt) {
@@ -159,8 +159,8 @@ export function createAbtestingClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param del - The del object.
-     * @param del.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param del.parameters - Query parameters to be applied to the current query.
+     * @param del.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param del.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     del(
@@ -186,11 +186,11 @@ export function createAbtestingClient({
     },
 
     /**
-     * Delete a test.
+     * Delete an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
      *
-     * @summary Delete a test.
+     * @summary Delete an A/B test.
      * @param deleteABTest - The deleteABTest object.
-     * @param deleteABTest.id - The A/B test ID.
+     * @param deleteABTest.id - Unique A/B test ID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteABTest(
@@ -225,8 +225,8 @@ export function createAbtestingClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param get - The get object.
-     * @param get.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param get.parameters - Query parameters to be applied to the current query.
+     * @param get.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param get.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     get(
@@ -252,11 +252,11 @@ export function createAbtestingClient({
     },
 
     /**
-     * Returns metadata and metrics for an A/B test.
+     * Get specific details for an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
      *
-     * @summary Get a test.
+     * @summary Get A/B test details.
      * @param getABTest - The getABTest object.
-     * @param getABTest.id - The A/B test ID.
+     * @param getABTest.id - Unique A/B test ID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getABTest(
@@ -285,14 +285,14 @@ export function createAbtestingClient({
     },
 
     /**
-     * Fetch all existing A/B tests for App that are available for the current API Key. When no data has been processed, the metrics will be returned as null.
+     * List all A/B tests.
      *
-     * @summary List all tests.
+     * @summary List all A/B tests.
      * @param listABTests - The listABTests object.
      * @param listABTests.offset - Position of the starting record. Used for paging. 0 is the first record.
-     * @param listABTests.limit - Number of records to return. Limit is the size of the page.
-     * @param listABTests.indexPrefix - Filters the returned ab tests by any indices starting with the provided prefix that are assigned to either variant of an ab test.
-     * @param listABTests.indexSuffix - Filters the returned ab tests by any indices ending with the provided suffix that are assigned to either variant of an ab test.
+     * @param listABTests.limit - Number of records to return (page size).
+     * @param listABTests.indexPrefix - Only return A/B tests for indices starting with this prefix.
+     * @param listABTests.indexSuffix - Only return A/B tests for indices ending with this suffix.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listABTests(
@@ -334,9 +334,9 @@ export function createAbtestingClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param post - The post object.
-     * @param post.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param post.parameters - Query parameters to be applied to the current query.
-     * @param post.body - The parameters to send with the custom request.
+     * @param post.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param post.parameters - Query parameters to apply to the current query.
+     * @param post.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     post(
@@ -367,9 +367,9 @@ export function createAbtestingClient({
      *
      * @summary Send requests to the Algolia REST API.
      * @param put - The put object.
-     * @param put.path - The path of the API endpoint to target, anything after the /1 needs to be specified.
-     * @param put.parameters - Query parameters to be applied to the current query.
-     * @param put.body - The parameters to send with the custom request.
+     * @param put.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param put.parameters - Query parameters to apply to the current query.
+     * @param put.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     put(
@@ -396,11 +396,11 @@ export function createAbtestingClient({
     },
 
     /**
-     * Marks the A/B test as stopped. At this point, the test is over and cannot be restarted. As a result, your application is back to normal: index A will perform as usual, receiving 100% of all search requests. Associated metadata and metrics are still stored.
+     * If stopped, the test is over and can\'t be restarted. There is now only one index, receiving 100% of all search requests. The data gathered for stopped A/B tests is retained. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
      *
-     * @summary Stop a test.
+     * @summary Stop an A/B test.
      * @param stopABTest - The stopABTest object.
-     * @param stopABTest.id - The A/B test ID.
+     * @param stopABTest.id - Unique A/B test ID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     stopABTest(

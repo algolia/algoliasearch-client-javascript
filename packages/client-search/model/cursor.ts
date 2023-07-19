@@ -2,7 +2,7 @@
 
 export type Cursor = {
   /**
-   * Cursor indicating the location to resume browsing from. Must match the value returned by the previous call.
+   * Cursor indicating the location to resume browsing from. Must match the value returned by the previous call. Pass this value to the subsequent browse call to get the next page of results. When the end of the index has been reached, `cursor` is absent from the response.
    */
   cursor?: string;
 };

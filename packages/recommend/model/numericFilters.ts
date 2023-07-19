@@ -3,6 +3,6 @@
 import type { MixedSearchFilters } from './mixedSearchFilters';
 
 /**
- * Filter on numeric attributes.
+ * [Filter on numeric attributes](https://www.algolia.com/doc/api-reference/api-parameters/numericFilters/).
  */
 export type NumericFilters = MixedSearchFilters[] | string;
