@@ -10,7 +10,7 @@
     },
     {
       "path": "packages/client-abtesting/dist/client-abtesting.umd.js",
-      "maxSize": "3.85KB"
+      "maxSize": "3.90KB"
     },
     {
       "path": "packages/client-analytics/dist/client-analytics.umd.js",
@@ -34,7 +34,11 @@
     },
     {
       "path": "packages/ingestion/dist/ingestion.umd.js",
-      "maxSize": "4.85KB"
+      "maxSize": "5.00KB"
+    },
+    {
+      "path": "packages/monitoring/dist/monitoring.umd.js",
+      "maxSize": "3.90KB"
     },
     {
       "path": "packages/predict/dist/predict.umd.js",

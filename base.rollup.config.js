@@ -1,7 +1,7 @@
 import babel from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import globals from 'rollup-plugin-node-globals';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import ts from 'rollup-plugin-typescript2';
 
 // Org where the packages are pushed
@@ -274,7 +274,9 @@ export function buildConfigs(pkg) {
           globals({
             global: true,
           }),
-          nodeResolve(),
+          nodeResolve({
+            preferBuiltins: true,
+          }),
           ts({
             check: checkForTypes,
             tsconfig: isLiteClient ? 'lite/tsconfig.json' : 'tsconfig.json',

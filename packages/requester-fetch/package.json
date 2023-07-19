@@ -5,6 +5,7 @@
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
   "author": "Algolia",
+  "type": "module",
   "main": "dist/requester-fetch.cjs.js",
   "module": "dist/requester-fetch.esm.node.js",
   "types": "dist/index.d.ts",
@@ -23,10 +24,10 @@
   },
   "devDependencies": {
     "@types/jest": "29.5.3",
-    "@types/node": "18.16.18",
+    "@types/node": "18.16.19",
     "cross-fetch": "4.0.0",
     "jest": "29.6.1",
-    "nock": "13.3.1",
+    "nock": "13.3.2",
     "ts-jest": "29.1.1",
     "typescript": "5.1.6"
   },

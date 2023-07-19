@@ -1,5 +1,5 @@
-import { buildConfigs } from '../../base.rollup.config';
+import { buildConfigs } from '../../base.rollup.config.js';
 
-import pkg from './package.json';
+import pkg from './package.json' assert { type: 'json' };
 
 export default buildConfigs(pkg);

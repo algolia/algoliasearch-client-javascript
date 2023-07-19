@@ -5,6 +5,7 @@
 .env
 
 yarn-error.log
+lerna-debug.log
 
 .yarn/*
 !.yarn/releases
