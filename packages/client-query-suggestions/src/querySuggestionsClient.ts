@@ -14,6 +14,7 @@ import type {
   QueryParameters,
 } from '@algolia/client-common';
 
+import type { BaseResponse } from '../model/baseResponse';
 import type {
   DelProps,
   DeleteConfigProps,
@@ -25,11 +26,10 @@ import type {
   PutProps,
   UpdateConfigProps,
 } from '../model/clientMethodProps';
-import type { LogFile } from '../model/logFile';
-import type { QuerySuggestionsIndex } from '../model/querySuggestionsIndex';
-import type { QuerySuggestionsIndexWithIndexParam } from '../model/querySuggestionsIndexWithIndexParam';
-import type { Status } from '../model/status';
-import type { SuccessResponse } from '../model/successResponse';
+import type { GetConfigStatus200Response } from '../model/getConfigStatus200Response';
+import type { GetLogFile200Response } from '../model/getLogFile200Response';
+import type { QuerySuggestionsConfigurationResponse } from '../model/querySuggestionsConfigurationResponse';
+import type { QuerySuggestionsConfigurationWithIndex } from '../model/querySuggestionsConfigurationWithIndex';
 
 export const apiClientVersion = '5.0.0-alpha.73';
 
@@ -110,19 +110,19 @@ export function createQuerySuggestionsClient({
     },
 
     /**
-     * Create a configuration of a Query Suggestions index. There\'s a limit of 100 configurations per application.
+     * Create a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
      *
      * @summary Create a configuration.
-     * @param querySuggestionsIndexWithIndexParam - The querySuggestionsIndexWithIndexParam object.
+     * @param querySuggestionsConfigurationWithIndex - The querySuggestionsConfigurationWithIndex object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     createConfig(
-      querySuggestionsIndexWithIndexParam: QuerySuggestionsIndexWithIndexParam,
+      querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex,
       requestOptions?: RequestOptions
-    ): Promise<SuccessResponse> {
-      if (!querySuggestionsIndexWithIndexParam) {
+    ): Promise<BaseResponse> {
+      if (!querySuggestionsConfigurationWithIndex) {
         throw new Error(
-          'Parameter `querySuggestionsIndexWithIndexParam` is required when calling `createConfig`.'
+          'Parameter `querySuggestionsConfigurationWithIndex` is required when calling `createConfig`.'
         );
       }
 
@@ -135,7 +135,7 @@ export function createQuerySuggestionsClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: querySuggestionsIndexWithIndexParam,
+        data: querySuggestionsConfigurationWithIndex,
       };
 
       return transporter.request(request, requestOptions);
@@ -173,17 +173,17 @@ export function createQuerySuggestionsClient({
     },
 
     /**
-     * Delete a configuration of a Query Suggestion\'s index. By deleting a configuration, you stop all updates to the underlying query suggestion index. Note that when doing this, the underlying index does not change - existing suggestions remain untouched.
+     * Delete a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. The Query Suggestions index itself is not deleted.
      *
      * @summary Delete a configuration.
      * @param deleteConfig - The deleteConfig object.
-     * @param deleteConfig.indexName - Index on which to perform the request.
+     * @param deleteConfig.indexName - Query Suggestions index name.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteConfig(
       { indexName }: DeleteConfigProps,
       requestOptions?: RequestOptions
-    ): Promise<SuccessResponse> {
+    ): Promise<BaseResponse> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `deleteConfig`.'
@@ -239,14 +239,14 @@ export function createQuerySuggestionsClient({
     },
 
     /**
-     * Get all the configurations of Query Suggestions. For each index, you get a block of JSON with a list of its configuration settings.
+     * List all Query Suggestions configurations of your Algolia application.
      *
      * @summary List configurations.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAllConfigs(
       requestOptions?: RequestOptions
-    ): Promise<QuerySuggestionsIndex[]> {
+    ): Promise<QuerySuggestionsConfigurationResponse[]> {
       const requestPath = '/1/configs';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -262,17 +262,17 @@ export function createQuerySuggestionsClient({
     },
 
     /**
-     * Get the configuration of a single Query Suggestions index.
+     * Get a single Query Suggestions configuration.
      *
-     * @summary Get a single configuration.
+     * @summary Get a configuration.
      * @param getConfig - The getConfig object.
-     * @param getConfig.indexName - Index on which to perform the request.
+     * @param getConfig.indexName - Query Suggestions index name.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getConfig(
       { indexName }: GetConfigProps,
       requestOptions?: RequestOptions
-    ): Promise<QuerySuggestionsIndex> {
+    ): Promise<QuerySuggestionsConfigurationResponse> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getConfig`.'
@@ -297,17 +297,17 @@ export function createQuerySuggestionsClient({
     },
 
     /**
-     * Get the status of a Query Suggestion\'s index. The status includes whether the Query Suggestions index is currently in the process of being built, and the last build time.
+     * Report the status of a Query Suggestions index.
      *
      * @summary Get configuration status.
      * @param getConfigStatus - The getConfigStatus object.
-     * @param getConfigStatus.indexName - Index on which to perform the request.
+     * @param getConfigStatus.indexName - Query Suggestions index name.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getConfigStatus(
       { indexName }: GetConfigStatusProps,
       requestOptions?: RequestOptions
-    ): Promise<Status> {
+    ): Promise<GetConfigStatus200Response> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getConfigStatus`.'
@@ -332,17 +332,17 @@ export function createQuerySuggestionsClient({
     },
 
     /**
-     * Get the log file of the last build of a single Query Suggestion index.
+     * Get the logs for a single Query Suggestions index.
      *
-     * @summary Get a log file.
+     * @summary Get logs.
      * @param getLogFile - The getLogFile object.
-     * @param getLogFile.indexName - Index on which to perform the request.
+     * @param getLogFile.indexName - Query Suggestions index name.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getLogFile(
       { indexName }: GetLogFileProps,
       requestOptions?: RequestOptions
-    ): Promise<LogFile[]> {
+    ): Promise<GetLogFile200Response> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getLogFile`.'
@@ -433,33 +433,33 @@ export function createQuerySuggestionsClient({
     },
 
     /**
-     * Update the configuration of a Query Suggestions index.
+     * Update a QuerySuggestions configuration.
      *
      * @summary Update a configuration.
      * @param updateConfig - The updateConfig object.
-     * @param updateConfig.indexName - Index on which to perform the request.
-     * @param updateConfig.querySuggestionsIndexParam - The querySuggestionsIndexParam object.
+     * @param updateConfig.indexName - Query Suggestions index name.
+     * @param updateConfig.querySuggestionsConfiguration - The querySuggestionsConfiguration object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     updateConfig(
-      { indexName, querySuggestionsIndexParam }: UpdateConfigProps,
+      { indexName, querySuggestionsConfiguration }: UpdateConfigProps,
       requestOptions?: RequestOptions
-    ): Promise<SuccessResponse> {
+    ): Promise<BaseResponse> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `updateConfig`.'
         );
       }
 
-      if (!querySuggestionsIndexParam) {
+      if (!querySuggestionsConfiguration) {
         throw new Error(
-          'Parameter `querySuggestionsIndexParam` is required when calling `updateConfig`.'
+          'Parameter `querySuggestionsConfiguration` is required when calling `updateConfig`.'
         );
       }
 
-      if (!querySuggestionsIndexParam.sourceIndices) {
+      if (!querySuggestionsConfiguration.sourceIndices) {
         throw new Error(
-          'Parameter `querySuggestionsIndexParam.sourceIndices` is required when calling `updateConfig`.'
+          'Parameter `querySuggestionsConfiguration.sourceIndices` is required when calling `updateConfig`.'
         );
       }
 
@@ -475,7 +475,7 @@ export function createQuerySuggestionsClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: querySuggestionsIndexParam,
+        data: querySuggestionsConfiguration,
       };
 
       return transporter.request(request, requestOptions);
