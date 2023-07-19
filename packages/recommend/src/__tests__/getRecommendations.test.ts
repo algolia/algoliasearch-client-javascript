@@ -2,9 +2,21 @@ import { TestSuite } from '../../../client-common/src/__tests__/TestSuite';
 
 const recommend = new TestSuite('recommend').recommend;
 
-function createMockedClient() {
+function createMockedClient<TObject>() {
   const client = recommend('appId', 'apiKey');
-  jest.spyOn(client.transporter, 'read').mockImplementation(() => Promise.resolve());
+  jest.spyOn(client.transporter, 'read').mockImplementation(() =>
+    Promise.resolve({
+      results: [
+        {
+          hits: [
+            {
+              objectID: '1',
+            },
+          ],
+        },
+      ],
+    })
+  );
 
   return client;
 }
@@ -196,5 +208,26 @@ describe('getRecommendations', () => {
       },
       {}
     );
+  });
+
+  test('returns recommendations results', async () => {
+    const client = createMockedClient();
+
+    const recommendations = await client.getRecommendations<any>(
+      [
+        {
+          model: 'bought-together',
+          indexName: 'products',
+          objectID: 'B018APC4LE',
+        },
+      ],
+      {}
+    );
+
+    expect(recommendations.results[0].hits).toEqual([
+      {
+        objectID: '1',
+      },
+    ]);
   });
 });
