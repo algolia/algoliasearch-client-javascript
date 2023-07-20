@@ -1,4 +1,4 @@
-import { MultipleQueriesResponse, SearchOptions } from '@algolia/client-search';
+import { SearchOptions, SearchResponse } from '@algolia/client-search';
 import { RequestOptions } from '@algolia/transporter';
 
 import { FrequentlyBoughtTogetherQuery } from './FrequentlyBoughtTogetherQuery';
@@ -9,6 +9,13 @@ import { TrendingFacetsQuery } from './TrendingFacetsQuery';
 import { TrendingItemsQuery } from './TrendingItemsQuery';
 import { TrendingQuery } from './TrendingQuery';
 
+export type RecommendQueriesResponse<TObject> = {
+  /**
+   * The list of results.
+   */
+  readonly results: ReadonlyArray<SearchResponse<TObject>>;
+};
+
 export type WithRecommendMethods<TType> = TType & {
   /**
    * Returns recommendations.
@@ -16,7 +23,7 @@ export type WithRecommendMethods<TType> = TType & {
   readonly getRecommendations: <TObject>(
     queries: ReadonlyArray<RecommendationsQuery | TrendingQuery>,
     requestOptions?: RequestOptions & SearchOptions
-  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
+  ) => Readonly<Promise<RecommendQueriesResponse<TObject>>>;
 
   /**
    * Returns [Related Products](https://algolia.com/doc/guides/algolia-ai/recommend/#related-products).
@@ -24,7 +31,7 @@ export type WithRecommendMethods<TType> = TType & {
   readonly getRelatedProducts: <TObject>(
     queries: readonly RelatedProductsQuery[],
     requestOptions?: RequestOptions & SearchOptions
-  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
+  ) => Readonly<Promise<RecommendQueriesResponse<TObject>>>;
 
   /**
    * Returns [Frequently Bought Together](https://algolia.com/doc/guides/algolia-ai/recommend/#frequently-bought-together) products.
@@ -32,7 +39,7 @@ export type WithRecommendMethods<TType> = TType & {
   readonly getFrequentlyBoughtTogether: <TObject>(
     queries: readonly FrequentlyBoughtTogetherQuery[],
     requestOptions?: RequestOptions & SearchOptions
-  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
+  ) => Readonly<Promise<RecommendQueriesResponse<TObject>>>;
 
   /**
    * Returns trending items
@@ -40,7 +47,7 @@ export type WithRecommendMethods<TType> = TType & {
   readonly getTrendingItems: <TObject>(
     queries: readonly TrendingItemsQuery[],
     requestOptions?: RequestOptions & SearchOptions
-  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
+  ) => Readonly<Promise<RecommendQueriesResponse<TObject>>>;
 
   /**
    * Returns trending items per facet
@@ -48,7 +55,7 @@ export type WithRecommendMethods<TType> = TType & {
   readonly getTrendingFacets: <TObject>(
     queries: readonly TrendingFacetsQuery[],
     requestOptions?: RequestOptions & SearchOptions
-  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
+  ) => Readonly<Promise<RecommendQueriesResponse<TObject>>>;
 
   /**
    * Returns Looking Similar
@@ -56,5 +63,5 @@ export type WithRecommendMethods<TType> = TType & {
   readonly getLookingSimilar: <TObject>(
     queries: readonly LookingSimilarQuery[],
     requestOptions?: RequestOptions & SearchOptions
-  ) => Readonly<Promise<MultipleQueriesResponse<TObject>>>;
+  ) => Readonly<Promise<RecommendQueriesResponse<TObject>>>;
 };
