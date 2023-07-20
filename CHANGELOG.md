@@ -1,3 +1,9 @@
+## [v4.19.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.19.0...4.19.1)
+
+* fix(recommend): Add Type RecommendQueriesResponse from old MultipleQueriesResponse for recommend (#1472) ([36285b2](https://github.com/algolia/algoliasearch-client-javascript/commit/36285b2)), closes [#1472](https://github.com/algolia/algoliasearch-client-javascript/issues/1472)
+
+
+
 ## [v4.19.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.18.0...4.19.0)
 
 * feat(abtests): add outlier count to variant response payload (#1467) ([b88a726](https://github.com/algolia/algoliasearch-client-javascript/commit/b88a726)), closes [#1467](https://github.com/algolia/algoliasearch-client-javascript/issues/1467)
