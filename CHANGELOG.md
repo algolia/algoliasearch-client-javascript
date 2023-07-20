@@ -1,3 +1,13 @@
+## [5.0.0-alpha.74](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.73...5.0.0-alpha.74)
+
+- [333368a3b](https://github.com/algolia/api-clients-automation/commit/333368a3b) feat(specs): query suggestions ([#1740](https://github.com/algolia/api-clients-automation/pull/1740)) by [@kai687](https://github.com/kai687/)
+- [f15457fd1](https://github.com/algolia/api-clients-automation/commit/f15457fd1) feat(specs): Review OpenAPI common specs ([#1692](https://github.com/algolia/api-clients-automation/pull/1692)) by [@gazconroy](https://github.com/gazconroy/)
+- [550313a8b](https://github.com/algolia/api-clients-automation/commit/550313a8b) fix(javascript): allow package.json to be pushed ([#1781](https://github.com/algolia/api-clients-automation/pull/1781)) by [@shortcuts](https://github.com/shortcuts/)
+- [d97511a66](https://github.com/algolia/api-clients-automation/commit/d97511a66) fix(javascript): release process ([#1779](https://github.com/algolia/api-clients-automation/pull/1779)) by [@shortcuts](https://github.com/shortcuts/)
+- [8765f6d47](https://github.com/algolia/api-clients-automation/commit/8765f6d47) feat(specs): add OpenAPI spec for Monitoring API ([#1683](https://github.com/algolia/api-clients-automation/pull/1683)) by [@kai687](https://github.com/kai687/)
+- [dc0ff048a](https://github.com/algolia/api-clients-automation/commit/dc0ff048a) fix(specs): facet stats properties as double ([#1694](https://github.com/algolia/api-clients-automation/pull/1694)) by [@aallam](https://github.com/aallam/)
+- [7250930c7](https://github.com/algolia/api-clients-automation/commit/7250930c7) fix(specs): add input to authentication list ([#1688](https://github.com/algolia/api-clients-automation/pull/1688)) by [@millotp](https://github.com/millotp/)
+
 ## [5.0.0-alpha.73](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.72...5.0.0-alpha.73)
 
 - [15bc7618](https://github.com/algolia/api-clients-automation/commit/15bc7618) feat(specs): updated_at removed from Run response ([#1651](https://github.com/algolia/api-clients-automation/pull/1651)) by [@mehmetaligok](https://github.com/mehmetaligok/)
