@@ -1,29 +1,13 @@
-import fsp from 'fs/promises';
-import path from 'path';
-
-import execa from 'execa';
+import { execaCommand } from 'execa';
 import semver from 'semver';
 
+import packageJSON from "../packages/algoliasearch/package.json" assert { type: "json" };
+
 async function publish(): Promise<void> {
-  // Read the local version of `algoliasearch/package.json`
-  const { version } = JSON.parse(
-    (
-      await fsp.readFile(
-        path.resolve(
-          __dirname,
-          '..',
-          'packages',
-          'algoliasearch',
-          'package.json'
-        )
-      )
-    ).toString()
-  );
-
   // Get tag like `alpha`, `beta`, ...
-  const tag = semver.prerelease(version)?.[0];
+  const tag = semver.prerelease(packageJSON.version)?.[0];
 
-  await execa.command(
+  await execaCommand(
     `lerna exec --no-bail -- npm_config_registry=https://registry.npmjs.org/ npm publish --access public ${
       tag ? `--tag ${tag}` : ''
     }`,
