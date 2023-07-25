@@ -1,3 +1,7 @@
+## [5.0.0-alpha.75](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.74...5.0.0-alpha.75)
+
+- [96ab1c384](https://github.com/algolia/api-clients-automation/commit/96ab1c384) fix(javascript): publish script esm ([#1787](https://github.com/algolia/api-clients-automation/pull/1787)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.74](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.73...5.0.0-alpha.74)
 
 - [333368a3b](https://github.com/algolia/api-clients-automation/commit/333368a3b) feat(specs): query suggestions ([#1740](https://github.com/algolia/api-clients-automation/pull/1740)) by [@kai687](https://github.com/kai687/)
