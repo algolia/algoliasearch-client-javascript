@@ -129,6 +129,7 @@ export * from './searchParamsString';
 export * from './searchQuery';
 export * from './searchResponse';
 export * from './searchResponses';
+export * from './searchResult';
 export * from './searchRulesParams';
 export * from './searchRulesResponse';
 export * from './searchStrategy';
