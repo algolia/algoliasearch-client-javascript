@@ -2,11 +2,17 @@
 
 export * from './actionType';
 export * from './authAPIKey';
+export * from './authAPIKeyPartial';
 export * from './authAlgolia';
+export * from './authAlgoliaPartial';
 export * from './authBasic';
+export * from './authBasicPartial';
 export * from './authGoogleServiceAccount';
+export * from './authGoogleServiceAccountPartial';
 export * from './authInput';
+export * from './authInputPartial';
 export * from './authOAuth';
+export * from './authOAuthPartial';
 export * from './authentication';
 export * from './authenticationCreate';
 export * from './authenticationCreateResponse';
