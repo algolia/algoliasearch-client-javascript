@@ -41,10 +41,6 @@
       "maxSize": "3.90KB"
     },
     {
-      "path": "packages/predict/dist/predict.umd.js",
-      "maxSize": "4.20KB"
-    },
-    {
       "path": "packages/recommend/dist/recommend.umd.js",
       "maxSize": "3.70KB"
     }

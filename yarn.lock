@@ -122,19 +122,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/predict@workspace:packages/predict":
-  version: 0.0.0-use.local
-  resolution: "@algolia/predict@workspace:packages/predict"
-  dependencies:
-    "@algolia/client-common": 5.0.0-alpha.76
-    "@algolia/requester-browser-xhr": 5.0.0-alpha.76
-    "@algolia/requester-node-http": 5.0.0-alpha.76
-    "@types/node": 18.17.1
-    rollup: 3.27.0
-    typescript: 5.1.6
-  languageName: unknown
-  linkType: soft
-
 "@algolia/recommend@workspace:packages/recommend":
   version: 0.0.0-use.local
   resolution: "@algolia/recommend@workspace:packages/recommend"

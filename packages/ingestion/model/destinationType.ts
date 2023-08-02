@@ -3,4 +3,4 @@
 /**
  * Type of the Destination, defines in which Algolia product the data will be stored.
  */
-export type DestinationType = 'flow' | 'insights' | 'predict' | 'search';
+export type DestinationType = 'flow' | 'insights' | 'search';
