@@ -90,11 +90,6 @@ export type BaseSearchResponse = {
    */
   page: number;
 
-  /**
-   * URL-encoded string of all search parameters.
-   */
-  params: string;
-
   redirect?: BaseSearchResponseRedirect;
 
   /**
@@ -106,11 +101,6 @@ export type BaseSearchResponse = {
    * Time the server took to process the request, in milliseconds.
    */
   processingTimeMS: number;
-
-  /**
-   * Text to search for in an index.
-   */
-  query: string;
 
   /**
    * Markup text indicating which parts of the original query have been removed to retrieve a non-empty result set.

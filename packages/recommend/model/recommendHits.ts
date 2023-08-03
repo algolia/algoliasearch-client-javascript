@@ -4,4 +4,14 @@ import type { RecommendHit } from './recommendHit';
 
 export type RecommendHits = {
   hits: RecommendHit[];
+
+  /**
+   * Text to search for in an index.
+   */
+  query?: string;
+
+  /**
+   * URL-encoded string of all search parameters.
+   */
+  params?: string;
 };

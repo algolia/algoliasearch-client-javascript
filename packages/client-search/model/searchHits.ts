@@ -4,4 +4,14 @@ import type { Hit } from './hit';
 
 export type SearchHits<T = Record<string, any>> = {
   hits: Array<Hit<T>>;
+
+  /**
+   * Text to search for in an index.
+   */
+  query: T;
+
+  /**
+   * URL-encoded string of all search parameters.
+   */
+  params: T;
 };
