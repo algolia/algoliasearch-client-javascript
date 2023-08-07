@@ -7,6 +7,8 @@ export * from './advancedSyntaxFeatures';
 export * from './alternativesAsExact';
 export * from './anchoring';
 export * from './apiKey';
+export * from './aroundPrecision';
+export * from './aroundPrecisionFromValueInner';
 export * from './aroundRadius';
 export * from './aroundRadiusAll';
 export * from './attributeToUpdate';
