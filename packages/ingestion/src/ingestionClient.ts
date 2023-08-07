@@ -79,7 +79,7 @@ import type { TaskSearch } from '../model/taskSearch';
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.0.0-alpha.50';
+export const apiClientVersion = '1.0.0-alpha.51';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
