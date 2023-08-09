@@ -5,7 +5,6 @@ import type { AroundRadius } from './aroundRadius';
 import type { FacetFilters } from './facetFilters';
 import type { NumericFilters } from './numericFilters';
 import type { OptionalFilters } from './optionalFilters';
-import type { ReRankingApplyFilter } from './reRankingApplyFilter';
 import type { TagFilters } from './tagFilters';
 
 export type BaseSearchParamsWithoutQuery = {
@@ -33,24 +32,19 @@ export type BaseSearchParamsWithoutQuery = {
   sumOrFiltersScores?: boolean;
 
   /**
+   * Restricts a query to only look at a subset of your [searchable attributes](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/).
+   */
+  restrictSearchableAttributes?: string[];
+
+  /**
    * Returns [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts), their facet values, and the number of matching facet values.
    */
   facets?: string[];
 
   /**
-   * Maximum number of facet values to return for each facet.
-   */
-  maxValuesPerFacet?: number;
-
-  /**
    * Forces faceting to be applied after [de-duplication](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/) (with the distinct feature). Alternatively, the `afterDistinct` [modifier](https://www.algolia.com/doc/api-reference/api-parameters/attributesForFaceting/#modifiers) of `attributesForFaceting` allows for more granular control.
    */
   facetingAfterDistinct?: boolean;
-
-  /**
-   * Controls how facet values are fetched.
-   */
-  sortFacetValuesBy?: string;
 
   /**
    * Page to retrieve (the first page is `0`, not `1`).
@@ -122,6 +116,16 @@ export type BaseSearchParamsWithoutQuery = {
   getRankingInfo?: boolean;
 
   /**
+   * Enriches the API\'s response with information about how the query was processed.
+   */
+  explain?: string[];
+
+  /**
+   * Whether to take into account an index\'s synonyms for a particular search.
+   */
+  synonyms?: boolean;
+
+  /**
    * Indicates whether a query ID parameter is included in the search response. This is required for [tracking click and conversion events](https://www.algolia.com/doc/guides/sending-events/concepts/event-types/#events-related-to-algolia-requests).
    */
   clickAnalytics?: boolean;
@@ -145,11 +149,4 @@ export type BaseSearchParamsWithoutQuery = {
    * Incidates whether this search will be considered in A/B testing.
    */
   enableABTest?: boolean;
-
-  /**
-   * Indicates whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/).
-   */
-  enableReRanking?: boolean;
-
-  reRankingApplyFilter?: ReRankingApplyFilter | null;
 };

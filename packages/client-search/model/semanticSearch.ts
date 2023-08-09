@@ -3,7 +3,7 @@
 /**
  * Settings for the semantic search part of NeuralSearch. Only used when `mode` is _neuralSearch_.
  */
-export type IndexSettingsAsSearchParamsSemanticSearch = {
+export type SemanticSearch = {
   /**
    * Indices from which to collect click and conversion events. If null, the current index and replica group will be used as the event source.
    */

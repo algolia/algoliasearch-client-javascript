@@ -5,12 +5,13 @@ import type { AlternativesAsExact } from './alternativesAsExact';
 import type { Distinct } from './distinct';
 import type { ExactOnSingleWordQuery } from './exactOnSingleWordQuery';
 import type { IgnorePlurals } from './ignorePlurals';
-import type { IndexSettingsAsSearchParamsSemanticSearch } from './indexSettingsAsSearchParamsSemanticSearch';
 import type { Mode } from './mode';
 import type { QueryType } from './queryType';
+import type { ReRankingApplyFilter } from './reRankingApplyFilter';
 import type { RemoveStopWords } from './removeStopWords';
 import type { RemoveWordsIfNoResults } from './removeWordsIfNoResults';
 import type { RenderingContent } from './renderingContent';
+import type { SemanticSearch } from './semanticSearch';
 import type { TypoTolerance } from './typoTolerance';
 
 export type IndexSettingsAsSearchParams = {
@@ -23,11 +24,6 @@ export type IndexSettingsAsSearchParams = {
    * Attributes to include in the API response. To reduce the size of your response, you can retrieve only some of the attributes. By default, the response includes all attributes.
    */
   attributesToRetrieve?: string[];
-
-  /**
-   * Restricts a query to only look at a subset of your [searchable attributes](https://www.algolia.com/doc/guides/managing-results/must-do/searchable-attributes/).
-   */
-  restrictSearchableAttributes?: string[];
 
   /**
    * Determines the order in which Algolia [returns your results](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/).
@@ -136,7 +132,7 @@ export type IndexSettingsAsSearchParams = {
 
   mode?: Mode;
 
-  semanticSearch?: IndexSettingsAsSearchParamsSemanticSearch;
+  semanticSearch?: SemanticSearch;
 
   /**
    * Enables the [advanced query syntax](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#advanced-syntax).
@@ -165,22 +161,12 @@ export type IndexSettingsAsSearchParams = {
    */
   advancedSyntaxFeatures?: AdvancedSyntaxFeatures[];
 
-  /**
-   * Enriches the API\'s response with information about how the query was processed.
-   */
-  explain?: string[];
-
   distinct?: Distinct;
 
   /**
    * Name of the deduplication attribute to be used with Algolia\'s [_distinct_ feature](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature).
    */
   attributeForDistinct?: string;
-
-  /**
-   * Whether to take into account an index\'s synonyms for a particular search.
-   */
-  synonyms?: boolean;
 
   /**
    * Whether to highlight and snippet the original word that matches the synonym or the synonym itself.
@@ -203,9 +189,26 @@ export type IndexSettingsAsSearchParams = {
   maxFacetHits?: number;
 
   /**
+   * Maximum number of facet values to return for each facet.
+   */
+  maxValuesPerFacet?: number;
+
+  /**
+   * Controls how facet values are fetched.
+   */
+  sortFacetValuesBy?: string;
+
+  /**
    * When the [Attribute criterion is ranked above Proximity](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#attribute-and-proximity-combinations) in your ranking formula, Proximity is used to select which searchable attribute is matched in the Attribute ranking stage.
    */
   attributeCriteriaComputedByMinProximity?: boolean;
 
   renderingContent?: RenderingContent;
+
+  /**
+   * Indicates whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/).
+   */
+  enableReRanking?: boolean;
+
+  reRankingApplyFilter?: ReRankingApplyFilter | null;
 };
