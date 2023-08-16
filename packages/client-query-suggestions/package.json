@@ -11,8 +11,8 @@
       "node": {
         "import": "./dist/client-query-suggestions.esm.node.js",
         "module": "./dist/client-query-suggestions.esm.node.js",
-        "require": "./dist/client-query-suggestions.cjs.js",
-        "default": "./dist/client-query-suggestions.cjs.js"
+        "require": "./dist/client-query-suggestions.cjs",
+        "default": "./dist/client-query-suggestions.cjs"
       },
       "default": {
         "umd": "./dist/client-query-suggestions.umd.js",

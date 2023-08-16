@@ -11,8 +11,8 @@
       "node": {
         "import": "./dist/client-analytics.esm.node.js",
         "module": "./dist/client-analytics.esm.node.js",
-        "require": "./dist/client-analytics.cjs.js",
-        "default": "./dist/client-analytics.cjs.js"
+        "require": "./dist/client-analytics.cjs",
+        "default": "./dist/client-analytics.cjs"
       },
       "default": {
         "umd": "./dist/client-analytics.umd.js",

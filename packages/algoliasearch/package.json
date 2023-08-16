@@ -12,8 +12,8 @@
       "node": {
         "import": "./dist/algoliasearch.esm.node.js",
         "module": "./dist/algoliasearch.esm.node.js",
-        "require": "./dist/algoliasearch.cjs.js",
-        "default": "./dist/algoliasearch.cjs.js"
+        "require": "./dist/algoliasearch.cjs",
+        "default": "./dist/algoliasearch.cjs"
       },
       "default": {
         "umd": "./dist/algoliasearch.umd.js",
@@ -27,8 +27,8 @@
       "node": {
         "import": "./dist/lite/lite.esm.node.js",
         "module": "./dist/lite/lite.esm.node.js",
-        "require": "./dist/lite/lite.cjs.js",
-        "default": "./dist/lite/lite.cjs.js"
+        "require": "./dist/lite/lite.cjs",
+        "default": "./dist/lite/lite.cjs"
       },
       "default": {
         "umd": "./dist/lite/lite.umd.js",

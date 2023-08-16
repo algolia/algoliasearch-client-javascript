@@ -11,8 +11,8 @@
       "node": {
         "import": "./dist/client-insights.esm.node.js",
         "module": "./dist/client-insights.esm.node.js",
-        "require": "./dist/client-insights.cjs.js",
-        "default": "./dist/client-insights.cjs.js"
+        "require": "./dist/client-insights.cjs",
+        "default": "./dist/client-insights.cjs"
       },
       "default": {
         "umd": "./dist/client-insights.umd.js",

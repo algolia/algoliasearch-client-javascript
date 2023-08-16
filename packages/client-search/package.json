@@ -11,8 +11,8 @@
       "node": {
         "import": "./dist/client-search.esm.node.js",
         "module": "./dist/client-search.esm.node.js",
-        "require": "./dist/client-search.cjs.js",
-        "default": "./dist/client-search.cjs.js"
+        "require": "./dist/client-search.cjs",
+        "default": "./dist/client-search.cjs"
       },
       "default": {
         "umd": "./dist/client-search.umd.js",

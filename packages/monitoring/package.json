@@ -11,8 +11,8 @@
       "node": {
         "import": "./dist/monitoring.esm.node.js",
         "module": "./dist/monitoring.esm.node.js",
-        "require": "./dist/monitoring.cjs.js",
-        "default": "./dist/monitoring.cjs.js"
+        "require": "./dist/monitoring.cjs",
+        "default": "./dist/monitoring.cjs"
       },
       "default": {
         "umd": "./dist/monitoring.umd.js",

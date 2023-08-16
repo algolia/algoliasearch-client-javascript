@@ -11,8 +11,8 @@
       "node": {
         "import": "./dist/ingestion.esm.node.js",
         "module": "./dist/ingestion.esm.node.js",
-        "require": "./dist/ingestion.cjs.js",
-        "default": "./dist/ingestion.cjs.js"
+        "require": "./dist/ingestion.cjs",
+        "default": "./dist/ingestion.cjs"
       },
       "default": {
         "umd": "./dist/ingestion.umd.js",

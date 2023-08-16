@@ -11,8 +11,8 @@
       "node": {
         "import": "./dist/client-personalization.esm.node.js",
         "module": "./dist/client-personalization.esm.node.js",
-        "require": "./dist/client-personalization.cjs.js",
-        "default": "./dist/client-personalization.cjs.js"
+        "require": "./dist/client-personalization.cjs",
+        "default": "./dist/client-personalization.cjs"
       },
       "default": {
         "umd": "./dist/client-personalization.umd.js",

@@ -78,7 +78,7 @@ function createBundlers({ output, isLiteClient }) {
     },
     cjs: {
       ...commonOptions,
-      file: `${path}/${output}.cjs.js`,
+      file: `${path}/${output}.cjs`,
       format: 'cjs',
     },
   };

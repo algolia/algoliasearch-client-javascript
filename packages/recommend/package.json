@@ -11,8 +11,8 @@
       "node": {
         "import": "./dist/recommend.esm.node.js",
         "module": "./dist/recommend.esm.node.js",
-        "require": "./dist/recommend.cjs.js",
-        "default": "./dist/recommend.cjs.js"
+        "require": "./dist/recommend.cjs",
+        "default": "./dist/recommend.cjs"
       },
       "default": {
         "umd": "./dist/recommend.umd.js",

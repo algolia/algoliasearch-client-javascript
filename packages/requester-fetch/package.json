@@ -6,7 +6,7 @@
   "license": "MIT",
   "author": "Algolia",
   "type": "module",
-  "main": "dist/requester-fetch.cjs.js",
+  "main": "dist/requester-fetch.cjs",
   "module": "dist/requester-fetch.esm.node.js",
   "types": "dist/index.d.ts",
   "files": [

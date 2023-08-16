@@ -11,8 +11,8 @@
       "node": {
         "import": "./dist/client-abtesting.esm.node.js",
         "module": "./dist/client-abtesting.esm.node.js",
-        "require": "./dist/client-abtesting.cjs.js",
-        "default": "./dist/client-abtesting.cjs.js"
+        "require": "./dist/client-abtesting.cjs",
+        "default": "./dist/client-abtesting.cjs"
       },
       "default": {
         "umd": "./dist/client-abtesting.umd.js",
