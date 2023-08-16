@@ -1,3 +1,8 @@
+## [5.0.0-alpha.79](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.78...5.0.0-alpha.79)
+
+- [d434431d1](https://github.com/algolia/api-clients-automation/commit/d434431d1) fix(javascript): move `cjs.js` to `cjs` ([#1894](https://github.com/algolia/api-clients-automation/pull/1894)) by [@shortcuts](https://github.com/shortcuts/)
+- [5a9d949db](https://github.com/algolia/api-clients-automation/commit/5a9d949db) fix(specs): mixed `SearchParams` and `IndexSettings` ([#1889](https://github.com/algolia/api-clients-automation/pull/1889)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.77](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.76...5.0.0-alpha.77)
 
 - [82d7dcf5a](https://github.com/algolia/api-clients-automation/commit/82d7dcf5a) fix(specs): allow JSON array for `aroundPrecision` ([#1855](https://github.com/algolia/api-clients-automation/pull/1855)) by [@shortcuts](https://github.com/shortcuts/)
