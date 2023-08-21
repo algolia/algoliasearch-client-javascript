@@ -12,7 +12,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.78
     "@algolia/requester-browser-xhr": 5.0.0-alpha.78
     "@algolia/requester-node-http": 5.0.0-alpha.78
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     rollup: 3.28.0
     typescript: 5.1.6
   languageName: unknown
@@ -25,7 +25,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.78
     "@algolia/requester-browser-xhr": 5.0.0-alpha.78
     "@algolia/requester-node-http": 5.0.0-alpha.78
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     rollup: 3.28.0
     typescript: 5.1.6
   languageName: unknown
@@ -36,7 +36,7 @@ __metadata:
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
     "@types/jest": 29.5.3
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     jest: 29.6.2
     jest-environment-jsdom: 29.6.2
     ts-jest: 29.1.1
@@ -51,7 +51,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.78
     "@algolia/requester-browser-xhr": 5.0.0-alpha.78
     "@algolia/requester-node-http": 5.0.0-alpha.78
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     rollup: 3.28.0
     typescript: 5.1.6
   languageName: unknown
@@ -64,7 +64,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.78
     "@algolia/requester-browser-xhr": 5.0.0-alpha.78
     "@algolia/requester-node-http": 5.0.0-alpha.78
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     rollup: 3.28.0
     typescript: 5.1.6
   languageName: unknown
@@ -77,7 +77,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.78
     "@algolia/requester-browser-xhr": 5.0.0-alpha.78
     "@algolia/requester-node-http": 5.0.0-alpha.78
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     rollup: 3.28.0
     typescript: 5.1.6
   languageName: unknown
@@ -90,7 +90,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.78
     "@algolia/requester-browser-xhr": 5.0.0-alpha.78
     "@algolia/requester-node-http": 5.0.0-alpha.78
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     rollup: 3.28.0
     typescript: 5.1.6
   languageName: unknown
@@ -103,7 +103,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.78
     "@algolia/requester-browser-xhr": 5.0.0-alpha.78
     "@algolia/requester-node-http": 5.0.0-alpha.78
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     rollup: 3.28.0
     typescript: 5.1.6
   languageName: unknown
@@ -116,7 +116,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.78
     "@algolia/requester-browser-xhr": 5.0.0-alpha.78
     "@algolia/requester-node-http": 5.0.0-alpha.78
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     rollup: 3.28.0
     typescript: 5.1.6
   languageName: unknown
@@ -129,7 +129,7 @@ __metadata:
     "@algolia/client-common": 5.0.0-alpha.78
     "@algolia/requester-browser-xhr": 5.0.0-alpha.78
     "@algolia/requester-node-http": 5.0.0-alpha.78
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     rollup: 3.28.0
     typescript: 5.1.6
   languageName: unknown
@@ -141,7 +141,7 @@ __metadata:
   dependencies:
     "@algolia/client-common": 5.0.0-alpha.78
     "@types/jest": 29.5.3
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     jest: 29.6.2
     jest-environment-jsdom: 29.6.2
     ts-jest: 29.1.1
@@ -156,10 +156,10 @@ __metadata:
   dependencies:
     "@algolia/client-common": 5.0.0-alpha.78
     "@types/jest": 29.5.3
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     cross-fetch: 4.0.0
     jest: 29.6.2
-    nock: 13.3.2
+    nock: 13.3.3
     ts-jest: 29.1.1
     typescript: 5.1.6
   languageName: unknown
@@ -171,9 +171,9 @@ __metadata:
   dependencies:
     "@algolia/client-common": 5.0.0-alpha.78
     "@types/jest": 29.5.3
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     jest: 29.6.2
-    nock: 13.3.2
+    nock: 13.3.3
     ts-jest: 29.1.1
     typescript: 5.1.6
   languageName: unknown
@@ -2310,15 +2310,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nrwl/tao@npm:16.6.0":
-  version: 16.6.0
-  resolution: "@nrwl/tao@npm:16.6.0"
+"@nrwl/tao@npm:16.7.2":
+  version: 16.7.2
+  resolution: "@nrwl/tao@npm:16.7.2"
   dependencies:
-    nx: 16.6.0
+    nx: 16.7.2
     tslib: ^2.3.0
   bin:
     tao: index.js
-  checksum: bce14477431750bb0dffb90ce23822f2b169f73186d91f59e5fd073a0cdc1f8e75631b0f61c9552b9f0cf5be1b3ae3c65c316dbce53abf096e0c1cabbeb5fdc6
+  checksum: ecab238e47fc1069cf051ec8d0618df1fb10e5025bda0a355ccf002804cbfe07463ed2ece744bf6920c34923ecd6a1bb37a27fcb90f51249ebdea328b940f669
   languageName: node
   linkType: hard
 
@@ -2345,9 +2345,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx/nx-darwin-arm64@npm:16.6.0":
-  version: 16.6.0
-  resolution: "@nx/nx-darwin-arm64@npm:16.6.0"
+"@nx/nx-darwin-arm64@npm:16.7.2":
+  version: 16.7.2
+  resolution: "@nx/nx-darwin-arm64@npm:16.7.2"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
@@ -2359,9 +2359,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx/nx-darwin-x64@npm:16.6.0":
-  version: 16.6.0
-  resolution: "@nx/nx-darwin-x64@npm:16.6.0"
+"@nx/nx-darwin-x64@npm:16.7.2":
+  version: 16.7.2
+  resolution: "@nx/nx-darwin-x64@npm:16.7.2"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
@@ -2373,9 +2373,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx/nx-freebsd-x64@npm:16.6.0":
-  version: 16.6.0
-  resolution: "@nx/nx-freebsd-x64@npm:16.6.0"
+"@nx/nx-freebsd-x64@npm:16.7.2":
+  version: 16.7.2
+  resolution: "@nx/nx-freebsd-x64@npm:16.7.2"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
@@ -2387,9 +2387,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-arm-gnueabihf@npm:16.6.0":
-  version: 16.6.0
-  resolution: "@nx/nx-linux-arm-gnueabihf@npm:16.6.0"
+"@nx/nx-linux-arm-gnueabihf@npm:16.7.2":
+  version: 16.7.2
+  resolution: "@nx/nx-linux-arm-gnueabihf@npm:16.7.2"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
@@ -2401,9 +2401,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-arm64-gnu@npm:16.6.0":
-  version: 16.6.0
-  resolution: "@nx/nx-linux-arm64-gnu@npm:16.6.0"
+"@nx/nx-linux-arm64-gnu@npm:16.7.2":
+  version: 16.7.2
+  resolution: "@nx/nx-linux-arm64-gnu@npm:16.7.2"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
@@ -2415,9 +2415,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-arm64-musl@npm:16.6.0":
-  version: 16.6.0
-  resolution: "@nx/nx-linux-arm64-musl@npm:16.6.0"
+"@nx/nx-linux-arm64-musl@npm:16.7.2":
+  version: 16.7.2
+  resolution: "@nx/nx-linux-arm64-musl@npm:16.7.2"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
@@ -2429,9 +2429,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-x64-gnu@npm:16.6.0":
-  version: 16.6.0
-  resolution: "@nx/nx-linux-x64-gnu@npm:16.6.0"
+"@nx/nx-linux-x64-gnu@npm:16.7.2":
+  version: 16.7.2
+  resolution: "@nx/nx-linux-x64-gnu@npm:16.7.2"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
@@ -2443,9 +2443,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-x64-musl@npm:16.6.0":
-  version: 16.6.0
-  resolution: "@nx/nx-linux-x64-musl@npm:16.6.0"
+"@nx/nx-linux-x64-musl@npm:16.7.2":
+  version: 16.7.2
+  resolution: "@nx/nx-linux-x64-musl@npm:16.7.2"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
@@ -2457,9 +2457,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx/nx-win32-arm64-msvc@npm:16.6.0":
-  version: 16.6.0
-  resolution: "@nx/nx-win32-arm64-msvc@npm:16.6.0"
+"@nx/nx-win32-arm64-msvc@npm:16.7.2":
+  version: 16.7.2
+  resolution: "@nx/nx-win32-arm64-msvc@npm:16.7.2"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
@@ -2471,9 +2471,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nx/nx-win32-x64-msvc@npm:16.6.0":
-  version: 16.6.0
-  resolution: "@nx/nx-win32-x64-msvc@npm:16.6.0"
+"@nx/nx-win32-x64-msvc@npm:16.7.2":
+  version: 16.7.2
+  resolution: "@nx/nx-win32-x64-msvc@npm:16.7.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -2667,9 +2667,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-node-resolve@npm:15.1.0":
-  version: 15.1.0
-  resolution: "@rollup/plugin-node-resolve@npm:15.1.0"
+"@rollup/plugin-node-resolve@npm:15.2.0":
+  version: 15.2.0
+  resolution: "@rollup/plugin-node-resolve@npm:15.2.0"
   dependencies:
     "@rollup/pluginutils": ^5.0.1
     "@types/resolve": 1.20.2
@@ -2682,7 +2682,7 @@ __metadata:
   peerDependenciesMeta:
     rollup:
       optional: true
-  checksum: 83617cdbb90cb780251e8b16dc1671e35bde90b8d4d30e008aefe706b5b643057f6299bdd3226b2a30bf5e4f807a880169de3faa47b9f2ba38d39f294f85f951
+  checksum: 92abfd7f1f5df08d71e4b8dd433d31cf1d62f68891ae3dd5e03a8a7f8d42d9c4433c14a25ead04204fea8235c663a3bbb66ba5528103a6dab66bd8c124f85a0d
   languageName: node
   linkType: hard
 
@@ -2953,10 +2953,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:18.17.5":
-  version: 18.17.5
-  resolution: "@types/node@npm:18.17.5"
-  checksum: b8c658a99234b99425243c324b641ed7b9ceb6bee6b06421fdc9bb7c58f9a5552e353225cc549e6982462ac384abe1985022ed76e2e4728797f59b21f659ca2b
+"@types/node@npm:18.17.6":
+  version: 18.17.6
+  resolution: "@types/node@npm:18.17.6"
+  checksum: 70bc92adde47d569f25c5ed40b55040cdf189518d6149e0c3041c6e60b1098cad9c48a856f0b7868ebd74d4098a0ca508b0ec4373dd96216eb8a387ee898e14c
   languageName: node
   linkType: hard
 
@@ -3157,16 +3157,16 @@ __metadata:
     "@babel/preset-env": 7.22.10
     "@babel/runtime": 7.22.10
     "@rollup/plugin-babel": 6.0.3
-    "@rollup/plugin-node-resolve": 15.1.0
+    "@rollup/plugin-node-resolve": 15.2.0
     "@rollup/plugin-terser": 0.4.3
     "@types/jest": 29.5.3
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     "@types/rollup-plugin-node-globals": 1.4.1
     "@types/semver": 7.5.0
     bundlesize2: 0.0.31
-    execa: 7.2.0
+    execa: 8.0.1
     lerna: 7.1.5
-    nx: 16.6.0
+    nx: 16.7.2
     rollup: 3.28.0
     rollup-plugin-node-globals: 1.4.0
     rollup-plugin-typescript2: 0.35.0
@@ -3188,7 +3188,7 @@ __metadata:
     "@algolia/requester-browser-xhr": 5.0.0-alpha.78
     "@algolia/requester-node-http": 5.0.0-alpha.78
     "@types/jest": 29.5.3
-    "@types/node": 18.17.5
+    "@types/node": 18.17.6
     jest: 29.6.2
     rollup: 3.28.0
     ts-jest: 29.1.1
@@ -4433,6 +4433,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:~16.3.1":
+  version: 16.3.1
+  resolution: "dotenv@npm:16.3.1"
+  checksum: 15d75e7279018f4bafd0ee9706593dd14455ddb71b3bcba9c52574460b7ccaf67d5cf8b2c08a5af1a9da6db36c956a04a1192b101ee102a3e0cf8817bbcf3dfd
+  languageName: node
+  linkType: hard
+
 "duplexer@npm:^0.1.1":
   version: 0.1.2
   resolution: "duplexer@npm:0.1.2"
@@ -4660,20 +4667,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:7.2.0":
-  version: 7.2.0
-  resolution: "execa@npm:7.2.0"
+"execa@npm:8.0.1":
+  version: 8.0.1
+  resolution: "execa@npm:8.0.1"
   dependencies:
     cross-spawn: ^7.0.3
-    get-stream: ^6.0.1
-    human-signals: ^4.3.0
+    get-stream: ^8.0.1
+    human-signals: ^5.0.0
     is-stream: ^3.0.0
     merge-stream: ^2.0.0
     npm-run-path: ^5.1.0
     onetime: ^6.0.0
-    signal-exit: ^3.0.7
+    signal-exit: ^4.1.0
     strip-final-newline: ^3.0.0
-  checksum: 14fd17ba0ca8c87b277584d93b1d9fc24f2a65e5152b31d5eb159a3b814854283eaae5f51efa9525e304447e2f757c691877f7adff8fde5746aae67eb1edd1cc
+  checksum: cac1bf86589d1d9b73bdc5dda65c52012d1a9619c44c526891956745f7b366ca2603d29fe3f7460bacc2b48c6eab5d6a4f7afe0534b31473d3708d1265545e1f
   languageName: node
   linkType: hard
 
@@ -5052,10 +5059,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-stream@npm:^6.0.0, get-stream@npm:^6.0.1":
+"get-stream@npm:^6.0.0":
   version: 6.0.1
   resolution: "get-stream@npm:6.0.1"
   checksum: e04ecece32c92eebf5b8c940f51468cd53554dcbb0ea725b2748be583c9523d00128137966afce410b9b051eb2ef16d657cd2b120ca8edafcf5a65e81af63cad
+  languageName: node
+  linkType: hard
+
+"get-stream@npm:^8.0.1":
+  version: 8.0.1
+  resolution: "get-stream@npm:8.0.1"
+  checksum: 01e3d3cf29e1393f05f44d2f00445c5f9ec3d1c49e8179b31795484b9c117f4c695e5e07b88b50785d5c8248a788c85d9913a79266fc77e3ef11f78f10f1b974
   languageName: node
   linkType: hard
 
@@ -5401,10 +5415,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"human-signals@npm:^4.3.0":
-  version: 4.3.1
-  resolution: "human-signals@npm:4.3.1"
-  checksum: 6f12958df3f21b6fdaf02d90896c271df00636a31e2bbea05bddf817a35c66b38a6fdac5863e2df85bd52f34958997f1f50350ff97249e1dff8452865d5235d1
+"human-signals@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "human-signals@npm:5.0.0"
+  checksum: 6504560d5ed91444f16bea3bd9dfc66110a339442084e56c3e7fa7bbdf3f406426d6563d662bdce67064b165eac31eeabfc0857ed170aaa612cf14ec9f9a464c
   languageName: node
   linkType: hard
 
@@ -7228,15 +7242,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nock@npm:13.3.2":
-  version: 13.3.2
-  resolution: "nock@npm:13.3.2"
+"nock@npm:13.3.3":
+  version: 13.3.3
+  resolution: "nock@npm:13.3.3"
   dependencies:
     debug: ^4.1.0
     json-stringify-safe: ^5.0.1
     lodash: ^4.17.21
     propagate: ^2.0.0
-  checksum: 1d7d5fda1816a3a0d2cb47f10283db139fcd15be6975db6f9b260efa781d5f0eeadf9bd7aab6db61191c519dd99bcd4c5c061e77880341be60abc39cd6163c1f
+  checksum: e3e4f0fb777ac63d74f89bbb7aebe8e815b891b64ac71983d91686f725fdab856fe189cf2fe23d4add9f5dd5da53f3568106a61116a771ce0f4ed0f5ad7b035b
   languageName: node
   linkType: hard
 
@@ -7618,21 +7632,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nx@npm:16.6.0":
-  version: 16.6.0
-  resolution: "nx@npm:16.6.0"
+"nx@npm:16.7.2":
+  version: 16.7.2
+  resolution: "nx@npm:16.7.2"
   dependencies:
-    "@nrwl/tao": 16.6.0
-    "@nx/nx-darwin-arm64": 16.6.0
-    "@nx/nx-darwin-x64": 16.6.0
-    "@nx/nx-freebsd-x64": 16.6.0
-    "@nx/nx-linux-arm-gnueabihf": 16.6.0
-    "@nx/nx-linux-arm64-gnu": 16.6.0
-    "@nx/nx-linux-arm64-musl": 16.6.0
-    "@nx/nx-linux-x64-gnu": 16.6.0
-    "@nx/nx-linux-x64-musl": 16.6.0
-    "@nx/nx-win32-arm64-msvc": 16.6.0
-    "@nx/nx-win32-x64-msvc": 16.6.0
+    "@nrwl/tao": 16.7.2
+    "@nx/nx-darwin-arm64": 16.7.2
+    "@nx/nx-darwin-x64": 16.7.2
+    "@nx/nx-freebsd-x64": 16.7.2
+    "@nx/nx-linux-arm-gnueabihf": 16.7.2
+    "@nx/nx-linux-arm64-gnu": 16.7.2
+    "@nx/nx-linux-arm64-musl": 16.7.2
+    "@nx/nx-linux-x64-gnu": 16.7.2
+    "@nx/nx-linux-x64-musl": 16.7.2
+    "@nx/nx-win32-arm64-msvc": 16.7.2
+    "@nx/nx-win32-x64-msvc": 16.7.2
     "@parcel/watcher": 2.0.4
     "@yarnpkg/lockfile": ^1.1.0
     "@yarnpkg/parsers": 3.0.0-rc.46
@@ -7642,7 +7656,7 @@ __metadata:
     cli-cursor: 3.1.0
     cli-spinners: 2.6.1
     cliui: ^7.0.2
-    dotenv: ~10.0.0
+    dotenv: ~16.3.1
     enquirer: ~2.3.6
     fast-glob: 3.2.7
     figures: 3.2.0
@@ -7698,7 +7712,7 @@ __metadata:
       optional: true
   bin:
     nx: bin/nx.js
-  checksum: 5910d1bd27cc8a2716f31a6dad1573d0fb455ea1bcffde3d2a8016cee552e3ad8b4aaa98f9176cf107032c9c0074698085157b10937a2601ac016a3e28b8d0b8
+  checksum: 8507fe0b5f842e7b4454631b4bd6a4a7e7a9664b477ffa8e40c15bee2c3cbcc74ffb353a3b04496e67e4185d26db8465b67ffc11bb2da8e6a97fef984b55a599
   languageName: node
   linkType: hard
 
@@ -8832,6 +8846,13 @@ __metadata:
   version: 4.0.2
   resolution: "signal-exit@npm:4.0.2"
   checksum: 41f5928431cc6e91087bf0343db786a6313dd7c6fd7e551dbc141c95bb5fb26663444fd9df8ea47c5d7fc202f60aa7468c3162a9365cbb0615fc5e1b1328fe31
+  languageName: node
+  linkType: hard
+
+"signal-exit@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "signal-exit@npm:4.1.0"
+  checksum: 64c757b498cb8629ffa5f75485340594d2f8189e9b08700e69199069c8e3070fb3e255f7ab873c05dc0b3cec412aea7402e10a5990cb6a050bd33ba062a6c549
   languageName: node
   linkType: hard
 
