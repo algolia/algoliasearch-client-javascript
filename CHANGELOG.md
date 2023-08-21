@@ -1,3 +1,7 @@
+## [5.0.0-alpha.80](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.79...5.0.0-alpha.80)
+
+- [693631cc7](https://github.com/algolia/api-clients-automation/commit/693631cc7) fix(specs): remove some parameters from trending requests ([#1915](https://github.com/algolia/api-clients-automation/pull/1915)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.79](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.78...5.0.0-alpha.79)
 
 - [d434431d1](https://github.com/algolia/api-clients-automation/commit/d434431d1) fix(javascript): move `cjs.js` to `cjs` ([#1894](https://github.com/algolia/api-clients-automation/pull/1894)) by [@shortcuts](https://github.com/shortcuts/)

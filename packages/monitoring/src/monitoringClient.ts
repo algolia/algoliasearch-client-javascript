@@ -34,7 +34,7 @@ import type { InventoryResponse } from '../model/inventoryResponse';
 import type { LatencyResponse } from '../model/latencyResponse';
 import type { StatusResponse } from '../model/statusResponse';
 
-export const apiClientVersion = '1.0.0-alpha.6';
+export const apiClientVersion = '1.0.0-alpha.7';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
