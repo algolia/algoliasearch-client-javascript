@@ -20,12 +20,12 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@types/jest": "29.5.3",
-    "@types/node": "18.17.6",
-    "jest": "29.6.2",
-    "jest-environment-jsdom": "29.6.2",
+    "@types/jest": "29.5.4",
+    "@types/node": "18.17.12",
+    "jest": "29.6.4",
+    "jest-environment-jsdom": "29.6.4",
     "ts-jest": "29.1.1",
-    "typescript": "5.1.6"
+    "typescript": "5.2.2"
   },
   "engines": {
     "node": ">= 14.0.0"
