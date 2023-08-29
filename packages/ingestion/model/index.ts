@@ -22,6 +22,7 @@ export * from './authenticationType';
 export * from './authenticationUpdate';
 export * from './authenticationUpdateResponse';
 export * from './bigCommerceChannel';
+export * from './bigCommerceMetafield';
 export * from './bigQueryDataType';
 export * from './deleteResponse';
 export * from './destination';
