@@ -26,6 +26,11 @@ export type Run = {
   outcome?: RunOutcome;
 
   /**
+   * A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+   */
+  failureThrehsold?: number;
+
+  /**
    * Explains the result of outcome.
    */
   reason?: string;

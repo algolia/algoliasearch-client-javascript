@@ -27,5 +27,10 @@ export type TaskCreate = {
    */
   enabled?: boolean;
 
+  /**
+   * A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+   */
+  failureThreshold?: number;
+
   input?: TaskInput;
 };
