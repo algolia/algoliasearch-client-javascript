@@ -19,11 +19,6 @@ export type SourceDocker = {
   imageType: DockerImageType;
 
   /**
-   * The full name of the output file.
-   */
-  outputFile?: string;
-
-  /**
    * The configuration of the spec.
    */
   configuration: Record<string, any>;
