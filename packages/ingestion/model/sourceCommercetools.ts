@@ -11,4 +11,9 @@ export type SourceCommercetools = {
   url: string;
 
   projectKey: string;
+
+  /**
+   * Determines the value that will be stored in the Algolia record if there\'s no inventory information on the product.
+   */
+  fallbackIsInStockValue?: boolean;
 };

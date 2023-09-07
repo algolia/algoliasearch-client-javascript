@@ -4,7 +4,7 @@ import type { DestinationInput } from './destinationInput';
 import type { DestinationType } from './destinationType';
 
 /**
- * Payload to partialy update a Destination.
+ * Payload to partially update a Destination.
  */
 export type DestinationUpdate = {
   type?: DestinationType;

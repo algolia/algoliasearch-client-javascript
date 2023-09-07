@@ -59,6 +59,7 @@ export * from './pagination';
 export * from './platform';
 export * from './platformNone';
 export * from './platformWithNone';
+export * from './recordType';
 export * from './run';
 export * from './runListResponse';
 export * from './runOutcome';
