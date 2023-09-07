@@ -35,7 +35,7 @@
 
 * feat: update ab test typing (#1455) ([f53c72c](https://github.com/algolia/algoliasearch-client-javascript/commit/f53c72c)), closes [#1455](https://github.com/algolia/algoliasearch-client-javascript/issues/1455)
 * feat(fetch): remove `mode` option to rely on library's default (#1452) ([67293e1](https://github.com/algolia/algoliasearch-client-javascript/commit/67293e1)), closes [#1452](https://github.com/algolia/algoliasearch-client-javascript/issues/1452)
-* feat(neural): make eventSources nullable (#1453) ([eacfca2](https://github.com/algolia/algoliasearch-client-javascript/commit/eacfca2)), closes [#1453](https://github.com/algolia/algoliasearch-client-javascript/issues/1453)
+* feat(neural): make event sources nullable (#1453) ([eacfca2](https://github.com/algolia/algoliasearch-client-javascript/commit/eacfca2)), closes [#1453](https://github.com/algolia/algoliasearch-client-javascript/issues/1453)
 
 
 
