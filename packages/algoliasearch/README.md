@@ -75,7 +75,7 @@ index
   });
 ```
 
-For full documentation, visit the **[online documentation](https://www.algolia.com/doc/api-client/getting-started/install/javascript/)**.
+For the full documentation, visit the **[online documentation](https://www.algolia.com/doc/api-client/getting-started/install/javascript/)**.
 
 ## 📄 License
 
