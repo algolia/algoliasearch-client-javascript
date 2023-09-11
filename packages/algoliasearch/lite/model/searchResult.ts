@@ -3,6 +3,4 @@
 import type { SearchForFacetValuesResponse } from './searchForFacetValuesResponse';
 import type { SearchResponse } from './searchResponse';
 
-export type SearchResult<T = Record<string, any>> =
-  | SearchForFacetValuesResponse
-  | SearchResponse<T>;
+export type SearchResult = SearchForFacetValuesResponse | SearchResponse;
