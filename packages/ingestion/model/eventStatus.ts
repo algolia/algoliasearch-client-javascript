@@ -2,6 +2,7 @@
 
 export type EventStatus =
   | 'created'
+  | 'critical'
   | 'failed'
   | 'retried'
   | 'started'
