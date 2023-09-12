@@ -88,6 +88,7 @@ export * from './sourceSortKeys';
 export * from './sourceType';
 export * from './sourceUpdate';
 export * from './sourceUpdateCommercetools';
+export * from './sourceUpdateDocker';
 export * from './sourceUpdateInput';
 export * from './sourceUpdateResponse';
 export * from './subscriptionTrigger';
