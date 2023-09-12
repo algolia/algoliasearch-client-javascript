@@ -1,3 +1,9 @@
+## [v4.20.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.19.1...4.20.0)
+
+* feat(search): add inference ACL to API key object (#1479) ([3a95126](https://github.com/algolia/algoliasearch-client-javascript/commit/3a95126)), closes [#1479](https://github.com/algolia/algoliasearch-client-javascript/issues/1479)
+
+
+
 ## [v4.19.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.19.0...4.19.1)
 
 * fix(recommend): Add Type RecommendQueriesResponse from old MultipleQueriesResponse for recommend (#1472) ([36285b2](https://github.com/algolia/algoliasearch-client-javascript/commit/36285b2)), closes [#1472](https://github.com/algolia/algoliasearch-client-javascript/issues/1472)
