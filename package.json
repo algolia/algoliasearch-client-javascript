@@ -6,8 +6,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build:all": "lerna run build --include-dependencies",
-    "build:many": "lerna run build --include-dependencies --scope ${0:-'{@algolia/*,algoliasearch}'}",
+    "build:all": "lerna run build --skip-nx-cache --include-dependencies",
+    "build:many": "lerna run build --skip-nx-cache --include-dependencies --scope ${0:-'{@algolia/*,algoliasearch}'}",
     "clean": "lerna run clean --include-dependencies",
     "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --force-publish --yes",
     "release:publish": "ts-node --esm --project tsconfig.script.json scripts/publish.ts",
