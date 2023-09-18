@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-fetch",
-  "version": "5.0.0-alpha.82",
+  "version": "5.0.0-alpha.83",
   "description": "Promise-based request library using Fetch.",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.82"
+    "@algolia/client-common": "5.0.0-alpha.83"
   },
   "devDependencies": {
     "@types/jest": "29.5.4",
