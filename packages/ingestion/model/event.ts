@@ -26,6 +26,11 @@ export type Event = {
 
   type: EventType;
 
+  /**
+   * The extracted record batch size.
+   */
+  batchSize: number;
+
   data?: Record<string, any>;
 
   /**
