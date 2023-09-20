@@ -1,3 +1,7 @@
+## [5.0.0-alpha.85](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.84...5.0.0-alpha.85)
+
+- [bf8dee8fd](https://github.com/algolia/api-clients-automation/commit/bf8dee8fd) feat(javascript): add partial task action type ([#2034](https://github.com/algolia/api-clients-automation/pull/2034)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.0.0-alpha.84](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.83...5.0.0-alpha.84)
 
 - [28c1a2118](https://github.com/algolia/api-clients-automation/commit/28c1a2118) feat(javascript): add batchSize to the observability event object ([#2029](https://github.com/algolia/api-clients-automation/pull/2029)) by [@Fluf22](https://github.com/Fluf22/)
