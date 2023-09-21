@@ -115,7 +115,7 @@ export type BaseSearchResponse = {
   /**
    * Lets you store custom data in your indices.
    */
-  userData?: Record<string, any>;
+  userData?: any | null;
 
   renderingContent?: RenderingContent;
 };
