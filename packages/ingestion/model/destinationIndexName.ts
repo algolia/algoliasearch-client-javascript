@@ -9,4 +9,9 @@ export type DestinationIndexName = {
   indexName: string;
 
   recordType?: RecordType;
+
+  /**
+   * Determines the attributes to exclude from an Algolia record. To remove nested element, you can separate the path to the element with dots (`.`):   - \"foo.bar\": will remove `bar` from `foo`. To remove elements from an array, you can use the following:   - \"foo.[0].bar\": will only remove `bar` from the first element of `foo`.   - \"foo.[*].bar\": will remove `bar` from every elements of `foo`.
+   */
+  attributesToExclude?: string[];
 };
