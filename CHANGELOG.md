@@ -1,3 +1,8 @@
+## [5.0.0-alpha.86](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.85...5.0.0-alpha.86)
+
+- [2260e903f](https://github.com/algolia/api-clients-automation/commit/2260e903f) feat(specs): add `attributesToExclude` for Ingestion ([#2053](https://github.com/algolia/api-clients-automation/pull/2053)) by [@shortcuts](https://github.com/shortcuts/)
+- [b7b6565ab](https://github.com/algolia/api-clients-automation/commit/b7b6565ab) fix(specs): `userData` type as 'any' ([#2033](https://github.com/algolia/api-clients-automation/pull/2033)) by [@aallam](https://github.com/aallam/)
+
 ## [5.0.0-alpha.85](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.84...5.0.0-alpha.85)
 
 - [bf8dee8fd](https://github.com/algolia/api-clients-automation/commit/bf8dee8fd) feat(javascript): add partial task action type ([#2034](https://github.com/algolia/api-clients-automation/pull/2034)) by [@Fluf22](https://github.com/Fluf22/)
