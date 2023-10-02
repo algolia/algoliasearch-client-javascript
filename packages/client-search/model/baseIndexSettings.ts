@@ -75,4 +75,9 @@ export type BaseIndexSettings = {
    * A list of characters and their normalized replacements to override Algolia\'s default [normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/).
    */
   customNormalization?: Record<string, Record<string, string>>;
+
+  /**
+   * Name of the deduplication attribute to be used with Algolia\'s [_distinct_ feature](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature).
+   */
+  attributeForDistinct?: string;
 };

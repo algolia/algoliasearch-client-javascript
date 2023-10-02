@@ -164,11 +164,6 @@ export type IndexSettingsAsSearchParams = {
   distinct?: Distinct;
 
   /**
-   * Name of the deduplication attribute to be used with Algolia\'s [_distinct_ feature](https://www.algolia.com/doc/guides/managing-results/refine-results/grouping/#introducing-algolias-distinct-feature).
-   */
-  attributeForDistinct?: string;
-
-  /**
    * Whether to highlight and snippet the original word that matches the synonym or the synonym itself.
    */
   replaceSynonymsInHighlight?: boolean;
