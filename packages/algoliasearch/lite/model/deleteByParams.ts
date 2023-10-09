@@ -27,10 +27,10 @@ export type DeleteByParams = {
   /**
    * Search inside a [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
    */
-  insideBoundingBox?: number[];
+  insideBoundingBox?: number[][];
 
   /**
    * Search inside a [polygon](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas) (in geographical coordinates).
    */
-  insidePolygon?: number[];
+  insidePolygon?: number[][];
 };
