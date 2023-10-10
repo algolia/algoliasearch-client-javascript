@@ -1,3 +1,12 @@
+## [5.0.0-alpha.87](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.86...5.0.0-alpha.87)
+
+- [e3b7e2ab6](https://github.com/algolia/api-clients-automation/commit/e3b7e2ab6) feat(specs): synchronize specs for all client ([#2103](https://github.com/algolia/api-clients-automation/pull/2103)) by [@Fluf22](https://github.com/Fluf22/)
+- [b31ce2c9f](https://github.com/algolia/api-clients-automation/commit/b31ce2c9f) feat(javascript): add discover handlers to source model ([#2096](https://github.com/algolia/api-clients-automation/pull/2096)) by [@Fluf22](https://github.com/Fluf22/)
+- [d039c7dc7](https://github.com/algolia/api-clients-automation/commit/d039c7dc7) feat(javascript): handle run discover type ([#2101](https://github.com/algolia/api-clients-automation/pull/2101)) by [@Fluf22](https://github.com/Fluf22/)
+- [f8e79a1e2](https://github.com/algolia/api-clients-automation/commit/f8e79a1e2) fix(specs): search `insideBoundingBox` type ([#2098](https://github.com/algolia/api-clients-automation/pull/2098)) by [@aallam](https://github.com/aallam/)
+- [d38619103](https://github.com/algolia/api-clients-automation/commit/d38619103) feat(specs): add new events type for insights ([#2080](https://github.com/algolia/api-clients-automation/pull/2080)) by [@millotp](https://github.com/millotp/)
+- [756f19ab7](https://github.com/algolia/api-clients-automation/commit/756f19ab7) feat(specs): Remove attributeForDistinct from the indexSettingsAsSearc… ([#2078](https://github.com/algolia/api-clients-automation/pull/2078)) by [@clemfromspace](https://github.com/clemfromspace/)
+
 ## [5.0.0-alpha.86](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.85...5.0.0-alpha.86)
 
 - [2260e903f](https://github.com/algolia/api-clients-automation/commit/2260e903f) feat(specs): add `attributesToExclude` for Ingestion ([#2053](https://github.com/algolia/api-clients-automation/pull/2053)) by [@shortcuts](https://github.com/shortcuts/)

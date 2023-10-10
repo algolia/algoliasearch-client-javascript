@@ -62,11 +62,11 @@
   "dependencies": {
     "@algolia/client-abtesting": "5.0.0-alpha.85",
     "@algolia/client-analytics": "5.0.0-alpha.85",
-    "@algolia/client-common": "5.0.0-alpha.85",
+    "@algolia/client-common": "5.0.0-alpha.86",
     "@algolia/client-personalization": "5.0.0-alpha.85",
     "@algolia/client-search": "5.0.0-alpha.85",
-    "@algolia/requester-browser-xhr": "5.0.0-alpha.85",
-    "@algolia/requester-node-http": "5.0.0-alpha.85"
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.86",
+    "@algolia/requester-node-http": "5.0.0-alpha.86"
   },
   "devDependencies": {
     "@types/jest": "29.5.5",
