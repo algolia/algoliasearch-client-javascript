@@ -38,6 +38,8 @@ export * from './destinationUpdate';
 export * from './destinationUpdateResponse';
 export * from './dockerImageType';
 export * from './dockerRegistry';
+export * from './dockerSourceDiscover';
+export * from './dockerSourceStreams';
 export * from './errorBase';
 export * from './event';
 export * from './eventSortKeys';

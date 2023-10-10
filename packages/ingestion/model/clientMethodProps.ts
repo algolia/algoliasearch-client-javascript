@@ -190,6 +190,16 @@ export type GetDestinationsProps = {
 };
 
 /**
+ * Properties for the `getDockerSourceStreams` method.
+ */
+export type GetDockerSourceStreamsProps = {
+  /**
+   * The source UUID.
+   */
+  sourceID: string;
+};
+
+/**
  * Properties for the `getEvent` method.
  */
 export type GetEventProps = {
@@ -421,6 +431,16 @@ export type RunTaskProps = {
    * The task UUID.
    */
   taskID: string;
+};
+
+/**
+ * Properties for the `triggerDockerSourceDiscover` method.
+ */
+export type TriggerDockerSourceDiscoverProps = {
+  /**
+   * The source UUID.
+   */
+  sourceID: string;
 };
 
 /**

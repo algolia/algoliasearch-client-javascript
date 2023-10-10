@@ -32,6 +32,7 @@ import type {
   GetAuthenticationsProps,
   GetDestinationProps,
   GetDestinationsProps,
+  GetDockerSourceStreamsProps,
   GetEventProps,
   GetEventsProps,
   GetRunProps,
@@ -43,6 +44,7 @@ import type {
   PostProps,
   PutProps,
   RunTaskProps,
+  TriggerDockerSourceDiscoverProps,
   UpdateAuthenticationProps,
   UpdateDestinationProps,
   UpdateSourceProps,
@@ -54,6 +56,8 @@ import type { DestinationCreate } from '../model/destinationCreate';
 import type { DestinationCreateResponse } from '../model/destinationCreateResponse';
 import type { DestinationSearch } from '../model/destinationSearch';
 import type { DestinationUpdateResponse } from '../model/destinationUpdateResponse';
+import type { DockerSourceDiscover } from '../model/dockerSourceDiscover';
+import type { DockerSourceStreams } from '../model/dockerSourceStreams';
 import type { Event } from '../model/event';
 import type { ListAuthenticationsResponse } from '../model/listAuthenticationsResponse';
 import type { ListDestinationsResponse } from '../model/listDestinationsResponse';
@@ -854,6 +858,41 @@ export function createIngestionClient({
     },
 
     /**
+     * Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+     *
+     * @summary Retrieve a stream listing.
+     * @param getDockerSourceStreams - The getDockerSourceStreams object.
+     * @param getDockerSourceStreams.sourceID - The source UUID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getDockerSourceStreams(
+      { sourceID }: GetDockerSourceStreamsProps,
+      requestOptions?: RequestOptions
+    ): Promise<DockerSourceStreams> {
+      if (!sourceID) {
+        throw new Error(
+          'Parameter `sourceID` is required when calling `getDockerSourceStreams`.'
+        );
+      }
+
+      const requestPath = '/1/sources/{sourceID}/discover'.replace(
+        '{sourceID}',
+        encodeURIComponent(sourceID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Get a single event for a specific runID.
      *
      * @summary Get an event.
@@ -1526,6 +1565,41 @@ export function createIngestionClient({
         queryParameters,
         headers,
         data: taskSearch,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Trigger a stream listing request for a Singer specification compatible docker type source.
+     *
+     * @summary Trigger a stream listing request.
+     * @param triggerDockerSourceDiscover - The triggerDockerSourceDiscover object.
+     * @param triggerDockerSourceDiscover.sourceID - The source UUID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    triggerDockerSourceDiscover(
+      { sourceID }: TriggerDockerSourceDiscoverProps,
+      requestOptions?: RequestOptions
+    ): Promise<DockerSourceDiscover> {
+      if (!sourceID) {
+        throw new Error(
+          'Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.'
+        );
+      }
+
+      const requestPath = '/1/sources/{sourceID}/discover'.replace(
+        '{sourceID}',
+        encodeURIComponent(sourceID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
       };
 
       return transporter.request(request, requestOptions);
