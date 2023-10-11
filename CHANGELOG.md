@@ -1,3 +1,7 @@
+## [5.0.0-alpha.88](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.87...5.0.0-alpha.88)
+
+- [2c58deae3](https://github.com/algolia/api-clients-automation/commit/2c58deae3) fix(javascript): release process ([#2106](https://github.com/algolia/api-clients-automation/pull/2106)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.87](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.86...5.0.0-alpha.87)
 
 - [e3b7e2ab6](https://github.com/algolia/api-clients-automation/commit/e3b7e2ab6) feat(specs): synchronize specs for all client ([#2103](https://github.com/algolia/api-clients-automation/pull/2103)) by [@Fluf22](https://github.com/Fluf22/)
