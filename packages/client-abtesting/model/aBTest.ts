@@ -14,9 +14,24 @@ export type ABTest = {
   clickSignificance: number;
 
   /**
-   * End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+   * [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on conversion. A value of 0.95 or over is considered to be _significant_.
    */
-  conversionSignificance: string;
+  conversionSignificance: number;
+
+  /**
+   * [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on add-to-cart data. A value of 0.95 or over is considered to be _significant_.
+   */
+  addToCartSignificance: number;
+
+  /**
+   * [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on purchase data. A value of 0.95 or over is considered to be _significant_.
+   */
+  purchaseSignificance: number;
+
+  /**
+   * [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on revenue data. A value of 0.95 or over is considered to be _significant_.
+   */
+  revenueSignificance: Record<string, number>;
 
   /**
    * Update date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
@@ -27,6 +42,11 @@ export type ABTest = {
    * Creation date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
    */
   createdAt: string;
+
+  /**
+   * End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+   */
+  endAt: string;
 
   /**
    * A/B test name.
