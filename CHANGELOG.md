@@ -1,3 +1,7 @@
+## [5.0.0-alpha.89](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.88...5.0.0-alpha.89)
+
+- [b5ec54151](https://github.com/algolia/api-clients-automation/commit/b5ec54151) feat(specs): revenue and filterEffects typing updates ([#2105](https://github.com/algolia/api-clients-automation/pull/2105)) by [@cdhawke](https://github.com/cdhawke/)
+
 ## [5.0.0-alpha.88](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.87...5.0.0-alpha.88)
 
 - [2c58deae3](https://github.com/algolia/api-clients-automation/commit/2c58deae3) fix(javascript): release process ([#2106](https://github.com/algolia/api-clients-automation/pull/2106)) by [@shortcuts](https://github.com/shortcuts/)
