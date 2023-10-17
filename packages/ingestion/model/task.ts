@@ -29,6 +29,11 @@ export type Task = {
    */
   enabled: boolean;
 
+  /**
+   * A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+   */
+  failureThreshold?: number;
+
   action: ActionType;
 
   /**
