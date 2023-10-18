@@ -105,6 +105,6 @@ export * from './taskSortKeys';
 export * from './taskUpdate';
 export * from './taskUpdateResponse';
 export * from './trigger';
-export * from './triggerInput';
 export * from './triggerType';
+export * from './triggerUpdateInput';
 export * from './clientMethodProps';
