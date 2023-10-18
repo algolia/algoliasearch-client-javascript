@@ -1,3 +1,10 @@
+## [5.0.0-alpha.90](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.89...5.0.0-alpha.90)
+
+- [d25921cb](https://github.com/algolia/api-clients-automation/commit/d25921cb) fix(specs): Change trigger input for task update ([#2147](https://github.com/algolia/api-clients-automation/pull/2147)) by [@damcou](https://github.com/damcou/)
+- [4befd83a](https://github.com/algolia/api-clients-automation/commit/4befd83a) feat(javascript): add `searchForHits` and `searchForFacets` helpers ([#2138](https://github.com/algolia/api-clients-automation/pull/2138)) by [@shortcuts](https://github.com/shortcuts/)
+- [dcd1201e](https://github.com/algolia/api-clients-automation/commit/dcd1201e) feat(specs): Add `failureThreshold` to `Task` and `TaskUpdate` types ([#2144](https://github.com/algolia/api-clients-automation/pull/2144)) by [@damcou](https://github.com/damcou/)
+- [a5ff0a76](https://github.com/algolia/api-clients-automation/commit/a5ff0a76) fix(specs): remove duplicate objectID ([#2113](https://github.com/algolia/api-clients-automation/pull/2113)) by [@millotp](https://github.com/millotp/)
+
 ## [5.0.0-alpha.89](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.88...5.0.0-alpha.89)
 
 - [b5ec54151](https://github.com/algolia/api-clients-automation/commit/b5ec54151) feat(specs): revenue and filterEffects typing updates ([#2105](https://github.com/algolia/api-clients-automation/pull/2105)) by [@cdhawke](https://github.com/cdhawke/)
