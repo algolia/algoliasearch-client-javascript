@@ -15,8 +15,6 @@ export * from './discount';
 export * from './errorBase';
 export * from './eventsItems';
 export * from './eventsResponse';
-export * from './identify';
-export * from './identifyEvent';
 export * from './insightsEvents';
 export * from './objectData';
 export * from './objectDataAfterSearch';
