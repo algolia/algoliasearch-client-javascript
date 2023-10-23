@@ -42,4 +42,9 @@ export type ClickedObjectIDsAfterSearch = {
    * Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
    */
   timestamp?: number;
+
+  /**
+   * User token for authenticated users.
+   */
+  authenticatedUserToken?: string;
 };
