@@ -2,7 +2,7 @@
 
 import type { Hit } from './hit';
 
-export type SearchHits<T = Record<string, any>> = {
+export type SearchHits<T = Record<string, any>> = Record<string, any> & {
   hits: Array<Hit<T>>;
 
   /**
