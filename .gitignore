@@ -12,3 +12,5 @@ lerna-debug.log
 !.yarn/plugins
 
 node_modules
+
+.nx
