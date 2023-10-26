@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-      "maxSize": "8.55KB"
+      "maxSize": "8.10KB"
     },
     {
       "path": "packages/algoliasearch/dist/lite/lite.umd.js",
@@ -34,7 +34,7 @@
     },
     {
       "path": "packages/ingestion/dist/ingestion.umd.js",
-      "maxSize": "4.95KB"
+      "maxSize": "5.05KB"
     },
     {
       "path": "packages/monitoring/dist/monitoring.umd.js",

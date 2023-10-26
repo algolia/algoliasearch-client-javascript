@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/no-unresolved
-export * from './dist/builds/node';
+export * from './dist/algoliasearch/builds/node';
