@@ -1,6 +1,10 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+    "outDir": "dist"
+  },
+  "include": [
+    "scripts"
+  ]
 }

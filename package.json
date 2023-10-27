@@ -10,7 +10,7 @@
     "build:many": "lerna run build --skip-nx-cache --include-dependencies --scope ${0:-'{@algolia/*,algoliasearch}'}",
     "clean": "lerna run clean --include-dependencies",
     "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --force-publish --yes",
-    "release:publish": "ts-node --esm --project tsconfig.script.json scripts/publish.ts",
+    "release:publish": "tsc --project tsconfig.script.json && node dist/scripts/publish.js",
     "test:size": "bundlesize"
   },
   "devDependencies": {
@@ -23,7 +23,7 @@
     "@rollup/plugin-node-resolve": "15.2.3",
     "@rollup/plugin-terser": "0.4.4",
     "@types/jest": "29.5.6",
-    "@types/node": "18.18.6",
+    "@types/node": "20.8.9",
     "@types/rollup-plugin-node-globals": "1.4.3",
     "@types/semver": "7.5.4",
     "bundlesize2": "0.0.31",
@@ -34,11 +34,10 @@
     "rollup-plugin-node-globals": "1.4.0",
     "rollup-plugin-typescript2": "0.36.0",
     "semver": "7.5.4",
-    "ts-node": "10.9.1",
     "typescript": "5.2.2"
   },
   "engines": {
     "node": ">= 14.0.0",
-    "yarn": "^3.0.0"
+    "yarn": "^4.0.0"
   }
 }

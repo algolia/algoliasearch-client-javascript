@@ -54,22 +54,35 @@ export function getStringifiedBody(
  * Creates a test server.
  */
 export function createTestServer(): http.Server {
-  return http.createServer(function (_req, res) {
-    res.writeHead(200, {
-      'content-type': 'text/plain',
-      'access-control-allow-origin': '*',
-      'x-powered-by': 'nodejs',
-    });
+  return http.createServer(function (req, res) {
+    if (req.url?.endsWith('/connection_timeout')) {
+      setTimeout(() => {
+        res.writeHead(200, {
+          'content-type': 'text/plain',
+          'access-control-allow-origin': '*',
+          'x-powered-by': 'nodejs',
+        });
 
-    res.write('{"foo":');
+        res.write('{"foo": "bar"}');
+        res.end();
+      }, 5000);
+    } else {
+      res.writeHead(200, {
+        'content-type': 'text/plain',
+        'access-control-allow-origin': '*',
+        'x-powered-by': 'nodejs',
+      });
 
-    setTimeout(() => {
-      res.write(' "bar"');
-    }, 1000);
+      res.write('{"foo":');
 
-    setTimeout(() => {
-      res.write('}');
-      res.end();
-    }, 5000);
+      setTimeout(() => {
+        res.write(' "bar"');
+      }, 1000);
+
+      setTimeout(() => {
+        res.write('}');
+        res.end();
+      }, 5000);
+    }
   });
 }

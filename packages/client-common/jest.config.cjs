@@ -1,12 +1,14 @@
-import type { Config } from '@jest/types';
-
-const baseConfig: Config.InitialOptions = {
+/** @type {import('jest').Config.InitialOptions} */
+const baseConfig = {
   preset: 'ts-jest',
   roots: ['src/__tests__'],
   moduleDirectories: ['../../node_modules'],
+  transform: {
+    "\\.[jt]sx?$": "babel-jest",
+  }
 };
-
-const config: Config.InitialOptions = {
+/** @type {import('jest').Config} */
+module.exports = {
   projects: [
     {
       ...baseConfig,
@@ -27,5 +29,3 @@ const config: Config.InitialOptions = {
     },
   ],
 };
-
-export default config;
