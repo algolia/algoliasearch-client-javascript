@@ -1,3 +1,10 @@
+## [5.0.0-alpha.91](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.90...5.0.0-alpha.91)
+
+- [ebc2a0c4d](https://github.com/algolia/api-clients-automation/commit/ebc2a0c4d) chore(specs): remove unused spec file ([#2186](https://github.com/algolia/api-clients-automation/pull/2186)) by [@shortcuts](https://github.com/shortcuts/)
+- [6fa5a402e](https://github.com/algolia/api-clients-automation/commit/6fa5a402e) fix(javascript): algoliaseach bundling ([#2185](https://github.com/algolia/api-clients-automation/pull/2185)) by [@millotp](https://github.com/millotp/)
+- [517f9cb72](https://github.com/algolia/api-clients-automation/commit/517f9cb72) revert(specs): insights identify ([#2182](https://github.com/algolia/api-clients-automation/pull/2182)) by [@aallam](https://github.com/aallam/)
+- [fa326a50e](https://github.com/algolia/api-clients-automation/commit/fa326a50e) feat(specs): add `authenticatedUserToken` and `Identify` to insights ([#2151](https://github.com/algolia/api-clients-automation/pull/2151)) by [@aallam](https://github.com/aallam/)
+
 ## [5.0.0-alpha.90](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.89...5.0.0-alpha.90)
 
 - [d25921cb](https://github.com/algolia/api-clients-automation/commit/d25921cb) fix(specs): Change trigger input for task update ([#2147](https://github.com/algolia/api-clients-automation/pull/2147)) by [@damcou](https://github.com/damcou/)

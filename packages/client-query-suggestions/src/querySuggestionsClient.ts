@@ -31,7 +31,7 @@ import type { GetLogFile200Response } from '../model/getLogFile200Response';
 import type { QuerySuggestionsConfigurationResponse } from '../model/querySuggestionsConfigurationResponse';
 import type { QuerySuggestionsConfigurationWithIndex } from '../model/querySuggestionsConfigurationWithIndex';
 
-export const apiClientVersion = '5.0.0-alpha.88';
+export const apiClientVersion = '5.0.0-alpha.89';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];

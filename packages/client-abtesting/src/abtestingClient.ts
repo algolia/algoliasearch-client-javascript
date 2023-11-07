@@ -29,7 +29,7 @@ import type {
 } from '../model/clientMethodProps';
 import type { ListABTestsResponse } from '../model/listABTestsResponse';
 
-export const apiClientVersion = '5.0.0-alpha.88';
+export const apiClientVersion = '5.0.0-alpha.89';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
