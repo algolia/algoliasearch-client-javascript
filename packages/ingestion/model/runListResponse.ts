@@ -2,9 +2,12 @@
 
 import type { Pagination } from './pagination';
 import type { Run } from './run';
+import type { Window } from './window';
 
 export type RunListResponse = {
   runs: Run[];
 
   pagination: Pagination;
+
+  window?: Window;
 };

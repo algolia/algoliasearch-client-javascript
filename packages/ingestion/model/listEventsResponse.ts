@@ -2,9 +2,12 @@
 
 import type { Event } from './event';
 import type { Pagination } from './pagination';
+import type { Window } from './window';
 
 export type ListEventsResponse = {
   events: Event[];
 
   pagination: Pagination;
+
+  window: Window;
 };

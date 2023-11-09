@@ -107,4 +107,5 @@ export * from './taskUpdateResponse';
 export * from './trigger';
 export * from './triggerType';
 export * from './triggerUpdateInput';
+export * from './window';
 export * from './clientMethodProps';
