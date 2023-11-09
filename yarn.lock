@@ -5,33 +5,33 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@algolia/client-abtesting@npm:5.0.0-alpha.89, @algolia/client-abtesting@workspace:packages/client-abtesting":
+"@algolia/client-abtesting@npm:5.0.0-alpha.90, @algolia/client-abtesting@workspace:packages/client-abtesting":
   version: 0.0.0-use.local
   resolution: "@algolia/client-abtesting@workspace:packages/client-abtesting"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
-    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.90"
-    "@algolia/requester-node-http": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
+    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.91"
+    "@algolia/requester-node-http": "npm:5.0.0-alpha.91"
     "@types/node": "npm:20.8.10"
     rollup: "npm:4.3.0"
     typescript: "npm:5.2.2"
   languageName: unknown
   linkType: soft
 
-"@algolia/client-analytics@npm:5.0.0-alpha.89, @algolia/client-analytics@workspace:packages/client-analytics":
+"@algolia/client-analytics@npm:5.0.0-alpha.90, @algolia/client-analytics@workspace:packages/client-analytics":
   version: 0.0.0-use.local
   resolution: "@algolia/client-analytics@workspace:packages/client-analytics"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
-    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.90"
-    "@algolia/requester-node-http": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
+    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.91"
+    "@algolia/requester-node-http": "npm:5.0.0-alpha.91"
     "@types/node": "npm:20.8.10"
     rollup: "npm:4.3.0"
     typescript: "npm:5.2.2"
   languageName: unknown
   linkType: soft
 
-"@algolia/client-common@npm:5.0.0-alpha.90, @algolia/client-common@workspace:packages/client-common":
+"@algolia/client-common@npm:5.0.0-alpha.91, @algolia/client-common@workspace:packages/client-common":
   version: 0.0.0-use.local
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
@@ -50,22 +50,22 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/client-insights@workspace:packages/client-insights"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
-    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.90"
-    "@algolia/requester-node-http": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
+    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.91"
+    "@algolia/requester-node-http": "npm:5.0.0-alpha.91"
     "@types/node": "npm:20.8.10"
     rollup: "npm:4.3.0"
     typescript: "npm:5.2.2"
   languageName: unknown
   linkType: soft
 
-"@algolia/client-personalization@npm:5.0.0-alpha.89, @algolia/client-personalization@workspace:packages/client-personalization":
+"@algolia/client-personalization@npm:5.0.0-alpha.90, @algolia/client-personalization@workspace:packages/client-personalization":
   version: 0.0.0-use.local
   resolution: "@algolia/client-personalization@workspace:packages/client-personalization"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
-    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.90"
-    "@algolia/requester-node-http": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
+    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.91"
+    "@algolia/requester-node-http": "npm:5.0.0-alpha.91"
     "@types/node": "npm:20.8.10"
     rollup: "npm:4.3.0"
     typescript: "npm:5.2.2"
@@ -76,22 +76,22 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/client-query-suggestions@workspace:packages/client-query-suggestions"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
-    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.90"
-    "@algolia/requester-node-http": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
+    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.91"
+    "@algolia/requester-node-http": "npm:5.0.0-alpha.91"
     "@types/node": "npm:20.8.10"
     rollup: "npm:4.3.0"
     typescript: "npm:5.2.2"
   languageName: unknown
   linkType: soft
 
-"@algolia/client-search@npm:5.0.0-alpha.89, @algolia/client-search@workspace:packages/client-search":
+"@algolia/client-search@npm:5.0.0-alpha.90, @algolia/client-search@workspace:packages/client-search":
   version: 0.0.0-use.local
   resolution: "@algolia/client-search@workspace:packages/client-search"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
-    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.90"
-    "@algolia/requester-node-http": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
+    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.91"
+    "@algolia/requester-node-http": "npm:5.0.0-alpha.91"
     "@types/node": "npm:20.8.10"
     rollup: "npm:4.3.0"
     typescript: "npm:5.2.2"
@@ -102,9 +102,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/ingestion@workspace:packages/ingestion"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
-    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.90"
-    "@algolia/requester-node-http": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
+    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.91"
+    "@algolia/requester-node-http": "npm:5.0.0-alpha.91"
     "@types/node": "npm:20.8.10"
     rollup: "npm:4.3.0"
     typescript: "npm:5.2.2"
@@ -115,9 +115,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/monitoring@workspace:packages/monitoring"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
-    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.90"
-    "@algolia/requester-node-http": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
+    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.91"
+    "@algolia/requester-node-http": "npm:5.0.0-alpha.91"
     "@types/node": "npm:20.8.10"
     rollup: "npm:4.3.0"
     typescript: "npm:5.2.2"
@@ -128,20 +128,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/recommend@workspace:packages/recommend"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
-    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.90"
-    "@algolia/requester-node-http": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
+    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.91"
+    "@algolia/requester-node-http": "npm:5.0.0-alpha.91"
     "@types/node": "npm:20.8.10"
     rollup: "npm:4.3.0"
     typescript: "npm:5.2.2"
   languageName: unknown
   linkType: soft
 
-"@algolia/requester-browser-xhr@npm:5.0.0-alpha.90, @algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr":
+"@algolia/requester-browser-xhr@npm:5.0.0-alpha.91, @algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr":
   version: 0.0.0-use.local
   resolution: "@algolia/requester-browser-xhr@workspace:packages/requester-browser-xhr"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
     "@babel/preset-env": "npm:7.23.2"
     "@babel/preset-typescript": "npm:7.23.2"
     "@types/jest": "npm:29.5.7"
@@ -158,7 +158,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@algolia/requester-fetch@workspace:packages/requester-fetch"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
     "@babel/preset-env": "npm:7.23.2"
     "@babel/preset-typescript": "npm:7.23.2"
     "@types/jest": "npm:29.5.7"
@@ -171,11 +171,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/requester-node-http@npm:5.0.0-alpha.90, @algolia/requester-node-http@workspace:packages/requester-node-http":
+"@algolia/requester-node-http@npm:5.0.0-alpha.91, @algolia/requester-node-http@workspace:packages/requester-node-http":
   version: 0.0.0-use.local
   resolution: "@algolia/requester-node-http@workspace:packages/requester-node-http"
   dependencies:
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
     "@babel/preset-env": "npm:7.23.2"
     "@babel/preset-typescript": "npm:7.23.2"
     "@types/jest": "npm:29.5.7"
@@ -3055,13 +3055,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "algoliasearch@workspace:packages/algoliasearch"
   dependencies:
-    "@algolia/client-abtesting": "npm:5.0.0-alpha.89"
-    "@algolia/client-analytics": "npm:5.0.0-alpha.89"
-    "@algolia/client-common": "npm:5.0.0-alpha.90"
-    "@algolia/client-personalization": "npm:5.0.0-alpha.89"
-    "@algolia/client-search": "npm:5.0.0-alpha.89"
-    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.90"
-    "@algolia/requester-node-http": "npm:5.0.0-alpha.90"
+    "@algolia/client-abtesting": "npm:5.0.0-alpha.90"
+    "@algolia/client-analytics": "npm:5.0.0-alpha.90"
+    "@algolia/client-common": "npm:5.0.0-alpha.91"
+    "@algolia/client-personalization": "npm:5.0.0-alpha.90"
+    "@algolia/client-search": "npm:5.0.0-alpha.90"
+    "@algolia/requester-browser-xhr": "npm:5.0.0-alpha.91"
+    "@algolia/requester-node-http": "npm:5.0.0-alpha.91"
     "@babel/preset-env": "npm:7.23.2"
     "@babel/preset-typescript": "npm:7.23.2"
     "@types/jest": "npm:29.5.7"
