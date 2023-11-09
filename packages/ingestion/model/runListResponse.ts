@@ -9,5 +9,5 @@ export type RunListResponse = {
 
   pagination: Pagination;
 
-  window?: Window;
+  window: Window;
 };
