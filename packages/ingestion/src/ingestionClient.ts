@@ -945,10 +945,22 @@ export function createIngestionClient({
      * @param getEvents.type - Filter the type of the events.
      * @param getEvents.sort - The key by which the list should be sorted.
      * @param getEvents.order - The order of the returned list.
+     * @param getEvents.startDate - The start date (in RFC3339 format) of the events fetching window. Defaults to \'now\'-3 hours if omitted.
+     * @param getEvents.endDate - The end date (in RFC3339 format) of the events fetching window. Defaults to \'now\' days if omitted.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getEvents(
-      { runID, itemsPerPage, page, status, type, sort, order }: GetEventsProps,
+      {
+        runID,
+        itemsPerPage,
+        page,
+        status,
+        type,
+        sort,
+        order,
+        startDate,
+        endDate,
+      }: GetEventsProps,
       requestOptions?: RequestOptions
     ): Promise<ListEventsResponse> {
       if (!runID) {
@@ -986,6 +998,14 @@ export function createIngestionClient({
 
       if (order !== undefined) {
         queryParameters.order = order.toString();
+      }
+
+      if (startDate !== undefined) {
+        queryParameters.startDate = startDate.toString();
+      }
+
+      if (endDate !== undefined) {
+        queryParameters.endDate = endDate.toString();
       }
 
       const request: Request = {
@@ -1042,8 +1062,8 @@ export function createIngestionClient({
      * @param getRuns.taskID - Filter by taskID.
      * @param getRuns.sort - The key by which the list should be sorted.
      * @param getRuns.order - The order of the returned list.
-     * @param getRuns.startDate - The start date (in RFC3339 format) of the runs fetching window. Defaults to \'now\'-7 days if omitted. The timespan between `startDate` and `endDate` must be smaller than 7 days.
-     * @param getRuns.endDate - The end date (in RFC3339 format) of the runs fetching window. Defaults to \'now\' days if omitted. The timespan between `startDate` and `endDate` must be smaller than 7 days.
+     * @param getRuns.startDate - The start date (in RFC3339 format) of the runs fetching window. Defaults to \'now\'-7 days if omitted.
+     * @param getRuns.endDate - The end date (in RFC3339 format) of the runs fetching window. Defaults to \'now\' days if omitted.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRuns(

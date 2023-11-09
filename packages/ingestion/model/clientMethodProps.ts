@@ -245,6 +245,14 @@ export type GetEventsProps = {
    * The order of the returned list.
    */
   order?: OrderKeys;
+  /**
+   * The start date (in RFC3339 format) of the events fetching window. Defaults to \'now\'-3 hours if omitted.
+   */
+  startDate?: string;
+  /**
+   * The end date (in RFC3339 format) of the events fetching window. Defaults to \'now\' days if omitted.
+   */
+  endDate?: string;
 };
 
 /**
@@ -286,11 +294,11 @@ export type GetRunsProps = {
    */
   order?: OrderKeys;
   /**
-   * The start date (in RFC3339 format) of the runs fetching window. Defaults to \'now\'-7 days if omitted. The timespan between `startDate` and `endDate` must be smaller than 7 days.
+   * The start date (in RFC3339 format) of the runs fetching window. Defaults to \'now\'-7 days if omitted.
    */
   startDate?: string;
   /**
-   * The end date (in RFC3339 format) of the runs fetching window. Defaults to \'now\' days if omitted. The timespan between `startDate` and `endDate` must be smaller than 7 days.
+   * The end date (in RFC3339 format) of the runs fetching window. Defaults to \'now\' days if omitted.
    */
   endDate?: string;
 };
