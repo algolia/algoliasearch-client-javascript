@@ -1,3 +1,8 @@
+## [5.0.0-alpha.94](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.93...5.0.0-alpha.94)
+
+- [c2e9fb52c](https://github.com/algolia/api-clients-automation/commit/c2e9fb52c) feat(specs): add `startDate` and `endDate` query parameter to list events ([#2229](https://github.com/algolia/api-clients-automation/pull/2229)) by [@shortcuts](https://github.com/shortcuts/)
+- [472dc87c4](https://github.com/algolia/api-clients-automation/commit/472dc87c4) fix(specs): require `window` in list runs ([#2226](https://github.com/algolia/api-clients-automation/pull/2226)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.93](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.92...5.0.0-alpha.93)
 
 - [472dc87c4](https://github.com/algolia/api-clients-automation/commit/472dc87c4) fix(specs): require `window` in list runs ([#2226](https://github.com/algolia/api-clients-automation/pull/2226)) by [@shortcuts](https://github.com/shortcuts/)
