@@ -8,3 +8,4 @@ export * from './getRelatedProducts';
 export * from './getTrendingFacets';
 export * from './getTrendingItems';
 export * from './getLookingSimilar';
+export * from './getRecommendedForYou';

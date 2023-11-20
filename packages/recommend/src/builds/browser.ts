@@ -12,6 +12,7 @@ import {
   getFrequentlyBoughtTogether,
   getLookingSimilar,
   getRecommendations,
+  getRecommendedForYou,
   getRelatedProducts,
   getTrendingFacets,
   getTrendingItems,
@@ -57,6 +58,7 @@ export default function recommend(
       getTrendingFacets,
       getTrendingItems,
       getLookingSimilar,
+      getRecommendedForYou,
     },
   });
 }
