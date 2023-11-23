@@ -39,7 +39,7 @@ export class TestSuite {
   public indicesCount = 0;
 
   public constructor(testName?: string) {
-    // this.ensureEnvironmentVariables();
+    this.ensureEnvironmentVariables();
 
     this.testName = testName || '';
   }
