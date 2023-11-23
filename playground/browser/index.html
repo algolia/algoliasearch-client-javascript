@@ -1,27 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- TODO reset before opening PR -->
+    <script src="/playground/browser/algoliasearch.umd.js"></script>
     <script src="/playground/browser/recommend.umd.js"></script>
-
-    <script>
-      const recommend = window['@algolia/recommend'];
-      const client = recommend('betaJ7GCETGTCW', '4cf66002c945b397d9041ca70089d3cd');
-
-      client
-        .getRecommendedForYou([
-          {
-            indexName: 'airbnb',
-            userToken: 'user_token_1',
-          },
-        ])
-        .then(({ results }) => {
-          console.log(results[0]);
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    </script>
   </head>
   <body></body>
 </html>
