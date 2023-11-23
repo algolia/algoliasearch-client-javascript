@@ -1,4 +1,4 @@
-import { MethodEnum } from '@algolia/requester-common/src';
+import { MethodEnum } from '@algolia/requester-common';
 
 import { BaseRecommendClient, RecommendedForYouQuery, WithRecommendMethods } from '../types';
 
