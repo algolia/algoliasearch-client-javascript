@@ -2,4 +2,6 @@
 
 import type { HighlightResultOption } from './highlightResultOption';
 
-export type HighlightResult = HighlightResultOption | HighlightResultOption[];
+export type HighlightResult =
+  | HighlightResultOption
+  | Record<string, HighlightResultOption>;
