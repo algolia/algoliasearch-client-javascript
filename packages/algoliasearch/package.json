@@ -69,12 +69,12 @@
     "@algolia/requester-node-http": "5.0.0-alpha.92"
   },
   "devDependencies": {
-    "@babel/preset-env": "7.23.3",
+    "@babel/preset-env": "7.23.5",
     "@babel/preset-typescript": "7.23.3",
     "@types/jest": "29.5.10",
-    "@types/node": "20.10.0",
+    "@types/node": "20.10.3",
     "jest": "29.7.0",
-    "rollup": "4.5.2",
+    "rollup": "4.6.1",
     "typescript": "5.3.2"
   },
   "engines": {
