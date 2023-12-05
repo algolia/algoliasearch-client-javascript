@@ -6,18 +6,9 @@ import { LookingSimilarQuery } from './LookingSimilarQuery';
 import { RecommendationsQuery } from './RecommendationsQuery';
 import { RelatedProductsQuery } from './RelatedProductsQuery';
 import { TrendingFacetsQuery } from './TrendingFacetsQuery';
+import { TrendingFacetsResponse } from './TrendingFacetsResponse';
 import { TrendingItemsQuery } from './TrendingItemsQuery';
 import { TrendingQuery } from './TrendingQuery';
-
-export type TrendingFacetHit<TObject> = {
-  readonly _score: number;
-  readonly facetName: string;
-  readonly facetValue: TObject;
-};
-
-export type TrendingFacetsResponse<TObject> = Omit<SearchResponse<TObject>, 'hits'> & {
-  readonly hits: ReadonlyArray<TrendingFacetHit<TObject>>;
-};
 
 export type RecommendTrendingFacetsQueriesResponse<TObject> = {
   /**
