@@ -9,6 +9,23 @@ import { TrendingFacetsQuery } from './TrendingFacetsQuery';
 import { TrendingItemsQuery } from './TrendingItemsQuery';
 import { TrendingQuery } from './TrendingQuery';
 
+export type TrendingFacetHit<TObject> = {
+  readonly _score: number;
+  readonly facetName: string;
+  readonly facetValue: TObject;
+};
+
+export type TrendingFacetsResponse<TObject> = Omit<SearchResponse<TObject>, 'hits'> & {
+  readonly hits: ReadonlyArray<TrendingFacetHit<TObject>>;
+};
+
+export type RecommendTrendingFacetsQueriesResponse<TObject> = {
+  /**
+   * The list of results.
+   */
+  readonly results: ReadonlyArray<TrendingFacetsResponse<TObject>>;
+};
+
 export type RecommendQueriesResponse<TObject> = {
   /**
    * The list of results.
