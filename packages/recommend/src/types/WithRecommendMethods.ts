@@ -63,7 +63,7 @@ export type WithRecommendMethods<TType> = TType & {
   readonly getTrendingFacets: <TObject>(
     queries: readonly TrendingFacetsQuery[],
     requestOptions?: RequestOptions & SearchOptions
-  ) => Readonly<Promise<RecommendQueriesResponse<TObject>>>;
+  ) => Readonly<Promise<RecommendTrendingFacetsQueriesResponse<TObject>>>;
 
   /**
    * Returns Looking Similar
