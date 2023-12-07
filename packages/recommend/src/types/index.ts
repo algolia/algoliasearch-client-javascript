@@ -16,3 +16,5 @@ export * from './TrendingQuery';
 export * from './WithRecommendMethods';
 export * from './LookingSimilarQuery';
 export * from './RecommendedForYouQuery';
+export * from './TrendingFacetHit';
+export * from './TrendingFacetsResponse';

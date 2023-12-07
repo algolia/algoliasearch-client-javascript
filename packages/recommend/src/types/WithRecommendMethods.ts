@@ -7,8 +7,16 @@ import { LookingSimilarQuery } from './LookingSimilarQuery';
 import { RecommendationsQuery } from './RecommendationsQuery';
 import { RelatedProductsQuery } from './RelatedProductsQuery';
 import { TrendingFacetsQuery } from './TrendingFacetsQuery';
+import { TrendingFacetsResponse } from './TrendingFacetsResponse';
 import { TrendingItemsQuery } from './TrendingItemsQuery';
 import { TrendingQuery } from './TrendingQuery';
+
+export type RecommendTrendingFacetsQueriesResponse<TObject> = {
+  /**
+   * The list of results.
+   */
+  readonly results: ReadonlyArray<TrendingFacetsResponse<TObject>>;
+};
 
 export type RecommendQueriesResponse<TObject> = {
   /**
@@ -56,7 +64,7 @@ export type WithRecommendMethods<TType> = TType & {
   readonly getTrendingFacets: <TObject>(
     queries: readonly TrendingFacetsQuery[],
     requestOptions?: RequestOptions & SearchOptions
-  ) => Readonly<Promise<RecommendQueriesResponse<TObject>>>;
+  ) => Readonly<Promise<RecommendTrendingFacetsQueriesResponse<TObject>>>;
 
   /**
    * Returns Looking Similar
