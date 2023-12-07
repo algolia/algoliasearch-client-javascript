@@ -3,4 +3,5 @@ export type RecommendModel =
   | 'related-products'
   | 'bought-together'
   | 'looking-similar'
+  | 'recommended-for-you'
   | TrendingModel;

@@ -106,7 +106,7 @@
     },
     {
       "path": "packages/recommend/dist/recommend.umd.js",
-      "maxSize": "4.3KB"
+      "maxSize": "4.4KB"
     }
   ]
 }
