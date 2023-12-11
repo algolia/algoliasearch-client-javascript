@@ -1,3 +1,11 @@
+## [v4.21.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.20.0...4.21.0)
+
+* feat(recommend): add recommended-for-you model (#1490) ([004f033](https://github.com/algolia/algoliasearch-client-javascript/commit/004f033)), closes [#1490](https://github.com/algolia/algoliasearch-client-javascript/issues/1490)
+* fix(recommend): getTrendingFacets typing (#1494) ([94b46b5](https://github.com/algolia/algoliasearch-client-javascript/commit/94b46b5)), closes [#1494](https://github.com/algolia/algoliasearch-client-javascript/issues/1494)
+* docs(readme): fix typo (#1486) ([db9953c](https://github.com/algolia/algoliasearch-client-javascript/commit/db9953c)), closes [#1486](https://github.com/algolia/algoliasearch-client-javascript/issues/1486)
+
+
+
 ## [v4.20.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.19.1...4.20.0)
 
 * feat(search): add inference ACL to API key object (#1479) ([3a95126](https://github.com/algolia/algoliasearch-client-javascript/commit/3a95126)), closes [#1479](https://github.com/algolia/algoliasearch-client-javascript/issues/1479)
