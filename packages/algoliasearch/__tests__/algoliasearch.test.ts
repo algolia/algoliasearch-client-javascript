@@ -23,7 +23,7 @@ describe('api', () => {
   });
 
   it('sets the user agent', async () => {
-    const req = (await client.post({
+    const req = (await client.customPost({
       path: '/test',
     })) as unknown as EchoResponse;
 
@@ -166,13 +166,13 @@ describe('api', () => {
         region: 'eu',
       });
 
-      const res1 = (await abtestingClient.get({
+      const res1 = (await abtestingClient.customGet({
         path: 'abtestingClient',
       })) as unknown as EchoResponse;
-      const res2 = (await analyticsClient.get({
+      const res2 = (await analyticsClient.customGet({
         path: 'analyticsClient',
       })) as unknown as EchoResponse;
-      const res3 = (await personalizationClient.get({
+      const res3 = (await personalizationClient.customGet({
         path: 'personalizationClient',
       })) as unknown as EchoResponse;
 
@@ -211,13 +211,13 @@ describe('api', () => {
         region: 'eu',
       });
 
-      const res1 = (await abtestingClient.get({
+      const res1 = (await abtestingClient.customGet({
         path: 'abtestingClient',
       })) as unknown as EchoResponse;
-      const res2 = (await analyticsClient.get({
+      const res2 = (await analyticsClient.customGet({
         path: 'analyticsClient',
       })) as unknown as EchoResponse;
-      const res3 = (await personalizationClient.get({
+      const res3 = (await personalizationClient.customGet({
         path: 'personalizationClient',
       })) as unknown as EchoResponse;
 

@@ -36,7 +36,10 @@ import type {
   ClearAllSynonymsProps,
   ClearObjectsProps,
   ClearRulesProps,
-  DelProps,
+  CustomDeleteProps,
+  CustomGetProps,
+  CustomPostProps,
+  CustomPutProps,
   DeleteApiKeyProps,
   DeleteByProps,
   DeleteIndexProps,
@@ -44,7 +47,6 @@ import type {
   DeleteRuleProps,
   DeleteSourceProps,
   DeleteSynonymProps,
-  GetProps,
   GetApiKeyProps,
   GetLogsProps,
   GetObjectProps,
@@ -58,8 +60,6 @@ import type {
   ListUserIdsProps,
   OperationIndexProps,
   PartialUpdateObjectProps,
-  PostProps,
-  PutProps,
   RemoveUserIdProps,
   ReplaceSourcesProps,
   RestoreApiKeyProps,
@@ -971,17 +971,19 @@ export function createSearchClient({
      * This method allow you to send requests to the Algolia REST API.
      *
      * @summary Send requests to the Algolia REST API.
-     * @param del - The del object.
-     * @param del.path - Path of the endpoint, anything after \"/1\" must be specified.
-     * @param del.parameters - Query parameters to apply to the current query.
+     * @param customDelete - The customDelete object.
+     * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param customDelete.parameters - Query parameters to apply to the current query.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    del(
-      { path, parameters }: DelProps,
+    customDelete(
+      { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
       if (!path) {
-        throw new Error('Parameter `path` is required when calling `del`.');
+        throw new Error(
+          'Parameter `path` is required when calling `customDelete`.'
+        );
       }
 
       const requestPath = '/1{path}'.replace('{path}', path);
@@ -993,6 +995,109 @@ export function createSearchClient({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * This method allow you to send requests to the Algolia REST API.
+     *
+     * @summary Send requests to the Algolia REST API.
+     * @param customGet - The customGet object.
+     * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param customGet.parameters - Query parameters to apply to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    customGet(
+      { path, parameters }: CustomGetProps,
+      requestOptions?: RequestOptions
+    ): Promise<Record<string, any>> {
+      if (!path) {
+        throw new Error(
+          'Parameter `path` is required when calling `customGet`.'
+        );
+      }
+
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * This method allow you to send requests to the Algolia REST API.
+     *
+     * @summary Send requests to the Algolia REST API.
+     * @param customPost - The customPost object.
+     * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param customPost.parameters - Query parameters to apply to the current query.
+     * @param customPost.body - Parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    customPost(
+      { path, parameters, body }: CustomPostProps,
+      requestOptions?: RequestOptions
+    ): Promise<Record<string, any>> {
+      if (!path) {
+        throw new Error(
+          'Parameter `path` is required when calling `customPost`.'
+        );
+      }
+
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: body ? body : {},
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * This method allow you to send requests to the Algolia REST API.
+     *
+     * @summary Send requests to the Algolia REST API.
+     * @param customPut - The customPut object.
+     * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param customPut.parameters - Query parameters to apply to the current query.
+     * @param customPut.body - Parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    customPut(
+      { path, parameters, body }: CustomPutProps,
+      requestOptions?: RequestOptions
+    ): Promise<Record<string, any>> {
+      if (!path) {
+        throw new Error(
+          'Parameter `path` is required when calling `customPut`.'
+        );
+      }
+
+      const requestPath = '/1{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: body ? body : {},
       };
 
       return transporter.request(request, requestOptions);
@@ -1271,37 +1376,6 @@ export function createSearchClient({
 
       const request: Request = {
         method: 'DELETE',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
-     * This method allow you to send requests to the Algolia REST API.
-     *
-     * @summary Send requests to the Algolia REST API.
-     * @param get - The get object.
-     * @param get.path - Path of the endpoint, anything after \"/1\" must be specified.
-     * @param get.parameters - Query parameters to apply to the current query.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    get(
-      { path, parameters }: GetProps,
-      requestOptions?: RequestOptions
-    ): Promise<Record<string, any>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `get`.');
-      }
-
-      const requestPath = '/1{path}'.replace('{path}', path);
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = parameters ? parameters : {};
-
-      const request: Request = {
-        method: 'GET',
         path: requestPath,
         queryParameters,
         headers,
@@ -2049,72 +2123,6 @@ export function createSearchClient({
         queryParameters,
         headers,
         data: attributesToUpdate,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
-     * This method allow you to send requests to the Algolia REST API.
-     *
-     * @summary Send requests to the Algolia REST API.
-     * @param post - The post object.
-     * @param post.path - Path of the endpoint, anything after \"/1\" must be specified.
-     * @param post.parameters - Query parameters to apply to the current query.
-     * @param post.body - Parameters to send with the custom request.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    post(
-      { path, parameters, body }: PostProps,
-      requestOptions?: RequestOptions
-    ): Promise<Record<string, any>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `post`.');
-      }
-
-      const requestPath = '/1{path}'.replace('{path}', path);
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = parameters ? parameters : {};
-
-      const request: Request = {
-        method: 'POST',
-        path: requestPath,
-        queryParameters,
-        headers,
-        data: body ? body : {},
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
-     * This method allow you to send requests to the Algolia REST API.
-     *
-     * @summary Send requests to the Algolia REST API.
-     * @param put - The put object.
-     * @param put.path - Path of the endpoint, anything after \"/1\" must be specified.
-     * @param put.parameters - Query parameters to apply to the current query.
-     * @param put.body - Parameters to send with the custom request.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    put(
-      { path, parameters, body }: PutProps,
-      requestOptions?: RequestOptions
-    ): Promise<Record<string, any>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `put`.');
-      }
-
-      const requestPath = '/1{path}'.replace('{path}', path);
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = parameters ? parameters : {};
-
-      const request: Request = {
-        method: 'PUT',
-        path: requestPath,
-        queryParameters,
-        headers,
-        data: body ? body : {},
       };
 
       return transporter.request(request, requestOptions);

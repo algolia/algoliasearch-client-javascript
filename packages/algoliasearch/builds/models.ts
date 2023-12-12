@@ -3,10 +3,10 @@
 import type { ClientOptions } from '@algolia/client-common';
 import {
   ErrorBase,
-  PutProps,
-  PostProps,
-  DelProps,
-  GetProps,
+  CustomPutProps,
+  CustomPostProps,
+  CustomDeleteProps,
+  CustomGetProps,
 } from '@algolia/client-search/model';
 
 export * from '@algolia/client-search/model';
@@ -19,7 +19,13 @@ export { PersonalizationClient } from '@algolia/client-personalization';
 export { AnalyticsClient } from '@algolia/client-analytics';
 export { AbtestingClient } from '@algolia/client-abtesting';
 
-export { ErrorBase, PutProps, PostProps, DelProps, GetProps };
+export {
+  ErrorBase,
+  CustomPutProps,
+  CustomPostProps,
+  CustomDeleteProps,
+  CustomGetProps,
+};
 
 /**
  * Options forwarded to the client initialized via the `init` method.

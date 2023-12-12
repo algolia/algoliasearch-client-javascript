@@ -22,9 +22,9 @@ import type { TaskUpdate } from './taskUpdate';
 import type { TriggerType } from './triggerType';
 
 /**
- * Properties for the `del` method.
+ * Properties for the `customDelete` method.
  */
-export type DelProps = {
+export type CustomDeleteProps = {
   /**
    * Path of the endpoint, anything after \"/1\" must be specified.
    */
@@ -33,6 +33,56 @@ export type DelProps = {
    * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
+};
+
+/**
+ * Properties for the `customGet` method.
+ */
+export type CustomGetProps = {
+  /**
+   * Path of the endpoint, anything after \"/1\" must be specified.
+   */
+  path: string;
+  /**
+   * Query parameters to apply to the current query.
+   */
+  parameters?: Record<string, any>;
+};
+
+/**
+ * Properties for the `customPost` method.
+ */
+export type CustomPostProps = {
+  /**
+   * Path of the endpoint, anything after \"/1\" must be specified.
+   */
+  path: string;
+  /**
+   * Query parameters to apply to the current query.
+   */
+  parameters?: Record<string, any>;
+  /**
+   * Parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};
+
+/**
+ * Properties for the `customPut` method.
+ */
+export type CustomPutProps = {
+  /**
+   * Path of the endpoint, anything after \"/1\" must be specified.
+   */
+  path: string;
+  /**
+   * Query parameters to apply to the current query.
+   */
+  parameters?: Record<string, any>;
+  /**
+   * Parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
 };
 
 /**
@@ -93,20 +143,6 @@ export type EnableTaskProps = {
    * The task UUID.
    */
   taskID: string;
-};
-
-/**
- * Properties for the `get` method.
- */
-export type GetProps = {
-  /**
-   * Path of the endpoint, anything after \"/1\" must be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to apply to the current query.
-   */
-  parameters?: Record<string, any>;
 };
 
 /**
@@ -393,42 +429,6 @@ export type GetTasksProps = {
    * The order of the returned list.
    */
   order?: OrderKeys;
-};
-
-/**
- * Properties for the `post` method.
- */
-export type PostProps = {
-  /**
-   * Path of the endpoint, anything after \"/1\" must be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to apply to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * Parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};
-
-/**
- * Properties for the `put` method.
- */
-export type PutProps = {
-  /**
-   * Path of the endpoint, anything after \"/1\" must be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to apply to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * Parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
 };
 
 /**

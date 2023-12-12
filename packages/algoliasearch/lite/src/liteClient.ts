@@ -16,7 +16,7 @@ import type {
 } from '@algolia/client-common';
 
 import type {
-  PostProps,
+  CustomPostProps,
   LegacySearchMethodProps,
 } from '../model/clientMethodProps';
 import type { SearchMethodParams } from '../model/searchMethodParams';
@@ -126,18 +126,20 @@ export function createLiteClient({
      * This method allow you to send requests to the Algolia REST API.
      *
      * @summary Send requests to the Algolia REST API.
-     * @param post - The post object.
-     * @param post.path - Path of the endpoint, anything after \"/1\" must be specified.
-     * @param post.parameters - Query parameters to apply to the current query.
-     * @param post.body - Parameters to send with the custom request.
+     * @param customPost - The customPost object.
+     * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param customPost.parameters - Query parameters to apply to the current query.
+     * @param customPost.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    post(
-      { path, parameters, body }: PostProps,
+    customPost(
+      { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions
     ): Promise<Record<string, any>> {
       if (!path) {
-        throw new Error('Parameter `path` is required when calling `post`.');
+        throw new Error(
+          'Parameter `path` is required when calling `customPost`.'
+        );
       }
 
       const requestPath = '/1{path}'.replace('{path}', path);

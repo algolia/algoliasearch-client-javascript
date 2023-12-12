@@ -5,9 +5,9 @@ import type { SearchForHitsOptions } from './searchForHitsOptions';
 import type { SearchParamsObject } from './searchParamsObject';
 
 /**
- * Properties for the `post` method.
+ * Properties for the `customPost` method.
  */
-export type PostProps = {
+export type CustomPostProps = {
   /**
    * Path of the endpoint, anything after \"/1\" must be specified.
    */

@@ -4,9 +4,9 @@ import type { Direction } from './direction';
 import type { OrderBy } from './orderBy';
 
 /**
- * Properties for the `del` method.
+ * Properties for the `customDelete` method.
  */
-export type DelProps = {
+export type CustomDeleteProps = {
   /**
    * Path of the endpoint, anything after \"/1\" must be specified.
    */
@@ -18,9 +18,9 @@ export type DelProps = {
 };
 
 /**
- * Properties for the `get` method.
+ * Properties for the `customGet` method.
  */
-export type GetProps = {
+export type CustomGetProps = {
   /**
    * Path of the endpoint, anything after \"/1\" must be specified.
    */
@@ -29,6 +29,42 @@ export type GetProps = {
    * Query parameters to apply to the current query.
    */
   parameters?: Record<string, any>;
+};
+
+/**
+ * Properties for the `customPost` method.
+ */
+export type CustomPostProps = {
+  /**
+   * Path of the endpoint, anything after \"/1\" must be specified.
+   */
+  path: string;
+  /**
+   * Query parameters to apply to the current query.
+   */
+  parameters?: Record<string, any>;
+  /**
+   * Parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
+};
+
+/**
+ * Properties for the `customPut` method.
+ */
+export type CustomPutProps = {
+  /**
+   * Path of the endpoint, anything after \"/1\" must be specified.
+   */
+  path: string;
+  /**
+   * Query parameters to apply to the current query.
+   */
+  parameters?: Record<string, any>;
+  /**
+   * Parameters to send with the custom request.
+   */
+  body?: Record<string, any>;
 };
 
 /**
@@ -491,40 +527,4 @@ export type GetUsersCountProps = {
    * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
    */
   tags?: string;
-};
-
-/**
- * Properties for the `post` method.
- */
-export type PostProps = {
-  /**
-   * Path of the endpoint, anything after \"/1\" must be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to apply to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * Parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
-};
-
-/**
- * Properties for the `put` method.
- */
-export type PutProps = {
-  /**
-   * Path of the endpoint, anything after \"/1\" must be specified.
-   */
-  path: string;
-  /**
-   * Query parameters to apply to the current query.
-   */
-  parameters?: Record<string, any>;
-  /**
-   * Parameters to send with the custom request.
-   */
-  body?: Record<string, any>;
 };
