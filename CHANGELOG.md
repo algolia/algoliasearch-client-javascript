@@ -1,3 +1,9 @@
+## [v4.21.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.21.0...4.21.1)
+
+* fix(recommend): RecommendedForYouQuery userToken should be required (#1496) ([d20b253](https://github.com/algolia/algoliasearch-client-javascript/commit/d20b253)), closes [#1496](https://github.com/algolia/algoliasearch-client-javascript/issues/1496)
+
+
+
 ## [v4.21.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.20.0...4.21.0)
 
 * feat(recommend): add recommended-for-you model (#1490) ([004f033](https://github.com/algolia/algoliasearch-client-javascript/commit/004f033)), closes [#1490](https://github.com/algolia/algoliasearch-client-javascript/issues/1490)
