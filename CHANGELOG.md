@@ -1,3 +1,9 @@
+## [v4.22.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.21.1...4.22.0)
+
+* fix(recommend): update TrendingFacetHit facetValue type to string (#1498) ([ac9d6e2](https://github.com/algolia/algoliasearch-client-javascript/commit/ac9d6e2)), closes [#1498](https://github.com/algolia/algoliasearch-client-javascript/issues/1498)
+
+
+
 ## [v4.21.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.21.0...4.21.1)
 
 * fix(recommend): RecommendedForYouQuery userToken should be required (#1496) ([d20b253](https://github.com/algolia/algoliasearch-client-javascript/commit/d20b253)), closes [#1496](https://github.com/algolia/algoliasearch-client-javascript/issues/1496)
