@@ -1,5 +1,5 @@
-export type TrendingFacetHit<TObject> = {
+export type TrendingFacetHit = {
   readonly _score: number;
   readonly facetName: string;
-  readonly facetValue: TObject;
+  readonly facetValue: string;
 };

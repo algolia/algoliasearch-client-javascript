@@ -2,6 +2,6 @@ import { SearchResponse } from '@algolia/client-search';
 
 import { TrendingFacetHit } from './TrendingFacetHit';
 
-export type TrendingFacetsResponse<TObject> = Omit<SearchResponse<TObject>, 'hits'> & {
-  readonly hits: ReadonlyArray<TrendingFacetHit<TObject>>;
+export type TrendingFacetsResponse = Omit<SearchResponse, 'hits'> & {
+  readonly hits: readonly TrendingFacetHit[];
 };
