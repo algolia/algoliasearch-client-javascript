@@ -5,7 +5,6 @@ export type RecommendedForYouQuery = Omit<
   RecommendationsQueryWithoutObjectID,
   'model' | 'queryParameters'
 > & {
-  readonly model: 'recommended-for-you';
   /**
    * List of [search parameters](https://www.algolia.com/doc/api-reference/search-api-parameters/) to send.
    */
