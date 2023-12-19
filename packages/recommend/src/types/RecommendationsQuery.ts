@@ -38,18 +38,3 @@ export type RecommendationsQuery = {
    */
   readonly fallbackParameters?: RecommendSearchOptions;
 };
-
-/**
- * Base type for models that don't require an `objectID`.
- *
- * Currently the only model that doesn't require an `objectID` is `recommended-for-you`.
- */
-export type RecommendationsQueryWithoutObjectID = Omit<
-  RecommendationsQuery,
-  'objectID' | 'model'
-> & {
-  /**
-   * The name of the Recommendation model to use.
-   */
-  readonly model: 'recommended-for-you';
-};
