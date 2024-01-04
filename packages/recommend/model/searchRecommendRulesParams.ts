@@ -28,9 +28,4 @@ export type SearchRecommendRulesParams = {
    * Restricts responses to enabled rules. When absent (default), _all_ rules are retrieved.
    */
   enabled?: boolean | null;
-
-  /**
-   * Request options to send with the API call.
-   */
-  _requestOptions?: Array<Record<string, any>>;
 };

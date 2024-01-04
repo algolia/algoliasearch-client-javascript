@@ -9,17 +9,17 @@ export type SearchRecommendRulesResponse = {
   hits: RuleResponse[];
 
   /**
-   * Number of fetched rules.
+   * Number of hits the search query matched.
    */
   nbHits: number;
 
   /**
-   * Current page.
+   * Page to retrieve (the first page is `0`, not `1`).
    */
   page: number;
 
   /**
-   * Number of pages.
+   * Number of pages of results for the current query.
    */
   nbPages: number;
 };
