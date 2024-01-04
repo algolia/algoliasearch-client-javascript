@@ -48,9 +48,26 @@ export type BrowserLocalStorageOptions = {
   key: string;
 
   /**
+   * The time to live for each cached item in seconds.
+   */
+  timeToLive?: number;
+
+  /**
    * The native local storage implementation.
    */
   localStorage?: Storage;
+};
+
+export type BrowserLocalStorageCacheItem = {
+  /**
+   * The cache item creation timestamp.
+   */
+  timestamp: number;
+
+  /**
+   * The cache item value.
+   */
+  value: any;
 };
 
 export type FallbackableCacheOptions = {

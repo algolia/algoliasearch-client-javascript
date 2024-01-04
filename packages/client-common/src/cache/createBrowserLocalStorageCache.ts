@@ -1,4 +1,9 @@
-import type { BrowserLocalStorageOptions, Cache, CacheEvents } from '../types';
+import type {
+  BrowserLocalStorageCacheItem,
+  BrowserLocalStorageOptions,
+  Cache,
+  CacheEvents,
+} from '../types';
 
 export function createBrowserLocalStorageCache(
   options: BrowserLocalStorageOptions
@@ -19,20 +24,61 @@ export function createBrowserLocalStorageCache(
     return JSON.parse(getStorage().getItem(namespaceKey) || '{}');
   }
 
+  function setNamespace(namespace: Record<string, any>): void {
+    getStorage().setItem(namespaceKey, JSON.stringify(namespace));
+  }
+
+  function removeOutdatedCacheItems(): void {
+    const timeToLive = options.timeToLive ? options.timeToLive * 1000 : null;
+    const namespace = getNamespace<BrowserLocalStorageCacheItem>();
+
+    const filteredNamespaceWithoutOldFormattedCacheItems = Object.fromEntries(
+      Object.entries(namespace).filter(([, cacheItem]) => {
+        return cacheItem.timestamp !== undefined;
+      })
+    );
+
+    setNamespace(filteredNamespaceWithoutOldFormattedCacheItems);
+
+    if (!timeToLive) {
+      return;
+    }
+
+    const filteredNamespaceWithoutExpiredItems = Object.fromEntries(
+      Object.entries(filteredNamespaceWithoutOldFormattedCacheItems).filter(
+        ([, cacheItem]) => {
+          const currentTimestamp = new Date().getTime();
+          const isExpired = cacheItem.timestamp + timeToLive < currentTimestamp;
+
+          return !isExpired;
+        }
+      )
+    );
+
+    setNamespace(filteredNamespaceWithoutExpiredItems);
+  }
+
   return {
     get<TValue>(
       key: Record<string, any> | string,
       defaultValue: () => Promise<TValue>,
       events: CacheEvents<TValue> = {
-        miss: (): Promise<void> => Promise.resolve(),
+        miss: () => Promise.resolve(),
       }
     ): Promise<TValue> {
       return Promise.resolve()
         .then(() => {
-          const keyAsString = JSON.stringify(key);
-          const value = getNamespace<TValue>()[keyAsString];
+          removeOutdatedCacheItems();
 
-          return Promise.all([value || defaultValue(), value !== undefined]);
+          return getNamespace<Promise<BrowserLocalStorageCacheItem>>()[
+            JSON.stringify(key)
+          ];
+        })
+        .then((value) => {
+          return Promise.all([
+            value ? value.value : defaultValue(),
+            value !== undefined,
+          ]);
         })
         .then(([value, exists]) => {
           return Promise.all([value, exists || events.miss(value)]);
@@ -47,7 +93,10 @@ export function createBrowserLocalStorageCache(
       return Promise.resolve().then(() => {
         const namespace = getNamespace();
 
-        namespace[JSON.stringify(key)] = value;
+        namespace[JSON.stringify(key)] = {
+          timestamp: new Date().getTime(),
+          value,
+        };
 
         getStorage().setItem(namespaceKey, JSON.stringify(namespace));
 
