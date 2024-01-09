@@ -13,12 +13,12 @@ export function shuffle<TData>(array: TData[]): TData[] {
   return array;
 }
 
-type Methods<TBase> = {
+export type Methods<TBase> = {
   // eslint-disable-next-line functional/prefer-readonly-type
   readonly [key: string]: (base: TBase) => (...args: any[]) => any;
 };
 
-type AddedMethods<TBase, TMethods extends Methods<TBase>> = TBase &
+export type AddedMethods<TBase, TMethods extends Methods<TBase>> = TBase &
   {
     [TKey in keyof TMethods extends string ? keyof TMethods : never]: ReturnType<TMethods[TKey]>;
   };

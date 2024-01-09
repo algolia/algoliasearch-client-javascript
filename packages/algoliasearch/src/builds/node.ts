@@ -197,6 +197,46 @@ import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
 
 import { AlgoliaSearchOptions, InitAnalyticsOptions, InitPersonalizationOptions } from '../types';
 
+// All exports
+export * from '@algolia/cache-common';
+export * from '@algolia/cache-in-memory';
+export * from '@algolia/client-analytics';
+export * from '@algolia/client-common';
+export * from '@algolia/client-personalization';
+export * from '@algolia/client-search';
+export * from '@algolia/logger-common';
+export * from '@algolia/requester-common';
+export * from '@algolia/requester-node-http';
+export * from '@algolia/cache-common';
+export * from '@algolia/client-common';
+export {
+  GetPersonalizationStrategyResponse,
+  PersonalizationStrategy,
+  RecommendationClient as BaseRecommendationClient,
+  RecommendationClientOptions,
+  SetPersonalizationStrategyResponse,
+} from '@algolia/client-recommendation';
+export {
+  RequestOptions,
+  Transporter,
+  TransporterOptions,
+  HostOptions,
+  Headers,
+  QueryParameters,
+  CallType,
+  Timeouts,
+  UserAgent,
+  UserAgentOptions,
+  StatelessHost,
+  Request as TransporterRequest,
+} from '@algolia/transporter';
+
+// To do: reup after eslint upgrade
+// export * as recommendation from '@algolia/client-recommendation';
+// export * as transporter from '@algolia/transporter';
+
+export * from '../types';
+
 export default function algoliasearch(
   appId: string,
   apiKey: string,
@@ -698,5 +738,3 @@ export type SearchClient = BaseSearchClient & {
    */
   readonly initRecommendation: (options?: InitPersonalizationOptions) => PersonalizationClient;
 } & Destroyable;
-
-export * from '../types';

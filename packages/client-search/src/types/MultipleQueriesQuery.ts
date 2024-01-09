@@ -1,6 +1,6 @@
 import { SearchOptions } from '.';
 
-type SharedMultipleQueriesQuery = {
+export type SharedMultipleQueriesQuery = {
   /**
    * The type of query to perform.
    *

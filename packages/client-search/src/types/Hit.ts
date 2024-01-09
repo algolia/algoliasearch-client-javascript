@@ -1,4 +1,4 @@
-type HighlightMatch = {
+export type HighlightMatch = {
   readonly value: string;
   readonly matchLevel: 'none' | 'partial' | 'full';
   readonly matchedWords: readonly string[];
@@ -11,7 +11,7 @@ export type HighlightResult<THit> = THit extends string | number
       [KAttribute in keyof THit]?: HighlightResult<THit[KAttribute]>;
     };
 
-type SnippetMatch = {
+export type SnippetMatch = {
   readonly value: string;
   readonly matchLevel: 'none' | 'partial' | 'full';
 };

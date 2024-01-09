@@ -62,4 +62,5 @@ recommend.version = version;
 
 export type RecommendClient = WithRecommendMethods<BaseRecommendClient> & Destroyable;
 
+export * from '../methods';
 export * from '../types';

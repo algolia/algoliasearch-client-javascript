@@ -8,7 +8,7 @@ import {
   WithRecommendMethods,
 } from '../types';
 
-type GetRecommendations = (
+export type GetRecommendations = (
   base: BaseRecommendClient
 ) => WithRecommendMethods<BaseRecommendClient>['getRecommendations'];
 

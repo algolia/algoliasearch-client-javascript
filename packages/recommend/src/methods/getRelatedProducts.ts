@@ -1,7 +1,7 @@
 import { BaseRecommendClient, RelatedProductsQuery, WithRecommendMethods } from '../types';
 import { getRecommendations } from './getRecommendations';
 
-type GetRelatedProducts = (
+export type GetRelatedProducts = (
   base: BaseRecommendClient
 ) => WithRecommendMethods<BaseRecommendClient>['getRelatedProducts'];
 

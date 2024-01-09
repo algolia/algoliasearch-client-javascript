@@ -1,7 +1,7 @@
 import { BaseRecommendClient, FrequentlyBoughtTogetherQuery, WithRecommendMethods } from '../types';
 import { getRecommendations } from './getRecommendations';
 
-type GetFrequentlyBoughtTogether = (
+export type GetFrequentlyBoughtTogether = (
   base: BaseRecommendClient
 ) => WithRecommendMethods<BaseRecommendClient>['getFrequentlyBoughtTogether'];
 
