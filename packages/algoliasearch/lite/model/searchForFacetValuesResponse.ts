@@ -4,4 +4,14 @@ import type { FacetHits } from './facetHits';
 
 export type SearchForFacetValuesResponse = {
   facetHits: FacetHits[];
+
+  /**
+   * See the `facetsCount` field of the `exhaustive` object in the response.
+   */
+  exhaustiveFacetsCount: boolean;
+
+  /**
+   * Time the server took to process the request, in milliseconds.
+   */
+  processingTimeMS?: number;
 };
