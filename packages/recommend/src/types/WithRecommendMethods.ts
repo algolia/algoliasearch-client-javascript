@@ -1,7 +1,7 @@
 import { SearchOptions, SearchResponse } from '@algolia/client-search';
 import { RequestOptions } from '@algolia/transporter';
 
-import { RecommendedForYouQuery } from '../builds/node';
+import { RecommendedForYouParams, RecommendedForYouQuery } from '../builds/node';
 import { FrequentlyBoughtTogetherQuery } from './FrequentlyBoughtTogetherQuery';
 import { LookingSimilarQuery } from './LookingSimilarQuery';
 import { RecommendationsQuery } from './RecommendationsQuery';
@@ -30,7 +30,7 @@ export type WithRecommendMethods<TType> = TType & {
    * Returns recommendations.
    */
   readonly getRecommendations: <TObject>(
-    queries: ReadonlyArray<RecommendationsQuery | TrendingQuery>,
+    queries: ReadonlyArray<RecommendationsQuery | TrendingQuery | RecommendedForYouQuery>,
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<RecommendQueriesResponse<TObject>>>;
 
@@ -78,7 +78,7 @@ export type WithRecommendMethods<TType> = TType & {
    * Returns Recommended for you
    */
   readonly getRecommendedForYou: <TObject>(
-    queries: readonly RecommendedForYouQuery[],
+    queries: readonly RecommendedForYouParams[],
     requestOptions?: RequestOptions & SearchOptions
   ) => Readonly<Promise<RecommendQueriesResponse<TObject>>>;
 };

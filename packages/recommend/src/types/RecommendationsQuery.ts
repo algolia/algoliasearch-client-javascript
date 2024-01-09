@@ -1,4 +1,3 @@
-import { RecommendModel } from './RecommendModel';
 import { RecommendSearchOptions } from './RecommendSearchOptions';
 
 export type RecommendationsQuery = {
@@ -10,7 +9,7 @@ export type RecommendationsQuery = {
   /**
    * The name of the Recommendation model to use.
    */
-  readonly model: RecommendModel;
+  readonly model: 'related-products' | 'bought-together' | 'looking-similar';
 
   /**
    * The `objectID` of the item to get recommendations for.

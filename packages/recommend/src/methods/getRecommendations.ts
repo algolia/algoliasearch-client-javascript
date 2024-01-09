@@ -4,16 +4,16 @@ import {
   BaseRecommendClient,
   RecommendationsQuery,
   RecommendedForYouQuery,
+  TrendingQuery,
   WithRecommendMethods,
 } from '../types';
-import { TrendingQuery } from '../types/TrendingQuery';
 
 type GetRecommendations = (
   base: BaseRecommendClient
 ) => WithRecommendMethods<BaseRecommendClient>['getRecommendations'];
 
 export const getRecommendations: GetRecommendations = base => {
-  return (queries: ReadonlyArray<RecommendationsQuery | TrendingQuery>, requestOptions) => {
+  return (queries, requestOptions) => {
     const requests: ReadonlyArray<
       RecommendationsQuery | TrendingQuery | RecommendedForYouQuery
     > = queries.map(query => ({
