@@ -1,3 +1,9 @@
+## [v4.22.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.22.0...4.22.1)
+
+* fix(recommend): update recommended-for-you model type (#1500) ([f94ce64](https://github.com/algolia/algoliasearch-client-javascript/commit/f94ce64)), closes [#1500](https://github.com/algolia/algoliasearch-client-javascript/issues/1500)
+
+
+
 ## [v4.22.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.21.1...4.22.0)
 
 * fix(recommend): update TrendingFacetHit facetValue type to string (#1498) ([ac9d6e2](https://github.com/algolia/algoliasearch-client-javascript/commit/ac9d6e2)), closes [#1498](https://github.com/algolia/algoliasearch-client-javascript/issues/1498)
