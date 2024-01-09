@@ -1,3 +1,7 @@
+## [5.0.0-alpha.96](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.95...5.0.0-alpha.96)
+
+- [461796bb7](https://github.com/algolia/api-clients-automation/commit/461796bb7) feat(clients): add missing clients ([#2479](https://github.com/algolia/api-clients-automation/pull/2479)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.95](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.94...5.0.0-alpha.95)
 
 - [ae6adfbf7](https://github.com/algolia/api-clients-automation/commit/ae6adfbf7) fix(specs): port recommend changes ([#2476](https://github.com/algolia/api-clients-automation/pull/2476)) by [@shortcuts](https://github.com/shortcuts/)
