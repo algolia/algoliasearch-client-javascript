@@ -47,9 +47,7 @@ export function personalizationClient(
     (region && (typeof region !== 'string' || !REGIONS.includes(region)))
   ) {
     throw new Error(
-      `\`region\` is required and must be one of the following: ${REGIONS.join(
-        ', '
-      )}`
+      `\`region\` is required and must be one of the following: ${REGIONS.join(', ')}`
     );
   }
 

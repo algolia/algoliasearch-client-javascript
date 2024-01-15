@@ -91,9 +91,7 @@ export function algoliasearch(
         !analyticsRegions.includes(initOptions.region))
     ) {
       throw new Error(
-        `\`region\` must be one of the following: ${analyticsRegions.join(
-          ', '
-        )}`
+        `\`region\` must be one of the following: ${analyticsRegions.join(', ')}`
       );
     }
 
@@ -113,9 +111,7 @@ export function algoliasearch(
         !abtestingRegions.includes(initOptions.region))
     ) {
       throw new Error(
-        `\`region\` must be one of the following: ${abtestingRegions.join(
-          ', '
-        )}`
+        `\`region\` must be one of the following: ${abtestingRegions.join(', ')}`
       );
     }
 
@@ -137,9 +133,7 @@ export function algoliasearch(
           !personalizationRegions.includes(initOptions.region)))
     ) {
       throw new Error(
-        `\`region\` is required and must be one of the following: ${personalizationRegions.join(
-          ', '
-        )}`
+        `\`region\` is required and must be one of the following: ${personalizationRegions.join(', ')}`
       );
     }
 
