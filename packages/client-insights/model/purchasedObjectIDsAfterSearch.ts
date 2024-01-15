@@ -3,13 +3,14 @@
 import type { ConversionEvent } from './conversionEvent';
 import type { ObjectDataAfterSearch } from './objectDataAfterSearch';
 import type { PurchaseEvent } from './purchaseEvent';
+import type { Value } from './value';
 
 /**
  * Use this event to track when users make a purchase after a previous Algolia request. If you\'re building your category pages with Algolia, you\'ll also use this event.
  */
 export type PurchasedObjectIDsAfterSearch = {
   /**
-   * Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment\'s [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
+   * The name of the event, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment\'s [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
    */
   eventName: string;
 
@@ -18,42 +19,39 @@ export type PurchasedObjectIDsAfterSearch = {
   eventSubtype: PurchaseEvent;
 
   /**
-   * Name of the Algolia index.
+   * The name of an Algolia index.
    */
   index: string;
 
   /**
-   * Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.
-   */
-  queryID: string;
-
-  /**
-   * List of object identifiers for items of an Algolia index.
+   * The object IDs of the records that are part of the event.
    */
   objectIDs: string[];
 
   /**
-   * Extra information about the records involved in the event—for example, to add price and quantities of purchased products.  If provided, must be the same length as `objectIDs`.
-   */
-  objectData?: ObjectDataAfterSearch[];
-
-  /**
-   * If you include pricing information in the `objectData` parameter, you must also specify the currency as ISO-4217 currency code, such as USD or EUR.
-   */
-  currency?: string;
-
-  /**
-   * Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens.
+   * An anonymous or pseudonymous user identifier.  > **Note**: Never include personally identifiable information in user tokens.
    */
   userToken: string;
 
   /**
-   * Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
+   * An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens.
+   */
+  authenticatedUserToken?: string;
+
+  /**
+   * Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
+   */
+  currency?: string;
+
+  /**
+   * Extra information about the records involved in a purchase or add-to-cart events.  If provided, it must be the same length as `objectIDs`.
+   */
+  objectData?: ObjectDataAfterSearch[];
+
+  /**
+   * The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
    */
   timestamp?: number;
 
-  /**
-   * User token for authenticated users.
-   */
-  authenticatedUserToken?: string;
+  value?: Value;
 };

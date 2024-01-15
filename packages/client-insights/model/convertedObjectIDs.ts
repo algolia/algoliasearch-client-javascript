@@ -7,34 +7,34 @@ import type { ConversionEvent } from './conversionEvent';
  */
 export type ConvertedObjectIDs = {
   /**
-   * Can contain up to 64 ASCII characters.   Consider naming events consistently—for example, by adopting Segment\'s [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
+   * The name of the event, up to 64 ASCII characters.  Consider naming events consistently—for example, by adopting Segment\'s [object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework) framework.
    */
   eventName: string;
 
   eventType: ConversionEvent;
 
   /**
-   * Name of the Algolia index.
+   * The name of an Algolia index.
    */
   index: string;
 
   /**
-   * List of object identifiers for items of an Algolia index.
+   * The object IDs of the records that are part of the event.
    */
   objectIDs: string[];
 
   /**
-   * Anonymous or pseudonymous user identifier.   > **Note**: Never include personally identifiable information in user tokens.
+   * An anonymous or pseudonymous user identifier.  > **Note**: Never include personally identifiable information in user tokens.
    */
   userToken: string;
 
   /**
-   * Time of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
-   */
-  timestamp?: number;
-
-  /**
-   * User token for authenticated users.
+   * An identifier for authenticated users.  > **Note**: Never include personally identifiable information in user tokens.
    */
   authenticatedUserToken?: string;
+
+  /**
+   * The timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
+   */
+  timestamp?: number;
 };

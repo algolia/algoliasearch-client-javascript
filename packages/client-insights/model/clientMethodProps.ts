@@ -63,3 +63,13 @@ export type CustomPutProps = {
    */
   body?: Record<string, any>;
 };
+
+/**
+ * Properties for the `deleteUserToken` method.
+ */
+export type DeleteUserTokenProps = {
+  /**
+   * The user token for which to delete all associated events.
+   */
+  userToken: string;
+};

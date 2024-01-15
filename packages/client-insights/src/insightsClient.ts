@@ -19,6 +19,7 @@ import type {
   CustomGetProps,
   CustomPostProps,
   CustomPutProps,
+  DeleteUserTokenProps,
 } from '../model/clientMethodProps';
 import type { EventsResponse } from '../model/eventsResponse';
 import type { InsightsEvents } from '../model/insightsEvents';
@@ -231,6 +232,41 @@ export function createInsightsClient({
         queryParameters,
         headers,
         data: body ? body : {},
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Delete all events related to a certain user token from events metrics and analytics. To delete a personalization user profile, see [Delete a user profile](https://www.algolia.com/doc/rest-api/personalization/#delete-a-user-profile).
+     *
+     * @summary Delete user token.
+     * @param deleteUserToken - The deleteUserToken object.
+     * @param deleteUserToken.userToken - The user token for which to delete all associated events.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    deleteUserToken(
+      { userToken }: DeleteUserTokenProps,
+      requestOptions?: RequestOptions
+    ): Promise<void> {
+      if (!userToken) {
+        throw new Error(
+          'Parameter `userToken` is required when calling `deleteUserToken`.'
+        );
+      }
+
+      const requestPath = '/1/usertokens/{userToken}'.replace(
+        '{userToken}',
+        encodeURIComponent(userToken)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
       };
 
       return transporter.request(request, requestOptions);

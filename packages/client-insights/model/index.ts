@@ -22,6 +22,7 @@ export * from './price';
 export * from './purchaseEvent';
 export * from './purchasedObjectIDs';
 export * from './purchasedObjectIDsAfterSearch';
+export * from './value';
 export * from './viewEvent';
 export * from './viewedFilters';
 export * from './viewedObjectIDs';
