@@ -1,3 +1,7 @@
+## [5.0.0-alpha.99](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.98...5.0.0-alpha.99)
+
+- [3d7c5e617](https://github.com/algolia/api-clients-automation/commit/3d7c5e617) fix(javascript): lock ([#2548](https://github.com/algolia/api-clients-automation/pull/2548)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.98](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.97...5.0.0-alpha.98)
 
 - [7c5ba3288](https://github.com/algolia/api-clients-automation/commit/7c5ba3288) feat(specs): update Insights API spec ([#2376](https://github.com/algolia/api-clients-automation/pull/2376)) by [@kai687](https://github.com/kai687/)
