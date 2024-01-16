@@ -33,9 +33,9 @@ import type {
   BatchAssignUserIdsProps,
   BatchDictionaryEntriesProps,
   BrowseProps,
-  ClearAllSynonymsProps,
   ClearObjectsProps,
   ClearRulesProps,
+  ClearSynonymsProps,
   CustomDeleteProps,
   CustomGetProps,
   CustomPostProps,
@@ -853,46 +853,6 @@ export function createSearchClient({
     },
 
     /**
-     * Delete all synonyms in the index.
-     *
-     * @summary Delete all synonyms.
-     * @param clearAllSynonyms - The clearAllSynonyms object.
-     * @param clearAllSynonyms.indexName - Index on which to perform the request.
-     * @param clearAllSynonyms.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    clearAllSynonyms(
-      { indexName, forwardToReplicas }: ClearAllSynonymsProps,
-      requestOptions?: RequestOptions
-    ): Promise<UpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error(
-          'Parameter `indexName` is required when calling `clearAllSynonyms`.'
-        );
-      }
-
-      const requestPath = '/1/indexes/{indexName}/synonyms/clear'.replace(
-        '{indexName}',
-        encodeURIComponent(indexName)
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      if (forwardToReplicas !== undefined) {
-        queryParameters.forwardToReplicas = forwardToReplicas.toString();
-      }
-
-      const request: Request = {
-        method: 'POST',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
      * Delete the records but leave settings and index-specific API keys untouched.
      *
      * @summary Delete all records from an index.
@@ -947,6 +907,46 @@ export function createSearchClient({
       }
 
       const requestPath = '/1/indexes/{indexName}/rules/clear'.replace(
+        '{indexName}',
+        encodeURIComponent(indexName)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (forwardToReplicas !== undefined) {
+        queryParameters.forwardToReplicas = forwardToReplicas.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Delete all synonyms in the index.
+     *
+     * @summary Delete all synonyms.
+     * @param clearSynonyms - The clearSynonyms object.
+     * @param clearSynonyms.indexName - Index on which to perform the request.
+     * @param clearSynonyms.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    clearSynonyms(
+      { indexName, forwardToReplicas }: ClearSynonymsProps,
+      requestOptions?: RequestOptions
+    ): Promise<UpdatedAtResponse> {
+      if (!indexName) {
+        throw new Error(
+          'Parameter `indexName` is required when calling `clearSynonyms`.'
+        );
+      }
+
+      const requestPath = '/1/indexes/{indexName}/synonyms/clear'.replace(
         '{indexName}',
         encodeURIComponent(indexName)
       );

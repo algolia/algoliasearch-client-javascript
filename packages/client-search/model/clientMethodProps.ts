@@ -101,20 +101,6 @@ export type BrowseProps = {
 };
 
 /**
- * Properties for the `clearAllSynonyms` method.
- */
-export type ClearAllSynonymsProps = {
-  /**
-   * Index on which to perform the request.
-   */
-  indexName: string;
-  /**
-   * Indicates whether changed index settings are forwarded to the replica indices.
-   */
-  forwardToReplicas?: boolean;
-};
-
-/**
  * Properties for the `clearObjects` method.
  */
 export type ClearObjectsProps = {
@@ -128,6 +114,20 @@ export type ClearObjectsProps = {
  * Properties for the `clearRules` method.
  */
 export type ClearRulesProps = {
+  /**
+   * Index on which to perform the request.
+   */
+  indexName: string;
+  /**
+   * Indicates whether changed index settings are forwarded to the replica indices.
+   */
+  forwardToReplicas?: boolean;
+};
+
+/**
+ * Properties for the `clearSynonyms` method.
+ */
+export type ClearSynonymsProps = {
   /**
    * Index on which to perform the request.
    */
