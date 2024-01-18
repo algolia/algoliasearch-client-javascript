@@ -4,7 +4,6 @@ import {
   createAuth,
   createTransporter,
   getAlgoliaAgent,
-  shuffle,
 } from '@algolia/client-common';
 import type {
   CreateClientOptions,
@@ -36,39 +35,10 @@ import type { StatusResponse } from '../model/statusResponse';
 
 export const apiClientVersion = '1.0.0-alpha.25';
 
-function getDefaultHosts(appId: string): Host[] {
-  return (
-    [
-      {
-        url: `${appId}-dsn.algolia.net`,
-        accept: 'read',
-        protocol: 'https',
-      },
-      {
-        url: `${appId}.algolia.net`,
-        accept: 'write',
-        protocol: 'https',
-      },
-    ] as Host[]
-  ).concat(
-    shuffle([
-      {
-        url: `${appId}-1.algolianet.com`,
-        accept: 'readWrite',
-        protocol: 'https',
-      },
-      {
-        url: `${appId}-2.algolianet.com`,
-        accept: 'readWrite',
-        protocol: 'https',
-      },
-      {
-        url: `${appId}-3.algolianet.com`,
-        accept: 'readWrite',
-        protocol: 'https',
-      },
-    ])
-  );
+function getDefaultHosts(): Host[] {
+  return [
+    { url: 'status.algolia.com', accept: 'readWrite', protocol: 'https' },
+  ];
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -81,7 +51,7 @@ export function createMonitoringClient({
 }: CreateClientOptions) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
-    hosts: getDefaultHosts(appIdOption),
+    hosts: getDefaultHosts(),
     ...options,
     algoliaAgent: getAlgoliaAgent({
       algoliaAgents,
