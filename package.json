@@ -2,6 +2,7 @@
   "version": "4.22.1",
   "private": true,
   "license": "MIT",
+  "homepage": "https://github.com/algolia/algoliasearch-client-javascript#readme",
   "workspaces": [
     "packages/*"
   ],
