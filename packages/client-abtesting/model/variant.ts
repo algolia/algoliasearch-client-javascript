@@ -90,4 +90,9 @@ export type Variant = {
    * Number of users during the A/B test.
    */
   userCount: number;
+
+  /**
+   * Number of users that performed a tracked search during the A/B test.
+   */
+  trackedUserCount: number;
 };
