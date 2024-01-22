@@ -44,6 +44,11 @@ export type VariantResponse = Variant & {
   searchCount?: number;
 
   /**
+   * Tracked user count. This is the number of users who performed a tracked search.
+   */
+  trackedUserCount?: number;
+
+  /**
    * User count.
    */
   userCount?: number;
