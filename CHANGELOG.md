@@ -1,3 +1,13 @@
+## [5.0.0-alpha.100](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.99...5.0.0-alpha.100)
+
+- [379fbc501](https://github.com/algolia/api-clients-automation/commit/379fbc501) fix(specs): correct `searchSynonyms` parameters ([#2595](https://github.com/algolia/api-clients-automation/pull/2595)) by [@morganleroi](https://github.com/morganleroi/)
+- [982fd3ca4](https://github.com/algolia/api-clients-automation/commit/982fd3ca4) feat(specs): import `crawler` and `usage` specs from new world repo ([#2598](https://github.com/algolia/api-clients-automation/pull/2598)) by [@shortcuts](https://github.com/shortcuts/)
+- [9532a0136](https://github.com/algolia/api-clients-automation/commit/9532a0136) feat(specs): AB testing tracked user count ([#2596](https://github.com/algolia/api-clients-automation/pull/2596)) by [@cdhawke](https://github.com/cdhawke/)
+- [2481e3ac8](https://github.com/algolia/api-clients-automation/commit/2481e3ac8) fix(clients): support the rest of the languages ([#2571](https://github.com/algolia/api-clients-automation/pull/2571)) by [@millotp](https://github.com/millotp/)
+- [99ce6dbae](https://github.com/algolia/api-clients-automation/commit/99ce6dbae) fix(clients): monitoring for JavaScript and Python ([#2568](https://github.com/algolia/api-clients-automation/pull/2568)) by [@shortcuts](https://github.com/shortcuts/)
+- [99e4bdf2c](https://github.com/algolia/api-clients-automation/commit/99e4bdf2c) feat(specs): add acl permissions to operations ([#2555](https://github.com/algolia/api-clients-automation/pull/2555)) by [@kai687](https://github.com/kai687/)
+- [8b0622380](https://github.com/algolia/api-clients-automation/commit/8b0622380) fix(specs): rename clearAllSynonyms to clearSynonyms ([#2553](https://github.com/algolia/api-clients-automation/pull/2553)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0-alpha.99](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.98...5.0.0-alpha.99)
 
 - [3d7c5e617](https://github.com/algolia/api-clients-automation/commit/3d7c5e617) fix(javascript): lock ([#2548](https://github.com/algolia/api-clients-automation/pull/2548)) by [@shortcuts](https://github.com/shortcuts/)
