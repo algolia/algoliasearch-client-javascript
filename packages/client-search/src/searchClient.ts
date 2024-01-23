@@ -417,31 +417,34 @@ export function createSearchClient({
      * @param browseObjects.indexName - The index in which to perform the request.
      * @param browseObjects.validate - The validator function. It receive the resolved return of the API call. By default, stops when there is less hits returned than the number of maximum hits (1000).
      * @param browseObjects.aggregator - The function that runs right after the API call has been resolved, allows you to do anything with the response before `validate`.
+     * @param browseObjects.searchSynonymsParams - The `searchSynonyms` method parameters.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `searchSynonyms` method and merged with the transporter requestOptions.
      */
     browseSynonyms(
       {
         indexName,
-        validate,
-        aggregator,
+        searchSynonymsParams,
         ...browseSynonymsOptions
       }: BrowseOptions<SearchSynonymsResponse> & SearchSynonymsProps,
       requestOptions?: RequestOptions
     ): Promise<SearchSynonymsResponse> {
       const params = {
+        page: 0,
+        ...searchSynonymsParams,
         hitsPerPage: 1000,
-        ...browseSynonymsOptions,
       };
 
       return createIterablePromise<SearchSynonymsResponse>({
         func: (previousResponse) => {
           return this.searchSynonyms(
             {
-              ...params,
               indexName,
-              page: previousResponse
-                ? previousResponse.page + 1
-                : browseSynonymsOptions.page || 0,
+              searchSynonymsParams: {
+                ...params,
+                page: previousResponse
+                  ? previousResponse.page + 1
+                  : params.page,
+              },
             },
             requestOptions
           );
@@ -2768,20 +2771,11 @@ export function createSearchClient({
      * @summary Search for synonyms.
      * @param searchSynonyms - The searchSynonyms object.
      * @param searchSynonyms.indexName - Index on which to perform the request.
-     * @param searchSynonyms.type - Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
-     * @param searchSynonyms.page - Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there\'s no pagination.
-     * @param searchSynonyms.hitsPerPage - Maximum number of hits per page.
      * @param searchSynonyms.searchSynonymsParams - Body of the `searchSynonyms` operation.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchSynonyms(
-      {
-        indexName,
-        type,
-        page,
-        hitsPerPage,
-        searchSynonymsParams,
-      }: SearchSynonymsProps,
+      { indexName, searchSynonymsParams }: SearchSynonymsProps,
       requestOptions?: RequestOptions
     ): Promise<SearchSynonymsResponse> {
       if (!indexName) {
@@ -2796,18 +2790,6 @@ export function createSearchClient({
       );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
-      if (type !== undefined) {
-        queryParameters.type = type.toString();
-      }
-
-      if (page !== undefined) {
-        queryParameters.page = page.toString();
-      }
-
-      if (hitsPerPage !== undefined) {
-        queryParameters.hitsPerPage = hitsPerPage.toString();
-      }
 
       const request: Request = {
         method: 'POST',

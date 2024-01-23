@@ -25,7 +25,6 @@ import type { SearchRulesParams } from './searchRulesParams';
 import type { SearchSynonymsParams } from './searchSynonymsParams';
 import type { Source } from './source';
 import type { SynonymHit } from './synonymHit';
-import type { SynonymType } from './synonymType';
 
 /**
  * Properties for the `addOrUpdateObject` method.
@@ -684,18 +683,6 @@ export type SearchSynonymsProps = {
    * Index on which to perform the request.
    */
   indexName: string;
-  /**
-   * Search for specific [types of synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms).
-   */
-  type?: SynonymType;
-  /**
-   * Returns the requested page number (the first page is 0). Page size is set by `hitsPerPage`. When null, there\'s no pagination.
-   */
-  page?: number;
-  /**
-   * Maximum number of hits per page.
-   */
-  hitsPerPage?: number;
   /**
    * Body of the `searchSynonyms` operation.
    */
