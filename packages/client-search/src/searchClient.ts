@@ -490,9 +490,7 @@ export function createSearchClient({
     /**
      * Add a new API key with specific permissions and restrictions. The request must be authenticated with the admin API key. The response returns an API key string.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Add API key.
      * @param apiKey - The apiKey object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -530,9 +528,7 @@ export function createSearchClient({
     /**
      * If you use an existing `objectID`, the existing record will be replaced with the new one.  To update only some attributes of an existing record, use the [`partial` operation](#tag/Records/operation/partialUpdateObject) instead.  To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
      *
-     * Required API Key ACLs:
-     * - addObject.
-     *
+     * @summary Add or update a record (using objectID).
      * @param addOrUpdateObject - The addOrUpdateObject object.
      * @param addOrUpdateObject.indexName - Index on which to perform the request.
      * @param addOrUpdateObject.objectID - Unique record (object) identifier.
@@ -581,9 +577,7 @@ export function createSearchClient({
     /**
      * Add a source to the list of allowed sources.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Add a source.
      * @param source - Source to add.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -621,9 +615,7 @@ export function createSearchClient({
     /**
      * Assign or move a user ID to a cluster. The time it takes to move a user is proportional to the amount of data linked to the user ID.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Assign or move a user ID.
      * @param assignUserId - The assignUserId object.
      * @param assignUserId.xAlgoliaUserID - UserID to assign.
      * @param assignUserId.assignUserIdParams - The assignUserIdParams object.
@@ -673,6 +665,7 @@ export function createSearchClient({
     /**
      * To reduce the time spent on network round trips, you can perform several write actions in a single API call. Actions are applied in the order they are specified. The supported `action`s are equivalent to the individual operations of the same name.
      *
+     * @summary Batch write operations on one index.
      * @param batch - The batch object.
      * @param batch.indexName - Index on which to perform the request.
      * @param batch.batchWriteParams - The batchWriteParams object.
@@ -721,9 +714,7 @@ export function createSearchClient({
     /**
      * Assign multiple user IDs to a cluster. **You can\'t _move_ users with this operation.**.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Batch assign userIDs.
      * @param batchAssignUserIds - The batchAssignUserIds object.
      * @param batchAssignUserIds.xAlgoliaUserID - UserID to assign.
      * @param batchAssignUserIds.batchAssignUserIdsParams - The batchAssignUserIdsParams object.
@@ -778,9 +769,7 @@ export function createSearchClient({
     /**
      * Add or remove a batch of dictionary entries.
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Batch dictionary entries.
      * @param batchDictionaryEntries - The batchDictionaryEntries object.
      * @param batchDictionaryEntries.dictionaryName - Dictionary to search in.
      * @param batchDictionaryEntries.batchDictionaryEntriesParams - The batchDictionaryEntriesParams object.
@@ -832,9 +821,7 @@ export function createSearchClient({
     /**
      * Retrieve up to 1,000 records per call. Supports full-text search and filters. For better performance, it doesn\'t support: - The `distinct` query parameter - Sorting by typos, proximity, words, or geographical distance.
      *
-     * Required API Key ACLs:
-     * - browse.
-     *
+     * @summary Get all records from an index.
      * @param browse - The browse object.
      * @param browse.indexName - Index on which to perform the request.
      * @param browse.browseParams - The browseParams object.
@@ -871,9 +858,7 @@ export function createSearchClient({
     /**
      * Delete the records but leave settings and index-specific API keys untouched.
      *
-     * Required API Key ACLs:
-     * - deleteIndex.
-     *
+     * @summary Delete all records from an index.
      * @param clearObjects - The clearObjects object.
      * @param clearObjects.indexName - Index on which to perform the request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -908,9 +893,7 @@ export function createSearchClient({
     /**
      * Delete all rules in the index.
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Delete all rules.
      * @param clearRules - The clearRules object.
      * @param clearRules.indexName - Index on which to perform the request.
      * @param clearRules.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
@@ -950,9 +933,7 @@ export function createSearchClient({
     /**
      * Delete all synonyms in the index.
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Delete all synonyms.
      * @param clearSynonyms - The clearSynonyms object.
      * @param clearSynonyms.indexName - Index on which to perform the request.
      * @param clearSynonyms.forwardToReplicas - Indicates whether changed index settings are forwarded to the replica indices.
@@ -992,6 +973,7 @@ export function createSearchClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.
      * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customDelete.parameters - Query parameters to apply to the current query.
@@ -1024,6 +1006,7 @@ export function createSearchClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customGet - The customGet object.
      * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customGet.parameters - Query parameters to apply to the current query.
@@ -1056,6 +1039,7 @@ export function createSearchClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -1090,6 +1074,7 @@ export function createSearchClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customPut - The customPut object.
      * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPut.parameters - Query parameters to apply to the current query.
@@ -1124,9 +1109,7 @@ export function createSearchClient({
     /**
      * Delete an existing API key. The request must be authenticated with the admin API key.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Delete API key.
      * @param deleteApiKey - The deleteApiKey object.
      * @param deleteApiKey.key - API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1161,9 +1144,7 @@ export function createSearchClient({
     /**
      * This operation doesn\'t support all the query options, only its filters (numeric, facet, or tag) and geo queries. It doesn\'t accept empty filters or queries.
      *
-     * Required API Key ACLs:
-     * - deleteIndex.
-     *
+     * @summary Delete all records matching a query.
      * @param deleteBy - The deleteBy object.
      * @param deleteBy.indexName - Index on which to perform the request.
      * @param deleteBy.deleteByParams - The deleteByParams object.
@@ -1206,9 +1187,7 @@ export function createSearchClient({
     /**
      * Delete an existing index.
      *
-     * Required API Key ACLs:
-     * - deleteIndex.
-     *
+     * @summary Delete index.
      * @param deleteIndex - The deleteIndex object.
      * @param deleteIndex.indexName - Index on which to perform the request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1243,9 +1222,7 @@ export function createSearchClient({
     /**
      * To delete a set of records matching a query, use the [`deleteByQuery` operation](#tag/Records/operation/deleteBy) instead.
      *
-     * Required API Key ACLs:
-     * - deleteObject.
-     *
+     * @summary Delete a record.
      * @param deleteObject - The deleteObject object.
      * @param deleteObject.indexName - Index on which to perform the request.
      * @param deleteObject.objectID - Unique record (object) identifier.
@@ -1286,9 +1263,7 @@ export function createSearchClient({
     /**
      * Delete a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Delete a rule.
      * @param deleteRule - The deleteRule object.
      * @param deleteRule.indexName - Index on which to perform the request.
      * @param deleteRule.objectID - Unique identifier of a rule object.
@@ -1334,9 +1309,7 @@ export function createSearchClient({
     /**
      * Remove a source from the list of allowed sources.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Remove a source.
      * @param deleteSource - The deleteSource object.
      * @param deleteSource.source - IP address range of the source.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1371,9 +1344,7 @@ export function createSearchClient({
     /**
      * Delete a synonym by its `objectID`. To find the object IDs of your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Delete a synonym.
      * @param deleteSynonym - The deleteSynonym object.
      * @param deleteSynonym.indexName - Index on which to perform the request.
      * @param deleteSynonym.objectID - Unique identifier of a synonym object.
@@ -1419,6 +1390,7 @@ export function createSearchClient({
     /**
      * Get the permissions and restrictions of a specific API key. When authenticating with the admin API key, you can request information for any of your application\'s keys. When authenticating with other API keys, you can only retrieve information for that key.
      *
+     * @summary Get API key permissions.
      * @param getApiKey - The getApiKey object.
      * @param getApiKey.key - API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1453,9 +1425,7 @@ export function createSearchClient({
     /**
      * Lists Algolia\'s [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/) and any customizations applied to each language\'s [stop word](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plural](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), and [segmentation (compound)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) features.
      *
-     * Required API Key ACLs:
-     * - settings.
-     *
+     * @summary List available languages.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDictionaryLanguages(
@@ -1478,9 +1448,7 @@ export function createSearchClient({
     /**
      * Get the languages for which [stop words are turned off](#tag/Dictionaries/operation/setDictionarySettings).
      *
-     * Required API Key ACLs:
-     * - settings.
-     *
+     * @summary Get stop word settings.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDictionarySettings(
@@ -1503,9 +1471,7 @@ export function createSearchClient({
     /**
      * The request must be authenticated by an API key with the [`logs` ACL](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl). Logs are held for the last seven days. There\'s also a logging limit of 1,000 API calls per server. This request counts towards your [operations quota](https://support.algolia.com/hc/en-us/articles/4406981829777-How-does-Algolia-count-records-and-operations-) but doesn\'t appear in the logs itself. > **Note**: To fetch the logs for a Distributed Search Network (DSN) cluster, target the [DSN\'s endpoint](https://www.algolia.com/doc/guides/scaling/distributed-search-network-dsn/#accessing-dsn-servers).
      *
-     * Required API Key ACLs:
-     * - logs.
-     *
+     * @summary Return the latest log entries.
      * @param getLogs - The getLogs object.
      * @param getLogs.offset - First log entry to retrieve. Sorted by decreasing date with 0 being the most recent.
      * @param getLogs.length - Maximum number of entries to retrieve.
@@ -1550,9 +1516,7 @@ export function createSearchClient({
     /**
      * To get more than one record, use the [`objects` operation](#tag/Records/operation/getObjects).
      *
-     * Required API Key ACLs:
-     * - search.
-     *
+     * @summary Get a record.
      * @param getObject - The getObject object.
      * @param getObject.indexName - Index on which to perform the request.
      * @param getObject.objectID - Unique record (object) identifier.
@@ -1598,9 +1562,7 @@ export function createSearchClient({
     /**
      * Retrieve one or more records, potentially from different indices, in a single API operation. Results will be received in the same order as the requests.
      *
-     * Required API Key ACLs:
-     * - search.
-     *
+     * @summary Get multiple records.
      * @param getObjectsParams - Request object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1640,9 +1602,7 @@ export function createSearchClient({
     /**
      * Get a rule by its `objectID`. To find the `objectID` for rules, use the [`search` operation](#tag/Rules/operation/searchRules).
      *
-     * Required API Key ACLs:
-     * - settings.
-     *
+     * @summary Get a rule.
      * @param getRule - The getRule object.
      * @param getRule.indexName - Index on which to perform the request.
      * @param getRule.objectID - Unique identifier of a rule object.
@@ -1683,9 +1643,7 @@ export function createSearchClient({
     /**
      * Return an object containing an index\'s [configuration settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/).
      *
-     * Required API Key ACLs:
-     * - search.
-     *
+     * @summary Get index settings.
      * @param getSettings - The getSettings object.
      * @param getSettings.indexName - Index on which to perform the request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1720,9 +1678,7 @@ export function createSearchClient({
     /**
      * Get all allowed sources (IP addresses).
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Get all allowed IP addresses.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSources(requestOptions?: RequestOptions): Promise<Source[]> {
@@ -1743,9 +1699,7 @@ export function createSearchClient({
     /**
      * Get a syonym by its `objectID`. To find the object IDs for your synonyms, use the [`search` operation](#tag/Synonyms/operation/searchSynonyms).
      *
-     * Required API Key ACLs:
-     * - settings.
-     *
+     * @summary Get a synonym object.
      * @param getSynonym - The getSynonym object.
      * @param getSynonym.indexName - Index on which to perform the request.
      * @param getSynonym.objectID - Unique identifier of a synonym object.
@@ -1786,9 +1740,7 @@ export function createSearchClient({
     /**
      * Some operations, such as copying an index, will respond with a `taskID` value. Use this value here to check the status of that task.
      *
-     * Required API Key ACLs:
-     * - addObject.
-     *
+     * @summary Check a task\'s status.
      * @param getTask - The getTask object.
      * @param getTask.indexName - Index on which to perform the request.
      * @param getTask.taskID - Unique task identifier.
@@ -1829,9 +1781,7 @@ export function createSearchClient({
     /**
      * Get the IDs of the 10 users with the highest number of records per cluster. Since it can take up to a few seconds to get the data from the different clusters, the response isn\'t real-time.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Get top userID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopUserIds(
@@ -1854,9 +1804,7 @@ export function createSearchClient({
     /**
      * Returns the userID data stored in the mapping. Since it can take up to a few seconds to get the data from the different clusters, the response isn\'t real-time.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Get userID.
      * @param getUserId - The getUserId object.
      * @param getUserId.userID - UserID to assign.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1891,9 +1839,7 @@ export function createSearchClient({
     /**
      * To determine when the time-consuming process of creating a large batch of users or migrating users from one cluster to another is complete, this operation retrieves the status of the process.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Get migration and user mapping status.
      * @param hasPendingMappings - The hasPendingMappings object.
      * @param hasPendingMappings.getClusters - Indicates whether to include the cluster\'s pending mapping state in the response.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1923,9 +1869,7 @@ export function createSearchClient({
     /**
      * List all API keys associated with your Algolia application, including their permissions and restrictions.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary List API keys.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listApiKeys(requestOptions?: RequestOptions): Promise<ListApiKeysResponse> {
@@ -1946,9 +1890,7 @@ export function createSearchClient({
     /**
      * List the available clusters in a multi-cluster setup.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary List clusters.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listClusters(
@@ -1971,9 +1913,7 @@ export function createSearchClient({
     /**
      * List indices in an Algolia application.
      *
-     * Required API Key ACLs:
-     * - listIndexes.
-     *
+     * @summary List indices.
      * @param listIndices - The listIndices object.
      * @param listIndices.page - Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.
      * @param listIndices.hitsPerPage - Maximum number of hits per page.
@@ -2008,9 +1948,7 @@ export function createSearchClient({
     /**
      * List the userIDs assigned to a multi-cluster application. Since it can take up to a few seconds to get the data from the different clusters, the response isn\'t real-time.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary List userIDs.
      * @param listUserIds - The listUserIds object.
      * @param listUserIds.page - Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.
      * @param listUserIds.hitsPerPage - Maximum number of hits per page.
@@ -2045,6 +1983,7 @@ export function createSearchClient({
     /**
      * To reduce the time spent on network round trips, you can perform several write actions in a single request. It\'s a multi-index version of the [`batch` operation](#tag/Records/operation/batch). Actions are applied in the order they are specified. The supported actions are equivalent to the individual operations of the same name.
      *
+     * @summary Batch write operations on multiple indices.
      * @param batchParams - The batchParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2082,9 +2021,7 @@ export function createSearchClient({
     /**
      * This `operation`, _copy_ or _move_, will copy or move a source index\'s (`IndexName`) records, settings, synonyms, and rules to a `destination` index. If the destination index exists, it will be replaced, except for index-specific API keys and analytics data. If the destination index doesn\'t exist, it will be created.  The choice between moving or copying an index depends on your needs. Choose:  - **Move** to rename an index. - **Copy** to create a new index with the same records and configuration as an existing one.  > **Note**: When considering copying or moving, be aware of the [rate limitations](https://www.algolia.com/doc/guides/scaling/algolia-service-limits/#application-record-and-index-limits) on these processes and the [impact on your analytics data](https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/concepts/indices-analytics/).
      *
-     * Required API Key ACLs:
-     * - addObject.
-     *
+     * @summary Copy, move, or rename an index.
      * @param operationIndex - The operationIndex object.
      * @param operationIndex.indexName - Index on which to perform the request.
      * @param operationIndex.operationIndexParams - The operationIndexParams object.
@@ -2138,9 +2075,7 @@ export function createSearchClient({
     /**
      * Add new attributes or update current ones in an existing record. You can use any first-level attribute but not nested attributes. If you specify a [nested attribute](https://www.algolia.com/doc/guides/sending-and-managing-data/prepare-your-data/how-to/creating-and-using-nested-attributes/), the engine treats it as a replacement for its first-level ancestor.
      *
-     * Required API Key ACLs:
-     * - addObject.
-     *
+     * @summary Update record attributes.
      * @param partialUpdateObject - The partialUpdateObject object.
      * @param partialUpdateObject.indexName - Index on which to perform the request.
      * @param partialUpdateObject.objectID - Unique record (object) identifier.
@@ -2199,9 +2134,7 @@ export function createSearchClient({
     /**
      * Remove a userID and its associated data from the multi-clusters.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Remove userID.
      * @param removeUserId - The removeUserId object.
      * @param removeUserId.userID - UserID to assign.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2236,9 +2169,7 @@ export function createSearchClient({
     /**
      * Replace all allowed sources.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Replace all sources.
      * @param replaceSources - The replaceSources object.
      * @param replaceSources.source - Allowed sources.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2271,9 +2202,7 @@ export function createSearchClient({
     /**
      * Restore a deleted API key, along with its associated permissions. The request must be authenticated with the admin API key.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Restore API key.
      * @param restoreApiKey - The restoreApiKey object.
      * @param restoreApiKey.key - API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2308,9 +2237,7 @@ export function createSearchClient({
     /**
      * Add a record (object) to an index or replace it. If the record doesn\'t contain an `objectID`, Algolia automatically adds it. If you use an existing `objectID`, the existing record is replaced with the new one. To add multiple records to your index in a single API request, use the [`batch` operation](#tag/Records/operation/batch).
      *
-     * Required API Key ACLs:
-     * - addObject.
-     *
+     * @summary Add or update a record.
      * @param saveObject - The saveObject object.
      * @param saveObject.indexName - Index on which to perform the request.
      * @param saveObject.body - The Algolia record.
@@ -2353,9 +2280,7 @@ export function createSearchClient({
     /**
      * To create or update more than one rule, use the [`batch` operation](#tag/Rules/operation/saveRules).
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Create or update a rule.
      * @param saveRule - The saveRule object.
      * @param saveRule.indexName - Index on which to perform the request.
      * @param saveRule.objectID - Unique identifier of a rule object.
@@ -2415,9 +2340,7 @@ export function createSearchClient({
     /**
      * Create or update multiple rules.
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Save a batch of rules.
      * @param saveRules - The saveRules object.
      * @param saveRules.indexName - Index on which to perform the request.
      * @param saveRules.rules - The rules object.
@@ -2475,9 +2398,7 @@ export function createSearchClient({
     /**
      * Add a [synonym](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#the-different-types-of-synonyms) to an index or replace it. If the synonym `objectID` doesn\'t exist, Algolia adds a new one. If you use an existing synonym `objectID`, the existing synonym is replaced with the new one. To add multiple synonyms in a single API request, use the [`batch` operation](#tag/Synonyms/operation/saveSynonyms).
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Save a synonym.
      * @param saveSynonym - The saveSynonym object.
      * @param saveSynonym.indexName - Index on which to perform the request.
      * @param saveSynonym.objectID - Unique identifier of a synonym object.
@@ -2542,9 +2463,7 @@ export function createSearchClient({
     /**
      * Create or update multiple synonyms.
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Save a batch of synonyms.
      * @param saveSynonyms - The saveSynonyms object.
      * @param saveSynonyms.indexName - Index on which to perform the request.
      * @param saveSynonyms.synonymHit - The synonymHit object.
@@ -2603,9 +2522,7 @@ export function createSearchClient({
     /**
      * Send multiple search queries to one or more indices.
      *
-     * Required API Key ACLs:
-     * - search.
-     *
+     * @summary Search multiple indices.
      * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2670,9 +2587,7 @@ export function createSearchClient({
     /**
      * Search for standard and [custom](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/) entries in the [stop words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-stop-words/), [plurals](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-plurals-and-other-declensions/), or [segmentation (compounds)](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/how-to/customize-segmentation/) dictionaries.
      *
-     * Required API Key ACLs:
-     * - settings.
-     *
+     * @summary Search dictionary entries.
      * @param searchDictionaryEntries - The searchDictionaryEntries object.
      * @param searchDictionaryEntries.dictionaryName - Dictionary to search in.
      * @param searchDictionaryEntries.searchDictionaryEntriesParams - The searchDictionaryEntriesParams object.
@@ -2726,9 +2641,7 @@ export function createSearchClient({
     /**
      * [Search for a facet\'s values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values), optionally restricting the returned values to those contained in records matching other search criteria. > **Note**: Pagination isn\'t supported (`page` and `hitsPerPage` are ignored). By default, the engine returns a maximum of 10 values but you can adjust this with `maxFacetHits`.
      *
-     * Required API Key ACLs:
-     * - search.
-     *
+     * @summary Search for facet values.
      * @param searchForFacetValues - The searchForFacetValues object.
      * @param searchForFacetValues.indexName - Index on which to perform the request.
      * @param searchForFacetValues.facetName - Facet name.
@@ -2777,9 +2690,7 @@ export function createSearchClient({
     /**
      * Search for rules in your index. You can control the search with parameters. To list all rules, send an empty request body.
      *
-     * Required API Key ACLs:
-     * - settings.
-     *
+     * @summary Search for rules.
      * @param searchRules - The searchRules object.
      * @param searchRules.indexName - Index on which to perform the request.
      * @param searchRules.searchRulesParams - The searchRulesParams object.
@@ -2818,9 +2729,7 @@ export function createSearchClient({
     /**
      * Return records that match the query.
      *
-     * Required API Key ACLs:
-     * - search.
-     *
+     * @summary Search an index.
      * @param searchSingleIndex - The searchSingleIndex object.
      * @param searchSingleIndex.indexName - Index on which to perform the request.
      * @param searchSingleIndex.searchParams - The searchParams object.
@@ -2859,9 +2768,7 @@ export function createSearchClient({
     /**
      * Search for synonyms in your index. You can control and filter the search with parameters. To get all synonyms, send an empty request body.
      *
-     * Required API Key ACLs:
-     * - settings.
-     *
+     * @summary Search for synonyms.
      * @param searchSynonyms - The searchSynonyms object.
      * @param searchSynonyms.indexName - Index on which to perform the request.
      * @param searchSynonyms.searchSynonymsParams - Body of the `searchSynonyms` operation.
@@ -2900,9 +2807,7 @@ export function createSearchClient({
     /**
      * Since it can take up to a few seconds to get the data from the different clusters, the response isn\'t real-time. To ensure rapid updates, the user IDs index isn\'t built at the same time as the mapping. Instead, it\'s built every 12 hours, at the same time as the update of user ID usage. For example, if you add or move a user ID, the search will show an old value until the next time the mapping is rebuilt (every 12 hours).
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Search for a user ID.
      * @param searchUserIdsParams - The searchUserIdsParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2942,9 +2847,7 @@ export function createSearchClient({
     /**
      * Set stop word settings for a specific language.
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Set stop word settings.
      * @param dictionarySettingsParams - The dictionarySettingsParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2982,9 +2885,7 @@ export function createSearchClient({
     /**
      * Update the specified [index settings](https://www.algolia.com/doc/api-reference/settings-api-parameters/). Specifying null for a setting resets it to its default value.
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Update index settings.
      * @param setSettings - The setSettings object.
      * @param setSettings.indexName - Index on which to perform the request.
      * @param setSettings.indexSettings - The indexSettings object.
@@ -3032,9 +2933,7 @@ export function createSearchClient({
     /**
      * Replace the permissions of an existing API key. Any unspecified parameter resets that permission to its default value. The request must be authenticated with the admin API key.
      *
-     * Required API Key ACLs:
-     * - admin.
-     *
+     * @summary Update an API key.
      * @param updateApiKey - The updateApiKey object.
      * @param updateApiKey.key - API key.
      * @param updateApiKey.apiKey - The apiKey object.

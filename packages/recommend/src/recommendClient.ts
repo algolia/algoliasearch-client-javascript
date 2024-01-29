@@ -135,6 +135,7 @@ export function createRecommendClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.
      * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customDelete.parameters - Query parameters to apply to the current query.
@@ -167,6 +168,7 @@ export function createRecommendClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customGet - The customGet object.
      * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customGet.parameters - Query parameters to apply to the current query.
@@ -199,6 +201,7 @@ export function createRecommendClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -233,6 +236,7 @@ export function createRecommendClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customPut - The customPut object.
      * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPut.parameters - Query parameters to apply to the current query.
@@ -267,9 +271,7 @@ export function createRecommendClient({
     /**
      * Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Delete a Recommend rule.
      * @param deleteRecommendRule - The deleteRecommendRule object.
      * @param deleteRecommendRule.indexName - Index on which to perform the request.
      * @param deleteRecommendRule.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
@@ -319,9 +321,7 @@ export function createRecommendClient({
     /**
      * Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
      *
-     * Required API Key ACLs:
-     * - settings.
-     *
+     * @summary Get a Recommend rule.
      * @param getRecommendRule - The getRecommendRule object.
      * @param getRecommendRule.indexName - Index on which to perform the request.
      * @param getRecommendRule.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
@@ -371,9 +371,7 @@ export function createRecommendClient({
     /**
      * Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Get a Recommend task\'s status.
      * @param getRecommendStatus - The getRecommendStatus object.
      * @param getRecommendStatus.indexName - Index on which to perform the request.
      * @param getRecommendStatus.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
@@ -422,9 +420,7 @@ export function createRecommendClient({
     /**
      * Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
      *
-     * Required API Key ACLs:
-     * - search.
-     *
+     * @summary Get recommendations and trending items.
      * @param getRecommendationsParams - The getRecommendationsParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -464,9 +460,7 @@ export function createRecommendClient({
     /**
      * List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
      *
-     * Required API Key ACLs:
-     * - settings.
-     *
+     * @summary List Recommend rules.
      * @param searchRecommendRules - The searchRecommendRules object.
      * @param searchRecommendRules.indexName - Index on which to perform the request.
      * @param searchRecommendRules.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).

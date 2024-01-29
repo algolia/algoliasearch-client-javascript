@@ -109,9 +109,7 @@ export function createAbtestingClient({
     /**
      * Creates an A/B test.
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Create an A/B test.
      * @param addABTestsRequest - The addABTestsRequest object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -159,6 +157,7 @@ export function createAbtestingClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.
      * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customDelete.parameters - Query parameters to apply to the current query.
@@ -191,6 +190,7 @@ export function createAbtestingClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customGet - The customGet object.
      * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customGet.parameters - Query parameters to apply to the current query.
@@ -223,6 +223,7 @@ export function createAbtestingClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -257,6 +258,7 @@ export function createAbtestingClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customPut - The customPut object.
      * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPut.parameters - Query parameters to apply to the current query.
@@ -291,9 +293,7 @@ export function createAbtestingClient({
     /**
      * Delete an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Delete an A/B test.
      * @param deleteABTest - The deleteABTest object.
      * @param deleteABTest.id - Unique A/B test ID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -328,9 +328,7 @@ export function createAbtestingClient({
     /**
      * Get specific details for an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
      *
-     * Required API Key ACLs:
-     * - analytics.
-     *
+     * @summary Get A/B test details.
      * @param getABTest - The getABTest object.
      * @param getABTest.id - Unique A/B test ID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -363,9 +361,7 @@ export function createAbtestingClient({
     /**
      * List all A/B tests.
      *
-     * Required API Key ACLs:
-     * - analytics.
-     *
+     * @summary List all A/B tests.
      * @param listABTests - The listABTests object.
      * @param listABTests.offset - Position of the starting record. Used for paging. 0 is the first record.
      * @param listABTests.limit - Number of records to return (page size).
@@ -410,9 +406,7 @@ export function createAbtestingClient({
     /**
      * If stopped, the test is over and can\'t be restarted. There is now only one index, receiving 100% of all search requests. The data gathered for stopped A/B tests is retained. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
      *
-     * Required API Key ACLs:
-     * - editSettings.
-     *
+     * @summary Stop an A/B test.
      * @param stopABTest - The stopABTest object.
      * @param stopABTest.id - Unique A/B test ID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.

@@ -107,6 +107,7 @@ export function createMonitoringClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.
      * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customDelete.parameters - Query parameters to apply to the current query.
@@ -139,6 +140,7 @@ export function createMonitoringClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customGet - The customGet object.
      * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customGet.parameters - Query parameters to apply to the current query.
@@ -171,6 +173,7 @@ export function createMonitoringClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -205,6 +208,7 @@ export function createMonitoringClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
+     * @summary Send requests to the Algolia REST API.
      * @param customPut - The customPut object.
      * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPut.parameters - Query parameters to apply to the current query.
@@ -239,6 +243,7 @@ export function createMonitoringClient({
     /**
      * List known incidents for selected clusters.
      *
+     * @summary List incidents for selected clusters.
      * @param getClusterIncidents - The getClusterIncidents object.
      * @param getClusterIncidents.clusters - Subset of clusters, separated by comma.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -273,6 +278,7 @@ export function createMonitoringClient({
     /**
      * Report whether a cluster is operational.
      *
+     * @summary List statuses of selected clusters.
      * @param getClusterStatus - The getClusterStatus object.
      * @param getClusterStatus.clusters - Subset of clusters, separated by comma.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -307,6 +313,7 @@ export function createMonitoringClient({
     /**
      * List known incidents for all clusters.
      *
+     * @summary List incidents.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getIncidents(requestOptions?: RequestOptions): Promise<IncidentsResponse> {
@@ -327,6 +334,7 @@ export function createMonitoringClient({
     /**
      * List the average times for indexing operations for selected clusters.
      *
+     * @summary Get indexing times.
      * @param getIndexingTime - The getIndexingTime object.
      * @param getIndexingTime.clusters - Subset of clusters, separated by comma.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -361,6 +369,7 @@ export function createMonitoringClient({
     /**
      * List the servers belonging to clusters.  The response depends on whether you authenticate your API request:  - With authentication, the response lists the servers assigned to your Algolia application\'s cluster.  - Without authentication, the response lists the servers for all Algolia clusters.
      *
+     * @summary List servers.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getInventory(requestOptions?: RequestOptions): Promise<InventoryResponse> {
@@ -381,6 +390,7 @@ export function createMonitoringClient({
     /**
      * List the average latency for search requests for selected clusters.
      *
+     * @summary Get search latency times.
      * @param getLatency - The getLatency object.
      * @param getLatency.clusters - Subset of clusters, separated by comma.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -415,6 +425,7 @@ export function createMonitoringClient({
     /**
      * Report the aggregate value of a metric for a selected period of time.
      *
+     * @summary Get metrics for a given period.
      * @param getMetrics - The getMetrics object.
      * @param getMetrics.metric - Metric to report.  For more information about the individual metrics, see the response. To include all metrics, use `*` as the parameter.
      * @param getMetrics.period - Period over which to aggregate the metrics:  - `minute`. Aggregate the last minute. 1 data point per 10 seconds. - `hour`. Aggregate the last hour. 1 data point per minute. - `day`. Aggregate the last day. 1 data point per 10 minutes. - `week`. Aggregate the last week. 1 data point per hour. - `month`. Aggregate the last month. 1 data point per day.
@@ -455,6 +466,7 @@ export function createMonitoringClient({
     /**
      * Test whether clusters are reachable or not.
      *
+     * @summary Test the reachability of clusters.
      * @param getReachability - The getReachability object.
      * @param getReachability.clusters - Subset of clusters, separated by comma.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -489,6 +501,7 @@ export function createMonitoringClient({
     /**
      * Report whether clusters are operational.  The response depends on whether you authenticate your API request.  - With authentication, the response includes the status of the cluster assigned to your Algolia application.  - Without authentication, the response lists the statuses of all public Algolia clusters.
      *
+     * @summary List cluster statuses.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getStatus(requestOptions?: RequestOptions): Promise<StatusResponse> {
