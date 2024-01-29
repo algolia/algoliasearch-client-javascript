@@ -1,3 +1,8 @@
+## [5.0.0-alpha.101](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.100...5.0.0-alpha.101)
+
+- [872ab29bf](https://github.com/algolia/api-clients-automation/commit/872ab29bf) feat(specs): update query suggestions unauthorized response example ([#2606](https://github.com/algolia/api-clients-automation/pull/2606)) by [@alphonseb](https://github.com/alphonseb/)
+- [e569a3e23](https://github.com/algolia/api-clients-automation/commit/e569a3e23) feat(specs): add acls to API endpoints ([#2604](https://github.com/algolia/api-clients-automation/pull/2604)) by [@alphonseb](https://github.com/alphonseb/)
+
 ## [5.0.0-alpha.100](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.99...5.0.0-alpha.100)
 
 - [379fbc501](https://github.com/algolia/api-clients-automation/commit/379fbc501) fix(specs): correct `searchSynonyms` parameters ([#2595](https://github.com/algolia/api-clients-automation/pull/2595)) by [@morganleroi](https://github.com/morganleroi/)
