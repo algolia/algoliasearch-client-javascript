@@ -108,7 +108,6 @@ export function createPersonalizationClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.
      * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customDelete.parameters - Query parameters to apply to the current query.
@@ -141,7 +140,6 @@ export function createPersonalizationClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customGet - The customGet object.
      * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customGet.parameters - Query parameters to apply to the current query.
@@ -174,7 +172,6 @@ export function createPersonalizationClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -209,7 +206,6 @@ export function createPersonalizationClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customPut - The customPut object.
      * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPut.parameters - Query parameters to apply to the current query.
@@ -244,7 +240,9 @@ export function createPersonalizationClient({
     /**
      * Delete the user profile and all its associated data.  Returns, as part of the response, a date until which the data can safely be considered as deleted for the given user. This means if you send events for the given user before this date, they will be ignored. Any data received after the deletedUntil date will start building a new user profile.  It might take a couple hours for the deletion request to be fully processed.
      *
-     * @summary Delete a user profile.
+     * Required API Key ACLs:
+     * - recommendation.
+     *
      * @param deleteUserProfile - The deleteUserProfile object.
      * @param deleteUserProfile.userToken - UserToken representing the user for which to fetch the Personalization profile.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -279,7 +277,9 @@ export function createPersonalizationClient({
     /**
      * The strategy contains information on the events and facets that impact user profiles and personalized search results.
      *
-     * @summary Get the current strategy.
+     * Required API Key ACLs:
+     * - recommendation.
+     *
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getPersonalizationStrategy(
@@ -302,7 +302,9 @@ export function createPersonalizationClient({
     /**
      * Get the user profile built from Personalization strategy.  The profile is structured by facet name used in the strategy. Each facet value is mapped to its score. Each score represents the user affinity for a specific facet value given the userToken past events and the Personalization strategy defined. Scores are bounded to 20. The last processed event timestamp is provided using the ISO 8601 format for debugging purposes.
      *
-     * @summary Get a user profile.
+     * Required API Key ACLs:
+     * - recommendation.
+     *
      * @param getUserTokenProfile - The getUserTokenProfile object.
      * @param getUserTokenProfile.userToken - UserToken representing the user for which to fetch the Personalization profile.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -337,7 +339,9 @@ export function createPersonalizationClient({
     /**
      * A strategy defines the events and facets that impact user profiles and personalized search results.
      *
-     * @summary Set a new strategy.
+     * Required API Key ACLs:
+     * - recommendation.
+     *
      * @param personalizationStrategyParams - The personalizationStrategyParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */

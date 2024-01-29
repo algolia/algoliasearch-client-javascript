@@ -197,7 +197,11 @@ export function createIngestionClient({
     /**
      * Create a authentication.
      *
-     * @summary Create a authentication.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param authenticationCreate -.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -245,7 +249,11 @@ export function createIngestionClient({
     /**
      * Create a destination.
      *
-     * @summary Create a destination.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param destinationCreate -.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -293,7 +301,11 @@ export function createIngestionClient({
     /**
      * Create a source.
      *
-     * @summary Create a source.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param sourceCreate -.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -341,7 +353,6 @@ export function createIngestionClient({
     /**
      * Create a task.
      *
-     * @summary Create a task.
      * @param taskCreate -.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -394,7 +405,6 @@ export function createIngestionClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.
      * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customDelete.parameters - Query parameters to apply to the current query.
@@ -427,7 +437,6 @@ export function createIngestionClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customGet - The customGet object.
      * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customGet.parameters - Query parameters to apply to the current query.
@@ -460,7 +469,6 @@ export function createIngestionClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -495,7 +503,6 @@ export function createIngestionClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customPut - The customPut object.
      * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPut.parameters - Query parameters to apply to the current query.
@@ -530,7 +537,11 @@ export function createIngestionClient({
     /**
      * Soft delete the authentication of the given authenticationID.
      *
-     * @summary Delete a authentication.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param deleteAuthentication - The deleteAuthentication object.
      * @param deleteAuthentication.authenticationID - The authentication UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -565,7 +576,11 @@ export function createIngestionClient({
     /**
      * Soft delete the destination of the given destinationID.
      *
-     * @summary Delete a destination.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param deleteDestination - The deleteDestination object.
      * @param deleteDestination.destinationID - The destination UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -600,7 +615,11 @@ export function createIngestionClient({
     /**
      * Soft delete the source of the given sourceID.
      *
-     * @summary Delete a source.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param deleteSource - The deleteSource object.
      * @param deleteSource.sourceID - The source UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -635,7 +654,6 @@ export function createIngestionClient({
     /**
      * Soft delete the task of the given taskID.
      *
-     * @summary Delete a task.
      * @param deleteTask - The deleteTask object.
      * @param deleteTask.taskID - The task UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -670,7 +688,11 @@ export function createIngestionClient({
     /**
      * Disable the task of the given taskID.
      *
-     * @summary Disable a task.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param disableTask - The disableTask object.
      * @param disableTask.taskID - The task UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -705,7 +727,11 @@ export function createIngestionClient({
     /**
      * Enable the task of the given taskID.
      *
-     * @summary Enable a task.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param enableTask - The enableTask object.
      * @param enableTask.taskID - The task UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -740,7 +766,11 @@ export function createIngestionClient({
     /**
      * Get the authentication of the given authenticationID.
      *
-     * @summary Get a authentication.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getAuthentication - The getAuthentication object.
      * @param getAuthentication.authenticationID - The authentication UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -775,7 +805,11 @@ export function createIngestionClient({
     /**
      * Get a list of authentications for the given query parameters, with pagination details.
      *
-     * @summary Get a list of authentications.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getAuthentications - The getAuthentications object.
      * @param getAuthentications.itemsPerPage - The number of items per page to return.
      * @param getAuthentications.page - The page number to fetch, starting at 1.
@@ -837,7 +871,11 @@ export function createIngestionClient({
     /**
      * Get the destination of the given destinationID.
      *
-     * @summary Get a destination.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getDestination - The getDestination object.
      * @param getDestination.destinationID - The destination UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -872,7 +910,11 @@ export function createIngestionClient({
     /**
      * Get a list of destinations for the given query parameters, with pagination details.
      *
-     * @summary Get a list of destinations.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getDestinations - The getDestinations object.
      * @param getDestinations.itemsPerPage - The number of items per page to return.
      * @param getDestinations.page - The page number to fetch, starting at 1.
@@ -934,7 +976,11 @@ export function createIngestionClient({
     /**
      * Retrieve a stream listing for a given Singer specification compatible docker type source ID.
      *
-     * @summary Retrieve a stream listing.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getDockerSourceStreams - The getDockerSourceStreams object.
      * @param getDockerSourceStreams.sourceID - The source UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -969,7 +1015,11 @@ export function createIngestionClient({
     /**
      * Get a single event for a specific runID.
      *
-     * @summary Get an event.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getEvent - The getEvent object.
      * @param getEvent.runID - The run UUID.
      * @param getEvent.eventID - The event UUID.
@@ -1010,7 +1060,11 @@ export function createIngestionClient({
     /**
      * Get a list of events associated to the given runID, for the given query parameters.
      *
-     * @summary Get a list of events.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getEvents - The getEvents object.
      * @param getEvents.runID - The run UUID.
      * @param getEvents.itemsPerPage - The number of items per page to return.
@@ -1095,7 +1149,11 @@ export function createIngestionClient({
     /**
      * Get a single run for the given ID.
      *
-     * @summary Get a run.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getRun - The getRun object.
      * @param getRun.runID - The run UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1128,7 +1186,11 @@ export function createIngestionClient({
     /**
      * Get a list of runs for the given query parameters, with pagination details.
      *
-     * @summary Get a list of runs.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getRuns - The getRuns object.
      * @param getRuns.itemsPerPage - The number of items per page to return.
      * @param getRuns.page - The page number to fetch, starting at 1.
@@ -1202,7 +1264,11 @@ export function createIngestionClient({
     /**
      * Get the source of the given sourceID.
      *
-     * @summary Get a source.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getSource - The getSource object.
      * @param getSource.sourceID - The source UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1237,7 +1303,11 @@ export function createIngestionClient({
     /**
      * Get a list of sources for the given query parameters, with pagination details.
      *
-     * @summary Get a list of sources.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getSources - The getSources object.
      * @param getSources.itemsPerPage - The number of items per page to return.
      * @param getSources.page - The page number to fetch, starting at 1.
@@ -1299,7 +1369,11 @@ export function createIngestionClient({
     /**
      * Get the task of the given taskID.
      *
-     * @summary Get a task.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getTask - The getTask object.
      * @param getTask.taskID - The task UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1334,7 +1408,11 @@ export function createIngestionClient({
     /**
      * Get a list of tasks for the given query parameters, with pagination details.
      *
-     * @summary Get a list of tasks.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param getTasks - The getTasks object.
      * @param getTasks.itemsPerPage - The number of items per page to return.
      * @param getTasks.page - The page number to fetch, starting at 1.
@@ -1414,7 +1492,11 @@ export function createIngestionClient({
     /**
      * Run the task of the given taskID.
      *
-     * @summary Run a task.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param runTask - The runTask object.
      * @param runTask.taskID - The task UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1449,7 +1531,11 @@ export function createIngestionClient({
     /**
      * Search among authentications with a defined set of parameters.
      *
-     * @summary Search among authentications.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param authenticationSearch - The authenticationSearch object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1487,7 +1573,11 @@ export function createIngestionClient({
     /**
      * Search among destinations with a defined set of parameters.
      *
-     * @summary Search among destinations.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param destinationSearch - The destinationSearch object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1525,7 +1615,11 @@ export function createIngestionClient({
     /**
      * Search among sources with a defined set of parameters.
      *
-     * @summary Search among sources.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param sourceSearch - The sourceSearch object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1563,7 +1657,11 @@ export function createIngestionClient({
     /**
      * Search among tasks with a defined set of parameters.
      *
-     * @summary Search among tasks.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param taskSearch - The taskSearch object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1601,7 +1699,11 @@ export function createIngestionClient({
     /**
      * Trigger a stream listing request for a Singer specification compatible docker type source.
      *
-     * @summary Trigger a stream listing request.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param triggerDockerSourceDiscover - The triggerDockerSourceDiscover object.
      * @param triggerDockerSourceDiscover.sourceID - The source UUID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1636,7 +1738,11 @@ export function createIngestionClient({
     /**
      * Update the authentication of the given authenticationID.
      *
-     * @summary Update a authentication.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param updateAuthentication - The updateAuthentication object.
      * @param updateAuthentication.authenticationID - The authentication UUID.
      * @param updateAuthentication.authenticationUpdate - The authenticationUpdate object.
@@ -1679,7 +1785,11 @@ export function createIngestionClient({
     /**
      * Update the destination of the given destinationID.
      *
-     * @summary Update a destination.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param updateDestination - The updateDestination object.
      * @param updateDestination.destinationID - The destination UUID.
      * @param updateDestination.destinationUpdate - The destinationUpdate object.
@@ -1722,7 +1832,11 @@ export function createIngestionClient({
     /**
      * Update the source of the given sourceID.
      *
-     * @summary Update a source.
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
      * @param updateSource - The updateSource object.
      * @param updateSource.sourceID - The source UUID.
      * @param updateSource.sourceUpdate - The sourceUpdate object.
@@ -1765,7 +1879,6 @@ export function createIngestionClient({
     /**
      * Update the task of the given taskID.
      *
-     * @summary Update a task.
      * @param updateTask - The updateTask object.
      * @param updateTask.taskID - The task UUID.
      * @param updateTask.taskUpdate - The taskUpdate object.
