@@ -135,7 +135,6 @@ export function createAnalyticsClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.
      * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customDelete.parameters - Query parameters to apply to the current query.
@@ -168,7 +167,6 @@ export function createAnalyticsClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customGet - The customGet object.
      * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customGet.parameters - Query parameters to apply to the current query.
@@ -201,7 +199,6 @@ export function createAnalyticsClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -236,7 +233,6 @@ export function createAnalyticsClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customPut - The customPut object.
      * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPut.parameters - Query parameters to apply to the current query.
@@ -271,7 +267,9 @@ export function createAnalyticsClient({
     /**
      * Return the average click position for the complete time range and for individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn\'t receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
      *
-     * @summary Get average click position.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getAverageClickPosition - The getAverageClickPosition object.
      * @param getAverageClickPosition.index - Index name to target.
      * @param getAverageClickPosition.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -322,7 +320,9 @@ export function createAnalyticsClient({
     /**
      * Show the number of clicks events and their associated position in the search results.  > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn\'t receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
      *
-     * @summary Get click positions.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getClickPositions - The getClickPositions object.
      * @param getClickPositions.index - Index name to target.
      * @param getClickPositions.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -373,7 +373,9 @@ export function createAnalyticsClient({
     /**
      * Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
      *
-     * @summary Get click-through rate (CTR).
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getClickThroughRate - The getClickThroughRate object.
      * @param getClickThroughRate.index - Index name to target.
      * @param getClickThroughRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -424,7 +426,9 @@ export function createAnalyticsClient({
     /**
      * Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
      *
-     * @summary Get conversion rate (CR).
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getConversationRate - The getConversationRate object.
      * @param getConversationRate.index - Index name to target.
      * @param getConversationRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -475,7 +479,9 @@ export function createAnalyticsClient({
     /**
      * Returns the rate at which searches don\'t lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
      *
-     * @summary Get no click rate.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getNoClickRate - The getNoClickRate object.
      * @param getNoClickRate.index - Index name to target.
      * @param getNoClickRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -526,7 +532,9 @@ export function createAnalyticsClient({
     /**
      * Returns the rate at which searches didn\'t return any results.
      *
-     * @summary Get no results rate.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getNoResultsRate - The getNoResultsRate object.
      * @param getNoResultsRate.index - Index name to target.
      * @param getNoResultsRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -577,7 +585,9 @@ export function createAnalyticsClient({
     /**
      * Returns the number of searches within a time range.
      *
-     * @summary Get number of searches.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getSearchesCount - The getSearchesCount object.
      * @param getSearchesCount.index - Index name to target.
      * @param getSearchesCount.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -628,7 +638,9 @@ export function createAnalyticsClient({
     /**
      * Return the most popular of the last 1,000 searches that didn\'t lead to any clicks.
      *
-     * @summary Get top searches with no clicks.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getSearchesNoClicks - The getSearchesNoClicks object.
      * @param getSearchesNoClicks.index - Index name to target.
      * @param getSearchesNoClicks.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -696,7 +708,9 @@ export function createAnalyticsClient({
     /**
      * Returns the most popular of the latest 1,000 searches that didn\'t return any results.
      *
-     * @summary Get top searches with no results.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getSearchesNoResults - The getSearchesNoResults object.
      * @param getSearchesNoResults.index - Index name to target.
      * @param getSearchesNoResults.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -764,7 +778,9 @@ export function createAnalyticsClient({
     /**
      * Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The Analytics API is updated every 5&nbsp;minutes.
      *
-     * @summary Get Analytics API status.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getStatus - The getStatus object.
      * @param getStatus.index - Index name to target.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -800,7 +816,9 @@ export function createAnalyticsClient({
     /**
      * Returns top countries. Limited to the 1,000 most frequent ones.
      *
-     * @summary Get top countries.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getTopCountries - The getTopCountries object.
      * @param getTopCountries.index - Index name to target.
      * @param getTopCountries.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
@@ -861,7 +879,9 @@ export function createAnalyticsClient({
     /**
      * Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
      *
-     * @summary Get top filterable attributes.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getTopFilterAttributes - The getTopFilterAttributes object.
      * @param getTopFilterAttributes.index - Index name to target.
      * @param getTopFilterAttributes.search - User query.
@@ -935,7 +955,9 @@ export function createAnalyticsClient({
     /**
      * Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
      *
-     * @summary Get top filter values for an attribute.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getTopFilterForAttribute - The getTopFilterForAttribute object.
      * @param getTopFilterForAttribute.attribute - Attribute name.
      * @param getTopFilterForAttribute.index - Index name to target.
@@ -1020,7 +1042,9 @@ export function createAnalyticsClient({
     /**
      * Returns top filters for filter-enabled searches that don\'t return results. Limited to the 1,000 most recently used filters.
      *
-     * @summary Get top filters for a no result search.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getTopFiltersNoResults - The getTopFiltersNoResults object.
      * @param getTopFiltersNoResults.index - Index name to target.
      * @param getTopFiltersNoResults.search - User query.
@@ -1094,7 +1118,9 @@ export function createAnalyticsClient({
     /**
      * Return the most popular clicked results in the last 1,000 searches.
      *
-     * @summary Get top hits.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getTopHits - The getTopHits object.
      * @param getTopHits.index - Index name to target.
      * @param getTopHits.search - User query.
@@ -1174,7 +1200,9 @@ export function createAnalyticsClient({
     /**
      * Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
      *
-     * @summary Get top searches.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getTopSearches - The getTopSearches object.
      * @param getTopSearches.index - Index name to target.
      * @param getTopSearches.clickAnalytics - Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
@@ -1260,7 +1288,9 @@ export function createAnalyticsClient({
     /**
      * Return the count of unique users.
      *
-     * @summary Get user count.
+     * Required API Key ACLs:
+     * - analytics.
+     *
      * @param getUsersCount - The getUsersCount object.
      * @param getUsersCount.index - Index name to target.
      * @param getUsersCount.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.

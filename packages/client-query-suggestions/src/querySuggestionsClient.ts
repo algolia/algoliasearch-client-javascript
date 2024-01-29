@@ -112,7 +112,9 @@ export function createQuerySuggestionsClient({
     /**
      * Create a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
      *
-     * @summary Create a configuration.
+     * Required API Key ACLs:
+     * - editSettings.
+     *
      * @param querySuggestionsConfigurationWithIndex - The querySuggestionsConfigurationWithIndex object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -144,7 +146,6 @@ export function createQuerySuggestionsClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.
      * @param customDelete.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customDelete.parameters - Query parameters to apply to the current query.
@@ -177,7 +178,6 @@ export function createQuerySuggestionsClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customGet - The customGet object.
      * @param customGet.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customGet.parameters - Query parameters to apply to the current query.
@@ -210,7 +210,6 @@ export function createQuerySuggestionsClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customPost - The customPost object.
      * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPost.parameters - Query parameters to apply to the current query.
@@ -245,7 +244,6 @@ export function createQuerySuggestionsClient({
     /**
      * This method allow you to send requests to the Algolia REST API.
      *
-     * @summary Send requests to the Algolia REST API.
      * @param customPut - The customPut object.
      * @param customPut.path - Path of the endpoint, anything after \"/1\" must be specified.
      * @param customPut.parameters - Query parameters to apply to the current query.
@@ -280,7 +278,9 @@ export function createQuerySuggestionsClient({
     /**
      * Delete a Query Suggestions configuration.  Deleting only removes the configuration and stops updates to the Query Suggestions index. The Query Suggestions index itself is not deleted.
      *
-     * @summary Delete a configuration.
+     * Required API Key ACLs:
+     * - editSettings.
+     *
      * @param deleteConfig - The deleteConfig object.
      * @param deleteConfig.indexName - Query Suggestions index name.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -315,7 +315,9 @@ export function createQuerySuggestionsClient({
     /**
      * List all Query Suggestions configurations of your Algolia application.
      *
-     * @summary List configurations.
+     * Required API Key ACLs:
+     * - settings.
+     *
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAllConfigs(
@@ -338,7 +340,9 @@ export function createQuerySuggestionsClient({
     /**
      * Get a single Query Suggestions configuration.
      *
-     * @summary Get a configuration.
+     * Required API Key ACLs:
+     * - settings.
+     *
      * @param getConfig - The getConfig object.
      * @param getConfig.indexName - Query Suggestions index name.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -373,7 +377,9 @@ export function createQuerySuggestionsClient({
     /**
      * Report the status of a Query Suggestions index.
      *
-     * @summary Get configuration status.
+     * Required API Key ACLs:
+     * - settings.
+     *
      * @param getConfigStatus - The getConfigStatus object.
      * @param getConfigStatus.indexName - Query Suggestions index name.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -408,7 +414,9 @@ export function createQuerySuggestionsClient({
     /**
      * Get the logs for a single Query Suggestions index.
      *
-     * @summary Get logs.
+     * Required API Key ACLs:
+     * - settings.
+     *
      * @param getLogFile - The getLogFile object.
      * @param getLogFile.indexName - Query Suggestions index name.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -443,7 +451,9 @@ export function createQuerySuggestionsClient({
     /**
      * Update a QuerySuggestions configuration.
      *
-     * @summary Update a configuration.
+     * Required API Key ACLs:
+     * - editSettings.
+     *
      * @param updateConfig - The updateConfig object.
      * @param updateConfig.indexName - Query Suggestions index name.
      * @param updateConfig.querySuggestionsConfiguration - The querySuggestionsConfiguration object.
