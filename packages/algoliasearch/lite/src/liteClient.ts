@@ -22,7 +22,7 @@ import type {
 import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponses } from '../model/searchResponses';
 
-export const apiClientVersion = '5.0.0-alpha.99';
+export const apiClientVersion = '5.0.0-alpha.100';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
