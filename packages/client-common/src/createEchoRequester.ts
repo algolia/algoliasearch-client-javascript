@@ -7,18 +7,33 @@ export type EchoRequesterParams = {
 
 function getUrlParams({
   host,
-  searchParams: urlSearchParams,
+  search,
   pathname,
 }: URL): Pick<EchoResponse, 'algoliaAgent' | 'host' | 'path' | 'searchParams'> {
-  const algoliaAgent = urlSearchParams.get('x-algolia-agent') || '';
+  const urlSearchParams = search.split('?');
+  if (urlSearchParams.length === 1) {
+    return {
+      host,
+      algoliaAgent: '',
+      searchParams: undefined,
+      path: pathname,
+    };
+  }
+
+  const splitSearchParams = urlSearchParams[1].split('&');
+  let algoliaAgent = '';
   const searchParams: Record<string, string> = {};
 
-  for (const [k, v] of urlSearchParams) {
-    if (k === 'x-algolia-agent') {
-      continue;
-    }
+  if (splitSearchParams.length > 0) {
+    splitSearchParams.forEach((param) => {
+      const [key, value] = param.split('=');
+      if (key === 'x-algolia-agent') {
+        algoliaAgent = value;
+        return;
+      }
 
-    searchParams[k] = v;
+      searchParams[key] = value;
+    });
   }
 
   return {
@@ -44,7 +59,7 @@ export function createEchoRequester({
       data: request.data ? JSON.parse(request.data) : undefined,
       path,
       host,
-      algoliaAgent: encodeURIComponent(algoliaAgent),
+      algoliaAgent,
       searchParams,
     };
 

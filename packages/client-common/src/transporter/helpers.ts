@@ -53,7 +53,7 @@ export function serializeQueryParameters(parameters: QueryParameters): string {
           isObjectOrArray(parameters[key])
             ? JSON.stringify(parameters[key])
             : parameters[key]
-        )}`
+        ).replaceAll('+', '%20')}`
     )
     .join('&');
 }
