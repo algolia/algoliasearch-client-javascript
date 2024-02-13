@@ -11,7 +11,7 @@ export type GetConversationRateResponse = {
   /**
    * Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
    */
-  trackedSearchCount: number;
+  trackedSearchCount: number | null;
 
   /**
    * Number of converted clicks.

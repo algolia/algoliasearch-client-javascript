@@ -14,7 +14,7 @@ export type ClickThroughRateEvent = {
   /**
    * Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
    */
-  trackedSearchCount: number;
+  trackedSearchCount: number | null;
 
   /**
    * Date of the event in the format YYYY-MM-DD.

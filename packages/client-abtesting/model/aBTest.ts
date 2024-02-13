@@ -11,27 +11,27 @@ export type ABTest = {
   /**
    * [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on click data. A value of 0.95 or over is considered to be _significant_.
    */
-  clickSignificance: number;
+  clickSignificance: number | null;
 
   /**
    * [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on conversion. A value of 0.95 or over is considered to be _significant_.
    */
-  conversionSignificance: number;
+  conversionSignificance: number | null;
 
   /**
    * [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on add-to-cart data. A value of 0.95 or over is considered to be _significant_.
    */
-  addToCartSignificance: number;
+  addToCartSignificance: number | null;
 
   /**
    * [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on purchase data. A value of 0.95 or over is considered to be _significant_.
    */
-  purchaseSignificance: number;
+  purchaseSignificance: number | null;
 
   /**
    * [A/B test significance](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/in-depth/how-ab-test-scores-are-calculated/#statistical-significance-or-chance) based on revenue data. A value of 0.95 or over is considered to be _significant_.
    */
-  revenueSignificance: Record<string, number>;
+  revenueSignificance: Record<string, number> | null;
 
   /**
    * Update date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.

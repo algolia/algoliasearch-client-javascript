@@ -12,12 +12,12 @@ export type Variant = {
   /**
    * Variant\'s [add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate).
    */
-  addToCartRate: number;
+  addToCartRate: number | null;
 
   /**
    * Variant\'s [average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position).
    */
-  averageClickPosition: number;
+  averageClickPosition: number | null;
 
   /**
    * Number of click events for this variant.
@@ -27,7 +27,7 @@ export type Variant = {
   /**
    * Variant\'s [click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
    */
-  clickThroughRate: number;
+  clickThroughRate: number | null;
 
   /**
    * Number of click events for this variant.
@@ -37,17 +37,22 @@ export type Variant = {
   /**
    * Variant\'s [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
    */
-  conversionRate: number;
+  conversionRate: number | null;
 
   /**
    * A/B test currencies.
    */
-  currencies: Record<string, CurrenciesValue>;
+  currencies?: Record<string, CurrenciesValue>;
 
   /**
    * A/B test description.
    */
   description: string;
+
+  /**
+   * The estimated number of searches that will need to be run to achieve the desired confidence level and statistical power. A `minimumDetectableEffect` must be set in the `configuration` object for this to be used.
+   */
+  estimatedSampleSize?: number;
 
   filterEffects?: FilterEffects;
 
@@ -59,7 +64,7 @@ export type Variant = {
   /**
    * Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for that variant.
    */
-  noResultCount: number;
+  noResultCount: number | null;
 
   /**
    * Number of purchase events for this variant.
@@ -69,17 +74,17 @@ export type Variant = {
   /**
    * Variant\'s [purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate).
    */
-  purchaseRate: number;
+  purchaseRate: number | null;
 
   /**
    * Number of searches carried out during the A/B test.
    */
-  searchCount: number;
+  searchCount: number | null;
 
   /**
    * Number of tracked searches. This is the number of search requests where the `clickAnalytics` parameter is `true`.
    */
-  trackedSearchCount: number;
+  trackedSearchCount: number | null;
 
   /**
    * A/B test traffic percentage.
@@ -89,10 +94,10 @@ export type Variant = {
   /**
    * Number of users during the A/B test.
    */
-  userCount: number;
+  userCount: number | null;
 
   /**
    * Number of users that performed a tracked search during the A/B test.
    */
-  trackedUserCount: number;
+  trackedUserCount: number | null;
 };
