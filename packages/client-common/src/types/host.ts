@@ -13,6 +13,11 @@ export type Host = {
    * The protocol of the host URL.
    */
   protocol: 'http' | 'https';
+
+  /**
+   * The port of the host URL.
+   */
+  port?: number;
 };
 
 export type StatefulHost = Host & {

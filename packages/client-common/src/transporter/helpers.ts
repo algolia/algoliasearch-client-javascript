@@ -30,7 +30,7 @@ export function serializeUrl(
   queryParameters: QueryParameters
 ): string {
   const queryParametersAsString = serializeQueryParameters(queryParameters);
-  let url = `${host.protocol}://${host.url}/${
+  let url = `${host.protocol}://${host.url}${host.port ? `:${host.port}` : ''}/${
     path.charAt(0) === '/' ? path.substr(1) : path
   }`;
 
