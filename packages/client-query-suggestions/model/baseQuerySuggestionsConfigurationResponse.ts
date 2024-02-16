@@ -2,11 +2,6 @@
 
 export type BaseQuerySuggestionsConfigurationResponse = {
   /**
-   * Your Algolia application ID.
-   */
-  appId?: string;
-
-  /**
    * API key used to read from your source index.
    */
   sourceIndicesAPIKey?: string;
