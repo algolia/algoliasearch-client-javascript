@@ -24,6 +24,7 @@ export * from './authenticationUpdateResponse';
 export * from './bigCommerceChannel';
 export * from './bigCommerceMetafield';
 export * from './bigQueryDataType';
+export * from './commercetoolsCustomFields';
 export * from './deleteResponse';
 export * from './destination';
 export * from './destinationCreate';
