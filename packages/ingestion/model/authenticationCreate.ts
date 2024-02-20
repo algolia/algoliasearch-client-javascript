@@ -15,7 +15,7 @@ export type AuthenticationCreate = {
    */
   name: string;
 
-  platform?: Platform;
+  platform?: Platform | null;
 
   input: AuthInput;
 };

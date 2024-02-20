@@ -7,7 +7,7 @@ export type SourceBigCommerce = {
   /**
    * The store hash identifying the store the shopper is signing in to.
    */
-  storeHash?: string;
+  storeHash: string;
 
   channel?: BigCommerceChannel;
 

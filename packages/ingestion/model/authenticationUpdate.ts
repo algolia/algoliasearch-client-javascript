@@ -15,7 +15,7 @@ export type AuthenticationUpdate = {
    */
   name?: string;
 
-  platform?: Platform;
+  platform?: Platform | null;
 
   input?: AuthInputPartial;
 };

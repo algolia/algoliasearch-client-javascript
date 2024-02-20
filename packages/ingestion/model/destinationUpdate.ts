@@ -16,5 +16,8 @@ export type DestinationUpdate = {
 
   input?: DestinationInput;
 
+  /**
+   * The authentication UUID.
+   */
   authenticationID?: string;
 };

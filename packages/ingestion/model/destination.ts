@@ -31,5 +31,8 @@ export type Destination = {
    */
   updatedAt?: string;
 
+  /**
+   * The authentication UUID.
+   */
   authenticationID?: string;
 };
