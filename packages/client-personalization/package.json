@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-personalization",
-  "version": "5.0.0-alpha.100",
+  "version": "5.0.0-alpha.101",
   "description": "JavaScript client for client-personalization",
   "repository": "algolia/algoliasearch-client-javascript",
   "license": "MIT",
@@ -39,9 +39,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-alpha.101",
-    "@algolia/requester-browser-xhr": "5.0.0-alpha.101",
-    "@algolia/requester-node-http": "5.0.0-alpha.101"
+    "@algolia/client-common": "5.0.0-alpha.102",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.102",
+    "@algolia/requester-node-http": "5.0.0-alpha.102"
   },
   "devDependencies": {
     "@types/node": "20.11.19",
