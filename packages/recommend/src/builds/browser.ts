@@ -42,7 +42,7 @@ export default function recommend(
         createInMemoryCache(),
       ],
     }),
-    userAgent: createUserAgent(version)
+    userAgent: createUserAgent(version, '')
       .add({ segment: 'Recommend', version })
       .add({ segment: 'Browser' }),
     authMode: AuthMode.WithinQueryParameters,
