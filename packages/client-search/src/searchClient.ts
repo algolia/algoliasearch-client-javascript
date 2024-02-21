@@ -435,19 +435,19 @@ export function createSearchClient({
       };
 
       return createIterablePromise<SearchSynonymsResponse>({
-        func: (previousResponse) => {
-          return this.searchSynonyms(
+        func: (_) => {
+          const resp = this.searchSynonyms(
             {
               indexName,
               searchSynonymsParams: {
                 ...params,
-                page: previousResponse
-                  ? previousResponse.page + 1
-                  : params.page,
+                page: params.page,
               },
             },
             requestOptions
           );
+          params.page += 1;
+          return resp;
         },
         validate: (response) => response.nbHits < params.hitsPerPage,
         ...browseSynonymsOptions,
