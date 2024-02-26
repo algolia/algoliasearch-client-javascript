@@ -9,9 +9,9 @@ import type {
   CreateClientOptions,
   Headers,
   Host,
-  QueryParameters,
   Request,
   RequestOptions,
+  QueryParameters,
 } from '@algolia/client-common';
 
 import type { ABTest } from '../model/aBTest';
