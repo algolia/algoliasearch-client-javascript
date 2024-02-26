@@ -2,11 +2,13 @@
 
 import type { CreateIterablePromise } from '@algolia/client-common';
 
+import type { Action } from './action';
 import type { ApiKey } from './apiKey';
 import type { AssignUserIdParams } from './assignUserIdParams';
 import type { AttributeToUpdate } from './attributeToUpdate';
 import type { BatchAssignUserIdsParams } from './batchAssignUserIdsParams';
 import type { BatchDictionaryEntriesParams } from './batchDictionaryEntriesParams';
+import type { BatchResponse } from './batchResponse';
 import type { BatchWriteParams } from './batchWriteParams';
 import type { BrowseParams } from './browseParams';
 import type { DeleteByParams } from './deleteByParams';
@@ -25,6 +27,7 @@ import type { SearchRulesParams } from './searchRulesParams';
 import type { SearchSynonymsParams } from './searchSynonymsParams';
 import type { Source } from './source';
 import type { SynonymHit } from './synonymHit';
+import type { UpdatedAtResponse } from './updatedAtResponse';
 
 /**
  * Properties for the `addOrUpdateObject` method.
@@ -770,3 +773,92 @@ export type WaitForApiKeyOptions = WaitForOptions & {
         apiKey: Partial<ApiKey>;
       }
   );
+
+export type GenerateSecuredApiKeyOptions = {
+  /**
+   * The base API key from which to generate the new secured one.
+   */
+  parentApiKey: string;
+
+  /**
+   * A set of properties defining the restrictions of the secured API key.
+   */
+  restrictions?: SecuredApiKeyRestrictions;
+};
+
+export type GetSecuredApiKeyRemainingValidityOptions = {
+  /**
+   * The secured API key generated with the `generateSecuredApiKey` method.
+   */
+  securedApiKey: string;
+};
+
+export type SecuredApiKeyRestrictions = {
+  /**
+   * A Unix timestamp used to define the expiration date of the API key.
+   */
+  validUntil?: number;
+
+  /**
+   * List of index names that can be queried.
+   */
+  restrictIndices?: string[] | string;
+
+  /**
+   * IPv4 network allowed to use the generated key. This is used for more protection against API key leaking and reuse.
+   */
+  restrictSources?: string;
+
+  /**
+   * Specify a user identifier. This is often used with rate limits.
+   */
+  userToken?: string;
+
+  searchParams?: SearchParamsObject;
+};
+
+export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
+  /**
+   * The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
+   */
+  action?: Action;
+
+  /**
+   * Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+   */
+  waitForTasks?: boolean;
+};
+
+export type ReplaceAllObjectsOptions = {
+  /**
+   * The `indexName` to replace `objects` in.
+   */
+  indexName: string;
+
+  /**
+   * The array of `objects` to store in the given Algolia `indexName`.
+   */
+  objects: Array<Record<string, any>>;
+
+  /**
+   * The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+   */
+  batchSize?: number;
+};
+
+export type ReplaceAllObjectsResponse = {
+  /**
+   * The response of the `operationIndex` request for the `copy` operation.
+   */
+  copyOperationResponse: UpdatedAtResponse;
+
+  /**
+   * The response of the `batch` request(s).
+   */
+  batchResponses: BatchResponse[];
+
+  /**
+   * The response of the `operationIndex` request for the `move` operation.
+   */
+  moveOperationResponse: UpdatedAtResponse;
+};
