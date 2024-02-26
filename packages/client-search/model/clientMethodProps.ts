@@ -770,3 +770,46 @@ export type WaitForApiKeyOptions = WaitForOptions & {
         apiKey: Partial<ApiKey>;
       }
   );
+
+export type GenerateSecuredApiKeyOptions = {
+  /**
+   * The base API key from which to generate the new secured one.
+   */
+  parentApiKey: string;
+
+  /**
+   * A set of properties defining the restrictions of the secured API key.
+   */
+  restrictions?: SecuredApiKeyRestrictions;
+};
+
+export type GetSecuredApiKeyRemainingValidityOptions = {
+  /**
+   * The secured API key generated with the `generateSecuredApiKey` method.
+   */
+  securedApiKey: string;
+};
+
+export type SecuredApiKeyRestrictions = {
+  /**
+   * A Unix timestamp used to define the expiration date of the API key.
+   */
+  validUntil?: number;
+
+  /**
+   * List of index names that can be queried.
+   */
+  restrictIndices?: string[] | string;
+
+  /**
+   * IPv4 network allowed to use the generated key. This is used for more protection against API key leaking and reuse.
+   */
+  restrictSources?: string;
+
+  /**
+   * Specify a user identifier. This is often used with rate limits.
+   */
+  userToken?: string;
+
+  searchParams?: SearchParamsObject;
+};
