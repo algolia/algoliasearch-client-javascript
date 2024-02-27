@@ -1,3 +1,14 @@
+## [5.0.0-alpha.105](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.104...5.0.0-alpha.105)
+
+- [d48e2f624](https://github.com/algolia/api-clients-automation/commit/d48e2f624) fix(specs): add missing attributes for CT Source update ([#2792](https://github.com/algolia/api-clients-automation/pull/2792)) by [@damcou](https://github.com/damcou/)
+- [cc10e9f8b](https://github.com/algolia/api-clients-automation/commit/cc10e9f8b) chore(javascript): assert `replaceAllObjects` ([#2790](https://github.com/algolia/api-clients-automation/pull/2790)) by [@shortcuts](https://github.com/shortcuts/)
+- [b13782469](https://github.com/algolia/api-clients-automation/commit/b13782469) fix(javascript): allow `batchSize` on `ReplaceAllObjectsOptions` ([#2788](https://github.com/algolia/api-clients-automation/pull/2788)) by [@shortcuts](https://github.com/shortcuts/)
+- [19177f7d6](https://github.com/algolia/api-clients-automation/commit/19177f7d6) feat(javascript): add `replaceAllObjects` ([#2768](https://github.com/algolia/api-clients-automation/pull/2768)) by [@shortcuts](https://github.com/shortcuts/)
+- [350e01c98](https://github.com/algolia/api-clients-automation/commit/350e01c98) chore(javascript): broken tests ([#2767](https://github.com/algolia/api-clients-automation/pull/2767)) by [@shortcuts](https://github.com/shortcuts/)
+- [1ef587f05](https://github.com/algolia/api-clients-automation/commit/1ef587f05) feat(javascript): add `getSecuredApiKey` and validity check ([#2766](https://github.com/algolia/api-clients-automation/pull/2766)) by [@shortcuts](https://github.com/shortcuts/)
+- [f3e894002](https://github.com/algolia/api-clients-automation/commit/f3e894002) fix(clients): replace all objects ([#2762](https://github.com/algolia/api-clients-automation/pull/2762)) by [@shortcuts](https://github.com/shortcuts/)
+- [92cd1c793](https://github.com/algolia/api-clients-automation/commit/92cd1c793) fix(clients): browse synonyms page not in response ([#2757](https://github.com/algolia/api-clients-automation/pull/2757)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.104](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.103...5.0.0-alpha.104)
 
 - [4f6e2d0b3](https://github.com/algolia/api-clients-automation/commit/4f6e2d0b3) fix(specs): allow custom fields to be nullable ([#2746](https://github.com/algolia/api-clients-automation/pull/2746)) by [@shortcuts](https://github.com/shortcuts/)
