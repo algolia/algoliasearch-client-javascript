@@ -13,5 +13,12 @@ export type SourceUpdateCommercetools = {
    */
   locales?: string[];
 
+  url?: string;
+
+  /**
+   * Determines the value that will be stored in the Algolia record if there\'s no inventory information on the product.
+   */
+  fallbackIsInStockValue?: boolean;
+
   customFields?: CommercetoolsCustomFields;
 };
