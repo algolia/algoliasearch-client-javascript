@@ -4,6 +4,7 @@ import type { CreateIterablePromise } from '@algolia/client-common';
 
 import type { Action } from './action';
 import type { ApiKey } from './apiKey';
+import type { ApiKeyOperation } from './apiKeyOperation';
 import type { AssignUserIdParams } from './assignUserIdParams';
 import type { AttributeToUpdate } from './attributeToUpdate';
 import type { BatchAssignUserIdsParams } from './batchAssignUserIdsParams';
@@ -25,6 +26,7 @@ import type { SearchParams } from './searchParams';
 import type { SearchParamsObject } from './searchParamsObject';
 import type { SearchRulesParams } from './searchRulesParams';
 import type { SearchSynonymsParams } from './searchSynonymsParams';
+import type { SecuredAPIKeyRestrictions } from './securedAPIKeyRestrictions';
 import type { Source } from './source';
 import type { SynonymHit } from './synonymHit';
 import type { UpdatedAtResponse } from './updatedAtResponse';
@@ -759,14 +761,14 @@ export type WaitForApiKeyOptions = WaitForOptions & {
         /**
          * The operation that has been performed, used to compute the stop condition.
          */
-        operation: 'add' | 'delete';
+        operation: Extract<ApiKeyOperation, 'add' | 'delete'>;
         apiKey?: never;
       }
     | {
         /**
          * The operation that has been performed, used to compute the stop condition.
          */
-        operation: 'update';
+        operation: Extract<ApiKeyOperation, 'update'>;
         /**
          * The updated fields, used to compute the stop condition.
          */
@@ -783,7 +785,7 @@ export type GenerateSecuredApiKeyOptions = {
   /**
    * A set of properties defining the restrictions of the secured API key.
    */
-  restrictions?: SecuredApiKeyRestrictions;
+  restrictions?: SecuredAPIKeyRestrictions;
 };
 
 export type GetSecuredApiKeyRemainingValidityOptions = {
@@ -791,30 +793,6 @@ export type GetSecuredApiKeyRemainingValidityOptions = {
    * The secured API key generated with the `generateSecuredApiKey` method.
    */
   securedApiKey: string;
-};
-
-export type SecuredApiKeyRestrictions = {
-  /**
-   * A Unix timestamp used to define the expiration date of the API key.
-   */
-  validUntil?: number;
-
-  /**
-   * List of index names that can be queried.
-   */
-  restrictIndices?: string[] | string;
-
-  /**
-   * IPv4 network allowed to use the generated key. This is used for more protection against API key leaking and reuse.
-   */
-  restrictSources?: string;
-
-  /**
-   * Specify a user identifier. This is often used with rate limits.
-   */
-  userToken?: string;
-
-  searchParams?: SearchParamsObject;
 };
 
 export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
