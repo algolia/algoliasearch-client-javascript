@@ -131,4 +131,9 @@ export type BaseSearchResponse = Record<string, any> & {
    * Lets you store custom data in your indices.
    */
   userData?: any | null;
+
+  /**
+   * Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+   */
+  queryID?: string;
 };
