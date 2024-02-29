@@ -534,7 +534,7 @@ export function createSearchClient({
       const match = decodedString.match(regex);
 
       if (match === null) {
-        throw new Error('ValidUntil not found in given secured api key.');
+        throw new Error('validUntil not found in given secured api key.');
       }
 
       return parseInt(match[1], 10) - Math.round(new Date().getTime() / 1000);
