@@ -8,10 +8,10 @@ export type SearchHits<T = Record<string, any>> = Record<string, any> & {
   /**
    * Text to search for in an index.
    */
-  query: T;
+  query: string;
 
   /**
    * URL-encoded string of all search parameters.
    */
-  params: T;
+  params: string;
 };
