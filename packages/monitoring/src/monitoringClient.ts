@@ -507,8 +507,3 @@ export function createMonitoringClient({
     },
   };
 }
-
-/**
- * The client type.
- */
-export type MonitoringClient = ReturnType<typeof createMonitoringClient>;

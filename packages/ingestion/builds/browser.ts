@@ -2,16 +2,16 @@
 
 import type { ClientOptions } from '@algolia/client-common';
 import {
-  DEFAULT_CONNECT_TIMEOUT_BROWSER,
-  DEFAULT_READ_TIMEOUT_BROWSER,
-  DEFAULT_WRITE_TIMEOUT_BROWSER,
   createMemoryCache,
   createFallbackableCache,
   createBrowserLocalStorageCache,
+  DEFAULT_CONNECT_TIMEOUT_BROWSER,
+  DEFAULT_READ_TIMEOUT_BROWSER,
+  DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
-import type { IngestionClient, Region } from '../src/ingestionClient';
+import type { Region } from '../src/ingestionClient';
 import {
   createIngestionClient,
   apiClientVersion,
@@ -20,7 +20,6 @@ import {
 
 export {
   apiClientVersion,
-  IngestionClient,
   Region,
   isOnDemandTrigger,
   isScheduleTrigger,
@@ -28,12 +27,18 @@ export {
 } from '../src/ingestionClient';
 export * from '../model';
 
+/**
+ * The client type.
+ */
+export type IngestionClient = ReturnType<typeof ingestionClient>;
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function ingestionClient(
   appId: string,
   apiKey: string,
   region: Region,
   options?: ClientOptions
-): IngestionClient {
+) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

@@ -2,38 +2,37 @@
 
 import type { ClientOptions } from '@algolia/client-common';
 import {
-  DEFAULT_CONNECT_TIMEOUT_BROWSER,
-  DEFAULT_READ_TIMEOUT_BROWSER,
-  DEFAULT_WRITE_TIMEOUT_BROWSER,
   createMemoryCache,
   createFallbackableCache,
   createBrowserLocalStorageCache,
+  DEFAULT_CONNECT_TIMEOUT_BROWSER,
+  DEFAULT_READ_TIMEOUT_BROWSER,
+  DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
-import type {
-  PersonalizationClient,
-  Region,
-} from '../src/personalizationClient';
+import type { Region } from '../src/personalizationClient';
 import {
   createPersonalizationClient,
   apiClientVersion,
   REGIONS,
 } from '../src/personalizationClient';
 
-export {
-  apiClientVersion,
-  PersonalizationClient,
-  Region,
-} from '../src/personalizationClient';
+export { apiClientVersion, Region } from '../src/personalizationClient';
 export * from '../model';
 
+/**
+ * The client type.
+ */
+export type PersonalizationClient = ReturnType<typeof personalizationClient>;
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function personalizationClient(
   appId: string,
   apiKey: string,
   region: Region,
   options?: ClientOptions
-): PersonalizationClient {
+) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

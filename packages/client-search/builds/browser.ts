@@ -2,26 +2,31 @@
 
 import type { ClientOptions } from '@algolia/client-common';
 import {
-  DEFAULT_CONNECT_TIMEOUT_BROWSER,
-  DEFAULT_READ_TIMEOUT_BROWSER,
-  DEFAULT_WRITE_TIMEOUT_BROWSER,
   createMemoryCache,
   createFallbackableCache,
   createBrowserLocalStorageCache,
+  DEFAULT_CONNECT_TIMEOUT_BROWSER,
+  DEFAULT_READ_TIMEOUT_BROWSER,
+  DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import { createSearchClient, apiClientVersion } from '../src/searchClient';
-import type { SearchClient } from '../src/searchClient';
 
-export { apiClientVersion, SearchClient } from '../src/searchClient';
+export { apiClientVersion } from '../src/searchClient';
 export * from '../model';
 
+/**
+ * The client type.
+ */
+export type SearchClient = ReturnType<typeof searchClient>;
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function searchClient(
   appId: string,
   apiKey: string,
   options?: ClientOptions
-): SearchClient {
+) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

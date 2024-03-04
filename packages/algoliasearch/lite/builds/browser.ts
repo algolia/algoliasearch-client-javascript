@@ -2,26 +2,31 @@
 
 import type { ClientOptions } from '@algolia/client-common';
 import {
-  DEFAULT_CONNECT_TIMEOUT_BROWSER,
-  DEFAULT_READ_TIMEOUT_BROWSER,
-  DEFAULT_WRITE_TIMEOUT_BROWSER,
   createMemoryCache,
   createFallbackableCache,
   createBrowserLocalStorageCache,
+  DEFAULT_CONNECT_TIMEOUT_BROWSER,
+  DEFAULT_READ_TIMEOUT_BROWSER,
+  DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import { createLiteClient, apiClientVersion } from '../src/liteClient';
-import type { LiteClient } from '../src/liteClient';
 
-export { apiClientVersion, LiteClient } from '../src/liteClient';
+export { apiClientVersion } from '../src/liteClient';
 export * from '../model';
 
+/**
+ * The client type.
+ */
+export type LiteClient = ReturnType<typeof liteClient>;
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function liteClient(
   appId: string,
   apiKey: string,
   options?: ClientOptions
-): LiteClient {
+) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

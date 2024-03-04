@@ -2,35 +2,37 @@
 
 import type { ClientOptions } from '@algolia/client-common';
 import {
-  DEFAULT_CONNECT_TIMEOUT_BROWSER,
-  DEFAULT_READ_TIMEOUT_BROWSER,
-  DEFAULT_WRITE_TIMEOUT_BROWSER,
   createMemoryCache,
   createFallbackableCache,
   createBrowserLocalStorageCache,
+  DEFAULT_CONNECT_TIMEOUT_BROWSER,
+  DEFAULT_READ_TIMEOUT_BROWSER,
+  DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
-import type { AbtestingClient, Region } from '../src/abtestingClient';
+import type { Region } from '../src/abtestingClient';
 import {
   createAbtestingClient,
   apiClientVersion,
   REGIONS,
 } from '../src/abtestingClient';
 
-export {
-  apiClientVersion,
-  AbtestingClient,
-  Region,
-} from '../src/abtestingClient';
+export { apiClientVersion, Region } from '../src/abtestingClient';
 export * from '../model';
 
+/**
+ * The client type.
+ */
+export type AbtestingClient = ReturnType<typeof abtestingClient>;
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function abtestingClient(
   appId: string,
   apiKey: string,
   region?: Region,
   options?: ClientOptions
-): AbtestingClient {
+) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

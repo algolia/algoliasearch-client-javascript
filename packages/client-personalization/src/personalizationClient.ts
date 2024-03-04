@@ -387,10 +387,3 @@ export function createPersonalizationClient({
     },
   };
 }
-
-/**
- * The client type.
- */
-export type PersonalizationClient = ReturnType<
-  typeof createPersonalizationClient
->;

@@ -1339,8 +1339,3 @@ export function createAnalyticsClient({
     },
   };
 }
-
-/**
- * The client type.
- */
-export type AnalyticsClient = ReturnType<typeof createAnalyticsClient>;

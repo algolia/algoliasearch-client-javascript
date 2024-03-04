@@ -2,36 +2,35 @@
 
 import type { ClientOptions } from '@algolia/client-common';
 import {
+  createMemoryCache,
+  createNullCache,
   DEFAULT_CONNECT_TIMEOUT_NODE,
   DEFAULT_READ_TIMEOUT_NODE,
   DEFAULT_WRITE_TIMEOUT_NODE,
-  createMemoryCache,
-  createNullCache,
 } from '@algolia/client-common';
 import { createHttpRequester } from '@algolia/requester-node-http';
 
-import type {
-  PersonalizationClient,
-  Region,
-} from '../src/personalizationClient';
+import type { Region } from '../src/personalizationClient';
 import {
   createPersonalizationClient,
   REGIONS,
 } from '../src/personalizationClient';
 
-export {
-  apiClientVersion,
-  PersonalizationClient,
-  Region,
-} from '../src/personalizationClient';
+export { apiClientVersion, Region } from '../src/personalizationClient';
 export * from '../model';
 
+/**
+ * The client type.
+ */
+export type PersonalizationClient = ReturnType<typeof personalizationClient>;
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function personalizationClient(
   appId: string,
   apiKey: string,
   region: Region,
   options?: ClientOptions
-): PersonalizationClient {
+) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -49,20 +48,22 @@ export function personalizationClient(
     );
   }
 
-  return createPersonalizationClient({
-    appId,
-    apiKey,
-    region,
-    timeouts: {
-      connect: DEFAULT_CONNECT_TIMEOUT_NODE,
-      read: DEFAULT_READ_TIMEOUT_NODE,
-      write: DEFAULT_WRITE_TIMEOUT_NODE,
-    },
-    requester: createHttpRequester(),
-    algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
-    responsesCache: createNullCache(),
-    requestsCache: createNullCache(),
-    hostsCache: createMemoryCache(),
-    ...options,
-  });
+  return {
+    ...createPersonalizationClient({
+      appId,
+      apiKey,
+      region,
+      timeouts: {
+        connect: DEFAULT_CONNECT_TIMEOUT_NODE,
+        read: DEFAULT_READ_TIMEOUT_NODE,
+        write: DEFAULT_WRITE_TIMEOUT_NODE,
+      },
+      requester: createHttpRequester(),
+      algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
+      responsesCache: createNullCache(),
+      requestsCache: createNullCache(),
+      hostsCache: createMemoryCache(),
+      ...options,
+    }),
+  };
 }

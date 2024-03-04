@@ -2,35 +2,37 @@
 
 import type { ClientOptions } from '@algolia/client-common';
 import {
-  DEFAULT_CONNECT_TIMEOUT_BROWSER,
-  DEFAULT_READ_TIMEOUT_BROWSER,
-  DEFAULT_WRITE_TIMEOUT_BROWSER,
   createMemoryCache,
   createFallbackableCache,
   createBrowserLocalStorageCache,
+  DEFAULT_CONNECT_TIMEOUT_BROWSER,
+  DEFAULT_READ_TIMEOUT_BROWSER,
+  DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
-import type { InsightsClient, Region } from '../src/insightsClient';
+import type { Region } from '../src/insightsClient';
 import {
   createInsightsClient,
   apiClientVersion,
   REGIONS,
 } from '../src/insightsClient';
 
-export {
-  apiClientVersion,
-  InsightsClient,
-  Region,
-} from '../src/insightsClient';
+export { apiClientVersion, Region } from '../src/insightsClient';
 export * from '../model';
 
+/**
+ * The client type.
+ */
+export type InsightsClient = ReturnType<typeof insightsClient>;
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function insightsClient(
   appId: string,
   apiKey: string,
   region?: Region,
   options?: ClientOptions
-): InsightsClient {
+) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

@@ -1919,8 +1919,3 @@ export function createIngestionClient({
     },
   };
 }
-
-/**
- * The client type.
- */
-export type IngestionClient = ReturnType<typeof createIngestionClient>;

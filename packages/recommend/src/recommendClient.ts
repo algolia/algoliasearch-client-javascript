@@ -514,8 +514,3 @@ export function createRecommendClient({
     },
   };
 }
-
-/**
- * The client type.
- */
-export type RecommendClient = ReturnType<typeof createRecommendClient>;
