@@ -1,3 +1,7 @@
+## [5.0.0-alpha.107](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.106...5.0.0-alpha.107)
+
+- [9847affc4](https://github.com/algolia/api-clients-automation/commit/9847affc4) fix(javascript): move node related helpers at node bundle level ([#2807](https://github.com/algolia/api-clients-automation/pull/2807)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.106](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.105...5.0.0-alpha.106)
 
 - [a138c2fef](https://github.com/algolia/api-clients-automation/commit/a138c2fef) fix(specs): add `queryID` to search response ([#2801](https://github.com/algolia/api-clients-automation/pull/2801)) by [@aallam](https://github.com/aallam/)
