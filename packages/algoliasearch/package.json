@@ -35,6 +35,7 @@
     "@algolia/client-search": "4.22.1",
     "@algolia/logger-common": "4.22.1",
     "@algolia/logger-console": "4.22.1",
+    "@algolia/recommend": "4.22.1",
     "@algolia/requester-browser-xhr": "4.22.1",
     "@algolia/requester-common": "4.22.1",
     "@algolia/requester-node-http": "4.22.1",
