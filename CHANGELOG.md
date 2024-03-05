@@ -1,3 +1,8 @@
+## [5.0.0-alpha.108](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.107...5.0.0-alpha.108)
+
+- [234427491](https://github.com/algolia/api-clients-automation/commit/234427491) feat(specs): Add MappingInput to Task Inputs ([#2787](https://github.com/algolia/api-clients-automation/pull/2787)) by [@jsok](https://github.com/jsok/)
+- [903852983](https://github.com/algolia/api-clients-automation/commit/903852983) fix(javascript): use correct vendor values ([#2829](https://github.com/algolia/api-clients-automation/pull/2829)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.107](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.106...5.0.0-alpha.107)
 
 - [9847affc4](https://github.com/algolia/api-clients-automation/commit/9847affc4) fix(javascript): move node related helpers at node bundle level ([#2807](https://github.com/algolia/api-clients-automation/pull/2807)) by [@shortcuts](https://github.com/shortcuts/)
