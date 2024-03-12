@@ -367,8 +367,8 @@ export function createAbtestingClient({
      * - analytics.
      *
      * @param listABTests - The listABTests object.
-     * @param listABTests.offset - Position of the starting record. Used for paging. 0 is the first record.
-     * @param listABTests.limit - Number of records to return (page size).
+     * @param listABTests.offset - Position of the first item to return.
+     * @param listABTests.limit - Number of items to return.
      * @param listABTests.indexPrefix - Only return A/B tests for indices starting with this prefix.
      * @param listABTests.indexSuffix - Only return A/B tests for indices ending with this suffix.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.

@@ -6,27 +6,27 @@ export type SecuredAPIKeyRestrictions = {
   searchParams?: SearchParamsObject;
 
   /**
-   * Filters that apply to every search made with the secured API key. You can add extra filters at search time with the filters query parameter. For example, if you set the filter group:admin on your generated API key, and you add groups:press OR groups:visitors with the filters query parameter, your final search filter is equivalent to groups:admin AND (groups:press OR groups:visitors).
+   * Filters that apply to every search made with the secured API key. Extra filters added at search time will be combined with `AND`. For example, if you set `group:admin` as fixed filter on your generated API key, and add `groups:visitors` to the search query, the complete set of filters will be `group:admin AND groups:visitors`.
    */
   filters?: string;
 
   /**
-   * Unix timestamp used to set the expiration date of the API key.
+   * Timestamp in [Unix epoch time](https://en.wikipedia.org/wiki/Unix_time) when the API key should expire.
    */
   validUntil?: number;
 
   /**
-   * Index names that can be queried.
+   * Index names or patterns that this API key can access. By default, an API key can access all indices in the same application.  You can use leading and trailing wildcard characters (`*`):  - `dev_*` matches all indices starting with \"dev_\". - `*_dev` matches all indices ending with \"_dev\". - `*_products_*` matches all indices containing \"_products_\".
    */
   restrictIndices?: string[];
 
   /**
-   * IPv4 network allowed to use the generated key. Use this to protect against API key leaking and reuse. You can only provide a single source, but you can specify a range of IPs (for example, 192.168.1.0/24).
+   * IP network that are allowed to use this key.  You can only add a single source, but you can provide a range of IP addresses. Use this to protect against API key leaking and reuse.
    */
   restrictSources?: string;
 
   /**
-   * Unique user IP address. This can be useful when you want to impose a rate limit on specific users. By default, rate limits are set based on the IP address. This can become an issue when several users search from the same IP address. To avoid this, you can set a unique userToken for each user when generating their API key. This lets you restrict each user to a maximum number of API calls per hour, even if they share their IP with another user. Specifying the userToken in a secured API key is also a good security practice as it ensures users don\'t change it. Many features like Analytics, Personalization, and Dynamic Re-ranking rely on the authenticity of user identifiers. Setting the userToken at the API key level ensures that downstream services work as expected and prevents abuse.
+   * Pseudonymous user identifier to restrict usage of this API key to specific users.  By default, rate limits are set based on IP addresses. This can be an issue if many users search from the same IP address. To avoid this, add a user token to each generated API key.
    */
   userToken?: string;
 };

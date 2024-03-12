@@ -4,12 +4,12 @@ import type { Edit } from './edit';
 
 export type ConsequenceQueryObject = {
   /**
-   * Words to remove.
+   * Words to remove from the search query.
    */
   remove?: string[];
 
   /**
-   * Edits to apply.
+   * Changes to make to the search query.
    */
   edits?: Edit[];
 };

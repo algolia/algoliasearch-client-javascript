@@ -12,7 +12,7 @@ export type TopSearch = {
   count: number;
 
   /**
-   * Number of hits the search query matched.
+   * Number of results (hits).
    */
   nbHits: number;
 };

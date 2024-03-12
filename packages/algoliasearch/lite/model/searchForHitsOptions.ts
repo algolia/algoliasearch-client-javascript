@@ -4,7 +4,7 @@ import type { SearchTypeDefault } from './searchTypeDefault';
 
 export type SearchForHitsOptions = {
   /**
-   * Algolia index name.
+   * Index name.
    */
   indexName: string;
 

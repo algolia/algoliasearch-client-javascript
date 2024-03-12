@@ -2,12 +2,12 @@
 
 export type TimeRange = {
   /**
-   * Lower bound of the time range (Unix timestamp).
+   * When the rule should start to be active, in Unix epoch time.
    */
   from: number;
 
   /**
-   * Upper bound of the time range (Unix timestamp).
+   * When the rule should stop to be active, in Unix epoch time.
    */
   until: number;
 };

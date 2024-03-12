@@ -3,6 +3,9 @@
 import type { FacetHits } from './facetHits';
 
 export type SearchForFacetValuesResponse = {
+  /**
+   * Matching facet values.
+   */
   facetHits: FacetHits[];
 
   /**

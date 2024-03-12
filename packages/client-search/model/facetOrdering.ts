@@ -4,13 +4,13 @@ import type { Facets } from './facets';
 import type { Value } from './value';
 
 /**
- * Defines the ordering of facets (widgets).
+ * Order of facet names and facet values in your UI.
  */
 export type FacetOrdering = {
   facets?: Facets;
 
   /**
-   * Ordering of facet values within an individual facet.
+   * Order of facet values. One object for each facet.
    */
   values?: Record<string, Value>;
 };

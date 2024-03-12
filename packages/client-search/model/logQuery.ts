@@ -7,7 +7,7 @@ export type LogQuery = {
   index_name?: string;
 
   /**
-   * User identifier.
+   * A user identifier.
    */
   user_token?: string;
 

@@ -42,7 +42,7 @@ export type TopSearchWithAnalytics = {
   conversionCount: number;
 
   /**
-   * Number of hits the search query matched.
+   * Number of results (hits).
    */
   nbHits: number;
 };

@@ -5,7 +5,7 @@ import type { ConsequenceQuery } from './consequenceQuery';
 import type { RenderingContent } from './renderingContent';
 
 /**
- * Additional search parameters.
+ * Parameters to apply to this search.  You can use all search parameters, plus special `automaticFacetFilters`, `automaticOptionalFacetFilters`, and `query`.
  */
 export type Params = {
   query?: ConsequenceQuery;

@@ -117,6 +117,7 @@ export * from './saveObjectResponse';
 export * from './saveSynonymResponse';
 export * from './scopeType';
 export * from './searchDictionaryEntriesParams';
+export * from './searchDictionaryEntriesResponse';
 export * from './searchForFacetValuesRequest';
 export * from './searchForFacetValuesResponse';
 export * from './searchForFacets';

@@ -89,11 +89,11 @@ export type GetABTestProps = {
  */
 export type ListABTestsProps = {
   /**
-   * Position of the starting record. Used for paging. 0 is the first record.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
-   * Number of records to return (page size).
+   * Number of items to return.
    */
   limit?: number;
   /**

@@ -3,14 +3,17 @@
 import type { MatchedGeoLocation } from './matchedGeoLocation';
 import type { Personalization } from './personalization';
 
+/**
+ * Object with detailed information about the record\'s ranking.
+ */
 export type RankingInfo = {
   /**
-   * This field is reserved for advanced usage.
+   * Whether a filter matched the query.
    */
   filters: number;
 
   /**
-   * Position of the most important matched attribute in the attributes to index list.
+   * Position of the first matched word in the best matching attribute of the record.
    */
   firstMatchedWord: number;
 
@@ -39,27 +42,27 @@ export type RankingInfo = {
   nbTypos: number;
 
   /**
-   * Present and set to true if a Rule promoted the hit.
+   * Whether the record was promoted by a rule.
    */
   promoted: boolean;
 
   /**
-   * When the query contains more than one word, the sum of the distances between matched words (in meters).
+   * Number of words between multiple matches in the query plus 1. For single word queries, `proximityDistance` is 0.
    */
   proximityDistance?: number;
 
   /**
-   * Custom ranking for the object, expressed as a single integer value.
+   * Overall ranking of the record, expressed as a single integer. This attribute is internal.
    */
   userScore: number;
 
   /**
-   * Number of matched words, including prefixes and typos.
+   * Number of matched words.
    */
   words: number;
 
   /**
-   * Wether the record are promoted by the re-ranking strategy.
+   * Whether the record is re-ranked.
    */
   promotedByReRanking?: boolean;
 };

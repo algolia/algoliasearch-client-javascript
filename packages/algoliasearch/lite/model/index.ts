@@ -83,6 +83,7 @@ export * from './removeWordsIfNoResults';
 export * from './renderingContent';
 export * from './rule';
 export * from './scopeType';
+export * from './searchDictionaryEntriesResponse';
 export * from './searchForFacetValuesResponse';
 export * from './searchForFacets';
 export * from './searchForFacetsOptions';

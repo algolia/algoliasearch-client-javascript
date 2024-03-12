@@ -72,7 +72,7 @@ export type CustomPutProps = {
  */
 export type DeleteRecommendRuleProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
@@ -80,7 +80,7 @@ export type DeleteRecommendRuleProps = {
    */
   model: RecommendModels;
   /**
-   * Unique record (object) identifier.
+   * Unique record identifier.
    */
   objectID: string;
 };
@@ -90,7 +90,7 @@ export type DeleteRecommendRuleProps = {
  */
 export type GetRecommendRuleProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
@@ -98,7 +98,7 @@ export type GetRecommendRuleProps = {
    */
   model: RecommendModels;
   /**
-   * Unique record (object) identifier.
+   * Unique record identifier.
    */
   objectID: string;
 };
@@ -108,7 +108,7 @@ export type GetRecommendRuleProps = {
  */
 export type GetRecommendStatusProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
@@ -126,7 +126,7 @@ export type GetRecommendStatusProps = {
  */
 export type SearchRecommendRulesProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**

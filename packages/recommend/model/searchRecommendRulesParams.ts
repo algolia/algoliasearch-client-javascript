@@ -5,7 +5,7 @@
  */
 export type SearchRecommendRulesParams = {
   /**
-   * Full-text query.
+   * Search query.
    */
   query?: string;
 
@@ -15,7 +15,7 @@ export type SearchRecommendRulesParams = {
   context?: string;
 
   /**
-   * Requested page (the first page is page 0).
+   * Requested page of the API response.
    */
   page?: number;
 

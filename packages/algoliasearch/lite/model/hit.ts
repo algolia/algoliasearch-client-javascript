@@ -5,21 +5,21 @@ import type { RankingInfo } from './rankingInfo';
 import type { SnippetResult } from './snippetResult';
 
 /**
- * A single hit.
+ * Search result.  A hit is a record from your index, augmented with special attributes for highlighting, snippeting, and ranking.
  */
 export type Hit<T = Record<string, any>> = T & {
   /**
-   * Unique object identifier.
+   * Unique record identifier.
    */
   objectID: string;
 
   /**
-   * Show highlighted section and words matched on a query.
+   * Surround words that match the query with HTML tags for highlighting.
    */
   _highlightResult?: Record<string, HighlightResult>;
 
   /**
-   * Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+   * Snippets that show the context around a matching search query.
    */
   _snippetResult?: Record<string, SnippetResult>;
 

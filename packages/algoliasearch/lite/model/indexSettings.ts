@@ -4,6 +4,6 @@ import type { BaseIndexSettings } from './baseIndexSettings';
 import type { IndexSettingsAsSearchParams } from './indexSettingsAsSearchParams';
 
 /**
- * Algolia index settings.
+ * Index settings.
  */
 export type IndexSettings = BaseIndexSettings & IndexSettingsAsSearchParams;

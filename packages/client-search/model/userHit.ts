@@ -4,7 +4,7 @@ import type { UserHighlightResult } from './userHighlightResult';
 
 export type UserHit = {
   /**
-   * UserID of the user.
+   * User ID.
    */
   userID: string;
 

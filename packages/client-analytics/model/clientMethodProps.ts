@@ -72,15 +72,15 @@ export type CustomPutProps = {
  */
 export type GetAverageClickPositionProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
@@ -94,15 +94,15 @@ export type GetAverageClickPositionProps = {
  */
 export type GetClickPositionsProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
@@ -116,15 +116,15 @@ export type GetClickPositionsProps = {
  */
 export type GetClickThroughRateProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
@@ -138,15 +138,15 @@ export type GetClickThroughRateProps = {
  */
 export type GetConversationRateProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
@@ -160,15 +160,15 @@ export type GetConversationRateProps = {
  */
 export type GetNoClickRateProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
@@ -182,15 +182,15 @@ export type GetNoClickRateProps = {
  */
 export type GetNoResultsRateProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
@@ -204,15 +204,15 @@ export type GetNoResultsRateProps = {
  */
 export type GetSearchesCountProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
@@ -226,23 +226,23 @@ export type GetSearchesCountProps = {
  */
 export type GetSearchesNoClicksProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return (page size).
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the starting record. Used for paging. 0 is the first record.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -256,23 +256,23 @@ export type GetSearchesNoClicksProps = {
  */
 export type GetSearchesNoResultsProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return (page size).
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the starting record. Used for paging. 0 is the first record.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -286,7 +286,7 @@ export type GetSearchesNoResultsProps = {
  */
 export type GetStatusProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
 };
@@ -296,23 +296,23 @@ export type GetStatusProps = {
  */
 export type GetTopCountriesProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return (page size).
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the starting record. Used for paging. 0 is the first record.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -326,7 +326,7 @@ export type GetTopCountriesProps = {
  */
 export type GetTopFilterAttributesProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
@@ -334,19 +334,19 @@ export type GetTopFilterAttributesProps = {
    */
   search?: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return (page size).
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the starting record. Used for paging. 0 is the first record.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -364,7 +364,7 @@ export type GetTopFilterForAttributeProps = {
    */
   attribute: string;
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
@@ -372,19 +372,19 @@ export type GetTopFilterForAttributeProps = {
    */
   search?: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return (page size).
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the starting record. Used for paging. 0 is the first record.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -398,7 +398,7 @@ export type GetTopFilterForAttributeProps = {
  */
 export type GetTopFiltersNoResultsProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
@@ -406,19 +406,19 @@ export type GetTopFiltersNoResultsProps = {
    */
   search?: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return (page size).
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the starting record. Used for paging. 0 is the first record.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -432,7 +432,7 @@ export type GetTopFiltersNoResultsProps = {
  */
 export type GetTopHitsProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
@@ -444,19 +444,19 @@ export type GetTopHitsProps = {
    */
   clickAnalytics?: boolean;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
-   * Number of records to return (page size).
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the starting record. Used for paging. 0 is the first record.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -470,7 +470,7 @@ export type GetTopHitsProps = {
  */
 export type GetTopSearchesProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
@@ -478,11 +478,11 @@ export type GetTopSearchesProps = {
    */
   clickAnalytics?: boolean;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**
@@ -494,11 +494,11 @@ export type GetTopSearchesProps = {
    */
   direction?: Direction;
   /**
-   * Number of records to return (page size).
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the starting record. Used for paging. 0 is the first record.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -512,15 +512,15 @@ export type GetTopSearchesProps = {
  */
 export type GetUsersCountProps = {
   /**
-   * Index name to target.
+   * Index name.
    */
   index: string;
   /**
-   * Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
   startDate?: string;
   /**
-   * End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+   * End date (`YYYY-MM-DD`) of the period to analyze.
    */
   endDate?: string;
   /**

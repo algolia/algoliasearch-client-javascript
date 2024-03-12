@@ -2,12 +2,12 @@
 
 export type MultipleBatchResponse = {
   /**
-   * TaskIDs per index.
+   * Task IDs. One for each index.
    */
   taskID: Record<string, number>;
 
   /**
-   * Unique object (record) identifiers.
+   * Unique record identifiers.
    */
   objectIDs: string[];
 };

@@ -3,11 +3,11 @@
 import type { MatchLevel } from './matchLevel';
 
 /**
- * Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+ * Snippets that show the context around a matching search query.
  */
 export type SnippetResultOption = {
   /**
-   * Markup text with `facetQuery` matches highlighted.
+   * Highlighted attribute value, including HTML tags.
    */
   value: string;
 

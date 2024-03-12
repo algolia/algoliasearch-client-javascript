@@ -271,9 +271,9 @@ export function createRecommendClient({
      * - editSettings.
      *
      * @param deleteRecommendRule - The deleteRecommendRule object.
-     * @param deleteRecommendRule.indexName - Index on which to perform the request.
+     * @param deleteRecommendRule.indexName - Name of the index on which to perform the operation.
      * @param deleteRecommendRule.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
-     * @param deleteRecommendRule.objectID - Unique record (object) identifier.
+     * @param deleteRecommendRule.objectID - Unique record identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteRecommendRule(
@@ -323,9 +323,9 @@ export function createRecommendClient({
      * - settings.
      *
      * @param getRecommendRule - The getRecommendRule object.
-     * @param getRecommendRule.indexName - Index on which to perform the request.
+     * @param getRecommendRule.indexName - Name of the index on which to perform the operation.
      * @param getRecommendRule.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
-     * @param getRecommendRule.objectID - Unique record (object) identifier.
+     * @param getRecommendRule.objectID - Unique record identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRecommendRule(
@@ -375,7 +375,7 @@ export function createRecommendClient({
      * - editSettings.
      *
      * @param getRecommendStatus - The getRecommendStatus object.
-     * @param getRecommendStatus.indexName - Index on which to perform the request.
+     * @param getRecommendStatus.indexName - Name of the index on which to perform the operation.
      * @param getRecommendStatus.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      * @param getRecommendStatus.taskID - Unique identifier of a task. Numeric value (up to 64bits).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -468,7 +468,7 @@ export function createRecommendClient({
      * - settings.
      *
      * @param searchRecommendRules - The searchRecommendRules object.
-     * @param searchRecommendRules.indexName - Index on which to perform the request.
+     * @param searchRecommendRules.indexName - Name of the index on which to perform the operation.
      * @param searchRecommendRules.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      * @param searchRecommendRules.searchRecommendRulesParams - The searchRecommendRulesParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.

@@ -7,19 +7,19 @@ import type { Anchoring } from './anchoring';
  */
 export type SearchRulesParams = {
   /**
-   * Rule object query.
+   * Search query for rules.
    */
   query?: string;
 
   anchoring?: Anchoring;
 
   /**
-   * Restricts responses to the specified [contextual rule](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#creating-contextual-rules).
+   * Only return rules that match the context (exact match).
    */
   context?: string;
 
   /**
-   * Requested page (the first page is page 0).
+   * Requested page of the API response.
    */
   page?: number;
 
@@ -29,12 +29,7 @@ export type SearchRulesParams = {
   hitsPerPage?: number;
 
   /**
-   * Restricts responses to enabled rules. When not specified (default), _all_ rules are retrieved.
+   * If `true`, return only enabled rules. If `false`, return only inactive rules. By default, _all_ rules are returned.
    */
   enabled?: boolean | null;
-
-  /**
-   * Request options to send with the API call.
-   */
-  requestOptions?: Array<Record<string, any>>;
 };

@@ -271,9 +271,9 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getAverageClickPosition - The getAverageClickPosition object.
-     * @param getAverageClickPosition.index - Index name to target.
-     * @param getAverageClickPosition.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getAverageClickPosition.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getAverageClickPosition.index - Index name.
+     * @param getAverageClickPosition.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getAverageClickPosition.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getAverageClickPosition.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -324,9 +324,9 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getClickPositions - The getClickPositions object.
-     * @param getClickPositions.index - Index name to target.
-     * @param getClickPositions.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getClickPositions.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getClickPositions.index - Index name.
+     * @param getClickPositions.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getClickPositions.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getClickPositions.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -377,9 +377,9 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getClickThroughRate - The getClickThroughRate object.
-     * @param getClickThroughRate.index - Index name to target.
-     * @param getClickThroughRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getClickThroughRate.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getClickThroughRate.index - Index name.
+     * @param getClickThroughRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getClickThroughRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getClickThroughRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -430,9 +430,9 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getConversationRate - The getConversationRate object.
-     * @param getConversationRate.index - Index name to target.
-     * @param getConversationRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getConversationRate.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getConversationRate.index - Index name.
+     * @param getConversationRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getConversationRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getConversationRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -483,9 +483,9 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getNoClickRate - The getNoClickRate object.
-     * @param getNoClickRate.index - Index name to target.
-     * @param getNoClickRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getNoClickRate.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getNoClickRate.index - Index name.
+     * @param getNoClickRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getNoClickRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getNoClickRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -536,9 +536,9 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getNoResultsRate - The getNoResultsRate object.
-     * @param getNoResultsRate.index - Index name to target.
-     * @param getNoResultsRate.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getNoResultsRate.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getNoResultsRate.index - Index name.
+     * @param getNoResultsRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getNoResultsRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getNoResultsRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -589,9 +589,9 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getSearchesCount - The getSearchesCount object.
-     * @param getSearchesCount.index - Index name to target.
-     * @param getSearchesCount.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getSearchesCount.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesCount.index - Index name.
+     * @param getSearchesCount.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesCount.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getSearchesCount.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -642,11 +642,11 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getSearchesNoClicks - The getSearchesNoClicks object.
-     * @param getSearchesNoClicks.index - Index name to target.
-     * @param getSearchesNoClicks.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getSearchesNoClicks.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getSearchesNoClicks.limit - Number of records to return (page size).
-     * @param getSearchesNoClicks.offset - Position of the starting record. Used for paging. 0 is the first record.
+     * @param getSearchesNoClicks.index - Index name.
+     * @param getSearchesNoClicks.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesNoClicks.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesNoClicks.limit - Number of items to return.
+     * @param getSearchesNoClicks.offset - Position of the first item to return.
      * @param getSearchesNoClicks.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -712,11 +712,11 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getSearchesNoResults - The getSearchesNoResults object.
-     * @param getSearchesNoResults.index - Index name to target.
-     * @param getSearchesNoResults.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getSearchesNoResults.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getSearchesNoResults.limit - Number of records to return (page size).
-     * @param getSearchesNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
+     * @param getSearchesNoResults.index - Index name.
+     * @param getSearchesNoResults.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesNoResults.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesNoResults.limit - Number of items to return.
+     * @param getSearchesNoResults.offset - Position of the first item to return.
      * @param getSearchesNoResults.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -782,7 +782,7 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getStatus - The getStatus object.
-     * @param getStatus.index - Index name to target.
+     * @param getStatus.index - Index name.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getStatus(
@@ -820,11 +820,11 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getTopCountries - The getTopCountries object.
-     * @param getTopCountries.index - Index name to target.
-     * @param getTopCountries.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getTopCountries.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getTopCountries.limit - Number of records to return (page size).
-     * @param getTopCountries.offset - Position of the starting record. Used for paging. 0 is the first record.
+     * @param getTopCountries.index - Index name.
+     * @param getTopCountries.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopCountries.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopCountries.limit - Number of items to return.
+     * @param getTopCountries.offset - Position of the first item to return.
      * @param getTopCountries.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -883,12 +883,12 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getTopFilterAttributes - The getTopFilterAttributes object.
-     * @param getTopFilterAttributes.index - Index name to target.
+     * @param getTopFilterAttributes.index - Index name.
      * @param getTopFilterAttributes.search - User query.
-     * @param getTopFilterAttributes.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getTopFilterAttributes.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getTopFilterAttributes.limit - Number of records to return (page size).
-     * @param getTopFilterAttributes.offset - Position of the starting record. Used for paging. 0 is the first record.
+     * @param getTopFilterAttributes.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFilterAttributes.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFilterAttributes.limit - Number of items to return.
+     * @param getTopFilterAttributes.offset - Position of the first item to return.
      * @param getTopFilterAttributes.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -960,12 +960,12 @@ export function createAnalyticsClient({
      *
      * @param getTopFilterForAttribute - The getTopFilterForAttribute object.
      * @param getTopFilterForAttribute.attribute - Attribute name.
-     * @param getTopFilterForAttribute.index - Index name to target.
+     * @param getTopFilterForAttribute.index - Index name.
      * @param getTopFilterForAttribute.search - User query.
-     * @param getTopFilterForAttribute.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getTopFilterForAttribute.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getTopFilterForAttribute.limit - Number of records to return (page size).
-     * @param getTopFilterForAttribute.offset - Position of the starting record. Used for paging. 0 is the first record.
+     * @param getTopFilterForAttribute.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFilterForAttribute.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFilterForAttribute.limit - Number of items to return.
+     * @param getTopFilterForAttribute.offset - Position of the first item to return.
      * @param getTopFilterForAttribute.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1046,12 +1046,12 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getTopFiltersNoResults - The getTopFiltersNoResults object.
-     * @param getTopFiltersNoResults.index - Index name to target.
+     * @param getTopFiltersNoResults.index - Index name.
      * @param getTopFiltersNoResults.search - User query.
-     * @param getTopFiltersNoResults.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getTopFiltersNoResults.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getTopFiltersNoResults.limit - Number of records to return (page size).
-     * @param getTopFiltersNoResults.offset - Position of the starting record. Used for paging. 0 is the first record.
+     * @param getTopFiltersNoResults.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFiltersNoResults.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFiltersNoResults.limit - Number of items to return.
+     * @param getTopFiltersNoResults.offset - Position of the first item to return.
      * @param getTopFiltersNoResults.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1122,13 +1122,13 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getTopHits - The getTopHits object.
-     * @param getTopHits.index - Index name to target.
+     * @param getTopHits.index - Index name.
      * @param getTopHits.search - User query.
      * @param getTopHits.clickAnalytics - Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
-     * @param getTopHits.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getTopHits.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getTopHits.limit - Number of records to return (page size).
-     * @param getTopHits.offset - Position of the starting record. Used for paging. 0 is the first record.
+     * @param getTopHits.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopHits.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopHits.limit - Number of items to return.
+     * @param getTopHits.offset - Position of the first item to return.
      * @param getTopHits.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1204,14 +1204,14 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getTopSearches - The getTopSearches object.
-     * @param getTopSearches.index - Index name to target.
+     * @param getTopSearches.index - Index name.
      * @param getTopSearches.clickAnalytics - Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
-     * @param getTopSearches.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getTopSearches.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getTopSearches.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopSearches.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getTopSearches.orderBy - Reorder the results.
      * @param getTopSearches.direction - Sorting direction of the results: ascending or descending.
-     * @param getTopSearches.limit - Number of records to return (page size).
-     * @param getTopSearches.offset - Position of the starting record. Used for paging. 0 is the first record.
+     * @param getTopSearches.limit - Number of items to return.
+     * @param getTopSearches.offset - Position of the first item to return.
      * @param getTopSearches.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1292,9 +1292,9 @@ export function createAnalyticsClient({
      * - analytics.
      *
      * @param getUsersCount - The getUsersCount object.
-     * @param getUsersCount.index - Index name to target.
-     * @param getUsersCount.startDate - Start date (a string in the format `YYYY-MM-DD`) of the period to analyze.
-     * @param getUsersCount.endDate - End date (a string in the format `YYYY-MM-DD`) of the period to analyze.
+     * @param getUsersCount.index - Index name.
+     * @param getUsersCount.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getUsersCount.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getUsersCount.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */

@@ -3,10 +3,13 @@
 import type { Hit } from './hit';
 
 export type SearchHits<T = Record<string, any>> = Record<string, any> & {
+  /**
+   * Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
+   */
   hits: Array<Hit<T>>;
 
   /**
-   * Text to search for in an index.
+   * Search query.
    */
   query: string;
 

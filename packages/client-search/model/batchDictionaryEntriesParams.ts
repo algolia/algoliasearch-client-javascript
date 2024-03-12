@@ -3,16 +3,16 @@
 import type { BatchDictionaryEntriesRequest } from './batchDictionaryEntriesRequest';
 
 /**
- * `batchDictionaryEntries` parameters.
+ * Request body for updating dictionary entries.
  */
 export type BatchDictionaryEntriesParams = {
   /**
-   * Incidates whether to replace all custom entries in the dictionary with the ones sent with this request.
+   * Whether to replace all custom entries in the dictionary with the ones sent with this request.
    */
   clearExistingDictionaryEntries?: boolean;
 
   /**
-   * Operations to batch.
+   * List of additions and deletions to your dictionaries.
    */
   requests: BatchDictionaryEntriesRequest[];
 };

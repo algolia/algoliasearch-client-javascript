@@ -157,12 +157,12 @@ export function createLiteClient({
     },
 
     /**
-     * Send multiple search queries to one or more indices.
+     * Sends multiple search request to one or more indices.  This can be useful in these cases:  - Different indices for different purposes, such as, one index for products, another one for marketing content. - Multiple searches to the same index—for example, with different filters.
      *
      * Required API Key ACLs:
      * - search.
      *
-     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
+     * @param searchMethodParams - Muli-search request body. Results are returned in the same order as the requests.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     search<T>(

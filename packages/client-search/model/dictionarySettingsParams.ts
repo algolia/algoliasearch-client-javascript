@@ -3,7 +3,7 @@
 import type { StandardEntries } from './standardEntries';
 
 /**
- * Enable or turn off the built-in Algolia stop words for a specific language.
+ * Turn on or off the built-in Algolia stop words for a specific language.
  */
 export type DictionarySettingsParams = {
   disableStandardEntries: StandardEntries;

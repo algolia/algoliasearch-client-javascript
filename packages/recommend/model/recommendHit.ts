@@ -9,17 +9,17 @@ import type { SnippetResult } from './snippetResult';
  */
 export type RecommendHit = Record<string, any> & {
   /**
-   * Unique object identifier.
+   * Unique record identifier.
    */
   objectID: string;
 
   /**
-   * Show highlighted section and words matched on a query.
+   * Surround words that match the query with HTML tags for highlighting.
    */
   _highlightResult?: Record<string, HighlightResult>;
 
   /**
-   * Snippeted attributes show parts of the matched attributes. Only returned when attributesToSnippet is non-empty.
+   * Snippets that show the context around a matching search query.
    */
   _snippetResult?: Record<string, SnippetResult>;
 

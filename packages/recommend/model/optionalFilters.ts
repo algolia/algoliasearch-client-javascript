@@ -3,6 +3,6 @@
 import type { MixedSearchFilters } from './mixedSearchFilters';
 
 /**
- * Create filters to boost or demote records.   Records that match the filter are ranked higher for positive and lower for negative optional filters. In contrast to regular filters, records that don\'t match the optional filter are still included in the results, only their ranking is affected.
+ * Filters to promote or demote records in the search results.  Optional filters work like facet filters, but they don\'t exclude records from the search results. Records that match the optional filter rank before records that don\'t match. If you\'re using a negative filter `facet:-value`, matching records rank after records that don\'t match.  - Optional filters don\'t work on virtual replicas. - Optional filters are applied _after_ sort-by attributes. - Optional filters don\'t work with numeric attributes.
  */
 export type OptionalFilters = MixedSearchFilters[] | string;

@@ -3,18 +3,18 @@
 import type { MatchLevel } from './matchLevel';
 
 /**
- * Show highlighted section and words matched on a query.
+ * Surround words that match the query with HTML tags for highlighting.
  */
 export type HighlightResultOption = {
   /**
-   * Markup text with `facetQuery` matches highlighted.
+   * Highlighted attribute value, including HTML tags.
    */
   value: string;
 
   matchLevel: MatchLevel;
 
   /**
-   * List of words from the query that matched the object.
+   * List of matched words from the search query.
    */
   matchedWords: string[];
 

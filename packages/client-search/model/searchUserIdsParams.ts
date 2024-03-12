@@ -15,7 +15,7 @@ export type SearchUserIdsParams = {
   clusterName?: string;
 
   /**
-   * Page to retrieve (the first page is `0`, not `1`).
+   * Page of search results to retrieve.
    */
   page?: number;
 

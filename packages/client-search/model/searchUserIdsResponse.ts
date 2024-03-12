@@ -12,12 +12,12 @@ export type SearchUserIdsResponse = {
   hits: UserHit[];
 
   /**
-   * Number of hits the search query matched.
+   * Number of results (hits).
    */
   nbHits: number;
 
   /**
-   * Page to retrieve (the first page is `0`, not `1`).
+   * Page of search results to retrieve.
    */
   page: number;
 

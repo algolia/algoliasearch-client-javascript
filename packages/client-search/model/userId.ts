@@ -5,7 +5,7 @@
  */
 export type UserId = {
   /**
-   * UserID of the user.
+   * User ID.
    */
   userID: string;
 

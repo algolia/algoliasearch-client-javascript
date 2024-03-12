@@ -4,12 +4,12 @@ import type { Rule } from './rule';
 
 export type SearchRulesResponse = {
   /**
-   * Fetched rules.
+   * Rules that matched the search criteria.
    */
   hits: Rule[];
 
   /**
-   * Number of fetched rules.
+   * Number of rules that matched the search criteria.
    */
   nbHits: number;
 

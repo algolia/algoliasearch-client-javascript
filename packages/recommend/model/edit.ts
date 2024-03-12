@@ -11,7 +11,7 @@ export type Edit = {
   delete?: string;
 
   /**
-   * Text that should be inserted in place of the removed text inside the query string.
+   * Text to be added in place of the deleted text inside the query string.
    */
   insert?: string;
 };

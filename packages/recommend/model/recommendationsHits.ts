@@ -6,7 +6,7 @@ export type RecommendationsHits = {
   hits: RecommendationsHit[];
 
   /**
-   * Text to search for in an index.
+   * Search query.
    */
   query?: string;
 

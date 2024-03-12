@@ -12,7 +12,7 @@ export type SearchForFacetValuesRequest = {
   facetQuery?: string;
 
   /**
-   * Maximum number of facet hits to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
+   * Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
    */
   maxFacetHits?: number;
 };

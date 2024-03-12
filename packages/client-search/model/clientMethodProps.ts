@@ -36,15 +36,15 @@ import type { UpdatedAtResponse } from './updatedAtResponse';
  */
 export type AddOrUpdateObjectProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
-   * Unique record (object) identifier.
+   * Unique record identifier.
    */
   objectID: string;
   /**
-   * Algolia record.
+   * The record, a schemaless object with attributes that are useful in the context of search and discovery.
    */
   body: Record<string, any>;
 };
@@ -54,7 +54,7 @@ export type AddOrUpdateObjectProps = {
  */
 export type AssignUserIdProps = {
   /**
-   * UserID to assign.
+   * User ID to assign.
    */
   xAlgoliaUserID: string;
   assignUserIdParams: AssignUserIdParams;
@@ -65,7 +65,7 @@ export type AssignUserIdProps = {
  */
 export type BatchProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   batchWriteParams: BatchWriteParams;
@@ -76,7 +76,7 @@ export type BatchProps = {
  */
 export type BatchAssignUserIdsProps = {
   /**
-   * UserID to assign.
+   * User ID to assign.
    */
   xAlgoliaUserID: string;
   batchAssignUserIdsParams: BatchAssignUserIdsParams;
@@ -87,7 +87,7 @@ export type BatchAssignUserIdsProps = {
  */
 export type BatchDictionaryEntriesProps = {
   /**
-   * Dictionary to search in.
+   * Dictionary type in which to search.
    */
   dictionaryName: DictionaryType;
   batchDictionaryEntriesParams: BatchDictionaryEntriesParams;
@@ -98,7 +98,7 @@ export type BatchDictionaryEntriesProps = {
  */
 export type BrowseProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   browseParams?: BrowseParams;
@@ -109,7 +109,7 @@ export type BrowseProps = {
  */
 export type ClearObjectsProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
 };
@@ -119,11 +119,11 @@ export type ClearObjectsProps = {
  */
 export type ClearRulesProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
-   * Indicates whether changed index settings are forwarded to the replica indices.
+   * Whether changes are applied to replica indices.
    */
   forwardToReplicas?: boolean;
 };
@@ -133,11 +133,11 @@ export type ClearRulesProps = {
  */
 export type ClearSynonymsProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
-   * Indicates whether changed index settings are forwarded to the replica indices.
+   * Whether changes are applied to replica indices.
    */
   forwardToReplicas?: boolean;
 };
@@ -221,7 +221,7 @@ export type DeleteApiKeyProps = {
  */
 export type DeleteByProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   deleteByParams: DeleteByParams;
@@ -232,7 +232,7 @@ export type DeleteByProps = {
  */
 export type DeleteIndexProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
 };
@@ -242,11 +242,11 @@ export type DeleteIndexProps = {
  */
 export type DeleteObjectProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
-   * Unique record (object) identifier.
+   * Unique record identifier.
    */
   objectID: string;
 };
@@ -256,7 +256,7 @@ export type DeleteObjectProps = {
  */
 export type DeleteRuleProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
@@ -264,7 +264,7 @@ export type DeleteRuleProps = {
    */
   objectID: string;
   /**
-   * Indicates whether changed index settings are forwarded to the replica indices.
+   * Whether changes are applied to replica indices.
    */
   forwardToReplicas?: boolean;
 };
@@ -284,7 +284,7 @@ export type DeleteSourceProps = {
  */
 export type DeleteSynonymProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
@@ -292,7 +292,7 @@ export type DeleteSynonymProps = {
    */
   objectID: string;
   /**
-   * Indicates whether changed index settings are forwarded to the replica indices.
+   * Whether changes are applied to replica indices.
    */
   forwardToReplicas?: boolean;
 };
@@ -312,7 +312,7 @@ export type GetApiKeyProps = {
  */
 export type GetLogsProps = {
   /**
-   * First log entry to retrieve. Sorted by decreasing date with 0 being the most recent.
+   * First log entry to retrieve. The most recent entries are listed first.
    */
   offset?: number;
   /**
@@ -320,11 +320,11 @@ export type GetLogsProps = {
    */
   length?: number;
   /**
-   * Index for which log entries should be retrieved. When omitted, log entries are retrieved for all indices.
+   * Index for which to retrieve log entries. By default, log entries are retrieved for all indices.
    */
   indexName?: string;
   /**
-   * Type of log entries to retrieve. When omitted, all log entries are retrieved.
+   * Type of log entries to retrieve. By default, all log entries are retrieved.
    */
   type?: LogType;
 };
@@ -334,15 +334,15 @@ export type GetLogsProps = {
  */
 export type GetObjectProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
-   * Unique record (object) identifier.
+   * Unique record identifier.
    */
   objectID: string;
   /**
-   * Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned. `objectID` is always retrieved, even when not specified. [`unretrievableAttributes`](https://www.algolia.com/doc/api-reference/api-parameters/unretrievableAttributes/) won\'t be retrieved unless the request is authenticated with the admin API key.
+   * Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned.  `objectID` is always retrieved.  Attributes included in `unretrievableAttributes` won\'t be retrieved unless the request is authenticated with the admin API key.
    */
   attributesToRetrieve?: string[];
 };
@@ -352,7 +352,7 @@ export type GetObjectProps = {
  */
 export type GetRuleProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
@@ -366,7 +366,7 @@ export type GetRuleProps = {
  */
 export type GetSettingsProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
 };
@@ -376,7 +376,7 @@ export type GetSettingsProps = {
  */
 export type GetSynonymProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
@@ -390,7 +390,7 @@ export type GetSynonymProps = {
  */
 export type GetTaskProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
@@ -404,7 +404,7 @@ export type GetTaskProps = {
  */
 export type GetUserIdProps = {
   /**
-   * UserID to assign.
+   * User ID to assign.
    */
   userID: string;
 };
@@ -414,7 +414,7 @@ export type GetUserIdProps = {
  */
 export type HasPendingMappingsProps = {
   /**
-   * Indicates whether to include the cluster\'s pending mapping state in the response.
+   * Whether to include the cluster\'s pending mapping state in the response.
    */
   getClusters?: boolean;
 };
@@ -424,11 +424,11 @@ export type HasPendingMappingsProps = {
  */
 export type ListIndicesProps = {
   /**
-   * Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.
+   * Requested page of the API response. If `null`, the API response is not paginated.
    */
   page?: number;
   /**
-   * Maximum number of hits per page.
+   * Number of hits per page.
    */
   hitsPerPage?: number;
 };
@@ -438,11 +438,11 @@ export type ListIndicesProps = {
  */
 export type ListUserIdsProps = {
   /**
-   * Returns the requested page number. The page size is determined by the `hitsPerPage` parameter. You can see the number of available pages in the `nbPages` response attribute. When `page` is null, the API response is not paginated.
+   * Requested page of the API response. If `null`, the API response is not paginated.
    */
   page?: number;
   /**
-   * Maximum number of hits per page.
+   * Number of hits per page.
    */
   hitsPerPage?: number;
 };
@@ -452,7 +452,7 @@ export type ListUserIdsProps = {
  */
 export type OperationIndexProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   operationIndexParams: OperationIndexParams;
@@ -463,19 +463,19 @@ export type OperationIndexProps = {
  */
 export type PartialUpdateObjectProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
-   * Unique record (object) identifier.
+   * Unique record identifier.
    */
   objectID: string;
   /**
-   * Object with attributes to update.
+   * Attributes with their values.
    */
   attributesToUpdate: Record<string, AttributeToUpdate>;
   /**
-   * Indicates whether to create a new record if it doesn\'t exist yet.
+   * Whether to create a new record if it doesn\'t exist.
    */
   createIfNotExists?: boolean;
 };
@@ -485,7 +485,7 @@ export type PartialUpdateObjectProps = {
  */
 export type RemoveUserIdProps = {
   /**
-   * UserID to assign.
+   * User ID to assign.
    */
   userID: string;
 };
@@ -515,11 +515,11 @@ export type RestoreApiKeyProps = {
  */
 export type SaveObjectProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
-   * The Algolia record.
+   * The record, a schemaless object with attributes that are useful in the context of search and discovery.
    */
   body: Record<string, any>;
 };
@@ -529,7 +529,7 @@ export type SaveObjectProps = {
  */
 export type SaveRuleProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
@@ -538,7 +538,7 @@ export type SaveRuleProps = {
   objectID: string;
   rule: Rule;
   /**
-   * Indicates whether changed index settings are forwarded to the replica indices.
+   * Whether changes are applied to replica indices.
    */
   forwardToReplicas?: boolean;
 };
@@ -548,16 +548,16 @@ export type SaveRuleProps = {
  */
 export type SaveRulesProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   rules: Rule[];
   /**
-   * Indicates whether changed index settings are forwarded to the replica indices.
+   * Whether changes are applied to replica indices.
    */
   forwardToReplicas?: boolean;
   /**
-   * Indicates whether existing rules should be deleted before adding this batch.
+   * Whether existing rules should be deleted before adding this batch.
    */
   clearExistingRules?: boolean;
 };
@@ -567,7 +567,7 @@ export type SaveRulesProps = {
  */
 export type SaveSynonymProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
@@ -576,7 +576,7 @@ export type SaveSynonymProps = {
   objectID: string;
   synonymHit: SynonymHit;
   /**
-   * Indicates whether changed index settings are forwarded to the replica indices.
+   * Whether changes are applied to replica indices.
    */
   forwardToReplicas?: boolean;
 };
@@ -586,16 +586,16 @@ export type SaveSynonymProps = {
  */
 export type SaveSynonymsProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   synonymHit: SynonymHit[];
   /**
-   * Indicates whether changed index settings are forwarded to the replica indices.
+   * Whether changes are applied to replica indices.
    */
   forwardToReplicas?: boolean;
   /**
-   * Indicates whether to replace all synonyms in the index with the ones sent with this request.
+   * Whether to replace all synonyms in the index with the ones sent with this request.
    */
   replaceExistingSynonyms?: boolean;
 };
@@ -637,7 +637,7 @@ export type LegacySearchMethodProps = LegacySearchQuery[];
  */
 export type SearchDictionaryEntriesProps = {
   /**
-   * Dictionary to search in.
+   * Dictionary type in which to search.
    */
   dictionaryName: DictionaryType;
   searchDictionaryEntriesParams: SearchDictionaryEntriesParams;
@@ -648,11 +648,11 @@ export type SearchDictionaryEntriesProps = {
  */
 export type SearchForFacetValuesProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
-   * Facet name.
+   * Facet attribute in which to search for values.  This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier.
    */
   facetName: string;
   searchForFacetValuesRequest?: SearchForFacetValuesRequest;
@@ -663,7 +663,7 @@ export type SearchForFacetValuesProps = {
  */
 export type SearchRulesProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   searchRulesParams?: SearchRulesParams;
@@ -674,7 +674,7 @@ export type SearchRulesProps = {
  */
 export type SearchSingleIndexProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   searchParams?: SearchParams;
@@ -685,7 +685,7 @@ export type SearchSingleIndexProps = {
  */
 export type SearchSynonymsProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   /**
@@ -699,12 +699,12 @@ export type SearchSynonymsProps = {
  */
 export type SetSettingsProps = {
   /**
-   * Index on which to perform the request.
+   * Name of the index on which to perform the operation.
    */
   indexName: string;
   indexSettings: IndexSettings;
   /**
-   * Indicates whether changed index settings are forwarded to the replica indices.
+   * Whether changes are applied to replica indices.
    */
   forwardToReplicas?: boolean;
 };

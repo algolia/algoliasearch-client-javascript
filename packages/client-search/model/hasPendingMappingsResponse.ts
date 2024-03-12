@@ -2,7 +2,7 @@
 
 export type HasPendingMappingsResponse = {
   /**
-   * Indicates whether there are clusters undergoing migration, creation, or deletion.
+   * Whether there are clusters undergoing migration, creation, or deletion.
    */
   pending: boolean;
 

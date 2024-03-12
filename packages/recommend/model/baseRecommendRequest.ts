@@ -2,7 +2,7 @@
 
 export type BaseRecommendRequest = {
   /**
-   * Algolia index name.
+   * Index name.
    */
   indexName: string;
 

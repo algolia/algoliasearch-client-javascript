@@ -22,7 +22,7 @@ export type BaseSearchResponse = Record<string, any> & {
   aroundLatLng?: string;
 
   /**
-   * Automatically-computed radius.
+   * Distance from a central coordinate provided by `aroundLatLng`.
    */
   automaticRadius?: string;
 
@@ -44,7 +44,7 @@ export type BaseSearchResponse = Record<string, any> & {
   exhaustiveTypo?: boolean;
 
   /**
-   * Mapping of each facet name to the corresponding facet counts.
+   * Facet counts.
    */
   facets?: Record<string, Record<string, number>>;
 
@@ -74,12 +74,12 @@ export type BaseSearchResponse = Record<string, any> & {
   message?: string;
 
   /**
-   * Number of hits the search query matched.
+   * Number of results (hits).
    */
   nbHits: number;
 
   /**
-   * Number of pages of results for the current query.
+   * Number of pages of results.
    */
   nbPages: number;
 
@@ -89,7 +89,7 @@ export type BaseSearchResponse = Record<string, any> & {
   nbSortedHits?: number;
 
   /**
-   * Page to retrieve (the first page is `0`, not `1`).
+   * Page of search results to retrieve.
    */
   page: number;
 
@@ -128,7 +128,7 @@ export type BaseSearchResponse = Record<string, any> & {
   serverUsed?: string;
 
   /**
-   * Lets you store custom data in your indices.
+   * An object with custom data.  You can store up to 32&nbsp;kB as custom data.
    */
   userData?: any | null;
 

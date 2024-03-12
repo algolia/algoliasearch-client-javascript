@@ -4,14 +4,14 @@ import type { SynonymType } from './synonymType';
 
 export type SearchSynonymsParams = {
   /**
-   * Text to search for in an index.
+   * Search query.
    */
   query?: string;
 
   type?: SynonymType;
 
   /**
-   * Page to retrieve (the first page is `0`, not `1`).
+   * Page of search results to retrieve.
    */
   page?: number;
 
