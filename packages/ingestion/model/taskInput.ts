@@ -2,5 +2,9 @@
 
 import type { OnDemandDateUtilsInput } from './onDemandDateUtilsInput';
 import type { ScheduleDateUtilsInput } from './scheduleDateUtilsInput';
+import type { StreamingUtilsInput } from './streamingUtilsInput';
 
-export type TaskInput = OnDemandDateUtilsInput | ScheduleDateUtilsInput;
+export type TaskInput =
+  | OnDemandDateUtilsInput
+  | ScheduleDateUtilsInput
+  | StreamingUtilsInput;

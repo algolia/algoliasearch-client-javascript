@@ -410,11 +410,11 @@ export type GetTasksProps = {
    */
   enabled?: boolean;
   /**
-   * The sourceIDs of the tasks to retrive.
+   * The sourceIDs of the tasks to retrieve.
    */
   sourceID?: string[];
   /**
-   * The destinationIDs of the tasks to retrive.
+   * The destinationIDs of the tasks to retrieve.
    */
   destinationID?: string[];
   /**

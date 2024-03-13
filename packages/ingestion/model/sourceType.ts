@@ -6,4 +6,5 @@ export type SourceType =
   | 'commercetools'
   | 'csv'
   | 'docker'
+  | 'ga4BigqueryExport'
   | 'json';

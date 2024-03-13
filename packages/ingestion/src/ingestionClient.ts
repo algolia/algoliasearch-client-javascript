@@ -1418,8 +1418,8 @@ export function createIngestionClient({
      * @param getTasks.page - The page number to fetch, starting at 1.
      * @param getTasks.action - The action of the tasks to retrieve.
      * @param getTasks.enabled - Whether the task is enabled or not.
-     * @param getTasks.sourceID - The sourceIDs of the tasks to retrive.
-     * @param getTasks.destinationID - The destinationIDs of the tasks to retrive.
+     * @param getTasks.sourceID - The sourceIDs of the tasks to retrieve.
+     * @param getTasks.destinationID - The destinationIDs of the tasks to retrieve.
      * @param getTasks.triggerType - The trigger type of the task.
      * @param getTasks.sort - The key by which the list should be sorted.
      * @param getTasks.order - The order of the returned list.

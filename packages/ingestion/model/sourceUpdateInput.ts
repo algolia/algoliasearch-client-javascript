@@ -2,6 +2,7 @@
 
 import type { SourceBigQuery } from './sourceBigQuery';
 import type { SourceCSV } from './sourceCSV';
+import type { SourceGA4BigQueryExport } from './sourceGA4BigQueryExport';
 import type { SourceJSON } from './sourceJSON';
 import type { SourceUpdateCommercetools } from './sourceUpdateCommercetools';
 import type { SourceUpdateDocker } from './sourceUpdateDocker';
@@ -9,6 +10,7 @@ import type { SourceUpdateDocker } from './sourceUpdateDocker';
 export type SourceUpdateInput =
   | SourceBigQuery
   | SourceCSV
+  | SourceGA4BigQueryExport
   | SourceJSON
   | SourceUpdateCommercetools
   | SourceUpdateDocker;

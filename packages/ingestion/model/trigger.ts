@@ -2,6 +2,11 @@
 
 import type { OnDemandTrigger } from './onDemandTrigger';
 import type { ScheduleTrigger } from './scheduleTrigger';
+import type { StreamingTrigger } from './streamingTrigger';
 import type { SubscriptionTrigger } from './subscriptionTrigger';
 
-export type Trigger = OnDemandTrigger | ScheduleTrigger | SubscriptionTrigger;
+export type Trigger =
+  | OnDemandTrigger
+  | ScheduleTrigger
+  | StreamingTrigger
+  | SubscriptionTrigger;
