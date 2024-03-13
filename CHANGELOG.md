@@ -1,3 +1,9 @@
+## [5.0.0-alpha.109](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.108...5.0.0-alpha.109)
+
+- [0f8d4432b](https://github.com/algolia/api-clients-automation/commit/0f8d4432b) feat(specs): insights api reference ([#2859](https://github.com/algolia/api-clients-automation/pull/2859)) by [@kai687](https://github.com/kai687/)
+- [c324c06bd](https://github.com/algolia/api-clients-automation/commit/c324c06bd) feat(specs): add ga4BigqueryExport, streaming and append options to task inputs ([#2858](https://github.com/algolia/api-clients-automation/pull/2858)) by [@JasonBerry](https://github.com/JasonBerry/)
+- [156fd9e69](https://github.com/algolia/api-clients-automation/commit/156fd9e69) feat(specs): improve API reference documentation ([#2831](https://github.com/algolia/api-clients-automation/pull/2831)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0-alpha.108](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.107...5.0.0-alpha.108)
 
 - [234427491](https://github.com/algolia/api-clients-automation/commit/234427491) feat(specs): Add MappingInput to Task Inputs ([#2787](https://github.com/algolia/api-clients-automation/pull/2787)) by [@jsok](https://github.com/jsok/)
