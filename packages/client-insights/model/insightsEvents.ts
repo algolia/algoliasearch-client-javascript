@@ -4,7 +4,7 @@ import type { EventsItems } from './eventsItems';
 
 export type InsightsEvents = {
   /**
-   * List of click and conversion events.  An event is an object representing a user interaction. Events have attributes that describe the interaction, such as an event name, a type, or a user token.  **All** events must be valid, otherwise the API returns an error.
+   * Click and conversion events.  **All** events must be valid, otherwise the API returns an error.
    */
   events: EventsItems[];
 };

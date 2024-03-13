@@ -69,7 +69,7 @@ export type CustomPutProps = {
  */
 export type DeleteUserTokenProps = {
   /**
-   * The user token for which to delete all associated events.
+   * User token for which to delete all associated events.
    */
   userToken: string;
 };

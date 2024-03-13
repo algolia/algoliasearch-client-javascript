@@ -12,7 +12,7 @@ export type ObjectDataAfterSearch = {
   price?: Price;
 
   /**
-   * The quantity of a product that has been purchased or added to the cart. The total value of a purchase is the sum of `quantity` multiplied with the `price` for each purchased item.
+   * Quantity of a product that has been purchased or added to the cart. The total purchase value is the sum of `quantity` multiplied with the `price` for each purchased item.
    */
   quantity?: number;
 
