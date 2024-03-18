@@ -150,6 +150,7 @@ export * from './snippetResultOption';
 export * from './sortRemainingBy';
 export * from './source';
 export * from './standardEntries';
+export * from './supportedLanguage';
 export * from './synonymHit';
 export * from './synonymType';
 export * from './tagFilters';

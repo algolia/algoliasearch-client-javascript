@@ -83,6 +83,7 @@ export * from './semanticSearch';
 export * from './snippetResult';
 export * from './snippetResultOption';
 export * from './sortRemainingBy';
+export * from './supportedLanguage';
 export * from './tagFilters';
 export * from './taskStatus';
 export * from './trendingFacetHit';
