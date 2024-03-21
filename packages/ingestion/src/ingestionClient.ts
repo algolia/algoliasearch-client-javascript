@@ -420,7 +420,7 @@ export function createIngestionClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -452,7 +452,7 @@ export function createIngestionClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -485,7 +485,7 @@ export function createIngestionClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
@@ -519,7 +519,7 @@ export function createIngestionClient({
         );
       }
 
-      const requestPath = '/1{path}'.replace('{path}', path);
+      const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
       const queryParameters: QueryParameters = parameters ? parameters : {};
 
