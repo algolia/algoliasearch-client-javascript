@@ -4,7 +4,7 @@ import type { TopSearch } from './topSearch';
 
 export type TopSearchesResponse = {
   /**
-   * Top searches with their hits count.
+   * Most popular searches and their number of search results (hits).
    */
   searches: TopSearch[];
 };

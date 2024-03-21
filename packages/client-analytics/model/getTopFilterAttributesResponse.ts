@@ -4,7 +4,7 @@ import type { GetTopFilterAttribute } from './getTopFilterAttribute';
 
 export type GetTopFilterAttributesResponse = {
   /**
-   * Filterable attributes.
+   * Most frequent filters.
    */
   attributes: GetTopFilterAttribute[];
 };

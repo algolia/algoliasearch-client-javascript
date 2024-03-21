@@ -19,12 +19,15 @@ import type {
   CustomGetProps,
   CustomPostProps,
   CustomPutProps,
+  GetAddToCartRateProps,
   GetAverageClickPositionProps,
   GetClickPositionsProps,
   GetClickThroughRateProps,
-  GetConversationRateProps,
+  GetConversionRateProps,
   GetNoClickRateProps,
   GetNoResultsRateProps,
+  GetPurchaseRateProps,
+  GetRevenueProps,
   GetSearchesCountProps,
   GetSearchesNoClicksProps,
   GetSearchesNoResultsProps,
@@ -37,12 +40,15 @@ import type {
   GetTopSearchesProps,
   GetUsersCountProps,
 } from '../model/clientMethodProps';
+import type { GetAddToCartRateResponse } from '../model/getAddToCartRateResponse';
 import type { GetAverageClickPositionResponse } from '../model/getAverageClickPositionResponse';
 import type { GetClickPositionsResponse } from '../model/getClickPositionsResponse';
 import type { GetClickThroughRateResponse } from '../model/getClickThroughRateResponse';
-import type { GetConversationRateResponse } from '../model/getConversationRateResponse';
+import type { GetConversionRateResponse } from '../model/getConversionRateResponse';
 import type { GetNoClickRateResponse } from '../model/getNoClickRateResponse';
 import type { GetNoResultsRateResponse } from '../model/getNoResultsRateResponse';
+import type { GetPurchaseRateResponse } from '../model/getPurchaseRateResponse';
+import type { GetRevenue } from '../model/getRevenue';
 import type { GetSearchesCountResponse } from '../model/getSearchesCountResponse';
 import type { GetSearchesNoClicksResponse } from '../model/getSearchesNoClicksResponse';
 import type { GetSearchesNoResultsResponse } from '../model/getSearchesNoResultsResponse';
@@ -265,7 +271,60 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Return the average click position for the complete time range and for individual days. > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn\'t receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
+     * Retrieves the add-to-cart rate for all of your searches with at least one add-to-cart event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
+     *
+     * Required API Key ACLs:
+     * - analytics.
+     *
+     * @param getAddToCartRate - The getAddToCartRate object.
+     * @param getAddToCartRate.index - Index name.
+     * @param getAddToCartRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getAddToCartRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getAddToCartRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getAddToCartRate(
+      { index, startDate, endDate, tags }: GetAddToCartRateProps,
+      requestOptions?: RequestOptions
+    ): Promise<GetAddToCartRateResponse> {
+      if (!index) {
+        throw new Error(
+          'Parameter `index` is required when calling `getAddToCartRate`.'
+        );
+      }
+
+      const requestPath = '/2/conversions/addToCartRate';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (index !== undefined) {
+        queryParameters.index = index.toString();
+      }
+
+      if (startDate !== undefined) {
+        queryParameters.startDate = startDate.toString();
+      }
+
+      if (endDate !== undefined) {
+        queryParameters.endDate = endDate.toString();
+      }
+
+      if (tags !== undefined) {
+        queryParameters.tags = tags.toString();
+      }
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves the average click position of your search results, including a daily breakdown.  The average click position is the average of all clicked search results\' positions. For example, if users only ever click on the first result for any search, the average click position is 1. By default, the analyzed period includes the last eight days including the current day.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -274,7 +333,7 @@ export function createAnalyticsClient({
      * @param getAverageClickPosition.index - Index name.
      * @param getAverageClickPosition.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getAverageClickPosition.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getAverageClickPosition.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getAverageClickPosition.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAverageClickPosition(
@@ -318,7 +377,7 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Show the number of clicks events and their associated position in the search results.  > **Note**: If all `positions` have a `clickCount` of `0` or `null`, it means Algolia didn\'t receive any click events for tracked searches. A _tracked_ search is a search request where the `clickAnalytics` parameter is `true`.
+     * Retrieves the positions in the search results and their associated number of clicks.  This lets you check how many clicks the first, second, or tenth search results receive.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -327,7 +386,7 @@ export function createAnalyticsClient({
      * @param getClickPositions.index - Index name.
      * @param getClickPositions.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getClickPositions.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getClickPositions.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getClickPositions.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getClickPositions(
@@ -371,7 +430,7 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns a [click-through rate (CTR)](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate).
+     * Retrieves the click-through rate for all of your searches with at least one click event, including a daily breakdown  By default, the analyzed period includes the last eight days including the current day.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -380,7 +439,7 @@ export function createAnalyticsClient({
      * @param getClickThroughRate.index - Index name.
      * @param getClickThroughRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getClickThroughRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getClickThroughRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getClickThroughRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getClickThroughRate(
@@ -424,25 +483,25 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Return a [conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate).
+     * Retrieves the conversion rate for all of your searches with at least one conversion event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
      *
      * Required API Key ACLs:
      * - analytics.
      *
-     * @param getConversationRate - The getConversationRate object.
-     * @param getConversationRate.index - Index name.
-     * @param getConversationRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getConversationRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getConversationRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getConversionRate - The getConversionRate object.
+     * @param getConversionRate.index - Index name.
+     * @param getConversionRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getConversionRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getConversionRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getConversationRate(
-      { index, startDate, endDate, tags }: GetConversationRateProps,
+    getConversionRate(
+      { index, startDate, endDate, tags }: GetConversionRateProps,
       requestOptions?: RequestOptions
-    ): Promise<GetConversationRateResponse> {
+    ): Promise<GetConversionRateResponse> {
       if (!index) {
         throw new Error(
-          'Parameter `index` is required when calling `getConversationRate`.'
+          'Parameter `index` is required when calling `getConversionRate`.'
         );
       }
 
@@ -477,7 +536,7 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the rate at which searches don\'t lead to any clicks. The endpoint returns a value for the complete given time range, as well as a value per day. It also returns the count of searches and searches without clicks.
+     * Retrieves the fraction of searches that didn\'t lead to any click within a time range, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -486,7 +545,7 @@ export function createAnalyticsClient({
      * @param getNoClickRate.index - Index name.
      * @param getNoClickRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getNoClickRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getNoClickRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getNoClickRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getNoClickRate(
@@ -530,7 +589,7 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the rate at which searches didn\'t return any results.
+     * Retrieves the fraction of searches that didn\'t return any results within a time range, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -539,7 +598,7 @@ export function createAnalyticsClient({
      * @param getNoResultsRate.index - Index name.
      * @param getNoResultsRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getNoResultsRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getNoResultsRate.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getNoResultsRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getNoResultsRate(
@@ -583,7 +642,113 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the number of searches within a time range.
+     * Retrieves the purchase rate for all of your searches with at least one purchase event, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
+     *
+     * Required API Key ACLs:
+     * - analytics.
+     *
+     * @param getPurchaseRate - The getPurchaseRate object.
+     * @param getPurchaseRate.index - Index name.
+     * @param getPurchaseRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getPurchaseRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getPurchaseRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getPurchaseRate(
+      { index, startDate, endDate, tags }: GetPurchaseRateProps,
+      requestOptions?: RequestOptions
+    ): Promise<GetPurchaseRateResponse> {
+      if (!index) {
+        throw new Error(
+          'Parameter `index` is required when calling `getPurchaseRate`.'
+        );
+      }
+
+      const requestPath = '/2/conversions/purchaseRate';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (index !== undefined) {
+        queryParameters.index = index.toString();
+      }
+
+      if (startDate !== undefined) {
+        queryParameters.startDate = startDate.toString();
+      }
+
+      if (endDate !== undefined) {
+        queryParameters.endDate = endDate.toString();
+      }
+
+      if (tags !== undefined) {
+        queryParameters.tags = tags.toString();
+      }
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves revenue-related metrics, such as the total revenue or the average order value.  To retrieve revenue-related metrics, sent purchase events. By default, the analyzed period includes the last eight days including the current day.
+     *
+     * Required API Key ACLs:
+     * - analytics.
+     *
+     * @param getRevenue - The getRevenue object.
+     * @param getRevenue.index - Index name.
+     * @param getRevenue.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getRevenue.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getRevenue.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getRevenue(
+      { index, startDate, endDate, tags }: GetRevenueProps,
+      requestOptions?: RequestOptions
+    ): Promise<GetRevenue> {
+      if (!index) {
+        throw new Error(
+          'Parameter `index` is required when calling `getRevenue`.'
+        );
+      }
+
+      const requestPath = '/2/conversions/revenue';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (index !== undefined) {
+        queryParameters.index = index.toString();
+      }
+
+      if (startDate !== undefined) {
+        queryParameters.startDate = startDate.toString();
+      }
+
+      if (endDate !== undefined) {
+        queryParameters.endDate = endDate.toString();
+      }
+
+      if (tags !== undefined) {
+        queryParameters.tags = tags.toString();
+      }
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves the number of searches within a time range, including a daily breakdown.  By default, the analyzed period includes the last eight days including the current day.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -592,7 +757,7 @@ export function createAnalyticsClient({
      * @param getSearchesCount.index - Index name.
      * @param getSearchesCount.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getSearchesCount.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getSearchesCount.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getSearchesCount.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSearchesCount(
@@ -636,7 +801,7 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Return the most popular of the last 1,000 searches that didn\'t lead to any clicks.
+     * Retrieves the most popular searches that didn\'t lead to any clicks, from the 1,000 most frequent searches.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -647,7 +812,7 @@ export function createAnalyticsClient({
      * @param getSearchesNoClicks.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getSearchesNoClicks.limit - Number of items to return.
      * @param getSearchesNoClicks.offset - Position of the first item to return.
-     * @param getSearchesNoClicks.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getSearchesNoClicks.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSearchesNoClicks(
@@ -706,7 +871,7 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the most popular of the latest 1,000 searches that didn\'t return any results.
+     * Retrieves the most popular searches that didn\'t return any results.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -717,7 +882,7 @@ export function createAnalyticsClient({
      * @param getSearchesNoResults.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getSearchesNoResults.limit - Number of items to return.
      * @param getSearchesNoResults.offset - Position of the first item to return.
-     * @param getSearchesNoResults.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getSearchesNoResults.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSearchesNoResults(
@@ -776,7 +941,7 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Return the latest update time of the Analytics API for an index. If the index has been recently created or no search has been performed yet, `updatedAt` will be `null`. > **Note**: The Analytics API is updated every 5&nbsp;minutes.
+     * Retrieves the time when the Analytics data for the specified index was last updated.  The Analytics data is updated every 5 minutes.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -814,7 +979,7 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns top countries. Limited to the 1,000 most frequent ones.
+     * Retrieves the countries with the most searches to your index.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -825,7 +990,7 @@ export function createAnalyticsClient({
      * @param getTopCountries.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getTopCountries.limit - Number of items to return.
      * @param getTopCountries.offset - Position of the first item to return.
-     * @param getTopCountries.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getTopCountries.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopCountries(
@@ -877,19 +1042,19 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Return the most popular [filterable attributes](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/) in the 1,000 most recently used filters.
+     * Retrieves the most frequently used filter attributes.  These are attributes of your records that you included in the `attributesForFaceting` setting.
      *
      * Required API Key ACLs:
      * - analytics.
      *
      * @param getTopFilterAttributes - The getTopFilterAttributes object.
      * @param getTopFilterAttributes.index - Index name.
-     * @param getTopFilterAttributes.search - User query.
+     * @param getTopFilterAttributes.search - Search query.
      * @param getTopFilterAttributes.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getTopFilterAttributes.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getTopFilterAttributes.limit - Number of items to return.
      * @param getTopFilterAttributes.offset - Position of the first item to return.
-     * @param getTopFilterAttributes.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getTopFilterAttributes.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopFilterAttributes(
@@ -953,7 +1118,7 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the most popular filter values for an attribute in the 1,000 most recently used filters.
+     * Retrieves the most frequent filter (facet) values for a filter attribute.  These are attributes of your records that you included in the `attributesForFaceting` setting.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -961,12 +1126,12 @@ export function createAnalyticsClient({
      * @param getTopFilterForAttribute - The getTopFilterForAttribute object.
      * @param getTopFilterForAttribute.attribute - Attribute name.
      * @param getTopFilterForAttribute.index - Index name.
-     * @param getTopFilterForAttribute.search - User query.
+     * @param getTopFilterForAttribute.search - Search query.
      * @param getTopFilterForAttribute.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getTopFilterForAttribute.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getTopFilterForAttribute.limit - Number of items to return.
      * @param getTopFilterForAttribute.offset - Position of the first item to return.
-     * @param getTopFilterForAttribute.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getTopFilterForAttribute.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopFilterForAttribute(
@@ -1040,19 +1205,19 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns top filters for filter-enabled searches that don\'t return results. Limited to the 1,000 most recently used filters.
+     * Retrieves the most frequently used filters for a search that didn\'t return any results.  To get the most frequent searches without results, use the [Retrieve searches without results](#tag/search/operation/getSearchesNoResults) operation.
      *
      * Required API Key ACLs:
      * - analytics.
      *
      * @param getTopFiltersNoResults - The getTopFiltersNoResults object.
      * @param getTopFiltersNoResults.index - Index name.
-     * @param getTopFiltersNoResults.search - User query.
+     * @param getTopFiltersNoResults.search - Search query.
      * @param getTopFiltersNoResults.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getTopFiltersNoResults.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getTopFiltersNoResults.limit - Number of items to return.
      * @param getTopFiltersNoResults.offset - Position of the first item to return.
-     * @param getTopFiltersNoResults.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getTopFiltersNoResults.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopFiltersNoResults(
@@ -1116,20 +1281,21 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Return the most popular clicked results in the last 1,000 searches.
+     * Retrieves the object IDs of the most frequent search results.
      *
      * Required API Key ACLs:
      * - analytics.
      *
      * @param getTopHits - The getTopHits object.
      * @param getTopHits.index - Index name.
-     * @param getTopHits.search - User query.
-     * @param getTopHits.clickAnalytics - Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
+     * @param getTopHits.search - Search query.
+     * @param getTopHits.clickAnalytics - Whether to include metrics related to click and conversion events in the response.
+     * @param getTopHits.revenueAnalytics - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
      * @param getTopHits.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getTopHits.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
      * @param getTopHits.limit - Number of items to return.
      * @param getTopHits.offset - Position of the first item to return.
-     * @param getTopHits.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getTopHits.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopHits(
@@ -1137,6 +1303,7 @@ export function createAnalyticsClient({
         index,
         search,
         clickAnalytics,
+        revenueAnalytics,
         startDate,
         endDate,
         limit,
@@ -1165,6 +1332,10 @@ export function createAnalyticsClient({
 
       if (clickAnalytics !== undefined) {
         queryParameters.clickAnalytics = clickAnalytics.toString();
+      }
+
+      if (revenueAnalytics !== undefined) {
+        queryParameters.revenueAnalytics = revenueAnalytics.toString();
       }
 
       if (startDate !== undefined) {
@@ -1198,27 +1369,29 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Returns the most popular of the latest 1,000 searches. For each search, also returns the number of hits.
+     * Returns the most popular search terms.
      *
      * Required API Key ACLs:
      * - analytics.
      *
      * @param getTopSearches - The getTopSearches object.
      * @param getTopSearches.index - Index name.
-     * @param getTopSearches.clickAnalytics - Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
+     * @param getTopSearches.clickAnalytics - Whether to include metrics related to click and conversion events in the response.
+     * @param getTopSearches.revenueAnalytics - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
      * @param getTopSearches.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getTopSearches.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getTopSearches.orderBy - Reorder the results.
+     * @param getTopSearches.orderBy - Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
      * @param getTopSearches.direction - Sorting direction of the results: ascending or descending.
      * @param getTopSearches.limit - Number of items to return.
      * @param getTopSearches.offset - Position of the first item to return.
-     * @param getTopSearches.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getTopSearches.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopSearches(
       {
         index,
         clickAnalytics,
+        revenueAnalytics,
         startDate,
         endDate,
         orderBy,
@@ -1245,6 +1418,10 @@ export function createAnalyticsClient({
 
       if (clickAnalytics !== undefined) {
         queryParameters.clickAnalytics = clickAnalytics.toString();
+      }
+
+      if (revenueAnalytics !== undefined) {
+        queryParameters.revenueAnalytics = revenueAnalytics.toString();
       }
 
       if (startDate !== undefined) {
@@ -1286,7 +1463,7 @@ export function createAnalyticsClient({
     },
 
     /**
-     * Return the count of unique users.
+     * Retrieves the number of unique users within a time range, including a daily breakdown.  Since this endpoint returns the number of unique users, the sum of the daily values might be different from the total number.  By default, Algolia distinguishes search users by their IP address, _unless_ you include a pseudonymous user identifier in your search requests with the `userToken` API parameter or `x-algolia-usertoken` request header. By default, the analyzed period includes the last eight days including the current day.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -1295,7 +1472,7 @@ export function createAnalyticsClient({
      * @param getUsersCount.index - Index name.
      * @param getUsersCount.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
      * @param getUsersCount.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getUsersCount.tags - Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+     * @param getUsersCount.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getUsersCount(

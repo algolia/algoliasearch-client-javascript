@@ -4,7 +4,7 @@ import type { TopHitWithAnalytics } from './topHitWithAnalytics';
 
 export type TopHitsResponseWithAnalytics = {
   /**
-   * Top hits.
+   * Most frequent search results with click and conversion metrics.
    */
   hits: TopHitWithAnalytics[];
 };

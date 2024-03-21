@@ -2,7 +2,9 @@
 
 import type { TopSearchesResponse } from './topSearchesResponse';
 import type { TopSearchesResponseWithAnalytics } from './topSearchesResponseWithAnalytics';
+import type { TopSearchesResponseWithRevenueAnalytics } from './topSearchesResponseWithRevenueAnalytics';
 
 export type GetTopSearchesResponse =
   | TopSearchesResponse
-  | TopSearchesResponseWithAnalytics;
+  | TopSearchesResponseWithAnalytics
+  | TopSearchesResponseWithRevenueAnalytics;

@@ -2,7 +2,7 @@
 
 export type TopCountry = {
   /**
-   * Country.
+   * Country code.
    */
   country: string;
 

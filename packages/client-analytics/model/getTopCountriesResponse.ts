@@ -4,7 +4,7 @@ import type { TopCountry } from './topCountry';
 
 export type GetTopCountriesResponse = {
   /**
-   * Countries.
+   * Countries and number of searches.
    */
   countries: TopCountry[];
 };

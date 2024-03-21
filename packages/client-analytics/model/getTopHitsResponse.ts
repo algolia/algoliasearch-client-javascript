@@ -2,5 +2,9 @@
 
 import type { TopHitsResponse } from './topHitsResponse';
 import type { TopHitsResponseWithAnalytics } from './topHitsResponseWithAnalytics';
+import type { TopHitsResponseWithRevenueAnalytics } from './topHitsResponseWithRevenueAnalytics';
 
-export type GetTopHitsResponse = TopHitsResponse | TopHitsResponseWithAnalytics;
+export type GetTopHitsResponse =
+  | TopHitsResponse
+  | TopHitsResponseWithAnalytics
+  | TopHitsResponseWithRevenueAnalytics;

@@ -6,7 +6,7 @@ export * from './abTestsVariant';
 export * from './abTestsVariantSearchParams';
 export * from './addABTestsRequest';
 export * from './addABTestsVariant';
-export * from './currenciesValue';
+export * from './currency';
 export * from './customSearchParams';
 export * from './errorBase';
 export * from './filterEffects';

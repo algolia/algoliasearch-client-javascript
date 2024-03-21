@@ -68,6 +68,28 @@ export type CustomPutProps = {
 };
 
 /**
+ * Properties for the `getAddToCartRate` method.
+ */
+export type GetAddToCartRateProps = {
+  /**
+   * Index name.
+   */
+  index: string;
+  /**
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * End date (`YYYY-MM-DD`) of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+   */
+  tags?: string;
+};
+
+/**
  * Properties for the `getAverageClickPosition` method.
  */
 export type GetAverageClickPositionProps = {
@@ -84,7 +106,7 @@ export type GetAverageClickPositionProps = {
    */
   endDate?: string;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -106,7 +128,7 @@ export type GetClickPositionsProps = {
    */
   endDate?: string;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -128,15 +150,15 @@ export type GetClickThroughRateProps = {
    */
   endDate?: string;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
 
 /**
- * Properties for the `getConversationRate` method.
+ * Properties for the `getConversionRate` method.
  */
-export type GetConversationRateProps = {
+export type GetConversionRateProps = {
   /**
    * Index name.
    */
@@ -150,7 +172,7 @@ export type GetConversationRateProps = {
    */
   endDate?: string;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -172,7 +194,7 @@ export type GetNoClickRateProps = {
    */
   endDate?: string;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -194,7 +216,51 @@ export type GetNoResultsRateProps = {
    */
   endDate?: string;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+   */
+  tags?: string;
+};
+
+/**
+ * Properties for the `getPurchaseRate` method.
+ */
+export type GetPurchaseRateProps = {
+  /**
+   * Index name.
+   */
+  index: string;
+  /**
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * End date (`YYYY-MM-DD`) of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
+   */
+  tags?: string;
+};
+
+/**
+ * Properties for the `getRevenue` method.
+ */
+export type GetRevenueProps = {
+  /**
+   * Index name.
+   */
+  index: string;
+  /**
+   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   */
+  startDate?: string;
+  /**
+   * End date (`YYYY-MM-DD`) of the period to analyze.
+   */
+  endDate?: string;
+  /**
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -216,7 +282,7 @@ export type GetSearchesCountProps = {
    */
   endDate?: string;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -246,7 +312,7 @@ export type GetSearchesNoClicksProps = {
    */
   offset?: number;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -276,7 +342,7 @@ export type GetSearchesNoResultsProps = {
    */
   offset?: number;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -316,7 +382,7 @@ export type GetTopCountriesProps = {
    */
   offset?: number;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -330,7 +396,7 @@ export type GetTopFilterAttributesProps = {
    */
   index: string;
   /**
-   * User query.
+   * Search query.
    */
   search?: string;
   /**
@@ -350,7 +416,7 @@ export type GetTopFilterAttributesProps = {
    */
   offset?: number;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -368,7 +434,7 @@ export type GetTopFilterForAttributeProps = {
    */
   index: string;
   /**
-   * User query.
+   * Search query.
    */
   search?: string;
   /**
@@ -388,7 +454,7 @@ export type GetTopFilterForAttributeProps = {
    */
   offset?: number;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -402,7 +468,7 @@ export type GetTopFiltersNoResultsProps = {
    */
   index: string;
   /**
-   * User query.
+   * Search query.
    */
   search?: string;
   /**
@@ -422,7 +488,7 @@ export type GetTopFiltersNoResultsProps = {
    */
   offset?: number;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -436,13 +502,17 @@ export type GetTopHitsProps = {
    */
   index: string;
   /**
-   * User query.
+   * Search query.
    */
   search?: string;
   /**
-   * Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
+   * Whether to include metrics related to click and conversion events in the response.
    */
   clickAnalytics?: boolean;
+  /**
+   * Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+   */
+  revenueAnalytics?: boolean;
   /**
    * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
@@ -460,7 +530,7 @@ export type GetTopHitsProps = {
    */
   offset?: number;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -474,9 +544,13 @@ export type GetTopSearchesProps = {
    */
   index: string;
   /**
-   * Whether to include [click and conversion](https://www.algolia.com/doc/guides/sending-events/getting-started/) rates for a search.
+   * Whether to include metrics related to click and conversion events in the response.
    */
   clickAnalytics?: boolean;
+  /**
+   * Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+   */
+  revenueAnalytics?: boolean;
   /**
    * Start date (`YYYY-MM-DD`) of the period to analyze.
    */
@@ -486,7 +560,7 @@ export type GetTopSearchesProps = {
    */
   endDate?: string;
   /**
-   * Reorder the results.
+   * Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
    */
   orderBy?: OrderBy;
   /**
@@ -502,7 +576,7 @@ export type GetTopSearchesProps = {
    */
   offset?: number;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };
@@ -524,7 +598,7 @@ export type GetUsersCountProps = {
    */
   endDate?: string;
   /**
-   * Filter analytics on the [`analyticsTags`](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) set at search time. Multiple tags can be combined with the operators OR and AND. If a tag contains characters like spaces or parentheses, it must be URL-encoded.
+   * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
   tags?: string;
 };

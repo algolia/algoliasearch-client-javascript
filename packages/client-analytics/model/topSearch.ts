@@ -2,12 +2,12 @@
 
 export type TopSearch = {
   /**
-   * User query.
+   * Search query.
    */
   search: string;
 
   /**
-   * Number of tracked _and_ untracked searches (where the `clickAnalytics` parameter isn\'t `true`).
+   * Number of searches.
    */
   count: number;
 
