@@ -1,13 +1,13 @@
 import type { EchoResponse } from '@algolia/client-common';
 import {
-  DEFAULT_CONNECT_TIMEOUT_NODE,
-  DEFAULT_READ_TIMEOUT_NODE,
-  DEFAULT_WRITE_TIMEOUT_NODE,
+  DEFAULT_CONNECT_TIMEOUT_BROWSER,
+  DEFAULT_READ_TIMEOUT_BROWSER,
+  DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
-import { echoRequester } from '@algolia/requester-node-http';
+import { echoRequester } from '@algolia/requester-browser-xhr';
 
-import { algoliasearch, apiClientVersion } from '../builds/node';
-import { liteClient } from '../lite/builds/node';
+import { algoliasearch, apiClientVersion } from '../builds/browser';
+import { liteClient } from '../lite/builds/browser';
 
 const client = algoliasearch('APP_ID', 'API_KEY', {
   requester: echoRequester(),
@@ -28,24 +28,16 @@ describe('api', () => {
     })) as unknown as EchoResponse;
 
     expect(req.algoliaAgent).toMatchInlineSnapshot(
-      `"Algolia%20for%20JavaScript%20(${apiClientVersion})%3B%20Search%20(${apiClientVersion})%3B%20Node.js%20(${process.versions.node})"`
+      `"Algolia%20for%20JavaScript%20(${apiClientVersion})%3B%20Search%20(${apiClientVersion})%3B%20Browser"`
     );
   });
 
   it('throws with undefined API key', () => {
-    try {
-      algoliasearch('APP_ID', '');
-    } catch (e) {
-      expect((e as Error).message).toMatch('`apiKey` is missing.');
-    }
+    expect(() => algoliasearch('APP_ID', '')).toThrow('`apiKey` is missing');
   });
 
   it('throws with undefined app ID', () => {
-    try {
-      algoliasearch('', 'API_KEY');
-    } catch (e) {
-      expect((e as Error).message).toMatch('`appId` is missing.');
-    }
+    expect(() => algoliasearch('', 'API_KEY')).toThrow('`appId` is missing');
   });
 
   it('provides the search client at the root of the API', () => {
@@ -62,9 +54,7 @@ describe('api', () => {
     });
 
     it('keeps `_ua` updated with the transporter algolia agent', () => {
-      expect(client._ua).toEqual(
-        expect.stringMatching(/.*; Node\.js \(.*\)$/g)
-      );
+      expect(client._ua).toEqual(expect.stringMatching(/.*; Browser$/g));
 
       client.addAlgoliaAgent('Jest', '0.0.1');
 
@@ -85,10 +75,11 @@ describe('api', () => {
       },
       baseHeaders: {
         'content-type': 'text/plain',
+      },
+      baseQueryParameters: {
         'x-algolia-api-key': 'API_KEY',
         'x-algolia-application-id': 'APP_ID',
       },
-      baseQueryParameters: {},
       hosts: expect.arrayContaining([
         {
           accept: 'read',
@@ -139,9 +130,9 @@ describe('api', () => {
         set: expect.any(Function),
       },
       timeouts: {
-        connect: DEFAULT_CONNECT_TIMEOUT_NODE,
-        read: DEFAULT_READ_TIMEOUT_NODE,
-        write: DEFAULT_WRITE_TIMEOUT_NODE,
+        connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
+        read: DEFAULT_READ_TIMEOUT_BROWSER,
+        write: DEFAULT_WRITE_TIMEOUT_BROWSER,
       },
     });
   });
@@ -176,19 +167,19 @@ describe('api', () => {
         path: 'personalizationClient',
       })) as unknown as EchoResponse;
 
-      expect(res1.headers).toEqual(
+      expect(res1.searchParams).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
         })
       );
-      expect(res2.headers).toEqual(
+      expect(res2.searchParams).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
         })
       );
-      expect(res3.headers).toEqual(
+      expect(res3.searchParams).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
@@ -221,19 +212,19 @@ describe('api', () => {
         path: 'personalizationClient',
       })) as unknown as EchoResponse;
 
-      expect(res1.headers).toEqual(
+      expect(res1.searchParams).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'appId1',
           'x-algolia-api-key': 'apiKey1',
         })
       );
-      expect(res2.headers).toEqual(
+      expect(res2.searchParams).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'appId2',
           'x-algolia-api-key': 'apiKey2',
         })
       );
-      expect(res3.headers).toEqual(
+      expect(res3.searchParams).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'appId3',
           'x-algolia-api-key': 'apiKey3',
@@ -265,7 +256,10 @@ describe('search with legacy signature', () => {
     expect(req.path).toEqual('/1/indexes/*/queries');
     expect(req.method).toEqual('POST');
     expect(req.data).toEqual({ requests: [{ indexName: 'theIndexName' }] });
-    expect(req.searchParams).toStrictEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      'x-algolia-api-key': 'API_KEY',
+      'x-algolia-application-id': 'APP_ID',
+    });
   });
 
   it('allows searching for facet', async () => {
@@ -284,7 +278,10 @@ describe('search with legacy signature', () => {
         { indexName: 'theIndexName', type: 'facet', facet: 'theFacet' },
       ],
     });
-    expect(req.searchParams).toStrictEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      'x-algolia-api-key': 'API_KEY',
+      'x-algolia-application-id': 'APP_ID',
+    });
   });
 
   it('accepts a `params` parameter for `searchParams`', async () => {
@@ -302,6 +299,50 @@ describe('search with legacy signature', () => {
     expect(req.data).toEqual({
       requests: [{ indexName: 'theIndexName', hitsPerPage: 42 }],
     });
-    expect(req.searchParams).toStrictEqual(undefined);
+    expect(req.searchParams).toStrictEqual({
+      'x-algolia-api-key': 'API_KEY',
+      'x-algolia-application-id': 'APP_ID',
+    });
+  });
+});
+
+describe('init', () => {
+  test('sets authMode', async () => {
+    const qpClient = algoliasearch('foo', 'bar', {
+      authMode: 'WithinQueryParameters',
+      requester: echoRequester(),
+    });
+    const headerClient = algoliasearch('foo', 'bar', {
+      authMode: 'WithinHeaders',
+      requester: echoRequester(),
+    });
+
+    const qpResult = (await qpClient.customGet({
+      path: '1/foo',
+    })) as unknown as EchoResponse;
+    expect(qpResult.searchParams).toEqual({
+      'x-algolia-api-key': 'bar',
+      'x-algolia-application-id': 'foo',
+    });
+
+    const headerResult = (await headerClient.customGet({
+      path: '1/bar',
+    })) as unknown as EchoResponse;
+    expect(headerResult.headers).toEqual({
+      accept: 'application/json',
+      'content-type': 'text/plain',
+      'x-algolia-api-key': 'bar',
+      'x-algolia-application-id': 'foo',
+    });
+  });
+
+  test('defaults to qp', async () => {
+    const res = (await client.customGet({
+      path: '1/foo',
+    })) as unknown as EchoResponse;
+    expect(res.searchParams).toEqual({
+      'x-algolia-api-key': 'API_KEY',
+      'x-algolia-application-id': 'APP_ID',
+    });
   });
 });
