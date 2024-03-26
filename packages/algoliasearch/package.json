@@ -24,6 +24,9 @@
     "lite.js",
     "lite.d.ts"
   ],
+  "scripts": {
+    "test:exports": "node --experimental-modules test/module/is-es-module.mjs && node test/module/is-cjs-module.cjs"
+  },
   "dependencies": {
     "@algolia/cache-browser-local-storage": "4.23.0",
     "@algolia/cache-common": "4.23.0",

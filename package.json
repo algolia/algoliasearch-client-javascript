@@ -17,6 +17,7 @@
     "test:browser-locally": "yarn setup:browser && ./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
     "test:build-declarations": "node --max-old-space-size=4096 scripts/test-build-declarations.js",
     "test:build-size": "bundlesize",
+    "test:exports": "lerna run test:exports",
     "test:lint": "eslint . --ext .js,.ts",
     "test:locally": "lerna clean --yes && yarn lint && yarn test:types && yarn test:unit",
     "test:types": "yarn tsc",
