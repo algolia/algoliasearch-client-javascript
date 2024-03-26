@@ -1,3 +1,9 @@
+## [v4.23.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.22.1...4.23.0)
+
+* feat(search): fetch recommendations directly from algoliasearch (#1509) ([8087b28](http://algolia/algoliasearch-client-javascript/commits/8087b28)), closes [#1509](http://algolia/algoliasearch-client-javascript/issues/1509)
+
+
+
 ## [v4.22.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.22.0...4.22.1)
 
 * fix(recommend): update recommended-for-you model type (#1500) ([f94ce64](https://github.com/algolia/algoliasearch-client-javascript/commit/f94ce64)), closes [#1500](https://github.com/algolia/algoliasearch-client-javascript/issues/1500)
