@@ -1,3 +1,9 @@
+## [v4.23.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.0...4.23.1)
+
+* fix(recommend): export recommend methods to use them in algoliasearch (#1512) ([5fc5f4f](http://algolia/algoliasearch-client-javascript/commits/5fc5f4f)), closes [#1512](http://algolia/algoliasearch-client-javascript/issues/1512)
+
+
+
 ## [v4.23.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.22.1...4.23.0)
 
 * feat(search): fetch recommendations directly from algoliasearch (#1509) ([8087b28](http://algolia/algoliasearch-client-javascript/commits/8087b28)), closes [#1509](http://algolia/algoliasearch-client-javascript/issues/1509)
