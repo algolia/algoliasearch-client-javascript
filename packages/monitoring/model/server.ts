@@ -13,12 +13,12 @@ export type Server = {
   region?: Region;
 
   /**
-   * Included to support legacy applications. Do not rely on this attribute being present in the response. Use `is_replica` instead.
+   * Included to support legacy applications. Use `is_replica` instead.
    */
   is_slave?: boolean;
 
   /**
-   * Indicates whether this server is a replica of another server.
+   * Whether this server is a replica of another server.
    */
   is_replica?: boolean;
 

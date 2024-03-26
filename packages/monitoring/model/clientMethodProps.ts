@@ -112,7 +112,7 @@ export type GetLatencyProps = {
  */
 export type GetMetricsProps = {
   /**
-   * Metric to report.  For more information about the individual metrics, see the response. To include all metrics, use `*` as the parameter.
+   * Metric to report.  For more information about the individual metrics, see the description of the API response. To include all metrics, use `*`.
    */
   metric: Metric;
   /**
