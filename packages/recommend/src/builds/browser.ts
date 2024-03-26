@@ -68,4 +68,5 @@ recommend.version = version;
 
 export type RecommendClient = WithRecommendMethods<BaseRecommendClient>;
 
+export * from '../methods';
 export * from '../types';
