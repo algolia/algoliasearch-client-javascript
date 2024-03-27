@@ -63,10 +63,17 @@ export default function recommend(
   });
 }
 
-// eslint-disable-next-line functional/immutable-data
+/* eslint-disable functional/immutable-data */
 recommend.version = version;
+recommend.getFrequentlyBoughtTogether = getFrequentlyBoughtTogether;
+recommend.getRecommendations = getRecommendations;
+recommend.getRelatedProducts = getRelatedProducts;
+recommend.getTrendingFacets = getTrendingFacets;
+recommend.getTrendingItems = getTrendingItems;
+recommend.getLookingSimilar = getLookingSimilar;
+recommend.getRecommendedForYou = getRecommendedForYou;
+/* eslint-enable functional/immutable-data */
 
 export type RecommendClient = WithRecommendMethods<BaseRecommendClient>;
 
-export * from '../methods';
 export * from '../types';
