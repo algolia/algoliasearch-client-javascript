@@ -79,7 +79,7 @@ export function searchClient(
     },
 
     /**
-     * Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `ValidUntil` parameter must have been provided.
+     * Helper: Retrieves the remaining validity of the previous generated `securedApiKey`, the `ValidUntil` parameter must have been provided.
      *
      * @summary Helper: Retrieves the remaining validity of the previous generated `secured_api_key`, the `ValidUntil` parameter must have been provided.
      * @param getSecuredApiKeyRemainingValidity - The `getSecuredApiKeyRemainingValidity` object.

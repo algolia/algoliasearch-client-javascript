@@ -496,7 +496,7 @@ export function createSearchClient({
     /**
      * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
      *
-     * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests. * @param getSecuredApiKeyRemainingValidity - The `getSecuredApiKeyRemainingValidity` object.
+     * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
      * @param chunkedBatch - The `chunkedBatch` object.
      * @param chunkedBatch.indexName - The `indexName` to replace `objects` in.
      * @param chunkedBatch.objects - The array of `objects` to store in the given Algolia `indexName`.
