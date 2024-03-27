@@ -1,3 +1,9 @@
+## [v4.23.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.1...4.23.2)
+
+* fix(recommend): only export default function (#1514) ([4a04d8e](https://github.com/algolia/algoliasearch-client-javascript/commits/4a04d8e)), closes [#1514](https://github.com/algolia/algoliasearch-client-javascript/issues/1514)
+
+
+
 ## [v4.23.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.0...4.23.1)
 
 * fix(recommend): export recommend methods to use them in algoliasearch (#1512) ([5fc5f4f](http://algolia/algoliasearch-client-javascript/commits/5fc5f4f)), closes [#1512](http://algolia/algoliasearch-client-javascript/issues/1512)
