@@ -14,18 +14,15 @@ export type QuerySuggestionsConfiguration = {
 
   languages?: Languages;
 
-  /**
-   * Patterns to exclude from query suggestions.
-   */
   exclude?: string[] | null;
 
   /**
-   * Turn on personalized query suggestions.
+   * Whether to turn on personalized query suggestions.
    */
   enablePersonalization?: boolean;
 
   /**
-   * Allow suggestions with special characters.
+   * Whether to include suggestions with special characters.
    */
   allowSpecialCharacters?: boolean;
 };

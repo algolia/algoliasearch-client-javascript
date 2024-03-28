@@ -12,22 +12,16 @@ export type SourceIndex = {
   indexName: string;
 
   /**
-   * If true, Query Suggestions uses all replicas of the primary index to find popular searches. If false, only the primary index is used.
+   * If true, Query Suggestions uses all replica indices to find popular searches. If false, only the primary index is used.
    */
   replicas?: boolean;
 
-  /**
-   * [Analytics tags](https://www.algolia.com/doc/api-reference/api-parameters/analyticsTags/) for filtering the popular searches.
-   */
   analyticsTags?: string[] | null;
 
-  /**
-   * Facets to use as top categories with your suggestions.  If provided, Query Suggestions adds the top facet values to each suggestion.
-   */
   facets?: Facet[] | null;
 
   /**
-   * Minimum number of hits required to be included as a suggestion.  A search query must at least generate `minHits` hits to be included in the Query Suggestions index.
+   * Minimum number of hits required to be included as a suggestion.  A search query must at least generate `minHits` search results to be included in the Query Suggestions index.
    */
   minHits?: number;
 
@@ -36,10 +30,7 @@ export type SourceIndex = {
    */
   minLetters?: number;
 
-  generate?: string[][];
+  generate?: string[][] | null;
 
-  /**
-   * Algolia indices with popular searches to use as query suggestions.  Records of these indices must have these attributes:    - `query`: search query which will be added as a suggestion   - `count`: measure of popularity of that search query  For example, you can export popular searches from an external analytics tool, such as Google Analytics or Adobe Analytics, and feed this data into an external Algolia index. You can use this external index to generate query suggestions until your Algolia analytics has collected enough data.
-   */
   external?: string[] | null;
 };

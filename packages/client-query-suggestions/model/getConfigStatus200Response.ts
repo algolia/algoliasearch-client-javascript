@@ -2,12 +2,12 @@
 
 export type GetConfigStatus200Response = {
   /**
-   * Query Suggestions index name.
+   * Name of the Query Suggestions index.
    */
   indexName?: string;
 
   /**
-   * Indicates whether the creation or update of the Query Suggestions is in progress.
+   * Whether the creation or update of the Query Suggestions index is in progress.
    */
   isRunning?: boolean;
 
