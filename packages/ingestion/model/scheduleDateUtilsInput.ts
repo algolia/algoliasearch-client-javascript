@@ -3,11 +3,11 @@
 import type { MappingInput } from './mappingInput';
 
 /**
- * The input for a `schedule` task whose source is of type `bigquery` and for which extracted data spans a fixed number of days.
+ * Input for scheduled tasks whose source is of type `bigquery` and for which extracted data spans a fixed number of days.
  */
 export type ScheduleDateUtilsInput = {
   /**
-   * The timeframe of the extraction, in number of days from today.
+   * Number of days in the past until the current day for which to extract Big Query data.
    */
   timeframe: number;
 

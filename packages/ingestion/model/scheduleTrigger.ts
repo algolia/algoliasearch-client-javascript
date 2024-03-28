@@ -3,23 +3,23 @@
 import type { ScheduleTriggerType } from './scheduleTriggerType';
 
 /**
- * The trigger information for a task of type \'schedule\'.
+ * Trigger information for scheduled tasks.
  */
 export type ScheduleTrigger = {
   type: ScheduleTriggerType;
 
   /**
-   * A cron expression that represent at which regularity the task should run.
+   * Cron expression for the task\'s schedule.
    */
   cron: string;
 
   /**
-   * The last time the scheduled task ran (RFC3339 format).
+   * The last time the scheduled task ran in RFC3339 format.
    */
   lastRun?: string;
 
   /**
-   * The next scheduled run of the task (RFC3339 format).
+   * The next scheduled run of the task in RFC3339 format.
    */
   nextRun: string;
 };

@@ -3,7 +3,7 @@
 import type { OnDemandTriggerType } from './onDemandTriggerType';
 
 /**
- * The trigger information of a task of type `onDemand`.
+ * Trigger information for manually-triggered tasks.
  */
 export type OnDemandTriggerInput = {
   type: OnDemandTriggerType;

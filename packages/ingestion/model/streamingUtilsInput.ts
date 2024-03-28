@@ -3,7 +3,7 @@
 import type { MappingInput } from './mappingInput';
 
 /**
- * The input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.
+ * Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.
  */
 export type StreamingUtilsInput = {
   mapping: MappingInput;

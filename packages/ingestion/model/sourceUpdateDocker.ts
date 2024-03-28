@@ -6,17 +6,17 @@ export type SourceUpdateDocker = {
   registry?: DockerRegistry;
 
   /**
-   * The name of the image to pull.
+   * Docker image name.
    */
   image?: string;
 
   /**
-   * The version of the image, defaults to `latest`.
+   * Docker image version.
    */
   version?: string;
 
   /**
-   * The configuration of the spec.
+   * Configuration of the spec.
    */
   configuration: Record<string, any>;
 };

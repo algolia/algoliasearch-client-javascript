@@ -6,17 +6,17 @@ import type { Trigger } from './trigger';
 
 export type Task = {
   /**
-   * The task UUID.
+   * Universally unique identifier (UUID) of a task.
    */
   taskID: string;
 
   /**
-   * The source UUID.
+   * Universally uniqud identifier (UUID) of a source.
    */
   sourceID: string;
 
   /**
-   * The destination UUID.
+   * Universally unique identifier (UUID) of a destination resource.
    */
   destinationID: string;
 
@@ -25,24 +25,24 @@ export type Task = {
   input?: TaskInput;
 
   /**
-   * Whether the task is enabled or not.
+   * Whether the task is enabled.
    */
   enabled: boolean;
 
   /**
-   * A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+   * Maximum accepted percentage of failures for a task run to finish successfully.
    */
   failureThreshold?: number;
 
   action: ActionType;
 
   /**
-   * Date of creation (RFC3339 format).
+   * Date of creation in RFC3339 format.
    */
   createdAt: string;
 
   /**
-   * Date of last update (RFC3339 format).
+   * Date of last update in RFC3339 format.
    */
   updatedAt?: string;
 };

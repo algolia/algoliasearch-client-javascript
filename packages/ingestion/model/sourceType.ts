@@ -7,4 +7,6 @@ export type SourceType =
   | 'csv'
   | 'docker'
   | 'ga4BigqueryExport'
-  | 'json';
+  | 'json'
+  | 'sfcc'
+  | 'shopify';

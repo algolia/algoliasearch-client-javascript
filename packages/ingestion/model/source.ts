@@ -5,7 +5,7 @@ import type { SourceType } from './sourceType';
 
 export type Source = {
   /**
-   * The source UUID.
+   * Universally uniqud identifier (UUID) of a source.
    */
   sourceID: string;
 
@@ -16,17 +16,17 @@ export type Source = {
   input: SourceInput;
 
   /**
-   * The authentication UUID.
+   * Universally unique identifier (UUID) of an authentication resource.
    */
   authenticationID?: string;
 
   /**
-   * Date of creation (RFC3339 format).
+   * Date of creation in RFC3339 format.
    */
   createdAt: string;
 
   /**
-   * Date of last update (RFC3339 format).
+   * Date of last update in RFC3339 format.
    */
   updatedAt?: string;
 };

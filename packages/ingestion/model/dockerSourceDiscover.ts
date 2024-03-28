@@ -2,12 +2,12 @@
 
 export type DockerSourceDiscover = {
   /**
-   * The run UUID.
+   * Universally unique identifier (UUID) of a task run.
    */
   runID: string;
 
   /**
-   * Date of creation (RFC3339 format).
+   * Date of creation in RFC3339 format.
    */
   createdAt: string;
 };

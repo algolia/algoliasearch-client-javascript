@@ -90,7 +90,7 @@ export type CustomPutProps = {
  */
 export type DeleteAuthenticationProps = {
   /**
-   * The authentication UUID.
+   * Unique identifier of an authentication resource.
    */
   authenticationID: string;
 };
@@ -100,7 +100,7 @@ export type DeleteAuthenticationProps = {
  */
 export type DeleteDestinationProps = {
   /**
-   * The destination UUID.
+   * Unique identifier of a destination.
    */
   destinationID: string;
 };
@@ -110,7 +110,7 @@ export type DeleteDestinationProps = {
  */
 export type DeleteSourceProps = {
   /**
-   * The source UUID.
+   * Unique identifier of a source.
    */
   sourceID: string;
 };
@@ -120,7 +120,7 @@ export type DeleteSourceProps = {
  */
 export type DeleteTaskProps = {
   /**
-   * The task UUID.
+   * Unique identifier of a task.
    */
   taskID: string;
 };
@@ -130,7 +130,7 @@ export type DeleteTaskProps = {
  */
 export type DisableTaskProps = {
   /**
-   * The task UUID.
+   * Unique identifier of a task.
    */
   taskID: string;
 };
@@ -140,7 +140,7 @@ export type DisableTaskProps = {
  */
 export type EnableTaskProps = {
   /**
-   * The task UUID.
+   * Unique identifier of a task.
    */
   taskID: string;
 };
@@ -150,7 +150,7 @@ export type EnableTaskProps = {
  */
 export type GetAuthenticationProps = {
   /**
-   * The authentication UUID.
+   * Unique identifier of an authentication resource.
    */
   authenticationID: string;
 };
@@ -160,27 +160,27 @@ export type GetAuthenticationProps = {
  */
 export type GetAuthenticationsProps = {
   /**
-   * The number of items per page to return.
+   * Number of items per page.
    */
   itemsPerPage?: number;
   /**
-   * The page number to fetch, starting at 1.
+   * Page number of the paginated API response.
    */
   page?: number;
   /**
-   * The type of the authentications to retrieve.
+   * Type of authentication resource to retrieve.
    */
   type?: AuthenticationType[];
   /**
-   * The platform of the authentications to retrieve.
+   * Ecommerce platform for which to retrieve authentication resources.
    */
   platform?: PlatformWithNone[];
   /**
-   * The key by which the list should be sorted.
+   * Property by which to sort the list of authentication resources.
    */
   sort?: AuthenticationSortKeys;
   /**
-   * The order of the returned list.
+   * Sort order of the response, ascending or descending.
    */
   order?: OrderKeys;
 };
@@ -190,7 +190,7 @@ export type GetAuthenticationsProps = {
  */
 export type GetDestinationProps = {
   /**
-   * The destination UUID.
+   * Unique identifier of a destination.
    */
   destinationID: string;
 };
@@ -200,27 +200,27 @@ export type GetDestinationProps = {
  */
 export type GetDestinationsProps = {
   /**
-   * The number of items per page to return.
+   * Number of items per page.
    */
   itemsPerPage?: number;
   /**
-   * The page number to fetch, starting at 1.
+   * Page number of the paginated API response.
    */
   page?: number;
   /**
-   * The type of the destinations to retrive.
+   * Destination type.
    */
   type?: DestinationType[];
   /**
-   * The authenticationIDs of the destinations to retrive.
+   * Authentication ID used by destinations.
    */
   authenticationID?: string[];
   /**
-   * The key by which the list should be sorted.
+   * Property by which to sort the destinations.
    */
   sort?: DestinationSortKeys;
   /**
-   * The order of the returned list.
+   * Sort order of the response, ascending or descending.
    */
   order?: OrderKeys;
 };
@@ -230,7 +230,7 @@ export type GetDestinationsProps = {
  */
 export type GetDockerSourceStreamsProps = {
   /**
-   * The source UUID.
+   * Unique identifier of a source.
    */
   sourceID: string;
 };
@@ -240,11 +240,11 @@ export type GetDockerSourceStreamsProps = {
  */
 export type GetEventProps = {
   /**
-   * The run UUID.
+   * Unique identifier of a task run.
    */
   runID: string;
   /**
-   * The event UUID.
+   * Unique identifier of an event.
    */
   eventID: string;
 };
@@ -254,39 +254,39 @@ export type GetEventProps = {
  */
 export type GetEventsProps = {
   /**
-   * The run UUID.
+   * Unique identifier of a task run.
    */
   runID: string;
   /**
-   * The number of items per page to return.
+   * Number of items per page.
    */
   itemsPerPage?: number;
   /**
-   * The page number to fetch, starting at 1.
+   * Page number of the paginated API response.
    */
   page?: number;
   /**
-   * Filter the status of the events.
+   * Event status for filtering the list of task runs.
    */
   status?: EventStatus[];
   /**
-   * Filter the type of the events.
+   * Event type for filtering the list of task runs.
    */
   type?: EventType[];
   /**
-   * The key by which the list should be sorted.
+   * Property by which to sort the list of task run events.
    */
   sort?: EventSortKeys;
   /**
-   * The order of the returned list.
+   * Sort order of the response, ascending or descending.
    */
   order?: OrderKeys;
   /**
-   * The start date (in RFC3339 format) of the events fetching window. Defaults to \'now\'-3 hours if omitted.
+   * Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
    */
   startDate?: string;
   /**
-   * The end date (in RFC3339 format) of the events fetching window. Defaults to \'now\' days if omitted.
+   * Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
    */
   endDate?: string;
 };
@@ -296,7 +296,7 @@ export type GetEventsProps = {
  */
 export type GetRunProps = {
   /**
-   * The run UUID.
+   * Unique identifier of a task run.
    */
   runID: string;
 };
@@ -306,35 +306,35 @@ export type GetRunProps = {
  */
 export type GetRunsProps = {
   /**
-   * The number of items per page to return.
+   * Number of items per page.
    */
   itemsPerPage?: number;
   /**
-   * The page number to fetch, starting at 1.
+   * Page number of the paginated API response.
    */
   page?: number;
   /**
-   * Filter the status of the runs.
+   * Run status for filtering the list of task runs.
    */
   status?: RunStatus[];
   /**
-   * Filter by taskID.
+   * Task ID for filtering the list of task runs.
    */
   taskID?: string;
   /**
-   * The key by which the list should be sorted.
+   * Property by which to sort the list of task runs.
    */
   sort?: RunSortKeys;
   /**
-   * The order of the returned list.
+   * Sort order of the response, ascending or descending.
    */
   order?: OrderKeys;
   /**
-   * The start date (in RFC3339 format) of the runs fetching window. Defaults to \'now\'-7 days if omitted.
+   * Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
    */
   startDate?: string;
   /**
-   * The end date (in RFC3339 format) of the runs fetching window. Defaults to \'now\' days if omitted.
+   * Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
    */
   endDate?: string;
 };
@@ -344,7 +344,7 @@ export type GetRunsProps = {
  */
 export type GetSourceProps = {
   /**
-   * The source UUID.
+   * Unique identifier of a source.
    */
   sourceID: string;
 };
@@ -354,27 +354,27 @@ export type GetSourceProps = {
  */
 export type GetSourcesProps = {
   /**
-   * The number of items per page to return.
+   * Number of items per page.
    */
   itemsPerPage?: number;
   /**
-   * The page number to fetch, starting at 1.
+   * Page number of the paginated API response.
    */
   page?: number;
   /**
-   * The type of the sources to retrieve.
+   * Source type. Some sources require authentication.
    */
   type?: SourceType[];
   /**
-   * The authenticationIDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication.
+   * Authentication IDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication resource.
    */
   authenticationID?: string[];
   /**
-   * The key by which the list should be sorted.
+   * Property by which to sort the list of sources.
    */
   sort?: SourceSortKeys;
   /**
-   * The order of the returned list.
+   * Sort order of the response, ascending or descending.
    */
   order?: OrderKeys;
 };
@@ -384,7 +384,7 @@ export type GetSourcesProps = {
  */
 export type GetTaskProps = {
   /**
-   * The task UUID.
+   * Unique identifier of a task.
    */
   taskID: string;
 };
@@ -394,39 +394,39 @@ export type GetTaskProps = {
  */
 export type GetTasksProps = {
   /**
-   * The number of items per page to return.
+   * Number of items per page.
    */
   itemsPerPage?: number;
   /**
-   * The page number to fetch, starting at 1.
+   * Page number of the paginated API response.
    */
   page?: number;
   /**
-   * The action of the tasks to retrieve.
+   * Actions for filtering the list of tasks.
    */
   action?: ActionType[];
   /**
-   * Whether the task is enabled or not.
+   * Whether to filter the list of tasks by the `enabled` status.
    */
   enabled?: boolean;
   /**
-   * The sourceIDs of the tasks to retrieve.
+   * Source IDs for filtering the list of tasks.
    */
   sourceID?: string[];
   /**
-   * The destinationIDs of the tasks to retrieve.
+   * Destination IDs for filtering the list of tasks.
    */
   destinationID?: string[];
   /**
-   * The trigger type of the task.
+   * Type of task trigger for filtering the list of tasks.
    */
   triggerType?: TriggerType[];
   /**
-   * The key by which the list should be sorted.
+   * Property by which to sort the list of tasks.
    */
   sort?: TaskSortKeys;
   /**
-   * The order of the returned list.
+   * Sort order of the response, ascending or descending.
    */
   order?: OrderKeys;
 };
@@ -436,7 +436,7 @@ export type GetTasksProps = {
  */
 export type RunTaskProps = {
   /**
-   * The task UUID.
+   * Unique identifier of a task.
    */
   taskID: string;
 };
@@ -446,7 +446,7 @@ export type RunTaskProps = {
  */
 export type TriggerDockerSourceDiscoverProps = {
   /**
-   * The source UUID.
+   * Unique identifier of a source.
    */
   sourceID: string;
 };
@@ -456,7 +456,7 @@ export type TriggerDockerSourceDiscoverProps = {
  */
 export type UpdateAuthenticationProps = {
   /**
-   * The authentication UUID.
+   * Unique identifier of an authentication resource.
    */
   authenticationID: string;
   authenticationUpdate: AuthenticationUpdate;
@@ -467,7 +467,7 @@ export type UpdateAuthenticationProps = {
  */
 export type UpdateDestinationProps = {
   /**
-   * The destination UUID.
+   * Unique identifier of a destination.
    */
   destinationID: string;
   destinationUpdate: DestinationUpdate;
@@ -478,7 +478,7 @@ export type UpdateDestinationProps = {
  */
 export type UpdateSourceProps = {
   /**
-   * The source UUID.
+   * Unique identifier of a source.
    */
   sourceID: string;
   sourceUpdate: SourceUpdate;
@@ -489,7 +489,7 @@ export type UpdateSourceProps = {
  */
 export type UpdateTaskProps = {
   /**
-   * The task UUID.
+   * Unique identifier of a task.
    */
   taskID: string;
   taskUpdate: TaskUpdate;

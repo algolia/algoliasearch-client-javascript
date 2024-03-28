@@ -5,6 +5,9 @@ import type { ScheduleTrigger } from './scheduleTrigger';
 import type { StreamingTrigger } from './streamingTrigger';
 import type { SubscriptionTrigger } from './subscriptionTrigger';
 
+/**
+ * Trigger that runs the task.
+ */
 export type Trigger =
   | OnDemandTrigger
   | ScheduleTrigger

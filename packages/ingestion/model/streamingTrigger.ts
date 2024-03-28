@@ -3,7 +3,7 @@
 import type { StreamingTriggerType } from './streamingTriggerType';
 
 /**
- * The trigger input for a task of type \'streaming\'.
+ * Trigger input for continuously running tasks.
  */
 export type StreamingTrigger = {
   type: StreamingTriggerType;

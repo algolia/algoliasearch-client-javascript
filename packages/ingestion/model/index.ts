@@ -52,6 +52,7 @@ export * from './listEventsResponse';
 export * from './listSourcesResponse';
 export * from './listTasksResponse';
 export * from './mappingFieldDirective';
+export * from './mappingFormatSchema';
 export * from './mappingInput';
 export * from './mappingKitAction';
 export * from './mappingTypeCSV';

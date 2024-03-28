@@ -5,7 +5,7 @@ import type { BigCommerceMetafield } from './bigCommerceMetafield';
 
 export type SourceBigCommerce = {
   /**
-   * The store hash identifying the store the shopper is signing in to.
+   * Store hash identifying your BigCommerce store.
    */
   storeHash: string;
 

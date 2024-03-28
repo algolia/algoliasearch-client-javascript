@@ -3,12 +3,15 @@
 import type { SourceUpdateInput } from './sourceUpdateInput';
 
 export type SourceUpdate = {
+  /**
+   * Descriptive name of the source.
+   */
   name?: string;
 
   input?: SourceUpdateInput;
 
   /**
-   * The authentication UUID.
+   * Universally unique identifier (UUID) of an authentication resource.
    */
   authenticationID?: string;
 };

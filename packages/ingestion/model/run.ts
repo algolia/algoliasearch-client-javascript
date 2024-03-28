@@ -8,14 +8,14 @@ import type { RunType } from './runType';
 
 export type Run = {
   /**
-   * The run UUID.
+   * Universally unique identifier (UUID) of a task run.
    */
   runID: string;
 
   appID: string;
 
   /**
-   * The task UUID.
+   * Universally unique identifier (UUID) of a task.
    */
   taskID: string;
 
@@ -26,12 +26,12 @@ export type Run = {
   outcome?: RunOutcome;
 
   /**
-   * A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+   * Maximum accepted percentage of failures for a task run to finish successfully.
    */
   failureThreshold?: number;
 
   /**
-   * Explains the result of outcome.
+   * More information about the task run\'s outcome.
    */
   reason?: string;
 
@@ -40,17 +40,17 @@ export type Run = {
   type: RunType;
 
   /**
-   * Date of creation (RFC3339 format).
+   * Date of creation in RFC3339 format.
    */
   createdAt: string;
 
   /**
-   * Date of start (RFC3339 format).
+   * Date of start in RFC3339 format.
    */
   startedAt?: string;
 
   /**
-   * Date of finish (RFC3339 format).
+   * Date of finish in RFC3339 format.
    */
   finishedAt?: string;
 };

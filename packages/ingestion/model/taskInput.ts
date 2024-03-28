@@ -4,6 +4,9 @@ import type { OnDemandDateUtilsInput } from './onDemandDateUtilsInput';
 import type { ScheduleDateUtilsInput } from './scheduleDateUtilsInput';
 import type { StreamingUtilsInput } from './streamingUtilsInput';
 
+/**
+ * Configuration of the task, depending on its type.
+ */
 export type TaskInput =
   | OnDemandDateUtilsInput
   | ScheduleDateUtilsInput

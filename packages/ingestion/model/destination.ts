@@ -4,35 +4,35 @@ import type { DestinationInput } from './destinationInput';
 import type { DestinationType } from './destinationType';
 
 /**
- * A destination describe how the data is indexed on the Algolia side.
+ * Destinations are Algolia resources like indices or event streams.
  */
 export type Destination = {
   /**
-   * The destination UUID.
+   * Universally unique identifier (UUID) of a destination resource.
    */
   destinationID: string;
 
   type: DestinationType;
 
   /**
-   * An human readable name describing the object.
+   * Descriptive name for the resource.
    */
   name: string;
 
   input: DestinationInput;
 
   /**
-   * Date of creation (RFC3339 format).
+   * Date of creation in RFC3339 format.
    */
   createdAt: string;
 
   /**
-   * Date of last update (RFC3339 format).
+   * Date of last update in RFC3339 format.
    */
   updatedAt?: string;
 
   /**
-   * The authentication UUID.
+   * Universally unique identifier (UUID) of an authentication resource.
    */
   authenticationID?: string;
 };

@@ -3,13 +3,13 @@
 import type { OnDemandTriggerType } from './onDemandTriggerType';
 
 /**
- * The trigger information of a task of type `onDemand`.
+ * Trigger information for manually-triggered tasks.
  */
 export type OnDemandTrigger = {
   type: OnDemandTriggerType;
 
   /**
-   * The last time the scheduled task ran (RFC3339 format).
+   * The last time the scheduled task ran in RFC3339 format.
    */
   lastRun?: string;
 };

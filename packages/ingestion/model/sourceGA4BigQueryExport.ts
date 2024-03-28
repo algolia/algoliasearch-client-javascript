@@ -2,17 +2,17 @@
 
 export type SourceGA4BigQueryExport = {
   /**
-   * GCP project ID that the BigQuery Export writes to.
+   * GCP project ID that the BigQuery export writes to.
    */
   projectID: string;
 
   /**
-   * BigQuery dataset ID that the BigQuery Export writes to.
+   * BigQuery dataset ID that the BigQuery export writes to.
    */
   datasetID: string;
 
   /**
-   * Prefix of the tables that the BigQuery Export writes to (i.e. Events_intraday_ for streaming, events_ for daily).
+   * Prefix of the tables that the BigQuery Export writes to.
    */
   tablePrefix: string;
 };

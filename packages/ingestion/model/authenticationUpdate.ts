@@ -5,13 +5,13 @@ import type { AuthenticationType } from './authenticationType';
 import type { Platform } from './platform';
 
 /**
- * Payload to partially update an Authentication.
+ * Request body for updating an authentication resource.
  */
 export type AuthenticationUpdate = {
   type?: AuthenticationType;
 
   /**
-   * An human readable name describing the object.
+   * Descriptive name for the resource.
    */
   name?: string;
 

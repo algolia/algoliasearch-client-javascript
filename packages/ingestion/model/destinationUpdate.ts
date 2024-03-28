@@ -4,20 +4,20 @@ import type { DestinationInput } from './destinationInput';
 import type { DestinationType } from './destinationType';
 
 /**
- * Payload to partially update a Destination.
+ * API request body for updating a destination.
  */
 export type DestinationUpdate = {
   type?: DestinationType;
 
   /**
-   * An human readable name describing the object.
+   * Descriptive name for the resource.
    */
   name?: string;
 
   input?: DestinationInput;
 
   /**
-   * The authentication UUID.
+   * Universally unique identifier (UUID) of an authentication resource.
    */
   authenticationID?: string;
 };

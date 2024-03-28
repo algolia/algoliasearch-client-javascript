@@ -4,24 +4,24 @@ import type { BigQueryDataType } from './bigQueryDataType';
 
 export type SourceBigQuery = {
   /**
-   * Project ID of the BigQuery Source.
+   * Project ID of the BigQuery source.
    */
   projectID: string;
 
   /**
-   * Dataset ID of the BigQuery Source.
+   * Dataset ID of the BigQuery source.
    */
   datasetID: string;
 
   dataType?: BigQueryDataType;
 
   /**
-   * Table name (for default BQ).
+   * Table name for the BigQuery export.
    */
   table?: string;
 
   /**
-   * Table prefix (for Google Analytics).
+   * Table prefix for a Google Analytics 4 data export to BigQuery.
    */
   tablePrefix?: string;
 
@@ -31,7 +31,7 @@ export type SourceBigQuery = {
   customSQLRequest?: string;
 
   /**
-   * The name of the column that contains the unique ID, used as `objectID` in Algolia.
+   * Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
    */
   uniqueIDColumn?: string;
 };

@@ -4,12 +4,12 @@ import type { MethodType } from './methodType';
 
 export type SourceJSON = {
   /**
-   * The URL of the file.
+   * URL of the file.
    */
   url: string;
 
   /**
-   * The name of the column that contains the unique ID, used as `objectID` in Algolia.
+   * Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
    */
   uniqueIDColumn?: string;
 

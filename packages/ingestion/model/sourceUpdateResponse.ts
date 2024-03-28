@@ -2,14 +2,17 @@
 
 export type SourceUpdateResponse = {
   /**
-   * The source UUID.
+   * Universally uniqud identifier (UUID) of a source.
    */
   sourceID: string;
 
+  /**
+   * Descriptive name of the source.
+   */
   name: string;
 
   /**
-   * Date of last update (RFC3339 format).
+   * Date of last update in RFC3339 format.
    */
   updatedAt: string;
 };

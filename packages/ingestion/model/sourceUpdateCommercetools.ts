@@ -3,20 +3,17 @@
 import type { CommercetoolsCustomFields } from './commercetoolsCustomFields';
 
 export type SourceUpdateCommercetools = {
-  /**
-   * Unique and immutable key of the referenced Store.
-   */
   storeKeys?: string[];
 
   /**
-   * Array of locales that must match the following pattern: ^[a-z]{2}(-[A-Z]{2})?$. For example [\"fr-FR\", \"en\"].
+   * Locales for your commercetools stores.
    */
   locales?: string[];
 
   url?: string;
 
   /**
-   * Determines the value that will be stored in the Algolia record if there\'s no inventory information on the product.
+   * Whether a fallback value is stored in the Algolia record if there\'s no inventory information about the product.
    */
   fallbackIsInStockValue?: boolean;
 

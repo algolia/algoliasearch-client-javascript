@@ -2,7 +2,7 @@
 
 export type DestinationIndexPrefix = {
   /**
-   * The prefix of the final index name.
+   * String added to the beginning of all indices created by this destination.
    */
   indexPrefix: string;
 };

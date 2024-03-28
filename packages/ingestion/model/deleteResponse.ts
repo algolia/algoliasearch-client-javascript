@@ -2,7 +2,7 @@
 
 export type DeleteResponse = {
   /**
-   * Date of deletion (RFC3339 format).
+   * Date of deletion in RFC3339 format.
    */
   deletedAt: string;
 };

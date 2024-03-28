@@ -3,13 +3,13 @@
 import type { ScheduleTriggerType } from './scheduleTriggerType';
 
 /**
- * The trigger input for a task of type \'schedule\'.
+ * Trigger input for scheduled tasks.
  */
 export type ScheduleTriggerInput = {
   type: ScheduleTriggerType;
 
   /**
-   * A cron expression that represent at which regularity the task should run.
+   * Cron expression for the task\'s schedule.
    */
   cron: string;
 };

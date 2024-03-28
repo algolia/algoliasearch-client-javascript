@@ -2,12 +2,12 @@
 
 export type BigCommerceMetafield = {
   /**
-   * The namespace of the metafield.
+   * Namespace of the metafield.
    */
   namespace: string;
 
   /**
-   * The key identifier of the metafield.
+   * Key identifier of the metafield.
    */
   key: string;
 };

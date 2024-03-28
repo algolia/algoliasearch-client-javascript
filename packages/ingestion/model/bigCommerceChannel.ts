@@ -2,12 +2,12 @@
 
 export type BigCommerceChannel = {
   /**
-   * The ID of the bigcommerce channel.
+   * ID of the BigCommerce channel.
    */
   id: number;
 
   /**
-   * An array of currencies for the given channel `ID`, a currency is a trigram string that represents the currency code.
+   * Currencies for the given channel.
    */
   currencies?: string[];
 };

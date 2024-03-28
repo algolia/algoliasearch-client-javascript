@@ -4,11 +4,11 @@ import type { TaskInput } from './taskInput';
 import type { TriggerUpdateInput } from './triggerUpdateInput';
 
 /**
- * The payload for a task update.
+ * API request body for updating a task.
  */
 export type TaskUpdate = {
   /**
-   * The destination UUID.
+   * Universally unique identifier (UUID) of a destination resource.
    */
   destinationID?: string;
 
@@ -17,12 +17,12 @@ export type TaskUpdate = {
   input?: TaskInput;
 
   /**
-   * Whether the task is enabled or not.
+   * Whether the task is enabled.
    */
   enabled?: boolean;
 
   /**
-   * A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+   * Maximum accepted percentage of failures for a task run to finish successfully.
    */
   failureThreshold?: number;
 };

@@ -4,20 +4,20 @@ import type { DestinationInput } from './destinationInput';
 import type { DestinationType } from './destinationType';
 
 /**
- * The payload when creating a destination.
+ * API request body for creating a new destination.
  */
 export type DestinationCreate = {
   type: DestinationType;
 
   /**
-   * An human readable name describing the object.
+   * Descriptive name for the resource.
    */
   name: string;
 
   input: DestinationInput;
 
   /**
-   * The authentication UUID.
+   * Universally unique identifier (UUID) of an authentication resource.
    */
   authenticationID?: string;
 };

@@ -8,12 +8,12 @@ import type { EventType } from './eventType';
  */
 export type Event = {
   /**
-   * The event UUID.
+   * Universally unique identifier (UUID) of an event.
    */
   eventID: string;
 
   /**
-   * The run UUID.
+   * Universally unique identifier (UUID) of a task run.
    */
   runID: string;
 
@@ -34,7 +34,7 @@ export type Event = {
   data?: Record<string, any>;
 
   /**
-   * Date of publish (RFC3339 format).
+   * Date of publish RFC3339 format.
    */
   publishedAt: string;
 };

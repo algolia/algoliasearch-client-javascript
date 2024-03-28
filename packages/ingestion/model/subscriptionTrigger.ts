@@ -3,7 +3,7 @@
 import type { SubscriptionTriggerType } from './subscriptionTriggerType';
 
 /**
- * The trigger input for a task of type \'subscription\'.
+ * Trigger input for subscription tasks.
  */
 export type SubscriptionTrigger = {
   type: SubscriptionTriggerType;

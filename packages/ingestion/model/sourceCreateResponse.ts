@@ -2,14 +2,17 @@
 
 export type SourceCreateResponse = {
   /**
-   * The source UUID.
+   * Universally uniqud identifier (UUID) of a source.
    */
   sourceID: string;
 
+  /**
+   * Descriptive name of the source.
+   */
   name: string;
 
   /**
-   * Date of creation (RFC3339 format).
+   * Date of creation in RFC3339 format.
    */
   createdAt: string;
 };

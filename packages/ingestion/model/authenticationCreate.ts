@@ -5,13 +5,13 @@ import type { AuthenticationType } from './authenticationType';
 import type { Platform } from './platform';
 
 /**
- * The payload when creating an authentication.
+ * Request body for creating a new authentication resource.
  */
 export type AuthenticationCreate = {
   type: AuthenticationType;
 
   /**
-   * An human readable name describing the object.
+   * Descriptive name for the resource.
    */
   name: string;
 

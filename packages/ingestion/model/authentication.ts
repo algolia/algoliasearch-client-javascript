@@ -5,18 +5,18 @@ import type { AuthenticationType } from './authenticationType';
 import type { Platform } from './platform';
 
 /**
- * An authentication is used to login into a Source or a Destination, with obfuscated input.
+ * Resource representing the information required to authenticate with a source or a destination.
  */
 export type Authentication = {
   /**
-   * The authentication UUID.
+   * Universally unique identifier (UUID) of an authentication resource.
    */
   authenticationID: string;
 
   type: AuthenticationType;
 
   /**
-   * An human readable name describing the object.
+   * Descriptive name for the resource.
    */
   name: string;
 
@@ -25,12 +25,12 @@ export type Authentication = {
   input: AuthInputPartial;
 
   /**
-   * Date of creation (RFC3339 format).
+   * Date of creation in RFC3339 format.
    */
   createdAt: string;
 
   /**
-   * Date of last update (RFC3339 format).
+   * Date of last update in RFC3339 format.
    */
   updatedAt?: string;
 };

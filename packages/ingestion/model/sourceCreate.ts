@@ -6,12 +6,15 @@ import type { SourceType } from './sourceType';
 export type SourceCreate = {
   type: SourceType;
 
+  /**
+   * Descriptive name of the source.
+   */
   name: string;
 
   input: SourceInput;
 
   /**
-   * The authentication UUID.
+   * Universally unique identifier (UUID) of an authentication resource.
    */
   authenticationID?: string;
 };

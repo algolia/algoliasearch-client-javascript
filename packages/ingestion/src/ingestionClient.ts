@@ -195,7 +195,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Create a authentication.
+     * Creates a new authentication resource.
      *
      * Required API Key ACLs:
      * - addObject
@@ -247,7 +247,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Create a destination.
+     * Creates a new destination.
      *
      * Required API Key ACLs:
      * - addObject
@@ -299,7 +299,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Create a source.
+     * Creates a new source.
      *
      * Required API Key ACLs:
      * - addObject
@@ -351,9 +351,9 @@ export function createIngestionClient({
     },
 
     /**
-     * Create a task.
+     * Creates a new task.
      *
-     * @param taskCreate -.
+     * @param taskCreate - Request body for creating a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     createTask(
@@ -535,7 +535,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Soft delete the authentication of the given authenticationID.
+     * Deletes an authentication resource. You can\'t delete authentication resources that are used by a source or a destination.
      *
      * Required API Key ACLs:
      * - addObject
@@ -543,7 +543,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param deleteAuthentication - The deleteAuthentication object.
-     * @param deleteAuthentication.authenticationID - The authentication UUID.
+     * @param deleteAuthentication.authenticationID - Unique identifier of an authentication resource.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteAuthentication(
@@ -574,7 +574,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Soft delete the destination of the given destinationID.
+     * Deletes a destination by its ID. You can\'t delete destinations that are referenced in tasks.
      *
      * Required API Key ACLs:
      * - addObject
@@ -582,7 +582,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param deleteDestination - The deleteDestination object.
-     * @param deleteDestination.destinationID - The destination UUID.
+     * @param deleteDestination.destinationID - Unique identifier of a destination.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteDestination(
@@ -613,7 +613,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Soft delete the source of the given sourceID.
+     * Deletes a source by its ID. You can\'t delete sources that are referenced in tasks.
      *
      * Required API Key ACLs:
      * - addObject
@@ -621,7 +621,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param deleteSource - The deleteSource object.
-     * @param deleteSource.sourceID - The source UUID.
+     * @param deleteSource.sourceID - Unique identifier of a source.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteSource(
@@ -652,10 +652,10 @@ export function createIngestionClient({
     },
 
     /**
-     * Soft delete the task of the given taskID.
+     * Deletes a task by its ID.
      *
      * @param deleteTask - The deleteTask object.
-     * @param deleteTask.taskID - The task UUID.
+     * @param deleteTask.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteTask(
@@ -686,7 +686,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Disable the task of the given taskID.
+     * Disables a task.
      *
      * Required API Key ACLs:
      * - addObject
@@ -694,7 +694,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param disableTask - The disableTask object.
-     * @param disableTask.taskID - The task UUID.
+     * @param disableTask.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     disableTask(
@@ -725,7 +725,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Enable the task of the given taskID.
+     * Enables a task.
      *
      * Required API Key ACLs:
      * - addObject
@@ -733,7 +733,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param enableTask - The enableTask object.
-     * @param enableTask.taskID - The task UUID.
+     * @param enableTask.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     enableTask(
@@ -764,7 +764,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get the authentication of the given authenticationID.
+     * Retrieves an authentication resource by its ID.
      *
      * Required API Key ACLs:
      * - addObject
@@ -772,7 +772,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getAuthentication - The getAuthentication object.
-     * @param getAuthentication.authenticationID - The authentication UUID.
+     * @param getAuthentication.authenticationID - Unique identifier of an authentication resource.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAuthentication(
@@ -803,7 +803,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of authentications for the given query parameters, with pagination details.
+     * Retrieves a list of all authentication resources.
      *
      * Required API Key ACLs:
      * - addObject
@@ -811,12 +811,12 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getAuthentications - The getAuthentications object.
-     * @param getAuthentications.itemsPerPage - The number of items per page to return.
-     * @param getAuthentications.page - The page number to fetch, starting at 1.
-     * @param getAuthentications.type - The type of the authentications to retrieve.
-     * @param getAuthentications.platform - The platform of the authentications to retrieve.
-     * @param getAuthentications.sort - The key by which the list should be sorted.
-     * @param getAuthentications.order - The order of the returned list.
+     * @param getAuthentications.itemsPerPage - Number of items per page.
+     * @param getAuthentications.page - Page number of the paginated API response.
+     * @param getAuthentications.type - Type of authentication resource to retrieve.
+     * @param getAuthentications.platform - Ecommerce platform for which to retrieve authentication resources.
+     * @param getAuthentications.sort - Property by which to sort the list of authentication resources.
+     * @param getAuthentications.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getAuthentications(
@@ -869,7 +869,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get the destination of the given destinationID.
+     * Retrieves a destination by its ID.
      *
      * Required API Key ACLs:
      * - addObject
@@ -877,7 +877,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getDestination - The getDestination object.
-     * @param getDestination.destinationID - The destination UUID.
+     * @param getDestination.destinationID - Unique identifier of a destination.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDestination(
@@ -908,7 +908,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of destinations for the given query parameters, with pagination details.
+     * Retrieves a list of destinations.
      *
      * Required API Key ACLs:
      * - addObject
@@ -916,12 +916,12 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getDestinations - The getDestinations object.
-     * @param getDestinations.itemsPerPage - The number of items per page to return.
-     * @param getDestinations.page - The page number to fetch, starting at 1.
-     * @param getDestinations.type - The type of the destinations to retrive.
-     * @param getDestinations.authenticationID - The authenticationIDs of the destinations to retrive.
-     * @param getDestinations.sort - The key by which the list should be sorted.
-     * @param getDestinations.order - The order of the returned list.
+     * @param getDestinations.itemsPerPage - Number of items per page.
+     * @param getDestinations.page - Page number of the paginated API response.
+     * @param getDestinations.type - Destination type.
+     * @param getDestinations.authenticationID - Authentication ID used by destinations.
+     * @param getDestinations.sort - Property by which to sort the destinations.
+     * @param getDestinations.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDestinations(
@@ -974,7 +974,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieve a stream listing for a given Singer specification compatible docker type source ID.
+     * Retrieves a stream listing for a source.  Listing streams only works with sources with `type: docker` and `imageType: singer`.
      *
      * Required API Key ACLs:
      * - addObject
@@ -982,7 +982,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getDockerSourceStreams - The getDockerSourceStreams object.
-     * @param getDockerSourceStreams.sourceID - The source UUID.
+     * @param getDockerSourceStreams.sourceID - Unique identifier of a source.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDockerSourceStreams(
@@ -1013,7 +1013,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a single event for a specific runID.
+     * Retrieves a single task run event by its ID.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1021,8 +1021,8 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getEvent - The getEvent object.
-     * @param getEvent.runID - The run UUID.
-     * @param getEvent.eventID - The event UUID.
+     * @param getEvent.runID - Unique identifier of a task run.
+     * @param getEvent.eventID - Unique identifier of an event.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getEvent(
@@ -1058,7 +1058,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of events associated to the given runID, for the given query parameters.
+     * Retrieves a list of events for a task run, identified by it\'s ID.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1066,15 +1066,15 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getEvents - The getEvents object.
-     * @param getEvents.runID - The run UUID.
-     * @param getEvents.itemsPerPage - The number of items per page to return.
-     * @param getEvents.page - The page number to fetch, starting at 1.
-     * @param getEvents.status - Filter the status of the events.
-     * @param getEvents.type - Filter the type of the events.
-     * @param getEvents.sort - The key by which the list should be sorted.
-     * @param getEvents.order - The order of the returned list.
-     * @param getEvents.startDate - The start date (in RFC3339 format) of the events fetching window. Defaults to \'now\'-3 hours if omitted.
-     * @param getEvents.endDate - The end date (in RFC3339 format) of the events fetching window. Defaults to \'now\' days if omitted.
+     * @param getEvents.runID - Unique identifier of a task run.
+     * @param getEvents.itemsPerPage - Number of items per page.
+     * @param getEvents.page - Page number of the paginated API response.
+     * @param getEvents.status - Event status for filtering the list of task runs.
+     * @param getEvents.type - Event type for filtering the list of task runs.
+     * @param getEvents.sort - Property by which to sort the list of task run events.
+     * @param getEvents.order - Sort order of the response, ascending or descending.
+     * @param getEvents.startDate - Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+     * @param getEvents.endDate - Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getEvents(
@@ -1147,7 +1147,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a single run for the given ID.
+     * Retrieve a single task run by its ID.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1155,7 +1155,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getRun - The getRun object.
-     * @param getRun.runID - The run UUID.
+     * @param getRun.runID - Unique identifier of a task run.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRun(
@@ -1184,7 +1184,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of runs for the given query parameters, with pagination details.
+     * Retrieve a list of task runs.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1192,14 +1192,14 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getRuns - The getRuns object.
-     * @param getRuns.itemsPerPage - The number of items per page to return.
-     * @param getRuns.page - The page number to fetch, starting at 1.
-     * @param getRuns.status - Filter the status of the runs.
-     * @param getRuns.taskID - Filter by taskID.
-     * @param getRuns.sort - The key by which the list should be sorted.
-     * @param getRuns.order - The order of the returned list.
-     * @param getRuns.startDate - The start date (in RFC3339 format) of the runs fetching window. Defaults to \'now\'-7 days if omitted.
-     * @param getRuns.endDate - The end date (in RFC3339 format) of the runs fetching window. Defaults to \'now\' days if omitted.
+     * @param getRuns.itemsPerPage - Number of items per page.
+     * @param getRuns.page - Page number of the paginated API response.
+     * @param getRuns.status - Run status for filtering the list of task runs.
+     * @param getRuns.taskID - Task ID for filtering the list of task runs.
+     * @param getRuns.sort - Property by which to sort the list of task runs.
+     * @param getRuns.order - Sort order of the response, ascending or descending.
+     * @param getRuns.startDate - Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+     * @param getRuns.endDate - Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRuns(
@@ -1262,7 +1262,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get the source of the given sourceID.
+     * Retrieve a source by its ID.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1270,7 +1270,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getSource - The getSource object.
-     * @param getSource.sourceID - The source UUID.
+     * @param getSource.sourceID - Unique identifier of a source.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSource(
@@ -1301,7 +1301,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of sources for the given query parameters, with pagination details.
+     * Retrieves a list of sources.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1309,12 +1309,12 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getSources - The getSources object.
-     * @param getSources.itemsPerPage - The number of items per page to return.
-     * @param getSources.page - The page number to fetch, starting at 1.
-     * @param getSources.type - The type of the sources to retrieve.
-     * @param getSources.authenticationID - The authenticationIDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication.
-     * @param getSources.sort - The key by which the list should be sorted.
-     * @param getSources.order - The order of the returned list.
+     * @param getSources.itemsPerPage - Number of items per page.
+     * @param getSources.page - Page number of the paginated API response.
+     * @param getSources.type - Source type. Some sources require authentication.
+     * @param getSources.authenticationID - Authentication IDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication resource.
+     * @param getSources.sort - Property by which to sort the list of sources.
+     * @param getSources.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSources(
@@ -1367,7 +1367,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get the task of the given taskID.
+     * Retrieves a task by its ID.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1375,7 +1375,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getTask - The getTask object.
-     * @param getTask.taskID - The task UUID.
+     * @param getTask.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTask(
@@ -1406,7 +1406,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Get a list of tasks for the given query parameters, with pagination details.
+     * Retrieves a list of tasks.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1414,15 +1414,15 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param getTasks - The getTasks object.
-     * @param getTasks.itemsPerPage - The number of items per page to return.
-     * @param getTasks.page - The page number to fetch, starting at 1.
-     * @param getTasks.action - The action of the tasks to retrieve.
-     * @param getTasks.enabled - Whether the task is enabled or not.
-     * @param getTasks.sourceID - The sourceIDs of the tasks to retrieve.
-     * @param getTasks.destinationID - The destinationIDs of the tasks to retrieve.
-     * @param getTasks.triggerType - The trigger type of the task.
-     * @param getTasks.sort - The key by which the list should be sorted.
-     * @param getTasks.order - The order of the returned list.
+     * @param getTasks.itemsPerPage - Number of items per page.
+     * @param getTasks.page - Page number of the paginated API response.
+     * @param getTasks.action - Actions for filtering the list of tasks.
+     * @param getTasks.enabled - Whether to filter the list of tasks by the `enabled` status.
+     * @param getTasks.sourceID - Source IDs for filtering the list of tasks.
+     * @param getTasks.destinationID - Destination IDs for filtering the list of tasks.
+     * @param getTasks.triggerType - Type of task trigger for filtering the list of tasks.
+     * @param getTasks.sort - Property by which to sort the list of tasks.
+     * @param getTasks.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTasks(
@@ -1490,7 +1490,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Run the task of the given taskID.
+     * Runs a task. You can check the status of task runs with the observability endpoints.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1498,7 +1498,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param runTask - The runTask object.
-     * @param runTask.taskID - The task UUID.
+     * @param runTask.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     runTask(
@@ -1529,7 +1529,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Search among authentications with a defined set of parameters.
+     * Searches for authentication resources.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1571,7 +1571,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Search among destinations with a defined set of parameters.
+     * Searches for destinations.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1613,7 +1613,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Search among sources with a defined set of parameters.
+     * Searches for sources.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1655,7 +1655,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Search among tasks with a defined set of parameters.
+     * Searches for tasks.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1697,7 +1697,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Trigger a stream listing request for a Singer specification compatible docker type source.
+     * Triggers a stream-listing request for a source. Triggering stream-listing requests only works with sources with `type: docker` and `imageType: singer`.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1705,7 +1705,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param triggerDockerSourceDiscover - The triggerDockerSourceDiscover object.
-     * @param triggerDockerSourceDiscover.sourceID - The source UUID.
+     * @param triggerDockerSourceDiscover.sourceID - Unique identifier of a source.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     triggerDockerSourceDiscover(
@@ -1736,7 +1736,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Update the authentication of the given authenticationID.
+     * Updates an authentication resource.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1744,7 +1744,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param updateAuthentication - The updateAuthentication object.
-     * @param updateAuthentication.authenticationID - The authentication UUID.
+     * @param updateAuthentication.authenticationID - Unique identifier of an authentication resource.
      * @param updateAuthentication.authenticationUpdate - The authenticationUpdate object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1783,7 +1783,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Update the destination of the given destinationID.
+     * Updates the destination by its ID.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1791,7 +1791,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param updateDestination - The updateDestination object.
-     * @param updateDestination.destinationID - The destination UUID.
+     * @param updateDestination.destinationID - Unique identifier of a destination.
      * @param updateDestination.destinationUpdate - The destinationUpdate object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1830,7 +1830,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Update the source of the given sourceID.
+     * Updates a source by its ID.
      *
      * Required API Key ACLs:
      * - addObject
@@ -1838,7 +1838,7 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param updateSource - The updateSource object.
-     * @param updateSource.sourceID - The source UUID.
+     * @param updateSource.sourceID - Unique identifier of a source.
      * @param updateSource.sourceUpdate - The sourceUpdate object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1877,10 +1877,10 @@ export function createIngestionClient({
     },
 
     /**
-     * Update the task of the given taskID.
+     * Updates a task by its ID.
      *
      * @param updateTask - The updateTask object.
-     * @param updateTask.taskID - The task UUID.
+     * @param updateTask.taskID - Unique identifier of a task.
      * @param updateTask.taskUpdate - The taskUpdate object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */

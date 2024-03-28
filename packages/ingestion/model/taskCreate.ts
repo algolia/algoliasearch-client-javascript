@@ -5,16 +5,16 @@ import type { TaskCreateTrigger } from './taskCreateTrigger';
 import type { TaskInput } from './taskInput';
 
 /**
- * The payload for a task creation.
+ * API request body for creating a task.
  */
 export type TaskCreate = {
   /**
-   * The source UUID.
+   * Universally uniqud identifier (UUID) of a source.
    */
   sourceID: string;
 
   /**
-   * The destination UUID.
+   * Universally unique identifier (UUID) of a destination resource.
    */
   destinationID: string;
 
@@ -23,12 +23,12 @@ export type TaskCreate = {
   action: ActionType;
 
   /**
-   * Whether the task is enabled or not.
+   * Whether the task is enabled.
    */
   enabled?: boolean;
 
   /**
-   * A percentage representing the accepted failure threshold to determine if a `run` succeeded or not.
+   * Maximum accepted percentage of failures for a task run to finish successfully.
    */
   failureThreshold?: number;
 
