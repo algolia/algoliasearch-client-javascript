@@ -46,7 +46,7 @@ export type PurchasedObjectIDsAfterSearch = {
   /**
    * Extra information about the records involved in a purchase or add-to-cart events.  If provided, it must be the same length as `objectIDs`.
    */
-  objectData?: ObjectDataAfterSearch[];
+  objectData: ObjectDataAfterSearch[];
 
   /**
    * Timestamp of the event in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time). By default, the Insights API uses the time it receives an event as its timestamp.
