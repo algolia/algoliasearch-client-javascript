@@ -14,10 +14,6 @@ import {
   createAnalyticsClient,
   REGIONS as analyticsRegions,
 } from '@algolia/client-analytics/src/analyticsClient';
-import type {
-  ClientOptions,
-  CreateClientOptions,
-} from '@algolia/client-common';
 import {
   serializeQueryParameters,
   DEFAULT_CONNECT_TIMEOUT_NODE,
@@ -25,6 +21,10 @@ import {
   DEFAULT_WRITE_TIMEOUT_NODE,
   createMemoryCache,
   createNullCache,
+} from '@algolia/client-common';
+import type {
+  ClientOptions,
+  CreateClientOptions,
 } from '@algolia/client-common';
 import type { PersonalizationClient } from '@algolia/client-personalization';
 import type { Region as PersonalizationRegion } from '@algolia/client-personalization/src/personalizationClient';

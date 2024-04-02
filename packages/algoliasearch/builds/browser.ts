@@ -12,10 +12,6 @@ import {
   createAnalyticsClient,
   REGIONS as analyticsRegions,
 } from '@algolia/client-analytics/src/analyticsClient';
-import type {
-  ClientOptions,
-  CreateClientOptions,
-} from '@algolia/client-common';
 import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
   DEFAULT_READ_TIMEOUT_BROWSER,
@@ -23,6 +19,10 @@ import {
   createBrowserLocalStorageCache,
   createFallbackableCache,
   createMemoryCache,
+} from '@algolia/client-common';
+import type {
+  ClientOptions,
+  CreateClientOptions,
 } from '@algolia/client-common';
 import type { PersonalizationClient } from '@algolia/client-personalization';
 import type { Region as PersonalizationRegion } from '@algolia/client-personalization/src/personalizationClient';
