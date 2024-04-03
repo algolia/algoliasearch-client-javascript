@@ -1,3 +1,9 @@
+## [5.0.0-alpha.112](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.111...5.0.0-alpha.112)
+
+- [10e08c9e7](https://github.com/algolia/api-clients-automation/commit/10e08c9e7) fix(specs): query suggestions api ([#2924](https://github.com/algolia/api-clients-automation/pull/2924)) by [@kai687](https://github.com/kai687/)
+- [b153b397e](https://github.com/algolia/api-clients-automation/commit/b153b397e) fix(specs): ingestion api reference ([#2918](https://github.com/algolia/api-clients-automation/pull/2918)) by [@kai687](https://github.com/kai687/)
+- [6c4519136](https://github.com/algolia/api-clients-automation/commit/6c4519136) fix(javascript): extra parameter in jsdoc def ([#2933](https://github.com/algolia/api-clients-automation/pull/2933)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-alpha.111](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.110...5.0.0-alpha.111)
 
 - [fd9256018](https://github.com/algolia/api-clients-automation/commit/fd9256018) chore(javascript): assert `authMode` ([#2897](https://github.com/algolia/api-clients-automation/pull/2897)) by [@shortcuts](https://github.com/shortcuts/)
