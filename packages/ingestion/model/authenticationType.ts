@@ -5,6 +5,7 @@
  */
 export type AuthenticationType =
   | 'algolia'
+  | 'algoliaInsights'
   | 'apiKey'
   | 'basic'
   | 'googleServiceAccount'

@@ -4,6 +4,8 @@ export * from './actionType';
 export * from './authAPIKey';
 export * from './authAPIKeyPartial';
 export * from './authAlgolia';
+export * from './authAlgoliaInsights';
+export * from './authAlgoliaInsightsPartial';
 export * from './authAlgoliaPartial';
 export * from './authBasic';
 export * from './authBasicPartial';

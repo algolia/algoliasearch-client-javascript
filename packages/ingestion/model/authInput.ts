@@ -2,12 +2,14 @@
 
 import type { AuthAPIKey } from './authAPIKey';
 import type { AuthAlgolia } from './authAlgolia';
+import type { AuthAlgoliaInsights } from './authAlgoliaInsights';
 import type { AuthBasic } from './authBasic';
 import type { AuthGoogleServiceAccount } from './authGoogleServiceAccount';
 import type { AuthOAuth } from './authOAuth';
 
 export type AuthInput =
   | AuthAlgolia
+  | AuthAlgoliaInsights
   | AuthAPIKey
   | AuthBasic
   | AuthGoogleServiceAccount
