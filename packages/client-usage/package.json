@@ -1,0 +1,54 @@
+{
+  "name": "@algolia/client-usage",
+  "version": "0.0.1",
+  "description": "JavaScript client for client-usage",
+  "repository": "algolia/algoliasearch-client-javascript",
+  "license": "MIT",
+  "author": "Algolia",
+  "type": "module",
+  "exports": {
+    ".": {
+      "node": {
+        "import": "./dist/client-usage.esm.node.js",
+        "module": "./dist/client-usage.esm.node.js",
+        "require": "./dist/client-usage.cjs",
+        "default": "./dist/client-usage.cjs"
+      },
+      "default": {
+        "umd": "./dist/client-usage.umd.js",
+        "module": "./dist/client-usage.esm.browser.js",
+        "import": "./dist/client-usage.esm.browser.js",
+        "default": "./dist/client-usage.umd.js"
+      }
+    },
+    "./src/*": "./src/*.ts",
+    "./model": "./model/index.ts"
+  },
+  "jsdelivr": "./dist/client-usage.umd.js",
+  "unpkg": "./dist/client-usage.umd.js",
+  "browser": "./dist/client-usage.umd.js",
+  "types": "./index.d.ts",
+  "files": [
+    "dist",
+    "model",
+    "index.js",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "build": "yarn clean && rollup --config",
+    "clean": "rm -rf ./dist || true"
+  },
+  "dependencies": {
+    "@algolia/client-common": "5.0.0-alpha.111",
+    "@algolia/requester-browser-xhr": "5.0.0-alpha.111",
+    "@algolia/requester-node-http": "5.0.0-alpha.111"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.30",
+    "rollup": "4.13.2",
+    "typescript": "5.4.3"
+  },
+  "engines": {
+    "node": ">= 14.0.0"
+  }
+}
