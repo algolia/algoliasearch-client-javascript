@@ -278,8 +278,8 @@ export function createAnalyticsClient({
      *
      * @param getAddToCartRate - The getAddToCartRate object.
      * @param getAddToCartRate.index - Index name.
-     * @param getAddToCartRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getAddToCartRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getAddToCartRate.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getAddToCartRate.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getAddToCartRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -331,8 +331,8 @@ export function createAnalyticsClient({
      *
      * @param getAverageClickPosition - The getAverageClickPosition object.
      * @param getAverageClickPosition.index - Index name.
-     * @param getAverageClickPosition.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getAverageClickPosition.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getAverageClickPosition.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getAverageClickPosition.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getAverageClickPosition.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -384,8 +384,8 @@ export function createAnalyticsClient({
      *
      * @param getClickPositions - The getClickPositions object.
      * @param getClickPositions.index - Index name.
-     * @param getClickPositions.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getClickPositions.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getClickPositions.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getClickPositions.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getClickPositions.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -437,8 +437,8 @@ export function createAnalyticsClient({
      *
      * @param getClickThroughRate - The getClickThroughRate object.
      * @param getClickThroughRate.index - Index name.
-     * @param getClickThroughRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getClickThroughRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getClickThroughRate.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getClickThroughRate.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getClickThroughRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -490,8 +490,8 @@ export function createAnalyticsClient({
      *
      * @param getConversionRate - The getConversionRate object.
      * @param getConversionRate.index - Index name.
-     * @param getConversionRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getConversionRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getConversionRate.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getConversionRate.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getConversionRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -543,8 +543,8 @@ export function createAnalyticsClient({
      *
      * @param getNoClickRate - The getNoClickRate object.
      * @param getNoClickRate.index - Index name.
-     * @param getNoClickRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getNoClickRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getNoClickRate.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getNoClickRate.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getNoClickRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -596,8 +596,8 @@ export function createAnalyticsClient({
      *
      * @param getNoResultsRate - The getNoResultsRate object.
      * @param getNoResultsRate.index - Index name.
-     * @param getNoResultsRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getNoResultsRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getNoResultsRate.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getNoResultsRate.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getNoResultsRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -649,8 +649,8 @@ export function createAnalyticsClient({
      *
      * @param getPurchaseRate - The getPurchaseRate object.
      * @param getPurchaseRate.index - Index name.
-     * @param getPurchaseRate.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getPurchaseRate.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getPurchaseRate.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getPurchaseRate.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getPurchaseRate.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -702,8 +702,8 @@ export function createAnalyticsClient({
      *
      * @param getRevenue - The getRevenue object.
      * @param getRevenue.index - Index name.
-     * @param getRevenue.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getRevenue.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getRevenue.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getRevenue.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getRevenue.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -755,8 +755,8 @@ export function createAnalyticsClient({
      *
      * @param getSearchesCount - The getSearchesCount object.
      * @param getSearchesCount.index - Index name.
-     * @param getSearchesCount.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getSearchesCount.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesCount.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getSearchesCount.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getSearchesCount.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -808,8 +808,8 @@ export function createAnalyticsClient({
      *
      * @param getSearchesNoClicks - The getSearchesNoClicks object.
      * @param getSearchesNoClicks.index - Index name.
-     * @param getSearchesNoClicks.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getSearchesNoClicks.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesNoClicks.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getSearchesNoClicks.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getSearchesNoClicks.limit - Number of items to return.
      * @param getSearchesNoClicks.offset - Position of the first item to return.
      * @param getSearchesNoClicks.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -878,8 +878,8 @@ export function createAnalyticsClient({
      *
      * @param getSearchesNoResults - The getSearchesNoResults object.
      * @param getSearchesNoResults.index - Index name.
-     * @param getSearchesNoResults.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getSearchesNoResults.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getSearchesNoResults.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getSearchesNoResults.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getSearchesNoResults.limit - Number of items to return.
      * @param getSearchesNoResults.offset - Position of the first item to return.
      * @param getSearchesNoResults.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -986,8 +986,8 @@ export function createAnalyticsClient({
      *
      * @param getTopCountries - The getTopCountries object.
      * @param getTopCountries.index - Index name.
-     * @param getTopCountries.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getTopCountries.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopCountries.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getTopCountries.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopCountries.limit - Number of items to return.
      * @param getTopCountries.offset - Position of the first item to return.
      * @param getTopCountries.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1050,8 +1050,8 @@ export function createAnalyticsClient({
      * @param getTopFilterAttributes - The getTopFilterAttributes object.
      * @param getTopFilterAttributes.index - Index name.
      * @param getTopFilterAttributes.search - Search query.
-     * @param getTopFilterAttributes.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getTopFilterAttributes.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFilterAttributes.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getTopFilterAttributes.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopFilterAttributes.limit - Number of items to return.
      * @param getTopFilterAttributes.offset - Position of the first item to return.
      * @param getTopFilterAttributes.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1127,8 +1127,8 @@ export function createAnalyticsClient({
      * @param getTopFilterForAttribute.attribute - Attribute name.
      * @param getTopFilterForAttribute.index - Index name.
      * @param getTopFilterForAttribute.search - Search query.
-     * @param getTopFilterForAttribute.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getTopFilterForAttribute.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFilterForAttribute.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getTopFilterForAttribute.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopFilterForAttribute.limit - Number of items to return.
      * @param getTopFilterForAttribute.offset - Position of the first item to return.
      * @param getTopFilterForAttribute.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1213,8 +1213,8 @@ export function createAnalyticsClient({
      * @param getTopFiltersNoResults - The getTopFiltersNoResults object.
      * @param getTopFiltersNoResults.index - Index name.
      * @param getTopFiltersNoResults.search - Search query.
-     * @param getTopFiltersNoResults.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getTopFiltersNoResults.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopFiltersNoResults.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getTopFiltersNoResults.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopFiltersNoResults.limit - Number of items to return.
      * @param getTopFiltersNoResults.offset - Position of the first item to return.
      * @param getTopFiltersNoResults.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1291,8 +1291,8 @@ export function createAnalyticsClient({
      * @param getTopHits.search - Search query.
      * @param getTopHits.clickAnalytics - Whether to include metrics related to click and conversion events in the response.
      * @param getTopHits.revenueAnalytics - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
-     * @param getTopHits.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getTopHits.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopHits.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getTopHits.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopHits.limit - Number of items to return.
      * @param getTopHits.offset - Position of the first item to return.
      * @param getTopHits.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
@@ -1378,8 +1378,8 @@ export function createAnalyticsClient({
      * @param getTopSearches.index - Index name.
      * @param getTopSearches.clickAnalytics - Whether to include metrics related to click and conversion events in the response.
      * @param getTopSearches.revenueAnalytics - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
-     * @param getTopSearches.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getTopSearches.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getTopSearches.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getTopSearches.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopSearches.orderBy - Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
      * @param getTopSearches.direction - Sorting direction of the results: ascending or descending.
      * @param getTopSearches.limit - Number of items to return.
@@ -1470,8 +1470,8 @@ export function createAnalyticsClient({
      *
      * @param getUsersCount - The getUsersCount object.
      * @param getUsersCount.index - Index name.
-     * @param getUsersCount.startDate - Start date (`YYYY-MM-DD`) of the period to analyze.
-     * @param getUsersCount.endDate - End date (`YYYY-MM-DD`) of the period to analyze.
+     * @param getUsersCount.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
+     * @param getUsersCount.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getUsersCount.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */

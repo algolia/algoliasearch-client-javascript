@@ -7,7 +7,7 @@ export type AddApiKeyResponse = {
   key: string;
 
   /**
-   * Timestamp of creation in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
+   * Date and time when the object was created, in RFC 3339 format.
    */
   createdAt: string;
 };

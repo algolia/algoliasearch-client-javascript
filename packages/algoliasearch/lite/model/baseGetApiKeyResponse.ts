@@ -7,7 +7,7 @@ export type BaseGetApiKeyResponse = {
   value?: string;
 
   /**
-   * Timestamp of creation in milliseconds in [Unix epoch time](https://wikipedia.org/wiki/Unix_time).
+   * Timestamp when the object was created, in milliseconds since the Unix epoch.
    */
   createdAt: number;
 };

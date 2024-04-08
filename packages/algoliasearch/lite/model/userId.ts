@@ -5,7 +5,7 @@
  */
 export type UserId = {
   /**
-   * User ID.
+   * Unique identifier of the user who makes the search request.
    */
   userID: string;
 

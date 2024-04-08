@@ -4,7 +4,7 @@ import type { LogQuery } from './logQuery';
 
 export type Log = {
   /**
-   * Timestamp of the API request in ISO 8601 format.
+   * Date and time of the API request, in RFC 3339 format.
    */
   timestamp: string;
 

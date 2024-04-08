@@ -730,7 +730,7 @@ export function createSearchClient({
      * - admin.
      *
      * @param assignUserId - The assignUserId object.
-     * @param assignUserId.xAlgoliaUserID - User ID to assign.
+     * @param assignUserId.xAlgoliaUserID - Unique identifier of the user who makes the search request.
      * @param assignUserId.assignUserIdParams - The assignUserIdParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -830,7 +830,7 @@ export function createSearchClient({
      * - admin.
      *
      * @param batchAssignUserIds - The batchAssignUserIds object.
-     * @param batchAssignUserIds.xAlgoliaUserID - User ID to assign.
+     * @param batchAssignUserIds.xAlgoliaUserID - Unique identifier of the user who makes the search request.
      * @param batchAssignUserIds.batchAssignUserIdsParams - The batchAssignUserIdsParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1963,7 +1963,7 @@ export function createSearchClient({
      * - admin.
      *
      * @param getUserId - The getUserId object.
-     * @param getUserId.userID - User ID to assign.
+     * @param getUserId.userID - Unique identifier of the user who makes the search request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getUserId(
@@ -2308,7 +2308,7 @@ export function createSearchClient({
      * - admin.
      *
      * @param removeUserId - The removeUserId object.
-     * @param removeUserId.userID - User ID to assign.
+     * @param removeUserId.userID - Unique identifier of the user who makes the search request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     removeUserId(

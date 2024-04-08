@@ -12,12 +12,12 @@ export type GetConfigStatus200Response = {
   isRunning?: boolean;
 
   /**
-   * Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last built.
+   * Date and time when the Query Suggestions index was last built, in RFC 3339 format.
    */
   lastBuiltAt?: string;
 
   /**
-   * Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format when the Query Suggestions index was last updated successfully.
+   * Date and time when the Query Suggestions index was last updated successfully.
    */
   lastSuccessfulBuiltAt?: string;
 

@@ -10,7 +10,7 @@ export type DeletedAtResponse = {
   taskID: number;
 
   /**
-   * Timestamp of deletion in [ISO 8601](https://wikipedia.org/wiki/ISO_8601) format.
+   * Date and time when the object was deleted, in RFC 3339 format.
    */
   deletedAt: string;
 };

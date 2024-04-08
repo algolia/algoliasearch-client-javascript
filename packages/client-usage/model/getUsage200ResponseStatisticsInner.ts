@@ -4,7 +4,7 @@ import type { StatisticValue } from './statisticValue';
 
 export type GetUsage200ResponseStatisticsInner = {
   /**
-   * Timestamp in milliseconds in Unix epoch time.
+   * Timestamp, measured in milliseconds since the Unix epoch.
    */
   t?: number;
 

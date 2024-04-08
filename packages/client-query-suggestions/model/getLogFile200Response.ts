@@ -4,7 +4,7 @@ import type { LogLevel } from './logLevel';
 
 export type GetLogFile200Response = {
   /**
-   * Timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+   * Date and time of the log entry, in RFC 3339 format.
    */
   timestamp?: string;
 

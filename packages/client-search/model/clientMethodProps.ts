@@ -54,7 +54,7 @@ export type AddOrUpdateObjectProps = {
  */
 export type AssignUserIdProps = {
   /**
-   * User ID to assign.
+   * Unique identifier of the user who makes the search request.
    */
   xAlgoliaUserID: string;
   assignUserIdParams: AssignUserIdParams;
@@ -76,7 +76,7 @@ export type BatchProps = {
  */
 export type BatchAssignUserIdsProps = {
   /**
-   * User ID to assign.
+   * Unique identifier of the user who makes the search request.
    */
   xAlgoliaUserID: string;
   batchAssignUserIdsParams: BatchAssignUserIdsParams;
@@ -404,7 +404,7 @@ export type GetTaskProps = {
  */
 export type GetUserIdProps = {
   /**
-   * User ID to assign.
+   * Unique identifier of the user who makes the search request.
    */
   userID: string;
 };
@@ -485,7 +485,7 @@ export type PartialUpdateObjectProps = {
  */
 export type RemoveUserIdProps = {
   /**
-   * User ID to assign.
+   * Unique identifier of the user who makes the search request.
    */
   userID: string;
 };

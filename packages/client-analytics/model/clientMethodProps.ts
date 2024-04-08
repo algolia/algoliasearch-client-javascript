@@ -76,11 +76,11 @@ export type GetAddToCartRateProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -98,11 +98,11 @@ export type GetAverageClickPositionProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -120,11 +120,11 @@ export type GetClickPositionsProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -142,11 +142,11 @@ export type GetClickThroughRateProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -164,11 +164,11 @@ export type GetConversionRateProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -186,11 +186,11 @@ export type GetNoClickRateProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -208,11 +208,11 @@ export type GetNoResultsRateProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -230,11 +230,11 @@ export type GetPurchaseRateProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -252,11 +252,11 @@ export type GetRevenueProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -274,11 +274,11 @@ export type GetSearchesCountProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -296,11 +296,11 @@ export type GetSearchesNoClicksProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -326,11 +326,11 @@ export type GetSearchesNoResultsProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -366,11 +366,11 @@ export type GetTopCountriesProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -400,11 +400,11 @@ export type GetTopFilterAttributesProps = {
    */
   search?: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -438,11 +438,11 @@ export type GetTopFilterForAttributeProps = {
    */
   search?: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -472,11 +472,11 @@ export type GetTopFiltersNoResultsProps = {
    */
   search?: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -514,11 +514,11 @@ export type GetTopHitsProps = {
    */
   revenueAnalytics?: boolean;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -552,11 +552,11 @@ export type GetTopSearchesProps = {
    */
   revenueAnalytics?: boolean;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
@@ -590,11 +590,11 @@ export type GetUsersCountProps = {
    */
   index: string;
   /**
-   * Start date (`YYYY-MM-DD`) of the period to analyze.
+   * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
   startDate?: string;
   /**
-   * End date (`YYYY-MM-DD`) of the period to analyze.
+   * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
   endDate?: string;
   /**
