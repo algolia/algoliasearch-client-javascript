@@ -76,7 +76,7 @@ export type DeleteRecommendRuleProps = {
    */
   indexName: string;
   /**
-   * [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   * [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    */
   model: RecommendModels;
   /**
@@ -94,7 +94,7 @@ export type GetRecommendRuleProps = {
    */
   indexName: string;
   /**
-   * [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   * [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    */
   model: RecommendModels;
   /**
@@ -112,11 +112,11 @@ export type GetRecommendStatusProps = {
    */
   indexName: string;
   /**
-   * [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   * [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    */
   model: RecommendModels;
   /**
-   * Unique identifier of a task. Numeric value (up to 64bits).
+   * Unique task identifier.
    */
   taskID: number;
 };
@@ -130,7 +130,7 @@ export type SearchRecommendRulesProps = {
    */
   indexName: string;
   /**
-   * [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+   * [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
    */
   model: RecommendModels;
   searchRecommendRulesParams?: SearchRecommendRulesParams;

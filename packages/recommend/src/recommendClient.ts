@@ -29,7 +29,7 @@ import type { DeletedAtResponse } from '../model/deletedAtResponse';
 import type { GetRecommendTaskResponse } from '../model/getRecommendTaskResponse';
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
-import type { RuleResponse } from '../model/ruleResponse';
+import type { RecommendRule } from '../model/recommendRule';
 import type { SearchRecommendRulesResponse } from '../model/searchRecommendRulesResponse';
 
 export const apiClientVersion = '5.0.0-alpha.110';
@@ -265,14 +265,14 @@ export function createRecommendClient({
     },
 
     /**
-     * Delete a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+     * Deletes a Recommend rule from a recommendation scenario.
      *
      * Required API Key ACLs:
      * - editSettings.
      *
      * @param deleteRecommendRule - The deleteRecommendRule object.
      * @param deleteRecommendRule.indexName - Name of the index on which to perform the operation.
-     * @param deleteRecommendRule.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+     * @param deleteRecommendRule.model - [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      * @param deleteRecommendRule.objectID - Unique record identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -317,21 +317,21 @@ export function createRecommendClient({
     },
 
     /**
-     * Return a [Recommend rule](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+     * Retrieves a Recommend rule that you previously created in the Algolia dashboard.
      *
      * Required API Key ACLs:
      * - settings.
      *
      * @param getRecommendRule - The getRecommendRule object.
      * @param getRecommendRule.indexName - Name of the index on which to perform the operation.
-     * @param getRecommendRule.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+     * @param getRecommendRule.model - [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      * @param getRecommendRule.objectID - Unique record identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRecommendRule(
       { indexName, model, objectID }: GetRecommendRuleProps,
       requestOptions?: RequestOptions
-    ): Promise<RuleResponse> {
+    ): Promise<RecommendRule> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getRecommendRule`.'
@@ -369,15 +369,15 @@ export function createRecommendClient({
     },
 
     /**
-     * Some operations, such as deleting a Recommend rule, will respond with a `taskID` value. Use this value here to check the status of that task.
+     * Checks the status of a given task.  Deleting a Recommend rule is asynchronous. When you delete a rule, a task is created on a queue and completed depending on the load on the server. The API response includes a task ID that you can use to check the status.
      *
      * Required API Key ACLs:
      * - editSettings.
      *
      * @param getRecommendStatus - The getRecommendStatus object.
      * @param getRecommendStatus.indexName - Name of the index on which to perform the operation.
-     * @param getRecommendStatus.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
-     * @param getRecommendStatus.taskID - Unique identifier of a task. Numeric value (up to 64bits).
+     * @param getRecommendStatus.model - [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+     * @param getRecommendStatus.taskID - Unique task identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRecommendStatus(
@@ -420,7 +420,7 @@ export function createRecommendClient({
     },
 
     /**
-     * Returns results from either recommendation or trending models:    - **Recommendations** are provided by the [Related Products](https://www.algolia.com/doc/guides/algolia-recommend/overview/#related-products-and-related-content) and [Frequently Bought Together](https://www.algolia.com/doc/guides/algolia-recommend/overview/#frequently-bought-together) models   - **Trending** models are [Trending Items and Trending Facet Values](https://www.algolia.com/doc/guides/algolia-recommend/overview/#trending-items-and-trending-facet-values).
+     * Retrieves recommendations from selected AI models.
      *
      * Required API Key ACLs:
      * - search.
@@ -462,14 +462,14 @@ export function createRecommendClient({
     },
 
     /**
-     * List [Recommend rules](https://www.algolia.com/doc/guides/algolia-recommend/how-to/rules/).
+     * Searches for Recommend rules.  Use an empty query to list all rules for this recommendation scenario.
      *
      * Required API Key ACLs:
      * - settings.
      *
      * @param searchRecommendRules - The searchRecommendRules object.
      * @param searchRecommendRules.indexName - Name of the index on which to perform the operation.
-     * @param searchRecommendRules.model - [Recommend models](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+     * @param searchRecommendRules.model - [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
      * @param searchRecommendRules.searchRecommendRulesParams - The searchRecommendRulesParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */

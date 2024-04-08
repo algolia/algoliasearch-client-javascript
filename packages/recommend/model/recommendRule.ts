@@ -2,23 +2,20 @@
 
 import type { Condition } from './condition';
 import type { Consequence } from './consequence';
-import type { RuleResponseMetadata } from './ruleResponseMetadata';
+import type { RecommendRuleMetadata } from './recommendRuleMetadata';
 
 /**
- * Rule object.
+ * Recommend rule.
  */
-export type RuleResponse = {
-  _metadata?: RuleResponseMetadata;
+export type RecommendRule = {
+  _metadata?: RecommendRuleMetadata;
 
   /**
-   * Unique identifier for a rule object.
+   * Unique identifier of a rule object.
    */
-  objectID: string;
+  objectID?: string;
 
-  /**
-   * [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions) required to activate a rule. You can use up to 25 conditions per rule.
-   */
-  conditions?: Condition[];
+  condition?: Condition;
 
   consequence?: Consequence;
 
