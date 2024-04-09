@@ -90,7 +90,7 @@ describe('transporter stack trace serialization', () => {
     await expect(transporter.read(transporterRequest)).rejects.toEqual({
       name: 'RetryError',
       message:
-        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
+        'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the [Algolia Support team](https://support.algolia.com/hc/en-us/requests/new).',
       transporterStackTrace,
     });
 
