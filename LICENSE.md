@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) Algolia <support@algolia.com>
+Copyright (c) Algolia <http://www.algolia.com/>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
