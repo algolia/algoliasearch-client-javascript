@@ -25,7 +25,7 @@ import type {
 } from '../model/clientMethodProps';
 import type { GetUsage200Response } from '../model/getUsage200Response';
 
-export const apiClientVersion = '0.0.1';
+export const apiClientVersion = '0.0.2-alpha.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

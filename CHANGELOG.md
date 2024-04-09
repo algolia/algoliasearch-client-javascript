@@ -1,3 +1,12 @@
+## [5.0.0-alpha.113](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.112...5.0.0-alpha.113)
+
+- [dabdd0291](https://github.com/algolia/api-clients-automation/commit/dabdd0291) fix(specs): recommend api ([#2958](https://github.com/algolia/api-clients-automation/pull/2958)) by [@kai687](https://github.com/kai687/)
+- [34e345d48](https://github.com/algolia/api-clients-automation/commit/34e345d48) fix(specs): update documentation for consistency ([#2976](https://github.com/algolia/api-clients-automation/pull/2976)) by [@kai687](https://github.com/kai687/)
+- [aee3fde96](https://github.com/algolia/api-clients-automation/commit/aee3fde96) feat(clients): add `usage` client ([#2960](https://github.com/algolia/api-clients-automation/pull/2960)) by [@shortcuts](https://github.com/shortcuts/)
+- [0348669d0](https://github.com/algolia/api-clients-automation/commit/0348669d0) feat(specs): add algoliaInsights auth type ([#2959](https://github.com/algolia/api-clients-automation/pull/2959)) by [@jkaho](https://github.com/jkaho/)
+- [60e23f87a](https://github.com/algolia/api-clients-automation/commit/60e23f87a) fix(specs): usage api ([#2954](https://github.com/algolia/api-clients-automation/pull/2954)) by [@kai687](https://github.com/kai687/)
+- [3e0d0dcc2](https://github.com/algolia/api-clients-automation/commit/3e0d0dcc2) fix(specs): crawler api ([#2949](https://github.com/algolia/api-clients-automation/pull/2949)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0-alpha.112](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.111...5.0.0-alpha.112)
 
 - [10e08c9e7](https://github.com/algolia/api-clients-automation/commit/10e08c9e7) fix(specs): query suggestions api ([#2924](https://github.com/algolia/api-clients-automation/pull/2924)) by [@kai687](https://github.com/kai687/)
