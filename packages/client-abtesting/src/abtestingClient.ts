@@ -107,7 +107,7 @@ export function createAbtestingClient({
     },
 
     /**
-     * Creates an A/B test.
+     * Creates a new A/B test.
      *
      * Required API Key ACLs:
      * - editSettings.
@@ -289,13 +289,13 @@ export function createAbtestingClient({
     },
 
     /**
-     * Delete an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+     * Deletes an A/B test by its ID.
      *
      * Required API Key ACLs:
      * - editSettings.
      *
      * @param deleteABTest - The deleteABTest object.
-     * @param deleteABTest.id - Unique A/B test ID.
+     * @param deleteABTest.id - Unique A/B test identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteABTest(
@@ -326,13 +326,13 @@ export function createAbtestingClient({
     },
 
     /**
-     * Get specific details for an A/B test. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+     * Retrieves the details for an A/B test by its ID.
      *
      * Required API Key ACLs:
      * - analytics.
      *
      * @param getABTest - The getABTest object.
-     * @param getABTest.id - Unique A/B test ID.
+     * @param getABTest.id - Unique A/B test identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getABTest(
@@ -361,7 +361,7 @@ export function createAbtestingClient({
     },
 
     /**
-     * List all A/B tests.
+     * Lists all A/B tests you configured for this application.
      *
      * Required API Key ACLs:
      * - analytics.
@@ -369,8 +369,8 @@ export function createAbtestingClient({
      * @param listABTests - The listABTests object.
      * @param listABTests.offset - Position of the first item to return.
      * @param listABTests.limit - Number of items to return.
-     * @param listABTests.indexPrefix - Only return A/B tests for indices starting with this prefix.
-     * @param listABTests.indexSuffix - Only return A/B tests for indices ending with this suffix.
+     * @param listABTests.indexPrefix - Index name prefix. Only A/B tests for indices starting with this string are included in the response.
+     * @param listABTests.indexSuffix - Index name suffix. Only A/B tests for indices ending with this string are included in the response.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listABTests(
@@ -408,13 +408,13 @@ export function createAbtestingClient({
     },
 
     /**
-     * If stopped, the test is over and can\'t be restarted. There is now only one index, receiving 100% of all search requests. The data gathered for stopped A/B tests is retained. To determine the `id` for an A/B test, use the [`listABTests` operation](#tag/abtest/operation/listABTests).
+     * Stops an A/B test by its ID.  You can\'t restart stopped A/B tests.
      *
      * Required API Key ACLs:
      * - editSettings.
      *
      * @param stopABTest - The stopABTest object.
-     * @param stopABTest.id - Unique A/B test ID.
+     * @param stopABTest.id - Unique A/B test identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     stopABTest(

@@ -69,7 +69,7 @@ export type CustomPutProps = {
  */
 export type DeleteABTestProps = {
   /**
-   * Unique A/B test ID.
+   * Unique A/B test identifier.
    */
   id: number;
 };
@@ -79,7 +79,7 @@ export type DeleteABTestProps = {
  */
 export type GetABTestProps = {
   /**
-   * Unique A/B test ID.
+   * Unique A/B test identifier.
    */
   id: number;
 };
@@ -97,11 +97,11 @@ export type ListABTestsProps = {
    */
   limit?: number;
   /**
-   * Only return A/B tests for indices starting with this prefix.
+   * Index name prefix. Only A/B tests for indices starting with this string are included in the response.
    */
   indexPrefix?: string;
   /**
-   * Only return A/B tests for indices ending with this suffix.
+   * Index name suffix. Only A/B tests for indices ending with this string are included in the response.
    */
   indexSuffix?: string;
 };
@@ -111,7 +111,7 @@ export type ListABTestsProps = {
  */
 export type StopABTestProps = {
   /**
-   * Unique A/B test ID.
+   * Unique A/B test identifier.
    */
   id: number;
 };

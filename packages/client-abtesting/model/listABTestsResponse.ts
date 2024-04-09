@@ -9,7 +9,7 @@ export type ListABTestsResponse = {
   abtests: ABTest[] | null;
 
   /**
-   * Number of A/B tests implemented.
+   * Number of A/B tests.
    */
   count: number;
 

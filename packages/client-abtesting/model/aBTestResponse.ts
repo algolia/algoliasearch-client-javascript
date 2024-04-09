@@ -7,7 +7,7 @@ export type ABTestResponse = {
   index: string;
 
   /**
-   * Unique A/B test ID.
+   * Unique A/B test identifier.
    */
   abTestID: number;
 

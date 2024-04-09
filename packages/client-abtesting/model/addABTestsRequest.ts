@@ -14,7 +14,7 @@ export type AddABTestsRequest = {
   variants: AddABTestsVariant[];
 
   /**
-   * End date timestamp in [ISO-8601](https://wikipedia.org/wiki/ISO_8601) format.
+   * End date and time of the A/B test, in RFC 3339 format.
    */
   endAt: string;
 };
