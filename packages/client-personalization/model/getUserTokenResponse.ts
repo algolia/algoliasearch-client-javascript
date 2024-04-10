@@ -2,17 +2,17 @@
 
 export type GetUserTokenResponse = {
   /**
-   * UserToken representing the user for which to fetch the Personalization profile.
+   * Unique pseudonymous or anonymous user identifier.  This helps with analytics and click and conversion events. For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
    */
   userToken: string;
 
   /**
-   * Date of last event update. (ISO-8601 format).
+   * Date and time of the last event from this user, in RFC 3339 format.
    */
   lastEventAt: string;
 
   /**
-   * The userToken scores.
+   * Scores for different facet values.  Scores represent the user affinity for a user profile towards specific facet values, given the personalization strategy and past events.
    */
   scores: Record<string, any>;
 };

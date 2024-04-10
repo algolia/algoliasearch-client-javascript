@@ -3,6 +3,7 @@
 export * from './deleteUserProfileResponse';
 export * from './errorBase';
 export * from './eventScoring';
+export * from './eventType';
 export * from './facetScoring';
 export * from './getUserTokenResponse';
 export * from './personalizationStrategyParams';

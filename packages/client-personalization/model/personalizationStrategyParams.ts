@@ -5,17 +5,17 @@ import type { FacetScoring } from './facetScoring';
 
 export type PersonalizationStrategyParams = {
   /**
-   * Scores associated with the events.
+   * Scores associated with each event.  The higher the scores, the higher the impact of those events on the personalization of search results.
    */
   eventScoring: EventScoring[];
 
   /**
-   * Scores associated with the facets.
+   * Scores associated with each facet.  The higher the scores, the higher the impact of those events on the personalization of search results.
    */
   facetScoring: FacetScoring[];
 
   /**
-   * The impact that personalization has on search results: a number between 0 (personalization disabled) and 100 (personalization fully enabled).
+   * Impact of personalization on the search results.  If set to 0, personalization has no impact on the search results.
    */
   personalizationImpact: number;
 };

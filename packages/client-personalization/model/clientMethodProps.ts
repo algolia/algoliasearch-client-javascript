@@ -69,7 +69,7 @@ export type CustomPutProps = {
  */
 export type DeleteUserProfileProps = {
   /**
-   * UserToken representing the user for which to fetch the Personalization profile.
+   * Unique identifier representing a user for which to fetch the personalization profile.
    */
   userToken: string;
 };
@@ -79,7 +79,7 @@ export type DeleteUserProfileProps = {
  */
 export type GetUserTokenProfileProps = {
   /**
-   * UserToken representing the user for which to fetch the Personalization profile.
+   * Unique identifier representing a user for which to fetch the personalization profile.
    */
   userToken: string;
 };
