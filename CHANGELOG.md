@@ -1,3 +1,9 @@
+## [v4.23.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.2...4.23.3)
+
+* fix(types): add `serverTimeMS` to search response (#1518) ([a1d1707](https://github.com/algolia/algoliasearch-client-javascript/commit/a1d1707)), closes [#1518](https://github.com/algolia/algoliasearch-client-javascript/issues/1518)
+
+
+
 ## [v4.23.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.1...4.23.2)
 
 * fix(recommend): only export default function (#1514) ([4a04d8e](https://github.com/algolia/algoliasearch-client-javascript/commits/4a04d8e)), closes [#1514](https://github.com/algolia/algoliasearch-client-javascript/issues/1514)
