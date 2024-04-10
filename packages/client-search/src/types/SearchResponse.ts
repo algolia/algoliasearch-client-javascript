@@ -53,6 +53,11 @@ export type SearchResponse<TObject = {}> = {
   processingTimeMS: number;
 
   /**
+   * Time the server took to process the request, in milliseconds.
+   */
+  serverTimeMS?: number;
+
+  /**
    * Whether the nbHits is exhaustive (true) or approximate (false).
    *
    * An approximation is done when the query takes more than 50ms to be
