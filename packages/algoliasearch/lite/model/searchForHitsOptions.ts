@@ -4,7 +4,7 @@ import type { SearchTypeDefault } from './searchTypeDefault';
 
 export type SearchForHitsOptions = {
   /**
-   * Index name.
+   * Index name (case-sensitive).
    */
   indexName: string;
 

@@ -3,6 +3,6 @@
 import type { MixedSearchFilters } from './mixedSearchFilters';
 
 /**
- * Restrict [Dynamic Re-ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these filters.
+ * Restrict [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these filters.
  */
 export type ReRankingApplyFilter = MixedSearchFilters[] | string;

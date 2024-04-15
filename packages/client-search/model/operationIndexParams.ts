@@ -7,7 +7,7 @@ export type OperationIndexParams = {
   operation: OperationType;
 
   /**
-   * Index name.
+   * Index name (case-sensitive).
    */
   destination: string;
 

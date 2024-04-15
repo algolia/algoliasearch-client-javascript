@@ -9,7 +9,7 @@ export type SearchForFacetsOptions = {
   facet: string;
 
   /**
-   * Index name.
+   * Index name (case-sensitive).
    */
   indexName: string;
 

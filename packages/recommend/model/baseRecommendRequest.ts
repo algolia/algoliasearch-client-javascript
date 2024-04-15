@@ -4,7 +4,7 @@ import type { SearchParams } from './searchParams';
 
 export type BaseRecommendRequest = {
   /**
-   * Index name.
+   * Index name (case-sensitive).
    */
   indexName: string;
 

@@ -2,7 +2,7 @@
 
 export type AbTestsVariant = {
   /**
-   * A/B test index.
+   * Index name of the A/B test variant (case-sensitive).
    */
   index: string;
 

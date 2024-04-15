@@ -4,7 +4,7 @@ import type { RecordType } from './recordType';
 
 export type DestinationIndexName = {
   /**
-   * Algolia index name.
+   * Algolia index name (case-sensitive).
    */
   indexName: string;
 

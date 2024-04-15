@@ -7,7 +7,7 @@ import type { Facet } from './facet';
  */
 export type SourceIndex = {
   /**
-   * Name of the Algolia index to use as source for query suggestions.
+   * Name of the Algolia index (case-sensitive) to use as source for query suggestions.
    */
   indexName: string;
 

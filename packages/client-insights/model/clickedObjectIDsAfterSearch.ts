@@ -14,7 +14,7 @@ export type ClickedObjectIDsAfterSearch = {
   eventType: ClickEvent;
 
   /**
-   * Index name to which the event\'s items belong.
+   * Index name (case-sensitive) to which the event\'s items belong.
    */
   index: string;
 

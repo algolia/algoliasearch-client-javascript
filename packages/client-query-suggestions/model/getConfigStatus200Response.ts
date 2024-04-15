@@ -2,7 +2,7 @@
 
 export type GetConfigStatus200Response = {
   /**
-   * Name of the Query Suggestions index.
+   * Name of the Query Suggestions index (case-sensitive).
    */
   indexName?: string;
 

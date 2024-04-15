@@ -11,7 +11,7 @@ export type MultipleBatchRequest = {
   body: Record<string, any>;
 
   /**
-   * Index to target for this operation.
+   * Index name (case-sensitive).
    */
   indexName: string;
 };
