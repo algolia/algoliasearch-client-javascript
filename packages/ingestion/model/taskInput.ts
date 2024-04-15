@@ -2,6 +2,7 @@
 
 import type { OnDemandDateUtilsInput } from './onDemandDateUtilsInput';
 import type { ScheduleDateUtilsInput } from './scheduleDateUtilsInput';
+import type { ShopifyInput } from './shopifyInput';
 import type { StreamingUtilsInput } from './streamingUtilsInput';
 
 /**
@@ -10,4 +11,5 @@ import type { StreamingUtilsInput } from './streamingUtilsInput';
 export type TaskInput =
   | OnDemandDateUtilsInput
   | ScheduleDateUtilsInput
+  | ShopifyInput
   | StreamingUtilsInput;

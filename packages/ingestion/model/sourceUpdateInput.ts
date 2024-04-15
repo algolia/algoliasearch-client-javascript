@@ -6,6 +6,7 @@ import type { SourceGA4BigQueryExport } from './sourceGA4BigQueryExport';
 import type { SourceJSON } from './sourceJSON';
 import type { SourceUpdateCommercetools } from './sourceUpdateCommercetools';
 import type { SourceUpdateDocker } from './sourceUpdateDocker';
+import type { SourceUpdateShopify } from './sourceUpdateShopify';
 
 export type SourceUpdateInput =
   | SourceBigQuery
@@ -13,4 +14,5 @@ export type SourceUpdateInput =
   | SourceGA4BigQueryExport
   | SourceJSON
   | SourceUpdateCommercetools
-  | SourceUpdateDocker;
+  | SourceUpdateDocker
+  | SourceUpdateShopify;

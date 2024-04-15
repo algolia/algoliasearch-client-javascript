@@ -7,6 +7,7 @@ import type { SourceCommercetools } from './sourceCommercetools';
 import type { SourceDocker } from './sourceDocker';
 import type { SourceGA4BigQueryExport } from './sourceGA4BigQueryExport';
 import type { SourceJSON } from './sourceJSON';
+import type { SourceShopify } from './sourceShopify';
 
 export type SourceInput =
   | SourceBigCommerce
@@ -15,4 +16,5 @@ export type SourceInput =
   | SourceCSV
   | SourceDocker
   | SourceGA4BigQueryExport
-  | SourceJSON;
+  | SourceJSON
+  | SourceShopify;
