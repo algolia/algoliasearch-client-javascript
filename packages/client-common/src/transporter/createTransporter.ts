@@ -151,17 +151,14 @@ export function createTransporter({
         throw new RetryError(stackTraceWithoutCredentials(stackTrace));
       }
 
-      let responseTimeout = requestOptions.timeout;
-      if (responseTimeout === undefined) {
-        responseTimeout = isRead ? timeouts.read : timeouts.write;
-      }
+      let responseTimeout = isRead ? requestOptions.timeouts?.read || timeouts.read : requestOptions.timeouts?.write || timeouts.write;
 
       const payload: EndRequest = {
         data,
         headers,
         method: request.method,
         url: serializeUrl(host, request.path, queryParameters),
-        connectTimeout: getTimeout(timeoutsCount, timeouts.connect),
+        connectTimeout: getTimeout(timeoutsCount, requestOptions.timeouts?.connect || timeouts.connect),
         responseTimeout: getTimeout(timeoutsCount, responseTimeout),
       };
 

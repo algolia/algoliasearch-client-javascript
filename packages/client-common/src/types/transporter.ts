@@ -11,7 +11,7 @@ export type RequestOptions = Pick<Request, 'cacheable'> & {
    * the given timeout will be applied. But the transporter layer may
    * increase this timeout if there is need for it.
    */
-  timeout?: number;
+  timeouts?: Partial<Timeouts>;
 
   /**
    * Custom headers for the request. This headers are
