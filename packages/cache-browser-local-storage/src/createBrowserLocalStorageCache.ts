@@ -1,4 +1,4 @@
-import { Cache, CacheEvents } from '@algolia/cache-common';
+import { Cache, CacheEvents } from '@sefai/cache-common';
 
 import { BrowserLocalStorageCacheItem, BrowserLocalStorageOptions } from '.';
 

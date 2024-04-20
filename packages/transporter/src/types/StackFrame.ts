@@ -1,4 +1,4 @@
-import { Request, Response } from '@algolia/requester-common';
+import { Request, Response } from '@sefai/requester-common';
 
 import { StatelessHost } from './StatelessHost';
 

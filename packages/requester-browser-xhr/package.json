@@ -1,11 +1,11 @@
 {
-  "name": "@algolia/requester-browser-xhr",
+  "name": "@sefai/requester-browser-xhr",
   "version": "4.23.3",
   "private": false,
   "description": "Promise-based request library for browser using xhr.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
+    "url": "git://github.com/sefai/algoliasearch-client-javascript.git"
   },
   "license": "MIT",
   "sideEffects": false,
@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/requester-common": "4.23.3"
+    "@sefai/requester-common": "4.23.3"
   }
 }

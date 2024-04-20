@@ -1,4 +1,4 @@
-import { Cache } from '@algolia/cache-common';
+import { Cache } from '@sefai/cache-common';
 
 import {
   createStatefulHost,

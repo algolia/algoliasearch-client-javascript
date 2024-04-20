@@ -1,4 +1,4 @@
-import { Request, Requester, Response } from '@algolia/requester-common';
+import { Request, Requester, Response } from '@sefai/requester-common';
 
 export function createBrowserXhrRequester(): Requester {
   return {

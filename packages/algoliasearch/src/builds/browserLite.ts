@@ -1,7 +1,7 @@
-import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { createFallbackableCache } from '@algolia/cache-common';
-import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { AuthMode, version } from '@algolia/client-common';
+import { createBrowserLocalStorageCache } from '@sefai/cache-browser-local-storage';
+import { createFallbackableCache } from '@sefai/cache-common';
+import { createInMemoryCache } from '@sefai/cache-in-memory';
+import { AuthMode, version } from '@sefai/client-common';
 import {
   createSearchClient,
   customRequest,
@@ -22,12 +22,12 @@ import {
   SearchIndex as BaseSearchIndex,
   SearchOptions,
   SearchResponse,
-} from '@algolia/client-search';
-import { LogLevelEnum } from '@algolia/logger-common';
-import { createConsoleLogger } from '@algolia/logger-console';
-import { getRecommendations, WithRecommendMethods } from '@algolia/recommend';
-import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
+} from '@sefai/client-search';
+import { LogLevelEnum } from '@sefai/logger-common';
+import { createConsoleLogger } from '@sefai/logger-console';
+import { getRecommendations, WithRecommendMethods } from '@sefai/recommend';
+import { createBrowserXhrRequester } from '@sefai/requester-browser-xhr';
+import { createUserAgent, Request, RequestOptions } from '@sefai/transporter';
 
 import { AlgoliaSearchOptions } from '../types';
 

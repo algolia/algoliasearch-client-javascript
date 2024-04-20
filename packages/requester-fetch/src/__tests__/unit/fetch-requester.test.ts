@@ -1,4 +1,4 @@
-import { MethodEnum, Request } from '@algolia/requester-common';
+import { MethodEnum, Request } from '@sefai/requester-common';
 import crossFetch from 'cross-fetch';
 import nock from 'nock';
 // @ts-ignore

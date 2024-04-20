@@ -21,7 +21,7 @@
     "rootDir": ".",
     "paths": {
       "algoliasearch": ["packages/algoliasearch/src/builds/node"],
-      "@algolia/*": ["packages/*/src"]
+      "@sefai/*": ["packages/*/src"]
     }
   },
   "include": ["packages/**/src/**/*.ts", "global.d.ts"]

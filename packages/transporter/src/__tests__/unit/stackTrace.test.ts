@@ -1,6 +1,6 @@
-import { version } from '@algolia/client-common';
-import { createNullLogger, Logger } from '@algolia/logger-common';
-import { Requester } from '@algolia/requester-common';
+import { version } from '@sefai/client-common';
+import { createNullLogger, Logger } from '@sefai/logger-common';
+import { Requester } from '@sefai/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { Transporter } from '../..';
@@ -90,7 +90,7 @@ describe('transporter stack trace serialization', () => {
     await expect(transporter.read(transporterRequest)).rejects.toEqual({
       name: 'RetryError',
       message:
-        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
+        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@sefai.com.',
       transporterStackTrace,
     });
 

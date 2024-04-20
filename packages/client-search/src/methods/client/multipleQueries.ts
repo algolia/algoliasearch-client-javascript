@@ -1,5 +1,5 @@
-import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, serializeQueryParameters } from '@algolia/transporter';
+import { MethodEnum } from '@sefai/requester-common';
+import { RequestOptions, serializeQueryParameters } from '@sefai/transporter';
 
 import {
   MultipleQueriesOptions,

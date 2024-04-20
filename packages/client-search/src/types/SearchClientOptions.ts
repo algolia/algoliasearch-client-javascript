@@ -1,4 +1,4 @@
-import { AuthModeType } from '@algolia/client-common';
+import { AuthModeType } from '@sefai/client-common';
 
 export type SearchClientOptions = {
   /**

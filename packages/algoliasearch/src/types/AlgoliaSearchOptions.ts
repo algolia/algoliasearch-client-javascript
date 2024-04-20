@@ -1,7 +1,7 @@
-import { AnalyticsClientOptions } from '@algolia/client-analytics';
-import { ClientTransporterOptions } from '@algolia/client-common';
-import { PersonalizationClientOptions } from '@algolia/client-personalization';
-import { SearchClientOptions } from '@algolia/client-search';
+import { AnalyticsClientOptions } from '@sefai/client-analytics';
+import { ClientTransporterOptions } from '@sefai/client-common';
+import { PersonalizationClientOptions } from '@sefai/client-personalization';
+import { SearchClientOptions } from '@sefai/client-search';
 
 type Credentials = { readonly appId: string; readonly apiKey: string };
 export type WithoutCredentials<TClientOptions extends Credentials> = Omit<

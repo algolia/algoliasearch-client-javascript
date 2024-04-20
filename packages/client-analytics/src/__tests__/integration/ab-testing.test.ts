@@ -1,5 +1,5 @@
-import { createRetryablePromise } from '@algolia/client-common';
-import { Transporter } from '@algolia/transporter';
+import { createRetryablePromise } from '@sefai/client-common';
+import { Transporter } from '@sefai/transporter';
 
 import { ABTest, Variant } from '../..';
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';

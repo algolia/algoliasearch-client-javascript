@@ -1,4 +1,4 @@
-import { MethodEnum } from '@algolia/requester-common';
+import { MethodEnum } from '@sefai/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';

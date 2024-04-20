@@ -1,4 +1,4 @@
-import { SearchResponse } from '@algolia/client-search';
+import { SearchResponse } from '@sefai/client-search';
 
 import { TrendingFacetHit } from './TrendingFacetHit';
 

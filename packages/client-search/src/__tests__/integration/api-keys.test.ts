@@ -1,4 +1,4 @@
-import { createRetryablePromise } from '@algolia/client-common';
+import { createRetryablePromise } from '@sefai/client-common';
 
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 

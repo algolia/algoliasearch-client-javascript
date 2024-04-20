@@ -1,4 +1,4 @@
-import { Response } from '@algolia/requester-common';
+import { Response } from '@sefai/requester-common';
 
 const isNetworkError = ({ isTimedOut, status }: Response): boolean => {
   return !isTimedOut && ~~status === 0;

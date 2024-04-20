@@ -1,4 +1,4 @@
-import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
+import { createWaitablePromise, WaitablePromise } from '@sefai/client-common';
 import {
   browseObjects,
   browseRules,
@@ -10,8 +10,8 @@ import {
   saveSynonyms,
   SearchIndex,
   setSettings,
-} from '@algolia/client-search';
-import { RequestOptions } from '@algolia/transporter';
+} from '@sefai/client-search';
+import { RequestOptions } from '@sefai/transporter';
 
 import { createDestinationIndiceExistsError, createIndicesInSameAppError } from '..';
 

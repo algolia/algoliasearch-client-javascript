@@ -1,6 +1,6 @@
-import { addMethods, encode } from '@algolia/client-common';
-import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions, Transporter } from '@algolia/transporter';
+import { addMethods, encode } from '@sefai/client-common';
+import { MethodEnum } from '@sefai/requester-common';
+import { RequestOptions, Transporter } from '@sefai/transporter';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { BatchActionEnum, SaveObjectsOptions } from '../..';

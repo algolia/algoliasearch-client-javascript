@@ -4,8 +4,8 @@ import {
   ClientTransporterOptions,
   createAuth,
   CreateClient,
-} from '@algolia/client-common';
-import { createTransporter } from '@algolia/transporter';
+} from '@sefai/client-common';
+import { createTransporter } from '@sefai/transporter';
 
 import { PersonalizationClient, PersonalizationClientOptions } from '.';
 

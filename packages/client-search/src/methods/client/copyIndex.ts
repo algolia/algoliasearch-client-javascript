@@ -1,6 +1,6 @@
-import { createWaitablePromise, encode, Wait, WaitablePromise } from '@algolia/client-common';
-import { MethodEnum } from '@algolia/requester-common';
-import { RequestOptions } from '@algolia/transporter';
+import { createWaitablePromise, encode, Wait, WaitablePromise } from '@sefai/client-common';
+import { MethodEnum } from '@sefai/requester-common';
+import { RequestOptions } from '@sefai/transporter';
 
 import { CopyIndexOptions, IndexOperationResponse, initIndex, SearchClient, waitTask } from '../..';
 

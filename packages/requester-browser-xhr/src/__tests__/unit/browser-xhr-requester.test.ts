@@ -1,4 +1,4 @@
-import { MethodEnum, Request } from '@algolia/requester-common';
+import { MethodEnum, Request } from '@sefai/requester-common';
 import mock, { MockRequest, MockResponse } from 'xhr-mock';
 
 import { createBrowserXhrRequester } from '../..';

@@ -1,10 +1,10 @@
-import { createNullCache } from '@algolia/cache-common';
-import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { destroy, version } from '@algolia/client-common';
-import { createNullLogger } from '@algolia/logger-common';
-import { Destroyable } from '@algolia/requester-common';
-import { createNodeHttpRequester } from '@algolia/requester-node-http';
-import { createUserAgent } from '@algolia/transporter';
+import { createNullCache } from '@sefai/cache-common';
+import { createInMemoryCache } from '@sefai/cache-in-memory';
+import { destroy, version } from '@sefai/client-common';
+import { createNullLogger } from '@sefai/logger-common';
+import { Destroyable } from '@sefai/requester-common';
+import { createFetchRequester } from '@sefai/requester-fetch';
+import { createUserAgent } from '@sefai/transporter';
 
 import { createRecommendClient } from '../createRecommendClient';
 import {
@@ -31,7 +31,7 @@ export default function recommend(
       read: 5,
       write: 30,
     },
-    requester: createNodeHttpRequester(),
+    requester: createFetchRequester(),
     logger: createNullLogger(),
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),

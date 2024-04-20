@@ -1,5 +1,5 @@
-import { createWaitablePromise, WaitablePromise } from '@algolia/client-common';
-import { RequestOptions } from '@algolia/transporter';
+import { createWaitablePromise, WaitablePromise } from '@sefai/client-common';
+import { RequestOptions } from '@sefai/transporter';
 
 import {
   batch,

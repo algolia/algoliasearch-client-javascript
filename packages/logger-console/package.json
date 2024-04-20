@@ -1,11 +1,11 @@
 {
-  "name": "@algolia/logger-console",
+  "name": "@sefai/logger-console",
   "version": "4.23.3",
   "private": false,
   "description": "Promise-based log library using console log.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
+    "url": "git://github.com/sefai/algoliasearch-client-javascript.git"
   },
   "license": "MIT",
   "sideEffects": false,
@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/logger-common": "4.23.3"
+    "@sefai/logger-common": "4.23.3"
   }
 }

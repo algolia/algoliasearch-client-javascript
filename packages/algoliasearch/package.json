@@ -1,11 +1,11 @@
 {
-  "name": "algoliasearch",
+  "name": "@sefai/algoliasearch",
   "version": "4.23.3",
   "private": false,
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
+    "url": "git://github.com/sefai/algoliasearch-client-javascript"
   },
   "license": "MIT",
   "sideEffects": false,
@@ -28,20 +28,20 @@
     "test:exports": "node --experimental-modules test/module/is-es-module.mjs && node test/module/is-cjs-module.cjs"
   },
   "dependencies": {
-    "@algolia/cache-browser-local-storage": "4.23.3",
-    "@algolia/cache-common": "4.23.3",
-    "@algolia/cache-in-memory": "4.23.3",
-    "@algolia/client-account": "4.23.3",
-    "@algolia/client-analytics": "4.23.3",
-    "@algolia/client-common": "4.23.3",
-    "@algolia/client-personalization": "4.23.3",
-    "@algolia/client-search": "4.23.3",
-    "@algolia/logger-common": "4.23.3",
-    "@algolia/logger-console": "4.23.3",
-    "@algolia/recommend": "4.23.3",
-    "@algolia/requester-browser-xhr": "4.23.3",
-    "@algolia/requester-common": "4.23.3",
-    "@algolia/requester-node-http": "4.23.3",
-    "@algolia/transporter": "4.23.3"
+    "@sefai/cache-browser-local-storage": "4.23.3",
+    "@sefai/cache-common": "4.23.3",
+    "@sefai/cache-in-memory": "4.23.3",
+    "@sefai/client-account": "4.23.3",
+    "@sefai/client-analytics": "4.23.3",
+    "@sefai/client-common": "4.23.3",
+    "@sefai/client-personalization": "4.23.3",
+    "@sefai/client-search": "4.23.3",
+    "@sefai/logger-common": "4.23.3",
+    "@sefai/logger-console": "4.23.3",
+    "@sefai/recommend": "4.23.3",
+    "@sefai/requester-browser-xhr": "4.23.3",
+    "@sefai/requester-common": "4.23.3",
+    "@sefai/requester-fetch": "4.23.3",
+    "@sefai/transporter": "4.23.3"
   }
 }

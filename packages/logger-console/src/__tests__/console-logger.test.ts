@@ -1,6 +1,6 @@
 /* eslint no-console: 0 */
 
-import { LogLevelEnum } from '@algolia/logger-common';
+import { LogLevelEnum } from '@sefai/logger-common';
 import mockConsole from 'jest-mock-console';
 
 import { createConsoleLogger } from '../createConsoleLogger';

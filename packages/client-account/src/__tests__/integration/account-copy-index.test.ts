@@ -1,6 +1,6 @@
-import { accountCopyIndex } from '@algolia/client-account';
-import { createRetryablePromise } from '@algolia/client-common';
-import { Rule, Synonym } from '@algolia/client-search';
+import { accountCopyIndex } from '@sefai/client-account';
+import { createRetryablePromise } from '@sefai/client-common';
+import { Rule, Synonym } from '@sefai/client-search';
 
 import { waitResponses } from '../../../../client-common/src/__tests__/helpers';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';

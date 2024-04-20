@@ -1,5 +1,5 @@
-import { SearchOptions, SearchResponse } from '@algolia/client-search';
-import { RequestOptions } from '@algolia/transporter';
+import { SearchOptions, SearchResponse } from '@sefai/client-search';
+import { RequestOptions } from '@sefai/transporter';
 
 import { RecommendedForYouParams, RecommendedForYouQuery } from '../builds/node';
 import { FrequentlyBoughtTogetherQuery } from './FrequentlyBoughtTogetherQuery';

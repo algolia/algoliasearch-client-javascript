@@ -1,7 +1,7 @@
-import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { createNullCache } from '@algolia/cache-common';
-import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { version } from '@algolia/client-common';
+import { createBrowserLocalStorageCache } from '@sefai/cache-browser-local-storage';
+import { createNullCache } from '@sefai/cache-common';
+import { createInMemoryCache } from '@sefai/cache-in-memory';
+import { version } from '@sefai/client-common';
 import { anything, spy, verify, when } from 'ts-mockito';
 
 import { createFakeRequester, createFixtures } from '../fixtures';
@@ -63,7 +63,7 @@ describe('hosts cache integration with cache drivers', () => {
 
         const message =
           // eslint-disable-next-line max-len
-          'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.';
+          'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@sefai.com.';
 
         await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
           message,

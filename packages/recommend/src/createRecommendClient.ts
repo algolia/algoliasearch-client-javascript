@@ -5,8 +5,8 @@ import {
   createAuth,
   CreateClient,
   shuffle,
-} from '@algolia/client-common';
-import { CallEnum, createTransporter, HostOptions } from '@algolia/transporter';
+} from '@sefai/client-common';
+import { CallEnum, createTransporter, HostOptions } from '@sefai/transporter';
 
 import { BaseRecommendClient, RecommendClientOptions } from './types';
 

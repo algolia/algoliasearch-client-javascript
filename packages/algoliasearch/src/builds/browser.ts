@@ -1,6 +1,6 @@
-import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { createFallbackableCache } from '@algolia/cache-common';
-import { createInMemoryCache } from '@algolia/cache-in-memory';
+import { createBrowserLocalStorageCache } from '@sefai/cache-browser-local-storage';
+import { createFallbackableCache } from '@sefai/cache-common';
+import { createInMemoryCache } from '@sefai/cache-in-memory';
 import {
   ABTest,
   addABTest,
@@ -16,8 +16,8 @@ import {
   GetABTestsResponse,
   stopABTest,
   StopABTestResponse,
-} from '@algolia/client-analytics';
-import { version, WaitablePromise } from '@algolia/client-common';
+} from '@sefai/client-analytics';
+import { version, WaitablePromise } from '@sefai/client-common';
 import {
   createPersonalizationClient,
   getPersonalizationStrategy,
@@ -26,7 +26,7 @@ import {
   PersonalizationStrategy,
   setPersonalizationStrategy,
   SetPersonalizationStrategyResponse,
-} from '@algolia/client-personalization';
+} from '@sefai/client-personalization';
 import {
   addApiKey,
   AddApiKeyOptions,
@@ -187,9 +187,9 @@ import {
   UserIDResponse,
   waitAppTask,
   waitTask,
-} from '@algolia/client-search';
-import { LogLevelEnum } from '@algolia/logger-common';
-import { createConsoleLogger } from '@algolia/logger-console';
+} from '@sefai/client-search';
+import { LogLevelEnum } from '@sefai/logger-common';
+import { createConsoleLogger } from '@sefai/logger-console';
 import {
   getFrequentlyBoughtTogether,
   getLookingSimilar,
@@ -199,9 +199,9 @@ import {
   getTrendingFacets,
   getTrendingItems,
   WithRecommendMethods,
-} from '@algolia/recommend';
-import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
+} from '@sefai/recommend';
+import { createBrowserXhrRequester } from '@sefai/requester-browser-xhr';
+import { createUserAgent, Request, RequestOptions } from '@sefai/transporter';
 
 import { AlgoliaSearchOptions, InitAnalyticsOptions, InitPersonalizationOptions } from '../types';
 

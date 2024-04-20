@@ -1,11 +1,11 @@
 {
-  "name": "@algolia/cache-in-memory",
+  "name": "@sefai/cache-in-memory",
   "version": "4.23.3",
   "private": false,
   "description": "Promise-based cache library using memory.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
+    "url": "git://github.com/sefai/algoliasearch-client-javascript.git"
   },
   "license": "MIT",
   "sideEffects": false,
@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/cache-common": "4.23.3"
+    "@sefai/cache-common": "4.23.3"
   }
 }

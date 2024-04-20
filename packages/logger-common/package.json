@@ -1,11 +1,11 @@
 {
-  "name": "@algolia/logger-common",
+  "name": "@sefai/logger-common",
   "version": "4.23.3",
   "private": false,
   "description": "Common interfaces for promise-based log libraries",
   "repository": {
     "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-js.git"
+    "url": "git://github.com/sefai/algoliasearch-client-js.git"
   },
   "license": "MIT",
   "sideEffects": false,

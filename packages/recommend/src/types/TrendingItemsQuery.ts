@@ -1,4 +1,4 @@
-import { RecommendSearchOptions } from '@algolia/recommend';
+import { RecommendSearchOptions } from '@sefai/recommend';
 
 export type TrendingItemsQuery = {
   /**

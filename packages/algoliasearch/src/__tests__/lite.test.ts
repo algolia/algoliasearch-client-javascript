@@ -1,6 +1,6 @@
-import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { version } from '@algolia/client-common';
-import { createStatelessHost, createUserAgent } from '@algolia/transporter';
+import { createInMemoryCache } from '@sefai/cache-in-memory';
+import { version } from '@sefai/client-common';
+import { createStatelessHost, createUserAgent } from '@sefai/transporter';
 
 import algoliasearch from '../builds/browserLite';
 

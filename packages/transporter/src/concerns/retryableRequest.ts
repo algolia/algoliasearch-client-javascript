@@ -1,4 +1,4 @@
-import { MethodEnum, Response } from '@algolia/requester-common';
+import { MethodEnum, Response } from '@sefai/requester-common';
 
 import {
   createRetryError,

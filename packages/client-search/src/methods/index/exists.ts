@@ -1,4 +1,4 @@
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@sefai/transporter';
 
 import { SearchIndex } from '../..';
 import { getSettings } from '.';

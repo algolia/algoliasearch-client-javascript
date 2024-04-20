@@ -1,4 +1,4 @@
-import { Headers, HostOptions, QueryParameters, TransporterOptions } from '@algolia/transporter';
+import { Headers, HostOptions, QueryParameters, TransporterOptions } from '@sefai/transporter';
 
 export type ClientTransporterOptions = Pick<
   TransporterOptions,

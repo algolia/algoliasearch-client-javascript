@@ -1,13 +1,13 @@
-import { createNullCache } from '@algolia/cache-common';
-import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { encode } from '@algolia/client-common';
+import { createNullCache } from '@sefai/cache-common';
+import { createInMemoryCache } from '@sefai/cache-in-memory';
+import { encode } from '@sefai/client-common';
 import {
   MethodEnum,
   Request,
   Request as RequesterRequest,
   Requester,
   Response,
-} from '@algolia/requester-common';
+} from '@sefai/requester-common';
 
 import { CallEnum, Transporter } from '..';
 import algoliasearch from '../../../algoliasearch/src/builds/browser';
