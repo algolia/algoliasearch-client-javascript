@@ -1,6 +1,6 @@
 {
   "name": "@sefai/requester-fetch",
-  "version": "4.23.3",
+  "version": "4.23.5",
   "private": false,
   "description": "Promise-based request library for Fetch.",
   "repository": {
@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@sefai/requester-common": "4.23.3"
+    "@sefai/requester-common": "4.23.5"
   }
 }

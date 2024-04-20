@@ -1,6 +1,6 @@
 {
   "name": "@sefai/recommend",
-  "version": "4.23.3",
+  "version": "4.23.5",
   "private": false,
   "description": "The perfect starting point to integrate Algolia Recommend within your JavaScript project.",
   "repository": {
@@ -25,16 +25,16 @@
     "test:exports": "node --experimental-modules test/module/is-es-module.mjs && node test/module/is-cjs-module.cjs"
   },
   "dependencies": {
-    "@sefai/cache-browser-local-storage": "4.23.3",
-    "@sefai/cache-common": "4.23.3",
-    "@sefai/cache-in-memory": "4.23.3",
-    "@sefai/client-common": "4.23.3",
-    "@sefai/client-search": "4.23.3",
-    "@sefai/logger-common": "4.23.3",
-    "@sefai/logger-console": "4.23.3",
-    "@sefai/requester-browser-xhr": "4.23.3",
-    "@sefai/requester-common": "4.23.3",
-    "@sefai/requester-fetch": "4.23.3",
-    "@sefai/transporter": "4.23.3"
+    "@sefai/cache-browser-local-storage": "4.23.5",
+    "@sefai/cache-common": "4.23.5",
+    "@sefai/cache-in-memory": "4.23.5",
+    "@sefai/client-common": "4.23.5",
+    "@sefai/client-search": "4.23.5",
+    "@sefai/logger-common": "4.23.5",
+    "@sefai/logger-console": "4.23.5",
+    "@sefai/requester-browser-xhr": "4.23.5",
+    "@sefai/requester-common": "4.23.5",
+    "@sefai/requester-fetch": "4.23.5",
+    "@sefai/transporter": "4.23.5"
   }
 }
