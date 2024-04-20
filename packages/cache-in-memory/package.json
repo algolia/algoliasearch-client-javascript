@@ -5,7 +5,7 @@
   "description": "Promise-based cache library using memory.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
+    "url": "git://github.com/sefai/algoliasearch-client-javascript.git"
   },
   "license": "MIT",
   "sideEffects": false,

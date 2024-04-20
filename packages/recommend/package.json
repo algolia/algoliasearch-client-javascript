@@ -5,7 +5,7 @@
   "description": "The perfect starting point to integrate Algolia Recommend within your JavaScript project.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
+    "url": "git://github.com/sefai/algoliasearch-client-javascript.git"
   },
   "license": "MIT",
   "sideEffects": false,

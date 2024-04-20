@@ -5,7 +5,7 @@
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
+    "url": "git://github.com/sefai/algoliasearch-client-javascript.git"
   },
   "license": "MIT",
   "sideEffects": false,

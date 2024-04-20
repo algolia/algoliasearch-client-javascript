@@ -17,7 +17,7 @@ module.exports = {
   conventionalChangelogArgs:
     '--config conventional-changelog.config.js --infile CHANGELOG.md --same-file',
   publishCommand({ tag }) {
-    return `yarn publish --access public --tag ${tag}`;
+    return `yarn publish --access private --tag ${tag} --registry=https://npm.pkg.github.com/sefai`;
   },
   async versionUpdated({ version, dir }) {
     // Update version with lerna

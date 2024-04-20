@@ -5,7 +5,7 @@
   "description": "Common interfaces for promise-based request libraries",
   "repository": {
     "type": "git",
-    "url": "git://github.com/algolia/algoliasearch-client-js.git"
+    "url": "git://github.com/sefai/algoliasearch-client-js.git"
   },
   "license": "MIT",
   "sideEffects": false,
