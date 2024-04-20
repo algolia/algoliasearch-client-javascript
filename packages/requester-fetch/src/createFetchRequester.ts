@@ -1,4 +1,4 @@
-import { Request, Requester, Response as AlgoliaResponse } from '@algolia/requester-common';
+import { Request, Requester, Response as AlgoliaResponse } from '@sefai/requester-common';
 
 function isAbortError(error: unknown): boolean {
   return error instanceof Error && error.name === 'AbortError';

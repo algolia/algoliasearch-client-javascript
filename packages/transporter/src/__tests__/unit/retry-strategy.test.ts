@@ -1,4 +1,4 @@
-import { Requester } from '@algolia/requester-common';
+import { Requester } from '@sefai/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { createStatefulHost, Transporter } from '../..';

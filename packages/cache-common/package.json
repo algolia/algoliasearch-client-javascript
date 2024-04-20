@@ -1,5 +1,5 @@
 {
-  "name": "@algolia/cache-common",
+  "name": "@sefai/cache-common",
   "version": "4.23.3",
   "private": false,
   "description": "Common interfaces for promise-based caching libraries",

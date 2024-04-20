@@ -1,5 +1,5 @@
-import { Destroyable } from '@algolia/requester-common';
-import { Transporter } from '@algolia/transporter';
+import { Destroyable } from '@sefai/requester-common';
+import { Transporter } from '@sefai/transporter';
 
 export const destroy = (base: { readonly transporter: Transporter }) => {
   return (): Readonly<Promise<void>> => {

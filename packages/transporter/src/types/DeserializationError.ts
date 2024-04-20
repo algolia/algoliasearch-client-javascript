@@ -1,4 +1,4 @@
-import { Response } from '@algolia/requester-common';
+import { Response } from '@sefai/requester-common';
 
 export type DeserializationError = Error & {
   /**

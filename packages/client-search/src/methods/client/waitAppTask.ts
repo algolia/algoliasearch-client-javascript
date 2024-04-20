@@ -1,5 +1,5 @@
-import { createRetryablePromise } from '@algolia/client-common';
-import { RequestOptions } from '@algolia/transporter';
+import { createRetryablePromise } from '@sefai/client-common';
+import { RequestOptions } from '@sefai/transporter';
 
 import { SearchClient } from '../..';
 import { getAppTask } from '.';

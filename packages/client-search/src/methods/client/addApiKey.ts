@@ -3,9 +3,9 @@ import {
   createWaitablePromise,
   Wait,
   WaitablePromise,
-} from '@algolia/client-common';
-import { MethodEnum } from '@algolia/requester-common';
-import { ApiError, RequestOptions } from '@algolia/transporter';
+} from '@sefai/client-common';
+import { MethodEnum } from '@sefai/requester-common';
+import { ApiError, RequestOptions } from '@sefai/transporter';
 
 import {
   AddApiKeyOptions,

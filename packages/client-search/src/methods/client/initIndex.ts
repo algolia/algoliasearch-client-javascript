@@ -1,4 +1,4 @@
-import { addMethods } from '@algolia/client-common';
+import { addMethods } from '@sefai/client-common';
 
 import { SearchClient, SearchIndex } from '../..';
 import { CreateIndex } from '../../types/CreateIndex';

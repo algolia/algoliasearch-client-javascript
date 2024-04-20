@@ -1,5 +1,5 @@
 {
-  "name": "@algolia/transporter",
+  "name": "@sefai/transporter",
   "version": "4.23.3",
   "private": false,
   "description": "Promise-based transporter layer with embedded retry strategy.",
@@ -17,8 +17,8 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/cache-common": "4.23.3",
-    "@algolia/logger-common": "4.23.3",
-    "@algolia/requester-common": "4.23.3"
+    "@sefai/cache-common": "4.23.3",
+    "@sefai/logger-common": "4.23.3",
+    "@sefai/requester-common": "4.23.3"
   }
 }

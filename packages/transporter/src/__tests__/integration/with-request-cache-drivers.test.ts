@@ -1,7 +1,7 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
 
-import { createNullCache } from '@algolia/cache-common';
-import { createInMemoryCache } from '@algolia/cache-in-memory';
+import { createNullCache } from '@sefai/cache-common';
+import { createInMemoryCache } from '@sefai/cache-in-memory';
 import { anything, spy, verify, when } from 'ts-mockito';
 
 import { createFakeRequester, createFixtures } from '../fixtures';

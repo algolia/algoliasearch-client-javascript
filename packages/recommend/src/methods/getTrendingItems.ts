@@ -1,4 +1,4 @@
-import { MethodEnum } from '@algolia/requester-common';
+import { MethodEnum } from '@sefai/requester-common';
 
 import { BaseRecommendClient, TrendingItemsQuery, WithRecommendMethods } from '../types';
 

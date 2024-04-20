@@ -1,10 +1,10 @@
-import { ClientTransporterOptions, CreateClient } from '@algolia/client-common';
-import { createPersonalizationClient } from '@algolia/client-personalization';
+import { ClientTransporterOptions, CreateClient } from '@sefai/client-common';
+import { createPersonalizationClient } from '@sefai/client-personalization';
 
 import { RecommendationClient, RecommendationClientOptions } from '.';
 
 /**
- * @deprecated The `@algolia/client-recommendation` package is deprecated and you should use `@algolia/client-personalization` instead. To migrate, install the new package and replace `createRecommendationClient` with `createPersonalizationClient`.
+ * @deprecated The `@sefai/client-recommendation` package is deprecated and you should use `@sefai/client-personalization` instead. To migrate, install the new package and replace `createRecommendationClient` with `createPersonalizationClient`.
  */
 export const createRecommendationClient: CreateClient<
   RecommendationClient,
@@ -12,7 +12,7 @@ export const createRecommendationClient: CreateClient<
 > = options => {
   /* eslint-disable max-len */
   options.logger.info(
-    'The `@algolia/client-recommendation` package is deprecated and you should use `@algolia/client-personalization` instead.\n' +
+    'The `@sefai/client-recommendation` package is deprecated and you should use `@sefai/client-personalization` instead.\n' +
       'To migrate, install the new package and replace `createRecommendationClient` with `createPersonalizationClient`.'
   );
   /* eslint-enable max-len */

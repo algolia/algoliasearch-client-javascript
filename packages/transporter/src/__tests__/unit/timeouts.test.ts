@@ -1,4 +1,4 @@
-import { Requester } from '@algolia/requester-common';
+import { Requester } from '@sefai/requester-common';
 import { anything, deepEqual, spy, verify, when } from 'ts-mockito';
 
 import { createStatefulHost, Transporter } from '../..';
@@ -86,7 +86,7 @@ describe('the timeouts selection', () => {
     await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
       name: 'RetryError',
       message:
-        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
+        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@sefai.com.',
     });
 
     assertRequest({
@@ -111,7 +111,7 @@ describe('the timeouts selection', () => {
     await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
       name: 'RetryError',
       message:
-        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
+        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@sefai.com.',
     });
 
     assertRequest({
@@ -142,7 +142,7 @@ describe('the timeouts selection', () => {
     await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
       name: 'RetryError',
       message:
-        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@algolia.com.',
+        'Unreachable hosts - your application id may be incorrect. If the error persists, contact support@sefai.com.',
     });
 
     assertRequest({

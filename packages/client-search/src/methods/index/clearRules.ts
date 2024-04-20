@@ -1,6 +1,6 @@
-import { createWaitablePromise, encode, WaitablePromise } from '@algolia/client-common';
-import { MethodEnum } from '@algolia/requester-common';
-import { createMappedRequestOptions, RequestOptions } from '@algolia/transporter';
+import { createWaitablePromise, encode, WaitablePromise } from '@sefai/client-common';
+import { MethodEnum } from '@sefai/requester-common';
+import { createMappedRequestOptions, RequestOptions } from '@sefai/transporter';
 
 import { ClearRulesOptions, DeleteResponse, SearchIndex, waitTask } from '../..';
 

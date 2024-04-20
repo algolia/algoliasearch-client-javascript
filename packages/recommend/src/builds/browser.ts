@@ -1,11 +1,11 @@
-import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { createFallbackableCache } from '@algolia/cache-common';
-import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { AuthMode, version } from '@algolia/client-common';
-import { LogLevelEnum } from '@algolia/logger-common';
-import { createConsoleLogger } from '@algolia/logger-console';
-import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
-import { createUserAgent } from '@algolia/transporter';
+import { createBrowserLocalStorageCache } from '@sefai/cache-browser-local-storage';
+import { createFallbackableCache } from '@sefai/cache-common';
+import { createInMemoryCache } from '@sefai/cache-in-memory';
+import { AuthMode, version } from '@sefai/client-common';
+import { LogLevelEnum } from '@sefai/logger-common';
+import { createConsoleLogger } from '@sefai/logger-console';
+import { createBrowserXhrRequester } from '@sefai/requester-browser-xhr';
+import { createUserAgent } from '@sefai/transporter';
 
 import { createRecommendClient } from '../createRecommendClient';
 import {

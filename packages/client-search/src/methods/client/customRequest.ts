@@ -1,5 +1,5 @@
-import { MethodEnum } from '@algolia/requester-common';
-import { Request, RequestOptions } from '@algolia/transporter';
+import { MethodEnum } from '@sefai/requester-common';
+import { Request, RequestOptions } from '@sefai/transporter';
 
 import { SearchClient } from '../..';
 

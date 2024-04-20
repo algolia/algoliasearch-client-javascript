@@ -6,7 +6,7 @@ import {
   multipleGetObjects,
   saveObjects,
   setSettings,
-} from '@algolia/client-search';
+} from '@sefai/client-search';
 
 import { addMethods } from '..';
 import algoliasearchForBrowser from '../../../algoliasearch/src/builds/browser';

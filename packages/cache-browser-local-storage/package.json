@@ -1,5 +1,5 @@
 {
-  "name": "@algolia/cache-browser-local-storage",
+  "name": "@sefai/cache-browser-local-storage",
   "version": "4.23.3",
   "private": false,
   "description": "Promise-based cache library for browser using local storage.",
@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/cache-common": "4.23.3"
+    "@sefai/cache-common": "4.23.3"
   }
 }

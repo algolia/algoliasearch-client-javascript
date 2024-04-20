@@ -1,6 +1,6 @@
 /* eslint no-console: 0 */
 
-import { Logger, LogLevelEnum, LogLevelType } from '@algolia/logger-common';
+import { Logger, LogLevelEnum, LogLevelType } from '@sefai/logger-common';
 
 export function createConsoleLogger(logLevel: LogLevelType): Logger {
   return {

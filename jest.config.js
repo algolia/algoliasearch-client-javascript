@@ -61,24 +61,6 @@ module.exports = {
     ),
     Object.assign(
       {
-        displayName: 'browser',
-        testEnvironment: 'jsdom',
-        testPathIgnorePatterns: [
-          'packages/requester-node-http/*',
-          'packages/client-search/src/__tests__/integration/secured-api-keys.test.ts',
-          'packages/client-search/src/__tests__/integration/dictionary.test.ts',
-        ],
-        globals: {
-          environment: 'browser',
-          isBrowser: true,
-          'ts-jest': { isolatedModules: true },
-          window: {},
-        },
-      },
-      config
-    ),
-    Object.assign(
-      {
         displayName: 'node',
         testEnvironment: 'node',
         testPathIgnorePatterns: [

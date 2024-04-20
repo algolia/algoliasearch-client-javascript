@@ -1,5 +1,5 @@
 {
-  "name": "@algolia/requester-common",
+  "name": "@sefai/requester-common",
   "version": "4.23.3",
   "private": false,
   "description": "Common interfaces for promise-based request libraries",

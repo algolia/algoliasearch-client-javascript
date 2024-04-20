@@ -1,4 +1,4 @@
-import { SearchOptions } from '@algolia/client-search';
+import { SearchOptions } from '@sefai/client-search';
 
 import { Variant } from './Variant';
 

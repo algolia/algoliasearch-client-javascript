@@ -1,4 +1,4 @@
-import { version } from '@algolia/client-common';
+import { version } from '@sefai/client-common';
 
 import { createBrowserLocalStorageCache } from '../..';
 

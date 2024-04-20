@@ -1,4 +1,4 @@
-import { MethodType } from '@algolia/requester-common';
+import { MethodType } from '@sefai/requester-common';
 
 export type Request = {
   /**

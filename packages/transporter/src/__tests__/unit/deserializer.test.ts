@@ -1,5 +1,5 @@
-import { version } from '@algolia/client-common';
-import { Requester } from '@algolia/requester-common';
+import { version } from '@sefai/client-common';
+import { Requester } from '@sefai/requester-common';
 import { anything, spy, when } from 'ts-mockito';
 
 import { Transporter } from '../..';

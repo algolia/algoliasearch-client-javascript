@@ -1,7 +1,7 @@
-import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage';
-import { createNullCache } from '@algolia/cache-common';
-import { createInMemoryCache } from '@algolia/cache-in-memory';
-import { version } from '@algolia/client-common';
+import { createBrowserLocalStorageCache } from '@sefai/cache-browser-local-storage';
+import { createNullCache } from '@sefai/cache-common';
+import { createInMemoryCache } from '@sefai/cache-in-memory';
+import { version } from '@sefai/client-common';
 
 import { createFallbackableCache } from '../../createFallbackableCache';
 

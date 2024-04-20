@@ -1,4 +1,4 @@
-import { Settings } from '@algolia/client-search';
+import { Settings } from '@sefai/client-search';
 
 import { createFaker } from '../../../../client-common/src/__tests__/createFaker';
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';

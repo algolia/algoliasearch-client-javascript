@@ -1,6 +1,6 @@
-import { Cache } from '@algolia/cache-common';
-import { Logger } from '@algolia/logger-common';
-import { Requester } from '@algolia/requester-common';
+import { Cache } from '@sefai/cache-common';
+import { Logger } from '@sefai/logger-common';
+import { Requester } from '@sefai/requester-common';
 
 import {
   Headers,

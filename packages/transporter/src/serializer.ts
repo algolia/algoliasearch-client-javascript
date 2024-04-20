@@ -1,5 +1,5 @@
-import { encode } from '@algolia/client-common';
-import { MethodEnum } from '@algolia/requester-common';
+import { encode } from '@sefai/client-common';
+import { MethodEnum } from '@sefai/requester-common';
 
 import { Headers, Request, RequestOptions, StatelessHost, Transporter } from '.';
 

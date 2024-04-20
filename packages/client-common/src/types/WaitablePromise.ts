@@ -1,4 +1,4 @@
-import { RequestOptions } from '@algolia/transporter';
+import { RequestOptions } from '@sefai/transporter';
 
 export type WaitablePromise<TResponse> = Readonly<Promise<TResponse>> & {
   /**

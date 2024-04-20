@@ -1,7 +1,7 @@
 /* eslint sonarjs/cognitive-complexity: 0 */ // --> OFF
 
-import { createRetryablePromise } from '@algolia/client-common';
-import { ApiError, Transporter } from '@algolia/transporter';
+import { createRetryablePromise } from '@sefai/client-common';
+import { ApiError, Transporter } from '@sefai/transporter';
 
 import { TestSuite } from '../../../../client-common/src/__tests__/TestSuite';
 

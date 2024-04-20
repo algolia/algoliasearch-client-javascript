@@ -1,5 +1,5 @@
-import { MethodEnum } from '@algolia/requester-common';
-import { createMappedRequestOptions, RequestOptions } from '@algolia/transporter';
+import { MethodEnum } from '@sefai/requester-common';
+import { createMappedRequestOptions, RequestOptions } from '@sefai/transporter';
 
 import { RemoveUserIDResponse, SearchClient } from '../..';
 

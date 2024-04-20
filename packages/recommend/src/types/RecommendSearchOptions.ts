@@ -1,4 +1,4 @@
-import { SearchOptions } from '@algolia/client-search';
+import { SearchOptions } from '@sefai/client-search';
 
 export type RecommendSearchOptions = Omit<
   SearchOptions,

@@ -1,4 +1,4 @@
-import { Transporter } from '@algolia/transporter';
+import { Transporter } from '@sefai/transporter';
 
 export type SearchClient = {
   /**

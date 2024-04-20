@@ -1,5 +1,5 @@
-import { createNullCache } from '@algolia/cache-common';
-import { createInMemoryCache } from '@algolia/cache-in-memory';
+import { createNullCache } from '@sefai/cache-common';
+import { createInMemoryCache } from '@sefai/cache-in-memory';
 import {
   ABTest,
   addABTest,
@@ -15,8 +15,8 @@ import {
   GetABTestsResponse,
   stopABTest,
   StopABTestResponse,
-} from '@algolia/client-analytics';
-import { destroy, version, WaitablePromise } from '@algolia/client-common';
+} from '@sefai/client-analytics';
+import { destroy, version, WaitablePromise } from '@sefai/client-common';
 import {
   createPersonalizationClient,
   getPersonalizationStrategy,
@@ -25,7 +25,7 @@ import {
   PersonalizationStrategy,
   setPersonalizationStrategy,
   SetPersonalizationStrategyResponse,
-} from '@algolia/client-personalization';
+} from '@sefai/client-personalization';
 import {
   addApiKey,
   AddApiKeyOptions,
@@ -189,8 +189,8 @@ import {
   UserIDResponse,
   waitAppTask,
   waitTask,
-} from '@algolia/client-search';
-import { createNullLogger } from '@algolia/logger-common';
+} from '@sefai/client-search';
+import { createNullLogger } from '@sefai/logger-common';
 import {
   getFrequentlyBoughtTogether,
   getLookingSimilar,
@@ -200,10 +200,10 @@ import {
   getTrendingFacets,
   getTrendingItems,
   WithRecommendMethods,
-} from '@algolia/recommend';
-import { Destroyable } from '@algolia/requester-common';
-import { createNodeHttpRequester } from '@algolia/requester-node-http';
-import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
+} from '@sefai/recommend';
+import { Destroyable } from '@sefai/requester-common';
+import { createFetchRequester } from '@sefai/requester-fetch';
+import { createUserAgent, Request, RequestOptions } from '@sefai/transporter';
 
 import { AlgoliaSearchOptions, InitAnalyticsOptions, InitPersonalizationOptions } from '../types';
 
@@ -220,7 +220,7 @@ export default function algoliasearch(
       read: 5,
       write: 30,
     },
-    requester: createNodeHttpRequester(),
+    requester: createFetchRequester(),
     logger: createNullLogger(),
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),

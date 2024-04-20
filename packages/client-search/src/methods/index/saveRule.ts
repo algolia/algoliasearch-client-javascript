@@ -1,5 +1,5 @@
-import { WaitablePromise } from '@algolia/client-common';
-import { RequestOptions } from '@algolia/transporter';
+import { WaitablePromise } from '@sefai/client-common';
+import { RequestOptions } from '@sefai/transporter';
 
 import { Rule, SaveRuleResponse, saveRules, SaveRulesOptions, SearchIndex } from '../..';
 

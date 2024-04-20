@@ -1,5 +1,5 @@
 {
-  "name": "@algolia/client-recommendation",
+  "name": "@sefai/client-recommendation",
   "version": "4.23.3",
   "private": false,
   "repository": {
@@ -16,8 +16,8 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/client-common": "4.23.3",
-    "@algolia/client-personalization": "4.23.3",
-    "@algolia/requester-common": "4.23.3"
+    "@sefai/client-common": "4.23.3",
+    "@sefai/client-personalization": "4.23.3",
+    "@sefai/requester-common": "4.23.3"
   }
 }

@@ -1,3 +1,3 @@
-import { ClientTransporterOptions } from '@algolia/client-common';
+import { ClientTransporterOptions } from '@sefai/client-common';
 
 export type RecommendOptions = Partial<ClientTransporterOptions>;

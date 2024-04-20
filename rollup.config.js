@@ -63,14 +63,6 @@ packagesConfig.push({
 });
 
 packagesConfig.push({
-  output: 'requester-node-http',
-  package: 'requester-node-http',
-  input: defaultInput,
-  formats: ['cjs', 'esm'],
-  external: ['https', 'http', 'url'],
-});
-
-packagesConfig.push({
   output: 'algoliasearch',
   package: 'algoliasearch',
   input: `src/builds/node.ts`,
@@ -105,14 +97,14 @@ packagesConfig.push(
   {
     output: 'recommend',
     package: 'recommend',
-    name: '@algolia/recommend',
+    name: '@sefai/recommend',
     input: `src/builds/browser.ts`,
     formats: ['esm-browser', 'umd'],
   },
   {
     output: 'recommend',
     package: 'recommend',
-    name: '@algolia/recommend',
+    name: '@sefai/recommend',
     input: `src/builds/node.ts`,
     formats: ['cjs'],
   }
@@ -123,7 +115,7 @@ const aliasOptions = { resolve: ['.ts'] };
 
 fs.readdirSync(packagesDir).forEach(dir => {
   if (dir !== 'algoliasearch' && fs.statSync(path.resolve(packagesDir, dir)).isDirectory()) {
-    aliasOptions[`@algolia/${dir}`] = path.resolve(packagesDir, `${dir}/index`);
+    aliasOptions[`@sefai/${dir}`] = path.resolve(packagesDir, `${dir}/index`);
   }
 });
 
