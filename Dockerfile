@@ -7,7 +7,7 @@ FROM $NODE_IMAGE
 WORKDIR /
 
 # We need to install some dependencies for bundlesize (https://github.com/siddharthkp/bundlesize/pull/370)
-RUN apk add --no-cache bash python3 make g++
+RUN apk add --no-cache bash python3 make g++ git
 
 COPY package.json yarn.lock ./
 
