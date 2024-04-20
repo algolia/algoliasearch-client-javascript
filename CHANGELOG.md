@@ -1,3 +1,9 @@
+## [v4.23.5](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.4...4.23.5)
+
+* bump version ([bba9df1](https://github.com/sefai/algoliasearch-client-javascript/commit/bba9df1))
+
+
+
 ## [v4.23.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.2...4.23.3)
 
 * fix(types): add `serverTimeMS` to search response (#1518) ([a1d1707](https://github.com/algolia/algoliasearch-client-javascript/commit/a1d1707)), closes [#1518](https://github.com/algolia/algoliasearch-client-javascript/issues/1518)
