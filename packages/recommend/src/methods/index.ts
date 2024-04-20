@@ -3,9 +3,9 @@
  */
 
 export * from './getFrequentlyBoughtTogether';
+export * from './getLookingSimilar';
 export * from './getRecommendations';
+export * from './getRecommendedForYou';
 export * from './getRelatedProducts';
 export * from './getTrendingFacets';
 export * from './getTrendingItems';
-export * from './getLookingSimilar';
-export * from './getRecommendedForYou';
