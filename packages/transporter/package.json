@@ -1,6 +1,6 @@
 {
   "name": "@sefai/transporter",
-  "version": "4.23.5",
+  "version": "4.23.6",
   "private": false,
   "description": "Promise-based transporter layer with embedded retry strategy.",
   "repository": {
@@ -17,8 +17,8 @@
     "dist"
   ],
   "dependencies": {
-    "@sefai/cache-common": "4.23.5",
-    "@sefai/logger-common": "4.23.5",
-    "@sefai/requester-common": "4.23.5"
+    "@sefai/cache-common": "4.23.6",
+    "@sefai/logger-common": "4.23.6",
+    "@sefai/requester-common": "4.23.6"
   }
 }

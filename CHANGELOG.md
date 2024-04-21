@@ -1,3 +1,9 @@
+## [v4.23.6](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.5...4.23.6)
+
+* chore: release v4.23.5 ([baa8793](https://github.com/sefai/algoliasearch-client-javascript/commit/baa8793))
+
+
+
 ## [v4.23.5](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.4...4.23.5)
 
 * bump version ([bba9df1](https://github.com/sefai/algoliasearch-client-javascript/commit/bba9df1))

@@ -1,6 +1,6 @@
 {
   "name": "@sefai/client-personalization",
-  "version": "4.23.5",
+  "version": "4.23.6",
   "private": false,
   "repository": {
     "type": "git",
@@ -16,8 +16,8 @@
     "dist"
   ],
   "dependencies": {
-    "@sefai/client-common": "4.23.5",
-    "@sefai/requester-common": "4.23.5",
-    "@sefai/transporter": "4.23.5"
+    "@sefai/client-common": "4.23.6",
+    "@sefai/requester-common": "4.23.6",
+    "@sefai/transporter": "4.23.6"
   }
 }

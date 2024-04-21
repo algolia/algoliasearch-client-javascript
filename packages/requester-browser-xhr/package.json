@@ -1,6 +1,6 @@
 {
   "name": "@sefai/requester-browser-xhr",
-  "version": "4.23.5",
+  "version": "4.23.6",
   "private": false,
   "description": "Promise-based request library for browser using xhr.",
   "repository": {
@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@sefai/requester-common": "4.23.5"
+    "@sefai/requester-common": "4.23.6"
   }
 }
