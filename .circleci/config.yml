@@ -58,3 +58,34 @@ jobs:
       - run:
           name: Lint tests
           command: yarn test:types
+
+  release:
+    working_directory: ~/algoliasearch-client-javascript
+    description: Perform a new release of the JavaScript client
+    docker:
+      - image: cimg/node:14.17
+    steps:
+      - checkout
+      - run:
+          command: yarn install
+      - run:
+          command: |
+            if [[ -z "$GITHUB_TOKEN" ]]; then echo '$GITHUB_TOKEN is not set'; exit 1; fi
+            yarn shipjs trigger
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - test_lint:
+          cimg_version: '12.22'
+      - test_types:
+          cimg_version: '12.22'
+      - release:
+          requires:
+            - test_lint
+            - test_types
+          filters:
+            branches:
+              only:
+                - master
