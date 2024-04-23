@@ -1,3 +1,8 @@
+## [5.0.0-beta.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.0...5.0.0-beta.1)
+
+- [b621988bc](https://github.com/algolia/api-clients-automation/commit/b621988bc) feat(specs): promote @kai687 to code owner ([#3014](https://github.com/algolia/api-clients-automation/pull/3014)) by [@Fluf22](https://github.com/Fluf22/)
+- [f9877a8ae](https://github.com/algolia/api-clients-automation/commit/f9877a8ae) fix(specs): remove periods on summaries ([#3013](https://github.com/algolia/api-clients-automation/pull/3013)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0-alpha.114](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.113...5.0.0-alpha.114)
 
 - [96e620626](https://github.com/algolia/api-clients-automation/commit/96e620626) feat(javascript): allow custom connect timeout ([#3010](https://github.com/algolia/api-clients-automation/pull/3010)) by [@shortcuts](https://github.com/shortcuts/)
