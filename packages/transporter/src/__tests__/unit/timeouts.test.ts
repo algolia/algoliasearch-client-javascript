@@ -86,7 +86,7 @@ describe('the timeouts selection', () => {
     await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
       name: 'RetryError',
       message:
-        'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the [Algolia Support team](https://support.algolia.com/hc/en-us/requests/new).',
+        'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support .',
     });
 
     assertRequest({
@@ -111,7 +111,7 @@ describe('the timeouts selection', () => {
     await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
       name: 'RetryError',
       message:
-        'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the [Algolia Support team](https://support.algolia.com/hc/en-us/requests/new).',
+        'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support .',
     });
 
     assertRequest({
@@ -142,7 +142,7 @@ describe('the timeouts selection', () => {
     await expect(transporter.read(transporterRequest)).rejects.toMatchObject({
       name: 'RetryError',
       message:
-        'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the [Algolia Support team](https://support.algolia.com/hc/en-us/requests/new).',
+        'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support .',
     });
 
     assertRequest({
