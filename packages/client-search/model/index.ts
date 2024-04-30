@@ -88,7 +88,6 @@ export * from './logQuery';
 export * from './logType';
 export * from './matchLevel';
 export * from './matchedGeoLocation';
-export * from './mixedSearchFilters';
 export * from './mode';
 export * from './multipleBatchRequest';
 export * from './multipleBatchResponse';

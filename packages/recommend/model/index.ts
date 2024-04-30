@@ -39,7 +39,6 @@ export * from './lookingSimilarModel';
 export * from './lookingSimilarQuery';
 export * from './matchLevel';
 export * from './matchedGeoLocation';
-export * from './mixedSearchFilters';
 export * from './mode';
 export * from './numericFilters';
 export * from './optionalFilters';

@@ -62,7 +62,6 @@ export * from './listIndicesResponse';
 export * from './logType';
 export * from './matchLevel';
 export * from './matchedGeoLocation';
-export * from './mixedSearchFilters';
 export * from './mode';
 export * from './numericFilters';
 export * from './operationType';
