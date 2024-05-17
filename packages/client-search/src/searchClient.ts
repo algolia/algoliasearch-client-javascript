@@ -123,7 +123,7 @@ import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObject
 import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
-export const apiClientVersion = '5.0.0-beta.1';
+export const apiClientVersion = '5.0.0-beta.2';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

@@ -33,7 +33,7 @@ import type { InventoryResponse } from '../model/inventoryResponse';
 import type { LatencyResponse } from '../model/latencyResponse';
 import type { StatusResponse } from '../model/statusResponse';
 
-export const apiClientVersion = '1.0.0-beta.1';
+export const apiClientVersion = '1.0.0-beta.2';
 
 function getDefaultHosts(): Host[] {
   return [

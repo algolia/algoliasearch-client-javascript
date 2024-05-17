@@ -1,3 +1,8 @@
+## [5.0.0-beta.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.1...5.0.0-beta.2)
+
+- [2b70d9ea5](https://github.com/algolia/api-clients-automation/commit/2b70d9ea5) fix(specs): exhaustiveFacetsCount is not deprecated for sffv ([#3089](https://github.com/algolia/api-clients-automation/pull/3089)) by [@kai687](https://github.com/kai687/)
+- [1250c2b3c](https://github.com/algolia/api-clients-automation/commit/1250c2b3c) fix(specs): simplify filter types ([#3042](https://github.com/algolia/api-clients-automation/pull/3042)) by [@millotp](https://github.com/millotp/)
+
 ## [5.0.0-beta.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.0...5.0.0-beta.1)
 
 - [b621988bc](https://github.com/algolia/api-clients-automation/commit/b621988bc) feat(specs): promote @kai687 to code owner ([#3014](https://github.com/algolia/api-clients-automation/pull/3014)) by [@Fluf22](https://github.com/Fluf22/)
