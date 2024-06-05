@@ -25,7 +25,7 @@ export class ErrorWithStackTrace extends AlgoliaError {
 export class RetryError extends ErrorWithStackTrace {
   constructor(stackTrace: StackFrame[]) {
     super(
-      'Unreachable hosts - your application id may be incorrect. If the error persists, please create a ticket at https://support.algolia.com/ sharing steps we can use to reproduce the issue.',
+      'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support.',
       stackTrace,
       'RetryError'
     );
