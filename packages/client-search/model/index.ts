@@ -110,6 +110,7 @@ export * from './removeStopWords';
 export * from './removeUserIdResponse';
 export * from './removeWordsIfNoResults';
 export * from './renderingContent';
+export * from './replaceAllObjectsResponse';
 export * from './replaceSourceResponse';
 export * from './rule';
 export * from './saveObjectResponse';

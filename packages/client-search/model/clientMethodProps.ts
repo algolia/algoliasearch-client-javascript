@@ -9,7 +9,6 @@ import type { AssignUserIdParams } from './assignUserIdParams';
 import type { AttributeToUpdate } from './attributeToUpdate';
 import type { BatchAssignUserIdsParams } from './batchAssignUserIdsParams';
 import type { BatchDictionaryEntriesParams } from './batchDictionaryEntriesParams';
-import type { BatchResponse } from './batchResponse';
 import type { BatchWriteParams } from './batchWriteParams';
 import type { BrowseParams } from './browseParams';
 import type { DeleteByParams } from './deleteByParams';
@@ -29,7 +28,6 @@ import type { SearchSynonymsParams } from './searchSynonymsParams';
 import type { SecuredAPIKeyRestrictions } from './securedAPIKeyRestrictions';
 import type { Source } from './source';
 import type { SynonymHit } from './synonymHit';
-import type { UpdatedAtResponse } from './updatedAtResponse';
 
 /**
  * Properties for the `addOrUpdateObject` method.
@@ -822,21 +820,4 @@ export type ReplaceAllObjectsOptions = {
    * The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    */
   batchSize?: number;
-};
-
-export type ReplaceAllObjectsResponse = {
-  /**
-   * The response of the `operationIndex` request for the `copy` operation.
-   */
-  copyOperationResponse: UpdatedAtResponse;
-
-  /**
-   * The response of the `batch` request(s).
-   */
-  batchResponses: BatchResponse[];
-
-  /**
-   * The response of the `operationIndex` request for the `move` operation.
-   */
-  moveOperationResponse: UpdatedAtResponse;
 };

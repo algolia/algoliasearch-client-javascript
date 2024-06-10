@@ -28,7 +28,6 @@ import type {
   BrowseOptions,
   ChunkedBatchOptions,
   ReplaceAllObjectsOptions,
-  ReplaceAllObjectsResponse,
   WaitForApiKeyOptions,
   WaitForTaskOptions,
   AddOrUpdateObjectProps,
@@ -102,6 +101,7 @@ import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
 import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
+import type { ReplaceAllObjectsResponse } from '../model/replaceAllObjectsResponse';
 import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
 import type { Rule } from '../model/rule';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
