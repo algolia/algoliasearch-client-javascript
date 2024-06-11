@@ -519,9 +519,10 @@ export function createSearchClient({
       let requests: BatchRequest[] = [];
       const responses: BatchResponse[] = [];
 
-      for (const [i, obj] of objects.entries()) {
+      const objectEntries = objects.entries();
+      for (const [i, obj] of objectEntries) {
         requests.push({ action, body: obj });
-        if (i % batchSize === 0) {
+        if (requests.length === batchSize || i === objects.length - 1) {
           responses.push(
             await this.batch(
               { indexName, batchWriteParams: { requests } },
@@ -548,7 +549,7 @@ export function createSearchClient({
      * @param replaceAllObjects - The `replaceAllObjects` object.
      * @param replaceAllObjects.indexName - The `indexName` to replace `objects` in.
      * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
-     * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async replaceAllObjects(
