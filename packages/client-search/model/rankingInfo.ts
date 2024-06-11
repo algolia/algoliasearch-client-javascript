@@ -10,7 +10,7 @@ export type RankingInfo = {
   /**
    * Whether a filter matched the query.
    */
-  filters: number;
+  filters?: number;
 
   /**
    * Position of the first matched word in the best matching attribute of the record.
@@ -44,7 +44,7 @@ export type RankingInfo = {
   /**
    * Whether the record was promoted by a rule.
    */
-  promoted: boolean;
+  promoted?: boolean;
 
   /**
    * Number of words between multiple matches in the query plus 1. For single word queries, `proximityDistance` is 0.
@@ -59,7 +59,7 @@ export type RankingInfo = {
   /**
    * Number of matched words.
    */
-  words: number;
+  words?: number;
 
   /**
    * Whether the record is re-ranked.
