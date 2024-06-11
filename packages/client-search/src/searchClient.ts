@@ -30,6 +30,7 @@ import type {
   ReplaceAllObjectsOptions,
   WaitForApiKeyOptions,
   WaitForTaskOptions,
+  WaitForAppTaskOptions,
   AddOrUpdateObjectProps,
   AssignUserIdProps,
   BatchProps,
@@ -249,6 +250,40 @@ export function createSearchClient({
 
       return createIterablePromise({
         func: () => this.getTask({ indexName, taskID }, requestOptions),
+        validate: (response) => response.status === 'published',
+        aggregator: () => (retryCount += 1),
+        error: {
+          validate: () => retryCount >= maxRetries,
+          message: () =>
+            `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+        },
+        timeout: () => timeout(retryCount),
+      });
+    },
+
+    /**
+     * Helper: Wait for an application-level task to complete for a given `taskID`.
+     *
+     * @summary Helper method that waits for a task to be published (completed).
+     * @param waitForAppTaskOptions - The `waitForTaskOptions` object.
+     * @param waitForAppTaskOptions.taskID - The `taskID` returned in the method response.
+     * @param waitForAppTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param waitForAppTaskOptions.timeout - The function to decide how long to wait between retries.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
+     */
+    waitForAppTask(
+      {
+        taskID,
+        maxRetries = 50,
+        timeout = (retryCount: number): number =>
+          Math.min(retryCount * 200, 5000),
+      }: WaitForAppTaskOptions,
+      requestOptions?: RequestOptions
+    ): Promise<GetTaskResponse> {
+      let retryCount = 0;
+
+      return createIterablePromise({
+        func: () => this.getAppTask({ taskID }, requestOptions),
         validate: (response) => response.status === 'published',
         aggregator: () => (retryCount += 1),
         error: {

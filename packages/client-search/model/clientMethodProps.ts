@@ -748,15 +748,18 @@ type WaitForOptions = Partial<{
   timeout: (retryCount: number) => number;
 }>;
 
-export type WaitForTaskOptions = WaitForOptions & {
-  /**
-   * The `indexName` where the operation was performed.
-   */
-  indexName: string;
+export type WaitForAppTaskOptions = WaitForOptions & {
   /**
    * The `taskID` returned by the method response.
    */
   taskID: number;
+};
+
+export type WaitForTaskOptions = WaitForAppTaskOptions & {
+  /**
+   * The `indexName` where the operation was performed.
+   */
+  indexName: string;
 };
 
 export type WaitForApiKeyOptions = WaitForOptions & {
