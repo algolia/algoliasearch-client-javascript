@@ -1,5 +1,3 @@
-....
-
 <p align="center">
   <a href="https://www.algolia.com">
     <img alt="Algolia for JavaScript" src="https://raw.githubusercontent.com/algolia/algoliasearch-client-common/master/banners/javascript.png" >
@@ -16,9 +14,85 @@
 </p>
 
 <p align="center">
-  <a href="https://api-clients-automation.netlify.app/docs/clients/introduction" target="_blank">Documentation</a>
+  <a href="https://www.algolia.com/doc/api-client/getting-started/install/javascript/" target="_blank">Documentation</a>  •
+  <a href="https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/" target="_blank">InstantSearch</a>  •
+  <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
+  <a href="http://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
+  <a href="https://github.com/algolia/algoliasearch-client-javascript/issues" target="_blank">Report a bug</a>  •
+  <a href="https://www.algolia.com/doc/api-client/troubleshooting/faq/javascript/" target="_blank">FAQ</a>  •
+  <a href="https://alg.li/support" target="_blank">Support</a>
 </p>
 
-# Contributing to this repository
+**Migration note from v4.x to v5.x**
 
-The Algolia API clients are automatically generated, you can find everything here https://github.com/algolia/api-clients-automation
+> In July 2024, we released the v5 version of our JavaScript client. If you are using version 4.x of the client, read the [migration guide to version 5.x](https://api-clients-automation.netlify.app/docs/clients/migration-guides/). Version 4.x will **no longer** be under active development.
+
+## ✨ Features
+
+- Thin & **minimal low-level HTTP client** to interact with Algolia's API
+- Works both on the **browser** and **node.js**
+- **UMD and ESM compatible**, you can use it with any module loader
+- Built with TypeScript
+
+## 💡 Getting Started
+
+First, install Algolia JavaScript API Client via your favorite package manager:
+
+```bash
+yarn add algoliasearch@beta
+# or
+npm install algoliasearch@beta
+```
+
+Or Without a package manager:
+
+Add the following JavaScript snippet to the `<head>` of your website:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@beta/dist/algoliasearch.umd.min.js"></script>
+```
+
+Then, create objects on your index:
+
+```js
+import { algoliasearch } from 'algoliasearch';
+
+const client = algoliasearch('YourApplicationID', 'YourAdminAPIKey');
+
+// Add a new record to your Algolia index
+const saveResponse = await client.saveObject({
+  indexName: '<YOUR_INDEX_NAME>',
+  body: { objectID: 'id', test: 'val' },
+});
+
+// use typed response
+console.log(saveResponse);
+
+// Poll the task status to know when it has been indexed
+await client.waitForTask({ indexName: '<YOUR_INDEX_NAME>', taskID: saveResponse.taskID });
+
+// Fetch search results, with typo tolerance
+const searchResponse = await client.search({
+  requests: [
+    {
+      indexName: '<YOUR_INDEX_NAME>',
+      query: '<YOUR_QUERY>',
+      hitsPerPage: 50,
+    },
+  ],
+});
+
+// use typed response
+console.log(searchResponse);
+```
+
+For the full documentation, visit the **[online documentation](https://api-clients-automation.netlify.app/docs/clients/usage)**.
+
+## ❓ Troubleshooting
+
+Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/javascript/) where you will find answers for the most common issues and gotchas with the client.
+
+## 📄 License
+
+Algolia JavaScript API Client is an open-sourced software licensed under the [MIT license](LICENSE.md).
+
