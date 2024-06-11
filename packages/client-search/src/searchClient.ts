@@ -51,6 +51,7 @@ import type {
   DeleteSourceProps,
   DeleteSynonymProps,
   GetApiKeyProps,
+  GetAppTaskProps,
   GetLogsProps,
   GetObjectProps,
   GetRuleProps,
@@ -1541,6 +1542,43 @@ export function createSearchClient({
       const requestPath = '/1/keys/{key}'.replace(
         '{key}',
         encodeURIComponent(key)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Checks the status of a given application task.
+     *
+     * Required API Key ACLs:
+     * - editSettings.
+     *
+     * @param getAppTask - The getAppTask object.
+     * @param getAppTask.taskID - Unique task identifier.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getAppTask(
+      { taskID }: GetAppTaskProps,
+      requestOptions?: RequestOptions
+    ): Promise<GetTaskResponse> {
+      if (!taskID) {
+        throw new Error(
+          'Parameter `taskID` is required when calling `getAppTask`.'
+        );
+      }
+
+      const requestPath = '/1/task/{taskID}'.replace(
+        '{taskID}',
+        encodeURIComponent(taskID)
       );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};

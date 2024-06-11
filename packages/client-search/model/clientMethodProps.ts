@@ -306,6 +306,16 @@ export type GetApiKeyProps = {
 };
 
 /**
+ * Properties for the `getAppTask` method.
+ */
+export type GetAppTaskProps = {
+  /**
+   * Unique task identifier.
+   */
+  taskID: number;
+};
+
+/**
  * Properties for the `getLogs` method.
  */
 export type GetLogsProps = {
