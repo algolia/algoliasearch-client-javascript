@@ -579,6 +579,7 @@ export function createSearchClient({
 
     /**
      * Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
+     * See https://api-clients-automation.netlify.app/docs/contributing/add-new-api-client#5-helpers for implementation details.
      *
      * @summary Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
      * @param replaceAllObjects - The `replaceAllObjects` object.
@@ -594,7 +595,29 @@ export function createSearchClient({
       const randomSuffix = Math.random().toString(36).substring(7);
       const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
 
-      const copyOperationResponse = await this.operationIndex(
+      let copyOperationResponse = await this.operationIndex(
+        {
+          indexName,
+          operationIndexParams: {
+            operation: 'copy',
+            destination: tmpIndexName,
+            scope: ['settings', 'rules', 'synonyms'],
+          },
+        },
+        requestOptions
+      );
+
+      const batchResponses = await this.chunkedBatch(
+        { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
+        requestOptions
+      );
+
+      await this.waitForTask({
+        indexName: tmpIndexName,
+        taskID: copyOperationResponse.taskID,
+      });
+
+      copyOperationResponse = await this.operationIndex(
         {
           indexName,
           operationIndexParams: {
@@ -606,14 +629,9 @@ export function createSearchClient({
         requestOptions
       );
       await this.waitForTask({
-        indexName,
+        indexName: tmpIndexName,
         taskID: copyOperationResponse.taskID,
       });
-
-      const batchResponses = await this.chunkedBatch(
-        { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
-        requestOptions
-      );
 
       const moveOperationResponse = await this.operationIndex(
         {
@@ -623,7 +641,7 @@ export function createSearchClient({
         requestOptions
       );
       await this.waitForTask({
-        indexName,
+        indexName: tmpIndexName,
         taskID: moveOperationResponse.taskID,
       });
 
