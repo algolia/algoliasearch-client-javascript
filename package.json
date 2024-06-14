@@ -11,6 +11,7 @@
     "clean": "lerna run clean --include-dependencies",
     "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --force-publish --yes",
     "release:publish": "tsc --project tsconfig.script.json && node dist/scripts/publish.js",
+    "test": "lerna run test",
     "test:size": "bundlesize"
   },
   "devDependencies": {

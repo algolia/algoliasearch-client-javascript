@@ -118,7 +118,7 @@ describe('timeout handling', () => {
   beforeAll(() => {
     server = createTestServer();
 
-    server.listen('1111');
+    server.listen('1113');
   });
 
   afterAll((done) => {
