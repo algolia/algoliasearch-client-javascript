@@ -282,11 +282,11 @@ export type GetEventsProps = {
    */
   order?: OrderKeys;
   /**
-   * Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+   * Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
    */
   startDate?: string;
   /**
-   * Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
+   * Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
    */
   endDate?: string;
 };
@@ -330,11 +330,11 @@ export type GetRunsProps = {
    */
   order?: OrderKeys;
   /**
-   * Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+   * Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
    */
   startDate?: string;
   /**
-   * Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
+   * Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
    */
   endDate?: string;
 };

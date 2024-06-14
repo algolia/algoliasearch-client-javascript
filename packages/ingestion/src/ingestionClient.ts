@@ -1073,8 +1073,8 @@ export function createIngestionClient({
      * @param getEvents.type - Event type for filtering the list of task runs.
      * @param getEvents.sort - Property by which to sort the list of task run events.
      * @param getEvents.order - Sort order of the response, ascending or descending.
-     * @param getEvents.startDate - Date and time in RFC3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
-     * @param getEvents.endDate - Date and time in RFC3339 format for the latest events to retrieve. By default, the current time is used.
+     * @param getEvents.startDate - Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+     * @param getEvents.endDate - Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getEvents(
@@ -1198,8 +1198,8 @@ export function createIngestionClient({
      * @param getRuns.taskID - Task ID for filtering the list of task runs.
      * @param getRuns.sort - Property by which to sort the list of task runs.
      * @param getRuns.order - Sort order of the response, ascending or descending.
-     * @param getRuns.startDate - Date in RFC3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-     * @param getRuns.endDate - Date in RFC3339 format for the latest run to retrieve. By default, the current day is used.
+     * @param getRuns.startDate - Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+     * @param getRuns.endDate - Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRuns(

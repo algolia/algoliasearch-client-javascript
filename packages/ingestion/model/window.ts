@@ -5,12 +5,12 @@
  */
 export type Window = {
   /**
-   * Date in RFC3339 format representing the oldest data in the time window.
+   * Date in RFC 3339 format representing the oldest data in the time window.
    */
   startDate: string;
 
   /**
-   * Date in RFC3339 format representing the newest data in the time window.
+   * Date in RFC 3339 format representing the newest data in the time window.
    */
   endDate: string;
 };

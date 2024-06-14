@@ -34,7 +34,7 @@ export type Event = {
   data?: Record<string, any>;
 
   /**
-   * Date of publish RFC3339 format.
+   * Date of publish RFC 3339 format.
    */
   publishedAt: string;
 };

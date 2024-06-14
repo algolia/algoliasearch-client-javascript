@@ -15,7 +15,7 @@ export type AuthenticationUpdateResponse = {
   name: string;
 
   /**
-   * Date of last update in RFC3339 format.
+   * Date of last update in RFC 3339 format.
    */
   updatedAt: string;
 };

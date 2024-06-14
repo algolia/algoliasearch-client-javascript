@@ -15,7 +15,7 @@ export type DestinationCreateResponse = {
   name: string;
 
   /**
-   * Date of creation in RFC3339 format.
+   * Date of creation in RFC 3339 format.
    */
   createdAt: string;
 };

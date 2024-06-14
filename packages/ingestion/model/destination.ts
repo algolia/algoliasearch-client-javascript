@@ -22,12 +22,12 @@ export type Destination = {
   input: DestinationInput;
 
   /**
-   * Date of creation in RFC3339 format.
+   * Date of creation in RFC 3339 format.
    */
   createdAt: string;
 
   /**
-   * Date of last update in RFC3339 format.
+   * Date of last update in RFC 3339 format.
    */
   updatedAt?: string;
 

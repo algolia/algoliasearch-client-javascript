@@ -40,17 +40,17 @@ export type Run = {
   type: RunType;
 
   /**
-   * Date of creation in RFC3339 format.
+   * Date of creation in RFC 3339 format.
    */
   createdAt: string;
 
   /**
-   * Date of start in RFC3339 format.
+   * Date of start in RFC 3339 format.
    */
   startedAt?: string;
 
   /**
-   * Date of finish in RFC3339 format.
+   * Date of finish in RFC 3339 format.
    */
   finishedAt?: string;
 };
