@@ -128,9 +128,9 @@ export type BaseSearchResponse = Record<string, any> & {
   serverUsed?: string;
 
   /**
-   * An object with custom data.  You can store up to 32&nbsp;kB as custom data.
+   * An object with custom data.  You can store up to 32kB as custom data.
    */
-  userData?: any | null;
+  userData?: Record<string, any>;
 
   /**
    * Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
