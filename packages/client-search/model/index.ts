@@ -143,7 +143,7 @@ export * from './searchTypeDefault';
 export * from './searchTypeFacet';
 export * from './searchUserIdsParams';
 export * from './searchUserIdsResponse';
-export * from './securedAPIKeyRestrictions';
+export * from './securedApiKeyRestrictions';
 export * from './semanticSearch';
 export * from './snippetResult';
 export * from './snippetResultOption';

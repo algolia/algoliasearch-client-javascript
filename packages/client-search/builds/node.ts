@@ -70,7 +70,29 @@ export function searchClient(
       parentApiKey,
       restrictions = {},
     }: GenerateSecuredApiKeyOptions): string {
-      const queryParameters = serializeQueryParameters(restrictions);
+      let mergedRestrictions = restrictions;
+      if (restrictions.searchParams) {
+        // merge searchParams with the root restrictions
+        mergedRestrictions = {
+          ...restrictions,
+          ...restrictions.searchParams,
+        };
+
+        delete mergedRestrictions.searchParams;
+      }
+
+      mergedRestrictions = Object.keys(mergedRestrictions)
+        .sort()
+        .reduce(
+          (acc, key) => {
+            // eslint-disable-next-line no-param-reassign
+            acc[key] = (mergedRestrictions as any)[key];
+            return acc;
+          },
+          {} as Record<string, unknown>
+        );
+
+      const queryParameters = serializeQueryParameters(mergedRestrictions);
       return Buffer.from(
         createHmac('sha256', parentApiKey)
           .update(queryParameters)

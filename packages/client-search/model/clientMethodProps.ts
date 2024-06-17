@@ -25,7 +25,7 @@ import type { SearchParams } from './searchParams';
 import type { SearchParamsObject } from './searchParamsObject';
 import type { SearchRulesParams } from './searchRulesParams';
 import type { SearchSynonymsParams } from './searchSynonymsParams';
-import type { SecuredAPIKeyRestrictions } from './securedAPIKeyRestrictions';
+import type { SecuredApiKeyRestrictions } from './securedApiKeyRestrictions';
 import type { Source } from './source';
 import type { SynonymHit } from './synonymHit';
 
@@ -796,7 +796,7 @@ export type GenerateSecuredApiKeyOptions = {
   /**
    * A set of properties defining the restrictions of the secured API key.
    */
-  restrictions?: SecuredAPIKeyRestrictions;
+  restrictions?: SecuredApiKeyRestrictions;
 };
 
 export type GetSecuredApiKeyRemainingValidityOptions = {

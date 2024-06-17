@@ -647,6 +647,7 @@ export function createSearchClient({
 
       return { copyOperationResponse, batchResponses, moveOperationResponse };
     },
+
     /**
      * Creates a new API key with specific permissions and restrictions.
      *

@@ -2,7 +2,7 @@
 
 import type { SearchParamsObject } from './searchParamsObject';
 
-export type SecuredAPIKeyRestrictions = {
+export type SecuredApiKeyRestrictions = {
   searchParams?: SearchParamsObject;
 
   /**
