@@ -130,7 +130,7 @@ describe('timeout handling', () => {
     const response = await requester.send({
       ...timeoutRequest,
       connectTimeout: 1000,
-      url: 'http://localhost:1111/connection_timeout',
+      url: 'http://localhost:1113/connection_timeout',
     });
 
     const now = Date.now();
@@ -145,7 +145,7 @@ describe('timeout handling', () => {
     const response = await requester.send({
       ...timeoutRequest,
       connectTimeout: 2000,
-      url: 'http://localhost:1111/connection_timeout',
+      url: 'http://localhost:1113/connection_timeout',
     });
 
     const now = Date.now();
@@ -161,7 +161,7 @@ describe('timeout handling', () => {
     const response = await requester.send({
       ...timeoutRequest,
       responseTimeout: 2000,
-      url: 'http://localhost:1111',
+      url: 'http://localhost:1113',
     });
 
     const now = Date.now();
@@ -176,7 +176,7 @@ describe('timeout handling', () => {
     const response = await requester.send({
       ...timeoutRequest,
       responseTimeout: 3000,
-      url: 'http://localhost:1111',
+      url: 'http://localhost:1113',
     });
 
     const now = Date.now();
@@ -190,7 +190,7 @@ describe('timeout handling', () => {
     const before = Date.now();
     const response = await requester.send({
       ...requestStub,
-      url: 'http://localhost:1111',
+      url: 'http://localhost:1113',
       responseTimeout: 6000,
     });
 
