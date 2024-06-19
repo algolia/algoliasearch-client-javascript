@@ -49,6 +49,7 @@ import type {
   UpdateDestinationProps,
   UpdateSourceProps,
   UpdateTaskProps,
+  ValidateSourceBeforeUpdateProps,
 } from '../model/clientMethodProps';
 import type { DeleteResponse } from '../model/deleteResponse';
 import type { Destination } from '../model/destination';
@@ -74,6 +75,7 @@ import type { SourceCreate } from '../model/sourceCreate';
 import type { SourceCreateResponse } from '../model/sourceCreateResponse';
 import type { SourceSearch } from '../model/sourceSearch';
 import type { SourceUpdateResponse } from '../model/sourceUpdateResponse';
+import type { SourceValidateResponse } from '../model/sourceValidateResponse';
 import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { Task } from '../model/task';
 import type { TaskCreate } from '../model/taskCreate';
@@ -1913,6 +1915,83 @@ export function createIngestionClient({
         queryParameters,
         headers,
         data: taskUpdate,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param sourceCreate -.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    validateSource(
+      sourceCreate: SourceCreate,
+      requestOptions: RequestOptions | undefined = undefined
+    ): Promise<SourceValidateResponse> {
+      const requestPath = '/1/sources/validate';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: sourceCreate ? sourceCreate : {},
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param validateSourceBeforeUpdate - The validateSourceBeforeUpdate object.
+     * @param validateSourceBeforeUpdate.sourceID - Unique identifier of a source.
+     * @param validateSourceBeforeUpdate.sourceUpdate - The sourceUpdate object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    validateSourceBeforeUpdate(
+      { sourceID, sourceUpdate }: ValidateSourceBeforeUpdateProps,
+      requestOptions?: RequestOptions
+    ): Promise<SourceValidateResponse> {
+      if (!sourceID) {
+        throw new Error(
+          'Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.'
+        );
+      }
+
+      if (!sourceUpdate) {
+        throw new Error(
+          'Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.'
+        );
+      }
+
+      const requestPath = '/1/sources/{sourceID}/validate'.replace(
+        '{sourceID}',
+        encodeURIComponent(sourceID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: sourceUpdate,
       };
 
       return transporter.request(request, requestOptions);

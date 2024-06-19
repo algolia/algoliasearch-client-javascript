@@ -494,3 +494,14 @@ export type UpdateTaskProps = {
   taskID: string;
   taskUpdate: TaskUpdate;
 };
+
+/**
+ * Properties for the `validateSourceBeforeUpdate` method.
+ */
+export type ValidateSourceBeforeUpdateProps = {
+  /**
+   * Unique identifier of a source.
+   */
+  sourceID: string;
+  sourceUpdate: SourceUpdate;
+};

@@ -107,6 +107,7 @@ export * from './sourceUpdateDocker';
 export * from './sourceUpdateInput';
 export * from './sourceUpdateResponse';
 export * from './sourceUpdateShopify';
+export * from './sourceValidateResponse';
 export * from './streamingTrigger';
 export * from './streamingTriggerType';
 export * from './streamingUtilsInput';
