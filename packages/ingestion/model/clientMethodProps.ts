@@ -226,16 +226,6 @@ export type GetDestinationsProps = {
 };
 
 /**
- * Properties for the `getDockerSourceStreams` method.
- */
-export type GetDockerSourceStreamsProps = {
-  /**
-   * Unique identifier of a source.
-   */
-  sourceID: string;
-};
-
-/**
  * Properties for the `getEvent` method.
  */
 export type GetEventProps = {

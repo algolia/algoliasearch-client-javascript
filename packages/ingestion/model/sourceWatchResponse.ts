@@ -2,7 +2,7 @@
 
 import type { Event } from './event';
 
-export type SourceValidateResponse = {
+export type SourceWatchResponse = {
   /**
    * Universally unique identifier (UUID) of a task run.
    */

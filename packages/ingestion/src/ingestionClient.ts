@@ -34,7 +34,6 @@ import type {
   GetAuthenticationsProps,
   GetDestinationProps,
   GetDestinationsProps,
-  GetDockerSourceStreamsProps,
   GetEventProps,
   GetEventsProps,
   GetRunProps,
@@ -57,8 +56,6 @@ import type { DestinationCreate } from '../model/destinationCreate';
 import type { DestinationCreateResponse } from '../model/destinationCreateResponse';
 import type { DestinationSearch } from '../model/destinationSearch';
 import type { DestinationUpdateResponse } from '../model/destinationUpdateResponse';
-import type { DockerSourceDiscover } from '../model/dockerSourceDiscover';
-import type { DockerSourceStreams } from '../model/dockerSourceStreams';
 import type { Event } from '../model/event';
 import type { ListAuthenticationsResponse } from '../model/listAuthenticationsResponse';
 import type { ListDestinationsResponse } from '../model/listDestinationsResponse';
@@ -75,7 +72,7 @@ import type { SourceCreate } from '../model/sourceCreate';
 import type { SourceCreateResponse } from '../model/sourceCreateResponse';
 import type { SourceSearch } from '../model/sourceSearch';
 import type { SourceUpdateResponse } from '../model/sourceUpdateResponse';
-import type { SourceValidateResponse } from '../model/sourceValidateResponse';
+import type { SourceWatchResponse } from '../model/sourceWatchResponse';
 import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { Task } from '../model/task';
 import type { TaskCreate } from '../model/taskCreate';
@@ -976,45 +973,6 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieves a stream listing for a source.  Listing streams only works with sources with `type: docker` and `imageType: singer`.
-     *
-     * Required API Key ACLs:
-     * - addObject
-     * - deleteIndex
-     * - editSettings.
-     *
-     * @param getDockerSourceStreams - The getDockerSourceStreams object.
-     * @param getDockerSourceStreams.sourceID - Unique identifier of a source.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    getDockerSourceStreams(
-      { sourceID }: GetDockerSourceStreamsProps,
-      requestOptions?: RequestOptions
-    ): Promise<DockerSourceStreams> {
-      if (!sourceID) {
-        throw new Error(
-          'Parameter `sourceID` is required when calling `getDockerSourceStreams`.'
-        );
-      }
-
-      const requestPath = '/1/sources/{sourceID}/discover'.replace(
-        '{sourceID}',
-        encodeURIComponent(sourceID)
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'GET',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
      * Retrieves a single task run event by its ID.
      *
      * Required API Key ACLs:
@@ -1713,7 +1671,7 @@ export function createIngestionClient({
     triggerDockerSourceDiscover(
       { sourceID }: TriggerDockerSourceDiscoverProps,
       requestOptions?: RequestOptions
-    ): Promise<DockerSourceDiscover> {
+    ): Promise<SourceWatchResponse> {
       if (!sourceID) {
         throw new Error(
           'Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.'
@@ -1934,7 +1892,7 @@ export function createIngestionClient({
     validateSource(
       sourceCreate: SourceCreate,
       requestOptions: RequestOptions | undefined = undefined
-    ): Promise<SourceValidateResponse> {
+    ): Promise<SourceWatchResponse> {
       const requestPath = '/1/sources/validate';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1966,7 +1924,7 @@ export function createIngestionClient({
     validateSourceBeforeUpdate(
       { sourceID, sourceUpdate }: ValidateSourceBeforeUpdateProps,
       requestOptions?: RequestOptions
-    ): Promise<SourceValidateResponse> {
+    ): Promise<SourceWatchResponse> {
       if (!sourceID) {
         throw new Error(
           'Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.'
