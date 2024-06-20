@@ -33,4 +33,9 @@ export type TaskCreate = {
   failureThreshold?: number;
 
   input?: TaskInput;
+
+  /**
+   * Date of the last cursor in RFC 3339 format.
+   */
+  cursor?: string;
 };

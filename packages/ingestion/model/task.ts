@@ -37,6 +37,11 @@ export type Task = {
   action: ActionType;
 
   /**
+   * Date of the last cursor in RFC 3339 format.
+   */
+  cursor?: string;
+
+  /**
    * Date of creation in RFC 3339 format.
    */
   createdAt: string;
