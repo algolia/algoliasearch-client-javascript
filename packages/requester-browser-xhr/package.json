@@ -2,7 +2,10 @@
   "name": "@algolia/requester-browser-xhr",
   "version": "5.0.0-beta.5",
   "description": "Promise-based request library for browser using xhr.",
-  "repository": "algolia/algoliasearch-client-javascript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
+  },
   "license": "MIT",
   "author": "Algolia",
   "type": "module",

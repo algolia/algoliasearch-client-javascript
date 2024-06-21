@@ -2,7 +2,10 @@
   "name": "@algolia/ingestion",
   "version": "1.0.0-beta.4",
   "description": "JavaScript client for ingestion",
-  "repository": "algolia/algoliasearch-client-javascript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
+  },
   "license": "MIT",
   "author": "Algolia",
   "type": "module",

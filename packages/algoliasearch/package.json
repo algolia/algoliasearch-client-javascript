@@ -2,7 +2,10 @@
   "name": "algoliasearch",
   "version": "5.0.0-beta.4",
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
-  "repository": "algolia/algoliasearch-client-javascript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
+  },
   "license": "MIT",
   "author": "Algolia",
   "type": "module",

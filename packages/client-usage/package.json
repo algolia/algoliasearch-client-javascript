@@ -2,7 +2,10 @@
   "name": "@algolia/client-usage",
   "version": "0.0.2-beta.4",
   "description": "JavaScript client for client-usage",
-  "repository": "algolia/algoliasearch-client-javascript",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
+  },
   "license": "MIT",
   "author": "Algolia",
   "type": "module",
