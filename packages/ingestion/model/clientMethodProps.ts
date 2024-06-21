@@ -14,11 +14,13 @@ import type { OrderKeys } from './orderKeys';
 import type { PlatformWithNone } from './platformWithNone';
 import type { RunSortKeys } from './runSortKeys';
 import type { RunStatus } from './runStatus';
+import type { SortKeys } from './sortKeys';
 import type { SourceSortKeys } from './sourceSortKeys';
 import type { SourceType } from './sourceType';
 import type { SourceUpdate } from './sourceUpdate';
 import type { TaskSortKeys } from './taskSortKeys';
 import type { TaskUpdate } from './taskUpdate';
+import type { TransformationCreate } from './transformationCreate';
 import type { TriggerType } from './triggerType';
 
 /**
@@ -123,6 +125,16 @@ export type DeleteTaskProps = {
    * Unique identifier of a task.
    */
   taskID: string;
+};
+
+/**
+ * Properties for the `deleteTransformation` method.
+ */
+export type DeleteTransformationProps = {
+  /**
+   * Unique identifier of a transformation.
+   */
+  transformationID: string;
 };
 
 /**
@@ -422,6 +434,30 @@ export type GetTasksProps = {
 };
 
 /**
+ * Properties for the `getTransformation` method.
+ */
+export type GetTransformationProps = {
+  /**
+   * Unique identifier of a transformation.
+   */
+  transformationID: string;
+};
+
+/**
+ * Properties for the `getTransformations` method.
+ */
+export type GetTransformationsProps = {
+  /**
+   * Property by which to sort the list.
+   */
+  sort?: SortKeys;
+  /**
+   * Sort order of the response, ascending or descending.
+   */
+  order?: OrderKeys;
+};
+
+/**
  * Properties for the `runTask` method.
  */
 export type RunTaskProps = {
@@ -483,6 +519,17 @@ export type UpdateTaskProps = {
    */
   taskID: string;
   taskUpdate: TaskUpdate;
+};
+
+/**
+ * Properties for the `updateTransformation` method.
+ */
+export type UpdateTransformationProps = {
+  /**
+   * Unique identifier of a transformation.
+   */
+  transformationID: string;
+  transformationCreate: TransformationCreate;
 };
 
 /**
