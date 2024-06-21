@@ -1,3 +1,13 @@
+## [5.0.0-beta.5](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.4...5.0.0-beta.5)
+
+- [b7ae19f2b](https://github.com/algolia/api-clients-automation/commit/b7ae19f2b) feat(specs): add transformations endpoints to ingestion ([#3215](https://github.com/algolia/api-clients-automation/pull/3215)) by [@shortcuts](https://github.com/shortcuts/)
+- [a99f796dd](https://github.com/algolia/api-clients-automation/commit/a99f796dd) fix(specs): update discover endpoint ([#3212](https://github.com/algolia/api-clients-automation/pull/3212)) by [@shortcuts](https://github.com/shortcuts/)
+- [c91ca54f2](https://github.com/algolia/api-clients-automation/commit/c91ca54f2) feat(specs): add validate endpoint ([#3087](https://github.com/algolia/api-clients-automation/pull/3087)) by [@Fluf22](https://github.com/Fluf22/)
+- [36aababfd](https://github.com/algolia/api-clients-automation/commit/36aababfd) chore(clients): use the ruff python formatter ([#3204](https://github.com/algolia/api-clients-automation/pull/3204)) by [@millotp](https://github.com/millotp/)
+- [9ad5c8cae](https://github.com/algolia/api-clients-automation/commit/9ad5c8cae) fix(clients): reduce common tests flakyness ([#3205](https://github.com/algolia/api-clients-automation/pull/3205)) by [@millotp](https://github.com/millotp/)
+- [fc1752b6e](https://github.com/algolia/api-clients-automation/commit/fc1752b6e) feat(clients): add chunkedBatch helper for Kotlin and Scala ([#3206](https://github.com/algolia/api-clients-automation/pull/3206)) by [@Fluf22](https://github.com/Fluf22/)
+- [a58e88322](https://github.com/algolia/api-clients-automation/commit/a58e88322) feat(clients): add generateSecuredApiKey to java ([#3167](https://github.com/algolia/api-clients-automation/pull/3167)) by [@millotp](https://github.com/millotp/)
+
 ## [5.0.0-beta.4](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.3...5.0.0-beta.4)
 
 - [b2a464a2b](https://github.com/algolia/api-clients-automation/commit/b2a464a2b) feat(clients): add generate_secured_api_key to ruby ([#3166](https://github.com/algolia/api-clients-automation/pull/3166)) by [@millotp](https://github.com/millotp/)
