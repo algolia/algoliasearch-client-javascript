@@ -592,7 +592,7 @@ export function createSearchClient({
       { indexName, objects, batchSize }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions
     ): Promise<ReplaceAllObjectsResponse> {
-      const randomSuffix = Math.random().toString(36).substring(7);
+      const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
       const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
 
       let copyOperationResponse = await this.operationIndex(
