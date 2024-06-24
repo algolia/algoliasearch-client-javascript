@@ -24,7 +24,7 @@ const UTILS = {
         babelrc: false,
         extensions: ['.ts'],
         exclude: 'node_modules/**',
-        plugins: ['@babel/plugin-proposal-class-properties'],
+        plugins: ['@babel/plugin-transform-class-properties'],
       }),
     ],
   },
