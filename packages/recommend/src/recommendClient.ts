@@ -23,6 +23,7 @@ import type {
   DeleteRecommendRuleProps,
   GetRecommendRuleProps,
   GetRecommendStatusProps,
+  LegacyGetRecommendationsParams,
   SearchRecommendRulesProps,
 } from '../model/clientMethodProps';
 import type { DeletedAtResponse } from '../model/deletedAtResponse';
@@ -429,9 +430,20 @@ export function createRecommendClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRecommendations(
-      getRecommendationsParams: GetRecommendationsParams,
+      getRecommendationsParams:
+        | GetRecommendationsParams
+        | LegacyGetRecommendationsParams,
       requestOptions?: RequestOptions
     ): Promise<GetRecommendationsResponse> {
+      if (getRecommendationsParams && Array.isArray(getRecommendationsParams)) {
+        const newSignatureRequest: GetRecommendationsParams = {
+          requests: getRecommendationsParams,
+        };
+
+        // eslint-disable-next-line no-param-reassign
+        getRecommendationsParams = newSignatureRequest;
+      }
+
       if (!getRecommendationsParams) {
         throw new Error(
           'Parameter `getRecommendationsParams` is required when calling `getRecommendations`.'

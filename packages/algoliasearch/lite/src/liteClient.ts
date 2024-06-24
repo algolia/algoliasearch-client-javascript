@@ -17,6 +17,7 @@ import type {
 
 import type {
   CustomPostProps,
+  LegacyGetRecommendationsParams,
   LegacySearchMethodProps,
 } from '../model/clientMethodProps';
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
@@ -168,9 +169,20 @@ export function createLiteClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRecommendations(
-      getRecommendationsParams: GetRecommendationsParams,
+      getRecommendationsParams:
+        | GetRecommendationsParams
+        | LegacyGetRecommendationsParams,
       requestOptions?: RequestOptions
     ): Promise<GetRecommendationsResponse> {
+      if (getRecommendationsParams && Array.isArray(getRecommendationsParams)) {
+        const newSignatureRequest: GetRecommendationsParams = {
+          requests: getRecommendationsParams,
+        };
+
+        // eslint-disable-next-line no-param-reassign
+        getRecommendationsParams = newSignatureRequest;
+      }
+
       if (!getRecommendationsParams) {
         throw new Error(
           'Parameter `getRecommendationsParams` is required when calling `getRecommendations`.'
