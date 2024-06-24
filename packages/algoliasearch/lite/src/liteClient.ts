@@ -19,6 +19,8 @@ import type {
   CustomPostProps,
   LegacySearchMethodProps,
 } from '../model/clientMethodProps';
+import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
+import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
 import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponses } from '../model/searchResponses';
 
@@ -151,6 +153,48 @@ export function createLiteClient({
         queryParameters,
         headers,
         data: body ? body : {},
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves recommendations from selected AI models.
+     *
+     * Required API Key ACLs:
+     * - search.
+     *
+     * @param getRecommendationsParams - The getRecommendationsParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getRecommendations(
+      getRecommendationsParams: GetRecommendationsParams,
+      requestOptions?: RequestOptions
+    ): Promise<GetRecommendationsResponse> {
+      if (!getRecommendationsParams) {
+        throw new Error(
+          'Parameter `getRecommendationsParams` is required when calling `getRecommendations`.'
+        );
+      }
+
+      if (!getRecommendationsParams.requests) {
+        throw new Error(
+          'Parameter `getRecommendationsParams.requests` is required when calling `getRecommendations`.'
+        );
+      }
+
+      const requestPath = '/1/indexes/*/recommendations';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: getRecommendationsParams,
+        useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(request, requestOptions);

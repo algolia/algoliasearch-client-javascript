@@ -7,11 +7,11 @@ import {
   REGIONS as abtestingRegions,
 } from '@algolia/client-abtesting/src/abtestingClient';
 import type { AnalyticsClient } from '@algolia/client-analytics';
-import type { Region as AnalyticsRegion } from '@algolia/client-analytics/src/analyticsClient';
 import {
   createAnalyticsClient,
   REGIONS as analyticsRegions,
 } from '@algolia/client-analytics/src/analyticsClient';
+import type { Region as AnalyticsRegion } from '@algolia/client-analytics/src/analyticsClient';
 import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
   DEFAULT_READ_TIMEOUT_BROWSER,
@@ -34,6 +34,8 @@ import {
   createSearchClient,
   apiClientVersion as searchClientVersion,
 } from '@algolia/client-search/src/searchClient';
+import type { RecommendClient } from '@algolia/recommend';
+import { createRecommendClient } from '@algolia/recommend/src/recommendClient';
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import type { InitClientOptions, InitClientRegion } from './models';
@@ -81,6 +83,14 @@ export function algoliasearch(
     }),
     ...options,
   };
+
+  function initRecommend(initOptions: InitClientOptions = {}): RecommendClient {
+    return createRecommendClient({
+      ...commonOptions,
+      ...initOptions.options,
+      ...initOptions,
+    });
+  }
 
   function initAnalytics(
     initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion> = {}
@@ -152,8 +162,9 @@ export function algoliasearch(
     get _ua(): string {
       return this.transporter.algoliaAgent.value;
     },
+    initAbtesting,
     initAnalytics,
     initPersonalization,
-    initAbtesting,
+    initRecommend,
   };
 }
