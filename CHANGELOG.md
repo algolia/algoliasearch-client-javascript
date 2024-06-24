@@ -1,3 +1,9 @@
+## [5.0.0-beta.6](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.5...5.0.0-beta.6)
+
+- [632827bef](https://github.com/algolia/api-clients-automation/commit/632827bef) feat(javascript): legacy `getRecommendations` signature ([#3241](https://github.com/algolia/api-clients-automation/pull/3241)) by [@aymeric-giraudet](https://github.com/aymeric-giraudet/)
+- [07e074806](https://github.com/algolia/api-clients-automation/commit/07e074806) feat(clients): add recommend to algoliasearch ([#2860](https://github.com/algolia/api-clients-automation/pull/2860)) by [@shortcuts](https://github.com/shortcuts/)
+- [683ecb979](https://github.com/algolia/api-clients-automation/commit/683ecb979) fix(javascript): deprecated publish options ([#3220](https://github.com/algolia/api-clients-automation/pull/3220)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-beta.5](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.4...5.0.0-beta.5)
 
 - [b7ae19f2b](https://github.com/algolia/api-clients-automation/commit/b7ae19f2b) feat(specs): add transformations endpoints to ingestion ([#3215](https://github.com/algolia/api-clients-automation/pull/3215)) by [@shortcuts](https://github.com/shortcuts/)
