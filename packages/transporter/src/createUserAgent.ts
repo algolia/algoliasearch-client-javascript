@@ -1,10 +1,12 @@
 import { UserAgent, UserAgentOptions } from '.';
 
-export function createUserAgent(version: string): UserAgent {
+export function createUserAgent(version: string, base = 'Algolia for JavaScript'): UserAgent {
   const userAgent: UserAgent = {
-    value: `Algolia for JavaScript (${version})`,
+    value: base ? `${base} (${version})` : '',
     add(options: UserAgentOptions): UserAgent {
-      const addedUserAgent = `; ${options.segment}${
+      const separator = userAgent.value ? '; ' : '';
+
+      const addedUserAgent = `${separator}${options.segment}${
         options.version !== undefined ? ` (${options.version})` : ''
       }`;
 

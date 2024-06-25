@@ -36,7 +36,7 @@ export default function recommend(
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),
     hostsCache: createInMemoryCache(),
-    userAgent: createUserAgent(version)
+    userAgent: createUserAgent(version, '')
       .add({ segment: 'Recommend', version })
       .add({ segment: 'Node.js', version: process.versions.node }),
   };

@@ -108,14 +108,12 @@ describe('recommend', () => {
     const client = recommend('appId', 'apiKey');
 
     if (testing.isBrowser()) {
-      expect(client.transporter.userAgent.value).toEqual(
-        `Algolia for JavaScript (${version}); Recommend (${version}); Browser`
-      );
+      expect(client.transporter.userAgent.value).toEqual(`Recommend (${version}); Browser`);
     } else {
       const nodeVersion = process.versions.node;
 
       expect(client.transporter.userAgent.value).toEqual(
-        `Algolia for JavaScript (${version}); Recommend (${version}); Node.js (${nodeVersion})`
+        `Recommend (${version}); Node.js (${nodeVersion})`
       );
     }
   });
@@ -123,7 +121,7 @@ describe('recommend', () => {
   test('allows to customize options', () => {
     const client = recommend('appId', 'apiKey');
     const cache = createInMemoryCache();
-    const userAgent = createUserAgent('0.2.0');
+    const userAgent = createUserAgent('0.2.0', '');
 
     const customClient = recommend('appId', 'apiKey', {
       hostsCache: cache,
