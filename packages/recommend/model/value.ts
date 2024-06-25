@@ -9,4 +9,9 @@ export type Value = {
   order?: string[];
 
   sortRemainingBy?: SortRemainingBy;
+
+  /**
+   * Hide facet values.
+   */
+  hide?: string[];
 };
