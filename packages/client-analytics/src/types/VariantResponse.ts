@@ -48,6 +48,16 @@ export type VariantResponse = Variant & {
    */
   userCount?: number;
 
+  /**
+   * Count of the tracked searches attributed to outlier traffic that were removed from the A/B test.
+   */
+  outlierTrackedSearchesCount?: number;
+
+  /**
+   * Count of users attributed to outlier traffic that were removed from the A/B test.
+   */
+  outlierUsersCount?: number;
+
   // @todo Handle this search options type.
   /**
    * The search parameters.

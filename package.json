@@ -1,5 +1,5 @@
 {
-  "version": "4.13.0",
+  "version": "4.24.0",
   "private": true,
   "license": "MIT",
   "workspaces": [
@@ -17,6 +17,7 @@
     "test:browser-locally": "yarn setup:browser && ./scripts/prepare-test-browser.sh && wdio ./wdio.local.conf.js",
     "test:build-declarations": "node --max-old-space-size=4096 scripts/test-build-declarations.js",
     "test:build-size": "bundlesize",
+    "test:exports": "lerna run test:exports",
     "test:lint": "eslint . --ext .js,.ts",
     "test:locally": "lerna clean --yes && yarn lint && yarn test:types && yarn test:unit",
     "test:types": "yarn tsc",
@@ -33,7 +34,7 @@
     "@babel/core": "7.8.7",
     "@babel/preset-env": "7.8.7",
     "@babel/preset-typescript": "7.8.3",
-    "@microsoft/api-extractor": "7.7.8",
+    "@microsoft/api-extractor": "7.18.0",
     "@rollup/plugin-alias": "3.0.1",
     "@rollup/plugin-json": "4.0.2",
     "@rollup/plugin-node-resolve": "7.1.1",
@@ -50,6 +51,7 @@
     "@wdio/static-server-service": "5.16.10",
     "barrelsby": "2.2.0",
     "bundlesize": "0.18.0",
+    "cross-fetch": "3.1.5",
     "dotenv": "8.2.0",
     "eslint": "6.8.0",
     "eslint-config-algolia": "15.0.0",
@@ -97,15 +99,15 @@
   "bundlesize": [
     {
       "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-      "maxSize": "7.95KB"
+      "maxSize": "8.4KB"
     },
     {
       "path": "packages/algoliasearch/dist/algoliasearch-lite.umd.js",
-      "maxSize": "4.4KB"
+      "maxSize": "4.6KB"
     },
     {
       "path": "packages/recommend/dist/recommend.umd.js",
-      "maxSize": "4.2KB"
+      "maxSize": "4.4KB"
     }
   ]
 }

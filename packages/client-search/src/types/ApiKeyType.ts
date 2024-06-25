@@ -5,6 +5,7 @@ export const ApiKeyACLEnum: Readonly<Record<string, ApiKeyACLType>> = {
   DeleteIndex: 'deleteIndex',
   DeleteObject: 'deleteObject',
   EditSettings: 'editSettings',
+  Inference: 'inference',
   ListIndexes: 'listIndexes',
   Logs: 'logs',
   Personalization: 'personalization',
@@ -22,6 +23,7 @@ export type ApiKeyACLType =
   | 'deleteIndex'
   | 'deleteObject'
   | 'editSettings'
+  | 'inference'
   | 'listIndexes'
   | 'logs'
   | 'personalization'

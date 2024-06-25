@@ -253,7 +253,7 @@ export type SearchOptions = {
   readonly restrictSearchableAttributes?: readonly string[];
 
   /**
-   * Restricts a given query to look in only a subset of your searchable attributes.
+   * Controls how facet values are sorted.
    */
   readonly sortFacetValuesBy?: 'count' | 'alpha';
 
@@ -273,7 +273,7 @@ export type SearchOptions = {
   readonly aroundLatLngViaIP?: boolean;
 
   /**
-   * Search for entries around a given location automatically computed from the requester’s IP address.
+   * Define the maximum radius for a geo search (in meters).
    */
   readonly aroundRadius?: number | 'all';
 
@@ -368,4 +368,14 @@ export type SearchOptions = {
     | readonly string[]
     | ReadonlyArray<readonly string[] | string>
     | null;
+
+  /**
+   * Sets the languages to be used by language-specific settings and functionalities such as ignorePlurals, removeStopWords, and CJK word-detection.
+   */
+  readonly queryLanguages?: readonly string[];
+
+  /**
+   * Enriches the API’s response with meta-information as to how the query was processed.
+   */
+  readonly explain?: readonly string[];
 };

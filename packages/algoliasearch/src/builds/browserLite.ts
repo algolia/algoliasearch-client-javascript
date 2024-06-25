@@ -25,6 +25,7 @@ import {
 } from '@algolia/client-search';
 import { LogLevelEnum } from '@algolia/logger-common';
 import { createConsoleLogger } from '@algolia/logger-console';
+import { getRecommendations, WithRecommendMethods } from '@algolia/recommend';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
 
@@ -74,6 +75,7 @@ export default function algoliasearch(
           methods: { search, searchForFacetValues, findAnswers },
         });
       },
+      getRecommendations,
     },
   });
 }
@@ -115,6 +117,7 @@ export type SearchClient = BaseSearchClient & {
     request: Request,
     requestOptions?: RequestOptions
   ) => Readonly<Promise<TResponse>>;
+  readonly getRecommendations: WithRecommendMethods<BaseSearchClient>['getRecommendations'];
 };
 
 export { WithoutCredentials, AlgoliaSearchOptions } from '../types';

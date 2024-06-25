@@ -190,6 +190,16 @@ import {
 } from '@algolia/client-search';
 import { LogLevelEnum } from '@algolia/logger-common';
 import { createConsoleLogger } from '@algolia/logger-console';
+import {
+  getFrequentlyBoughtTogether,
+  getLookingSimilar,
+  getRecommendations,
+  getRecommendedForYou,
+  getRelatedProducts,
+  getTrendingFacets,
+  getTrendingItems,
+  WithRecommendMethods,
+} from '@algolia/recommend';
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
 
@@ -343,6 +353,13 @@ export default function algoliasearch(
 
         return initPersonalization()(clientOptions);
       },
+      getRecommendations,
+      getFrequentlyBoughtTogether,
+      getLookingSimilar,
+      getRecommendedForYou,
+      getRelatedProducts,
+      getTrendingFacets,
+      getTrendingItems,
     },
   });
 }
@@ -689,6 +706,15 @@ export type SearchClient = BaseSearchClient & {
    * @deprecated Use `initPersonalization` instead.
    */
   readonly initRecommendation: (options?: InitPersonalizationOptions) => PersonalizationClient;
+  readonly getRecommendations: WithRecommendMethods<BaseSearchClient>['getRecommendations'];
+  readonly getFrequentlyBoughtTogether: WithRecommendMethods<
+    BaseSearchClient
+  >['getFrequentlyBoughtTogether'];
+  readonly getLookingSimilar: WithRecommendMethods<BaseSearchClient>['getLookingSimilar'];
+  readonly getRecommendedForYou: WithRecommendMethods<BaseSearchClient>['getRecommendedForYou'];
+  readonly getRelatedProducts: WithRecommendMethods<BaseSearchClient>['getRelatedProducts'];
+  readonly getTrendingFacets: WithRecommendMethods<BaseSearchClient>['getTrendingFacets'];
+  readonly getTrendingItems: WithRecommendMethods<BaseSearchClient>['getTrendingItems'];
 };
 
 export * from '../types';

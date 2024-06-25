@@ -1,6 +1,6 @@
 import { Cache, CacheEvents } from '@algolia/cache-common';
 
-import { BrowserLocalStorageOptions } from '.';
+import { BrowserLocalStorageCacheItem, BrowserLocalStorageOptions } from '.';
 
 export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptions): Cache {
   const namespaceKey = `algoliasearch-client-js-${options.key}`;
@@ -19,6 +19,36 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
     return JSON.parse(getStorage().getItem(namespaceKey) || '{}');
   };
 
+  const setNamespace = (namespace: Record<string, any>) => {
+    getStorage().setItem(namespaceKey, JSON.stringify(namespace));
+  };
+
+  const removeOutdatedCacheItems = () => {
+    const timeToLive = options.timeToLive ? options.timeToLive * 1000 : null;
+    const namespace = getNamespace<BrowserLocalStorageCacheItem>();
+
+    const filteredNamespaceWithoutOldFormattedCacheItems = Object.fromEntries(
+      Object.entries(namespace).filter(([, cacheItem]) => {
+        return cacheItem.timestamp !== undefined;
+      })
+    );
+
+    setNamespace(filteredNamespaceWithoutOldFormattedCacheItems);
+
+    if (!timeToLive) return;
+
+    const filteredNamespaceWithoutExpiredItems = Object.fromEntries(
+      Object.entries(filteredNamespaceWithoutOldFormattedCacheItems).filter(([, cacheItem]) => {
+        const currentTimestamp = new Date().getTime();
+        const isExpired = cacheItem.timestamp + timeToLive < currentTimestamp;
+
+        return !isExpired;
+      })
+    );
+
+    setNamespace(filteredNamespaceWithoutExpiredItems);
+  };
+
   return {
     get<TValue>(
       key: object | string,
@@ -29,10 +59,14 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
     ): Readonly<Promise<TValue>> {
       return Promise.resolve()
         .then(() => {
-          const keyAsString = JSON.stringify(key);
-          const value = getNamespace<TValue>()[keyAsString];
+          removeOutdatedCacheItems();
 
-          return Promise.all([value || defaultValue(), value !== undefined]);
+          const keyAsString = JSON.stringify(key);
+
+          return getNamespace<Promise<BrowserLocalStorageCacheItem>>()[keyAsString];
+        })
+        .then(value => {
+          return Promise.all([value ? value.value : defaultValue(), value !== undefined]);
         })
         .then(([value, exists]) => {
           return Promise.all([value, exists || events.miss(value)]);
@@ -45,7 +79,10 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
         const namespace = getNamespace();
 
         // eslint-disable-next-line functional/immutable-data
-        namespace[JSON.stringify(key)] = value;
+        namespace[JSON.stringify(key)] = {
+          timestamp: new Date().getTime(),
+          value,
+        };
 
         getStorage().setItem(namespaceKey, JSON.stringify(namespace));
 

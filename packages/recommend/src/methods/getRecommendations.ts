@@ -3,6 +3,7 @@ import { MethodEnum } from '@algolia/requester-common';
 import {
   BaseRecommendClient,
   RecommendationsQuery,
+  RecommendedForYouQuery,
   TrendingQuery,
   WithRecommendMethods,
 } from '../types';
@@ -12,8 +13,10 @@ type GetRecommendations = (
 ) => WithRecommendMethods<BaseRecommendClient>['getRecommendations'];
 
 export const getRecommendations: GetRecommendations = base => {
-  return (queries: ReadonlyArray<RecommendationsQuery | TrendingQuery>, requestOptions) => {
-    const requests: ReadonlyArray<RecommendationsQuery | TrendingQuery> = queries.map(query => ({
+  return (queries, requestOptions) => {
+    const requests: ReadonlyArray<
+      RecommendationsQuery | TrendingQuery | RecommendedForYouQuery
+    > = queries.map(query => ({
       ...query,
       // The `threshold` param is required by the endpoint to make it easier
       // to provide a default value later, so we default it in the client

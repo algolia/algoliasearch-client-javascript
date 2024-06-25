@@ -63,6 +63,7 @@ export * from './MultipleQueriesResponse';
 export * from './ObjectWithObjectID';
 export * from './PartialUpdateObjectResponse';
 export * from './PartialUpdateObjectsOptions';
+export * from './RedirectRuleIndexMetadata';
 export * from './RemoveUserIDResponse';
 export * from './ReplaceAllObjectsOptions';
 export * from './RequireAtLeastOne';

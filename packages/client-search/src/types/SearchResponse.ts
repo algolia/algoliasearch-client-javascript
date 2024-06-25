@@ -1,4 +1,5 @@
 import { Hit, Settings } from '.';
+import { RedirectRuleIndexMetadata } from './RedirectRuleIndexMetadata';
 
 export type SearchResponse<TObject = {}> = {
   /**
@@ -50,6 +51,11 @@ export type SearchResponse<TObject = {}> = {
    * Time the server took to process the request, in milliseconds. This does not include network time.
    */
   processingTimeMS: number;
+
+  /**
+   * Time the server took to process the request, in milliseconds.
+   */
+  serverTimeMS?: number;
 
   /**
    * Whether the nbHits is exhaustive (true) or approximate (false).
@@ -156,6 +162,11 @@ export type SearchResponse<TObject = {}> = {
   indexUsed?: string;
 
   /**
+   * If a search encounters an index that is being A/B tested, abTestID reports the ongoing A/B test ID.
+   */
+  abTestID?: number;
+
+  /**
    * In case of AB test, reports the variant ID used. The variant ID is the position in the array of variants (starting at 1).
    */
   abTestVariantID?: number;
@@ -219,6 +230,13 @@ export type SearchResponse<TObject = {}> = {
      * as a JSON object with one field per parameter.
      */
     params?: Record<string, any>;
+
+    /**
+     * This parameter is for internal use only.
+     */
+    redirect?: {
+      index?: RedirectRuleIndexMetadata[];
+    };
   };
 
   /**

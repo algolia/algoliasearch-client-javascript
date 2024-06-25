@@ -1,3 +1,141 @@
+## [v4.24.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.3...4.24.0)
+
+* fix(support): redirect to ticket link (#1527) ([f73a86a](https://github.com/algolia/algoliasearch-client-javascript/commit/f73a86a)), closes [#1527](https://github.com/algolia/algoliasearch-client-javascript/issues/1527)
+* feat(types): add `banners` in `renderingContent` (#1522) ([5828389](https://github.com/algolia/algoliasearch-client-javascript/commit/5828389)), closes [#1522](https://github.com/algolia/algoliasearch-client-javascript/issues/1522)
+
+
+
+## [v4.23.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.2...4.23.3)
+
+* fix(types): add `serverTimeMS` to search response (#1518) ([a1d1707](https://github.com/algolia/algoliasearch-client-javascript/commit/a1d1707)), closes [#1518](https://github.com/algolia/algoliasearch-client-javascript/issues/1518)
+
+
+
+## [v4.23.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.1...4.23.2)
+
+* fix(recommend): only export default function (#1514) ([4a04d8e](https://github.com/algolia/algoliasearch-client-javascript/commits/4a04d8e)), closes [#1514](https://github.com/algolia/algoliasearch-client-javascript/issues/1514)
+
+
+
+## [v4.23.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.0...4.23.1)
+
+* fix(recommend): export recommend methods to use them in algoliasearch (#1512) ([5fc5f4f](http://algolia/algoliasearch-client-javascript/commits/5fc5f4f)), closes [#1512](http://algolia/algoliasearch-client-javascript/issues/1512)
+
+
+
+## [v4.23.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.22.1...4.23.0)
+
+* feat(search): fetch recommendations directly from algoliasearch (#1509) ([8087b28](http://algolia/algoliasearch-client-javascript/commits/8087b28)), closes [#1509](http://algolia/algoliasearch-client-javascript/issues/1509)
+
+
+
+## [v4.22.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.22.0...4.22.1)
+
+* fix(recommend): update recommended-for-you model type (#1500) ([f94ce64](https://github.com/algolia/algoliasearch-client-javascript/commit/f94ce64)), closes [#1500](https://github.com/algolia/algoliasearch-client-javascript/issues/1500)
+
+
+
+## [v4.22.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.21.1...4.22.0)
+
+* fix(recommend): update TrendingFacetHit facetValue type to string (#1498) ([ac9d6e2](https://github.com/algolia/algoliasearch-client-javascript/commit/ac9d6e2)), closes [#1498](https://github.com/algolia/algoliasearch-client-javascript/issues/1498)
+
+
+
+## [v4.21.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.21.0...4.21.1)
+
+* fix(recommend): RecommendedForYouQuery userToken should be required (#1496) ([d20b253](https://github.com/algolia/algoliasearch-client-javascript/commit/d20b253)), closes [#1496](https://github.com/algolia/algoliasearch-client-javascript/issues/1496)
+
+
+
+## [v4.21.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.20.0...4.21.0)
+
+* feat(recommend): add recommended-for-you model (#1490) ([004f033](https://github.com/algolia/algoliasearch-client-javascript/commit/004f033)), closes [#1490](https://github.com/algolia/algoliasearch-client-javascript/issues/1490)
+* fix(recommend): getTrendingFacets typing (#1494) ([94b46b5](https://github.com/algolia/algoliasearch-client-javascript/commit/94b46b5)), closes [#1494](https://github.com/algolia/algoliasearch-client-javascript/issues/1494)
+* docs(readme): fix typo (#1486) ([db9953c](https://github.com/algolia/algoliasearch-client-javascript/commit/db9953c)), closes [#1486](https://github.com/algolia/algoliasearch-client-javascript/issues/1486)
+
+
+
+## [v4.20.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.19.1...4.20.0)
+
+* feat(search): add inference ACL to API key object (#1479) ([3a95126](https://github.com/algolia/algoliasearch-client-javascript/commit/3a95126)), closes [#1479](https://github.com/algolia/algoliasearch-client-javascript/issues/1479)
+
+
+
+## [v4.19.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.19.0...4.19.1)
+
+* fix(recommend): Add Type RecommendQueriesResponse from old MultipleQueriesResponse for recommend (#1472) ([36285b2](https://github.com/algolia/algoliasearch-client-javascript/commit/36285b2)), closes [#1472](https://github.com/algolia/algoliasearch-client-javascript/issues/1472)
+
+
+
+## [v4.19.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.18.0...4.19.0)
+
+* feat(abtests): add outlier count to variant response payload (#1467) ([b88a726](https://github.com/algolia/algoliasearch-client-javascript/commit/b88a726)), closes [#1467](https://github.com/algolia/algoliasearch-client-javascript/issues/1467)
+* feat(recommend): add "Looking Similar" model (#1469) ([01eac7f](https://github.com/algolia/algoliasearch-client-javascript/commit/01eac7f)), closes [#1469](https://github.com/algolia/algoliasearch-client-javascript/issues/1469)
+
+
+
+## [v4.18.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.17.2...4.18.0)
+
+* fix(types): union SearchForFacetValuesResponse type for multipleQueries (#1460) ([6a786f1](https://github.com/algolia/algoliasearch-client-javascript/commit/6a786f1)), closes [#1460](https://github.com/algolia/algoliasearch-client-javascript/issues/1460)
+* feat(cache-browser-local-storage): Implemented TTL support to cached items (#1457) ([9092414](https://github.com/algolia/algoliasearch-client-javascript/commit/9092414)), closes [#1457](https://github.com/algolia/algoliasearch-client-javascript/issues/1457)
+
+
+
+## [v4.17.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.17.1...4.17.2)
+
+* fix(search): fix wait method for updateApiKey request (#1464) ([edc629d](https://github.com/algolia/algoliasearch-client-javascript/commit/edc629d)), closes [#1464](https://github.com/algolia/algoliasearch-client-javascript/issues/1464)
+* docs(SearchOptions): fix jsdoc of sortFacetValuesBy (#1463) ([a4309c7](https://github.com/algolia/algoliasearch-client-javascript/commit/a4309c7)), closes [#1463](https://github.com/algolia/algoliasearch-client-javascript/issues/1463)
+
+
+
+## [v4.17.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.17.0...4.17.1)
+
+* fix(recommend): Align `getRecommendations` type with actual implementation (#1459) ([d18391b](https://github.com/algolia/algoliasearch-client-javascript/commit/d18391b)), closes [#1459](https://github.com/algolia/algoliasearch-client-javascript/issues/1459)
+
+
+
+## [v4.17.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.16.0...4.17.0)
+
+* feat: update ab test typing (#1455) ([f53c72c](https://github.com/algolia/algoliasearch-client-javascript/commit/f53c72c)), closes [#1455](https://github.com/algolia/algoliasearch-client-javascript/issues/1455)
+* feat(fetch): remove `mode` option to rely on library's default (#1452) ([67293e1](https://github.com/algolia/algoliasearch-client-javascript/commit/67293e1)), closes [#1452](https://github.com/algolia/algoliasearch-client-javascript/issues/1452)
+* feat(neural): make eventSources nullable (#1453) ([eacfca2](https://github.com/algolia/algoliasearch-client-javascript/commit/eacfca2)), closes [#1453](https://github.com/algolia/algoliasearch-client-javascript/issues/1453)
+
+
+
+## [v4.16.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.15.0...4.16.0)
+
+* feat(neuralsearch): adding the semanticSearch settings to client-search (#1450) ([a478ffd](https://github.com/algolia/algoliasearch-client-javascript/commit/a478ffd)), closes [#1450](https://github.com/algolia/algoliasearch-client-javascript/issues/1450)
+* Fix for the redirect object in SearchResponse (#1443) ([6b0685c](https://github.com/algolia/algoliasearch-client-javascript/commit/6b0685c)), closes [#1443](https://github.com/algolia/algoliasearch-client-javascript/issues/1443)
+
+
+
+## [v4.15.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.14.3...4.15.0)
+
+* feat: add mode to settings types (#1439) ([89fd80e](https://github.com/algolia/algoliasearch-client-javascript/commit/89fd80e)), closes [#1439](https://github.com/algolia/algoliasearch-client-javascript/issues/1439)
+
+## [v4.14.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.14.2...4.14.3)
+
+* fix(recommend): remove unused trendingFacets props  (#1433) ([ffbfc05](https://github.com/algolia/algoliasearch-client-javascript/commit/ffbfc05)), closes [#1433](https://github.com/algolia/algoliasearch-client-javascript/issues/1433)
+* fix(recommend): update trending facets query props (RECO-1184) (#1434) ([913443f](https://github.com/algolia/algoliasearch-client-javascript/commit/913443f)), closes [#1434](https://github.com/algolia/algoliasearch-client-javascript/issues/1434)
+* docs: Fix incorrect property description (#1429) ([ba59b68](https://github.com/algolia/algoliasearch-client-javascript/commit/ba59b68)), closes [#1429](https://github.com/algolia/algoliasearch-client-javascript/issues/1429)
+
+## [v4.14.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.14.1...4.14.2)
+
+- fix(types): add `abTestID` to `SearchResponse` (#1419) ([05059f2](https://github.com/algolia/algoliasearch-client-javascript/commit/05059f2)), closes [#1419](https://github.com/algolia/algoliasearch-client-javascript/issues/1419)
+
+## [v4.14.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.14.0...4.14.1)
+
+- fix(types): Updating searchoptions with explain attribute (#1415) ([c46932e](https://github.com/algolia/algoliasearch-client-javascript/commit/c46932e)), closes [#1415](https://github.com/algolia/algoliasearch-client-javascript/issues/1415)
+
+## [v4.14.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.13.1...4.14.0)
+
+- chore: mention `next` version in `README` (#1413) ([100d180](https://github.com/algolia/algoliasearch-client-javascript/commit/100d180)), closes [#1413](https://github.com/algolia/algoliasearch-client-javascript/issues/1413)
+- feat(fetch-requester): add `@algolia/requester-fetch` (#1411) ([7b62403](https://github.com/algolia/algoliasearch-client-javascript/commit/7b62403)), closes [#1411](https://github.com/algolia/algoliasearch-client-javascript/issues/1411)
+
+## [v4.13.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.13.0...4.13.1)
+
+- fix(search): add type for queryLanguages (#1406) ([61c2976](https://github.com/algolia/algoliasearch-client-javascript/commit/61c2976)), closes [#1406](https://github.com/algolia/algoliasearch-client-javascript/issues/1406) [#1405](https://github.com/algolia/algoliasearch-client-javascript/issues/1405)
+
 ## [v4.13.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.12.2...4.13.0)
 
 - feat(recommend): Add trending types and methods (#1396) ([6882ec8](https://github.com/algolia/algoliasearch-client-javascript/commit/6882ec8)), closes [#1396](https://github.com/algolia/algoliasearch-client-javascript/issues/1396)

@@ -83,6 +83,7 @@ module.exports = {
         testEnvironment: 'node',
         testPathIgnorePatterns: [
           'packages/requester-browser-xhr/*',
+          'packages/requester-fetch/*',
           'packages/cache-browser-local-storage/*',
           'packages/algoliasearch/src/__tests__/lite.test.ts',
         ],

@@ -306,6 +306,22 @@ export type Settings = {
   readonly relevancyStrictness?: number;
 
   /**
+   * The search mode that the index will use to query for results.
+   */
+  readonly mode?: 'neuralSearch' | 'keywordSearch';
+
+  /**
+   * The settings relevant for configuration of the semantic search engine.
+   * These settings are only used when the mode is set to 'neuralSearch'.
+   */
+  readonly semanticSearch?: {
+    /**
+     * When null, the current index / replica group will be used as the event source.
+     */
+    readonly eventSources?: readonly string[] | null;
+  };
+
+  /**
    * Content defining how the search interface should be rendered.
    * This is set via the settings for a default value and can be overridden via rules
    */
@@ -341,6 +357,49 @@ export type Settings = {
           readonly sortRemainingBy?: 'count' | 'alpha' | 'hidden';
         };
       };
+    };
+    /**
+     * Defining UI widget configuration
+     */
+    readonly widgets?: {
+      /**
+       * Configuration for banners
+       */
+      readonly banners?: ReadonlyArray<{
+        /**
+         * Configuration for the banner image
+         */
+        readonly image: {
+          /**
+           * Set of possible URLs of the banner image
+           */
+          readonly urls: ReadonlyArray<{
+            /**
+             * URL of the banner image
+             */
+            readonly url: string;
+          }>;
+          /**
+           * Alt text of the banner image
+           */
+          readonly title?: string;
+        };
+        /**
+         * Configuration for the banner click navigation
+         */
+        readonly link?: {
+          /**
+           * URL to navigate to when the banner is clicked
+           */
+          readonly url?: string;
+          /**
+           * Target of the navigation
+           * - `_blank` opens the URL in a new tab
+           * - `_self` opens the URL in the same tab
+           */
+          readonly target?: '_blank' | '_self';
+        };
+      }>;
     };
   };
 

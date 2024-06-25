@@ -70,6 +70,7 @@ module.exports = {
           ['@algolia/recommend', './packages/recommend/src'],
           ['@algolia/requester-browser-xhr', './packages/requester-browser-xhr/src'],
           ['@algolia/requester-common', './packages/requester-common/src'],
+          ['@algolia/requester-fetch', './packages/requester-fetch/src'],
           ['@algolia/requester-node-http', './packages/requester-node-http/src'],
           ['@algolia/transporter', './packages/transporter/src'],
         ],

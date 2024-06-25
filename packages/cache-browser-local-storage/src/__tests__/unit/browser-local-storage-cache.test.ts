@@ -43,11 +43,45 @@ describe('browser local storage cache', () => {
     expect(missMock.mock.calls.length).toBe(1);
   });
 
+  it('reads unexpired timeToLive keys', async () => {
+    const cache = createBrowserLocalStorageCache({ key: version, timeToLive: 5 });
+    await cache.set({ key: 'foo' }, { bar: 1 });
+
+    const defaultValue = () => Promise.resolve({ bar: 2 });
+
+    const missMock = jest.fn();
+
+    expect(
+      await cache.get({ key: 'foo' }, defaultValue, {
+        miss: () => Promise.resolve(missMock()),
+      })
+    ).toMatchObject({ bar: 1 });
+
+    expect(missMock.mock.calls.length).toBe(0);
+  });
+
   it('deletes keys', async () => {
     const cache = createBrowserLocalStorageCache({ key: version });
     await cache.set({ key: 'foo' }, { bar: 1 });
 
     await cache.delete({ key: 'foo' });
+
+    const defaultValue = () => Promise.resolve({ bar: 2 });
+
+    const missMock = jest.fn();
+
+    expect(
+      await cache.get({ key: 'foo' }, defaultValue, {
+        miss: () => Promise.resolve(missMock()),
+      })
+    ).toMatchObject({ bar: 2 });
+
+    expect(missMock.mock.calls.length).toBe(1);
+  });
+
+  it('deletes expired keys', async () => {
+    const cache = createBrowserLocalStorageCache({ key: version, timeToLive: -1 });
+    await cache.set({ key: 'foo' }, { bar: 1 });
 
     const defaultValue = () => Promise.resolve({ bar: 2 });
 
@@ -72,6 +106,8 @@ describe('browser local storage cache', () => {
 
     const missMock = jest.fn();
 
+    expect(localStorage.length).toBe(0);
+
     expect(
       await cache.get({ key: 'foo' }, defaultValue, {
         miss: () => Promise.resolve(missMock()),
@@ -80,7 +116,7 @@ describe('browser local storage cache', () => {
 
     expect(missMock.mock.calls.length).toBe(1);
 
-    expect(localStorage.length).toBe(0);
+    expect(localStorage.getItem(`algoliasearch-client-js-${version}`)).toEqual('{}');
   });
 
   it('do throws localstorage exceptions on access', async () => {
@@ -139,8 +175,15 @@ describe('browser local storage cache', () => {
 
     await cache.set(key, value);
 
-    expect(localStorage.getItem(`algoliasearch-client-js-${version}`)).toBe(
-      '{"{\\"foo\\":\\"bar\\"}":"foo"}'
-    );
+    const expectedValue = expect.objectContaining({
+      [JSON.stringify(key)]: {
+        timestamp: expect.any(Number),
+        value,
+      },
+    });
+
+    const localStorageValue = localStorage.getItem(`algoliasearch-client-js-${version}`);
+
+    expect(JSON.parse(localStorageValue ? localStorageValue : '{}')).toEqual(expectedValue);
   });
 });

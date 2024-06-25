@@ -9,7 +9,9 @@ import { createUserAgent } from '@algolia/transporter';
 import { createRecommendClient } from '../createRecommendClient';
 import {
   getFrequentlyBoughtTogether,
+  getLookingSimilar,
   getRecommendations,
+  getRecommendedForYou,
   getRelatedProducts,
   getTrendingFacets,
   getTrendingItems,
@@ -49,12 +51,22 @@ export default function recommend(
       getRelatedProducts,
       getTrendingFacets,
       getTrendingItems,
+      getLookingSimilar,
+      getRecommendedForYou,
     },
   });
 }
 
-// eslint-disable-next-line functional/immutable-data
+/* eslint-disable functional/immutable-data */
 recommend.version = version;
+recommend.getFrequentlyBoughtTogether = getFrequentlyBoughtTogether;
+recommend.getRecommendations = getRecommendations;
+recommend.getRelatedProducts = getRelatedProducts;
+recommend.getTrendingFacets = getTrendingFacets;
+recommend.getTrendingItems = getTrendingItems;
+recommend.getLookingSimilar = getLookingSimilar;
+recommend.getRecommendedForYou = getRecommendedForYou;
+/* eslint-enable functional/immutable-data */
 
 export type RecommendClient = WithRecommendMethods<BaseRecommendClient> & Destroyable;
 
