@@ -1,3 +1,14 @@
+## [v4.24.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.3...4.24.0)
+
+* chore: release v4.24.0 (#1528) ([9f8956c](https://github.com/algolia/algoliasearch-client-javascript/commit/9f8956c)), closes [#1528](https://github.com/algolia/algoliasearch-client-javascript/issues/1528)
+* chore: revert "chore: release v4.24.0 (#1528)" (#1531) ([6a67e85](https://github.com/algolia/algoliasearch-client-javascript/commit/6a67e85)), closes [#1528](https://github.com/algolia/algoliasearch-client-javascript/issues/1528) [#1531](https://github.com/algolia/algoliasearch-client-javascript/issues/1531)
+* feat(types): add `banners` in `renderingContent` (#1522) ([5828389](https://github.com/algolia/algoliasearch-client-javascript/commit/5828389)), closes [#1522](https://github.com/algolia/algoliasearch-client-javascript/issues/1522)
+* feat(types): add hide in renderingContent facet values (#1529) ([ed320a8](https://github.com/algolia/algoliasearch-client-javascript/commit/ed320a8)), closes [#1529](https://github.com/algolia/algoliasearch-client-javascript/issues/1529)
+* feat(types): add missing virtual attribute to Index type (#1530) ([ba2d858](https://github.com/algolia/algoliasearch-client-javascript/commit/ba2d858)), closes [#1530](https://github.com/algolia/algoliasearch-client-javascript/issues/1530)
+* fix(support): redirect to ticket link (#1527) ([f73a86a](https://github.com/algolia/algoliasearch-client-javascript/commit/f73a86a)), closes [#1527](https://github.com/algolia/algoliasearch-client-javascript/issues/1527)
+
+
+
 ## [v4.23.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.2...4.23.3)
 
 * fix(types): add `serverTimeMS` to search response (#1518) ([a1d1707](https://github.com/algolia/algoliasearch-client-javascript/commit/a1d1707)), closes [#1518](https://github.com/algolia/algoliasearch-client-javascript/issues/1518)
