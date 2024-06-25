@@ -1,10 +1,3 @@
-## [v4.24.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.3...4.24.0)
-
-* fix(support): redirect to ticket link (#1527) ([f73a86a](https://github.com/algolia/algoliasearch-client-javascript/commit/f73a86a)), closes [#1527](https://github.com/algolia/algoliasearch-client-javascript/issues/1527)
-* feat(types): add `banners` in `renderingContent` (#1522) ([5828389](https://github.com/algolia/algoliasearch-client-javascript/commit/5828389)), closes [#1522](https://github.com/algolia/algoliasearch-client-javascript/issues/1522)
-
-
-
 ## [v4.23.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.2...4.23.3)
 
 * fix(types): add `serverTimeMS` to search response (#1518) ([a1d1707](https://github.com/algolia/algoliasearch-client-javascript/commit/a1d1707)), closes [#1518](https://github.com/algolia/algoliasearch-client-javascript/issues/1518)
