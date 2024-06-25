@@ -345,6 +345,10 @@ export type Settings = {
       readonly values?: {
         readonly [facet: string]: {
           /**
+           * Hide facet values
+           */
+          readonly hide?: readonly string[];
+          /**
            * pinned order of facet values
            */
           readonly order?: readonly string[];
