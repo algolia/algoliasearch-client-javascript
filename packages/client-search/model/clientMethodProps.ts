@@ -806,28 +806,6 @@ export type GetSecuredApiKeyRemainingValidityOptions = {
   securedApiKey: string;
 };
 
-export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName'> & {
-  /**
-   * The objectIDs to delete.
-   */
-  objectIDs: string[];
-};
-
-export type PartialUpdateObjectsOptions = Pick<
-  ChunkedBatchOptions,
-  'indexName' | 'objects'
-> & {
-  /**
-   *To be provided if non-existing objects are passed, otherwise, the call will fail.
-   */
-  createIfNotExists?: boolean;
-};
-
-export type SaveObjectsOptions = Pick<
-  ChunkedBatchOptions,
-  'indexName' | 'objects'
->;
-
 export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
   /**
    * The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
