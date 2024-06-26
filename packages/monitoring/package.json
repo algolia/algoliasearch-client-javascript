@@ -1,6 +1,6 @@
 {
   "name": "@algolia/monitoring",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.0-beta.6",
   "description": "JavaScript client for monitoring",
   "repository": {
     "type": "git",
@@ -42,9 +42,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-beta.6",
-    "@algolia/requester-browser-xhr": "5.0.0-beta.6",
-    "@algolia/requester-node-http": "5.0.0-beta.6"
+    "@algolia/client-common": "5.0.0-beta.7",
+    "@algolia/requester-browser-xhr": "5.0.0-beta.7",
+    "@algolia/requester-node-http": "5.0.0-beta.7"
   },
   "devDependencies": {
     "@types/node": "20.14.8",
