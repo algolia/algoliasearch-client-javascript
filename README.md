@@ -36,7 +36,9 @@
 
 ## 💡 Getting Started
 
-First, install Algolia JavaScript API Client via your favorite package manager:
+To get started, you first need to install algoliasearch (or any other available API client package).
+
+All of our clients comes with type definition, and are available for both browser and node environments.
 
 ```bash
 yarn add algoliasearch@beta
@@ -44,35 +46,43 @@ yarn add algoliasearch@beta
 npm install algoliasearch@beta
 ```
 
-Or Without a package manager:
+Or use a specific package:
 
-Add the following JavaScript snippet to the `<head>` of your website:
+```bash
+yarn add @algolia/client-search@beta
+# or
+npm install @algolia/client-search@beta
+```
+
+Without a package manager
+
+Add the following JavaScript snippet to the <head> of your website:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/algoliasearch@beta/dist/algoliasearch.umd.min.js"></script>
 ```
 
-Then, create objects on your index:
+You can now import the Algolia API client in your project and play with it.
 
 ```js
-import { algoliasearch } from 'algoliasearch';
+import { searchClient } from '@algolia/client-search';
 
-const client = algoliasearch('YourApplicationID', 'YourAdminAPIKey');
+const client = searchClient('YOUR_APP_ID', 'YOUR_API_KEY');
 
 // Add a new record to your Algolia index
-const saveResponse = await client.saveObject({
+const response = await client.saveObject({
   indexName: '<YOUR_INDEX_NAME>',
   body: { objectID: 'id', test: 'val' },
 });
 
 // use typed response
-console.log(saveResponse);
+console.log(response);
 
 // Poll the task status to know when it has been indexed
-await client.waitForTask({ indexName: '<YOUR_INDEX_NAME>', taskID: saveResponse.taskID });
+await client.waitForTask({ indexName: '<YOUR_INDEX_NAME>', taskID: response.taskID });
 
 // Fetch search results, with typo tolerance
-const searchResponse = await client.search({
+const response = await client.search({
   requests: [
     {
       indexName: '<YOUR_INDEX_NAME>',
@@ -83,16 +93,15 @@ const searchResponse = await client.search({
 });
 
 // use typed response
-console.log(searchResponse);
+console.log(response);
 ```
 
-For the full documentation, visit the **[online documentation](https://api-clients-automation.netlify.app/docs/clients/usage)**.
+For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/api-client/getting-started/install/javascript/)**.
 
 ## ❓ Troubleshooting
 
-Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/javascript/) where you will find answers for the most common issues and gotchas with the client.
+Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/api-client/troubleshooting/faq/javascript/) where you will find answers for the most common issues and gotchas with the client. You can also open [a GitHub issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=&projects=&template=Bug_report.md)
 
 ## 📄 License
 
-Algolia JavaScript API Client is an open-sourced software licensed under the [MIT license](LICENSE.md).
-
+The Algolia JavaScript API Client is an open-sourced software licensed under the [MIT license](LICENSE).
