@@ -14,11 +14,6 @@ export type BaseIndexSettings = {
   replicas?: string[];
 
   /**
-   * Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
-   */
-  virtual?: boolean;
-
-  /**
    * Maximum number of search results that can be obtained through pagination.  Higher pagination limits might slow down your search. For pagination limits above 1,000, the sorting of results beyond the 1,000th hit can\'t be guaranteed.
    */
   paginationLimitedTo?: number;
