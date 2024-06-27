@@ -1,3 +1,7 @@
+## [5.0.0-beta.8](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.7...5.0.0-beta.8)
+
+- [8e98407c1](https://github.com/algolia/api-clients-automation/commit/8e98407c1) fix(clients): update ingestion transformations description and fix taggroups ([#3265](https://github.com/algolia/api-clients-automation/pull/3265)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-beta.7](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.6...5.0.0-beta.7)
 
 - [e5cfcf0c4](https://github.com/algolia/api-clients-automation/commit/e5cfcf0c4) feat(clients): generate common LICENSE ([#3258](https://github.com/algolia/api-clients-automation/pull/3258)) by [@shortcuts](https://github.com/shortcuts/)
