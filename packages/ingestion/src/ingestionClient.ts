@@ -1909,7 +1909,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Searches for transformations.
+     * Try a transformation.
      *
      * Required API Key ACLs:
      * - addObject
