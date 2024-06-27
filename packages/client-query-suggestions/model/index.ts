@@ -2,14 +2,14 @@
 
 export * from './appID';
 export * from './baseResponse';
+export * from './configuration';
+export * from './configurationResponse';
+export * from './configurationWithIndex';
 export * from './errorBase';
 export * from './facet';
 export * from './getConfigStatus200Response';
 export * from './getLogFile200Response';
 export * from './languages';
 export * from './logLevel';
-export * from './querySuggestionsConfiguration';
-export * from './querySuggestionsConfigurationResponse';
-export * from './querySuggestionsConfigurationWithIndex';
 export * from './sourceIndex';
 export * from './clientMethodProps';

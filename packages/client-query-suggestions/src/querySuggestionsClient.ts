@@ -26,10 +26,10 @@ import type {
   GetLogFileProps,
   UpdateConfigProps,
 } from '../model/clientMethodProps';
+import type { ConfigurationResponse } from '../model/configurationResponse';
+import type { ConfigurationWithIndex } from '../model/configurationWithIndex';
 import type { GetConfigStatus200Response } from '../model/getConfigStatus200Response';
 import type { GetLogFile200Response } from '../model/getLogFile200Response';
-import type { QuerySuggestionsConfigurationResponse } from '../model/querySuggestionsConfigurationResponse';
-import type { QuerySuggestionsConfigurationWithIndex } from '../model/querySuggestionsConfigurationWithIndex';
 
 export const apiClientVersion = '5.0.0-beta.6';
 
@@ -115,16 +115,16 @@ export function createQuerySuggestionsClient({
      * Required API Key ACLs:
      * - editSettings.
      *
-     * @param querySuggestionsConfigurationWithIndex - The querySuggestionsConfigurationWithIndex object.
+     * @param configurationWithIndex - The configurationWithIndex object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     createConfig(
-      querySuggestionsConfigurationWithIndex: QuerySuggestionsConfigurationWithIndex,
+      configurationWithIndex: ConfigurationWithIndex,
       requestOptions?: RequestOptions
     ): Promise<BaseResponse> {
-      if (!querySuggestionsConfigurationWithIndex) {
+      if (!configurationWithIndex) {
         throw new Error(
-          'Parameter `querySuggestionsConfigurationWithIndex` is required when calling `createConfig`.'
+          'Parameter `configurationWithIndex` is required when calling `createConfig`.'
         );
       }
 
@@ -137,7 +137,7 @@ export function createQuerySuggestionsClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: querySuggestionsConfigurationWithIndex,
+        data: configurationWithIndex,
       };
 
       return transporter.request(request, requestOptions);
@@ -322,7 +322,7 @@ export function createQuerySuggestionsClient({
      */
     getAllConfigs(
       requestOptions?: RequestOptions
-    ): Promise<QuerySuggestionsConfigurationResponse[]> {
+    ): Promise<ConfigurationResponse[]> {
       const requestPath = '/1/configs';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -350,7 +350,7 @@ export function createQuerySuggestionsClient({
     getConfig(
       { indexName }: GetConfigProps,
       requestOptions?: RequestOptions
-    ): Promise<QuerySuggestionsConfigurationResponse> {
+    ): Promise<ConfigurationResponse> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getConfig`.'
@@ -456,11 +456,11 @@ export function createQuerySuggestionsClient({
      *
      * @param updateConfig - The updateConfig object.
      * @param updateConfig.indexName - Query Suggestions index name.
-     * @param updateConfig.querySuggestionsConfiguration - The querySuggestionsConfiguration object.
+     * @param updateConfig.configuration - The configuration object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     updateConfig(
-      { indexName, querySuggestionsConfiguration }: UpdateConfigProps,
+      { indexName, configuration }: UpdateConfigProps,
       requestOptions?: RequestOptions
     ): Promise<BaseResponse> {
       if (!indexName) {
@@ -469,15 +469,15 @@ export function createQuerySuggestionsClient({
         );
       }
 
-      if (!querySuggestionsConfiguration) {
+      if (!configuration) {
         throw new Error(
-          'Parameter `querySuggestionsConfiguration` is required when calling `updateConfig`.'
+          'Parameter `configuration` is required when calling `updateConfig`.'
         );
       }
 
-      if (!querySuggestionsConfiguration.sourceIndices) {
+      if (!configuration.sourceIndices) {
         throw new Error(
-          'Parameter `querySuggestionsConfiguration.sourceIndices` is required when calling `updateConfig`.'
+          'Parameter `configuration.sourceIndices` is required when calling `updateConfig`.'
         );
       }
 
@@ -493,7 +493,7 @@ export function createQuerySuggestionsClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: querySuggestionsConfiguration,
+        data: configuration,
       };
 
       return transporter.request(request, requestOptions);

@@ -6,7 +6,7 @@ import type { SourceIndex } from './sourceIndex';
 /**
  * Query Suggestions configuration.
  */
-export type QuerySuggestionsConfiguration = {
+export type Configuration = {
   /**
    * Algolia indices from which to get the popular searches for query suggestions.
    */
