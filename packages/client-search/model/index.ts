@@ -106,6 +106,7 @@ export * from './reRankingApplyFilter';
 export * from './redirect';
 export * from './redirectRuleIndexMetadata';
 export * from './redirectRuleIndexMetadataData';
+export * from './redirectURL';
 export * from './removeStopWords';
 export * from './removeUserIdResponse';
 export * from './removeWordsIfNoResults';

@@ -70,6 +70,7 @@ export * from './recommendedForYouQuery';
 export * from './redirect';
 export * from './redirectRuleIndexMetadata';
 export * from './redirectRuleIndexMetadataData';
+export * from './redirectURL';
 export * from './relatedModel';
 export * from './relatedProducts';
 export * from './relatedQuery';
