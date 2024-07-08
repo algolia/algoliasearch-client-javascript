@@ -1,3 +1,7 @@
+## [5.0.0-beta.10](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.9...5.0.0-beta.10)
+
+- [d82229de0](https://github.com/algolia/api-clients-automation/commit/d82229de0) chore(javascript): nx cache lock ([#3327](https://github.com/algolia/api-clients-automation/pull/3327)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-beta.9](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.8...5.0.0-beta.9)
 
 - [9776cb3ba](https://github.com/algolia/api-clients-automation/commit/9776cb3ba) feat(specs): add redirect to renderingContent ([#3296](https://github.com/algolia/api-clients-automation/pull/3296)) by [@shortcuts](https://github.com/shortcuts/)
