@@ -17,5 +17,5 @@ export type TransformationCreate = {
   /**
    * A descriptive name for your transformation of what it does.
    */
-  description: string;
+  description?: string;
 };

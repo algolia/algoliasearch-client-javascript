@@ -19,7 +19,7 @@ export type Transformation = {
   /**
    * A descriptive name for your transformation of what it does.
    */
-  description: string;
+  description?: string;
 
   /**
    * Date of creation in RFC 3339 format.

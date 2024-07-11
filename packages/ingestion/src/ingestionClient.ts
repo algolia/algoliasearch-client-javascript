@@ -439,11 +439,6 @@ export function createIngestionClient({
           'Parameter `transformationCreate.name` is required when calling `createTransformation`.'
         );
       }
-      if (!transformationCreate.description) {
-        throw new Error(
-          'Parameter `transformationCreate.description` is required when calling `createTransformation`.'
-        );
-      }
 
       const requestPath = '/1/transformations';
       const headers: Headers = {};
@@ -2170,11 +2165,6 @@ export function createIngestionClient({
       if (!transformationCreate.name) {
         throw new Error(
           'Parameter `transformationCreate.name` is required when calling `updateTransformation`.'
-        );
-      }
-      if (!transformationCreate.description) {
-        throw new Error(
-          'Parameter `transformationCreate.description` is required when calling `updateTransformation`.'
         );
       }
 
