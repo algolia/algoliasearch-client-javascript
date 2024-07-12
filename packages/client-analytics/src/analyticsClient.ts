@@ -61,7 +61,7 @@ import type { GetTopHitsResponse } from '../model/getTopHitsResponse';
 import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
 
-export const apiClientVersion = '5.0.0-beta.9';
+export const apiClientVersion = '5.0.0-beta.10';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];

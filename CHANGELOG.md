@@ -1,3 +1,9 @@
+## [5.0.0-beta.11](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.10...5.0.0-beta.11)
+
+- [a009967f6](https://github.com/algolia/api-clients-automation/commit/a009967f6) fix(specs): browse response required properties ([#3348](https://github.com/algolia/api-clients-automation/pull/3348)) by [@millotp](https://github.com/millotp/)
+- [04a799417](https://github.com/algolia/api-clients-automation/commit/04a799417) fix(specs): ingestion task and transformation ([#3347](https://github.com/algolia/api-clients-automation/pull/3347)) by [@shortcuts](https://github.com/shortcuts/)
+- [dcb1b59dc](https://github.com/algolia/api-clients-automation/commit/dcb1b59dc) fix(specs): clarify browse parameters ([#3333](https://github.com/algolia/api-clients-automation/pull/3333)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0-beta.10](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.9...5.0.0-beta.10)
 
 - [d82229de0](https://github.com/algolia/api-clients-automation/commit/d82229de0) chore(javascript): nx cache lock ([#3327](https://github.com/algolia/api-clients-automation/pull/3327)) by [@shortcuts](https://github.com/shortcuts/)
