@@ -69,6 +69,7 @@ export * from './relatedQuery';
 export * from './removeStopWords';
 export * from './removeWordsIfNoResults';
 export * from './renderingContent';
+export * from './searchPagination';
 export * from './searchParams';
 export * from './searchParamsObject';
 export * from './searchParamsQuery';

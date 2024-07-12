@@ -54,11 +54,6 @@ export type BaseSearchResponse = Record<string, any> & {
   facets_stats?: Record<string, FacetsStats>;
 
   /**
-   * Number of hits per page.
-   */
-  hitsPerPage: number;
-
-  /**
    * Index name used for the query.
    */
   index?: string;
@@ -74,24 +69,9 @@ export type BaseSearchResponse = Record<string, any> & {
   message?: string;
 
   /**
-   * Number of results (hits).
-   */
-  nbHits: number;
-
-  /**
-   * Number of pages of results.
-   */
-  nbPages: number;
-
-  /**
    * Number of hits selected and sorted by the relevant sort algorithm.
    */
   nbSortedHits?: number;
-
-  /**
-   * Page of search results to retrieve.
-   */
-  page: number;
 
   /**
    * Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean) query string that will be searched.

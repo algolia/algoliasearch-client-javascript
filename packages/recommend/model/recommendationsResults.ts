@@ -2,5 +2,8 @@
 
 import type { BaseSearchResponse } from './baseSearchResponse';
 import type { RecommendationsHits } from './recommendationsHits';
+import type { SearchPagination } from './searchPagination';
 
-export type RecommendationsResults = BaseSearchResponse & RecommendationsHits;
+export type RecommendationsResults = BaseSearchResponse &
+  RecommendationsHits &
+  SearchPagination;
