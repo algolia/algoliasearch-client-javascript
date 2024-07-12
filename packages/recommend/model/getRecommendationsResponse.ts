@@ -3,5 +3,5 @@
 import type { RecommendationsResults } from './recommendationsResults';
 
 export type GetRecommendationsResponse = {
-  results?: RecommendationsResults[];
+  results: RecommendationsResults[];
 };
