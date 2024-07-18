@@ -320,18 +320,19 @@ export function createSearchClient({
           Math.min(retryCount * 200, 5000),
       }: WaitForApiKeyOptions,
       requestOptions?: RequestOptions
-    ): Promise<ApiError | GetApiKeyResponse> {
+    ): Promise<GetApiKeyResponse | undefined> {
       let retryCount = 0;
-      const baseIteratorOptions: IterableOptions<ApiError | GetApiKeyResponse> =
-        {
-          aggregator: () => (retryCount += 1),
-          error: {
-            validate: () => retryCount >= maxRetries,
-            message: () =>
-              `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
-          },
-          timeout: () => timeout(retryCount),
-        };
+      const baseIteratorOptions: IterableOptions<
+        GetApiKeyResponse | undefined
+      > = {
+        aggregator: () => (retryCount += 1),
+        error: {
+          validate: () => retryCount >= maxRetries,
+          message: () =>
+            `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+        },
+        timeout: () => timeout(retryCount),
+      };
 
       if (operation === 'update') {
         if (!apiKey) {
@@ -366,9 +367,15 @@ export function createSearchClient({
       return createIterablePromise({
         ...baseIteratorOptions,
         func: () =>
-          this.getApiKey({ key }, requestOptions).catch((error) => error),
-        validate: (error: ApiError) =>
-          operation === 'add' ? error.status !== 404 : error.status === 404,
+          this.getApiKey({ key }, requestOptions).catch((error: ApiError) => {
+            if (error.status === 404) {
+              return undefined;
+            }
+
+            throw error;
+          }),
+        validate: (response) =>
+          operation === 'add' ? response !== undefined : response === undefined,
       });
     },
 
