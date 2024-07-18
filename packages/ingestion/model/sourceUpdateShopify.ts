@@ -2,37 +2,7 @@
 
 export type SourceUpdateShopify = {
   /**
-   * Whether to index collection IDs.   If your store has `has_collection_search_page` set to true, collection IDs will be indexed even if `collectionIDIndexing` is false.
+   * Feature flags for the Shopify source.
    */
-  collectionIDIndexing?: boolean;
-
-  /**
-   * Whether to increase the number of indexed collections per product. If true, Algolia indexes 200 collections per product. If false, 100 collections per product are indexed.
-   */
-  increaseProductCollectionLimit?: boolean;
-
-  /**
-   * Whether to set the default price ratio to 1 if no sale price is present.  The price ratio is determined by the ratio: `sale_price` / `regular_price`. If no sale price is present, the price ratio would be 0. If `defaultPriceRatioAsOne` is true, the price ratio is indexed as 1 instead.
-   */
-  defaultPriceRatioAsOne?: boolean;
-
-  /**
-   * Whether to exclude out-of-stock variants when determining the `max_variant_price` and `min_variant_price` attributes.
-   */
-  excludeOOSVariantsForPriceAtTRS?: boolean;
-
-  /**
-   * Whether to include an inventory with every variant for every product record.
-   */
-  includeVariantsInventory?: boolean;
-
-  /**
-   * Whether to include collection IDs and handles in the product records.
-   */
-  hasCollectionSearchPage?: boolean;
-
-  /**
-   * Whether to convert tags on products to named tags.  To learn more, see [Named tags](https://www.algolia.com/doc/integration/shopify/sending-and-managing-data/named-tags).
-   */
-  productNamedTags?: boolean;
+  featureFlags?: Record<string, any>;
 };
