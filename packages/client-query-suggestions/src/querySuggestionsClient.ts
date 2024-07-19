@@ -31,7 +31,7 @@ import type { ConfigurationWithIndex } from '../model/configurationWithIndex';
 import type { GetConfigStatus200Response } from '../model/getConfigStatus200Response';
 import type { GetLogFile200Response } from '../model/getLogFile200Response';
 
-export const apiClientVersion = '5.0.0-beta.10';
+export const apiClientVersion = '5.0.0-beta.11';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
