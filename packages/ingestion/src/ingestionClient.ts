@@ -28,29 +28,36 @@ import type {
   DeleteDestinationProps,
   DeleteSourceProps,
   DeleteTaskProps,
+  DeleteTaskV1Props,
   DeleteTransformationProps,
   DisableTaskProps,
+  DisableTaskV1Props,
   EnableTaskProps,
+  EnableTaskV1Props,
   GetAuthenticationProps,
-  GetAuthenticationsProps,
   GetDestinationProps,
-  GetDestinationsProps,
   GetEventProps,
-  GetEventsProps,
   GetRunProps,
-  GetRunsProps,
   GetSourceProps,
-  GetSourcesProps,
   GetTaskProps,
-  GetTasksProps,
+  GetTaskV1Props,
   GetTransformationProps,
-  GetTransformationsProps,
+  ListAuthenticationsProps,
+  ListDestinationsProps,
+  ListEventsProps,
+  ListRunsProps,
+  ListSourcesProps,
+  ListTasksProps,
+  ListTasksV1Props,
+  ListTransformationsProps,
   RunTaskProps,
+  RunTaskV1Props,
   TriggerDockerSourceDiscoverProps,
   UpdateAuthenticationProps,
   UpdateDestinationProps,
   UpdateSourceProps,
   UpdateTaskProps,
+  UpdateTaskV1Props,
   UpdateTransformationProps,
   ValidateSourceBeforeUpdateProps,
 } from '../model/clientMethodProps';
@@ -66,6 +73,7 @@ import type { ListDestinationsResponse } from '../model/listDestinationsResponse
 import type { ListEventsResponse } from '../model/listEventsResponse';
 import type { ListSourcesResponse } from '../model/listSourcesResponse';
 import type { ListTasksResponse } from '../model/listTasksResponse';
+import type { ListTasksResponseV1 } from '../model/listTasksResponseV1';
 import type { ListTransformationsResponse } from '../model/listTransformationsResponse';
 import type { OnDemandTrigger } from '../model/onDemandTrigger';
 import type { Run } from '../model/run';
@@ -83,8 +91,10 @@ import type { Task } from '../model/task';
 import type { TaskCreate } from '../model/taskCreate';
 import type { TaskCreateResponse } from '../model/taskCreateResponse';
 import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
+import type { TaskCreateV1 } from '../model/taskCreateV1';
 import type { TaskSearch } from '../model/taskSearch';
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
+import type { TaskV1 } from '../model/taskV1';
 import type { Transformation } from '../model/transformation';
 import type { TransformationCreate } from '../model/transformationCreate';
 import type { TransformationCreateResponse } from '../model/transformationCreateResponse';
@@ -387,14 +397,61 @@ export function createIngestionClient({
           'Parameter `taskCreate.destinationID` is required when calling `createTask`.'
         );
       }
+      if (!taskCreate.action) {
+        throw new Error(
+          'Parameter `taskCreate.action` is required when calling `createTask`.'
+        );
+      }
+
+      const requestPath = '/2/tasks';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: taskCreate,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Creates a new task using the v1 endpoint, please use `createTask` instead.
+     *
+     * @param taskCreate - Request body for creating a task.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    createTaskV1(
+      taskCreate: TaskCreateV1,
+      requestOptions?: RequestOptions
+    ): Promise<TaskCreateResponse> {
+      if (!taskCreate) {
+        throw new Error(
+          'Parameter `taskCreate` is required when calling `createTaskV1`.'
+        );
+      }
+
+      if (!taskCreate.sourceID) {
+        throw new Error(
+          'Parameter `taskCreate.sourceID` is required when calling `createTaskV1`.'
+        );
+      }
+      if (!taskCreate.destinationID) {
+        throw new Error(
+          'Parameter `taskCreate.destinationID` is required when calling `createTaskV1`.'
+        );
+      }
       if (!taskCreate.trigger) {
         throw new Error(
-          'Parameter `taskCreate.trigger` is required when calling `createTask`.'
+          'Parameter `taskCreate.trigger` is required when calling `createTaskV1`.'
         );
       }
       if (!taskCreate.action) {
         throw new Error(
-          'Parameter `taskCreate.action` is required when calling `createTask`.'
+          'Parameter `taskCreate.action` is required when calling `createTaskV1`.'
         );
       }
 
@@ -721,6 +778,40 @@ export function createIngestionClient({
         );
       }
 
+      const requestPath = '/2/tasks/{taskID}'.replace(
+        '{taskID}',
+        encodeURIComponent(taskID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+     *
+     * @param deleteTaskV1 - The deleteTaskV1 object.
+     * @param deleteTaskV1.taskID - Unique identifier of a task.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    deleteTaskV1(
+      { taskID }: DeleteTaskV1Props,
+      requestOptions?: RequestOptions
+    ): Promise<DeleteResponse> {
+      if (!taskID) {
+        throw new Error(
+          'Parameter `taskID` is required when calling `deleteTaskV1`.'
+        );
+      }
+
       const requestPath = '/1/tasks/{taskID}'.replace(
         '{taskID}',
         encodeURIComponent(taskID)
@@ -794,6 +885,45 @@ export function createIngestionClient({
         );
       }
 
+      const requestPath = '/2/tasks/{taskID}/disable'.replace(
+        '{taskID}',
+        encodeURIComponent(taskID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Disables a task using the v1 endpoint, please use `disableTask` instead.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param disableTaskV1 - The disableTaskV1 object.
+     * @param disableTaskV1.taskID - Unique identifier of a task.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    disableTaskV1(
+      { taskID }: DisableTaskV1Props,
+      requestOptions?: RequestOptions
+    ): Promise<TaskUpdateResponse> {
+      if (!taskID) {
+        throw new Error(
+          'Parameter `taskID` is required when calling `disableTaskV1`.'
+        );
+      }
+
       const requestPath = '/1/tasks/{taskID}/disable'.replace(
         '{taskID}',
         encodeURIComponent(taskID)
@@ -830,6 +960,45 @@ export function createIngestionClient({
       if (!taskID) {
         throw new Error(
           'Parameter `taskID` is required when calling `enableTask`.'
+        );
+      }
+
+      const requestPath = '/2/tasks/{taskID}/enable'.replace(
+        '{taskID}',
+        encodeURIComponent(taskID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Enables a task using the v1 endpoint, please use `enableTask` instead.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param enableTaskV1 - The enableTaskV1 object.
+     * @param enableTaskV1.taskID - Unique identifier of a task.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    enableTaskV1(
+      { taskID }: EnableTaskV1Props,
+      requestOptions?: RequestOptions
+    ): Promise<TaskUpdateResponse> {
+      if (!taskID) {
+        throw new Error(
+          'Parameter `taskID` is required when calling `enableTaskV1`.'
         );
       }
 
@@ -890,72 +1059,6 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieves a list of all authentication resources.
-     *
-     * Required API Key ACLs:
-     * - addObject
-     * - deleteIndex
-     * - editSettings.
-     *
-     * @param getAuthentications - The getAuthentications object.
-     * @param getAuthentications.itemsPerPage - Number of items per page.
-     * @param getAuthentications.page - Page number of the paginated API response.
-     * @param getAuthentications.type - Type of authentication resource to retrieve.
-     * @param getAuthentications.platform - Ecommerce platform for which to retrieve authentication resources.
-     * @param getAuthentications.sort - Property by which to sort the list of authentication resources.
-     * @param getAuthentications.order - Sort order of the response, ascending or descending.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    getAuthentications(
-      {
-        itemsPerPage,
-        page,
-        type,
-        platform,
-        sort,
-        order,
-      }: GetAuthenticationsProps = {},
-      requestOptions: RequestOptions | undefined = undefined
-    ): Promise<ListAuthenticationsResponse> {
-      const requestPath = '/1/authentications';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      if (itemsPerPage !== undefined) {
-        queryParameters.itemsPerPage = itemsPerPage.toString();
-      }
-
-      if (page !== undefined) {
-        queryParameters.page = page.toString();
-      }
-
-      if (type !== undefined) {
-        queryParameters.type = type.toString();
-      }
-
-      if (platform !== undefined) {
-        queryParameters.platform = platform.toString();
-      }
-
-      if (sort !== undefined) {
-        queryParameters.sort = sort.toString();
-      }
-
-      if (order !== undefined) {
-        queryParameters.order = order.toString();
-      }
-
-      const request: Request = {
-        method: 'GET',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
      * Retrieves a destination by its ID.
      *
      * Required API Key ACLs:
@@ -983,72 +1086,6 @@ export function createIngestionClient({
       );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'GET',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
-     * Retrieves a list of destinations.
-     *
-     * Required API Key ACLs:
-     * - addObject
-     * - deleteIndex
-     * - editSettings.
-     *
-     * @param getDestinations - The getDestinations object.
-     * @param getDestinations.itemsPerPage - Number of items per page.
-     * @param getDestinations.page - Page number of the paginated API response.
-     * @param getDestinations.type - Destination type.
-     * @param getDestinations.authenticationID - Authentication ID used by destinations.
-     * @param getDestinations.sort - Property by which to sort the destinations.
-     * @param getDestinations.order - Sort order of the response, ascending or descending.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    getDestinations(
-      {
-        itemsPerPage,
-        page,
-        type,
-        authenticationID,
-        sort,
-        order,
-      }: GetDestinationsProps = {},
-      requestOptions: RequestOptions | undefined = undefined
-    ): Promise<ListDestinationsResponse> {
-      const requestPath = '/1/destinations';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      if (itemsPerPage !== undefined) {
-        queryParameters.itemsPerPage = itemsPerPage.toString();
-      }
-
-      if (page !== undefined) {
-        queryParameters.page = page.toString();
-      }
-
-      if (type !== undefined) {
-        queryParameters.type = type.toString();
-      }
-
-      if (authenticationID !== undefined) {
-        queryParameters.authenticationID = authenticationID.toString();
-      }
-
-      if (sort !== undefined) {
-        queryParameters.sort = sort.toString();
-      }
-
-      if (order !== undefined) {
-        queryParameters.order = order.toString();
-      }
 
       const request: Request = {
         method: 'GET',
@@ -1106,6 +1143,331 @@ export function createIngestionClient({
     },
 
     /**
+     * Retrieve a single task run by its ID.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param getRun - The getRun object.
+     * @param getRun.runID - Unique identifier of a task run.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getRun(
+      { runID }: GetRunProps,
+      requestOptions?: RequestOptions
+    ): Promise<Run> {
+      if (!runID) {
+        throw new Error('Parameter `runID` is required when calling `getRun`.');
+      }
+
+      const requestPath = '/1/runs/{runID}'.replace(
+        '{runID}',
+        encodeURIComponent(runID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieve a source by its ID.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param getSource - The getSource object.
+     * @param getSource.sourceID - Unique identifier of a source.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getSource(
+      { sourceID }: GetSourceProps,
+      requestOptions?: RequestOptions
+    ): Promise<Source> {
+      if (!sourceID) {
+        throw new Error(
+          'Parameter `sourceID` is required when calling `getSource`.'
+        );
+      }
+
+      const requestPath = '/1/sources/{sourceID}'.replace(
+        '{sourceID}',
+        encodeURIComponent(sourceID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves a task by its ID.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param getTask - The getTask object.
+     * @param getTask.taskID - Unique identifier of a task.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getTask(
+      { taskID }: GetTaskProps,
+      requestOptions?: RequestOptions
+    ): Promise<Task> {
+      if (!taskID) {
+        throw new Error(
+          'Parameter `taskID` is required when calling `getTask`.'
+        );
+      }
+
+      const requestPath = '/2/tasks/{taskID}'.replace(
+        '{taskID}',
+        encodeURIComponent(taskID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves a task by its ID using the v1 endpoint, please use `getTask` instead.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param getTaskV1 - The getTaskV1 object.
+     * @param getTaskV1.taskID - Unique identifier of a task.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getTaskV1(
+      { taskID }: GetTaskV1Props,
+      requestOptions?: RequestOptions
+    ): Promise<TaskV1> {
+      if (!taskID) {
+        throw new Error(
+          'Parameter `taskID` is required when calling `getTaskV1`.'
+        );
+      }
+
+      const requestPath = '/1/tasks/{taskID}'.replace(
+        '{taskID}',
+        encodeURIComponent(taskID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves a transformation by its ID.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param getTransformation - The getTransformation object.
+     * @param getTransformation.transformationID - Unique identifier of a transformation.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getTransformation(
+      { transformationID }: GetTransformationProps,
+      requestOptions?: RequestOptions
+    ): Promise<Transformation> {
+      if (!transformationID) {
+        throw new Error(
+          'Parameter `transformationID` is required when calling `getTransformation`.'
+        );
+      }
+
+      const requestPath = '/1/transformations/{transformationID}'.replace(
+        '{transformationID}',
+        encodeURIComponent(transformationID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves a list of all authentication resources.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param listAuthentications - The listAuthentications object.
+     * @param listAuthentications.itemsPerPage - Number of items per page.
+     * @param listAuthentications.page - Page number of the paginated API response.
+     * @param listAuthentications.type - Type of authentication resource to retrieve.
+     * @param listAuthentications.platform - Ecommerce platform for which to retrieve authentication resources.
+     * @param listAuthentications.sort - Property by which to sort the list of authentication resources.
+     * @param listAuthentications.order - Sort order of the response, ascending or descending.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    listAuthentications(
+      {
+        itemsPerPage,
+        page,
+        type,
+        platform,
+        sort,
+        order,
+      }: ListAuthenticationsProps = {},
+      requestOptions: RequestOptions | undefined = undefined
+    ): Promise<ListAuthenticationsResponse> {
+      const requestPath = '/1/authentications';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (itemsPerPage !== undefined) {
+        queryParameters.itemsPerPage = itemsPerPage.toString();
+      }
+
+      if (page !== undefined) {
+        queryParameters.page = page.toString();
+      }
+
+      if (type !== undefined) {
+        queryParameters.type = type.toString();
+      }
+
+      if (platform !== undefined) {
+        queryParameters.platform = platform.toString();
+      }
+
+      if (sort !== undefined) {
+        queryParameters.sort = sort.toString();
+      }
+
+      if (order !== undefined) {
+        queryParameters.order = order.toString();
+      }
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves a list of destinations.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param listDestinations - The listDestinations object.
+     * @param listDestinations.itemsPerPage - Number of items per page.
+     * @param listDestinations.page - Page number of the paginated API response.
+     * @param listDestinations.type - Destination type.
+     * @param listDestinations.authenticationID - Authentication ID used by destinations.
+     * @param listDestinations.sort - Property by which to sort the destinations.
+     * @param listDestinations.order - Sort order of the response, ascending or descending.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    listDestinations(
+      {
+        itemsPerPage,
+        page,
+        type,
+        authenticationID,
+        sort,
+        order,
+      }: ListDestinationsProps = {},
+      requestOptions: RequestOptions | undefined = undefined
+    ): Promise<ListDestinationsResponse> {
+      const requestPath = '/1/destinations';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (itemsPerPage !== undefined) {
+        queryParameters.itemsPerPage = itemsPerPage.toString();
+      }
+
+      if (page !== undefined) {
+        queryParameters.page = page.toString();
+      }
+
+      if (type !== undefined) {
+        queryParameters.type = type.toString();
+      }
+
+      if (authenticationID !== undefined) {
+        queryParameters.authenticationID = authenticationID.toString();
+      }
+
+      if (sort !== undefined) {
+        queryParameters.sort = sort.toString();
+      }
+
+      if (order !== undefined) {
+        queryParameters.order = order.toString();
+      }
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Retrieves a list of events for a task run, identified by it\'s ID.
      *
      * Required API Key ACLs:
@@ -1113,19 +1475,19 @@ export function createIngestionClient({
      * - deleteIndex
      * - editSettings.
      *
-     * @param getEvents - The getEvents object.
-     * @param getEvents.runID - Unique identifier of a task run.
-     * @param getEvents.itemsPerPage - Number of items per page.
-     * @param getEvents.page - Page number of the paginated API response.
-     * @param getEvents.status - Event status for filtering the list of task runs.
-     * @param getEvents.type - Event type for filtering the list of task runs.
-     * @param getEvents.sort - Property by which to sort the list of task run events.
-     * @param getEvents.order - Sort order of the response, ascending or descending.
-     * @param getEvents.startDate - Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
-     * @param getEvents.endDate - Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
+     * @param listEvents - The listEvents object.
+     * @param listEvents.runID - Unique identifier of a task run.
+     * @param listEvents.itemsPerPage - Number of items per page.
+     * @param listEvents.page - Page number of the paginated API response.
+     * @param listEvents.status - Event status for filtering the list of task runs.
+     * @param listEvents.type - Event type for filtering the list of task runs.
+     * @param listEvents.sort - Property by which to sort the list of task run events.
+     * @param listEvents.order - Sort order of the response, ascending or descending.
+     * @param listEvents.startDate - Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+     * @param listEvents.endDate - Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getEvents(
+    listEvents(
       {
         runID,
         itemsPerPage,
@@ -1136,12 +1498,12 @@ export function createIngestionClient({
         order,
         startDate,
         endDate,
-      }: GetEventsProps,
+      }: ListEventsProps,
       requestOptions?: RequestOptions
     ): Promise<ListEventsResponse> {
       if (!runID) {
         throw new Error(
-          'Parameter `runID` is required when calling `getEvents`.'
+          'Parameter `runID` is required when calling `listEvents`.'
         );
       }
 
@@ -1195,43 +1557,6 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieve a single task run by its ID.
-     *
-     * Required API Key ACLs:
-     * - addObject
-     * - deleteIndex
-     * - editSettings.
-     *
-     * @param getRun - The getRun object.
-     * @param getRun.runID - Unique identifier of a task run.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    getRun(
-      { runID }: GetRunProps,
-      requestOptions?: RequestOptions
-    ): Promise<Run> {
-      if (!runID) {
-        throw new Error('Parameter `runID` is required when calling `getRun`.');
-      }
-
-      const requestPath = '/1/runs/{runID}'.replace(
-        '{runID}',
-        encodeURIComponent(runID)
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'GET',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
      * Retrieve a list of task runs.
      *
      * Required API Key ACLs:
@@ -1239,18 +1564,18 @@ export function createIngestionClient({
      * - deleteIndex
      * - editSettings.
      *
-     * @param getRuns - The getRuns object.
-     * @param getRuns.itemsPerPage - Number of items per page.
-     * @param getRuns.page - Page number of the paginated API response.
-     * @param getRuns.status - Run status for filtering the list of task runs.
-     * @param getRuns.taskID - Task ID for filtering the list of task runs.
-     * @param getRuns.sort - Property by which to sort the list of task runs.
-     * @param getRuns.order - Sort order of the response, ascending or descending.
-     * @param getRuns.startDate - Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
-     * @param getRuns.endDate - Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+     * @param listRuns - The listRuns object.
+     * @param listRuns.itemsPerPage - Number of items per page.
+     * @param listRuns.page - Page number of the paginated API response.
+     * @param listRuns.status - Run status for filtering the list of task runs.
+     * @param listRuns.taskID - Task ID for filtering the list of task runs.
+     * @param listRuns.sort - Property by which to sort the list of task runs.
+     * @param listRuns.order - Sort order of the response, ascending or descending.
+     * @param listRuns.startDate - Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+     * @param listRuns.endDate - Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getRuns(
+    listRuns(
       {
         itemsPerPage,
         page,
@@ -1260,7 +1585,7 @@ export function createIngestionClient({
         order,
         startDate,
         endDate,
-      }: GetRunsProps = {},
+      }: ListRunsProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<RunListResponse> {
       const requestPath = '/1/runs';
@@ -1310,45 +1635,6 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieve a source by its ID.
-     *
-     * Required API Key ACLs:
-     * - addObject
-     * - deleteIndex
-     * - editSettings.
-     *
-     * @param getSource - The getSource object.
-     * @param getSource.sourceID - Unique identifier of a source.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    getSource(
-      { sourceID }: GetSourceProps,
-      requestOptions?: RequestOptions
-    ): Promise<Source> {
-      if (!sourceID) {
-        throw new Error(
-          'Parameter `sourceID` is required when calling `getSource`.'
-        );
-      }
-
-      const requestPath = '/1/sources/{sourceID}'.replace(
-        '{sourceID}',
-        encodeURIComponent(sourceID)
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'GET',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
      * Retrieves a list of sources.
      *
      * Required API Key ACLs:
@@ -1356,16 +1642,16 @@ export function createIngestionClient({
      * - deleteIndex
      * - editSettings.
      *
-     * @param getSources - The getSources object.
-     * @param getSources.itemsPerPage - Number of items per page.
-     * @param getSources.page - Page number of the paginated API response.
-     * @param getSources.type - Source type. Some sources require authentication.
-     * @param getSources.authenticationID - Authentication IDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication resource.
-     * @param getSources.sort - Property by which to sort the list of sources.
-     * @param getSources.order - Sort order of the response, ascending or descending.
+     * @param listSources - The listSources object.
+     * @param listSources.itemsPerPage - Number of items per page.
+     * @param listSources.page - Page number of the paginated API response.
+     * @param listSources.type - Source type. Some sources require authentication.
+     * @param listSources.authenticationID - Authentication IDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication resource.
+     * @param listSources.sort - Property by which to sort the list of sources.
+     * @param listSources.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getSources(
+    listSources(
       {
         itemsPerPage,
         page,
@@ -1373,7 +1659,7 @@ export function createIngestionClient({
         authenticationID,
         sort,
         order,
-      }: GetSourcesProps = {},
+      }: ListSourcesProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListSourcesResponse> {
       const requestPath = '/1/sources';
@@ -1415,33 +1701,78 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieves a task by its ID.
+     * Retrieves a list of tasks.
      *
      * Required API Key ACLs:
      * - addObject
      * - deleteIndex
      * - editSettings.
      *
-     * @param getTask - The getTask object.
-     * @param getTask.taskID - Unique identifier of a task.
+     * @param listTasks - The listTasks object.
+     * @param listTasks.itemsPerPage - Number of items per page.
+     * @param listTasks.page - Page number of the paginated API response.
+     * @param listTasks.action - Actions for filtering the list of tasks.
+     * @param listTasks.enabled - Whether to filter the list of tasks by the `enabled` status.
+     * @param listTasks.sourceID - Source IDs for filtering the list of tasks.
+     * @param listTasks.destinationID - Destination IDs for filtering the list of tasks.
+     * @param listTasks.triggerType - Type of task trigger for filtering the list of tasks.
+     * @param listTasks.sort - Property by which to sort the list of tasks.
+     * @param listTasks.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getTask(
-      { taskID }: GetTaskProps,
-      requestOptions?: RequestOptions
-    ): Promise<Task> {
-      if (!taskID) {
-        throw new Error(
-          'Parameter `taskID` is required when calling `getTask`.'
-        );
-      }
-
-      const requestPath = '/1/tasks/{taskID}'.replace(
-        '{taskID}',
-        encodeURIComponent(taskID)
-      );
+    listTasks(
+      {
+        itemsPerPage,
+        page,
+        action,
+        enabled,
+        sourceID,
+        destinationID,
+        triggerType,
+        sort,
+        order,
+      }: ListTasksProps = {},
+      requestOptions: RequestOptions | undefined = undefined
+    ): Promise<ListTasksResponse> {
+      const requestPath = '/2/tasks';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
+      if (itemsPerPage !== undefined) {
+        queryParameters.itemsPerPage = itemsPerPage.toString();
+      }
+
+      if (page !== undefined) {
+        queryParameters.page = page.toString();
+      }
+
+      if (action !== undefined) {
+        queryParameters.action = action.toString();
+      }
+
+      if (enabled !== undefined) {
+        queryParameters.enabled = enabled.toString();
+      }
+
+      if (sourceID !== undefined) {
+        queryParameters.sourceID = sourceID.toString();
+      }
+
+      if (destinationID !== undefined) {
+        queryParameters.destinationID = destinationID.toString();
+      }
+
+      if (triggerType !== undefined) {
+        queryParameters.triggerType = triggerType.toString();
+      }
+
+      if (sort !== undefined) {
+        queryParameters.sort = sort.toString();
+      }
+
+      if (order !== undefined) {
+        queryParameters.order = order.toString();
+      }
 
       const request: Request = {
         method: 'GET',
@@ -1454,26 +1785,26 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieves a list of tasks.
+     * Retrieves a list of tasks using the v1 endpoint, please use `getTasks` instead.
      *
      * Required API Key ACLs:
      * - addObject
      * - deleteIndex
      * - editSettings.
      *
-     * @param getTasks - The getTasks object.
-     * @param getTasks.itemsPerPage - Number of items per page.
-     * @param getTasks.page - Page number of the paginated API response.
-     * @param getTasks.action - Actions for filtering the list of tasks.
-     * @param getTasks.enabled - Whether to filter the list of tasks by the `enabled` status.
-     * @param getTasks.sourceID - Source IDs for filtering the list of tasks.
-     * @param getTasks.destinationID - Destination IDs for filtering the list of tasks.
-     * @param getTasks.triggerType - Type of task trigger for filtering the list of tasks.
-     * @param getTasks.sort - Property by which to sort the list of tasks.
-     * @param getTasks.order - Sort order of the response, ascending or descending.
+     * @param listTasksV1 - The listTasksV1 object.
+     * @param listTasksV1.itemsPerPage - Number of items per page.
+     * @param listTasksV1.page - Page number of the paginated API response.
+     * @param listTasksV1.action - Actions for filtering the list of tasks.
+     * @param listTasksV1.enabled - Whether to filter the list of tasks by the `enabled` status.
+     * @param listTasksV1.sourceID - Source IDs for filtering the list of tasks.
+     * @param listTasksV1.destinationID - Destination IDs for filtering the list of tasks.
+     * @param listTasksV1.triggerType - Type of task trigger for filtering the list of tasks.
+     * @param listTasksV1.sort - Property by which to sort the list of tasks.
+     * @param listTasksV1.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getTasks(
+    listTasksV1(
       {
         itemsPerPage,
         page,
@@ -1484,9 +1815,9 @@ export function createIngestionClient({
         triggerType,
         sort,
         order,
-      }: GetTasksProps = {},
+      }: ListTasksV1Props = {},
       requestOptions: RequestOptions | undefined = undefined
-    ): Promise<ListTasksResponse> {
+    ): Promise<ListTasksResponseV1> {
       const requestPath = '/1/tasks';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1538,45 +1869,6 @@ export function createIngestionClient({
     },
 
     /**
-     * Retrieves a transformation by its ID.
-     *
-     * Required API Key ACLs:
-     * - addObject
-     * - deleteIndex
-     * - editSettings.
-     *
-     * @param getTransformation - The getTransformation object.
-     * @param getTransformation.transformationID - Unique identifier of a transformation.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    getTransformation(
-      { transformationID }: GetTransformationProps,
-      requestOptions?: RequestOptions
-    ): Promise<Transformation> {
-      if (!transformationID) {
-        throw new Error(
-          'Parameter `transformationID` is required when calling `getTransformation`.'
-        );
-      }
-
-      const requestPath = '/1/transformations/{transformationID}'.replace(
-        '{transformationID}',
-        encodeURIComponent(transformationID)
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'GET',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
      * Retrieves a list of transformations.
      *
      * Required API Key ACLs:
@@ -1584,13 +1876,13 @@ export function createIngestionClient({
      * - deleteIndex
      * - editSettings.
      *
-     * @param getTransformations - The getTransformations object.
-     * @param getTransformations.sort - Property by which to sort the list.
-     * @param getTransformations.order - Sort order of the response, ascending or descending.
+     * @param listTransformations - The listTransformations object.
+     * @param listTransformations.sort - Property by which to sort the list.
+     * @param listTransformations.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getTransformations(
-      { sort, order }: GetTransformationsProps = {},
+    listTransformations(
+      { sort, order }: ListTransformationsProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListTransformationsResponse> {
       const requestPath = '/1/transformations';
@@ -1634,6 +1926,45 @@ export function createIngestionClient({
       if (!taskID) {
         throw new Error(
           'Parameter `taskID` is required when calling `runTask`.'
+        );
+      }
+
+      const requestPath = '/2/tasks/{taskID}/run'.replace(
+        '{taskID}',
+        encodeURIComponent(taskID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Runs a task using the v1 endpoint, please use `runTask` instead. You can check the status of task runs with the observability endpoints.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param runTaskV1 - The runTaskV1 object.
+     * @param runTaskV1.taskID - Unique identifier of a task.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    runTaskV1(
+      { taskID }: RunTaskV1Props,
+      requestOptions?: RequestOptions
+    ): Promise<RunResponse> {
+      if (!taskID) {
+        throw new Error(
+          'Parameter `taskID` is required when calling `runTaskV1`.'
         );
       }
 
@@ -1804,6 +2135,48 @@ export function createIngestionClient({
       if (!taskSearch.taskIDs) {
         throw new Error(
           'Parameter `taskSearch.taskIDs` is required when calling `searchTasks`.'
+        );
+      }
+
+      const requestPath = '/2/tasks/search';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: taskSearch,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Searches for tasks using the v1 endpoint, please use `searchTasks` instead.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param taskSearch - The taskSearch object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchTasksV1(
+      taskSearch: TaskSearch,
+      requestOptions?: RequestOptions
+    ): Promise<TaskV1[]> {
+      if (!taskSearch) {
+        throw new Error(
+          'Parameter `taskSearch` is required when calling `searchTasksV1`.'
+        );
+      }
+
+      if (!taskSearch.taskIDs) {
+        throw new Error(
+          'Parameter `taskSearch.taskIDs` is required when calling `searchTasksV1`.'
         );
       }
 
@@ -2112,6 +2485,48 @@ export function createIngestionClient({
       if (!taskUpdate) {
         throw new Error(
           'Parameter `taskUpdate` is required when calling `updateTask`.'
+        );
+      }
+
+      const requestPath = '/2/tasks/{taskID}'.replace(
+        '{taskID}',
+        encodeURIComponent(taskID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PATCH',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: taskUpdate,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+     *
+     * @param updateTaskV1 - The updateTaskV1 object.
+     * @param updateTaskV1.taskID - Unique identifier of a task.
+     * @param updateTaskV1.taskUpdate - The taskUpdate object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    updateTaskV1(
+      { taskID, taskUpdate }: UpdateTaskV1Props,
+      requestOptions?: RequestOptions
+    ): Promise<TaskUpdateResponse> {
+      if (!taskID) {
+        throw new Error(
+          'Parameter `taskID` is required when calling `updateTaskV1`.'
+        );
+      }
+
+      if (!taskUpdate) {
+        throw new Error(
+          'Parameter `taskUpdate` is required when calling `updateTaskV1`.'
         );
       }
 

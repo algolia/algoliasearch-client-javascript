@@ -20,6 +20,7 @@ import type { SourceType } from './sourceType';
 import type { SourceUpdate } from './sourceUpdate';
 import type { TaskSortKeys } from './taskSortKeys';
 import type { TaskUpdate } from './taskUpdate';
+import type { TaskUpdateV1 } from './taskUpdateV1';
 import type { TransformationCreate } from './transformationCreate';
 import type { TriggerType } from './triggerType';
 
@@ -128,6 +129,16 @@ export type DeleteTaskProps = {
 };
 
 /**
+ * Properties for the `deleteTaskV1` method.
+ */
+export type DeleteTaskV1Props = {
+  /**
+   * Unique identifier of a task.
+   */
+  taskID: string;
+};
+
+/**
  * Properties for the `deleteTransformation` method.
  */
 export type DeleteTransformationProps = {
@@ -148,9 +159,29 @@ export type DisableTaskProps = {
 };
 
 /**
+ * Properties for the `disableTaskV1` method.
+ */
+export type DisableTaskV1Props = {
+  /**
+   * Unique identifier of a task.
+   */
+  taskID: string;
+};
+
+/**
  * Properties for the `enableTask` method.
  */
 export type EnableTaskProps = {
+  /**
+   * Unique identifier of a task.
+   */
+  taskID: string;
+};
+
+/**
+ * Properties for the `enableTaskV1` method.
+ */
+export type EnableTaskV1Props = {
   /**
    * Unique identifier of a task.
    */
@@ -168,9 +199,83 @@ export type GetAuthenticationProps = {
 };
 
 /**
- * Properties for the `getAuthentications` method.
+ * Properties for the `getDestination` method.
  */
-export type GetAuthenticationsProps = {
+export type GetDestinationProps = {
+  /**
+   * Unique identifier of a destination.
+   */
+  destinationID: string;
+};
+
+/**
+ * Properties for the `getEvent` method.
+ */
+export type GetEventProps = {
+  /**
+   * Unique identifier of a task run.
+   */
+  runID: string;
+  /**
+   * Unique identifier of an event.
+   */
+  eventID: string;
+};
+
+/**
+ * Properties for the `getRun` method.
+ */
+export type GetRunProps = {
+  /**
+   * Unique identifier of a task run.
+   */
+  runID: string;
+};
+
+/**
+ * Properties for the `getSource` method.
+ */
+export type GetSourceProps = {
+  /**
+   * Unique identifier of a source.
+   */
+  sourceID: string;
+};
+
+/**
+ * Properties for the `getTask` method.
+ */
+export type GetTaskProps = {
+  /**
+   * Unique identifier of a task.
+   */
+  taskID: string;
+};
+
+/**
+ * Properties for the `getTaskV1` method.
+ */
+export type GetTaskV1Props = {
+  /**
+   * Unique identifier of a task.
+   */
+  taskID: string;
+};
+
+/**
+ * Properties for the `getTransformation` method.
+ */
+export type GetTransformationProps = {
+  /**
+   * Unique identifier of a transformation.
+   */
+  transformationID: string;
+};
+
+/**
+ * Properties for the `listAuthentications` method.
+ */
+export type ListAuthenticationsProps = {
   /**
    * Number of items per page.
    */
@@ -198,19 +303,9 @@ export type GetAuthenticationsProps = {
 };
 
 /**
- * Properties for the `getDestination` method.
+ * Properties for the `listDestinations` method.
  */
-export type GetDestinationProps = {
-  /**
-   * Unique identifier of a destination.
-   */
-  destinationID: string;
-};
-
-/**
- * Properties for the `getDestinations` method.
- */
-export type GetDestinationsProps = {
+export type ListDestinationsProps = {
   /**
    * Number of items per page.
    */
@@ -238,23 +333,9 @@ export type GetDestinationsProps = {
 };
 
 /**
- * Properties for the `getEvent` method.
+ * Properties for the `listEvents` method.
  */
-export type GetEventProps = {
-  /**
-   * Unique identifier of a task run.
-   */
-  runID: string;
-  /**
-   * Unique identifier of an event.
-   */
-  eventID: string;
-};
-
-/**
- * Properties for the `getEvents` method.
- */
-export type GetEventsProps = {
+export type ListEventsProps = {
   /**
    * Unique identifier of a task run.
    */
@@ -294,19 +375,9 @@ export type GetEventsProps = {
 };
 
 /**
- * Properties for the `getRun` method.
+ * Properties for the `listRuns` method.
  */
-export type GetRunProps = {
-  /**
-   * Unique identifier of a task run.
-   */
-  runID: string;
-};
-
-/**
- * Properties for the `getRuns` method.
- */
-export type GetRunsProps = {
+export type ListRunsProps = {
   /**
    * Number of items per page.
    */
@@ -342,19 +413,9 @@ export type GetRunsProps = {
 };
 
 /**
- * Properties for the `getSource` method.
+ * Properties for the `listSources` method.
  */
-export type GetSourceProps = {
-  /**
-   * Unique identifier of a source.
-   */
-  sourceID: string;
-};
-
-/**
- * Properties for the `getSources` method.
- */
-export type GetSourcesProps = {
+export type ListSourcesProps = {
   /**
    * Number of items per page.
    */
@@ -382,19 +443,9 @@ export type GetSourcesProps = {
 };
 
 /**
- * Properties for the `getTask` method.
+ * Properties for the `listTasks` method.
  */
-export type GetTaskProps = {
-  /**
-   * Unique identifier of a task.
-   */
-  taskID: string;
-};
-
-/**
- * Properties for the `getTasks` method.
- */
-export type GetTasksProps = {
+export type ListTasksProps = {
   /**
    * Number of items per page.
    */
@@ -434,19 +485,51 @@ export type GetTasksProps = {
 };
 
 /**
- * Properties for the `getTransformation` method.
+ * Properties for the `listTasksV1` method.
  */
-export type GetTransformationProps = {
+export type ListTasksV1Props = {
   /**
-   * Unique identifier of a transformation.
+   * Number of items per page.
    */
-  transformationID: string;
+  itemsPerPage?: number;
+  /**
+   * Page number of the paginated API response.
+   */
+  page?: number;
+  /**
+   * Actions for filtering the list of tasks.
+   */
+  action?: ActionType[];
+  /**
+   * Whether to filter the list of tasks by the `enabled` status.
+   */
+  enabled?: boolean;
+  /**
+   * Source IDs for filtering the list of tasks.
+   */
+  sourceID?: string[];
+  /**
+   * Destination IDs for filtering the list of tasks.
+   */
+  destinationID?: string[];
+  /**
+   * Type of task trigger for filtering the list of tasks.
+   */
+  triggerType?: TriggerType[];
+  /**
+   * Property by which to sort the list of tasks.
+   */
+  sort?: TaskSortKeys;
+  /**
+   * Sort order of the response, ascending or descending.
+   */
+  order?: OrderKeys;
 };
 
 /**
- * Properties for the `getTransformations` method.
+ * Properties for the `listTransformations` method.
  */
-export type GetTransformationsProps = {
+export type ListTransformationsProps = {
   /**
    * Property by which to sort the list.
    */
@@ -461,6 +544,16 @@ export type GetTransformationsProps = {
  * Properties for the `runTask` method.
  */
 export type RunTaskProps = {
+  /**
+   * Unique identifier of a task.
+   */
+  taskID: string;
+};
+
+/**
+ * Properties for the `runTaskV1` method.
+ */
+export type RunTaskV1Props = {
   /**
    * Unique identifier of a task.
    */
@@ -519,6 +612,17 @@ export type UpdateTaskProps = {
    */
   taskID: string;
   taskUpdate: TaskUpdate;
+};
+
+/**
+ * Properties for the `updateTaskV1` method.
+ */
+export type UpdateTaskV1Props = {
+  /**
+   * Unique identifier of a task.
+   */
+  taskID: string;
+  taskUpdate: TaskUpdateV1;
 };
 
 /**

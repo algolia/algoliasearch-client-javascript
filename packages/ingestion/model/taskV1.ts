@@ -2,8 +2,12 @@
 
 import type { ActionType } from './actionType';
 import type { TaskInput } from './taskInput';
+import type { Trigger } from './trigger';
 
-export type Task = {
+/**
+ * The V1 task object, please use methods and types that don\'t contain the V1 suffix.
+ */
+export type TaskV1 = {
   /**
    * Universally unique identifier (UUID) of a task.
    */
@@ -19,20 +23,7 @@ export type Task = {
    */
   destinationID: string;
 
-  /**
-   * Cron expression for the task\'s schedule.
-   */
-  cron?: string;
-
-  /**
-   * The last time the scheduled task ran in RFC 3339 format.
-   */
-  lastRun?: string;
-
-  /**
-   * The next scheduled run of the task in RFC 3339 format.
-   */
-  nextRun?: string;
+  trigger: Trigger;
 
   input?: TaskInput;
 
