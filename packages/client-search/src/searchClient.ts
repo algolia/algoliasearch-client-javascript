@@ -98,7 +98,6 @@ import type { GetObjectsResponse } from '../model/getObjectsResponse';
 import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
 import type { HasPendingMappingsResponse } from '../model/hasPendingMappingsResponse';
-import type { IndexSettings } from '../model/indexSettings';
 import type { Languages } from '../model/languages';
 import type { ListApiKeysResponse } from '../model/listApiKeysResponse';
 import type { ListClustersResponse } from '../model/listClustersResponse';
@@ -120,6 +119,7 @@ import type { SearchRulesResponse } from '../model/searchRulesResponse';
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SearchUserIdsParams } from '../model/searchUserIdsParams';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
+import type { SettingsResponse } from '../model/settingsResponse';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
@@ -1968,7 +1968,7 @@ export function createSearchClient({
     getSettings(
       { indexName }: GetSettingsProps,
       requestOptions?: RequestOptions
-    ): Promise<IndexSettings> {
+    ): Promise<SettingsResponse> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getSettings`.'
