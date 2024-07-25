@@ -4,6 +4,7 @@ import type { ActionType } from './actionType';
 import type { AuthenticationSortKeys } from './authenticationSortKeys';
 import type { AuthenticationType } from './authenticationType';
 import type { AuthenticationUpdate } from './authenticationUpdate';
+import type { BatchWriteParams } from './batchWriteParams';
 import type { DestinationSortKeys } from './destinationSortKeys';
 import type { DestinationType } from './destinationType';
 import type { DestinationUpdate } from './destinationUpdate';
@@ -538,6 +539,20 @@ export type ListTransformationsProps = {
    * Sort order of the response, ascending or descending.
    */
   order?: OrderKeys;
+};
+
+/**
+ * Properties for the `pushTask` method.
+ */
+export type PushTaskProps = {
+  /**
+   * Unique identifier of a task.
+   */
+  taskID: string;
+  /**
+   * Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+   */
+  batchWriteParams: BatchWriteParams;
 };
 
 /**

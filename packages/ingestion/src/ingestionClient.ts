@@ -50,6 +50,7 @@ import type {
   ListTasksProps,
   ListTasksV1Props,
   ListTransformationsProps,
+  PushTaskProps,
   RunTaskProps,
   RunTaskV1Props,
   TriggerDockerSourceDiscoverProps,
@@ -1902,6 +1903,59 @@ export function createIngestionClient({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Push a `batch` request payload through the Pipeline. You can check the status of task pushes with the observability endpoints.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param pushTask - The pushTask object.
+     * @param pushTask.taskID - Unique identifier of a task.
+     * @param pushTask.batchWriteParams - Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    pushTask(
+      { taskID, batchWriteParams }: PushTaskProps,
+      requestOptions?: RequestOptions
+    ): Promise<RunResponse> {
+      if (!taskID) {
+        throw new Error(
+          'Parameter `taskID` is required when calling `pushTask`.'
+        );
+      }
+
+      if (!batchWriteParams) {
+        throw new Error(
+          'Parameter `batchWriteParams` is required when calling `pushTask`.'
+        );
+      }
+
+      if (!batchWriteParams.requests) {
+        throw new Error(
+          'Parameter `batchWriteParams.requests` is required when calling `pushTask`.'
+        );
+      }
+
+      const requestPath = '/2/tasks/{taskID}/push'.replace(
+        '{taskID}',
+        encodeURIComponent(taskID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: batchWriteParams,
       };
 
       return transporter.request(request, requestOptions);
