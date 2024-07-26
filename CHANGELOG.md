@@ -1,3 +1,12 @@
+## [5.0.0-beta.13](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.12...5.0.0-beta.13)
+
+- [3ec5f5f7e](https://github.com/algolia/api-clients-automation/commit/3ec5f5f7e) feat(specs): add v2 endpoints for ingestion ([#3416](https://github.com/algolia/api-clients-automation/pull/3416)) by [@shortcuts](https://github.com/shortcuts/)
+- [200f07e9c](https://github.com/algolia/api-clients-automation/commit/200f07e9c) fix(specs): add primary to get settings response ([#3415](https://github.com/algolia/api-clients-automation/pull/3415)) by [@kai687](https://github.com/kai687/)
+- [81c15cf5b](https://github.com/algolia/api-clients-automation/commit/81c15cf5b) chore(specs): add eslint rule to avoid cross-references ([#3413](https://github.com/algolia/api-clients-automation/pull/3413)) by [@millotp](https://github.com/millotp/)
+- [be060a060](https://github.com/algolia/api-clients-automation/commit/be060a060) fix(specs): remove cross-references of analytics ([#3414](https://github.com/algolia/api-clients-automation/pull/3414)) by [@millotp](https://github.com/millotp/)
+- [fe6f5edab](https://github.com/algolia/api-clients-automation/commit/fe6f5edab) feat(specs): add v2 endpoints for ingestion ([#3410](https://github.com/algolia/api-clients-automation/pull/3410)) by [@shortcuts](https://github.com/shortcuts/)
+- [e3c6b8401](https://github.com/algolia/api-clients-automation/commit/e3c6b8401) fix(specs): remove cross-specs references ([#3412](https://github.com/algolia/api-clients-automation/pull/3412)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-beta.12](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.11...5.0.0-beta.12)
 
 - [280037178](https://github.com/algolia/api-clients-automation/commit/280037178) fix(specs): update shopify feature flags ([#3380](https://github.com/algolia/api-clients-automation/pull/3380)) by [@millotp](https://github.com/millotp/)
