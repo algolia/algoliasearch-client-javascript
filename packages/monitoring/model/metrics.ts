@@ -2,7 +2,7 @@
 
 import type { ProbesMetric } from './probesMetric';
 
-export type InfrastructureResponseMetrics = {
+export type Metrics = {
   /**
    * CPU idleness in %.
    */

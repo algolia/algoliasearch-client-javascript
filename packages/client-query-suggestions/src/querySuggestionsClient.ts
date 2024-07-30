@@ -26,10 +26,10 @@ import type {
   GetLogFileProps,
   UpdateConfigProps,
 } from '../model/clientMethodProps';
+import type { ConfigStatus } from '../model/configStatus';
 import type { ConfigurationResponse } from '../model/configurationResponse';
 import type { ConfigurationWithIndex } from '../model/configurationWithIndex';
-import type { GetConfigStatus200Response } from '../model/getConfigStatus200Response';
-import type { GetLogFile200Response } from '../model/getLogFile200Response';
+import type { LogFile } from '../model/logFile';
 
 export const apiClientVersion = '5.0.0-beta.12';
 
@@ -387,7 +387,7 @@ export function createQuerySuggestionsClient({
     getConfigStatus(
       { indexName }: GetConfigStatusProps,
       requestOptions?: RequestOptions
-    ): Promise<GetConfigStatus200Response> {
+    ): Promise<ConfigStatus> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getConfigStatus`.'
@@ -424,7 +424,7 @@ export function createQuerySuggestionsClient({
     getLogFile(
       { indexName }: GetLogFileProps,
       requestOptions?: RequestOptions
-    ): Promise<GetLogFile200Response> {
+    ): Promise<LogFile> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getLogFile`.'

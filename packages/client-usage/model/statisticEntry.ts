@@ -2,7 +2,7 @@
 
 import type { StatisticValue } from './statisticValue';
 
-export type GetUsage200ResponseStatisticsInner = {
+export type StatisticEntry = {
   /**
    * Timestamp, measured in milliseconds since the Unix epoch.
    */

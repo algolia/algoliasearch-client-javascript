@@ -2,7 +2,7 @@
 
 import type { LogLevel } from './logLevel';
 
-export type GetLogFile200Response = {
+export type LogFile = {
   /**
    * Date and time of the log entry, in RFC 3339 format.
    */

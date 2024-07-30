@@ -2,13 +2,13 @@
 
 import type { Condition } from './condition';
 import type { Consequence } from './consequence';
-import type { RecommendRuleMetadata } from './recommendRuleMetadata';
+import type { RuleMetadata } from './ruleMetadata';
 
 /**
  * Recommend rule.
  */
 export type RecommendRule = {
-  _metadata?: RecommendRuleMetadata;
+  _metadata?: RuleMetadata;
 
   /**
    * Unique identifier of a rule object.

@@ -23,7 +23,7 @@ import type {
   GetIndexUsageProps,
   GetUsageProps,
 } from '../model/clientMethodProps';
-import type { GetUsage200Response } from '../model/getUsage200Response';
+import type { IndexUsage } from '../model/indexUsage';
 
 export const apiClientVersion = '0.0.2-beta.12';
 
@@ -277,7 +277,7 @@ export function createUsageClient({
         granularity,
       }: GetIndexUsageProps,
       requestOptions?: RequestOptions
-    ): Promise<GetUsage200Response> {
+    ): Promise<IndexUsage> {
       if (!statistic) {
         throw new Error(
           'Parameter `statistic` is required when calling `getIndexUsage`.'
@@ -343,7 +343,7 @@ export function createUsageClient({
     getUsage(
       { statistic, startDate, endDate, granularity }: GetUsageProps,
       requestOptions?: RequestOptions
-    ): Promise<GetUsage200Response> {
+    ): Promise<IndexUsage> {
       if (!statistic) {
         throw new Error(
           'Parameter `statistic` is required when calling `getUsage`.'

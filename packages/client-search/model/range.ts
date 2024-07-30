@@ -3,7 +3,7 @@
 /**
  * Range object with lower and upper values in meters to define custom ranges.
  */
-export type AroundPrecisionFromValueInner = {
+export type Range = {
   /**
    * Lower boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
    */

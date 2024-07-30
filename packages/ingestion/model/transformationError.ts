@@ -3,7 +3,7 @@
 /**
  * The error if the transformation failed.
  */
-export type TransformationTryResponseError = {
+export type TransformationError = {
   /**
    * The error status code.
    */
