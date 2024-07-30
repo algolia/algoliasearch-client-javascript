@@ -12,7 +12,7 @@ export type DictionaryEntry = Record<string, any> & {
    */
   objectID: string;
 
-  language: SupportedLanguage;
+  language?: SupportedLanguage;
 
   /**
    * Matching dictionary word for `stopwords` and `compounds` dictionaries.
