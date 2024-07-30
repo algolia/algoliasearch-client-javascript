@@ -1837,7 +1837,7 @@ export function createSearchClient({
     getObject(
       { indexName, objectID, attributesToRetrieve }: GetObjectProps,
       requestOptions?: RequestOptions
-    ): Promise<Record<string, string>> {
+    ): Promise<Record<string, any>> {
       if (!indexName) {
         throw new Error(
           'Parameter `indexName` is required when calling `getObject`.'
