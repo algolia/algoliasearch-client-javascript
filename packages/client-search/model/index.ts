@@ -33,6 +33,7 @@ export * from './browseParamsObject';
 export * from './browseResponse';
 export * from './builtInOperation';
 export * from './builtInOperationType';
+export * from './builtInOperationValue';
 export * from './condition';
 export * from './consequence';
 export * from './consequenceHide';
