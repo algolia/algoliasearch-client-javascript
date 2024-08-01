@@ -23,10 +23,6 @@
   <a href="https://alg.li/support" target="_blank">Support</a>
 </p>
 
-**Migration note from v4.x to v5.x**
-
-> In July 2024, we released the v5 version of our JavaScript client. If you are using version 4.x of the client, read the [migration guide to version 5.x](https://api-clients-automation.netlify.app/docs/clients/migration-guides/). Version 4.x will **no longer** be under active development.
-
 ## ✨ Features
 
 - Thin & **minimal low-level HTTP client** to interact with Algolia's API
