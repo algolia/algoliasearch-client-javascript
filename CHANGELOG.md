@@ -1,3 +1,12 @@
+## [5.0.0-beta.14](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.13...5.0.0-beta.14)
+
+- [e982ddf0a](https://github.com/algolia/api-clients-automation/commit/e982ddf0a) fix(specs): built-in ops accept also int ([#3450](https://github.com/algolia/api-clients-automation/pull/3450)) by [@kai687](https://github.com/kai687/)
+- [9a2e7a837](https://github.com/algolia/api-clients-automation/commit/9a2e7a837) fix(specs): required prop for dictionaryEntry ([#3449](https://github.com/algolia/api-clients-automation/pull/3449)) by [@kai687](https://github.com/kai687/)
+- [41d86ce68](https://github.com/algolia/api-clients-automation/commit/41d86ce68) feat(clients): delete unused models ([#3445](https://github.com/algolia/api-clients-automation/pull/3445)) by [@millotp](https://github.com/millotp/)
+- [e17970142](https://github.com/algolia/api-clients-automation/commit/e17970142) fix(specs): proper title with linter ([#3444](https://github.com/algolia/api-clients-automation/pull/3444)) by [@millotp](https://github.com/millotp/)
+- [8fbbd5ebd](https://github.com/algolia/api-clients-automation/commit/8fbbd5ebd) fix(specs): getObject return object ([#3446](https://github.com/algolia/api-clients-automation/pull/3446)) by [@millotp](https://github.com/millotp/)
+- [a35e814ab](https://github.com/algolia/api-clients-automation/commit/a35e814ab) fix(specs): clarify decompounding limitations ([#3227](https://github.com/algolia/api-clients-automation/pull/3227)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0-beta.13](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.12...5.0.0-beta.13)
 
 - [3ec5f5f7e](https://github.com/algolia/api-clients-automation/commit/3ec5f5f7e) feat(specs): add v2 endpoints for ingestion ([#3416](https://github.com/algolia/api-clients-automation/pull/3416)) by [@shortcuts](https://github.com/shortcuts/)
