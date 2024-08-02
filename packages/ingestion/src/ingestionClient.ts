@@ -51,6 +51,7 @@ import type {
   ListTasksV1Props,
   ListTransformationsProps,
   PushTaskProps,
+  RunSourceProps,
   RunTaskProps,
   RunTaskV1Props,
   TriggerDockerSourceDiscoverProps,
@@ -80,6 +81,7 @@ import type { OnDemandTrigger } from '../model/onDemandTrigger';
 import type { Run } from '../model/run';
 import type { RunListResponse } from '../model/runListResponse';
 import type { RunResponse } from '../model/runResponse';
+import type { RunSourceResponse } from '../model/runSourceResponse';
 import type { ScheduleTrigger } from '../model/scheduleTrigger';
 import type { Source } from '../model/source';
 import type { SourceCreate } from '../model/sourceCreate';
@@ -1956,6 +1958,47 @@ export function createIngestionClient({
         queryParameters,
         headers,
         data: batchWriteParams,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Runs all tasks linked to a source, only available for Shopify sources. It will create 1 run per task.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param runSource - The runSource object.
+     * @param runSource.sourceID - Unique identifier of a source.
+     * @param runSource.runSourcePayload -.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    runSource(
+      { sourceID, runSourcePayload }: RunSourceProps,
+      requestOptions?: RequestOptions
+    ): Promise<RunSourceResponse> {
+      if (!sourceID) {
+        throw new Error(
+          'Parameter `sourceID` is required when calling `runSource`.'
+        );
+      }
+
+      const requestPath = '/1/sources/{sourceID}/run'.replace(
+        '{sourceID}',
+        encodeURIComponent(sourceID)
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: runSourcePayload ? runSourcePayload : {},
       };
 
       return transporter.request(request, requestOptions);

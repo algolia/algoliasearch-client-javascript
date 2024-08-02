@@ -14,6 +14,7 @@ import type { EventType } from './eventType';
 import type { OrderKeys } from './orderKeys';
 import type { PlatformWithNone } from './platformWithNone';
 import type { RunSortKeys } from './runSortKeys';
+import type { RunSourcePayload } from './runSourcePayload';
 import type { RunStatus } from './runStatus';
 import type { SortKeys } from './sortKeys';
 import type { SourceSortKeys } from './sourceSortKeys';
@@ -553,6 +554,20 @@ export type PushTaskProps = {
    * Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
    */
   batchWriteParams: BatchWriteParams;
+};
+
+/**
+ * Properties for the `runSource` method.
+ */
+export type RunSourceProps = {
+  /**
+   * Unique identifier of a source.
+   */
+  sourceID: string;
+  /**
+   *
+   */
+  runSourcePayload?: RunSourcePayload;
 };
 
 /**
