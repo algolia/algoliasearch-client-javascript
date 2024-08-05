@@ -35,7 +35,6 @@ export * from './destination';
 export * from './destinationCreate';
 export * from './destinationCreateResponse';
 export * from './destinationIndexName';
-export * from './destinationIndexPrefix';
 export * from './destinationInput';
 export * from './destinationSearch';
 export * from './destinationSortKeys';
