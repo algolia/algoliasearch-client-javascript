@@ -533,6 +533,14 @@ export type ListTasksV1Props = {
  */
 export type ListTransformationsProps = {
   /**
+   * Number of items per page.
+   */
+  itemsPerPage?: number;
+  /**
+   * Page number of the paginated API response.
+   */
+  page?: number;
+  /**
    * Property by which to sort the list.
    */
   sort?: SortKeys;

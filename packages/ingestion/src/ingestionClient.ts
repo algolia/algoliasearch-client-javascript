@@ -1880,17 +1880,27 @@ export function createIngestionClient({
      * - editSettings.
      *
      * @param listTransformations - The listTransformations object.
+     * @param listTransformations.itemsPerPage - Number of items per page.
+     * @param listTransformations.page - Page number of the paginated API response.
      * @param listTransformations.sort - Property by which to sort the list.
      * @param listTransformations.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listTransformations(
-      { sort, order }: ListTransformationsProps = {},
+      { itemsPerPage, page, sort, order }: ListTransformationsProps = {},
       requestOptions: RequestOptions | undefined = undefined
     ): Promise<ListTransformationsResponse> {
       const requestPath = '/1/transformations';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
+      if (itemsPerPage !== undefined) {
+        queryParameters.itemsPerPage = itemsPerPage.toString();
+      }
+
+      if (page !== undefined) {
+        queryParameters.page = page.toString();
+      }
 
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();

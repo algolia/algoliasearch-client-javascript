@@ -20,4 +20,6 @@ export type DestinationUpdate = {
    * Universally unique identifier (UUID) of an authentication resource.
    */
   authenticationID?: string;
+
+  transformationIDs?: string[];
 };
