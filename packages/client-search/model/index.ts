@@ -49,6 +49,7 @@ export * from './deletedAtResponse';
 export * from './dictionaryAction';
 export * from './dictionaryEntry';
 export * from './dictionaryEntryState';
+export * from './dictionaryEntryType';
 export * from './dictionaryLanguage';
 export * from './dictionarySettingsParams';
 export * from './dictionaryType';
