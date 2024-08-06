@@ -101,6 +101,7 @@ import type { TaskV1 } from '../model/taskV1';
 import type { Transformation } from '../model/transformation';
 import type { TransformationCreate } from '../model/transformationCreate';
 import type { TransformationCreateResponse } from '../model/transformationCreateResponse';
+import type { TransformationModels } from '../model/transformationModels';
 import type { TransformationSearch } from '../model/transformationSearch';
 import type { TransformationTry } from '../model/transformationTry';
 import type { TransformationTryResponse } from '../model/transformationTryResponse';
@@ -1860,6 +1861,33 @@ export function createIngestionClient({
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves a list of existing LLM transformation helpers.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    listTransformationModels(
+      requestOptions?: RequestOptions
+    ): Promise<TransformationModels> {
+      const requestPath = '/1/transformations/copilot';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'GET',
