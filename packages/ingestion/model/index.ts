@@ -52,6 +52,8 @@ export * from './event';
 export * from './eventSortKeys';
 export * from './eventStatus';
 export * from './eventType';
+export * from './generateTransformationCodePayload';
+export * from './generateTransformationCodeResponse';
 export * from './listAuthenticationsResponse';
 export * from './listDestinationsResponse';
 export * from './listEventsResponse';

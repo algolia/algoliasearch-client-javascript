@@ -70,6 +70,8 @@ import type { DestinationCreateResponse } from '../model/destinationCreateRespon
 import type { DestinationSearch } from '../model/destinationSearch';
 import type { DestinationUpdateResponse } from '../model/destinationUpdateResponse';
 import type { Event } from '../model/event';
+import type { GenerateTransformationCodePayload } from '../model/generateTransformationCodePayload';
+import type { GenerateTransformationCodeResponse } from '../model/generateTransformationCodeResponse';
 import type { ListAuthenticationsResponse } from '../model/listAuthenticationsResponse';
 import type { ListDestinationsResponse } from '../model/listDestinationsResponse';
 import type { ListEventsResponse } from '../model/listEventsResponse';
@@ -1024,6 +1026,53 @@ export function createIngestionClient({
     },
 
     /**
+     * Generates code for the selected model based on the given prompt.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param generateTransformationCodePayload - The generateTransformationCodePayload object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    generateTransformationCode(
+      generateTransformationCodePayload: GenerateTransformationCodePayload,
+      requestOptions?: RequestOptions
+    ): Promise<GenerateTransformationCodeResponse> {
+      if (!generateTransformationCodePayload) {
+        throw new Error(
+          'Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`.'
+        );
+      }
+
+      if (!generateTransformationCodePayload.id) {
+        throw new Error(
+          'Parameter `generateTransformationCodePayload.id` is required when calling `generateTransformationCode`.'
+        );
+      }
+      if (!generateTransformationCodePayload.userPrompt) {
+        throw new Error(
+          'Parameter `generateTransformationCodePayload.userPrompt` is required when calling `generateTransformationCode`.'
+        );
+      }
+
+      const requestPath = '/1/transformations/models';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: generateTransformationCodePayload,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Retrieves an authentication resource by its ID.
      *
      * Required API Key ACLs:
@@ -1885,7 +1934,7 @@ export function createIngestionClient({
     listTransformationModels(
       requestOptions?: RequestOptions
     ): Promise<TransformationModels> {
-      const requestPath = '/1/transformations/copilot';
+      const requestPath = '/1/transformations/models';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 
