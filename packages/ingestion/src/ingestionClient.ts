@@ -2416,24 +2416,24 @@ export function createIngestionClient({
      * @param transformationTry - The transformationTry object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    tryTransformations(
+    tryTransformation(
       transformationTry: TransformationTry,
       requestOptions?: RequestOptions
     ): Promise<TransformationTryResponse> {
       if (!transformationTry) {
         throw new Error(
-          'Parameter `transformationTry` is required when calling `tryTransformations`.'
+          'Parameter `transformationTry` is required when calling `tryTransformation`.'
         );
       }
 
       if (!transformationTry.code) {
         throw new Error(
-          'Parameter `transformationTry.code` is required when calling `tryTransformations`.'
+          'Parameter `transformationTry.code` is required when calling `tryTransformation`.'
         );
       }
       if (!transformationTry.sampleRecord) {
         throw new Error(
-          'Parameter `transformationTry.sampleRecord` is required when calling `tryTransformations`.'
+          'Parameter `transformationTry.sampleRecord` is required when calling `tryTransformation`.'
         );
       }
 
