@@ -55,6 +55,7 @@ import type {
   RunTaskProps,
   RunTaskV1Props,
   TriggerDockerSourceDiscoverProps,
+  TryTransformationBeforeUpdateProps,
   UpdateAuthenticationProps,
   UpdateDestinationProps,
   UpdateSourceProps,
@@ -2455,7 +2456,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Try a transformation.
+     * Try a transformation before creating it.
      *
      * Required API Key ACLs:
      * - addObject
@@ -2487,6 +2488,67 @@ export function createIngestionClient({
       }
 
       const requestPath = '/1/transformations/try';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: transformationTry,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Try a transformation before updating it.
+     *
+     * Required API Key ACLs:
+     * - addObject
+     * - deleteIndex
+     * - editSettings.
+     *
+     * @param tryTransformationBeforeUpdate - The tryTransformationBeforeUpdate object.
+     * @param tryTransformationBeforeUpdate.transformationID - Unique identifier of a transformation.
+     * @param tryTransformationBeforeUpdate.transformationTry - The transformationTry object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    tryTransformationBeforeUpdate(
+      {
+        transformationID,
+        transformationTry,
+      }: TryTransformationBeforeUpdateProps,
+      requestOptions?: RequestOptions
+    ): Promise<TransformationTryResponse> {
+      if (!transformationID) {
+        throw new Error(
+          'Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.'
+        );
+      }
+
+      if (!transformationTry) {
+        throw new Error(
+          'Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.'
+        );
+      }
+
+      if (!transformationTry.code) {
+        throw new Error(
+          'Parameter `transformationTry.code` is required when calling `tryTransformationBeforeUpdate`.'
+        );
+      }
+      if (!transformationTry.sampleRecord) {
+        throw new Error(
+          'Parameter `transformationTry.sampleRecord` is required when calling `tryTransformationBeforeUpdate`.'
+        );
+      }
+
+      const requestPath = '/1/transformations/{transformationID}/try'.replace(
+        '{transformationID}',
+        encodeURIComponent(transformationID)
+      );
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
 

@@ -7,6 +7,11 @@ export type Transformation = {
   transformationID: string;
 
   /**
+   * The authentications associated for the current transformation.
+   */
+  authenticationIDs?: string[];
+
+  /**
    * The source code of the transformation.
    */
   code: string;

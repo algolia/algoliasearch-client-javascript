@@ -24,6 +24,7 @@ import type { TaskSortKeys } from './taskSortKeys';
 import type { TaskUpdate } from './taskUpdate';
 import type { TaskUpdateV1 } from './taskUpdateV1';
 import type { TransformationCreate } from './transformationCreate';
+import type { TransformationTry } from './transformationTry';
 import type { TriggerType } from './triggerType';
 
 /**
@@ -606,6 +607,17 @@ export type TriggerDockerSourceDiscoverProps = {
    * Unique identifier of a source.
    */
   sourceID: string;
+};
+
+/**
+ * Properties for the `tryTransformationBeforeUpdate` method.
+ */
+export type TryTransformationBeforeUpdateProps = {
+  /**
+   * Unique identifier of a transformation.
+   */
+  transformationID: string;
+  transformationTry: TransformationTry;
 };
 
 /**

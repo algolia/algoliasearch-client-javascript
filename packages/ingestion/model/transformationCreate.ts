@@ -18,4 +18,9 @@ export type TransformationCreate = {
    * A descriptive name for your transformation of what it does.
    */
   description?: string;
+
+  /**
+   * The authentications associated for the current transformation.
+   */
+  authenticationIDs?: string[];
 };
