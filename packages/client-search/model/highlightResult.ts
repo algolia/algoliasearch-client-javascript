@@ -5,4 +5,5 @@ import type { HighlightResultOption } from './highlightResultOption';
 export type HighlightResult =
   | HighlightResultOption
   | HighlightResultOption[]
-  | Record<string, HighlightResultOption>;
+  | Record<string, HighlightResultOption>
+  | { [key: string]: HighlightResult };
