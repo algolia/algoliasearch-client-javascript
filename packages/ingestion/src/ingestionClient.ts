@@ -2401,6 +2401,12 @@ export function createIngestionClient({
         );
       }
 
+      if (!transformationSearch.transformationIDs) {
+        throw new Error(
+          'Parameter `transformationSearch.transformationIDs` is required when calling `searchTransformations`.'
+        );
+      }
+
       const requestPath = '/1/transformations/search';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
