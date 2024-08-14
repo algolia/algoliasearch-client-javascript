@@ -6,9 +6,9 @@
   <h4 align="center">The perfect starting point to integrate <a href="https://algolia.com" target="_blank">Algolia</a> within your JavaScript project</h4>
 
   <p align="center">
-    <a href="https://npmjs.org/package/algoliasearch"><img src="https://img.shields.io/npm/v/algoliasearch.svg?style=flat-square" alt="NPM version"></img></a>
-    <a href="http://npm-stat.com/charts.html?package=algoliasearch"><img src="https://img.shields.io/npm/dm/algoliasearch.svg?style=flat-square" alt="NPM downloads"></a>
-    <a href="https://www.jsdelivr.com/package/npm/algoliasearch"><img src="https://data.jsdelivr.com/v1/package/npm/algoliasearch/badge" alt="jsDelivr Downloads"></img></a>
+    <a href="https://npmjs.org/package/@algolia/recommend"><img src="https://img.shields.io/npm/v/@algolia/recommend.svg?style=flat-square" alt="NPM version"></img></a>
+    <a href="http://npm-stat.com/charts.html?package=@algolia/recommend"><img src="https://img.shields.io/npm/dm/@algolia/recommend.svg?style=flat-square" alt="NPM downloads"></a>
+    <a href="https://www.jsdelivr.com/package/npm/@algolia/recommend"><img src="https://data.jsdelivr.com/v1/package/npm/@algolia/recommend/badge" alt="jsDelivr Downloads"></img></a>
     <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>
   </p>
 </p>
@@ -32,14 +32,14 @@
 
 ## 💡 Getting Started
 
-To get started, you first need to install algoliasearch (or any other available API client package).
+To get started, you first need to install @algolia/recommend (or any other available API client package).
 
 All of our clients comes with type definition, and are available for both browser and node environments.
 
 ```bash
-yarn add algoliasearch
+yarn add @algolia/recommend
 # or
-npm install algoliasearch
+npm install @algolia/recommend
 ```
 
 Without a package manager
@@ -47,20 +47,15 @@ Without a package manager
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/algoliasearch.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/recommend.umd.min.js"></script>
 ```
 
 You can now import the Algolia API client in your project and play with it.
 
 ```js
-import { algoliasearch } from 'algoliasearch';
+import { recommendClient } from '@algolia/recommend';
 
-const client = algoliasearch('YOUR_APP_ID', 'YOUR_API_KEY');
-
-// or with the lite client
-import { liteClient } from 'algoliasearch/lite';
-
-const client = liteClient('YOUR_APP_ID', 'YOUR_API_KEY');
+const client = recommendClient('YOUR_APP_ID', 'YOUR_API_KEY');
 ```
 
 For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/api-client/getting-started/install/javascript/)**.
