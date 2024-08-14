@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-fetch",
-  "version": "5.0.0-beta.18",
+  "version": "5.0.0",
   "description": "Promise-based request library using Fetch.",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.0-beta.18"
+    "@algolia/client-common": "5.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "7.25.3",

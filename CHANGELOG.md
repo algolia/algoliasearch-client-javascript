@@ -1,3 +1,9 @@
+## [5.0.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.18...5.0.0)
+
+New major version released! Browse [our documentation](https://www.algolia.com/doc/libraries/javascript)
+
+- [22348001a](https://github.com/algolia/api-clients-automation/commit/22348001a) fix(specs): required ingestion search params ([#3516](https://github.com/algolia/api-clients-automation/pull/3516)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.0-beta.18](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.17...5.0.0-beta.18)
 
 - [4c052002e](https://github.com/algolia/api-clients-automation/commit/4c052002e) feat(specs): recursive snippets and highlights result ([#3497](https://github.com/algolia/api-clients-automation/pull/3497)) by [@shortcuts](https://github.com/shortcuts/)
