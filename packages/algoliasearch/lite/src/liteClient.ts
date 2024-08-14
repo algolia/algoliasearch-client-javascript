@@ -25,7 +25,7 @@ import type { GetRecommendationsResponse } from '../model/getRecommendationsResp
 import type { SearchMethodParams } from '../model/searchMethodParams';
 import type { SearchResponses } from '../model/searchResponses';
 
-export const apiClientVersion = '5.0.0';
+export const apiClientVersion = '5.0.1';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

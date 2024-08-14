@@ -1,3 +1,7 @@
+## [5.0.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0...5.0.1)
+
+- [40c5d47bd](https://github.com/algolia/api-clients-automation/commit/40c5d47bd) fix(specs): delete user token processing time ([#3525](https://github.com/algolia/api-clients-automation/pull/3525)) by [@kai687](https://github.com/kai687/)
+
 ## [5.0.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-beta.18...5.0.0)
 
 New major version released! Browse [our documentation](https://www.algolia.com/doc/libraries/javascript)

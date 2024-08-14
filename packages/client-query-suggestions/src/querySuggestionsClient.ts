@@ -31,7 +31,7 @@ import type { ConfigurationResponse } from '../model/configurationResponse';
 import type { ConfigurationWithIndex } from '../model/configurationWithIndex';
 import type { LogFile } from '../model/logFile';
 
-export const apiClientVersion = '5.0.0';
+export const apiClientVersion = '5.0.1';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
