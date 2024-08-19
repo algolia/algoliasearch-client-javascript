@@ -1,3 +1,7 @@
+## [5.0.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.1...5.0.2)
+
+- [6cfc2d479](https://github.com/algolia/api-clients-automation/commit/6cfc2d479) chore(specs): update rendered title for search params ([#3553](https://github.com/algolia/api-clients-automation/pull/3553)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.0.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0...5.0.1)
 
 - [40c5d47bd](https://github.com/algolia/api-clients-automation/commit/40c5d47bd) fix(specs): delete user token processing time ([#3525](https://github.com/algolia/api-clients-automation/pull/3525)) by [@kai687](https://github.com/kai687/)
