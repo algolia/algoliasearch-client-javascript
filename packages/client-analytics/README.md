@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.algolia.com/doc/api-client/getting-started/install/javascript/" target="_blank">Documentation</a>  •
+  <a href="https://www.algolia.com/doc/libraries/javascript/" target="_blank">Documentation</a>  •
   <a href="https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/" target="_blank">InstantSearch</a>  •
   <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
   <a href="http://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
@@ -58,7 +58,7 @@ import { analyticsClient } from '@algolia/client-analytics';
 const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY');
 ```
 
-For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/api-client/getting-started/install/javascript/)**.
+For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/)**.
 
 ## ❓ Troubleshooting
 
