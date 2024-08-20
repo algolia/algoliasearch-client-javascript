@@ -1,6 +1,6 @@
 {
   "name": "algoliasearch",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": {
     "type": "git",
@@ -63,14 +63,14 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algolia/client-abtesting": "5.0.2",
-    "@algolia/client-analytics": "5.0.2",
-    "@algolia/client-common": "5.0.2",
-    "@algolia/client-personalization": "5.0.2",
-    "@algolia/client-search": "5.0.2",
-    "@algolia/recommend": "5.0.2",
-    "@algolia/requester-browser-xhr": "5.0.2",
-    "@algolia/requester-node-http": "5.0.2"
+    "@algolia/client-abtesting": "5.1.0",
+    "@algolia/client-analytics": "5.1.0",
+    "@algolia/client-common": "5.1.0",
+    "@algolia/client-personalization": "5.1.0",
+    "@algolia/client-search": "5.1.0",
+    "@algolia/recommend": "5.1.0",
+    "@algolia/requester-browser-xhr": "5.1.0",
+    "@algolia/requester-node-http": "5.1.0"
   },
   "devDependencies": {
     "@babel/preset-env": "7.25.3",

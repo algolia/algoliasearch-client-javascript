@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-browser-xhr",
-  "version": "5.0.2",
+  "version": "5.1.0",
   "description": "Promise-based request library for browser using xhr.",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algolia/client-common": "5.0.2"
+    "@algolia/client-common": "5.1.0"
   },
   "devDependencies": {
     "@babel/preset-env": "7.25.3",

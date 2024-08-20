@@ -1,3 +1,8 @@
+## [5.1.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.2...5.1.0)
+
+- [c8343884e](https://github.com/algolia/api-clients-automation/commit/c8343884e) feat(javascript): add search wrappers to lite client ([#3556](https://github.com/algolia/api-clients-automation/pull/3556)) by [@shortcuts](https://github.com/shortcuts/)
+- [d53060d96](https://github.com/algolia/api-clients-automation/commit/d53060d96) feat(specs): add /schedule endpoint ([#3350](https://github.com/algolia/api-clients-automation/pull/3350)) by [@febeck](https://github.com/febeck/)
+
 ## [5.0.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.1...5.0.2)
 
 - [6cfc2d479](https://github.com/algolia/api-clients-automation/commit/6cfc2d479) chore(specs): update rendered title for search params ([#3553](https://github.com/algolia/api-clients-automation/pull/3553)) by [@shortcuts](https://github.com/shortcuts/)
