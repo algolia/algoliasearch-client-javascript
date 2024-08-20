@@ -506,40 +506,6 @@ export function createSearchClient({
     },
 
     /**
-     * Helper: calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
-     * Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.
-     *
-     * @summary Search multiple indices for `hits`.
-     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    searchForHits<T>(
-      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions
-    ): Promise<{ results: Array<SearchResponse<T>> }> {
-      return this.search(searchMethodParams, requestOptions) as Promise<{
-        results: Array<SearchResponse<T>>;
-      }>;
-    },
-
-    /**
-     * Helper: calls the `search` method but with certainty that we will only request Algolia facets and not records (hits).
-     * Disclaimer: We don't assert that the parameters you pass to this method only contains `facets` requests to prevent impacting search performances, this helper is purely for typing purposes.
-     *
-     * @summary Search multiple indices for `facets`.
-     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    searchForFacets(
-      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions
-    ): Promise<{ results: SearchForFacetValuesResponse[] }> {
-      return this.search(searchMethodParams, requestOptions) as Promise<{
-        results: SearchForFacetValuesResponse[];
-      }>;
-    },
-
-    /**
      * Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
      *
      * @summary Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `batch` requests.
@@ -724,6 +690,40 @@ export function createSearchClient({
       });
 
       return { copyOperationResponse, batchResponses, moveOperationResponse };
+    },
+
+    /**
+     * Helper: calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
+     * Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.
+     *
+     * @summary Search multiple indices for `hits`.
+     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchForHits<T>(
+      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
+      requestOptions?: RequestOptions
+    ): Promise<{ results: Array<SearchResponse<T>> }> {
+      return this.search(searchMethodParams, requestOptions) as Promise<{
+        results: Array<SearchResponse<T>>;
+      }>;
+    },
+
+    /**
+     * Helper: calls the `search` method but with certainty that we will only request Algolia facets and not records (hits).
+     * Disclaimer: We don't assert that the parameters you pass to this method only contains `facets` requests to prevent impacting search performances, this helper is purely for typing purposes.
+     *
+     * @summary Search multiple indices for `facets`.
+     * @param searchMethodParams - Query requests and strategies. Results will be received in the same order as the queries.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchForFacets(
+      searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
+      requestOptions?: RequestOptions
+    ): Promise<{ results: SearchForFacetValuesResponse[] }> {
+      return this.search(searchMethodParams, requestOptions) as Promise<{
+        results: SearchForFacetValuesResponse[];
+      }>;
     },
     /**
      * Creates a new API key with specific permissions and restrictions.
