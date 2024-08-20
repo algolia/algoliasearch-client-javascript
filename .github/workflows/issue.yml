@@ -1,0 +1,69 @@
+name: 'Issue sync with Jira'
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create ticket
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const action = context.payload.action;
+            if (action !== 'opened') {
+              return;
+            }
+            const title = context.payload.issue.title;
+            const body = context.payload.issue.body;
+
+            const res = await fetch('https://algolia.atlassian.net/rest/api/3/issue', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Basic ${{ secrets.JIRA_TOKEN }}`
+              },
+              body: JSON.stringify({
+                fields: {
+                  description: {
+                    content: [
+                      {
+                        content: [
+                          {
+                            text: `Issue created by ${context.actor} at ${context.payload.issue.html_url} \n\n${body}`,
+                            type: 'text'
+                          }
+                        ],
+                        type: 'paragraph'
+                      }
+                    ],
+                    type: 'doc',
+                    version: 1
+                  },
+                  issuetype: {
+                    id: '10001'
+                  },
+                  parent: {
+                    key: 'DI-2737'
+                  },
+                  project: {
+                    id: '10118'
+                  },
+                  summary: `[GH-ISSUE] ${title}`
+                },
+                update: {}
+              })
+            });
+
+            if (!res.ok) {
+              throw new Error(`Failed to create ticket: ${res.statusText} (${res.status}) - ${await res.text()}`);
+            }
+
+            const data = await res.json();
+            console.log(`Created ticket: ${data.key}`);
