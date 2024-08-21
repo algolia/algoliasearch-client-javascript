@@ -15,13 +15,15 @@
         "import": "./dist/client-usage.esm.node.js",
         "module": "./dist/client-usage.esm.node.js",
         "require": "./dist/client-usage.cjs",
-        "default": "./dist/client-usage.cjs"
+        "default": "./dist/client-usage.cjs",
+        "types": "./dist/builds/node.d.ts"
       },
       "default": {
         "umd": "./dist/client-usage.umd.js",
         "module": "./dist/client-usage.esm.browser.js",
         "import": "./dist/client-usage.esm.browser.js",
-        "default": "./dist/client-usage.umd.js"
+        "default": "./dist/client-usage.umd.js",
+        "types": "./dist/builds/browser.d.ts"
       }
     },
     "./src/*": "./src/*.ts",

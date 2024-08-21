@@ -15,13 +15,15 @@
         "import": "./dist/client-personalization.esm.node.js",
         "module": "./dist/client-personalization.esm.node.js",
         "require": "./dist/client-personalization.cjs",
-        "default": "./dist/client-personalization.cjs"
+        "default": "./dist/client-personalization.cjs",
+        "types": "./dist/builds/node.d.ts"
       },
       "default": {
         "umd": "./dist/client-personalization.umd.js",
         "module": "./dist/client-personalization.esm.browser.js",
         "import": "./dist/client-personalization.esm.browser.js",
-        "default": "./dist/client-personalization.umd.js"
+        "default": "./dist/client-personalization.umd.js",
+        "types": "./dist/builds/browser.d.ts"
       }
     },
     "./src/*": "./src/*.ts",

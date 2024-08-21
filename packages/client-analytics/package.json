@@ -15,13 +15,15 @@
         "import": "./dist/client-analytics.esm.node.js",
         "module": "./dist/client-analytics.esm.node.js",
         "require": "./dist/client-analytics.cjs",
-        "default": "./dist/client-analytics.cjs"
+        "default": "./dist/client-analytics.cjs",
+        "types": "./dist/builds/node.d.ts"
       },
       "default": {
         "umd": "./dist/client-analytics.umd.js",
         "module": "./dist/client-analytics.esm.browser.js",
         "import": "./dist/client-analytics.esm.browser.js",
-        "default": "./dist/client-analytics.umd.js"
+        "default": "./dist/client-analytics.umd.js",
+        "types": "./dist/builds/browser.d.ts"
       }
     },
     "./src/*": "./src/*.ts",

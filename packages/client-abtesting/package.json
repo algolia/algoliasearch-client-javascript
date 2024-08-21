@@ -15,13 +15,15 @@
         "import": "./dist/client-abtesting.esm.node.js",
         "module": "./dist/client-abtesting.esm.node.js",
         "require": "./dist/client-abtesting.cjs",
-        "default": "./dist/client-abtesting.cjs"
+        "default": "./dist/client-abtesting.cjs",
+        "types": "./dist/builds/node.d.ts"
       },
       "default": {
         "umd": "./dist/client-abtesting.umd.js",
         "module": "./dist/client-abtesting.esm.browser.js",
         "import": "./dist/client-abtesting.esm.browser.js",
-        "default": "./dist/client-abtesting.umd.js"
+        "default": "./dist/client-abtesting.umd.js",
+        "types": "./dist/builds/browser.d.ts"
       }
     },
     "./src/*": "./src/*.ts",
