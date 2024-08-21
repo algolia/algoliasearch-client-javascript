@@ -10,15 +10,15 @@ export type ABTest = {
    */
   abTestID: number;
 
-  clickSignificance: number | null;
+  clickSignificance?: number | null;
 
-  conversionSignificance: number | null;
+  conversionSignificance?: number | null;
 
-  addToCartSignificance: number | null;
+  addToCartSignificance?: number | null;
 
-  purchaseSignificance: number | null;
+  purchaseSignificance?: number | null;
 
-  revenueSignificance: Record<string, number> | null;
+  revenueSignificance?: Record<string, number> | null;
 
   /**
    * Date and time when the A/B test was last updated, in RFC 3339 format.

@@ -12,12 +12,12 @@ export type Variant = {
   /**
    * [Add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate) for this variant.
    */
-  addToCartRate: number | null;
+  addToCartRate?: number | null;
 
   /**
    * [Average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) for this variant.
    */
-  averageClickPosition: number | null;
+  averageClickPosition?: number | null;
 
   /**
    * Number of click events for this variant.
@@ -27,7 +27,7 @@ export type Variant = {
   /**
    * [Click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate) for this variant.
    */
-  clickThroughRate: number | null;
+  clickThroughRate?: number | null;
 
   /**
    * Number of click events for this variant.
@@ -37,7 +37,7 @@ export type Variant = {
   /**
    * [Conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate) for this variant.
    */
-  conversionRate: number | null;
+  conversionRate?: number | null;
 
   /**
    * A/B test currencies.
@@ -74,7 +74,7 @@ export type Variant = {
   /**
    * [Purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate) for this variant.
    */
-  purchaseRate: number | null;
+  purchaseRate?: number | null;
 
   /**
    * Number of searches for this variant.
