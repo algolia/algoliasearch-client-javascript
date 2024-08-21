@@ -15,13 +15,15 @@
         "import": "./dist/recommend.esm.node.js",
         "module": "./dist/recommend.esm.node.js",
         "require": "./dist/recommend.cjs",
-        "default": "./dist/recommend.cjs"
+        "default": "./dist/recommend.cjs",
+        "types": "./dist/builds/node.d.ts"
       },
       "default": {
         "umd": "./dist/recommend.umd.js",
         "module": "./dist/recommend.esm.browser.js",
         "import": "./dist/recommend.esm.browser.js",
-        "default": "./dist/recommend.umd.js"
+        "default": "./dist/recommend.umd.js",
+        "types": "./dist/builds/browser.d.ts"
       }
     },
     "./src/*": "./src/*.ts",
