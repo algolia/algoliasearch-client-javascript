@@ -27,7 +27,7 @@ import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
 import type { PersonalizationStrategyParams } from '../model/personalizationStrategyParams';
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';
 
-export const apiClientVersion = '5.1.0';
+export const apiClientVersion = '5.1.1';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];

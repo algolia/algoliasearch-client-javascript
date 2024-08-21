@@ -1,6 +1,6 @@
 {
   "name": "@algolia/ingestion",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "JavaScript client for ingestion",
   "repository": {
     "type": "git",
@@ -44,9 +44,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.1.0",
-    "@algolia/requester-browser-xhr": "5.1.0",
-    "@algolia/requester-node-http": "5.1.0"
+    "@algolia/client-common": "5.1.1",
+    "@algolia/requester-browser-xhr": "5.1.1",
+    "@algolia/requester-node-http": "5.1.1"
   },
   "devDependencies": {
     "@types/node": "22.2.0",
