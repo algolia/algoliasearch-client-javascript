@@ -22,7 +22,7 @@ jobs:
             const title = context.payload.issue.title;
             const body = context.payload.issue.body;
 
-            const res = await fetch('https://algolia.atlassian.net/rest/api/3/issue', {
+            const res = await fetch('https://algolia.atlassian.net/rest/api/2/issue', {
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
@@ -31,21 +31,7 @@ jobs:
               },
               body: JSON.stringify({
                 fields: {
-                  description: {
-                    content: [
-                      {
-                        content: [
-                          {
-                            text: `Issue created by ${context.actor} at ${context.payload.issue.html_url} \n\n${body}`,
-                            type: 'text'
-                          }
-                        ],
-                        type: 'paragraph'
-                      }
-                    ],
-                    type: 'doc',
-                    version: 1
-                  },
+                  description: `Issue created by ${context.actor} at [${context.payload.issue.html_url}](${context.payload.issue.html_url}) \n\n${body}`,
                   issuetype: {
                     id: '10001'
                   },
