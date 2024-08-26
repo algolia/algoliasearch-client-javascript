@@ -2,4 +2,4 @@
 
 import type { SearchParamsObject } from './searchParamsObject';
 
-export type SearchParams = Record<string, any> & SearchParamsObject;
+export type SearchParams = Record<string, unknown> & SearchParamsObject;

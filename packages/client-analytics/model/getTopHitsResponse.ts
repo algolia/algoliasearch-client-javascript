@@ -4,7 +4,4 @@ import type { TopHitsResponse } from './topHitsResponse';
 import type { TopHitsResponseWithAnalytics } from './topHitsResponseWithAnalytics';
 import type { TopHitsResponseWithRevenueAnalytics } from './topHitsResponseWithRevenueAnalytics';
 
-export type GetTopHitsResponse =
-  | TopHitsResponse
-  | TopHitsResponseWithAnalytics
-  | TopHitsResponseWithRevenueAnalytics;
+export type GetTopHitsResponse = TopHitsResponse | TopHitsResponseWithAnalytics | TopHitsResponseWithRevenueAnalytics;

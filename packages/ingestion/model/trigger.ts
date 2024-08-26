@@ -8,8 +8,4 @@ import type { SubscriptionTrigger } from './subscriptionTrigger';
 /**
  * Trigger that runs the task.
  */
-export type Trigger =
-  | OnDemandTrigger
-  | ScheduleTrigger
-  | StreamingTrigger
-  | SubscriptionTrigger;
+export type Trigger = OnDemandTrigger | ScheduleTrigger | StreamingTrigger | SubscriptionTrigger;

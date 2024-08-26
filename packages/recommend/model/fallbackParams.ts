@@ -2,4 +2,4 @@
 
 import type { SearchParamsObject } from './searchParamsObject';
 
-export type FallbackParams = Record<string, any> & SearchParamsObject;
+export type FallbackParams = Record<string, unknown> & SearchParamsObject;

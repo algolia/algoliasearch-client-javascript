@@ -21,11 +21,7 @@ export * from '../model';
 export type RecommendClient = ReturnType<typeof recommendClient>;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function recommendClient(
-  appId: string,
-  apiKey: string,
-  options?: ClientOptions
-) {
+export function recommendClient(appId: string, apiKey: string, options?: ClientOptions) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

@@ -18,5 +18,5 @@ export type SourceUpdateDocker = {
   /**
    * Configuration of the spec.
    */
-  configuration: Record<string, any>;
+  configuration: Record<string, unknown>;
 };

@@ -6,7 +6,7 @@ export type TransformationTryResponse = {
   /**
    * The array of records returned by the transformation service.
    */
-  payloads: Array<Record<string, any>>;
+  payloads: Array<Record<string, unknown>>;
 
   error?: TransformationError;
 };

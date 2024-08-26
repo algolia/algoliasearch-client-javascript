@@ -22,11 +22,7 @@ export * from '../model';
 export type LiteClient = ReturnType<typeof liteClient>;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function liteClient(
-  appId: string,
-  apiKey: string,
-  options?: ClientOptions
-) {
+export function liteClient(appId: string, apiKey: string, options?: ClientOptions) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -49,10 +45,7 @@ export function liteClient(
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
-      caches: [
-        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
-        createMemoryCache(),
-      ],
+      caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
     ...options,
   });

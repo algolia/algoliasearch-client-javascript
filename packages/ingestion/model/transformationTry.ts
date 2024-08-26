@@ -11,7 +11,7 @@ export type TransformationTry = {
   /**
    * The record to apply the given code to.
    */
-  sampleRecord: Record<string, any>;
+  sampleRecord: Record<string, unknown>;
 
   authentications?: AuthenticationCreate[];
 };

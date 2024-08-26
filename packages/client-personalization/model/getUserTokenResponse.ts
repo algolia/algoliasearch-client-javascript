@@ -14,5 +14,5 @@ export type GetUserTokenResponse = {
   /**
    * Scores for different facet values.  Scores represent the user affinity for a user profile towards specific facet values, given the personalization strategy and past events.
    */
-  scores: Record<string, any>;
+  scores: Record<string, unknown>;
 };

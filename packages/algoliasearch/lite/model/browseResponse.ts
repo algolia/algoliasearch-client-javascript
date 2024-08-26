@@ -5,7 +5,4 @@ import type { BrowsePagination } from './browsePagination';
 import type { Cursor } from './cursor';
 import type { SearchHits } from './searchHits';
 
-export type BrowseResponse<T = Record<string, any>> = BaseSearchResponse &
-  BrowsePagination &
-  Cursor &
-  SearchHits<T>;
+export type BrowseResponse<T = Record<string, any>> = BaseSearchResponse & BrowsePagination & Cursor & SearchHits<T>;

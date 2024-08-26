@@ -3,8 +3,4 @@
 /**
  * Metric for which you want to detect the smallest relative difference.
  */
-export type Effect =
-  | 'addToCartRate'
-  | 'clickThroughRate'
-  | 'conversionRate'
-  | 'purchaseRate';
+export type Effect = 'addToCartRate' | 'clickThroughRate' | 'conversionRate' | 'purchaseRate';

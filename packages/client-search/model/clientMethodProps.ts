@@ -44,7 +44,7 @@ export type AddOrUpdateObjectProps = {
   /**
    * The record, a schemaless object with attributes that are useful in the context of search and discovery.
    */
-  body: Record<string, any>;
+  body: Record<string, unknown>;
 };
 
 /**
@@ -183,7 +183,7 @@ export type CustomPostProps = {
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, any>;
+  body?: Record<string, unknown>;
 };
 
 /**
@@ -201,7 +201,7 @@ export type CustomPutProps = {
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, any>;
+  body?: Record<string, unknown>;
 };
 
 /**
@@ -529,7 +529,7 @@ export type SaveObjectProps = {
   /**
    * The record, a schemaless object with attributes that are useful in the context of search and discovery.
    */
-  body: Record<string, any>;
+  body: Record<string, unknown>;
 };
 
 /**
@@ -731,9 +731,7 @@ export type UpdateApiKeyProps = {
 /**
  * The `browseObjects`, `browseRules`, `browseSynonyms` options.
  */
-export type BrowseOptions<T> = Partial<
-  Pick<CreateIterablePromise<T>, 'validate'>
-> &
+export type BrowseOptions<T> = Partial<Pick<CreateIterablePromise<T>, 'validate'>> &
   Required<Pick<CreateIterablePromise<T>, 'aggregator'>>;
 
 type WaitForOptions = Partial<{
@@ -813,20 +811,14 @@ export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName'> & {
   objectIDs: string[];
 };
 
-export type PartialUpdateObjectsOptions = Pick<
-  ChunkedBatchOptions,
-  'indexName' | 'objects'
-> & {
+export type PartialUpdateObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'objects'> & {
   /**
    *To be provided if non-existing objects are passed, otherwise, the call will fail.
    */
   createIfNotExists?: boolean;
 };
 
-export type SaveObjectsOptions = Pick<
-  ChunkedBatchOptions,
-  'indexName' | 'objects'
->;
+export type SaveObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'objects'>;
 
 export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
   /**

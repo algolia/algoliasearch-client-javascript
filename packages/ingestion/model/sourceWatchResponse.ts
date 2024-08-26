@@ -11,7 +11,7 @@ export type SourceWatchResponse = {
   /**
    * Depending on the source type, the validation returns sampling data of your source (JSON, CSV, BigQuery).
    */
-  data?: Array<Record<string, any>>;
+  data?: Array<Record<string, unknown>>;
 
   /**
    * In case of error, observability events will be added to the response, if any.

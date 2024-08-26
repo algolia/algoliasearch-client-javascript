@@ -3,7 +3,7 @@
 /**
  * Currency code.
  */
-export type CurrenciesValue = {
+export type CurrencyCode = {
   /**
    * Currency code.
    */

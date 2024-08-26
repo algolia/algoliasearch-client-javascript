@@ -3,5 +3,4 @@
 import type { BaseRecommendRequest } from './baseRecommendRequest';
 import type { FrequentlyBoughtTogether } from './frequentlyBoughtTogether';
 
-export type BoughtTogetherQuery = BaseRecommendRequest &
-  FrequentlyBoughtTogether;
+export type BoughtTogetherQuery = BaseRecommendRequest & FrequentlyBoughtTogether;

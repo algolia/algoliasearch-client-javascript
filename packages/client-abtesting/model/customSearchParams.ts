@@ -4,5 +4,5 @@
  * Search parameters to add to the test variant. Only use this parameter if the two variants use the same index.
  */
 export type CustomSearchParams = {
-  customSearchParameters: Record<string, any>;
+  customSearchParameters: Record<string, unknown>;
 };

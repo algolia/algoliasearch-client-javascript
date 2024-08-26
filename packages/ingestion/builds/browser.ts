@@ -12,11 +12,7 @@ import {
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import type { Region } from '../src/ingestionClient';
-import {
-  createIngestionClient,
-  apiClientVersion,
-  REGIONS,
-} from '../src/ingestionClient';
+import { createIngestionClient, apiClientVersion, REGIONS } from '../src/ingestionClient';
 
 export {
   apiClientVersion,
@@ -33,12 +29,7 @@ export * from '../model';
 export type IngestionClient = ReturnType<typeof ingestionClient>;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function ingestionClient(
-  appId: string,
-  apiKey: string,
-  region: Region,
-  options?: ClientOptions
-) {
+export function ingestionClient(appId: string, apiKey: string, region: Region, options?: ClientOptions) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -47,13 +38,8 @@ export function ingestionClient(
     throw new Error('`apiKey` is missing.');
   }
 
-  if (
-    !region ||
-    (region && (typeof region !== 'string' || !REGIONS.includes(region)))
-  ) {
-    throw new Error(
-      `\`region\` is required and must be one of the following: ${REGIONS.join(', ')}`
-    );
+  if (!region || (region && (typeof region !== 'string' || !REGIONS.includes(region)))) {
+    throw new Error(`\`region\` is required and must be one of the following: ${REGIONS.join(', ')}`);
   }
 
   return createIngestionClient({
@@ -71,10 +57,7 @@ export function ingestionClient(
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
-      caches: [
-        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
-        createMemoryCache(),
-      ],
+      caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
     ...options,
   });

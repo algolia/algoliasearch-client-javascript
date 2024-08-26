@@ -3,9 +3,4 @@
 /**
  * Property by which to sort the list of authentication resources.
  */
-export type AuthenticationSortKeys =
-  | 'auth_type'
-  | 'createdAt'
-  | 'name'
-  | 'platform'
-  | 'updatedAt';
+export type AuthenticationSortKeys = 'auth_type' | 'createdAt' | 'name' | 'platform' | 'updatedAt';

@@ -46,7 +46,7 @@ export type CustomPostProps = {
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, any>;
+  body?: Record<string, unknown>;
 };
 
 /**
@@ -64,7 +64,7 @@ export type CustomPutProps = {
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, any>;
+  body?: Record<string, unknown>;
 };
 
 /**

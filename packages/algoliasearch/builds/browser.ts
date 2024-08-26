@@ -2,15 +2,9 @@
 
 import type { AbtestingClient } from '@algolia/client-abtesting';
 import type { Region as AbtestingRegion } from '@algolia/client-abtesting/src/abtestingClient';
-import {
-  createAbtestingClient,
-  REGIONS as abtestingRegions,
-} from '@algolia/client-abtesting/src/abtestingClient';
+import { createAbtestingClient, REGIONS as abtestingRegions } from '@algolia/client-abtesting/src/abtestingClient';
 import type { AnalyticsClient } from '@algolia/client-analytics';
-import {
-  createAnalyticsClient,
-  REGIONS as analyticsRegions,
-} from '@algolia/client-analytics/src/analyticsClient';
+import { createAnalyticsClient, REGIONS as analyticsRegions } from '@algolia/client-analytics/src/analyticsClient';
 import type { Region as AnalyticsRegion } from '@algolia/client-analytics/src/analyticsClient';
 import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
@@ -20,20 +14,14 @@ import {
   createFallbackableCache,
   createMemoryCache,
 } from '@algolia/client-common';
-import type {
-  ClientOptions,
-  CreateClientOptions,
-} from '@algolia/client-common';
+import type { ClientOptions, CreateClientOptions } from '@algolia/client-common';
 import type { PersonalizationClient } from '@algolia/client-personalization';
 import type { Region as PersonalizationRegion } from '@algolia/client-personalization/src/personalizationClient';
 import {
   createPersonalizationClient,
   REGIONS as personalizationRegions,
 } from '@algolia/client-personalization/src/personalizationClient';
-import {
-  createSearchClient,
-  apiClientVersion as searchClientVersion,
-} from '@algolia/client-search/src/searchClient';
+import { createSearchClient, apiClientVersion as searchClientVersion } from '@algolia/client-search/src/searchClient';
 import type { RecommendClient } from '@algolia/recommend';
 import { createRecommendClient } from '@algolia/recommend/src/recommendClient';
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
@@ -50,11 +38,7 @@ export const apiClientVersion = searchClientVersion;
 export type Algoliasearch = ReturnType<typeof algoliasearch>;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function algoliasearch(
-  appId: string,
-  apiKey: string,
-  options?: ClientOptions
-) {
+export function algoliasearch(appId: string, apiKey: string, options?: ClientOptions) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -76,10 +60,7 @@ export function algoliasearch(
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
-      caches: [
-        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
-        createMemoryCache(),
-      ],
+      caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
     ...options,
   };
@@ -92,17 +73,12 @@ export function algoliasearch(
     });
   }
 
-  function initAnalytics(
-    initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion> = {}
-  ): AnalyticsClient {
+  function initAnalytics(initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion> = {}): AnalyticsClient {
     if (
       initOptions.region &&
-      (typeof initOptions.region !== 'string' ||
-        !analyticsRegions.includes(initOptions.region))
+      (typeof initOptions.region !== 'string' || !analyticsRegions.includes(initOptions.region))
     ) {
-      throw new Error(
-        `\`region\` must be one of the following: ${analyticsRegions.join(', ')}`
-      );
+      throw new Error(`\`region\` must be one of the following: ${analyticsRegions.join(', ')}`);
     }
 
     return createAnalyticsClient({
@@ -112,17 +88,12 @@ export function algoliasearch(
     });
   }
 
-  function initAbtesting(
-    initOptions: InitClientOptions & InitClientRegion<AbtestingRegion> = {}
-  ): AbtestingClient {
+  function initAbtesting(initOptions: InitClientOptions & InitClientRegion<AbtestingRegion> = {}): AbtestingClient {
     if (
       initOptions.region &&
-      (typeof initOptions.region !== 'string' ||
-        !abtestingRegions.includes(initOptions.region))
+      (typeof initOptions.region !== 'string' || !abtestingRegions.includes(initOptions.region))
     ) {
-      throw new Error(
-        `\`region\` must be one of the following: ${abtestingRegions.join(', ')}`
-      );
+      throw new Error(`\`region\` must be one of the following: ${abtestingRegions.join(', ')}`);
     }
 
     return createAbtestingClient({
@@ -133,18 +104,14 @@ export function algoliasearch(
   }
 
   function initPersonalization(
-    initOptions: InitClientOptions &
-      Required<InitClientRegion<PersonalizationRegion>>
+    initOptions: InitClientOptions & Required<InitClientRegion<PersonalizationRegion>>,
   ): PersonalizationClient {
     if (
       !initOptions.region ||
       (initOptions.region &&
-        (typeof initOptions.region !== 'string' ||
-          !personalizationRegions.includes(initOptions.region)))
+        (typeof initOptions.region !== 'string' || !personalizationRegions.includes(initOptions.region)))
     ) {
-      throw new Error(
-        `\`region\` is required and must be one of the following: ${personalizationRegions.join(', ')}`
-      );
+      throw new Error(`\`region\` is required and must be one of the following: ${personalizationRegions.join(', ')}`);
     }
 
     return createPersonalizationClient({

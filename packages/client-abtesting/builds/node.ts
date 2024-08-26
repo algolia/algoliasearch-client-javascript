@@ -22,12 +22,7 @@ export * from '../model';
 export type AbtestingClient = ReturnType<typeof abtestingClient>;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function abtestingClient(
-  appId: string,
-  apiKey: string,
-  region?: Region,
-  options?: ClientOptions
-) {
+export function abtestingClient(appId: string, apiKey: string, region?: Region, options?: ClientOptions) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -37,9 +32,7 @@ export function abtestingClient(
   }
 
   if (region && (typeof region !== 'string' || !REGIONS.includes(region))) {
-    throw new Error(
-      `\`region\` must be one of the following: ${REGIONS.join(', ')}`
-    );
+    throw new Error(`\`region\` must be one of the following: ${REGIONS.join(', ')}`);
   }
 
   return {

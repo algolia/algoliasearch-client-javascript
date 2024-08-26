@@ -3,8 +3,4 @@
 /**
  * Status of the cluster.
  */
-export type Status =
-  | 'degraded_performance'
-  | 'major_outage'
-  | 'operational'
-  | 'partial_outage';
+export type Status = 'degraded_performance' | 'major_outage' | 'operational' | 'partial_outage';

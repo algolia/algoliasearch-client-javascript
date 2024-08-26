@@ -11,10 +11,7 @@ import {
 } from '@algolia/client-common';
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
-import {
-  createRecommendClient,
-  apiClientVersion,
-} from '../src/recommendClient';
+import { createRecommendClient, apiClientVersion } from '../src/recommendClient';
 
 export { apiClientVersion } from '../src/recommendClient';
 export * from '../model';
@@ -25,11 +22,7 @@ export * from '../model';
 export type RecommendClient = ReturnType<typeof recommendClient>;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function recommendClient(
-  appId: string,
-  apiKey: string,
-  options?: ClientOptions
-) {
+export function recommendClient(appId: string, apiKey: string, options?: ClientOptions) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -52,10 +45,7 @@ export function recommendClient(
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
-      caches: [
-        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
-        createMemoryCache(),
-      ],
+      caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
     ...options,
   });

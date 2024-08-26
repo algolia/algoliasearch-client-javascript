@@ -3,9 +3,4 @@
 /**
  * Property by which to sort the list of tasks.
  */
-export type TaskSortKeys =
-  | 'action'
-  | 'createdAt'
-  | 'enabled'
-  | 'triggerType'
-  | 'updatedAt';
+export type TaskSortKeys = 'action' | 'createdAt' | 'enabled' | 'triggerType' | 'updatedAt';

@@ -13,10 +13,7 @@ import {
 } from '@algolia/client-common';
 import { createHttpRequester } from '@algolia/requester-node-http';
 
-import type {
-  GenerateSecuredApiKeyOptions,
-  GetSecuredApiKeyRemainingValidityOptions,
-} from '../model';
+import type { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions } from '../model';
 import { createSearchClient } from '../src/searchClient';
 
 export { apiClientVersion } from '../src/searchClient';
@@ -28,11 +25,7 @@ export * from '../model';
 export type SearchClient = ReturnType<typeof searchClient>;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function searchClient(
-  appId: string,
-  apiKey: string,
-  options?: ClientOptions
-) {
+export function searchClient(appId: string, apiKey: string, options?: ClientOptions) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -66,10 +59,7 @@ export function searchClient(
      * @param generateSecuredApiKey.parentApiKey - The base API key from which to generate the new secured one.
      * @param generateSecuredApiKey.restrictions - A set of properties defining the restrictions of the secured API key.
      */
-    generateSecuredApiKey({
-      parentApiKey,
-      restrictions = {},
-    }: GenerateSecuredApiKeyOptions): string {
+    generateSecuredApiKey({ parentApiKey, restrictions = {} }: GenerateSecuredApiKeyOptions): string {
       let mergedRestrictions = restrictions;
       if (restrictions.searchParams) {
         // merge searchParams with the root restrictions
@@ -89,14 +79,12 @@ export function searchClient(
             acc[key] = (mergedRestrictions as any)[key];
             return acc;
           },
-          {} as Record<string, unknown>
+          {} as Record<string, unknown>,
         );
 
       const queryParameters = serializeQueryParameters(mergedRestrictions);
       return Buffer.from(
-        createHmac('sha256', parentApiKey)
-          .update(queryParameters)
-          .digest('hex') + queryParameters
+        createHmac('sha256', parentApiKey).update(queryParameters).digest('hex') + queryParameters,
       ).toString('base64');
     },
 
@@ -107,12 +95,8 @@ export function searchClient(
      * @param getSecuredApiKeyRemainingValidity - The `getSecuredApiKeyRemainingValidity` object.
      * @param getSecuredApiKeyRemainingValidity.securedApiKey - The secured API key generated with the `generateSecuredApiKey` method.
      */
-    getSecuredApiKeyRemainingValidity({
-      securedApiKey,
-    }: GetSecuredApiKeyRemainingValidityOptions): number {
-      const decodedString = Buffer.from(securedApiKey, 'base64').toString(
-        'ascii'
-      );
+    getSecuredApiKeyRemainingValidity({ securedApiKey }: GetSecuredApiKeyRemainingValidityOptions): number {
+      const decodedString = Buffer.from(securedApiKey, 'base64').toString('ascii');
       const regex = /validUntil=(\d+)/;
       const match = decodedString.match(regex);
 

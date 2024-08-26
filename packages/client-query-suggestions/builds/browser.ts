@@ -12,11 +12,7 @@ import {
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import type { Region } from '../src/querySuggestionsClient';
-import {
-  createQuerySuggestionsClient,
-  apiClientVersion,
-  REGIONS,
-} from '../src/querySuggestionsClient';
+import { createQuerySuggestionsClient, apiClientVersion, REGIONS } from '../src/querySuggestionsClient';
 
 export { apiClientVersion, Region } from '../src/querySuggestionsClient';
 export * from '../model';
@@ -27,12 +23,7 @@ export * from '../model';
 export type QuerySuggestionsClient = ReturnType<typeof querySuggestionsClient>;
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function querySuggestionsClient(
-  appId: string,
-  apiKey: string,
-  region: Region,
-  options?: ClientOptions
-) {
+export function querySuggestionsClient(appId: string, apiKey: string, region: Region, options?: ClientOptions) {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -41,13 +32,8 @@ export function querySuggestionsClient(
     throw new Error('`apiKey` is missing.');
   }
 
-  if (
-    !region ||
-    (region && (typeof region !== 'string' || !REGIONS.includes(region)))
-  ) {
-    throw new Error(
-      `\`region\` is required and must be one of the following: ${REGIONS.join(', ')}`
-    );
+  if (!region || (region && (typeof region !== 'string' || !REGIONS.includes(region)))) {
+    throw new Error(`\`region\` is required and must be one of the following: ${REGIONS.join(', ')}`);
   }
 
   return createQuerySuggestionsClient({
@@ -65,10 +51,7 @@ export function querySuggestionsClient(
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
-      caches: [
-        createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }),
-        createMemoryCache(),
-      ],
+      caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
     ...options,
   });

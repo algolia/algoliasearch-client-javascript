@@ -3,10 +3,4 @@
 /**
  * Type of authentication. This determines the type of credentials required in the `input` object.
  */
-export type AuthenticationType =
-  | 'algolia'
-  | 'algoliaInsights'
-  | 'apiKey'
-  | 'basic'
-  | 'googleServiceAccount'
-  | 'oauth';
+export type AuthenticationType = 'algolia' | 'algoliaInsights' | 'apiKey' | 'basic' | 'googleServiceAccount' | 'oauth';
