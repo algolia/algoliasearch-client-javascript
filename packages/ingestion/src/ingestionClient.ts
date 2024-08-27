@@ -1227,7 +1227,6 @@ export function createIngestionClient({
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
-
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
@@ -1237,6 +1236,7 @@ export function createIngestionClient({
       if (platform !== undefined) {
         queryParameters.platform = platform.toString();
       }
+
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
@@ -1278,6 +1278,7 @@ export function createIngestionClient({
       const requestPath = '/1/destinations';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
@@ -1287,7 +1288,6 @@ export function createIngestionClient({
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
-
       if (authenticationID !== undefined) {
         queryParameters.authenticationID = authenticationID.toString();
       }
@@ -1339,14 +1339,12 @@ export function createIngestionClient({
       const requestPath = '/1/runs/{runID}/events'.replace('{runID}', encodeURIComponent(runID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (status !== undefined) {
         queryParameters.status = status.toString();
       }
@@ -1356,6 +1354,7 @@ export function createIngestionClient({
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1388,6 +1387,7 @@ export function createIngestionClient({
      * @param listRuns.itemsPerPage - Number of items per page.
      * @param listRuns.page - Page number of the paginated API response.
      * @param listRuns.status - Run status for filtering the list of task runs.
+     * @param listRuns.type - Run type for filtering the list of task runs.
      * @param listRuns.taskID - Task ID for filtering the list of task runs.
      * @param listRuns.sort - Property by which to sort the list of task runs.
      * @param listRuns.order - Sort order of the response, ascending or descending.
@@ -1396,12 +1396,13 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listRuns(
-      { itemsPerPage, page, status, taskID, sort, order, startDate, endDate }: ListRunsProps = {},
+      { itemsPerPage, page, status, type, taskID, sort, order, startDate, endDate }: ListRunsProps = {},
       requestOptions: RequestOptions | undefined = undefined,
     ): Promise<RunListResponse> {
       const requestPath = '/1/runs';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
@@ -1411,13 +1412,16 @@ export function createIngestionClient({
       if (status !== undefined) {
         queryParameters.status = status.toString();
       }
-
+      if (type !== undefined) {
+        queryParameters.type = type.toString();
+      }
       if (taskID !== undefined) {
         queryParameters.taskID = taskID.toString();
       }
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1471,7 +1475,6 @@ export function createIngestionClient({
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
-
       if (authenticationID !== undefined) {
         queryParameters.authenticationID = authenticationID.toString();
       }
@@ -1529,6 +1532,7 @@ export function createIngestionClient({
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
+
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
@@ -1541,7 +1545,6 @@ export function createIngestionClient({
       if (triggerType !== undefined) {
         queryParameters.triggerType = triggerType.toString();
       }
-
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
@@ -1589,13 +1592,13 @@ export function createIngestionClient({
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
-
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
+
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
@@ -1609,7 +1612,6 @@ export function createIngestionClient({
       if (triggerType !== undefined) {
         queryParameters.triggerType = triggerType.toString();
       }
-
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
@@ -1680,6 +1682,7 @@ export function createIngestionClient({
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
+
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }

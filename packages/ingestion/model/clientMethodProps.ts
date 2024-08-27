@@ -16,6 +16,7 @@ import type { PlatformWithNone } from './platformWithNone';
 import type { RunSortKeys } from './runSortKeys';
 import type { RunSourcePayload } from './runSourcePayload';
 import type { RunStatus } from './runStatus';
+import type { RunType } from './runType';
 import type { SortKeys } from './sortKeys';
 import type { SourceSortKeys } from './sourceSortKeys';
 import type { SourceType } from './sourceType';
@@ -393,6 +394,10 @@ export type ListRunsProps = {
    * Run status for filtering the list of task runs.
    */
   status?: RunStatus[];
+  /**
+   * Run type for filtering the list of task runs.
+   */
+  type?: RunType[];
   /**
    * Task ID for filtering the list of task runs.
    */
