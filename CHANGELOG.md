@@ -1,3 +1,9 @@
+## [5.2.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.1.1...5.2.0)
+
+- [23a799f0e](https://github.com/algolia/api-clients-automation/commit/23a799f0e) feat(specs): push source type ([#3600](https://github.com/algolia/api-clients-automation/pull/3600)) by [@shortcuts](https://github.com/shortcuts/)
+- [536fdef01](https://github.com/algolia/api-clients-automation/commit/536fdef01) fix(specs): filter run list by type ([#3577](https://github.com/algolia/api-clients-automation/pull/3577)) by [@millotp](https://github.com/millotp/)
+- [9b6dc0b70](https://github.com/algolia/api-clients-automation/commit/9b6dc0b70) docs(specs): update api's length minimum value ([#3574](https://github.com/algolia/api-clients-automation/pull/3574)) by [@Jerska](https://github.com/Jerska/)
+
 ## [5.1.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.1.0...5.1.1)
 
 - [4cbbce55c](https://github.com/algolia/api-clients-automation/commit/4cbbce55c) fix(clients): highlight and snippet results e2e ([#3567](https://github.com/algolia/api-clients-automation/pull/3567)) by [@shortcuts](https://github.com/shortcuts/)

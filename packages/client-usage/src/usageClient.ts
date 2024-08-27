@@ -20,7 +20,7 @@ import type {
 } from '../model/clientMethodProps';
 import type { IndexUsage } from '../model/indexUsage';
 
-export const apiClientVersion = '1.1.1';
+export const apiClientVersion = '1.2.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
