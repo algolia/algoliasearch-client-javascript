@@ -13,7 +13,7 @@ export type Source = {
 
   name: string;
 
-  input: SourceInput;
+  input?: SourceInput;
 
   /**
    * Universally unique identifier (UUID) of an authentication resource.

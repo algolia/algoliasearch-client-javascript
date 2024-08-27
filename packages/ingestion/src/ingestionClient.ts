@@ -319,9 +319,6 @@ export function createIngestionClient({
       if (!sourceCreate.name) {
         throw new Error('Parameter `sourceCreate.name` is required when calling `createSource`.');
       }
-      if (!sourceCreate.input) {
-        throw new Error('Parameter `sourceCreate.input` is required when calling `createSource`.');
-      }
 
       const requestPath = '/1/sources';
       const headers: Headers = {};

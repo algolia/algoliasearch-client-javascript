@@ -11,7 +11,7 @@ export type SourceCreate = {
    */
   name: string;
 
-  input: SourceInput;
+  input?: SourceInput;
 
   /**
    * Universally unique identifier (UUID) of an authentication resource.
