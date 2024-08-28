@@ -18,7 +18,7 @@
         "default": "./dist/client-abtesting.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/client-abtesting.umd.js",
         "module": "./dist/client-abtesting.esm.browser.js",
         "import": "./dist/client-abtesting.esm.browser.js",

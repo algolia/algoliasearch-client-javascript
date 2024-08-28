@@ -2,12 +2,11 @@
 
 import { createHmac } from 'node:crypto';
 
-import type { AbtestingClient } from '@algolia/client-abtesting';
-import type { Region as AbtestingRegion } from '@algolia/client-abtesting/src/abtestingClient';
-import { createAbtestingClient, REGIONS as abtestingRegions } from '@algolia/client-abtesting/src/abtestingClient';
-import type { AnalyticsClient } from '@algolia/client-analytics';
-import { createAnalyticsClient, REGIONS as analyticsRegions } from '@algolia/client-analytics/src/analyticsClient';
-import type { Region as AnalyticsRegion } from '@algolia/client-analytics/src/analyticsClient';
+import type { AbtestingClient, Region as AbtestingRegion } from '@algolia/client-abtesting';
+import { abtestingClient } from '@algolia/client-abtesting';
+import type { AnalyticsClient, Region as AnalyticsRegion } from '@algolia/client-analytics';
+import { analyticsClient } from '@algolia/client-analytics';
+import type { ClientOptions } from '@algolia/client-common';
 import {
   DEFAULT_CONNECT_TIMEOUT_NODE,
   DEFAULT_READ_TIMEOUT_NODE,
@@ -16,16 +15,11 @@ import {
   createNullCache,
   serializeQueryParameters,
 } from '@algolia/client-common';
-import type { ClientOptions, CreateClientOptions } from '@algolia/client-common';
-import type { PersonalizationClient } from '@algolia/client-personalization';
-import type { Region as PersonalizationRegion } from '@algolia/client-personalization/src/personalizationClient';
-import {
-  createPersonalizationClient,
-  REGIONS as personalizationRegions,
-} from '@algolia/client-personalization/src/personalizationClient';
-import { createSearchClient, apiClientVersion as searchClientVersion } from '@algolia/client-search/src/searchClient';
+import type { PersonalizationClient, Region as PersonalizationRegion } from '@algolia/client-personalization';
+import { personalizationClient } from '@algolia/client-personalization';
+import { searchClient, apiClientVersion as searchClientVersion } from '@algolia/client-search';
 import type { RecommendClient } from '@algolia/recommend';
-import { createRecommendClient } from '@algolia/recommend/src/recommendClient';
+import { recommendClient } from '@algolia/recommend';
 import { createHttpRequester } from '@algolia/requester-node-http';
 
 import type {
@@ -53,80 +47,54 @@ export function algoliasearch(appId: string, apiKey: string, options?: ClientOpt
   if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
-  const commonOptions: CreateClientOptions = {
-    apiKey,
-    appId,
-    timeouts: {
-      connect: DEFAULT_CONNECT_TIMEOUT_NODE,
-      read: DEFAULT_READ_TIMEOUT_NODE,
-      write: DEFAULT_WRITE_TIMEOUT_NODE,
-    },
-    requester: createHttpRequester(),
-    algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
-    responsesCache: createNullCache(),
-    requestsCache: createNullCache(),
-    hostsCache: createMemoryCache(),
-    ...options,
-  };
 
   function initRecommend(initOptions: InitClientOptions = {}): RecommendClient {
-    return createRecommendClient({
-      ...commonOptions,
-      ...initOptions.options,
-      ...initOptions,
-    });
+    return recommendClient(initOptions.appId || appId, initOptions.apiKey || apiKey, initOptions.options);
   }
 
   function initAnalytics(initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion> = {}): AnalyticsClient {
-    if (
-      initOptions.region &&
-      (typeof initOptions.region !== 'string' || !analyticsRegions.includes(initOptions.region))
-    ) {
-      throw new Error(`\`region\` must be one of the following: ${analyticsRegions.join(', ')}`);
-    }
-
-    return createAnalyticsClient({
-      ...commonOptions,
-      ...initOptions.options,
-      ...initOptions,
-    });
+    return analyticsClient(
+      initOptions.appId || appId,
+      initOptions.apiKey || apiKey,
+      initOptions.region,
+      initOptions.options,
+    );
   }
 
   function initAbtesting(initOptions: InitClientOptions & InitClientRegion<AbtestingRegion> = {}): AbtestingClient {
-    if (
-      initOptions.region &&
-      (typeof initOptions.region !== 'string' || !abtestingRegions.includes(initOptions.region))
-    ) {
-      throw new Error(`\`region\` must be one of the following: ${abtestingRegions.join(', ')}`);
-    }
-
-    return createAbtestingClient({
-      ...commonOptions,
-      ...initOptions.options,
-      ...initOptions,
-    });
+    return abtestingClient(
+      initOptions.appId || appId,
+      initOptions.apiKey || apiKey,
+      initOptions.region,
+      initOptions.options,
+    );
   }
 
   function initPersonalization(
     initOptions: InitClientOptions & Required<InitClientRegion<PersonalizationRegion>>,
   ): PersonalizationClient {
-    if (
-      !initOptions.region ||
-      (initOptions.region &&
-        (typeof initOptions.region !== 'string' || !personalizationRegions.includes(initOptions.region)))
-    ) {
-      throw new Error(`\`region\` is required and must be one of the following: ${personalizationRegions.join(', ')}`);
-    }
-
-    return createPersonalizationClient({
-      ...commonOptions,
-      ...initOptions.options,
-      ...initOptions,
-    });
+    return personalizationClient(
+      initOptions.appId || appId,
+      initOptions.apiKey || apiKey,
+      initOptions.region,
+      initOptions.options,
+    );
   }
 
   return {
-    ...createSearchClient(commonOptions),
+    ...searchClient(appId, apiKey, {
+      timeouts: {
+        connect: DEFAULT_CONNECT_TIMEOUT_NODE,
+        read: DEFAULT_READ_TIMEOUT_NODE,
+        write: DEFAULT_WRITE_TIMEOUT_NODE,
+      },
+      requester: createHttpRequester(),
+      algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
+      responsesCache: createNullCache(),
+      requestsCache: createNullCache(),
+      hostsCache: createMemoryCache(),
+      ...options,
+    }),
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */

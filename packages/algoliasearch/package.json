@@ -11,7 +11,6 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
       "node": {
         "import": "./dist/algoliasearch.esm.node.js",
         "module": "./dist/algoliasearch.esm.node.js",
@@ -19,7 +18,7 @@
         "default": "./dist/algoliasearch.cjs",
         "types": "./dist/algoliasearch/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/algoliasearch.umd.js",
         "module": "./dist/algoliasearch.esm.browser.js",
         "import": "./dist/algoliasearch.esm.browser.js",
@@ -28,7 +27,6 @@
       }
     },
     "./lite": {
-      "types": "./lite.d.ts",
       "node": {
         "import": "./dist/lite/lite.esm.node.js",
         "module": "./dist/lite/lite.esm.node.js",
@@ -36,7 +34,7 @@
         "default": "./dist/lite/lite.cjs",
         "types": "./dist/lite/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/lite/lite.umd.js",
         "module": "./dist/lite/lite.esm.browser.js",
         "import": "./dist/lite/lite.esm.browser.js",

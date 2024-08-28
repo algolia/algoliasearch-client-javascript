@@ -145,10 +145,11 @@ describe('api', () => {
     });
 
     it('default `init` clients to the root `algoliasearch` credentials', async () => {
-      const abtestingClient = client.initAbtesting();
-      const analyticsClient = client.initAnalytics();
+      const abtestingClient = client.initAbtesting({ options: { requester: echoRequester() } });
+      const analyticsClient = client.initAnalytics({ options: { requester: echoRequester() } });
       const personalizationClient = client.initPersonalization({
         region: 'eu',
+        options: { requester: echoRequester() },
       });
 
       const res1 = (await abtestingClient.customGet({
@@ -185,15 +186,18 @@ describe('api', () => {
       const abtestingClient = client.initAbtesting({
         appId: 'appId1',
         apiKey: 'apiKey1',
+        options: { requester: echoRequester() },
       });
       const analyticsClient = client.initAnalytics({
         appId: 'appId2',
         apiKey: 'apiKey2',
+        options: { requester: echoRequester() },
       });
       const personalizationClient = client.initPersonalization({
         appId: 'appId3',
         apiKey: 'apiKey3',
         region: 'eu',
+        options: { requester: echoRequester() },
       });
 
       const res1 = (await abtestingClient.customGet({

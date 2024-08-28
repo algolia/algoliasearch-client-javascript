@@ -1,6 +1,5 @@
 import babel from '@rollup/plugin-babel';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import globals from 'rollup-plugin-node-globals';
 import terser from '@rollup/plugin-terser';
 import ts from 'rollup-plugin-typescript2';
 
@@ -271,11 +270,9 @@ export function buildConfigs(pkg) {
         input: baseConfig.input,
         external: [...baseConfig.external, ...baseConfig.dependencies],
         plugins: [
-          globals({
-            global: true,
-          }),
           nodeResolve({
             preferBuiltins: true,
+            exportConditions: [isUmdBuild || isEsmBrowserBuild ? 'browser' : 'node'],
           }),
           ts({
             check: checkForTypes,

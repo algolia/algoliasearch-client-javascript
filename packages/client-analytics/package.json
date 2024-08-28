@@ -18,7 +18,7 @@
         "default": "./dist/client-analytics.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/client-analytics.umd.js",
         "module": "./dist/client-analytics.esm.browser.js",
         "import": "./dist/client-analytics.esm.browser.js",

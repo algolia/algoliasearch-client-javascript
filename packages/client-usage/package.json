@@ -18,7 +18,7 @@
         "default": "./dist/client-usage.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/client-usage.umd.js",
         "module": "./dist/client-usage.esm.browser.js",
         "import": "./dist/client-usage.esm.browser.js",

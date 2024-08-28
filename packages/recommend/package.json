@@ -18,7 +18,7 @@
         "default": "./dist/recommend.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/recommend.umd.js",
         "module": "./dist/recommend.esm.browser.js",
         "import": "./dist/recommend.esm.browser.js",

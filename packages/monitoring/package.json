@@ -18,7 +18,7 @@
         "default": "./dist/monitoring.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/monitoring.umd.js",
         "module": "./dist/monitoring.esm.browser.js",
         "import": "./dist/monitoring.esm.browser.js",

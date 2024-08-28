@@ -18,7 +18,7 @@
         "default": "./dist/client-insights.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/client-insights.umd.js",
         "module": "./dist/client-insights.esm.browser.js",
         "import": "./dist/client-insights.esm.browser.js",

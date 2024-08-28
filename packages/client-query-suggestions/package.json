@@ -18,7 +18,7 @@
         "default": "./dist/client-query-suggestions.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/client-query-suggestions.umd.js",
         "module": "./dist/client-query-suggestions.esm.browser.js",
         "import": "./dist/client-query-suggestions.esm.browser.js",

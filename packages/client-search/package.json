@@ -18,7 +18,7 @@
         "default": "./dist/client-search.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/client-search.umd.js",
         "module": "./dist/client-search.esm.browser.js",
         "import": "./dist/client-search.esm.browser.js",

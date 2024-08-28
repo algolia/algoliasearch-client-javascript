@@ -18,7 +18,7 @@
         "default": "./dist/ingestion.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/ingestion.umd.js",
         "module": "./dist/ingestion.esm.browser.js",
         "import": "./dist/ingestion.esm.browser.js",

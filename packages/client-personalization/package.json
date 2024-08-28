@@ -18,7 +18,7 @@
         "default": "./dist/client-personalization.cjs",
         "types": "./dist/builds/node.d.ts"
       },
-      "default": {
+      "browser": {
         "umd": "./dist/client-personalization.umd.js",
         "module": "./dist/client-personalization.esm.browser.js",
         "import": "./dist/client-personalization.esm.browser.js",
