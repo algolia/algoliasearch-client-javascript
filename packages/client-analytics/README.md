@@ -9,7 +9,7 @@
     <a href="https://npmjs.org/package/@algolia/client-analytics"><img src="https://img.shields.io/npm/v/@algolia/client-analytics.svg?style=flat-square" alt="NPM version"></img></a>
     <a href="http://npm-stat.com/charts.html?package=@algolia/client-analytics"><img src="https://img.shields.io/npm/dm/@algolia/client-analytics.svg?style=flat-square" alt="NPM downloads"></a>
     <a href="https://www.jsdelivr.com/package/npm/@algolia/client-analytics"><img src="https://data.jsdelivr.com/v1/package/npm/@algolia/client-analytics/badge" alt="jsDelivr Downloads"></img></a>
-    <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>
   </p>
 </p>
 

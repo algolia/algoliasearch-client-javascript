@@ -9,7 +9,7 @@
     <a href="https://npmjs.org/package/@algolia/ingestion"><img src="https://img.shields.io/npm/v/@algolia/ingestion.svg?style=flat-square" alt="NPM version"></img></a>
     <a href="http://npm-stat.com/charts.html?package=@algolia/ingestion"><img src="https://img.shields.io/npm/dm/@algolia/ingestion.svg?style=flat-square" alt="NPM downloads"></a>
     <a href="https://www.jsdelivr.com/package/npm/@algolia/ingestion"><img src="https://data.jsdelivr.com/v1/package/npm/@algolia/ingestion/badge" alt="jsDelivr Downloads"></img></a>
-    <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>
   </p>
 </p>
 
