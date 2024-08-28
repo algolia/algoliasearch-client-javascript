@@ -1,3 +1,7 @@
+## [5.2.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.0...5.2.1)
+
+- [41f849e41](https://github.com/algolia/api-clients-automation/commit/41f849e41) fix(specs): partial update operation ([#3486](https://github.com/algolia/api-clients-automation/pull/3486)) by [@kai687](https://github.com/kai687/)
+
 ## [5.2.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.1.1...5.2.0)
 
 - [23a799f0e](https://github.com/algolia/api-clients-automation/commit/23a799f0e) feat(specs): push source type ([#3600](https://github.com/algolia/api-clients-automation/pull/3600)) by [@shortcuts](https://github.com/shortcuts/)
