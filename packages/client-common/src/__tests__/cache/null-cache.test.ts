@@ -18,11 +18,9 @@ describe('null cache', () => {
 
     await cache.set({ key: 'key' }, { foo: 10 });
 
-    expect(await cache.get({ key: 'key' }, defaultValue, events)).toMatchObject(
-      {
-        bar: 12,
-      }
-    );
+    expect(await cache.get({ key: 'key' }, defaultValue, events)).toMatchObject({
+      bar: 12,
+    });
 
     expect(missMock.mock.calls.length).toBe(1);
   });
@@ -30,11 +28,9 @@ describe('null cache', () => {
   it('returns default value', async () => {
     const defaultValue = (): DefaultValue => Promise.resolve({ bar: 12 });
 
-    expect(await cache.get({ foo: 'foo' }, defaultValue, events)).toMatchObject(
-      {
-        bar: 12,
-      }
-    );
+    expect(await cache.get({ foo: 'foo' }, defaultValue, events)).toMatchObject({
+      bar: 12,
+    });
 
     expect(missMock.mock.calls.length).toBe(1);
   });

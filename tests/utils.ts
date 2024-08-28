@@ -44,9 +44,7 @@ export const testQueryBaseUrl = 'https://algolia-dns.net';
 /**
  * Returns a JSON strigified body.
  */
-export function getStringifiedBody(
-  body: Record<string, any> = { foo: 'bar' }
-): string {
+export function getStringifiedBody(body: Record<string, any> = { foo: 'bar' }): string {
   return JSON.stringify(body);
 }
 

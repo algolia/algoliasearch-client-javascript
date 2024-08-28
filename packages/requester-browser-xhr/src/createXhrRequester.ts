@@ -8,9 +8,7 @@ export function createXhrRequester(): Requester {
       const baseRequester = new XMLHttpRequest();
       baseRequester.open(request.method, request.url, true);
 
-      Object.keys(request.headers).forEach((key) =>
-        baseRequester.setRequestHeader(key, request.headers[key])
-      );
+      Object.keys(request.headers).forEach((key) => baseRequester.setRequestHeader(key, request.headers[key]));
 
       const createTimeout = (timeout: number, content: string): Timeout => {
         return setTimeout(() => {
@@ -24,24 +22,15 @@ export function createXhrRequester(): Requester {
         }, timeout);
       };
 
-      const connectTimeout = createTimeout(
-        request.connectTimeout,
-        'Connection timeout'
-      );
+      const connectTimeout = createTimeout(request.connectTimeout, 'Connection timeout');
 
       let responseTimeout: Timeout | undefined;
 
       baseRequester.onreadystatechange = (): void => {
-        if (
-          baseRequester.readyState > baseRequester.OPENED &&
-          responseTimeout === undefined
-        ) {
+        if (baseRequester.readyState > baseRequester.OPENED && responseTimeout === undefined) {
           clearTimeout(connectTimeout);
 
-          responseTimeout = createTimeout(
-            request.responseTimeout,
-            'Socket timeout'
-          );
+          responseTimeout = createTimeout(request.responseTimeout, 'Socket timeout');
         }
       };
 

@@ -3,7 +3,7 @@ import type { AuthMode, Headers, QueryParameters } from './types';
 export function createAuth(
   appId: string,
   apiKey: string,
-  authMode: AuthMode = 'WithinHeaders'
+  authMode: AuthMode = 'WithinHeaders',
 ): {
   readonly headers: () => Headers;
   readonly queryParameters: () => QueryParameters;

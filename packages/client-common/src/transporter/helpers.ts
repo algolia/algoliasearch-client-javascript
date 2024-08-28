@@ -1,12 +1,4 @@
-import type {
-  Headers,
-  Host,
-  QueryParameters,
-  Request,
-  RequestOptions,
-  Response,
-  StackFrame,
-} from '../types';
+import type { Headers, Host, QueryParameters, Request, RequestOptions, Response, StackFrame } from '../types';
 
 import { ApiError, DeserializationError, DetailedApiError } from './errors';
 
@@ -24,11 +16,7 @@ export function shuffle<TData>(array: TData[]): TData[] {
   return shuffledArray;
 }
 
-export function serializeUrl(
-  host: Host,
-  path: string,
-  queryParameters: QueryParameters
-): string {
+export function serializeUrl(host: Host, path: string, queryParameters: QueryParameters): string {
   const queryParametersAsString = serializeQueryParameters(queryParameters);
   let url = `${host.protocol}://${host.url}${host.port ? `:${host.port}` : ''}/${
     path.charAt(0) === '/' ? path.substring(1) : path
@@ -50,26 +38,18 @@ export function serializeQueryParameters(parameters: QueryParameters): string {
         `${key}=${encodeURIComponent(
           Object.prototype.toString.call(parameters[key]) === '[object Array]'
             ? parameters[key].join(',')
-            : parameters[key]
-        ).replaceAll('+', '%20')}`
+            : parameters[key],
+        ).replaceAll('+', '%20')}`,
     )
     .join('&');
 }
 
-export function serializeData(
-  request: Request,
-  requestOptions: RequestOptions
-): string | undefined {
-  if (
-    request.method === 'GET' ||
-    (request.data === undefined && requestOptions.data === undefined)
-  ) {
+export function serializeData(request: Request, requestOptions: RequestOptions): string | undefined {
+  if (request.method === 'GET' || (request.data === undefined && requestOptions.data === undefined)) {
     return undefined;
   }
 
-  const data = Array.isArray(request.data)
-    ? request.data
-    : { ...request.data, ...requestOptions.data };
+  const data = Array.isArray(request.data) ? request.data : { ...request.data, ...requestOptions.data };
 
   return JSON.stringify(data);
 }
@@ -77,7 +57,7 @@ export function serializeData(
 export function serializeHeaders(
   baseHeaders: Headers,
   requestHeaders: Headers,
-  requestOptionsHeaders?: Headers
+  requestOptionsHeaders?: Headers,
 ): Headers {
   const headers: Headers = {
     Accept: 'application/json',
@@ -103,22 +83,14 @@ export function deserializeSuccess<TObject>(response: Response): TObject {
   }
 }
 
-export function deserializeFailure(
-  { content, status }: Response,
-  stackFrame: StackFrame[]
-): Error {
+export function deserializeFailure({ content, status }: Response, stackFrame: StackFrame[]): Error {
   try {
     const parsed = JSON.parse(content);
     if ('error' in parsed) {
-      return new DetailedApiError(
-        parsed.message,
-        status,
-        parsed.error,
-        stackFrame
-      );
+      return new DetailedApiError(parsed.message, status, parsed.error, stackFrame);
     }
     return new ApiError(parsed.message, status, stackFrame);
-  } catch (e) {
+  } catch {
     // ..
   }
   return new ApiError(content, status, stackFrame);

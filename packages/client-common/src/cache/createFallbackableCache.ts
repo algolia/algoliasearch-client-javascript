@@ -2,9 +2,7 @@ import type { FallbackableCacheOptions, Cache, CacheEvents } from '../types';
 
 import { createNullCache } from './createNullCache';
 
-export function createFallbackableCache(
-  options: FallbackableCacheOptions
-): Cache {
+export function createFallbackableCache(options: FallbackableCacheOptions): Cache {
   const caches = [...options.caches];
   const current = caches.shift();
 
@@ -18,21 +16,14 @@ export function createFallbackableCache(
       defaultValue: () => Promise<TValue>,
       events: CacheEvents<TValue> = {
         miss: (): Promise<void> => Promise.resolve(),
-      }
+      },
     ): Promise<TValue> {
       return current.get(key, defaultValue, events).catch(() => {
-        return createFallbackableCache({ caches }).get(
-          key,
-          defaultValue,
-          events
-        );
+        return createFallbackableCache({ caches }).get(key, defaultValue, events);
       });
     },
 
-    set<TValue>(
-      key: Record<string, any> | string,
-      value: TValue
-    ): Promise<TValue> {
+    set<TValue>(key: Record<string, any> | string, value: TValue): Promise<TValue> {
       return current.set(key, value).catch(() => {
         return createFallbackableCache({ caches }).set(key, value);
       });

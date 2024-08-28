@@ -16,18 +16,14 @@ describe('memory cache', () => {
     const cache = createMemoryCache();
     const defaultValue = (): DefaultValue => Promise.resolve({ bar: 1 });
 
-    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject(
-      {
-        bar: 1,
-      }
-    );
+    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject({
+      bar: 1,
+    });
 
     await cache.set({ key: 'foo' }, { foo: 2 });
 
     expect(missMock.mock.calls.length).toBe(1);
-    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject(
-      { foo: 2 }
-    );
+    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject({ foo: 2 });
     expect(missMock.mock.calls.length).toBe(1);
   });
 
@@ -54,9 +50,7 @@ describe('memory cache', () => {
 
     const defaultValue = (): DefaultValue => Promise.resolve({ bar: 2 });
 
-    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject(
-      { bar: 2 }
-    );
+    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject({ bar: 2 });
     expect(missMock.mock.calls.length).toBe(1);
   });
 
@@ -68,9 +62,7 @@ describe('memory cache', () => {
 
     const defaultValue = (): DefaultValue => Promise.resolve({ bar: 2 });
 
-    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject(
-      { bar: 2 }
-    );
+    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject({ bar: 2 });
     expect(missMock.mock.calls.length).toBe(1);
   });
 
@@ -82,9 +74,7 @@ describe('memory cache', () => {
 
     const defaultValue = (): DefaultValue => Promise.resolve({ bar: 2 });
 
-    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject(
-      { bar: 2 }
-    );
+    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject({ bar: 2 });
     expect(missMock.mock.calls.length).toBe(1);
   });
 });

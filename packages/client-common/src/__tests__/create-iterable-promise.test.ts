@@ -156,9 +156,7 @@ describe('createIterablePromise', () => {
         validate: () => false,
       });
 
-      await expect(promise).rejects.toEqual(
-        expect.objectContaining({ message: 'nope' })
-      );
+      await expect(promise).rejects.toEqual(expect.objectContaining({ message: 'nope' }));
     });
 
     it('gets the rejection of the given promise via throw', async () => {
@@ -178,9 +176,7 @@ describe('createIterablePromise', () => {
         validate: () => false,
       });
 
-      await expect(promise).rejects.toEqual(
-        expect.objectContaining({ message: 'nope' })
-      );
+      await expect(promise).rejects.toEqual(expect.objectContaining({ message: 'nope' }));
     });
 
     it('rejects with the given `message` when `validate` hits', async () => {
@@ -204,7 +200,7 @@ describe('createIterablePromise', () => {
       await expect(promise).rejects.toEqual(
         expect.objectContaining({
           message: 'Error is thrown: 3/3',
-        })
+        }),
       );
       expect(calls).toBe(MAX_RETRIES);
     });
@@ -230,7 +226,7 @@ describe('createIterablePromise', () => {
       await expect(promise).rejects.toEqual(
         expect.objectContaining({
           message: 'Error is thrown: 3/3',
-        })
+        }),
       );
       expect(calls).toBe(MAX_RETRIES);
     });

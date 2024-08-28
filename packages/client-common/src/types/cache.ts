@@ -5,16 +5,13 @@ export type Cache = {
   get: <TValue>(
     key: Record<string, any> | string,
     defaultValue: () => Promise<TValue>,
-    events?: CacheEvents<TValue>
+    events?: CacheEvents<TValue>,
   ) => Promise<TValue>;
 
   /**
    * Sets the given value with the given `key`.
    */
-  set: <TValue>(
-    key: Record<string, any> | string,
-    value: TValue
-  ) => Promise<TValue>;
+  set: <TValue>(key: Record<string, any> | string, value: TValue) => Promise<TValue>;
 
   /**
    * Deletes the given `key`.

@@ -26,16 +26,12 @@ describe('browser local storage cache', () => {
     const cache = createBrowserLocalStorageCache({ key: version });
     const defaultValue = (): DefaultValue => Promise.resolve({ bar: 1 });
 
-    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject(
-      { bar: 1 }
-    );
+    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject({ bar: 1 });
     expect(missMock.mock.calls.length).toBe(1);
 
     await cache.set({ key: 'foo' }, { foo: 2 });
 
-    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject(
-      { foo: 2 }
-    );
+    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject({ foo: 2 });
     expect(missMock.mock.calls.length).toBe(1);
   });
 
@@ -51,7 +47,7 @@ describe('browser local storage cache', () => {
     expect(
       await cache.get({ key: 'foo' }, defaultValue, {
         miss: () => Promise.resolve(missMock()),
-      })
+      }),
     ).toMatchObject({ bar: 1 });
 
     expect(missMock.mock.calls.length).toBe(0);
@@ -65,9 +61,7 @@ describe('browser local storage cache', () => {
 
     const defaultValue = (): DefaultValue => Promise.resolve({ bar: 2 });
 
-    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject(
-      { bar: 2 }
-    );
+    expect(await cache.get({ key: 'foo' }, defaultValue, events)).toMatchObject({ bar: 2 });
     expect(missMock.mock.calls.length).toBe(1);
   });
 
@@ -83,7 +77,7 @@ describe('browser local storage cache', () => {
     expect(
       await cache.get({ key: 'foo' }, defaultValue, {
         miss: () => Promise.resolve(missMock()),
-      })
+      }),
     ).toMatchObject({ bar: 2 });
 
     expect(missMock.mock.calls.length).toBe(1);
@@ -102,7 +96,7 @@ describe('browser local storage cache', () => {
     expect(
       await cache.get({ key: 'foo' }, defaultValue, {
         miss: () => Promise.resolve(missMock()),
-      })
+      }),
     ).toMatchObject({ bar: 2 });
 
     expect(missMock.mock.calls.length).toBe(1);
@@ -111,8 +105,7 @@ describe('browser local storage cache', () => {
   });
 
   it('do throws localstorage exceptions on access', async () => {
-    const message =
-      "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.";
+    const message = "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.";
     const cache = createBrowserLocalStorageCache(
       new Proxy(
         { key: 'foo' },
@@ -125,20 +118,16 @@ describe('browser local storage cache', () => {
             // Simulates a window.localStorage access.
             throw new DOMException(message);
           },
-        }
-      )
+        },
+      ),
     );
     const key = { foo: 'bar' };
     const value = 'foo';
     const fallback = 'bar';
 
     await expect(cache.delete(key)).rejects.toEqual(new DOMException(message));
-    await expect(cache.set(key, value)).rejects.toEqual(
-      new DOMException(message)
-    );
-    await expect(
-      cache.get(key, () => Promise.resolve(fallback))
-    ).rejects.toEqual(new DOMException(message));
+    await expect(cache.set(key, value)).rejects.toEqual(new DOMException(message));
+    await expect(cache.get(key, () => Promise.resolve(fallback))).rejects.toEqual(new DOMException(message));
   });
 
   it('do throws localstorage exceptions after access', async () => {
@@ -153,9 +142,7 @@ describe('browser local storage cache', () => {
 
     await expect(cache.delete(key)).rejects.toEqual(new Error(message));
     await expect(cache.set(key, value)).rejects.toEqual(new Error(message));
-    await expect(
-      cache.get(key, () => Promise.resolve(fallback))
-    ).rejects.toEqual(new Error(message));
+    await expect(cache.get(key, () => Promise.resolve(fallback))).rejects.toEqual(new Error(message));
   });
 
   it('creates a namespace within local storage', async () => {
@@ -175,12 +162,8 @@ describe('browser local storage cache', () => {
       },
     });
 
-    const localStorageValue = localStorage.getItem(
-      `algolia-client-js-${version}`
-    );
+    const localStorageValue = localStorage.getItem(`algolia-client-js-${version}`);
 
-    expect(JSON.parse(localStorageValue ? localStorageValue : '{}')).toEqual(
-      expectedValue
-    );
+    expect(JSON.parse(localStorageValue ? localStorageValue : '{}')).toEqual(expectedValue);
   });
 });

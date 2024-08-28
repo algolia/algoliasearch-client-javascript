@@ -7,19 +7,13 @@ export type GetAlgoliaAgent = {
   version: string;
 };
 
-export function getAlgoliaAgent({
-  algoliaAgents,
-  client,
-  version,
-}: GetAlgoliaAgent): AlgoliaAgent {
+export function getAlgoliaAgent({ algoliaAgents, client, version }: GetAlgoliaAgent): AlgoliaAgent {
   const defaultAlgoliaAgent = createAlgoliaAgent(version).add({
     segment: client,
     version,
   });
 
-  algoliaAgents.forEach((algoliaAgent) =>
-    defaultAlgoliaAgent.add(algoliaAgent)
-  );
+  algoliaAgents.forEach((algoliaAgent) => defaultAlgoliaAgent.add(algoliaAgent));
 
   return defaultAlgoliaAgent;
 }

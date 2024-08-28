@@ -34,8 +34,7 @@ export function createHttpRequester({
       // eslint-disable-next-line prefer-const -- linter thinks this is not reassigned
       let connectTimeout: NodeJS.Timeout | undefined;
       const url = new URL(request.url);
-      const path =
-        url.search === null ? url.pathname : `${url.pathname}${url.search}`;
+      const path = url.search === null ? url.pathname : `${url.pathname}${url.search}`;
       const options: https.RequestOptions = {
         agent: url.protocol === 'https:' ? httpsAgent : httpAgent,
         hostname: url.hostname,
@@ -52,32 +51,26 @@ export function createHttpRequester({
         options.port = url.port;
       }
 
-      const req = (url.protocol === 'https:' ? https : http).request(
-        options,
-        (response) => {
-          let contentBuffers: Buffer[] = [];
+      const req = (url.protocol === 'https:' ? https : http).request(options, (response) => {
+        let contentBuffers: Buffer[] = [];
 
-          response.on('data', (chunk) => {
-            contentBuffers = contentBuffers.concat(chunk);
+        response.on('data', (chunk) => {
+          contentBuffers = contentBuffers.concat(chunk);
+        });
+
+        response.on('end', () => {
+          clearTimeout(connectTimeout as NodeJS.Timeout);
+          clearTimeout(responseTimeout as NodeJS.Timeout);
+
+          resolve({
+            status: response.statusCode || 0,
+            content: Buffer.concat(contentBuffers).toString(),
+            isTimedOut: false,
           });
+        });
+      });
 
-          response.on('end', () => {
-            clearTimeout(connectTimeout as NodeJS.Timeout);
-            clearTimeout(responseTimeout as NodeJS.Timeout);
-
-            resolve({
-              status: response.statusCode || 0,
-              content: Buffer.concat(contentBuffers).toString(),
-              isTimedOut: false,
-            });
-          });
-        }
-      );
-
-      const createTimeout = (
-        timeout: number,
-        content: string
-      ): NodeJS.Timeout => {
+      const createTimeout = (timeout: number, content: string): NodeJS.Timeout => {
         return setTimeout(() => {
           req.destroy();
 
@@ -89,10 +82,7 @@ export function createHttpRequester({
         }, timeout);
       };
 
-      connectTimeout = createTimeout(
-        request.connectTimeout,
-        'Connection timeout'
-      );
+      connectTimeout = createTimeout(request.connectTimeout, 'Connection timeout');
 
       req.on('error', (error) => {
         clearTimeout(connectTimeout as NodeJS.Timeout);
@@ -102,10 +92,7 @@ export function createHttpRequester({
 
       req.once('response', () => {
         clearTimeout(connectTimeout as NodeJS.Timeout);
-        responseTimeout = createTimeout(
-          request.responseTimeout,
-          'Socket timeout'
-        );
+        responseTimeout = createTimeout(request.responseTimeout, 'Socket timeout');
       });
 
       if (request.data !== undefined) {

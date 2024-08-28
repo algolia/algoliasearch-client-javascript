@@ -1,7 +1,7 @@
 import { execaCommand } from 'execa';
 import semver from 'semver';
 
-import packageJSON from "../packages/algoliasearch/package.json" assert { type: "json" };
+import packageJSON from '../packages/algoliasearch/package.json' with { type: 'json' };
 
 async function publish(): Promise<void> {
   // Get tag like `alpha`, `beta`, ...
@@ -13,7 +13,7 @@ async function publish(): Promise<void> {
     }`,
     {
       shell: 'bash',
-    }
+    },
   );
 }
 

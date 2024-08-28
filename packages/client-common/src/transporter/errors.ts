@@ -27,7 +27,7 @@ export class RetryError extends ErrorWithStackTrace {
     super(
       'Unreachable hosts - your application id may be incorrect. If the error persists, please reach out to the Algolia Support team: https://alg.li/support.',
       stackTrace,
-      'RetryError'
+      'RetryError',
     );
   }
 }
@@ -35,12 +35,7 @@ export class RetryError extends ErrorWithStackTrace {
 export class ApiError extends ErrorWithStackTrace {
   status: number;
 
-  constructor(
-    message: string,
-    status: number,
-    stackTrace: StackFrame[],
-    name = 'ApiError'
-  ) {
+  constructor(message: string, status: number, stackTrace: StackFrame[], name = 'ApiError') {
     super(message, stackTrace, name);
     this.status = status;
   }
@@ -75,12 +70,7 @@ export type DetailedError = {
 export class DetailedApiError extends ApiError {
   error: DetailedError;
 
-  constructor(
-    message: string,
-    status: number,
-    error: DetailedError,
-    stackTrace: StackFrame[]
-  ) {
+  constructor(message: string, status: number, error: DetailedError, stackTrace: StackFrame[]) {
     super(message, status, stackTrace, 'DetailedApiError');
     this.error = error;
   }

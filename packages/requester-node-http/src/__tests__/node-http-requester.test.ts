@@ -79,7 +79,7 @@ describe('api', () => {
           'my-extra-header': 'algolia',
         }),
       }),
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 });
@@ -88,10 +88,7 @@ describe('status code handling', () => {
   it('sends requests', async () => {
     const body = getStringifiedBody();
 
-    nock(testQueryBaseUrl, { reqheaders: headers })
-      .post('/foo')
-      .query(testQueryHeader)
-      .reply(200, body);
+    nock(testQueryBaseUrl, { reqheaders: headers }).post('/foo').query(testQueryHeader).reply(200, body);
 
     const response = await requester.send(requestStub);
 
@@ -101,10 +98,7 @@ describe('status code handling', () => {
   it('resolves status 200', async () => {
     const body = getStringifiedBody();
 
-    nock(testQueryBaseUrl, { reqheaders: headers })
-      .post('/foo')
-      .query(testQueryHeader)
-      .reply(200, body);
+    nock(testQueryBaseUrl, { reqheaders: headers }).post('/foo').query(testQueryHeader).reply(200, body);
 
     const response = await requester.send(requestStub);
 
@@ -116,10 +110,7 @@ describe('status code handling', () => {
   it('resolves status 300', async () => {
     const reason = 'Multiple Choices';
 
-    nock(testQueryBaseUrl, { reqheaders: headers })
-      .post('/foo')
-      .query(testQueryHeader)
-      .reply(300, reason);
+    nock(testQueryBaseUrl, { reqheaders: headers }).post('/foo').query(testQueryHeader).reply(300, reason);
 
     const response = await requester.send(requestStub);
 
@@ -133,10 +124,7 @@ describe('status code handling', () => {
       message: 'Invalid Application-Id or API-Key',
     });
 
-    nock(testQueryBaseUrl, { reqheaders: headers })
-      .post('/foo')
-      .query(testQueryHeader)
-      .reply(400, body);
+    nock(testQueryBaseUrl, { reqheaders: headers }).post('/foo').query(testQueryHeader).reply(400, body);
 
     const response = await requester.send(requestStub);
 
@@ -157,10 +145,7 @@ describe('status code handling', () => {
 
     const testStream = Readable.from(generate());
 
-    nock(testQueryBaseUrl, { reqheaders: headers })
-      .post('/foo')
-      .query(testQueryHeader)
-      .reply(200, testStream);
+    nock(testQueryBaseUrl, { reqheaders: headers }).post('/foo').query(testQueryHeader).reply(200, testStream);
 
     const response = await requester.send(requestStub);
 

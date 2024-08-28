@@ -210,9 +210,7 @@ describe('error handling', () => {
   });
 
   it('resolves general network errors', async () => {
-    mock.post(BASE_URL, () =>
-      Promise.reject(new Error('This is a general error'))
-    );
+    mock.post(BASE_URL, () => Promise.reject(new Error('This is a general error')));
 
     const response = await requester.send(requestStub);
 

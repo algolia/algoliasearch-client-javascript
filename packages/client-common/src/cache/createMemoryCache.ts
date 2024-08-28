@@ -1,8 +1,6 @@
 import type { Cache, CacheEvents, MemoryCacheOptions } from '../types';
 
-export function createMemoryCache(
-  options: MemoryCacheOptions = { serializable: true }
-): Cache {
+export function createMemoryCache(options: MemoryCacheOptions = { serializable: true }): Cache {
   let cache: Record<string, any> = {};
 
   return {
@@ -11,32 +9,21 @@ export function createMemoryCache(
       defaultValue: () => Promise<TValue>,
       events: CacheEvents<TValue> = {
         miss: (): Promise<void> => Promise.resolve(),
-      }
+      },
     ): Promise<TValue> {
       const keyAsString = JSON.stringify(key);
 
       if (keyAsString in cache) {
-        return Promise.resolve(
-          options.serializable
-            ? JSON.parse(cache[keyAsString])
-            : cache[keyAsString]
-        );
+        return Promise.resolve(options.serializable ? JSON.parse(cache[keyAsString]) : cache[keyAsString]);
       }
 
       const promise = defaultValue();
 
-      return promise
-        .then((value: TValue) => events.miss(value))
-        .then(() => promise);
+      return promise.then((value: TValue) => events.miss(value)).then(() => promise);
     },
 
-    set<TValue>(
-      key: Record<string, any> | string,
-      value: TValue
-    ): Promise<TValue> {
-      cache[JSON.stringify(key)] = options.serializable
-        ? JSON.stringify(value)
-        : value;
+    set<TValue>(key: Record<string, any> | string, value: TValue): Promise<TValue> {
+      cache[JSON.stringify(key)] = options.serializable ? JSON.stringify(value) : value;
 
       return Promise.resolve(value);
     },

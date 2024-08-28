@@ -10,7 +10,7 @@
     "build:many": "lerna run build --skip-nx-cache --include-dependencies --scope ${0:-'{@algolia/*,algoliasearch}'}",
     "clean": "lerna run clean --include-dependencies",
     "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --force-publish --yes",
-    "release:publish": "tsc --project tsconfig.script.json && node dist/scripts/publish.js",
+    "release:publish": "tsc --project scripts/tsconfig.json && node scripts/dist/scripts/publish.js",
     "test": "lerna run test $*",
     "test:size": "bundlesize"
   },

@@ -146,8 +146,5 @@ export type Transporter = TransporterOptions & {
    * Performs a request.
    * The `baseRequest` and `baseRequestOptions` will be merged accordingly.
    */
-  request: <TResponse>(
-    baseRequest: Request,
-    baseRequestOptions?: RequestOptions
-  ) => Promise<TResponse>;
+  request: <TResponse>(baseRequest: Request, baseRequestOptions?: RequestOptions) => Promise<TResponse>;
 };

@@ -1,13 +1,6 @@
-import type {
-  BrowserLocalStorageCacheItem,
-  BrowserLocalStorageOptions,
-  Cache,
-  CacheEvents,
-} from '../types';
+import type { BrowserLocalStorageCacheItem, BrowserLocalStorageOptions, Cache, CacheEvents } from '../types';
 
-export function createBrowserLocalStorageCache(
-  options: BrowserLocalStorageOptions
-): Cache {
+export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptions): Cache {
   let storage: Storage;
   // We've changed the namespace to avoid conflicts with v4, as this version is a huge breaking change
   const namespaceKey = `algolia-client-js-${options.key}`;
@@ -35,7 +28,7 @@ export function createBrowserLocalStorageCache(
     const filteredNamespaceWithoutOldFormattedCacheItems = Object.fromEntries(
       Object.entries(namespace).filter(([, cacheItem]) => {
         return cacheItem.timestamp !== undefined;
-      })
+      }),
     );
 
     setNamespace(filteredNamespaceWithoutOldFormattedCacheItems);
@@ -45,14 +38,12 @@ export function createBrowserLocalStorageCache(
     }
 
     const filteredNamespaceWithoutExpiredItems = Object.fromEntries(
-      Object.entries(filteredNamespaceWithoutOldFormattedCacheItems).filter(
-        ([, cacheItem]) => {
-          const currentTimestamp = new Date().getTime();
-          const isExpired = cacheItem.timestamp + timeToLive < currentTimestamp;
+      Object.entries(filteredNamespaceWithoutOldFormattedCacheItems).filter(([, cacheItem]) => {
+        const currentTimestamp = new Date().getTime();
+        const isExpired = cacheItem.timestamp + timeToLive < currentTimestamp;
 
-          return !isExpired;
-        }
-      )
+        return !isExpired;
+      }),
     );
 
     setNamespace(filteredNamespaceWithoutExpiredItems);
@@ -64,21 +55,16 @@ export function createBrowserLocalStorageCache(
       defaultValue: () => Promise<TValue>,
       events: CacheEvents<TValue> = {
         miss: () => Promise.resolve(),
-      }
+      },
     ): Promise<TValue> {
       return Promise.resolve()
         .then(() => {
           removeOutdatedCacheItems();
 
-          return getNamespace<Promise<BrowserLocalStorageCacheItem>>()[
-            JSON.stringify(key)
-          ];
+          return getNamespace<Promise<BrowserLocalStorageCacheItem>>()[JSON.stringify(key)];
         })
         .then((value) => {
-          return Promise.all([
-            value ? value.value : defaultValue(),
-            value !== undefined,
-          ]);
+          return Promise.all([value ? value.value : defaultValue(), value !== undefined]);
         })
         .then(([value, exists]) => {
           return Promise.all([value, exists || events.miss(value)]);
@@ -86,10 +72,7 @@ export function createBrowserLocalStorageCache(
         .then(([value]) => value);
     },
 
-    set<TValue>(
-      key: Record<string, any> | string,
-      value: TValue
-    ): Promise<TValue> {
+    set<TValue>(key: Record<string, any> | string, value: TValue): Promise<TValue> {
       return Promise.resolve().then(() => {
         const namespace = getNamespace();
 

@@ -6,7 +6,6 @@ import type { Action } from './action';
 import type { ApiKey } from './apiKey';
 import type { ApiKeyOperation } from './apiKeyOperation';
 import type { AssignUserIdParams } from './assignUserIdParams';
-import type { AttributeToUpdate } from './attributeToUpdate';
 import type { BatchAssignUserIdsParams } from './batchAssignUserIdsParams';
 import type { BatchDictionaryEntriesParams } from './batchDictionaryEntriesParams';
 import type { BatchWriteParams } from './batchWriteParams';
@@ -481,7 +480,7 @@ export type PartialUpdateObjectProps = {
   /**
    * Attributes with their values.
    */
-  attributesToUpdate: Record<string, AttributeToUpdate>;
+  attributesToUpdate: Record<string, unknown>;
   /**
    * Whether to create a new record if it doesn\'t exist.
    */

@@ -39,20 +39,14 @@ function getUrlParams({
   return {
     host,
     algoliaAgent,
-    searchParams:
-      Object.keys(searchParams).length === 0 ? undefined : searchParams,
+    searchParams: Object.keys(searchParams).length === 0 ? undefined : searchParams,
     path: pathname,
   };
 }
 
-export function createEchoRequester({
-  getURL,
-  status = 200,
-}: EchoRequesterParams): Requester {
+export function createEchoRequester({ getURL, status = 200 }: EchoRequesterParams): Requester {
   function send(request: EndRequest): Promise<Response> {
-    const { host, searchParams, algoliaAgent, path } = getUrlParams(
-      getURL(request.url)
-    );
+    const { host, searchParams, algoliaAgent, path } = getUrlParams(getURL(request.url));
 
     const content: EchoResponse = {
       ...request,

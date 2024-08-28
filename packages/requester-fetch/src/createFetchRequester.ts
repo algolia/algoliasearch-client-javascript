@@ -1,8 +1,4 @@
-import type {
-  EndRequest,
-  Requester,
-  Response as AlgoliaResponse,
-} from '@algolia/client-common';
+import type { EndRequest, Requester, Response as AlgoliaResponse } from '@algolia/client-common';
 
 function isAbortError(error: unknown): boolean {
   return error instanceof Error && error.name === 'AbortError';
@@ -19,9 +15,7 @@ export type FetchRequesterOptions = {
   readonly requesterOptions?: RequestInit;
 };
 
-export function createFetchRequester({
-  requesterOptions = {},
-}: FetchRequesterOptions = {}): Requester {
+export function createFetchRequester({ requesterOptions = {} }: FetchRequesterOptions = {}): Requester {
   async function send(request: EndRequest): Promise<AlgoliaResponse> {
     const abortController = new AbortController();
     const signal = abortController.signal;

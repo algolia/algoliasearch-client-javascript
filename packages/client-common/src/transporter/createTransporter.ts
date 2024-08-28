@@ -12,18 +12,9 @@ import type {
 
 import { createStatefulHost } from './createStatefulHost';
 import { RetryError } from './errors';
-import {
-  deserializeFailure,
-  deserializeSuccess,
-  serializeData,
-  serializeHeaders,
-  serializeUrl,
-} from './helpers';
+import { deserializeFailure, deserializeSuccess, serializeData, serializeHeaders, serializeUrl } from './helpers';
 import { isRetryable, isSuccess } from './responses';
-import {
-  stackTraceWithoutCredentials,
-  stackFrameWithoutCredentials,
-} from './stackTrace';
+import { stackTraceWithoutCredentials, stackFrameWithoutCredentials } from './stackTrace';
 
 type RetryableOptions = {
   hosts: Host[];
@@ -41,23 +32,20 @@ export function createTransporter({
   requestsCache,
   responsesCache,
 }: TransporterOptions): Transporter {
-  async function createRetryableOptions(
-    compatibleHosts: Host[]
-  ): Promise<RetryableOptions> {
+  async function createRetryableOptions(compatibleHosts: Host[]): Promise<RetryableOptions> {
     const statefulHosts = await Promise.all(
       compatibleHosts.map((compatibleHost) => {
         return hostsCache.get(compatibleHost, () => {
           return Promise.resolve(createStatefulHost(compatibleHost));
         });
-      })
+      }),
     );
     const hostsUp = statefulHosts.filter((host) => host.isUp());
     const hostsTimedOut = statefulHosts.filter((host) => host.isTimedOut());
 
     // Note, we put the hosts that previously timed out on the end of the list.
     const hostsAvailable = [...hostsUp, ...hostsTimedOut];
-    const compatibleHostsAvailable =
-      hostsAvailable.length > 0 ? hostsAvailable : compatibleHosts;
+    const compatibleHostsAvailable = hostsAvailable.length > 0 ? hostsAvailable : compatibleHosts;
 
     return {
       hosts: compatibleHostsAvailable,
@@ -74,9 +62,7 @@ export function createTransporter({
          * current v3 version.
          */
         const timeoutMultiplier =
-          hostsTimedOut.length === 0 && timeoutsCount === 0
-            ? 1
-            : hostsTimedOut.length + 3 + timeoutsCount;
+          hostsTimedOut.length === 0 && timeoutsCount === 0 ? 1 : hostsTimedOut.length + 3 + timeoutsCount;
 
         return timeoutMultiplier * baseTimeout;
       },
@@ -86,7 +72,7 @@ export function createTransporter({
   async function retryableRequest<TResponse>(
     request: Request,
     requestOptions: RequestOptions,
-    isRead = true
+    isRead = true,
   ): Promise<TResponse> {
     const stackTrace: StackFrame[] = [];
 
@@ -94,11 +80,7 @@ export function createTransporter({
      * First we prepare the payload that do not depend from hosts.
      */
     const data = serializeData(request, requestOptions);
-    const headers = serializeHeaders(
-      baseHeaders,
-      request.headers,
-      requestOptions.headers
-    );
+    const headers = serializeHeaders(baseHeaders, request.headers, requestOptions.headers);
 
     // On `GET`, the data is proxied to query parameters.
     const dataQueryParameters: QueryParameters =
@@ -126,9 +108,7 @@ export function createTransporter({
         // handled in the `serializeUrl` step right after.
         if (
           !requestOptions.queryParameters[key] ||
-          Object.prototype.toString.call(
-            requestOptions.queryParameters[key]
-          ) === '[object Object]'
+          Object.prototype.toString.call(requestOptions.queryParameters[key]) === '[object Object]'
         ) {
           queryParameters[key] = requestOptions.queryParameters[key];
         } else {
@@ -141,7 +121,7 @@ export function createTransporter({
 
     const retry = async (
       retryableHosts: Host[],
-      getTimeout: (timeoutsCount: number, timeout: number) => number
+      getTimeout: (timeoutsCount: number, timeout: number) => number,
     ): Promise<TResponse> => {
       /**
        * We iterate on each host, until there is no host left.
@@ -151,15 +131,15 @@ export function createTransporter({
         throw new RetryError(stackTraceWithoutCredentials(stackTrace));
       }
 
-      let responseTimeout = isRead ? requestOptions.timeouts?.read || timeouts.read : requestOptions.timeouts?.write || timeouts.write;
+      const timeout = { ...timeouts, ...requestOptions.timeouts };
 
       const payload: EndRequest = {
         data,
         headers,
         method: request.method,
         url: serializeUrl(host, request.path, queryParameters),
-        connectTimeout: getTimeout(timeoutsCount, requestOptions.timeouts?.connect || timeouts.connect),
-        responseTimeout: getTimeout(timeoutsCount, responseTimeout),
+        connectTimeout: getTimeout(timeoutsCount, timeout.connect),
+        responseTimeout: getTimeout(timeoutsCount, isRead ? timeout.read : timeout.write),
       };
 
       /**
@@ -195,20 +175,14 @@ export function createTransporter({
          * when a retry error does not happen.
          */
         // eslint-disable-next-line no-console -- this will be fixed by exposing a `logger` to the transporter
-        console.log(
-          'Retryable failure',
-          stackFrameWithoutCredentials(stackFrame)
-        );
+        console.log('Retryable failure', stackFrameWithoutCredentials(stackFrame));
 
         /**
          * We also store the state of the host in failure cases. If the host, is
          * down it will remain down for the next 2 minutes. In a timeout situation,
          * this host will be added end of the list of hosts on the next request.
          */
-        await hostsCache.set(
-          host,
-          createStatefulHost(host, response.isTimedOut ? 'timed out' : 'down')
-        );
+        await hostsCache.set(host, createStatefulHost(host, response.isTimedOut ? 'timed out' : 'down'));
 
         return retry(retryableHosts, getTimeout);
       }
@@ -230,19 +204,14 @@ export function createTransporter({
      * for the current context.
      */
     const compatibleHosts = hosts.filter(
-      (host) =>
-        host.accept === 'readWrite' ||
-        (isRead ? host.accept === 'read' : host.accept === 'write')
+      (host) => host.accept === 'readWrite' || (isRead ? host.accept === 'read' : host.accept === 'write'),
     );
     const options = await createRetryableOptions(compatibleHosts);
 
     return retry([...options.hosts].reverse(), options.getTimeout);
   }
 
-  function createRequest<TResponse>(
-    request: Request,
-    requestOptions: RequestOptions = {}
-  ): Promise<TResponse> {
+  function createRequest<TResponse>(request: Request, requestOptions: RequestOptions = {}): Promise<TResponse> {
     /**
      * A read request is either a `GET` request, or a request that we make
      * via the `read` transporter (e.g. `search`).
@@ -315,10 +284,9 @@ export function createTransporter({
             .set(key, createRetryableRequest())
             .then(
               (response) => Promise.all([requestsCache.delete(key), response]),
-              (err) =>
-                Promise.all([requestsCache.delete(key), Promise.reject(err)])
+              (err) => Promise.all([requestsCache.delete(key), Promise.reject(err)]),
             )
-            .then(([_, response]) => response)
+            .then(([_, response]) => response),
         );
       },
       {
@@ -328,7 +296,7 @@ export function createTransporter({
          * to be used later.
          */
         miss: (response) => responsesCache.set(key, response),
-      }
+      },
     );
   }
 

@@ -7,19 +7,14 @@ export function createNullCache(): Cache {
       defaultValue: () => Promise<TValue>,
       events: CacheEvents<TValue> = {
         miss: (): Promise<void> => Promise.resolve(),
-      }
+      },
     ): Promise<TValue> {
       const value = defaultValue();
 
-      return value
-        .then((result) => Promise.all([result, events.miss(result)]))
-        .then(([result]) => result);
+      return value.then((result) => Promise.all([result, events.miss(result)])).then(([result]) => result);
     },
 
-    set<TValue>(
-      _key: Record<string, any> | string,
-      value: TValue
-    ): Promise<TValue> {
+    set<TValue>(_key: Record<string, any> | string, value: TValue): Promise<TValue> {
       return Promise.resolve(value);
     },
 
