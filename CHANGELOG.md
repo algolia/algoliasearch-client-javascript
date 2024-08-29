@@ -1,3 +1,7 @@
+## [5.2.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.2...5.2.3)
+
+- [327e08d4e](https://github.com/algolia/api-clients-automation/commit/327e08d4e) fix(specs): ingestion push task payload [skip-bc] ([#3607](https://github.com/algolia/api-clients-automation/pull/3607)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.2.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.1...5.2.2)
 
 - [7189cbe4c](https://github.com/algolia/api-clients-automation/commit/7189cbe4c) fix(javascript): dependency imports and low-level init ([#3596](https://github.com/algolia/api-clients-automation/pull/3596)) by [@shortcuts](https://github.com/shortcuts/)

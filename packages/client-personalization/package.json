@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-personalization",
-  "version": "5.2.2",
+  "version": "5.2.3",
   "description": "JavaScript client for client-personalization",
   "repository": {
     "type": "git",
@@ -44,9 +44,9 @@
     "clean": "rm -rf ./dist || true"
   },
   "dependencies": {
-    "@algolia/client-common": "5.2.2",
-    "@algolia/requester-browser-xhr": "5.2.2",
-    "@algolia/requester-node-http": "5.2.2"
+    "@algolia/client-common": "5.2.3",
+    "@algolia/requester-browser-xhr": "5.2.3",
+    "@algolia/requester-node-http": "5.2.3"
   },
   "devDependencies": {
     "@types/node": "22.5.0",
