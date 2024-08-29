@@ -4,7 +4,6 @@ import type { ActionType } from './actionType';
 import type { AuthenticationSortKeys } from './authenticationSortKeys';
 import type { AuthenticationType } from './authenticationType';
 import type { AuthenticationUpdate } from './authenticationUpdate';
-import type { BatchWriteParams } from './batchWriteParams';
 import type { DestinationSortKeys } from './destinationSortKeys';
 import type { DestinationType } from './destinationType';
 import type { DestinationUpdate } from './destinationUpdate';
@@ -13,6 +12,7 @@ import type { EventStatus } from './eventStatus';
 import type { EventType } from './eventType';
 import type { OrderKeys } from './orderKeys';
 import type { PlatformWithNone } from './platformWithNone';
+import type { PushTaskPayload } from './pushTaskPayload';
 import type { RunSortKeys } from './runSortKeys';
 import type { RunSourcePayload } from './runSourcePayload';
 import type { RunStatus } from './runStatus';
@@ -567,7 +567,7 @@ export type PushTaskProps = {
   /**
    * Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
    */
-  batchWriteParams: BatchWriteParams;
+  pushTaskPayload: PushTaskPayload;
 };
 
 /**

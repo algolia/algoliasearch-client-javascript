@@ -1707,20 +1707,23 @@ export function createIngestionClient({
      *
      * @param pushTask - The pushTask object.
      * @param pushTask.taskID - Unique identifier of a task.
-     * @param pushTask.batchWriteParams - Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
+     * @param pushTask.pushTaskPayload - Request body of a Search API `batch` request that will be pushed in the Connectors pipeline.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    pushTask({ taskID, batchWriteParams }: PushTaskProps, requestOptions?: RequestOptions): Promise<RunResponse> {
+    pushTask({ taskID, pushTaskPayload }: PushTaskProps, requestOptions?: RequestOptions): Promise<RunResponse> {
       if (!taskID) {
         throw new Error('Parameter `taskID` is required when calling `pushTask`.');
       }
 
-      if (!batchWriteParams) {
-        throw new Error('Parameter `batchWriteParams` is required when calling `pushTask`.');
+      if (!pushTaskPayload) {
+        throw new Error('Parameter `pushTaskPayload` is required when calling `pushTask`.');
       }
 
-      if (!batchWriteParams.requests) {
-        throw new Error('Parameter `batchWriteParams.requests` is required when calling `pushTask`.');
+      if (!pushTaskPayload.action) {
+        throw new Error('Parameter `pushTaskPayload.action` is required when calling `pushTask`.');
+      }
+      if (!pushTaskPayload.records) {
+        throw new Error('Parameter `pushTaskPayload.records` is required when calling `pushTask`.');
       }
 
       const requestPath = '/2/tasks/{taskID}/push'.replace('{taskID}', encodeURIComponent(taskID));
@@ -1732,7 +1735,7 @@ export function createIngestionClient({
         path: requestPath,
         queryParameters,
         headers,
-        data: batchWriteParams,
+        data: pushTaskPayload,
       };
 
       return transporter.request(request, requestOptions);
