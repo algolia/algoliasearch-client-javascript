@@ -48,8 +48,8 @@ body:
     attributes:
       label: Version
       description: The version of the client you are using.
-      validations:
-        required: true
+    validations:
+      required: true
   - type: textarea
     id: logs
     attributes:
