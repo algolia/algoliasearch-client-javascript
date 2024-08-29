@@ -1,3 +1,9 @@
+## [5.2.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.1...5.2.2)
+
+- [7189cbe4c](https://github.com/algolia/api-clients-automation/commit/7189cbe4c) fix(javascript): dependency imports and low-level init ([#3596](https://github.com/algolia/api-clients-automation/pull/3596)) by [@shortcuts](https://github.com/shortcuts/)
+- [796ae3fe2](https://github.com/algolia/api-clients-automation/commit/796ae3fe2) chore(javascript): add license to the root of the repo ([#3610](https://github.com/algolia/api-clients-automation/pull/3610)) by [@shortcuts](https://github.com/shortcuts/)
+- [f8b7a77a8](https://github.com/algolia/api-clients-automation/commit/f8b7a77a8) fix(javascript): prefix with `node:` for node packages ([#3608](https://github.com/algolia/api-clients-automation/pull/3608)) by [@atinux](https://github.com/atinux/)
+
 ## [5.2.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.0...5.2.1)
 
 - [41f849e41](https://github.com/algolia/api-clients-automation/commit/41f849e41) fix(specs): partial update operation ([#3486](https://github.com/algolia/api-clients-automation/pull/3486)) by [@kai687](https://github.com/kai687/)

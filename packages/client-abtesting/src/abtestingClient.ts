@@ -27,7 +27,7 @@ import type { ListABTestsResponse } from '../model/listABTestsResponse';
 import type { ScheduleABTestResponse } from '../model/scheduleABTestResponse';
 import type { ScheduleABTestsRequest } from '../model/scheduleABTestsRequest';
 
-export const apiClientVersion = '5.2.1';
+export const apiClientVersion = '5.2.2';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
