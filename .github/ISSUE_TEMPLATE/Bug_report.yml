@@ -1,0 +1,58 @@
+name: Bug Report
+description: File a bug report.
+title: '[bug]: '
+labels: ['bug', 'triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Please help us help you!
+
+        > [!IMPORTANT]  
+        > This repository is fully generated and all pull request will be rejected.
+        > If you wish to contribute, please refer to the [contribution guidelines](https://github.com/algolia/api-clients-automation/blob/main/CONTRIBUTING.md) on the `api-clients-automation` repository.
+
+        Before filing your issue, ask yourself:
+        - Is there an issue already opened for this bug?
+        - Can I reproduce it?
+
+        If you are not sure about the origin of the issue, or if it impacts your customer experience, please contact [our support team](https://alg.li/support).
+  - type: textarea
+    attributes:
+      label: Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: dropdown
+    id: client
+    attributes:
+      label: Client
+      description: Which API are you targetting?
+      options:
+        - All
+        - AB testing
+        - Analytics
+        - Ingestion
+        - Insights
+        - Monitoring
+        - Personalization
+        - Query-Suggestions
+        - Recommend
+        - Search
+        - Usage
+        - Crawler
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The version of the client you are using.
+      validations:
+        required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
