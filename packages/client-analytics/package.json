@@ -1,14 +1,18 @@
 {
-  "name": "@algolia/client-analytics",
   "version": "5.2.3",
-  "description": "JavaScript client for client-analytics",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "type": "module",
   "license": "MIT",
   "author": "Algolia",
-  "type": "module",
+  "types": "./index.d.ts",
+  "name": "@algolia/client-analytics",
+  "description": "JavaScript client for client-analytics",
+  "jsdelivr": "./dist/client-analytics.umd.js",
+  "unpkg": "./dist/client-analytics.umd.js",
+  "browser": "./dist/client-analytics.umd.js",
   "exports": {
     ".": {
       "node": {
@@ -29,10 +33,6 @@
     "./src/*": "./src/*.ts",
     "./model": "./model/index.ts"
   },
-  "jsdelivr": "./dist/client-analytics.umd.js",
-  "unpkg": "./dist/client-analytics.umd.js",
-  "browser": "./dist/client-analytics.umd.js",
-  "types": "./index.d.ts",
   "files": [
     "dist",
     "model",

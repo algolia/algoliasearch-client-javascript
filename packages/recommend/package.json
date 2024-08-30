@@ -1,14 +1,18 @@
 {
-  "name": "@algolia/recommend",
   "version": "5.2.3",
-  "description": "JavaScript client for recommend",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "type": "module",
   "license": "MIT",
   "author": "Algolia",
-  "type": "module",
+  "types": "./index.d.ts",
+  "name": "@algolia/recommend",
+  "description": "JavaScript client for recommend",
+  "jsdelivr": "./dist/recommend.umd.js",
+  "unpkg": "./dist/recommend.umd.js",
+  "browser": "./dist/recommend.umd.js",
   "exports": {
     ".": {
       "node": {
@@ -29,10 +33,6 @@
     "./src/*": "./src/*.ts",
     "./model": "./model/index.ts"
   },
-  "jsdelivr": "./dist/recommend.umd.js",
-  "unpkg": "./dist/recommend.umd.js",
-  "browser": "./dist/recommend.umd.js",
-  "types": "./index.d.ts",
   "files": [
     "dist",
     "model",

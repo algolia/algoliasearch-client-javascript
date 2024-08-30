@@ -1,14 +1,18 @@
 {
-  "name": "@algolia/client-usage",
   "version": "1.2.3",
-  "description": "JavaScript client for client-usage",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "type": "module",
   "license": "MIT",
   "author": "Algolia",
-  "type": "module",
+  "types": "./index.d.ts",
+  "name": "@algolia/client-usage",
+  "description": "JavaScript client for client-usage",
+  "jsdelivr": "./dist/client-usage.umd.js",
+  "unpkg": "./dist/client-usage.umd.js",
+  "browser": "./dist/client-usage.umd.js",
   "exports": {
     ".": {
       "node": {
@@ -29,10 +33,6 @@
     "./src/*": "./src/*.ts",
     "./model": "./model/index.ts"
   },
-  "jsdelivr": "./dist/client-usage.umd.js",
-  "unpkg": "./dist/client-usage.umd.js",
-  "browser": "./dist/client-usage.umd.js",
-  "types": "./index.d.ts",
   "files": [
     "dist",
     "model",

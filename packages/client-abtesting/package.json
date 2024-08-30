@@ -1,14 +1,18 @@
 {
-  "name": "@algolia/client-abtesting",
   "version": "5.2.3",
-  "description": "JavaScript client for client-abtesting",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "type": "module",
   "license": "MIT",
   "author": "Algolia",
-  "type": "module",
+  "types": "./index.d.ts",
+  "name": "@algolia/client-abtesting",
+  "description": "JavaScript client for client-abtesting",
+  "jsdelivr": "./dist/client-abtesting.umd.js",
+  "unpkg": "./dist/client-abtesting.umd.js",
+  "browser": "./dist/client-abtesting.umd.js",
   "exports": {
     ".": {
       "node": {
@@ -29,10 +33,6 @@
     "./src/*": "./src/*.ts",
     "./model": "./model/index.ts"
   },
-  "jsdelivr": "./dist/client-abtesting.umd.js",
-  "unpkg": "./dist/client-abtesting.umd.js",
-  "browser": "./dist/client-abtesting.umd.js",
-  "types": "./index.d.ts",
   "files": [
     "dist",
     "model",

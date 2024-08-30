@@ -1,14 +1,18 @@
 {
-  "name": "@algolia/client-insights",
   "version": "5.2.3",
-  "description": "JavaScript client for client-insights",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "type": "module",
   "license": "MIT",
   "author": "Algolia",
-  "type": "module",
+  "types": "./index.d.ts",
+  "name": "@algolia/client-insights",
+  "description": "JavaScript client for client-insights",
+  "jsdelivr": "./dist/client-insights.umd.js",
+  "unpkg": "./dist/client-insights.umd.js",
+  "browser": "./dist/client-insights.umd.js",
   "exports": {
     ".": {
       "node": {
@@ -29,10 +33,6 @@
     "./src/*": "./src/*.ts",
     "./model": "./model/index.ts"
   },
-  "jsdelivr": "./dist/client-insights.umd.js",
-  "unpkg": "./dist/client-insights.umd.js",
-  "browser": "./dist/client-insights.umd.js",
-  "types": "./index.d.ts",
   "files": [
     "dist",
     "model",

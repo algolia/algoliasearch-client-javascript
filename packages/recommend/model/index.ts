@@ -10,6 +10,7 @@ export * from './baseRecommendRequest';
 export * from './baseSearchParams';
 export * from './baseSearchParamsWithoutQuery';
 export * from './baseSearchResponse';
+export * from './booleanString';
 export * from './boughtTogetherQuery';
 export * from './condition';
 export * from './consequence';

@@ -27,6 +27,7 @@ export * from './batchParams';
 export * from './batchRequest';
 export * from './batchResponse';
 export * from './batchWriteParams';
+export * from './booleanString';
 export * from './browsePagination';
 export * from './browseParams';
 export * from './browseParamsObject';

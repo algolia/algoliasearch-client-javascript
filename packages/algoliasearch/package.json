@@ -1,14 +1,21 @@
 {
-  "name": "algoliasearch",
   "version": "5.2.3",
-  "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "type": "module",
   "license": "MIT",
   "author": "Algolia",
-  "type": "module",
+  "types": "./index.d.ts",
+  "name": "algoliasearch",
+  "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
+  "jsdelivr": "./dist/algoliasearch.umd.js",
+  "unpkg": "./dist/algoliasearch.umd.js",
+  "browser": {
+    "./index.js": "./dist/algoliasearch.umd.js",
+    "./lite.js": "./dist/lite/lite.umd.js"
+  },
   "exports": {
     ".": {
       "node": {
@@ -43,13 +50,6 @@
       }
     }
   },
-  "jsdelivr": "./dist/algoliasearch.umd.js",
-  "unpkg": "./dist/algoliasearch.umd.js",
-  "browser": {
-    "./index.js": "./dist/algoliasearch.umd.js",
-    "./lite.js": "./dist/lite/lite.umd.js"
-  },
-  "types": "./index.d.ts",
   "files": [
     "dist",
     "builds",
