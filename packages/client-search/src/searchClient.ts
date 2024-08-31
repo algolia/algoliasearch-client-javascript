@@ -1625,10 +1625,10 @@ export function createSearchClient({
      * @param getObject.attributesToRetrieve - Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned.  `objectID` is always retrieved.  Attributes included in `unretrievableAttributes` won\'t be retrieved unless the request is authenticated with the admin API key.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getObject(
+    getObject<T = Record<string, any>>(
       { indexName, objectID, attributesToRetrieve }: GetObjectProps,
       requestOptions?: RequestOptions,
-    ): Promise<Record<string, unknown>> {
+    ): Promise<T> {
       if (!indexName) {
         throw new Error('Parameter `indexName` is required when calling `getObject`.');
       }
