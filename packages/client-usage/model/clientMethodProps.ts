@@ -80,11 +80,11 @@ export type GetIndexUsageProps = {
    */
   indexName: string;
   /**
-   * Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * Start date of the period to analyze, in RFC 3339 format.
    */
   startDate: string;
   /**
-   * End date of the period to analyze, in `YYYY-MM-DD` format.
+   * End date of the period to analyze, in RFC 3339 format.
    */
   endDate: string;
   /**
@@ -102,11 +102,11 @@ export type GetUsageProps = {
    */
   statistic: Statistic;
   /**
-   * Start date of the period to analyze, in `YYYY-MM-DD` format.
+   * Start date of the period to analyze, in RFC 3339 format.
    */
   startDate: string;
   /**
-   * End date of the period to analyze, in `YYYY-MM-DD` format.
+   * End date of the period to analyze, in RFC 3339 format.
    */
   endDate: string;
   /**
