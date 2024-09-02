@@ -1,3 +1,8 @@
+## [5.2.4](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.3...5.2.4)
+
+- [3d07a1e4f](https://github.com/algolia/api-clients-automation/commit/3d07a1e4f) fix(specs): ignorePlurals can be a boolean string ([#3620](https://github.com/algolia/api-clients-automation/pull/3620)) by [@millotp](https://github.com/millotp/)
+- [c0675ff6b](https://github.com/algolia/api-clients-automation/commit/c0675ff6b) fix(clients): correly parse usage hosts ([#3622](https://github.com/algolia/api-clients-automation/pull/3622)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.2.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.2...5.2.3)
 
 - [327e08d4e](https://github.com/algolia/api-clients-automation/commit/327e08d4e) fix(specs): ingestion push task payload [skip-bc] ([#3607](https://github.com/algolia/api-clients-automation/pull/3607)) by [@shortcuts](https://github.com/shortcuts/)

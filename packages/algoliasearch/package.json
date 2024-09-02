@@ -1,5 +1,5 @@
 {
-  "version": "5.2.3",
+  "version": "5.2.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -65,14 +65,14 @@
     "test": "jest"
   },
   "dependencies": {
-    "@algolia/client-abtesting": "5.2.3",
-    "@algolia/client-analytics": "5.2.3",
-    "@algolia/client-common": "5.2.3",
-    "@algolia/client-personalization": "5.2.3",
-    "@algolia/client-search": "5.2.3",
-    "@algolia/recommend": "5.2.3",
-    "@algolia/requester-browser-xhr": "5.2.3",
-    "@algolia/requester-node-http": "5.2.3"
+    "@algolia/client-abtesting": "5.2.4",
+    "@algolia/client-analytics": "5.2.4",
+    "@algolia/client-common": "5.2.4",
+    "@algolia/client-personalization": "5.2.4",
+    "@algolia/client-search": "5.2.4",
+    "@algolia/recommend": "5.2.4",
+    "@algolia/requester-browser-xhr": "5.2.4",
+    "@algolia/requester-node-http": "5.2.4"
   },
   "devDependencies": {
     "@babel/preset-env": "7.25.4",
