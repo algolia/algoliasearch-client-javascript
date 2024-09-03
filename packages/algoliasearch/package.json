@@ -7,49 +7,54 @@
   "type": "module",
   "license": "MIT",
   "author": "Algolia",
-  "types": "./index.d.ts",
+  "scripts": {
+    "build": "yarn clean && yarn tsup && yarn rollup -c rollup.config.js",
+    "clean": "rm -rf ./dist || true",
+    "test": "jest",
+    "test:bundle": "publint . && attw --pack ."
+  },
   "name": "algoliasearch",
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
-  "jsdelivr": "./dist/algoliasearch.umd.js",
-  "unpkg": "./dist/algoliasearch.umd.js",
-  "browser": {
-    "./index.js": "./dist/algoliasearch.umd.js",
-    "./lite.js": "./dist/lite/lite.umd.js"
-  },
   "exports": {
     ".": {
       "node": {
-        "import": "./dist/algoliasearch.esm.node.js",
-        "module": "./dist/algoliasearch.esm.node.js",
-        "require": "./dist/algoliasearch.cjs",
-        "default": "./dist/algoliasearch.cjs",
-        "types": "./dist/algoliasearch/builds/node.d.ts"
+        "types": {
+          "import": "./dist/node.d.ts",
+          "module": "./dist/node.d.ts",
+          "require": "./dist/node.d.cts"
+        },
+        "import": "./dist/node.js",
+        "module": "./dist/node.js",
+        "require": "./dist/node.cjs"
       },
-      "browser": {
-        "umd": "./dist/algoliasearch.umd.js",
-        "module": "./dist/algoliasearch.esm.browser.js",
-        "import": "./dist/algoliasearch.esm.browser.js",
-        "default": "./dist/algoliasearch.umd.js",
-        "types": "./dist/algoliasearch/builds/browser.d.ts"
+      "default": {
+        "types": "./dist/browser.d.ts",
+        "module": "./dist/browser.js",
+        "import": "./dist/browser.js",
+        "default": "./dist/algoliasearch.umd.js"
       }
     },
     "./lite": {
       "node": {
-        "import": "./dist/lite/lite.esm.node.js",
-        "module": "./dist/lite/lite.esm.node.js",
-        "require": "./dist/lite/lite.cjs",
-        "default": "./dist/lite/lite.cjs",
-        "types": "./dist/lite/builds/node.d.ts"
+        "types": {
+          "import": "./dist/lite/node.d.ts",
+          "module": "./dist/lite/node.d.ts",
+          "require": "./dist/lite/node.d.cts"
+        },
+        "import": "./dist/lite/builds/node.js",
+        "module": "./dist/lite/builds/node.js",
+        "require": "./dist/lite/builds/node.cjs"
       },
-      "browser": {
-        "umd": "./dist/lite/lite.umd.js",
-        "module": "./dist/lite/lite.esm.browser.js",
-        "import": "./dist/lite/lite.esm.browser.js",
-        "default": "./dist/lite/lite.umd.js",
-        "types": "./dist/lite/builds/browser.d.ts"
+      "default": {
+        "types": "./dist/lite/browser.d.ts",
+        "module": "./dist/lite/builds/browser.js",
+        "import": "./dist/lite/builds/browser.js",
+        "default": "./dist/lite/builds/browser.umd.js"
       }
     }
   },
+  "jsdelivr": "./dist/algoliasearch.umd.js",
+  "unpkg": "./dist/algoliasearch.umd.js",
   "files": [
     "dist",
     "builds",
@@ -59,11 +64,6 @@
     "lite.js",
     "lite.d.ts"
   ],
-  "scripts": {
-    "build": "yarn clean && rollup --config",
-    "clean": "rm -rf ./dist || true",
-    "test": "jest"
-  },
   "dependencies": {
     "@algolia/client-abtesting": "5.2.4",
     "@algolia/client-analytics": "5.2.4",
@@ -75,12 +75,15 @@
     "@algolia/requester-node-http": "5.2.4"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.15.4",
     "@babel/preset-env": "7.25.4",
     "@babel/preset-typescript": "7.24.7",
     "@types/jest": "29.5.12",
     "@types/node": "22.5.1",
     "jest": "29.7.0",
+    "publint": "0.2.10",
     "rollup": "4.21.2",
+    "tsup": "8.2.4",
     "typescript": "5.5.4"
   },
   "engines": {

@@ -1,5 +1,16 @@
-import { buildConfigs } from '../../base.rollup.config.js';
-
-import pkg from './package.json' with { type: 'json' };
-
-export default buildConfigs(pkg);
+export default [
+  {
+    input: 'dist/builds/browser.min.js',
+    external: ['dom'],
+    output: {
+      esModule: false,
+      file: 'dist/builds/browser.umd.js',
+      name: 'monitoringClient',
+      format: 'umd',
+      sourcemap: false,
+      globals: {
+        ['monitoringClient']: 'monitoringClient',
+      },
+    },
+  },
+]

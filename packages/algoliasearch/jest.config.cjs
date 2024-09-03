@@ -3,9 +3,7 @@ const baseConfig = {
   preset: 'ts-jest',
   roots: ['__tests__'],
   moduleDirectories: ['../../node_modules'],
-  transform: {
-    "\\.[jt]sx?$": "babel-jest",
-  }
+  transform: { "\\.[jt]sx?$": "babel-jest", } 
 };
 /** @type {import('jest').Config} */
 module.exports = {

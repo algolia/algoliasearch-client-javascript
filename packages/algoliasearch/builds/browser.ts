@@ -4,7 +4,6 @@ import type { AbtestingClient, Region as AbtestingRegion } from '@algolia/client
 import { abtestingClient } from '@algolia/client-abtesting';
 import type { AnalyticsClient, Region as AnalyticsRegion } from '@algolia/client-analytics';
 import { analyticsClient } from '@algolia/client-analytics';
-import type { ClientOptions } from '@algolia/client-common';
 import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
   DEFAULT_READ_TIMEOUT_BROWSER,
@@ -13,18 +12,18 @@ import {
   createFallbackableCache,
   createMemoryCache,
 } from '@algolia/client-common';
+import type { ClientOptions } from '@algolia/client-common';
 import type { PersonalizationClient, Region as PersonalizationRegion } from '@algolia/client-personalization';
 import { personalizationClient } from '@algolia/client-personalization';
-import { searchClient, apiClientVersion as searchClientVersion } from '@algolia/client-search';
+import { searchClient } from '@algolia/client-search';
 import type { RecommendClient } from '@algolia/recommend';
 import { recommendClient } from '@algolia/recommend';
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import type { InitClientOptions, InitClientRegion } from './models';
+import { apiClientVersion } from './models';
 
 export * from './models';
-
-export const apiClientVersion = searchClientVersion;
 
 /**
  * The client type.
@@ -40,7 +39,6 @@ export function algoliasearch(appId: string, apiKey: string, options?: ClientOpt
   if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
-
   function initRecommend(initOptions: InitClientOptions = {}): RecommendClient {
     return recommendClient(initOptions.appId || appId, initOptions.apiKey || apiKey, initOptions.options);
   }

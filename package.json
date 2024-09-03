@@ -12,7 +12,8 @@
     "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --force-publish --yes",
     "release:publish": "tsc --project scripts/tsconfig.json && node scripts/dist/scripts/publish.js",
     "test": "lerna run test $*",
-    "test:size": "bundlesize"
+    "test:size": "bundlesize",
+    "test:bundle": "lerna run test:bundle --verbose --skip-nx-cache --include-dependencies"
   },
   "devDependencies": {
     "@babel/core": "7.25.2",

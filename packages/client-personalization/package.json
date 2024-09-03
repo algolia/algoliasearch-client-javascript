@@ -7,50 +7,53 @@
   "type": "module",
   "license": "MIT",
   "author": "Algolia",
-  "types": "./index.d.ts",
+  "scripts": {
+    "build": "yarn clean && yarn tsup && yarn rollup -c rollup.config.js",
+    "clean": "rm -rf ./dist || true",
+    "test:bundle": "publint . && attw --pack ."
+  },
   "name": "@algolia/client-personalization",
   "description": "JavaScript client for client-personalization",
-  "jsdelivr": "./dist/client-personalization.umd.js",
-  "unpkg": "./dist/client-personalization.umd.js",
-  "browser": "./dist/client-personalization.umd.js",
   "exports": {
     ".": {
       "node": {
-        "import": "./dist/client-personalization.esm.node.js",
-        "module": "./dist/client-personalization.esm.node.js",
-        "require": "./dist/client-personalization.cjs",
-        "default": "./dist/client-personalization.cjs",
-        "types": "./dist/builds/node.d.ts"
+        "types": {
+          "import": "./dist/node.d.ts",
+          "module": "./dist/node.d.ts",
+          "require": "./dist/node.d.cts"
+        },
+        "import": "./dist/builds/node.js",
+        "module": "./dist/builds/node.js",
+        "require": "./dist/builds/node.cjs"
       },
-      "browser": {
-        "umd": "./dist/client-personalization.umd.js",
-        "module": "./dist/client-personalization.esm.browser.js",
-        "import": "./dist/client-personalization.esm.browser.js",
-        "default": "./dist/client-personalization.umd.js",
-        "types": "./dist/builds/browser.d.ts"
+      "default": {
+        "types": "./dist/browser.d.ts",
+        "module": "./dist/builds/browser.js",
+        "import": "./dist/builds/browser.js",
+        "default": "./dist/builds/browser.umd.js"
       }
     },
-    "./src/*": "./src/*.ts",
-    "./model": "./model/index.ts"
+    "./src/*": "./src/*.ts"
   },
+  "jsdelivr": "./dist/builds/browser.umd.js",
+  "unpkg": "./dist/builds/browser.umd.js",
   "files": [
     "dist",
     "model",
     "index.js",
     "index.d.ts"
   ],
-  "scripts": {
-    "build": "yarn clean && rollup --config",
-    "clean": "rm -rf ./dist || true"
-  },
   "dependencies": {
     "@algolia/client-common": "5.2.4",
     "@algolia/requester-browser-xhr": "5.2.4",
     "@algolia/requester-node-http": "5.2.4"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.15.4",
     "@types/node": "22.5.1",
+    "publint": "0.2.10",
     "rollup": "4.21.2",
+    "tsup": "8.2.4",
     "typescript": "5.5.4"
   },
   "engines": {
