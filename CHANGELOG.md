@@ -1,3 +1,9 @@
+## [5.2.5](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.4...5.2.5)
+
+- [ff0c99653](https://github.com/algolia/api-clients-automation/commit/ff0c99653) chore(javascript): use tsup bundler ([#3640](https://github.com/algolia/api-clients-automation/pull/3640)) by [@shortcuts](https://github.com/shortcuts/)
+- [a9405b168](https://github.com/algolia/api-clients-automation/commit/a9405b168) fix(specs): usage api ([#3624](https://github.com/algolia/api-clients-automation/pull/3624)) by [@kai687](https://github.com/kai687/)
+- [e3af9554e](https://github.com/algolia/api-clients-automation/commit/e3af9554e) fix(specs): no links across API specs ([#3643](https://github.com/algolia/api-clients-automation/pull/3643)) by [@kai687](https://github.com/kai687/)
+
 ## [5.2.4](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.3...5.2.4)
 
 - [3d07a1e4f](https://github.com/algolia/api-clients-automation/commit/3d07a1e4f) fix(specs): ignorePlurals can be a boolean string ([#3620](https://github.com/algolia/api-clients-automation/pull/3620)) by [@millotp](https://github.com/millotp/)

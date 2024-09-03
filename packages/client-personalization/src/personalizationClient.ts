@@ -23,7 +23,7 @@ import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
 import type { PersonalizationStrategyParams } from '../model/personalizationStrategyParams';
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';
 
-export const apiClientVersion = '5.2.4';
+export const apiClientVersion = '5.2.5';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
