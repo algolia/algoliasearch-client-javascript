@@ -31,7 +31,7 @@ jobs:
               },
               body: JSON.stringify({
                 fields: {
-                  description: `Issue created by ${context.actor} at [${context.payload.issue.html_url}](${context.payload.issue.html_url}) \n\n${body}`,
+                  description: `Issue created by ${context.actor} at ${context.payload.issue.html_url} \n\n${body}`,
                   issuetype: {
                     id: '10001'
                   },
