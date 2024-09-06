@@ -226,6 +226,16 @@ export function createSearchClient({
     },
 
     /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+    },
+
+    /**
      * Helper: Wait for a task to be published (completed) for a given `indexName` and `taskID`.
      *
      * @summary Helper method that waits for a task to be published (completed).
@@ -1471,7 +1481,6 @@ export function createSearchClient({
         .replace('{objectID}', encodeURIComponent(objectID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -1610,6 +1619,7 @@ export function createSearchClient({
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
+
       if (length !== undefined) {
         queryParameters.length = length.toString();
       }
@@ -2019,7 +2029,6 @@ export function createSearchClient({
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (hitsPerPage !== undefined) {
         queryParameters.hitsPerPage = hitsPerPage.toString();
       }
@@ -2052,10 +2061,10 @@ export function createSearchClient({
       const requestPath = '/1/clusters/mapping';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
+
       if (hitsPerPage !== undefined) {
         queryParameters.hitsPerPage = hitsPerPage.toString();
       }
@@ -2355,7 +2364,6 @@ export function createSearchClient({
         .replace('{objectID}', encodeURIComponent(objectID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -2399,10 +2407,10 @@ export function createSearchClient({
       const requestPath = '/1/indexes/{indexName}/rules/batch'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
+
       if (clearExistingRules !== undefined) {
         queryParameters.clearExistingRules = clearExistingRules.toString();
       }

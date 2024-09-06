@@ -130,6 +130,16 @@ export function createAnalyticsClient({
     },
 
     /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+    },
+
+    /**
      * This method allow you to send requests to the Algolia REST API.
      *
      * @param customDelete - The customDelete object.
@@ -277,7 +287,6 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -325,12 +334,14 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
+
       if (tags !== undefined) {
         queryParameters.tags = tags.toString();
       }
@@ -419,6 +430,7 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -466,7 +478,6 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -517,10 +528,10 @@ export function createAnalyticsClient({
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
-
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
+
       if (tags !== undefined) {
         queryParameters.tags = tags.toString();
       }
@@ -562,14 +573,12 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
-
       if (tags !== undefined) {
         queryParameters.tags = tags.toString();
       }
@@ -608,10 +617,10 @@ export function createAnalyticsClient({
       const requestPath = '/2/conversions/purchaseRate';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -659,10 +668,10 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
+
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -711,10 +720,10 @@ export function createAnalyticsClient({
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
-
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
+
       if (tags !== undefined) {
         queryParameters.tags = tags.toString();
       }
@@ -755,6 +764,7 @@ export function createAnalyticsClient({
       const requestPath = '/2/searches/noClicks';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
@@ -767,7 +777,6 @@ export function createAnalyticsClient({
       if (limit !== undefined) {
         queryParameters.limit = limit.toString();
       }
-
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
@@ -814,7 +823,6 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -900,6 +908,7 @@ export function createAnalyticsClient({
       const requestPath = '/2/countries';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
@@ -912,7 +921,6 @@ export function createAnalyticsClient({
       if (limit !== undefined) {
         queryParameters.limit = limit.toString();
       }
-
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
@@ -957,10 +965,10 @@ export function createAnalyticsClient({
       const requestPath = '/2/filters';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
+
       if (search !== undefined) {
         queryParameters.search = search.toString();
       }
@@ -1042,6 +1050,7 @@ export function createAnalyticsClient({
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
+
       if (tags !== undefined) {
         queryParameters.tags = tags.toString();
       }

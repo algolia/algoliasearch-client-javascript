@@ -100,6 +100,16 @@ export function createQuerySuggestionsClient({
     },
 
     /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+    },
+
+    /**
      * Creates a new Query Suggestions configuration.  You can have up to 100 configurations per Algolia application.
      *
      * Required API Key ACLs:

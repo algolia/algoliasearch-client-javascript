@@ -118,6 +118,16 @@ export function createLiteClient({
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.algoliaAgent.add({ segment, version });
     },
+
+    /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+    },
     /**
      * Helper: calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
      * Disclaimer: We don't assert that the parameters you pass to this method only contains `hits` requests to prevent impacting search performances, this helper is purely for typing purposes.

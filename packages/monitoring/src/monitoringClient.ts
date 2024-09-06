@@ -96,6 +96,16 @@ export function createMonitoringClient({
     },
 
     /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+    },
+
+    /**
      * This method allow you to send requests to the Algolia REST API.
      *
      * @param customDelete - The customDelete object.

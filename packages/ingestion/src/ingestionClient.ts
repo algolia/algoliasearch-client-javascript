@@ -210,6 +210,16 @@ export function createIngestionClient({
     },
 
     /**
+     * Helper method to switch the API key used to authenticate the requests.
+     *
+     * @param params - Method params.
+     * @param params.apiKey - The new API Key to use.
+     */
+    setClientApiKey({ apiKey }: { apiKey: string }): void {
+      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+    },
+
+    /**
      * Creates a new authentication resource.
      *
      * Required API Key ACLs:
@@ -1233,7 +1243,6 @@ export function createIngestionClient({
       if (platform !== undefined) {
         queryParameters.platform = platform.toString();
       }
-
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
@@ -1275,13 +1284,13 @@ export function createIngestionClient({
       const requestPath = '/1/destinations';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
+
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
@@ -1339,6 +1348,7 @@ export function createIngestionClient({
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
+
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
@@ -1351,7 +1361,6 @@ export function createIngestionClient({
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
-
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1399,13 +1408,13 @@ export function createIngestionClient({
       const requestPath = '/1/runs';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
+
       if (status !== undefined) {
         queryParameters.status = status.toString();
       }
@@ -1418,13 +1427,14 @@ export function createIngestionClient({
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
-
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
+
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -1466,6 +1476,7 @@ export function createIngestionClient({
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
+
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
@@ -1478,7 +1489,6 @@ export function createIngestionClient({
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
-
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1529,13 +1539,13 @@ export function createIngestionClient({
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
-
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
       if (sourceID !== undefined) {
         queryParameters.sourceID = sourceID.toString();
       }
+
       if (destinationID !== undefined) {
         queryParameters.destinationID = destinationID.toString();
       }
@@ -1595,7 +1605,6 @@ export function createIngestionClient({
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
-
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
