@@ -13,16 +13,17 @@ import { createHttpRequester } from '@algolia/requester-node-http';
 import type { Region } from '../src/abtestingClient';
 import { createAbtestingClient, REGIONS } from '../src/abtestingClient';
 
+export type AbtestingClient = ReturnType<typeof createAbtestingClient>;
+
 export { apiClientVersion, Region } from '../src/abtestingClient';
 export * from '../model';
 
-/**
- * The client type.
- */
-export type AbtestingClient = ReturnType<typeof abtestingClient>;
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function abtestingClient(appId: string, apiKey: string, region?: Region, options?: ClientOptions) {
+export function abtestingClient(
+  appId: string,
+  apiKey: string,
+  region?: Region,
+  options?: ClientOptions,
+): AbtestingClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

@@ -14,16 +14,17 @@ import { createXhrRequester } from '@algolia/requester-browser-xhr';
 import type { Region } from '../src/querySuggestionsClient';
 import { createQuerySuggestionsClient, apiClientVersion, REGIONS } from '../src/querySuggestionsClient';
 
+export type QuerySuggestionsClient = ReturnType<typeof createQuerySuggestionsClient>;
+
 export { apiClientVersion, Region } from '../src/querySuggestionsClient';
 export * from '../model';
 
-/**
- * The client type.
- */
-export type QuerySuggestionsClient = ReturnType<typeof querySuggestionsClient>;
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function querySuggestionsClient(appId: string, apiKey: string, region: Region, options?: ClientOptions) {
+export function querySuggestionsClient(
+  appId: string,
+  apiKey: string,
+  region: Region,
+  options?: ClientOptions,
+): QuerySuggestionsClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

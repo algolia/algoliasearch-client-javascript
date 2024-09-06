@@ -13,16 +13,12 @@ import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import { createRecommendClient, apiClientVersion } from '../src/recommendClient';
 
+export type RecommendClient = ReturnType<typeof createRecommendClient>;
+
 export { apiClientVersion } from '../src/recommendClient';
 export * from '../model';
 
-/**
- * The client type.
- */
-export type RecommendClient = ReturnType<typeof recommendClient>;
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function recommendClient(appId: string, apiKey: string, options?: ClientOptions) {
+export function recommendClient(appId: string, apiKey: string, options?: ClientOptions): RecommendClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

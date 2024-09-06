@@ -174,27 +174,26 @@ export function createSearchClient({
   ...options
 }: CreateClientOptions) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
-  const transporter = createTransporter({
-    hosts: getDefaultHosts(appIdOption),
-    ...options,
-    algoliaAgent: getAlgoliaAgent({
-      algoliaAgents,
-      client: 'Search',
-      version: apiClientVersion,
-    }),
-    baseHeaders: {
-      'content-type': 'text/plain',
-      ...auth.headers(),
-      ...options.baseHeaders,
-    },
-    baseQueryParameters: {
-      ...auth.queryParameters(),
-      ...options.baseQueryParameters,
-    },
-  });
 
   return {
-    transporter,
+    transporter: createTransporter({
+      hosts: getDefaultHosts(appIdOption),
+      ...options,
+      algoliaAgent: getAlgoliaAgent({
+        algoliaAgents,
+        client: 'Search',
+        version: apiClientVersion,
+      }),
+      baseHeaders: {
+        'content-type': 'text/plain',
+        ...auth.headers(),
+        ...options.baseHeaders,
+      },
+      baseQueryParameters: {
+        ...auth.queryParameters(),
+        ...options.baseQueryParameters,
+      },
+    }),
 
     /**
      * The `appId` currently in use.
@@ -205,14 +204,16 @@ export function createSearchClient({
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
      */
     clearCache(): Promise<void> {
-      return Promise.all([transporter.requestsCache.clear(), transporter.responsesCache.clear()]).then(() => undefined);
+      return Promise.all([this.transporter.requestsCache.clear(), this.transporter.responsesCache.clear()]).then(
+        () => undefined,
+      );
     },
 
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
-      return transporter.algoliaAgent.value;
+      return this.transporter.algoliaAgent.value;
     },
 
     /**
@@ -222,7 +223,7 @@ export function createSearchClient({
      * @param version - The version of the agent.
      */
     addAlgoliaAgent(segment: string, version?: string): void {
-      transporter.algoliaAgent.add({ segment, version });
+      this.transporter.algoliaAgent.add({ segment, version });
     },
 
     /**
@@ -232,7 +233,7 @@ export function createSearchClient({
      * @param params.apiKey - The new API Key to use.
      */
     setClientApiKey({ apiKey }: { apiKey: string }): void {
-      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      this.transporter.baseHeaders['x-algolia-api-key'] = apiKey;
     },
 
     /**
@@ -733,7 +734,7 @@ export function createSearchClient({
         data: apiKey,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -778,7 +779,7 @@ export function createSearchClient({
         data: body,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -811,7 +812,7 @@ export function createSearchClient({
         data: source,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -857,7 +858,7 @@ export function createSearchClient({
         data: assignUserIdParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -893,7 +894,7 @@ export function createSearchClient({
         data: batchWriteParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -942,7 +943,7 @@ export function createSearchClient({
         data: batchAssignUserIdsParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -989,7 +990,7 @@ export function createSearchClient({
         data: batchDictionaryEntriesParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1020,7 +1021,7 @@ export function createSearchClient({
         data: browseParams ? browseParams : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1049,7 +1050,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1085,7 +1086,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1121,7 +1122,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1151,7 +1152,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1178,7 +1179,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1210,7 +1211,7 @@ export function createSearchClient({
         data: body ? body : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1242,7 +1243,7 @@ export function createSearchClient({
         data: body ? body : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1271,7 +1272,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1309,7 +1310,7 @@ export function createSearchClient({
         data: deleteByParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1338,7 +1339,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1377,7 +1378,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1409,6 +1410,7 @@ export function createSearchClient({
         .replace('{objectID}', encodeURIComponent(objectID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -1420,7 +1422,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1449,7 +1451,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1492,7 +1494,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1518,7 +1520,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1547,7 +1549,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1570,7 +1572,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1593,7 +1595,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1619,10 +1621,10 @@ export function createSearchClient({
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
-
       if (length !== undefined) {
         queryParameters.length = length.toString();
       }
+
       if (indexName !== undefined) {
         queryParameters.indexName = indexName.toString();
       }
@@ -1637,7 +1639,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1669,7 +1671,6 @@ export function createSearchClient({
         .replace('{objectID}', encodeURIComponent(objectID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (attributesToRetrieve !== undefined) {
         queryParameters.attributesToRetrieve = attributesToRetrieve.toString();
       }
@@ -1681,7 +1682,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1716,7 +1717,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1752,7 +1753,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1781,7 +1782,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1804,7 +1805,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1840,7 +1841,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1876,7 +1877,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1899,7 +1900,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1928,7 +1929,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1959,7 +1960,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1982,7 +1983,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2005,7 +2006,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2040,7 +2041,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2064,7 +2065,6 @@ export function createSearchClient({
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (hitsPerPage !== undefined) {
         queryParameters.hitsPerPage = hitsPerPage.toString();
       }
@@ -2076,7 +2076,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2106,7 +2106,7 @@ export function createSearchClient({
         data: batchParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2151,7 +2151,7 @@ export function createSearchClient({
         data: operationIndexParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2200,7 +2200,7 @@ export function createSearchClient({
         data: attributesToUpdate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2229,7 +2229,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2259,7 +2259,7 @@ export function createSearchClient({
         data: source,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2288,7 +2288,7 @@ export function createSearchClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2323,7 +2323,7 @@ export function createSearchClient({
         data: body,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2364,6 +2364,7 @@ export function createSearchClient({
         .replace('{objectID}', encodeURIComponent(objectID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -2376,7 +2377,7 @@ export function createSearchClient({
         data: rule,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2423,7 +2424,7 @@ export function createSearchClient({
         data: rules,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2467,6 +2468,7 @@ export function createSearchClient({
         .replace('{objectID}', encodeURIComponent(objectID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -2479,7 +2481,7 @@ export function createSearchClient({
         data: synonymHit,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2510,6 +2512,7 @@ export function createSearchClient({
       const requestPath = '/1/indexes/{indexName}/synonyms/batch'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (forwardToReplicas !== undefined) {
         queryParameters.forwardToReplicas = forwardToReplicas.toString();
       }
@@ -2525,7 +2528,7 @@ export function createSearchClient({
         data: synonymHit,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2588,7 +2591,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2639,7 +2642,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2682,7 +2685,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2718,7 +2721,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2754,7 +2757,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2793,7 +2796,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2831,7 +2834,7 @@ export function createSearchClient({
         cacheable: true,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2869,7 +2872,7 @@ export function createSearchClient({
         data: dictionarySettingsParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2911,7 +2914,7 @@ export function createSearchClient({
         data: indexSettings,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2950,7 +2953,7 @@ export function createSearchClient({
         data: apiKey,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
   };
 }

@@ -44,27 +44,26 @@ export function createPersonalizationClient({
   ...options
 }: CreateClientOptions & { region: Region }) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
-  const transporter = createTransporter({
-    hosts: getDefaultHosts(regionOption),
-    ...options,
-    algoliaAgent: getAlgoliaAgent({
-      algoliaAgents,
-      client: 'Personalization',
-      version: apiClientVersion,
-    }),
-    baseHeaders: {
-      'content-type': 'text/plain',
-      ...auth.headers(),
-      ...options.baseHeaders,
-    },
-    baseQueryParameters: {
-      ...auth.queryParameters(),
-      ...options.baseQueryParameters,
-    },
-  });
 
   return {
-    transporter,
+    transporter: createTransporter({
+      hosts: getDefaultHosts(regionOption),
+      ...options,
+      algoliaAgent: getAlgoliaAgent({
+        algoliaAgents,
+        client: 'Personalization',
+        version: apiClientVersion,
+      }),
+      baseHeaders: {
+        'content-type': 'text/plain',
+        ...auth.headers(),
+        ...options.baseHeaders,
+      },
+      baseQueryParameters: {
+        ...auth.queryParameters(),
+        ...options.baseQueryParameters,
+      },
+    }),
 
     /**
      * The `appId` currently in use.
@@ -75,14 +74,16 @@ export function createPersonalizationClient({
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
      */
     clearCache(): Promise<void> {
-      return Promise.all([transporter.requestsCache.clear(), transporter.responsesCache.clear()]).then(() => undefined);
+      return Promise.all([this.transporter.requestsCache.clear(), this.transporter.responsesCache.clear()]).then(
+        () => undefined,
+      );
     },
 
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
-      return transporter.algoliaAgent.value;
+      return this.transporter.algoliaAgent.value;
     },
 
     /**
@@ -92,7 +93,7 @@ export function createPersonalizationClient({
      * @param version - The version of the agent.
      */
     addAlgoliaAgent(segment: string, version?: string): void {
-      transporter.algoliaAgent.add({ segment, version });
+      this.transporter.algoliaAgent.add({ segment, version });
     },
 
     /**
@@ -102,7 +103,7 @@ export function createPersonalizationClient({
      * @param params.apiKey - The new API Key to use.
      */
     setClientApiKey({ apiKey }: { apiKey: string }): void {
-      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      this.transporter.baseHeaders['x-algolia-api-key'] = apiKey;
     },
 
     /**
@@ -132,7 +133,7 @@ export function createPersonalizationClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -159,7 +160,7 @@ export function createPersonalizationClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -191,7 +192,7 @@ export function createPersonalizationClient({
         data: body ? body : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -223,7 +224,7 @@ export function createPersonalizationClient({
         data: body ? body : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -255,7 +256,7 @@ export function createPersonalizationClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -278,7 +279,7 @@ export function createPersonalizationClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -313,7 +314,7 @@ export function createPersonalizationClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -363,7 +364,7 @@ export function createPersonalizationClient({
         data: personalizationStrategyParams,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
   };
 }

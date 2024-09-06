@@ -13,6 +13,8 @@ import { createHttpRequester } from '@algolia/requester-node-http';
 import type { Region } from '../src/ingestionClient';
 import { createIngestionClient, REGIONS } from '../src/ingestionClient';
 
+export type IngestionClient = ReturnType<typeof createIngestionClient>;
+
 export {
   apiClientVersion,
   Region,
@@ -22,13 +24,12 @@ export {
 } from '../src/ingestionClient';
 export * from '../model';
 
-/**
- * The client type.
- */
-export type IngestionClient = ReturnType<typeof ingestionClient>;
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function ingestionClient(appId: string, apiKey: string, region: Region, options?: ClientOptions) {
+export function ingestionClient(
+  appId: string,
+  apiKey: string,
+  region: Region,
+  options?: ClientOptions,
+): IngestionClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

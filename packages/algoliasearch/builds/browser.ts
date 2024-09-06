@@ -4,34 +4,28 @@ import type { AbtestingClient, Region as AbtestingRegion } from '@algolia/client
 import { abtestingClient } from '@algolia/client-abtesting';
 import type { AnalyticsClient, Region as AnalyticsRegion } from '@algolia/client-analytics';
 import { analyticsClient } from '@algolia/client-analytics';
-import {
-  DEFAULT_CONNECT_TIMEOUT_BROWSER,
-  DEFAULT_READ_TIMEOUT_BROWSER,
-  DEFAULT_WRITE_TIMEOUT_BROWSER,
-  createBrowserLocalStorageCache,
-  createFallbackableCache,
-  createMemoryCache,
-} from '@algolia/client-common';
 import type { ClientOptions } from '@algolia/client-common';
 import type { PersonalizationClient, Region as PersonalizationRegion } from '@algolia/client-personalization';
 import { personalizationClient } from '@algolia/client-personalization';
+import type { SearchClient } from '@algolia/client-search';
 import { searchClient } from '@algolia/client-search';
 import type { RecommendClient } from '@algolia/recommend';
 import { recommendClient } from '@algolia/recommend';
-import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import type { InitClientOptions, InitClientRegion } from './models';
-import { apiClientVersion } from './models';
 
 export * from './models';
 
-/**
- * The client type.
- */
-export type Algoliasearch = ReturnType<typeof algoliasearch>;
+export type Algoliasearch = SearchClient & {
+  initRecommend: (initOptions: InitClientOptions) => RecommendClient;
+  initAnalytics: (initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion>) => AnalyticsClient;
+  initAbtesting: (initOptions: InitClientOptions & InitClientRegion<AbtestingRegion>) => AbtestingClient;
+  initPersonalization: (
+    initOptions: InitClientOptions & Required<InitClientRegion<PersonalizationRegion>>,
+  ) => PersonalizationClient;
+};
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function algoliasearch(appId: string, apiKey: string, options?: ClientOptions) {
+export function algoliasearch(appId: string, apiKey: string, options?: ClientOptions): Algoliasearch {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -39,65 +33,46 @@ export function algoliasearch(appId: string, apiKey: string, options?: ClientOpt
   if (!apiKey || typeof apiKey !== 'string') {
     throw new Error('`apiKey` is missing.');
   }
-  function initRecommend(initOptions: InitClientOptions = {}): RecommendClient {
-    return recommendClient(initOptions.appId || appId, initOptions.apiKey || apiKey, initOptions.options);
-  }
-
-  function initAnalytics(initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion> = {}): AnalyticsClient {
-    return analyticsClient(
-      initOptions.appId || appId,
-      initOptions.apiKey || apiKey,
-      initOptions.region,
-      initOptions.options,
-    );
-  }
-
-  function initAbtesting(initOptions: InitClientOptions & InitClientRegion<AbtestingRegion> = {}): AbtestingClient {
-    return abtestingClient(
-      initOptions.appId || appId,
-      initOptions.apiKey || apiKey,
-      initOptions.region,
-      initOptions.options,
-    );
-  }
-
-  function initPersonalization(
-    initOptions: InitClientOptions & Required<InitClientRegion<PersonalizationRegion>>,
-  ): PersonalizationClient {
-    return personalizationClient(
-      initOptions.appId || appId,
-      initOptions.apiKey || apiKey,
-      initOptions.region,
-      initOptions.options,
-    );
-  }
 
   return {
-    ...searchClient(appId, apiKey, {
-      timeouts: {
-        connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
-        read: DEFAULT_READ_TIMEOUT_BROWSER,
-        write: DEFAULT_WRITE_TIMEOUT_BROWSER,
-      },
-      requester: createXhrRequester(),
-      algoliaAgents: [{ segment: 'Browser' }],
-      authMode: 'WithinQueryParameters',
-      responsesCache: createMemoryCache(),
-      requestsCache: createMemoryCache({ serializable: false }),
-      hostsCache: createFallbackableCache({
-        caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
-      }),
-      ...options,
-    }),
+    ...searchClient(appId, apiKey, options),
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
       return this.transporter.algoliaAgent.value;
     },
-    initAbtesting,
-    initAnalytics,
-    initPersonalization,
-    initRecommend,
+    initRecommend: (initOptions: InitClientOptions = {}): RecommendClient => {
+      return recommendClient(initOptions.appId || appId, initOptions.apiKey || apiKey, initOptions.options);
+    },
+
+    initAnalytics: (initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion> = {}): AnalyticsClient => {
+      return analyticsClient(
+        initOptions.appId || appId,
+        initOptions.apiKey || apiKey,
+        initOptions.region,
+        initOptions.options,
+      );
+    },
+
+    initAbtesting: (initOptions: InitClientOptions & InitClientRegion<AbtestingRegion> = {}): AbtestingClient => {
+      return abtestingClient(
+        initOptions.appId || appId,
+        initOptions.apiKey || apiKey,
+        initOptions.region,
+        initOptions.options,
+      );
+    },
+
+    initPersonalization: (
+      initOptions: InitClientOptions & Required<InitClientRegion<PersonalizationRegion>>,
+    ): PersonalizationClient => {
+      return personalizationClient(
+        initOptions.appId || appId,
+        initOptions.apiKey || apiKey,
+        initOptions.region,
+        initOptions.options,
+      );
+    },
   };
 }

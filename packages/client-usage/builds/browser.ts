@@ -13,16 +13,12 @@ import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import { createUsageClient, apiClientVersion } from '../src/usageClient';
 
+export type UsageClient = ReturnType<typeof createUsageClient>;
+
 export { apiClientVersion } from '../src/usageClient';
 export * from '../model';
 
-/**
- * The client type.
- */
-export type UsageClient = ReturnType<typeof usageClient>;
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function usageClient(appId: string, apiKey: string, options?: ClientOptions) {
+export function usageClient(appId: string, apiKey: string, options?: ClientOptions): UsageClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

@@ -14,16 +14,17 @@ import { createXhrRequester } from '@algolia/requester-browser-xhr';
 import type { Region } from '../src/personalizationClient';
 import { createPersonalizationClient, apiClientVersion, REGIONS } from '../src/personalizationClient';
 
+export type PersonalizationClient = ReturnType<typeof createPersonalizationClient>;
+
 export { apiClientVersion, Region } from '../src/personalizationClient';
 export * from '../model';
 
-/**
- * The client type.
- */
-export type PersonalizationClient = ReturnType<typeof personalizationClient>;
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function personalizationClient(appId: string, apiKey: string, region: Region, options?: ClientOptions) {
+export function personalizationClient(
+  appId: string,
+  apiKey: string,
+  region: Region,
+  options?: ClientOptions,
+): PersonalizationClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

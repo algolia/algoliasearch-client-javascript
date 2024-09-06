@@ -12,16 +12,12 @@ import { createHttpRequester } from '@algolia/requester-node-http';
 
 import { createLiteClient } from '../src/liteClient';
 
+export type LiteClient = ReturnType<typeof createLiteClient>;
+
 export { apiClientVersion } from '../src/liteClient';
 export * from '../model';
 
-/**
- * The client type.
- */
-export type LiteClient = ReturnType<typeof liteClient>;
-
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function liteClient(appId: string, apiKey: string, options?: ClientOptions) {
+export function liteClient(appId: string, apiKey: string, options?: ClientOptions): LiteClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

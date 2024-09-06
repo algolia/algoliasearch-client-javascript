@@ -158,27 +158,26 @@ export function createIngestionClient({
   ...options
 }: CreateClientOptions & { region: Region }) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
-  const transporter = createTransporter({
-    hosts: getDefaultHosts(regionOption),
-    ...options,
-    algoliaAgent: getAlgoliaAgent({
-      algoliaAgents,
-      client: 'Ingestion',
-      version: apiClientVersion,
-    }),
-    baseHeaders: {
-      'content-type': 'text/plain',
-      ...auth.headers(),
-      ...options.baseHeaders,
-    },
-    baseQueryParameters: {
-      ...auth.queryParameters(),
-      ...options.baseQueryParameters,
-    },
-  });
 
   return {
-    transporter,
+    transporter: createTransporter({
+      hosts: getDefaultHosts(regionOption),
+      ...options,
+      algoliaAgent: getAlgoliaAgent({
+        algoliaAgents,
+        client: 'Ingestion',
+        version: apiClientVersion,
+      }),
+      baseHeaders: {
+        'content-type': 'text/plain',
+        ...auth.headers(),
+        ...options.baseHeaders,
+      },
+      baseQueryParameters: {
+        ...auth.queryParameters(),
+        ...options.baseQueryParameters,
+      },
+    }),
 
     /**
      * The `appId` currently in use.
@@ -189,14 +188,16 @@ export function createIngestionClient({
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
      */
     clearCache(): Promise<void> {
-      return Promise.all([transporter.requestsCache.clear(), transporter.responsesCache.clear()]).then(() => undefined);
+      return Promise.all([this.transporter.requestsCache.clear(), this.transporter.responsesCache.clear()]).then(
+        () => undefined,
+      );
     },
 
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
-      return transporter.algoliaAgent.value;
+      return this.transporter.algoliaAgent.value;
     },
 
     /**
@@ -206,7 +207,7 @@ export function createIngestionClient({
      * @param version - The version of the agent.
      */
     addAlgoliaAgent(segment: string, version?: string): void {
-      transporter.algoliaAgent.add({ segment, version });
+      this.transporter.algoliaAgent.add({ segment, version });
     },
 
     /**
@@ -216,7 +217,7 @@ export function createIngestionClient({
      * @param params.apiKey - The new API Key to use.
      */
     setClientApiKey({ apiKey }: { apiKey: string }): void {
-      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      this.transporter.baseHeaders['x-algolia-api-key'] = apiKey;
     },
 
     /**
@@ -260,7 +261,7 @@ export function createIngestionClient({
         data: authenticationCreate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -304,7 +305,7 @@ export function createIngestionClient({
         data: destinationCreate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -342,7 +343,7 @@ export function createIngestionClient({
         data: sourceCreate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -378,7 +379,7 @@ export function createIngestionClient({
         data: taskCreate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -417,7 +418,7 @@ export function createIngestionClient({
         data: taskCreate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -453,7 +454,7 @@ export function createIngestionClient({
         data: transformationCreate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -483,7 +484,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -510,7 +511,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -542,7 +543,7 @@ export function createIngestionClient({
         data: body ? body : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -574,7 +575,7 @@ export function createIngestionClient({
         data: body ? body : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -611,7 +612,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -648,7 +649,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -679,7 +680,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -705,7 +706,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -731,7 +732,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -763,7 +764,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -794,7 +795,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -825,7 +826,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -856,7 +857,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -887,7 +888,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -934,7 +935,7 @@ export function createIngestionClient({
         data: generateTransformationCodePayload,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -971,7 +972,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1005,7 +1006,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1043,7 +1044,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1074,7 +1075,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1105,7 +1106,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1136,7 +1137,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1167,7 +1168,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1204,7 +1205,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1231,6 +1232,7 @@ export function createIngestionClient({
       const requestPath = '/1/authentications';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
@@ -1240,6 +1242,7 @@ export function createIngestionClient({
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
+
       if (platform !== undefined) {
         queryParameters.platform = platform.toString();
       }
@@ -1257,7 +1260,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1311,7 +1314,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1345,13 +1348,14 @@ export function createIngestionClient({
       const requestPath = '/1/runs/{runID}/events'.replace('{runID}', encodeURIComponent(runID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
-
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
+
       if (status !== undefined) {
         queryParameters.status = status.toString();
       }
@@ -1364,6 +1368,7 @@ export function createIngestionClient({
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -1378,7 +1383,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1411,16 +1416,17 @@ export function createIngestionClient({
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
+
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (status !== undefined) {
         queryParameters.status = status.toString();
       }
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
+
       if (taskID !== undefined) {
         queryParameters.taskID = taskID.toString();
       }
@@ -1434,7 +1440,6 @@ export function createIngestionClient({
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
-
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -1446,7 +1451,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1476,19 +1481,20 @@ export function createIngestionClient({
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
-
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
+
       if (authenticationID !== undefined) {
         queryParameters.authenticationID = authenticationID.toString();
       }
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1500,7 +1506,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1539,6 +1545,7 @@ export function createIngestionClient({
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
+
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
@@ -1566,7 +1573,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1605,13 +1612,13 @@ export function createIngestionClient({
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
+
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
       if (sourceID !== undefined) {
         queryParameters.sourceID = sourceID.toString();
       }
-
       if (destinationID !== undefined) {
         queryParameters.destinationID = destinationID.toString();
       }
@@ -1621,6 +1628,7 @@ export function createIngestionClient({
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1632,7 +1640,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1657,7 +1665,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1682,13 +1690,13 @@ export function createIngestionClient({
       const requestPath = '/1/transformations';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
@@ -1703,7 +1711,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1747,7 +1755,7 @@ export function createIngestionClient({
         data: pushTaskPayload,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1783,7 +1791,7 @@ export function createIngestionClient({
         data: runSourcePayload ? runSourcePayload : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1814,7 +1822,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1845,7 +1853,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1885,7 +1893,7 @@ export function createIngestionClient({
         data: authenticationSearch,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1920,7 +1928,7 @@ export function createIngestionClient({
         data: destinationSearch,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1955,7 +1963,7 @@ export function createIngestionClient({
         data: sourceSearch,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -1990,7 +1998,7 @@ export function createIngestionClient({
         data: taskSearch,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2025,7 +2033,7 @@ export function createIngestionClient({
         data: taskSearch,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2065,7 +2073,7 @@ export function createIngestionClient({
         data: transformationSearch,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2099,7 +2107,7 @@ export function createIngestionClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2140,7 +2148,7 @@ export function createIngestionClient({
         data: transformationTry,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2192,7 +2200,7 @@ export function createIngestionClient({
         data: transformationTry,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2235,7 +2243,7 @@ export function createIngestionClient({
         data: authenticationUpdate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2278,7 +2286,7 @@ export function createIngestionClient({
         data: destinationUpdate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2318,7 +2326,7 @@ export function createIngestionClient({
         data: sourceUpdate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2350,7 +2358,7 @@ export function createIngestionClient({
         data: taskUpdate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2385,7 +2393,7 @@ export function createIngestionClient({
         data: taskUpdate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2430,7 +2438,7 @@ export function createIngestionClient({
         data: transformationCreate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2460,7 +2468,7 @@ export function createIngestionClient({
         data: sourceCreate ? sourceCreate : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -2500,7 +2508,7 @@ export function createIngestionClient({
         data: sourceUpdate,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
   };
 }

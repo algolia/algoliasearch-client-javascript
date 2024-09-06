@@ -803,6 +803,11 @@ export type GetSecuredApiKeyRemainingValidityOptions = {
   securedApiKey: string;
 };
 
+export type SearchClientNodeHelpers = {
+  generateSecuredApiKey: (opts: GenerateSecuredApiKeyOptions) => string;
+  getSecuredApiKeyRemainingValidity: (opts: GetSecuredApiKeyRemainingValidityOptions) => number;
+};
+
 export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName'> & {
   /**
    * The objectIDs to delete.

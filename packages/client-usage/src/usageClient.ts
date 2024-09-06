@@ -35,27 +35,26 @@ export function createUsageClient({
   ...options
 }: CreateClientOptions) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
-  const transporter = createTransporter({
-    hosts: getDefaultHosts(),
-    ...options,
-    algoliaAgent: getAlgoliaAgent({
-      algoliaAgents,
-      client: 'Usage',
-      version: apiClientVersion,
-    }),
-    baseHeaders: {
-      'content-type': 'text/plain',
-      ...auth.headers(),
-      ...options.baseHeaders,
-    },
-    baseQueryParameters: {
-      ...auth.queryParameters(),
-      ...options.baseQueryParameters,
-    },
-  });
 
   return {
-    transporter,
+    transporter: createTransporter({
+      hosts: getDefaultHosts(),
+      ...options,
+      algoliaAgent: getAlgoliaAgent({
+        algoliaAgents,
+        client: 'Usage',
+        version: apiClientVersion,
+      }),
+      baseHeaders: {
+        'content-type': 'text/plain',
+        ...auth.headers(),
+        ...options.baseHeaders,
+      },
+      baseQueryParameters: {
+        ...auth.queryParameters(),
+        ...options.baseQueryParameters,
+      },
+    }),
 
     /**
      * The `appId` currently in use.
@@ -66,14 +65,16 @@ export function createUsageClient({
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
      */
     clearCache(): Promise<void> {
-      return Promise.all([transporter.requestsCache.clear(), transporter.responsesCache.clear()]).then(() => undefined);
+      return Promise.all([this.transporter.requestsCache.clear(), this.transporter.responsesCache.clear()]).then(
+        () => undefined,
+      );
     },
 
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
-      return transporter.algoliaAgent.value;
+      return this.transporter.algoliaAgent.value;
     },
 
     /**
@@ -83,7 +84,7 @@ export function createUsageClient({
      * @param version - The version of the agent.
      */
     addAlgoliaAgent(segment: string, version?: string): void {
-      transporter.algoliaAgent.add({ segment, version });
+      this.transporter.algoliaAgent.add({ segment, version });
     },
 
     /**
@@ -93,7 +94,7 @@ export function createUsageClient({
      * @param params.apiKey - The new API Key to use.
      */
     setClientApiKey({ apiKey }: { apiKey: string }): void {
-      transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      this.transporter.baseHeaders['x-algolia-api-key'] = apiKey;
     },
 
     /**
@@ -123,7 +124,7 @@ export function createUsageClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -150,7 +151,7 @@ export function createUsageClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -182,7 +183,7 @@ export function createUsageClient({
         data: body ? body : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -214,7 +215,7 @@ export function createUsageClient({
         data: body ? body : {},
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -259,6 +260,7 @@ export function createUsageClient({
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
+
       if (granularity !== undefined) {
         queryParameters.granularity = granularity.toString();
       }
@@ -270,7 +272,7 @@ export function createUsageClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
 
     /**
@@ -320,7 +322,7 @@ export function createUsageClient({
         headers,
       };
 
-      return transporter.request(request, requestOptions);
+      return this.transporter.request(request, requestOptions);
     },
   };
 }
