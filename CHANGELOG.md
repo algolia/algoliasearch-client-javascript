@@ -1,3 +1,12 @@
+## [5.3.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.5...5.3.0)
+
+- [3b673cee4](https://github.com/algolia/api-clients-automation/commit/3b673cee4) fix(javascript): type definition and template cleanup ([#3656](https://github.com/algolia/api-clients-automation/pull/3656)) by [@shortcuts](https://github.com/shortcuts/)
+- [2c65a8d11](https://github.com/algolia/api-clients-automation/commit/2c65a8d11) feat(clients): helper to switch API key in use ([#3616](https://github.com/algolia/api-clients-automation/pull/3616)) by [@Fluf22](https://github.com/Fluf22/)
+- [f126366dc](https://github.com/algolia/api-clients-automation/commit/f126366dc) fix(specs): note on Analytics API server ([#3650](https://github.com/algolia/api-clients-automation/pull/3650)) by [@kai687](https://github.com/kai687/)
+- [3d02b3164](https://github.com/algolia/api-clients-automation/commit/3d02b3164) feat(clients): add helper to check if an index exists ([#3646](https://github.com/algolia/api-clients-automation/pull/3646)) by [@millotp](https://github.com/millotp/)
+- [a36746d65](https://github.com/algolia/api-clients-automation/commit/a36746d65) fix(specs): note on insights API server ([#3649](https://github.com/algolia/api-clients-automation/pull/3649)) by [@kai687](https://github.com/kai687/)
+- [1f53716c6](https://github.com/algolia/api-clients-automation/commit/1f53716c6) fix(specs): don't extend $ref objects ([#3623](https://github.com/algolia/api-clients-automation/pull/3623)) by [@kai687](https://github.com/kai687/)
+
 ## [5.2.5](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.4...5.2.5)
 
 - [ff0c99653](https://github.com/algolia/api-clients-automation/commit/ff0c99653) chore(javascript): use tsup bundler ([#3640](https://github.com/algolia/api-clients-automation/pull/3640)) by [@shortcuts](https://github.com/shortcuts/)
