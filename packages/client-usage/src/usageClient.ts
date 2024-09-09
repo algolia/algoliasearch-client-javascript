@@ -20,7 +20,7 @@ import type {
 } from '../model/clientMethodProps';
 import type { IndexUsage } from '../model/indexUsage';
 
-export const apiClientVersion = '1.3.1';
+export const apiClientVersion = '1.3.2';
 
 function getDefaultHosts(): Host[] {
   return [{ url: 'usage.algolia.com', accept: 'readWrite', protocol: 'https' }];

@@ -1,3 +1,7 @@
+## [5.3.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.3.1...5.3.2)
+
+- [0a433cc7a](https://github.com/algolia/api-clients-automation/commit/0a433cc7a) fix(javascript): use transporter directly ([#3682](https://github.com/algolia/api-clients-automation/pull/3682)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.3.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.3.0...5.3.1)
 
 - [50bd07392](https://github.com/algolia/api-clients-automation/commit/50bd07392) fix(javascript): assert helpers and fix setClientApiKey helper ([#3663](https://github.com/algolia/api-clients-automation/pull/3663)) by [@shortcuts](https://github.com/shortcuts/)
