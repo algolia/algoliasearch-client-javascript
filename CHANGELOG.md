@@ -1,3 +1,7 @@
+## [5.3.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.3.0...5.3.1)
+
+- [50bd07392](https://github.com/algolia/api-clients-automation/commit/50bd07392) fix(javascript): assert helpers and fix setClientApiKey helper ([#3663](https://github.com/algolia/api-clients-automation/pull/3663)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.3.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.2.5...5.3.0)
 
 - [3b673cee4](https://github.com/algolia/api-clients-automation/commit/3b673cee4) fix(javascript): type definition and template cleanup ([#3656](https://github.com/algolia/api-clients-automation/pull/3656)) by [@shortcuts](https://github.com/shortcuts/)
