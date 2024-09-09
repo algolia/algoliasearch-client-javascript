@@ -78,26 +78,27 @@ export function createAnalyticsClient({
   ...options
 }: CreateClientOptions & { region?: Region }) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
+  const transporter = createTransporter({
+    hosts: getDefaultHosts(regionOption),
+    ...options,
+    algoliaAgent: getAlgoliaAgent({
+      algoliaAgents,
+      client: 'Analytics',
+      version: apiClientVersion,
+    }),
+    baseHeaders: {
+      'content-type': 'text/plain',
+      ...auth.headers(),
+      ...options.baseHeaders,
+    },
+    baseQueryParameters: {
+      ...auth.queryParameters(),
+      ...options.baseQueryParameters,
+    },
+  });
 
   return {
-    transporter: createTransporter({
-      hosts: getDefaultHosts(regionOption),
-      ...options,
-      algoliaAgent: getAlgoliaAgent({
-        algoliaAgents,
-        client: 'Analytics',
-        version: apiClientVersion,
-      }),
-      baseHeaders: {
-        'content-type': 'text/plain',
-        ...auth.headers(),
-        ...options.baseHeaders,
-      },
-      baseQueryParameters: {
-        ...auth.queryParameters(),
-        ...options.baseQueryParameters,
-      },
-    }),
+    transporter,
 
     /**
      * The `appId` currently in use.
@@ -108,16 +109,14 @@ export function createAnalyticsClient({
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
      */
     clearCache(): Promise<void> {
-      return Promise.all([this.transporter.requestsCache.clear(), this.transporter.responsesCache.clear()]).then(
-        () => undefined,
-      );
+      return Promise.all([transporter.requestsCache.clear(), transporter.responsesCache.clear()]).then(() => undefined);
     },
 
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
-      return this.transporter.algoliaAgent.value;
+      return transporter.algoliaAgent.value;
     },
 
     /**
@@ -127,7 +126,7 @@ export function createAnalyticsClient({
      * @param version - The version of the agent.
      */
     addAlgoliaAgent(segment: string, version?: string): void {
-      this.transporter.algoliaAgent.add({ segment, version });
+      transporter.algoliaAgent.add({ segment, version });
     },
 
     /**
@@ -138,9 +137,9 @@ export function createAnalyticsClient({
      */
     setClientApiKey({ apiKey }: { apiKey: string }): void {
       if (!authMode || authMode === 'WithinHeaders') {
-        this.transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+        transporter.baseHeaders['x-algolia-api-key'] = apiKey;
       } else {
-        this.transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
+        transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
       }
     },
 
@@ -171,7 +170,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -198,7 +197,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -230,7 +229,7 @@ export function createAnalyticsClient({
         data: body ? body : {},
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -262,7 +261,7 @@ export function createAnalyticsClient({
         data: body ? body : {},
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -296,7 +295,6 @@ export function createAnalyticsClient({
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
-
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -311,7 +309,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -347,7 +345,6 @@ export function createAnalyticsClient({
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
-
       if (tags !== undefined) {
         queryParameters.tags = tags.toString();
       }
@@ -359,7 +356,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -406,7 +403,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -436,7 +433,6 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -454,7 +450,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -484,6 +480,7 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -501,7 +498,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -531,10 +528,10 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
+
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -549,7 +546,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -579,6 +576,7 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -597,7 +595,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -624,6 +622,7 @@ export function createAnalyticsClient({
       const requestPath = '/2/conversions/purchaseRate';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
@@ -644,7 +643,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -692,7 +691,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -722,9 +721,11 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
+
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -739,7 +740,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -771,17 +772,16 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
-
       if (limit !== undefined) {
         queryParameters.limit = limit.toString();
       }
+
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
@@ -796,7 +796,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -828,16 +828,17 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
-
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
       if (limit !== undefined) {
         queryParameters.limit = limit.toString();
       }
+
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
@@ -852,7 +853,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -884,7 +885,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -916,17 +917,16 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
-
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
       if (limit !== undefined) {
         queryParameters.limit = limit.toString();
       }
+
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
@@ -941,7 +941,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -971,6 +971,7 @@ export function createAnalyticsClient({
       const requestPath = '/2/filters';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
@@ -986,6 +987,7 @@ export function createAnalyticsClient({
       if (limit !== undefined) {
         queryParameters.limit = limit.toString();
       }
+
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
@@ -1000,7 +1002,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1041,10 +1043,10 @@ export function createAnalyticsClient({
       if (search !== undefined) {
         queryParameters.search = search.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
-
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -1065,7 +1067,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1098,6 +1100,7 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
+
       if (search !== undefined) {
         queryParameters.search = search.toString();
       }
@@ -1124,7 +1127,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1162,10 +1165,10 @@ export function createAnalyticsClient({
       if (search !== undefined) {
         queryParameters.search = search.toString();
       }
+
       if (clickAnalytics !== undefined) {
         queryParameters.clickAnalytics = clickAnalytics.toString();
       }
-
       if (revenueAnalytics !== undefined) {
         queryParameters.revenueAnalytics = revenueAnalytics.toString();
       }
@@ -1175,10 +1178,10 @@ export function createAnalyticsClient({
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
+
       if (limit !== undefined) {
         queryParameters.limit = limit.toString();
       }
-
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
@@ -1193,7 +1196,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1259,7 +1262,6 @@ export function createAnalyticsClient({
       if (direction !== undefined) {
         queryParameters.direction = direction.toString();
       }
-
       if (limit !== undefined) {
         queryParameters.limit = limit.toString();
       }
@@ -1277,7 +1279,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
 
     /**
@@ -1326,7 +1328,7 @@ export function createAnalyticsClient({
         headers,
       };
 
-      return this.transporter.request(request, requestOptions);
+      return transporter.request(request, requestOptions);
     },
   };
 }

@@ -34,13 +34,15 @@ export function algoliasearch(appId: string, apiKey: string, options?: ClientOpt
     throw new Error('`apiKey` is missing.');
   }
 
+  const client = searchClient(appId, apiKey, options);
+
   return {
-    ...searchClient(appId, apiKey, options),
+    ...client,
     /**
      * Get the value of the `algoliaAgent`, used by our libraries internally and telemetry system.
      */
     get _ua(): string {
-      return this.transporter.algoliaAgent.value;
+      return client.transporter.algoliaAgent.value;
     },
     initRecommend: (initOptions: InitClientOptions = {}): RecommendClient => {
       return recommendClient(initOptions.appId || appId, initOptions.apiKey || apiKey, initOptions.options);
