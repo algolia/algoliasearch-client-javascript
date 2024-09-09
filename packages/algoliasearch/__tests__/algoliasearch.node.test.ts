@@ -20,6 +20,18 @@ describe('api', () => {
 
   it('provides a `clearCache` method', () => {
     expect(client.clearCache).not.toBeUndefined();
+    expect(() => client.clearCache()).not.toThrow();
+  });
+
+  it('provides a `setClientApiKey` method', () => {
+    const _client = algoliasearch('foo', 'bar', {
+      requester: echoRequester(),
+    });
+
+    expect(_client.transporter.baseHeaders['x-algolia-api-key']).toEqual('bar');
+    expect(_client.setClientApiKey).not.toBeUndefined();
+    _client.setClientApiKey({ apiKey: 'tabac' });
+    expect(_client.transporter.baseHeaders['x-algolia-api-key']).toEqual('tabac');
   });
 
   it('sets the user agent', async () => {

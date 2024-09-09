@@ -133,7 +133,11 @@ export function createRecommendClient({
      * @param params.apiKey - The new API Key to use.
      */
     setClientApiKey({ apiKey }: { apiKey: string }): void {
-      this.transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      if (!authMode || authMode === 'WithinHeaders') {
+        this.transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      } else {
+        this.transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
+      }
     },
 
     /**

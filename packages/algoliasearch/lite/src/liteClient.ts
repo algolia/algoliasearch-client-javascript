@@ -127,7 +127,11 @@ export function createLiteClient({
      * @param params.apiKey - The new API Key to use.
      */
     setClientApiKey({ apiKey }: { apiKey: string }): void {
-      this.transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      if (!authMode || authMode === 'WithinHeaders') {
+        this.transporter.baseHeaders['x-algolia-api-key'] = apiKey;
+      } else {
+        this.transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
+      }
     },
     /**
      * Helper: calls the `search` method but with certainty that we will only request Algolia records (hits) and not facets.
