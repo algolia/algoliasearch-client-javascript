@@ -1,3 +1,8 @@
+## [5.4.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.3.2...5.4.0)
+
+- [52e1b570a](https://github.com/algolia/api-clients-automation/commit/52e1b570a) feat(javascript): add requester-testing package ([#3684](https://github.com/algolia/api-clients-automation/pull/3684)) by [@shortcuts](https://github.com/shortcuts/)
+- [896435217](https://github.com/algolia/api-clients-automation/commit/896435217) feat(javascript): add worker exports ([#3680](https://github.com/algolia/api-clients-automation/pull/3680)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.3.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.3.1...5.3.2)
 
 - [0a433cc7a](https://github.com/algolia/api-clients-automation/commit/0a433cc7a) fix(javascript): use transporter directly ([#3682](https://github.com/algolia/api-clients-automation/pull/3682)) by [@shortcuts](https://github.com/shortcuts/)
