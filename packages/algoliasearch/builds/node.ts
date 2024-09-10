@@ -17,9 +17,9 @@ import type { InitClientOptions, InitClientRegion } from './models';
 export * from './models';
 
 export type Algoliasearch = SearchClient & {
-  initRecommend: (initOptions: InitClientOptions) => RecommendClient;
-  initAnalytics: (initOptions: InitClientOptions & InitClientRegion<AnalyticsRegion>) => AnalyticsClient;
-  initAbtesting: (initOptions: InitClientOptions & InitClientRegion<AbtestingRegion>) => AbtestingClient;
+  initRecommend: (initOptions?: InitClientOptions) => RecommendClient;
+  initAnalytics: (initOptions?: InitClientOptions & InitClientRegion<AnalyticsRegion>) => AnalyticsClient;
+  initAbtesting: (initOptions?: InitClientOptions & InitClientRegion<AbtestingRegion>) => AbtestingClient;
   initPersonalization: (
     initOptions: InitClientOptions & Required<InitClientRegion<PersonalizationRegion>>,
   ) => PersonalizationClient;

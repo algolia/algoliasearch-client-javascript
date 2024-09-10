@@ -11,12 +11,17 @@ module.exports = {
     {
       ...baseConfig,
       testEnvironment: 'jsdom',
-      testPathIgnorePatterns: [ '__tests__/algoliasearch.node.test.ts' ],
+      testMatch: [ '**/algoliasearch.browser.*' ],
     },
     {
       ...baseConfig,
       testEnvironment: 'node',
-      testPathIgnorePatterns: [ '__tests__/algoliasearch.browser.test.ts' ],
+      testMatch: [ '**/algoliasearch.(node|common).*' ],
+    },
+    {
+      ...baseConfig,
+      testEnvironment: "miniflare",
+      testMatch: [ '**/algoliasearch.fetch.*' ],
     },
   ],
 };

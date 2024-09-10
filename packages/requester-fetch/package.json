@@ -15,16 +15,23 @@
         "types": {
           "import": "./dist/requester.fetch.node.d.ts",
           "module": "./dist/requester.fetch.node.d.ts",
-          "require": "./dist/requester.fetch.node.d.cts"
+          "require": "./dist/requester.fetch.node.d.cts",
+          "default": "./dist/requester.fetch.node.d.cts"
         },
         "import": "./dist/requester.fetch.node.js",
         "module": "./dist/requester.fetch.node.js",
-        "require": "./dist/requester.fetch.node.cjs"
+        "require": "./dist/requester.fetch.node.cjs",
+        "default": "./dist/requester.fetch.node.cjs"
+      },
+      "worker": {
+        "types": "./dist/requester.fetch.node.d.ts",
+        "default": "./dist/requester.fetch.node.js"
       },
       "default": {
         "types": "./dist/requester.fetch.browser.d.ts",
         "module": "./dist/requester.fetch.browser.js",
-        "import": "./dist/requester.fetch.browser.js"
+        "import": "./dist/requester.fetch.browser.js",
+        "default": "./dist/requester.fetch.browser.js"
       }
     },
     "./src/*": "./src/*.ts"

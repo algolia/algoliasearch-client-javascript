@@ -9,7 +9,6 @@ const nodeOptions: Options = {
   ...getBaseNodeOptions(pkg, __dirname),
   dts: { entry: { node: 'lite/builds/node.ts' } },
   entry: ['lite/builds/node.ts', 'lite/src/*.ts'],
-
   outDir: 'dist/lite',
 };
 
@@ -17,17 +16,17 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'cjs',
-    name: 'node lite cjs',
+    name: `node ${pkg.name} cjs`,
   },
   {
     ...nodeOptions,
     format: 'esm',
-    name: 'node lite esm',
+    name: `node ${pkg.name} esm`,
   },
   {
     ...nodeOptions,
     format: 'cjs',
-    name: 'node cjs',
+    name: 'node algoliasearch cjs',
     dts: { entry: { node: 'builds/node.ts' } },
     entry: ['builds/node.ts'],
     outDir: 'dist',
@@ -35,16 +34,24 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'esm',
-    name: 'node esm',
+    name: 'node algoliasearch esm',
     dts: { entry: { node: 'builds/node.ts' } },
     entry: ['builds/node.ts'],
     outDir: 'dist',
+  },
+  {
+    ...nodeOptions,
+    format: 'esm',
+    name: 'fetch algoliasearch esm',
+    dts: { entry: { fetch: 'builds/fetch.ts' } },
+    entry: ['builds/fetch.ts'],
+    outDir: 'dist',
+    external: getDependencies(pkg, 'fetch'),
   },
 ];
 
 const browserOptions: Options = {
   ...getBaseBrowserOptions(pkg, __dirname),
-
   globalName: 'lite',
   outDir: 'dist/lite',
 };
@@ -53,7 +60,7 @@ const browserConfigs: Options[] = [
   {
     ...browserOptions,
     minify: false,
-    name: 'browser esm',
+    name: `browser ${pkg.name} esm`,
     dts: { entry: { browser: 'lite/builds/browser.ts' } },
     entry: ['lite/builds/browser.ts', 'lite/src/*.ts'],
     external: ['dom', '@algolia/client-common', '@algolia/requester-browser-xhr'],
@@ -62,7 +69,7 @@ const browserConfigs: Options[] = [
     ...browserOptions,
     dts: false,
     minify: true,
-    name: 'browser min esm',
+    name: `browser ${pkg.name} min esm`,
     entry: { 'builds/browser.min': 'lite/builds/browser.ts' },
     external: [],
     noExternal: ['dom', '@algolia/client-common', '@algolia/requester-browser-xhr'],
@@ -85,7 +92,7 @@ const browserConfigs: Options[] = [
     entry: { 'browser.min': 'builds/browser.ts' },
     outDir: 'dist',
     external: [],
-    noExternal: getDependencies(pkg, 'browser'),
+    noExternal: getDependencies(pkg, 'xhr'),
   },
 ];
 

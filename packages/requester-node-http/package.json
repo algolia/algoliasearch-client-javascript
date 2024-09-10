@@ -19,11 +19,13 @@
       "types": {
         "import": "./dist/requester.http.d.ts",
         "module": "./dist/requester.http.d.ts",
-        "require": "./dist/requester.http.d.cts"
+        "require": "./dist/requester.http.d.cts",
+        "default": "./dist/requester.http.d.cts"
       },
       "import": "./dist/requester.http.js",
       "module": "./dist/requester.http.js",
-      "require": "./dist/requester.http.cjs"
+      "require": "./dist/requester.http.cjs",
+      "default": "./dist/requester.http.cjs"
     },
     "./src/*": "./src/*.ts"
   },

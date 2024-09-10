@@ -1,4 +1,4 @@
-import { algoliasearch, apiClientVersion } from '../builds/browser';
+import { algoliasearch, apiClientVersion } from '../builds/fetch';
 
 describe('bundle', () => {
   const client = algoliasearch('APP_ID', 'API_KEY');
@@ -7,7 +7,7 @@ describe('bundle', () => {
     expect(client.transporter.algoliaAgent).toEqual({
       add: expect.any(Function),
       value: expect.stringContaining(
-        `Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion}); Browser`,
+        `Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion}); Fetch`,
       ),
     });
   });

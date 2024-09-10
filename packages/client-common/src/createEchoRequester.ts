@@ -1,7 +1,13 @@
 import type { EchoResponse, EndRequest, Requester, Response } from './types';
 
+type BasicURL = {
+  host: string;
+  search: string;
+  pathname: string;
+};
+
 export type EchoRequesterParams = {
-  getURL: (url: string) => URL;
+  getURL: (url: string) => BasicURL;
   status?: number;
 };
 
@@ -9,7 +15,7 @@ function getUrlParams({
   host,
   search,
   pathname,
-}: URL): Pick<EchoResponse, 'algoliaAgent' | 'host' | 'path' | 'searchParams'> {
+}: BasicURL): Pick<EchoResponse, 'algoliaAgent' | 'host' | 'path' | 'searchParams'> {
   const urlSearchParams = search.split('?');
   if (urlSearchParams.length === 1) {
     return {

@@ -26,6 +26,10 @@
         "module": "./dist/builds/node.js",
         "require": "./dist/builds/node.cjs"
       },
+      "worker": {
+        "types": "./dist/fetch.d.ts",
+        "default": "./dist/builds/fetch.js"
+      },
       "default": {
         "types": "./dist/browser.d.ts",
         "module": "./dist/builds/browser.js",
@@ -46,6 +50,7 @@
   "dependencies": {
     "@algolia/client-common": "5.3.2",
     "@algolia/requester-browser-xhr": "5.3.2",
+    "@algolia/requester-fetch": "5.3.2",
     "@algolia/requester-node-http": "5.3.2"
   },
   "devDependencies": {

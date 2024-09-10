@@ -19,11 +19,13 @@
       "types": {
         "import": "./dist/common.d.ts",
         "module": "./dist/common.d.ts",
-        "require": "./dist/common.d.cts"
+        "require": "./dist/common.d.cts",
+        "default": "./dist/common.d.cts"
       },
       "import": "./dist/common.esm.js",
       "module": "./dist/common.esm.js",
-      "require": "./dist/common.cjs"
+      "require": "./dist/common.cjs",
+      "default": "./dist/common.cjs"
     },
     "./src/*": "./src/*.ts"
   },

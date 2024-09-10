@@ -15,12 +15,20 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'cjs',
-    name: 'node cjs',
+    name: `node ${pkg.name} cjs`,
   },
   {
     ...nodeOptions,
     format: 'esm',
-    name: 'node esm',
+    name: `node ${pkg.name} esm`,
+  },
+  {
+    ...nodeOptions,
+    format: 'esm',
+    name: `fetch ${pkg.name} esm`,
+    dts: { entry: { fetch: 'builds/fetch.ts' } },
+    external: getDependencies(pkg, 'fetch'),
+    entry: ['builds/fetch.ts', 'src/*.ts'],
   },
 ];
 
@@ -33,7 +41,7 @@ const browserConfigs: Options[] = [
   {
     ...browserOptions,
     minify: false,
-    name: 'browser esm',
+    name: `browser ${pkg.name} esm`,
     dts: { entry: { browser: 'builds/browser.ts' } },
     entry: ['builds/browser.ts', 'src/*.ts'],
   },
@@ -41,10 +49,10 @@ const browserConfigs: Options[] = [
     ...browserOptions,
     dts: false,
     minify: true,
-    name: 'browser min esm',
+    name: `browser ${pkg.name} min esm`,
     entry: { 'builds/browser.min': 'builds/browser.ts' },
     external: [],
-    noExternal: getDependencies(pkg, 'browser'),
+    noExternal: getDependencies(pkg, 'xhr'),
   },
 ];
 
