@@ -10,7 +10,7 @@
   "scripts": {
     "build": "yarn clean && yarn tsup && yarn rollup -c rollup.config.js",
     "clean": "rm -rf ./dist || true",
-    "test": "jest",
+    "test": "vitest --run",
     "test:bundle": "publint . && attw --pack ."
   },
   "name": "algoliasearch",
@@ -80,17 +80,16 @@
     "@algolia/requester-node-http": "5.3.2"
   },
   "devDependencies": {
+    "@algolia/requester-testing": "0.0.0",
     "@arethetypeswrong/cli": "0.15.4",
-    "@babel/preset-env": "7.25.4",
-    "@babel/preset-typescript": "7.24.7",
-    "@types/jest": "29.5.12",
     "@types/node": "22.5.1",
-    "jest": "29.7.0",
-    "jest-environment-miniflare": "2.14.3",
+    "jsdom": "25.0.0",
     "publint": "0.2.10",
     "rollup": "4.21.2",
     "tsup": "8.2.4",
-    "typescript": "5.5.4"
+    "typescript": "5.5.4",
+    "vitest": "2.0.5",
+    "vitest-environment-miniflare": "2.14.3"
   },
   "engines": {
     "node": ">= 14.0.0"

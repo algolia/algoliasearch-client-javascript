@@ -1,18 +1,20 @@
+import { vi, describe, test, beforeEach, expect } from 'vitest';
+
 import { createMemoryCache } from '../../cache';
 
 type DefaultValue = Promise<{ bar: number }>;
 
 describe('memory cache', () => {
-  const missMock = jest.fn();
+  const missMock = vi.fn();
   const events = {
     miss: (): Promise<any> => Promise.resolve(missMock()),
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  it('sets/gets values', async () => {
+  test('sets/gets values', async () => {
     const cache = createMemoryCache();
     const defaultValue = (): DefaultValue => Promise.resolve({ bar: 1 });
 
@@ -27,7 +29,7 @@ describe('memory cache', () => {
     expect(missMock.mock.calls.length).toBe(1);
   });
 
-  it('getted values do not have references to the value on cache', async () => {
+  test('getted values do not have references to the value on cache', async () => {
     const cache = createMemoryCache();
     const key = { foo: 'bar' };
     const obj = { 1: { 2: 'bar' } };
@@ -42,7 +44,7 @@ describe('memory cache', () => {
     });
   });
 
-  it('deletes keys', async () => {
+  test('deletes keys', async () => {
     const cache = createMemoryCache();
 
     await cache.set({ key: 'foo' }, { bar: 1 });
@@ -54,7 +56,7 @@ describe('memory cache', () => {
     expect(missMock.mock.calls.length).toBe(1);
   });
 
-  it('can be cleared', async () => {
+  test('can be cleared', async () => {
     const cache = createMemoryCache();
 
     await cache.set({ key: 'foo' }, { bar: 1 });
@@ -66,7 +68,7 @@ describe('memory cache', () => {
     expect(missMock.mock.calls.length).toBe(1);
   });
 
-  it('do not force promise based api for clearing cache', async () => {
+  test('do not force promise based api for clearing cache', async () => {
     const cache = createMemoryCache();
 
     cache.set({ key: 'foo' }, { bar: 1 });

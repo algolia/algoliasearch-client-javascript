@@ -1,4 +1,11 @@
-import type { EchoResponse, EndRequest, Requester, Response } from './types';
+import type { Request, EndRequest, Requester, Response } from '@algolia/client-common';
+
+export type EchoResponse = Omit<EndRequest, 'data'> &
+  Pick<Request, 'data' | 'path'> & {
+    host: string;
+    algoliaAgent: string;
+    searchParams?: Record<string, string>;
+  };
 
 type BasicURL = {
   host: string;

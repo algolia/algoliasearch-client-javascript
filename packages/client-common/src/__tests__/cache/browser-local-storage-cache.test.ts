@@ -1,3 +1,5 @@
+import { vi, describe, test, beforeEach, expect } from 'vitest';
+
 import { createBrowserLocalStorageCache } from '../../cache';
 
 const version = 'foobar';
@@ -12,17 +14,17 @@ const notAvailableStorage = new Proxy(window.localStorage, {
 type DefaultValue = Promise<{ bar: number }>;
 
 describe('browser local storage cache', () => {
-  const missMock = jest.fn();
+  const missMock = vi.fn();
   const events = {
     miss: (): Promise<any> => Promise.resolve(missMock()),
   };
 
   beforeEach(() => {
     window.localStorage.clear();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  it('sets/gets values', async () => {
+  test('sets/gets values', async () => {
     const cache = createBrowserLocalStorageCache({ key: version });
     const defaultValue = (): DefaultValue => Promise.resolve({ bar: 1 });
 
@@ -35,7 +37,7 @@ describe('browser local storage cache', () => {
     expect(missMock.mock.calls.length).toBe(1);
   });
 
-  it('reads unexpired timeToLive keys', async () => {
+  test('reads unexpired timeToLive keys', async () => {
     const cache = createBrowserLocalStorageCache({
       key: version,
       timeToLive: 5,
@@ -53,7 +55,7 @@ describe('browser local storage cache', () => {
     expect(missMock.mock.calls.length).toBe(0);
   });
 
-  it('deletes keys', async () => {
+  test('deletes keys', async () => {
     const cache = createBrowserLocalStorageCache({ key: version });
 
     await cache.set({ key: 'foo' }, { bar: 1 });
@@ -65,7 +67,7 @@ describe('browser local storage cache', () => {
     expect(missMock.mock.calls.length).toBe(1);
   });
 
-  it('deletes expired keys', async () => {
+  test('deletes expired keys', async () => {
     const cache = createBrowserLocalStorageCache({
       key: version,
       timeToLive: -1,
@@ -83,7 +85,7 @@ describe('browser local storage cache', () => {
     expect(missMock.mock.calls.length).toBe(1);
   });
 
-  it('can be cleared', async () => {
+  test('can be cleared', async () => {
     const cache = createBrowserLocalStorageCache({ key: version });
     await cache.set({ key: 'foo' }, { bar: 1 });
 
@@ -104,7 +106,7 @@ describe('browser local storage cache', () => {
     expect(localStorage.getItem(`algolia-client-js-${version}`)).toEqual('{}');
   });
 
-  it('do throws localstorage exceptions on access', async () => {
+  test('do throws localstorage exceptions on access', async () => {
     const message = "Failed to read the 'localStorage' property from 'Window': Access is denied for this document.";
     const cache = createBrowserLocalStorageCache(
       new Proxy(
@@ -130,7 +132,7 @@ describe('browser local storage cache', () => {
     await expect(cache.get(key, () => Promise.resolve(fallback))).rejects.toEqual(new DOMException(message));
   });
 
-  it('do throws localstorage exceptions after access', async () => {
+  test('do throws localstorage exceptions after access', async () => {
     const cache = createBrowserLocalStorageCache({
       key: version,
       localStorage: notAvailableStorage,
@@ -145,7 +147,7 @@ describe('browser local storage cache', () => {
     await expect(cache.get(key, () => Promise.resolve(fallback))).rejects.toEqual(new Error(message));
   });
 
-  it('creates a namespace within local storage', async () => {
+  test('creates a namespace within local storage', async () => {
     const cache = createBrowserLocalStorageCache({
       key: version,
     });

@@ -63,10 +63,3 @@ export type Requester = {
    */
   send: (request: EndRequest) => Promise<Response>;
 };
-
-export type EchoResponse = Omit<EndRequest, 'data'> &
-  Pick<Request, 'data' | 'path'> & {
-    host: string;
-    algoliaAgent: string;
-    searchParams?: Record<string, string>;
-  };

@@ -15,6 +15,6 @@ export default defineConfig([
     ...getBaseNodeOptions(pkg, __dirname),
     format: 'esm',
     dts: { entry: { common: 'index.ts' } },
-    entry: { 'common.esm': 'index.ts' },
+    entry: { common: 'index.ts' },
   },
 ]);

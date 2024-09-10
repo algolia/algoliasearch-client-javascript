@@ -19,34 +19,29 @@
       "types": {
         "import": "./dist/common.d.ts",
         "module": "./dist/common.d.ts",
-        "require": "./dist/common.d.cts",
-        "default": "./dist/common.d.cts"
+        "require": "./dist/common.d.cts"
       },
-      "import": "./dist/common.esm.js",
-      "module": "./dist/common.esm.js",
-      "require": "./dist/common.cjs",
-      "default": "./dist/common.cjs"
+      "import": "./dist/common.js",
+      "module": "./dist/common.js",
+      "require": "./dist/common.cjs"
     },
     "./src/*": "./src/*.ts"
   },
   "scripts": {
     "build": "yarn clean && yarn tsup",
     "clean": "rm -rf ./dist || true",
-    "test": "jest",
+    "test": "vitest --run",
     "test:bundle": "publint . && attw --pack ."
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.16.1",
-    "@babel/preset-env": "7.25.4",
-    "@babel/preset-typescript": "7.24.7",
-    "@types/jest": "29.5.12",
     "@types/node": "22.5.1",
-    "jest": "29.7.0",
-    "jest-environment-jsdom": "29.7.0",
+    "jsdom": "25.0.0",
     "publint": "0.2.10",
-    "ts-jest": "29.2.5",
+    "ts-node": "10.9.2",
     "tsup": "8.2.4",
-    "typescript": "5.5.4"
+    "typescript": "5.5.4",
+    "vitest": "2.0.5"
   },
   "engines": {
     "node": ">= 14.0.0"

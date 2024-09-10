@@ -1,3 +1,5 @@
+import { describe, test, expect } from 'vitest';
+
 import {
   createBrowserLocalStorageCache,
   createFallbackableCache,
@@ -21,7 +23,7 @@ describe('fallbackable cache', () => {
   const value = { 3: 4 };
   const defaultValue = (): DefaultValue => Promise.resolve({ 5: 6 });
 
-  it('always fallback in null cache', async () => {
+  test('always fallback in null cache', async () => {
     const cache = createFallbackableCache({ caches: [] });
 
     await cache.set(key, value);
@@ -31,7 +33,7 @@ describe('fallbackable cache', () => {
   });
 
   describe('order', () => {
-    it('use memory cache', async () => {
+    test('use memory cache', async () => {
       const cache = createFallbackableCache({
         caches: [createMemoryCache()],
       });
@@ -43,7 +45,7 @@ describe('fallbackable cache', () => {
       });
     });
 
-    it('use null cache first', async () => {
+    test('use null cache first', async () => {
       const cache = createFallbackableCache({
         caches: [createNullCache(), createMemoryCache()],
       });
@@ -56,71 +58,69 @@ describe('fallbackable cache', () => {
     });
   });
 
-  describe('fallbacks', () => {
-    it('to memory cache', async () => {
-      const cache = createFallbackableCache({
-        caches: [
-          createBrowserLocalStorageCache({
-            key: version,
-            // @ts-expect-error this will make the cache fail, and normally we fallback on memory cache
-            localStorage: {},
-          }),
-          createMemoryCache(),
-        ],
-      });
-
-      await cache.set(key, value);
-
-      expect(await cache.get(key, defaultValue)).toEqual({
-        3: 4,
-      });
+  test('fallback to to memory cache', async () => {
+    const cache = createFallbackableCache({
+      caches: [
+        createBrowserLocalStorageCache({
+          key: version,
+          // @ts-expect-error this will make the cache fail, and normally we fallback on memory cache
+          localStorage: {},
+        }),
+        createMemoryCache(),
+      ],
     });
 
-    it('to null cache', async () => {
-      const cache = createFallbackableCache({
-        caches: [
-          createBrowserLocalStorageCache({
-            key: version,
-            // @ts-expect-error this will make the cache fail, and normally we fallback on memory cache
-            localStorage: {},
-          }),
-        ],
-      });
+    await cache.set(key, value);
 
-      await cache.set(key, value);
+    expect(await cache.get(key, defaultValue)).toEqual({
+      3: 4,
+    });
+  });
 
-      expect(await cache.get(key, defaultValue)).toEqual({
-        5: 6,
-      });
+  test('fallback to null cache', async () => {
+    const cache = createFallbackableCache({
+      caches: [
+        createBrowserLocalStorageCache({
+          key: version,
+          // @ts-expect-error this will make the cache fail, and normally we fallback on memory cache
+          localStorage: {},
+        }),
+      ],
     });
 
-    it('to memory cache', async () => {
-      const cache = createFallbackableCache({
-        caches: [
-          createBrowserLocalStorageCache({
-            key: version,
-            // @ts-expect-error this will make the cache fail
-            localStorage: {},
-          }),
-          createBrowserLocalStorageCache({
-            key: version,
-            localStorage: notAvailableStorage, // this will make the cache fail due localStorage not available
-          }),
-          createMemoryCache(),
-        ],
-      });
+    await cache.set(key, value);
 
-      await cache.set(key, value);
+    expect(await cache.get(key, defaultValue)).toEqual({
+      5: 6,
+    });
+  });
 
-      expect(await cache.get(key, defaultValue)).toEqual({
-        3: 4,
-      });
+  test('fallback to memory cache', async () => {
+    const cache = createFallbackableCache({
+      caches: [
+        createBrowserLocalStorageCache({
+          key: version,
+          // @ts-expect-error this will make the cache fail
+          localStorage: {},
+        }),
+        createBrowserLocalStorageCache({
+          key: version,
+          localStorage: notAvailableStorage, // this will make the cache fail due localStorage not available
+        }),
+        createMemoryCache(),
+      ],
+    });
 
-      await cache.clear();
+    await cache.set(key, value);
 
-      expect(await cache.get(key, defaultValue)).toEqual({
-        5: 6,
-      });
+    expect(await cache.get(key, defaultValue)).toEqual({
+      3: 4,
+    });
+
+    await cache.clear();
+
+    expect(await cache.get(key, defaultValue)).toEqual({
+      5: 6,
     });
   });
 });

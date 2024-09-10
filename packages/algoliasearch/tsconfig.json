@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "types": ["node", "jest"],
+    "types": ["node", "@cloudflare/workers-types", "vitest-environment-miniflare/globals", "vitest/globals"],
     "outDir": "dist"
   },
   "include": ["src", "model", "builds"],

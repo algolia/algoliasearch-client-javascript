@@ -1,6 +1,7 @@
 import type http from 'http';
 
 import type { EndRequest } from '@algolia/client-common';
+import { describe, test, beforeAll, afterAll, beforeEach, afterEach, expect } from 'vitest';
 import type { MockRequest, MockResponse } from 'xhr-mock';
 import mock from 'xhr-mock';
 
@@ -17,10 +18,14 @@ import {
 const requester = createXhrRequester();
 
 describe('status code handling', () => {
-  beforeEach(() => mock.setup());
-  afterEach(() => mock.teardown());
+  beforeEach(() => {
+    mock.setup();
+  });
+  afterEach(() => {
+    mock.teardown();
+  });
 
-  it('sends requests', async () => {
+  test('sends requests', async () => {
     mock.post(BASE_URL, (req: MockRequest, res: MockResponse): MockResponse => {
       expect(req.method()).toEqual('POST');
       expect(req.header('content-type')).toEqual('text/plain');
@@ -32,7 +37,7 @@ describe('status code handling', () => {
     await requester.send(requestStub);
   });
 
-  it('resolves status 200', async () => {
+  test('resolves status 200', async () => {
     const body = getStringifiedBody();
 
     mock.post(BASE_URL, {
@@ -47,7 +52,7 @@ describe('status code handling', () => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('resolves status 300', async () => {
+  test('resolves status 300', async () => {
     const reason = 'Multiple Choices';
 
     mock.post(BASE_URL, {
@@ -62,7 +67,7 @@ describe('status code handling', () => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('resolves status 400', async () => {
+  test('resolves status 400', async () => {
     const body = getStringifiedBody({
       message: 'Invalid Application-Id or API-Key',
     });
@@ -79,7 +84,7 @@ describe('status code handling', () => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('handles the protocol', async () => {
+  test('handles the protocol', async () => {
     const body = getStringifiedBody();
 
     mock.post('http://localhost/', {
@@ -107,11 +112,14 @@ describe('timeout handling', () => {
     server.listen('1111');
   });
 
-  afterAll((done) => {
-    server.close(() => done());
-  });
+  afterAll(
+    () =>
+      new Promise((done) => {
+        done();
+      }),
+  );
 
-  it('connection timeouts with the given 1 seconds connection timeout', async () => {
+  test('connection timeouts with the given 1 seconds connection timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
@@ -126,7 +134,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(1200);
   });
 
-  it('connection timeouts with the given 2 seconds connection timeout', async () => {
+  test('connection timeouts with the given 2 seconds connection timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...timeoutRequest,
@@ -141,7 +149,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(2200);
   });
 
-  it("socket timeouts if response don't appears before the timeout with 2 seconds timeout", async () => {
+  test("socket timeouts if response don't appears before the timeout with 2 seconds timeout", async () => {
     const before = Date.now();
 
     const response = await requester.send({
@@ -157,7 +165,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(2200);
   });
 
-  it("socket timeouts if response don't appears before the timeout with 3 seconds timeout", async () => {
+  test("socket timeouts if response don't appears before the timeout with 3 seconds timeout", async () => {
     const before = Date.now();
 
     const response = await requester.send({
@@ -173,7 +181,7 @@ describe('timeout handling', () => {
     expect(now - before).toBeLessThanOrEqual(3200);
   });
 
-  it('do not timeouts if response appears before the timeout', async () => {
+  test('do not timeouts if response appears before the timeout', async () => {
     const before = Date.now();
     const response = await requester.send({
       ...requestStub,
@@ -192,7 +200,7 @@ describe('timeout handling', () => {
 });
 
 describe('error handling', () => {
-  it('resolves dns not found', async () => {
+  test('resolves dns not found', async () => {
     const request: EndRequest = {
       url: 'https://this-dont-exist.algolia.com',
       method: 'POST',
@@ -209,7 +217,7 @@ describe('error handling', () => {
     expect(response.isTimedOut).toBe(false);
   });
 
-  it('resolves general network errors', async () => {
+  test('resolves general network errors', async () => {
     mock.post(BASE_URL, () => Promise.reject(new Error('This is a general error')));
 
     const response = await requester.send(requestStub);

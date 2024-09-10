@@ -1,8 +1,10 @@
+import { describe, test, expect } from 'vitest';
+
 import { createIterablePromise } from '../createIterablePromise';
 
 describe('createIterablePromise', () => {
   describe('func', () => {
-    it('provides the `previousResponse` parameter', async () => {
+    test('provides the `previousResponse` parameter', async () => {
       const responses: Array<string | undefined> = [];
       const promise = createIterablePromise<string | undefined>({
         func: (previousResponse) => {
@@ -20,7 +22,7 @@ describe('createIterablePromise', () => {
   });
 
   describe('validate', () => {
-    it('iterates on a `func` until `validate` is met', async () => {
+    test('iterates on a `func` until `validate` is met', async () => {
       let calls = 0;
       const promise = createIterablePromise({
         func: () => {
@@ -36,7 +38,7 @@ describe('createIterablePromise', () => {
       expect(calls).toBe(3);
     });
 
-    it('forward the response of the `func`', async () => {
+    test('forward the response of the `func`', async () => {
       let calls = 0;
       const promise = createIterablePromise<number>({
         func: () => {
@@ -54,7 +56,7 @@ describe('createIterablePromise', () => {
   });
 
   describe('aggregator', () => {
-    it('is called before iterating', async () => {
+    test('is called before iterating', async () => {
       let calls = 0;
       let count = 0;
       const promise = createIterablePromise({
@@ -73,7 +75,7 @@ describe('createIterablePromise', () => {
       expect(count).toBe(3 * 3);
     });
 
-    it('forward the response of the `func`', async () => {
+    test('forward the response of the `func`', async () => {
       let calls = 0;
       const responses: string[] = [];
       const promise = createIterablePromise<string>({
@@ -96,7 +98,7 @@ describe('createIterablePromise', () => {
   });
 
   describe('timeout', () => {
-    it('defaults to no timeout (0)', async () => {
+    test('defaults to no timeout (0)', async () => {
       let calls = 0;
       const before = Date.now();
       const promise = createIterablePromise({
@@ -116,7 +118,7 @@ describe('createIterablePromise', () => {
       expect(calls).toBe(2);
     });
 
-    it('waits before calling the `func` again', async () => {
+    test('waits before calling the `func` again', async () => {
       let calls = 0;
       const before = Date.now();
       const promise = createIterablePromise({
@@ -139,7 +141,7 @@ describe('createIterablePromise', () => {
   });
 
   describe('error', () => {
-    it('gets the rejection of the given promise via reject', async () => {
+    test('gets the rejection of the given promise via reject', async () => {
       let calls = 0;
 
       const promise = createIterablePromise({
@@ -159,7 +161,7 @@ describe('createIterablePromise', () => {
       await expect(promise).rejects.toEqual(expect.objectContaining({ message: 'nope' }));
     });
 
-    it('gets the rejection of the given promise via throw', async () => {
+    test('gets the rejection of the given promise via throw', async () => {
       let calls = 0;
 
       const promise = createIterablePromise({
@@ -179,7 +181,7 @@ describe('createIterablePromise', () => {
       await expect(promise).rejects.toEqual(expect.objectContaining({ message: 'nope' }));
     });
 
-    it('rejects with the given `message` when `validate` hits', async () => {
+    test('rejects with the given `message` when `validate` hits', async () => {
       const MAX_RETRIES = 3;
       let calls = 0;
 
@@ -205,7 +207,7 @@ describe('createIterablePromise', () => {
       expect(calls).toBe(MAX_RETRIES);
     });
 
-    it('forward the response of the `func`', async () => {
+    test('forward the response of the `func`', async () => {
       const MAX_RETRIES = 3;
       let calls = 0;
 
