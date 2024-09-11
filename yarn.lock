@@ -122,23 +122,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-usage@workspace:packages/client-usage":
-  version: 0.0.0-use.local
-  resolution: "@algolia/client-usage@workspace:packages/client-usage"
-  dependencies:
-    "@algolia/client-common": "npm:5.4.0"
-    "@algolia/requester-browser-xhr": "npm:5.4.0"
-    "@algolia/requester-fetch": "npm:5.4.0"
-    "@algolia/requester-node-http": "npm:5.4.0"
-    "@arethetypeswrong/cli": "npm:0.15.4"
-    "@types/node": "npm:22.5.1"
-    publint: "npm:0.2.10"
-    rollup: "npm:4.21.2"
-    tsup: "npm:8.2.4"
-    typescript: "npm:5.5.4"
-  languageName: unknown
-  linkType: soft
-
 "@algolia/ingestion@workspace:packages/ingestion":
   version: 0.0.0-use.local
   resolution: "@algolia/ingestion@workspace:packages/ingestion"

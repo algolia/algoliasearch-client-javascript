@@ -39,7 +39,6 @@ body:
         - Query-Suggestions
         - Recommend
         - Search
-        - Usage
         - Crawler
     validations:
       required: true
