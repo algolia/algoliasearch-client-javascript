@@ -116,4 +116,9 @@ export type BaseSearchResponse = Record<string, any> & {
    * Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
    */
   queryID?: string;
+
+  /**
+   * Whether automatic events collection is enabled for the application.
+   */
+  _automaticInsights?: boolean;
 };
