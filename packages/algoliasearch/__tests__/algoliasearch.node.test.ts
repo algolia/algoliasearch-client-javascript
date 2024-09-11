@@ -12,3 +12,12 @@ test('sets the ua', () => {
     ),
   });
 });
+
+test('forwards node search helpers', () => {
+  expect(client.generateSecuredApiKey).not.toBeUndefined();
+  expect(client.getSecuredApiKeyRemainingValidity).not.toBeUndefined();
+  expect(() => {
+    const resp = client.generateSecuredApiKey({ parentApiKey: 'foo', restrictions: { validUntil: 200 } });
+    client.getSecuredApiKeyRemainingValidity({ securedApiKey: resp });
+  }).not.toThrow();
+});
