@@ -5,7 +5,7 @@ export default [
     output: {
       esModule: false,
       file: 'dist/lite/builds/browser.umd.js',
-      name: 'lite',
+      name: 'algoliasearch/lite',
       format: 'umd',
       sourcemap: false,
       globals: {

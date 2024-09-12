@@ -5,7 +5,7 @@ export default [
     output: {
       esModule: false,
       file: 'dist/builds/browser.umd.js',
-      name: 'recommendClient',
+      name: '@algolia/recommend',
       format: 'umd',
       sourcemap: false,
       globals: {

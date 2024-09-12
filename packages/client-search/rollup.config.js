@@ -5,7 +5,7 @@ export default [
     output: {
       esModule: false,
       file: 'dist/builds/browser.umd.js',
-      name: 'searchClient',
+      name: '@algolia/client-search',
       format: 'umd',
       sourcemap: false,
       globals: {

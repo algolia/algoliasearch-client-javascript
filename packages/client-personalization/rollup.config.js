@@ -5,7 +5,7 @@ export default [
     output: {
       esModule: false,
       file: 'dist/builds/browser.umd.js',
-      name: 'personalizationClient',
+      name: '@algolia/client-personalization',
       format: 'umd',
       sourcemap: false,
       globals: {

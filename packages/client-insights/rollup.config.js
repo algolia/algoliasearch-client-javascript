@@ -5,7 +5,7 @@ export default [
     output: {
       esModule: false,
       file: 'dist/builds/browser.umd.js',
-      name: 'insightsClient',
+      name: '@algolia/client-insights',
       format: 'umd',
       sourcemap: false,
       globals: {

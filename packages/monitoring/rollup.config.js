@@ -5,7 +5,7 @@ export default [
     output: {
       esModule: false,
       file: 'dist/builds/browser.umd.js',
-      name: 'monitoringClient',
+      name: '@algolia/monitoring',
       format: 'umd',
       sourcemap: false,
       globals: {

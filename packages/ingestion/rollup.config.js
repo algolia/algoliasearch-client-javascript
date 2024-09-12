@@ -5,7 +5,7 @@ export default [
     output: {
       esModule: false,
       file: 'dist/builds/browser.umd.js',
-      name: 'ingestionClient',
+      name: '@algolia/ingestion',
       format: 'umd',
       sourcemap: false,
       globals: {

@@ -5,7 +5,7 @@ export default [
     output: {
       esModule: false,
       file: 'dist/builds/browser.umd.js',
-      name: 'abtestingClient',
+      name: '@algolia/client-abtesting',
       format: 'umd',
       sourcemap: false,
       globals: {
