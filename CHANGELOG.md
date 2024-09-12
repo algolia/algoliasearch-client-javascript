@@ -1,3 +1,9 @@
+## [5.4.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.0...5.4.1)
+
+- [d4df544d6](https://github.com/algolia/api-clients-automation/commit/d4df544d6) fix(specs): remove usage [skip-bc] ([#3691](https://github.com/algolia/api-clients-automation/pull/3691)) by [@kai687](https://github.com/kai687/)
+- [d39b87726](https://github.com/algolia/api-clients-automation/commit/d39b87726) chore: assert node helpers ([#3689](https://github.com/algolia/api-clients-automation/pull/3689)) by [@shortcuts](https://github.com/shortcuts/)
+- [46d9d8fd0](https://github.com/algolia/api-clients-automation/commit/46d9d8fd0) feat(specs): add (optional) _automaticInsights to search result ([#3688](https://github.com/algolia/api-clients-automation/pull/3688)) by [@raed667](https://github.com/raed667/)
+
 ## [5.4.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.3.2...5.4.0)
 
 - [52e1b570a](https://github.com/algolia/api-clients-automation/commit/52e1b570a) feat(javascript): add requester-testing package ([#3684](https://github.com/algolia/api-clients-automation/pull/3684)) by [@shortcuts](https://github.com/shortcuts/)
