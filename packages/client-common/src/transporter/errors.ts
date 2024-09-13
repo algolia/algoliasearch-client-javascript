@@ -1,7 +1,7 @@
 import type { Response, StackFrame } from '../types';
 
 export class AlgoliaError extends Error {
-  name: string = 'AlgoliaError';
+  override name: string = 'AlgoliaError';
 
   constructor(message: string, name: string) {
     super(message);
