@@ -1,3 +1,7 @@
+## [5.4.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.1...5.4.2)
+
+- [274fae19b](https://github.com/algolia/api-clients-automation/commit/274fae19b) fix(javascript): umd export name ([#3701](https://github.com/algolia/api-clients-automation/pull/3701)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.4.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.0...5.4.1)
 
 - [d4df544d6](https://github.com/algolia/api-clients-automation/commit/d4df544d6) fix(specs): remove usage [skip-bc] ([#3691](https://github.com/algolia/api-clients-automation/pull/3691)) by [@kai687](https://github.com/kai687/)
