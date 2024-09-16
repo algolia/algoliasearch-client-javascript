@@ -2,8 +2,4 @@
 
 import type { SnippetResultOption } from './snippetResultOption';
 
-export type SnippetResult =
-  | Record<string, SnippetResultOption>
-  | SnippetResultOption
-  | SnippetResultOption[]
-  | { [key: string]: SnippetResult };
+export type SnippetResult = SnippetResult[] | SnippetResultOption | { [key: string]: SnippetResult };
