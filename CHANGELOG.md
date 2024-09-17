@@ -1,3 +1,8 @@
+## [5.4.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.2...5.4.3)
+
+- [638058eae](https://github.com/algolia/api-clients-automation/commit/638058eae) fix(specs): update search api specs [skip-bc] ([#3760](https://github.com/algolia/api-clients-automation/pull/3760)) by [@Fluf22](https://github.com/Fluf22/)
+- [08d8ee6de](https://github.com/algolia/api-clients-automation/commit/08d8ee6de) chore(deps): dependencies 2024-09-16 [skip-bc] ([#3704](https://github.com/algolia/api-clients-automation/pull/3704)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.4.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.1...5.4.2)
 
 - [274fae19b](https://github.com/algolia/api-clients-automation/commit/274fae19b) fix(javascript): umd export name ([#3701](https://github.com/algolia/api-clients-automation/pull/3701)) by [@shortcuts](https://github.com/shortcuts/)

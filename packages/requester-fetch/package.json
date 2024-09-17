@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-fetch",
-  "version": "5.4.2",
+  "version": "5.4.3",
   "description": "Promise-based request library using Fetch.",
   "repository": {
     "type": "git",
@@ -46,7 +46,7 @@
     "test:bundle": "publint . && attw --pack ."
   },
   "dependencies": {
-    "@algolia/client-common": "5.4.2"
+    "@algolia/client-common": "5.4.3"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.16.4",
