@@ -1,3 +1,7 @@
+## [5.5.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.3...5.5.0)
+
+- [d67c0e0e6](https://github.com/algolia/api-clients-automation/commit/d67c0e0e6) feat(javascript): add react-native field in package.json ([#3767](https://github.com/algolia/api-clients-automation/pull/3767)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.4.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.2...5.4.3)
 
 - [638058eae](https://github.com/algolia/api-clients-automation/commit/638058eae) fix(specs): update search api specs [skip-bc] ([#3760](https://github.com/algolia/api-clients-automation/pull/3760)) by [@Fluf22](https://github.com/Fluf22/)
