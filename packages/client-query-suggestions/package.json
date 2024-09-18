@@ -41,6 +41,7 @@
   },
   "jsdelivr": "./dist/builds/browser.umd.js",
   "unpkg": "./dist/builds/browser.umd.js",
+  "react-native": "./dist/builds/browser.js",
   "files": [
     "dist",
     "model",

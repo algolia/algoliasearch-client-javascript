@@ -59,6 +59,7 @@
   },
   "jsdelivr": "./dist/algoliasearch.umd.js",
   "unpkg": "./dist/algoliasearch.umd.js",
+  "react-native": "./dist/browser.js",
   "files": [
     "dist",
     "builds",
