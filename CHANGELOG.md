@@ -1,3 +1,7 @@
+## [5.5.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.5.0...5.5.1)
+
+- [901076592](https://github.com/algolia/api-clients-automation/commit/901076592) fix(javascript): react-native lite resolution ([#3771](https://github.com/algolia/api-clients-automation/pull/3771)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.5.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.4.3...5.5.0)
 
 - [d67c0e0e6](https://github.com/algolia/api-clients-automation/commit/d67c0e0e6) feat(javascript): add react-native field in package.json ([#3767](https://github.com/algolia/api-clients-automation/pull/3767)) by [@shortcuts](https://github.com/shortcuts/)
