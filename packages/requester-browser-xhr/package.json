@@ -18,6 +18,7 @@
     },
     "./src/*": "./src/*.ts"
   },
+  "react-native": "./dist/requester.xhr.js",
   "files": [
     "dist",
     "src",

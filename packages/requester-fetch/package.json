@@ -34,6 +34,7 @@
     },
     "./src/*": "./src/*.ts"
   },
+  "react-native": "./dist/requester.fetch.browser.js",
   "files": [
     "dist",
     "src",
