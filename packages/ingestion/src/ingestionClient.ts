@@ -67,8 +67,6 @@ import type { DestinationCreateResponse } from '../model/destinationCreateRespon
 import type { DestinationSearch } from '../model/destinationSearch';
 import type { DestinationUpdateResponse } from '../model/destinationUpdateResponse';
 import type { Event } from '../model/event';
-import type { GenerateTransformationCodePayload } from '../model/generateTransformationCodePayload';
-import type { GenerateTransformationCodeResponse } from '../model/generateTransformationCodeResponse';
 import type { ListAuthenticationsResponse } from '../model/listAuthenticationsResponse';
 import type { ListDestinationsResponse } from '../model/listDestinationsResponse';
 import type { ListEventsResponse } from '../model/listEventsResponse';
@@ -100,7 +98,6 @@ import type { TaskV1 } from '../model/taskV1';
 import type { Transformation } from '../model/transformation';
 import type { TransformationCreate } from '../model/transformationCreate';
 import type { TransformationCreateResponse } from '../model/transformationCreateResponse';
-import type { TransformationModels } from '../model/transformationModels';
 import type { TransformationSearch } from '../model/transformationSearch';
 import type { TransformationTry } from '../model/transformationTry';
 import type { TransformationTryResponse } from '../model/transformationTryResponse';
@@ -895,53 +892,6 @@ export function createIngestionClient({
     },
 
     /**
-     * Generates code for the selected model based on the given prompt.
-     *
-     * Required API Key ACLs:
-     * - addObject
-     * - deleteIndex
-     * - editSettings.
-     *
-     * @param generateTransformationCodePayload - The generateTransformationCodePayload object.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    generateTransformationCode(
-      generateTransformationCodePayload: GenerateTransformationCodePayload,
-      requestOptions?: RequestOptions,
-    ): Promise<GenerateTransformationCodeResponse> {
-      if (!generateTransformationCodePayload) {
-        throw new Error(
-          'Parameter `generateTransformationCodePayload` is required when calling `generateTransformationCode`.',
-        );
-      }
-
-      if (!generateTransformationCodePayload.id) {
-        throw new Error(
-          'Parameter `generateTransformationCodePayload.id` is required when calling `generateTransformationCode`.',
-        );
-      }
-      if (!generateTransformationCodePayload.userPrompt) {
-        throw new Error(
-          'Parameter `generateTransformationCodePayload.userPrompt` is required when calling `generateTransformationCode`.',
-        );
-      }
-
-      const requestPath = '/1/transformations/models';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'POST',
-        path: requestPath,
-        queryParameters,
-        headers,
-        data: generateTransformationCodePayload,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
      * Retrieves an authentication resource by its ID.
      *
      * Required API Key ACLs:
@@ -1244,10 +1194,10 @@ export function createIngestionClient({
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
+
       if (platform !== undefined) {
         queryParameters.platform = platform.toString();
       }
-
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
@@ -1289,7 +1239,6 @@ export function createIngestionClient({
       const requestPath = '/1/destinations';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
@@ -1305,6 +1254,7 @@ export function createIngestionClient({
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1350,6 +1300,7 @@ export function createIngestionClient({
       const requestPath = '/1/runs/{runID}/events'.replace('{runID}', encodeURIComponent(runID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
@@ -1365,13 +1316,13 @@ export function createIngestionClient({
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
-
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
+
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -1413,13 +1364,13 @@ export function createIngestionClient({
       const requestPath = '/1/runs';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
+
       if (status !== undefined) {
         queryParameters.status = status.toString();
       }
@@ -1429,13 +1380,14 @@ export function createIngestionClient({
       if (taskID !== undefined) {
         queryParameters.taskID = taskID.toString();
       }
+
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
-
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -1480,19 +1432,20 @@ export function createIngestionClient({
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
+
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
+
       if (authenticationID !== undefined) {
         queryParameters.authenticationID = authenticationID.toString();
       }
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
-
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1540,13 +1493,14 @@ export function createIngestionClient({
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
+
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
-
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
+
       if (sourceID !== undefined) {
         queryParameters.sourceID = sourceID.toString();
       }
@@ -1606,54 +1560,29 @@ export function createIngestionClient({
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
+
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
-
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
       if (sourceID !== undefined) {
         queryParameters.sourceID = sourceID.toString();
       }
-
       if (destinationID !== undefined) {
         queryParameters.destinationID = destinationID.toString();
       }
       if (triggerType !== undefined) {
         queryParameters.triggerType = triggerType.toString();
       }
+
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
-
-      const request: Request = {
-        method: 'GET',
-        path: requestPath,
-        queryParameters,
-        headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
-     * Retrieves a list of existing LLM transformation helpers.
-     *
-     * Required API Key ACLs:
-     * - addObject
-     * - deleteIndex
-     * - editSettings.
-     *
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    listTransformationModels(requestOptions?: RequestOptions): Promise<TransformationModels> {
-      const requestPath = '/1/transformations/models';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'GET',
@@ -1687,16 +1616,17 @@ export function createIngestionClient({
       const requestPath = '/1/transformations';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }

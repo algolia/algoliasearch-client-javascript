@@ -5,17 +5,15 @@ import type { AlternativesAsExact } from './alternativesAsExact';
 import type { Distinct } from './distinct';
 import type { ExactOnSingleWordQuery } from './exactOnSingleWordQuery';
 import type { IgnorePlurals } from './ignorePlurals';
-import type { Mode } from './mode';
 import type { QueryType } from './queryType';
 import type { ReRankingApplyFilter } from './reRankingApplyFilter';
 import type { RemoveStopWords } from './removeStopWords';
 import type { RemoveWordsIfNoResults } from './removeWordsIfNoResults';
 import type { RenderingContent } from './renderingContent';
-import type { SemanticSearch } from './semanticSearch';
 import type { SupportedLanguage } from './supportedLanguage';
 import type { TypoTolerance } from './typoTolerance';
 
-export type IndexSettingsAsSearchParams = {
+export type BaseRecommendIndexSettings = {
   /**
    * Attributes to include in the API response.  To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive.  - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
    */
@@ -25,11 +23,6 @@ export type IndexSettingsAsSearchParams = {
    * Determines the order in which Algolia returns your results.  By default, each entry corresponds to a [ranking criteria](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/). The tie-breaking algorithm sequentially applies each criterion in the order they\'re specified. If you configure a replica index for [sorting by an attribute](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-by-attribute/), you put the sorting attribute at the top of the list.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order. - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  Before you modify the default setting, you should test your changes in the dashboard, and by [A/B testing](https://www.algolia.com/doc/guides/ab-testing/what-is-ab-testing/).
    */
   ranking?: string[];
-
-  /**
-   * Attributes to use as [custom ranking](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/). Attribute names are case-sensitive.  The custom ranking attributes decide which items are shown first if the other ranking criteria are equal.  Records with missing values for your selected custom ranking attributes are always sorted last. Boolean attributes are sorted based on their alphabetical order.  **Modifiers**  - `asc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in ascending order.  - `desc(\"ATTRIBUTE\")`.   Sort the index by the values of an attribute, in descending order.  If you use two or more custom ranking attributes, [reduce the precision](https://www.algolia.com/doc/guides/managing-results/must-do/custom-ranking/how-to/controlling-custom-ranking-metrics-precision/) of your first attributes, or the other attributes will never be applied.
-   */
-  customRanking?: string[];
 
   /**
    * Relevancy threshold below which less relevant results aren\'t included in the results.  You can only set `relevancyStrictness` on [virtual replica indices](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/in-depth/replicas/#what-are-virtual-replicas). Use this setting to strike a balance between the relevance and number of returned results.
@@ -67,11 +60,6 @@ export type IndexSettingsAsSearchParams = {
   restrictHighlightAndSnippetArrays?: boolean;
 
   /**
-   * Number of hits per page.
-   */
-  hitsPerPage?: number;
-
-  /**
    * Minimum number of characters a word in the search query must contain to accept matches with [one typo](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/in-depth/configuring-typo-tolerance/#configuring-word-length-for-typos).
    */
   minWordSizefor1Typo?: number;
@@ -98,11 +86,6 @@ export type IndexSettingsAsSearchParams = {
   removeStopWords?: RemoveStopWords;
 
   /**
-   * Characters for which diacritics should be preserved.  By default, Algolia removes diacritics from letters. For example, `é` becomes `e`. If this causes issues in your search, you can specify characters that should keep their diacritics.
-   */
-  keepDiacriticsOnCharacters?: string;
-
-  /**
    * Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries.  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**.  **You should always specify a query language.** If you don\'t specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
    */
   queryLanguages?: SupportedLanguage[];
@@ -125,10 +108,6 @@ export type IndexSettingsAsSearchParams = {
   queryType?: QueryType;
 
   removeWordsIfNoResults?: RemoveWordsIfNoResults;
-
-  mode?: Mode;
-
-  semanticSearch?: SemanticSearch;
 
   /**
    * Whether to support phrase matching and excluding words from search queries.  Use the `advancedSyntaxFeatures` parameter to control which feature is supported.

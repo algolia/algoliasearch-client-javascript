@@ -8,7 +8,7 @@ import type { OptionalFilters } from './optionalFilters';
 import type { SupportedLanguage } from './supportedLanguage';
 import type { TagFilters } from './tagFilters';
 
-export type BaseSearchParamsWithoutQuery = {
+export type BaseRecommendSearchParams = {
   /**
    * Keywords to be used instead of the search query to conduct a more broader search.  Using the `similarQuery` parameter changes other settings:  - `queryType` is set to `prefixNone`. - `removeStopWords` is set to true. - `words` is set as the first ranking criterion. - All remaining words are treated as `optionalWords`.  Since the `similarQuery` is supposed to do a broad search, they usually return many results. Combine it with `filters` to narrow down the list of results.
    */
@@ -46,21 +46,6 @@ export type BaseSearchParamsWithoutQuery = {
    * Whether faceting should be applied after deduplication with `distinct`.  This leads to accurate facet counts when using faceting in combination with `distinct`. It\'s usually better to use `afterDistinct` modifiers in the `attributesForFaceting` setting, as `facetingAfterDistinct` only computes correct facet counts if all records have the same facet values for the `attributeForDistinct`.
    */
   facetingAfterDistinct?: boolean;
-
-  /**
-   * Page of search results to retrieve.
-   */
-  page?: number;
-
-  /**
-   * Position of the first hit to retrieve.
-   */
-  offset?: number;
-
-  /**
-   * Number of hits to retrieve (used in combination with `offset`).
-   */
-  length?: number;
 
   /**
    * Coordinates for the center of a circle, expressed as a comma-separated string of latitude and longitude.  Only records included within circle around this central location are included in the results. The radius of the circle is determined by the `aroundRadius` and `minimumAroundRadius` settings. This parameter is ignored if you also specify `insidePolygon` or `insideBoundingBox`.
