@@ -1,5 +1,5 @@
 {
-  "version": "5.5.2",
+  "version": "5.5.3",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -73,18 +73,18 @@
     "lite.d.ts"
   ],
   "dependencies": {
-    "@algolia/client-abtesting": "5.5.2",
-    "@algolia/client-analytics": "5.5.2",
-    "@algolia/client-common": "5.5.2",
-    "@algolia/client-personalization": "5.5.2",
-    "@algolia/client-search": "5.5.2",
-    "@algolia/recommend": "5.5.2",
-    "@algolia/requester-browser-xhr": "5.5.2",
-    "@algolia/requester-fetch": "5.5.2",
-    "@algolia/requester-node-http": "5.5.2"
+    "@algolia/client-abtesting": "5.5.3",
+    "@algolia/client-analytics": "5.5.3",
+    "@algolia/client-common": "5.5.3",
+    "@algolia/client-personalization": "5.5.3",
+    "@algolia/client-search": "5.5.3",
+    "@algolia/recommend": "5.5.3",
+    "@algolia/requester-browser-xhr": "5.5.3",
+    "@algolia/requester-fetch": "5.5.3",
+    "@algolia/requester-node-http": "5.5.3"
   },
   "devDependencies": {
-    "@algolia/requester-testing": "5.5.2",
+    "@algolia/requester-testing": "5.5.3",
     "@arethetypeswrong/cli": "0.16.2",
     "@types/node": "22.5.5",
     "jsdom": "25.0.0",

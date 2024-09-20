@@ -1,3 +1,7 @@
+## [5.5.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.5.2...5.5.3)
+
+- [b187a09df](https://github.com/algolia/api-clients-automation/commit/b187a09df) fix(javascript): add override to name property ([#3785](https://github.com/algolia/api-clients-automation/pull/3785)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.5.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.5.1...5.5.2)
 
 - [1a73994ff](https://github.com/algolia/api-clients-automation/commit/1a73994ff) fix(specs): recommend remove unsupported query parameters [RECO-2345] [skip-bc] ([#3692](https://github.com/algolia/api-clients-automation/pull/3692)) by [@raed667](https://github.com/raed667/)

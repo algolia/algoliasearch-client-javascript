@@ -28,7 +28,7 @@ import type { GetRecommendationsResponse } from '../model/getRecommendationsResp
 import type { RecommendRule } from '../model/recommendRule';
 import type { SearchRecommendRulesResponse } from '../model/searchRecommendRulesResponse';
 
-export const apiClientVersion = '5.5.2';
+export const apiClientVersion = '5.5.3';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

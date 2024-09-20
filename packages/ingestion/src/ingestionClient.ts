@@ -104,7 +104,7 @@ import type { TransformationTryResponse } from '../model/transformationTryRespon
 import type { TransformationUpdateResponse } from '../model/transformationUpdateResponse';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.5.2';
+export const apiClientVersion = '1.5.3';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
