@@ -14,6 +14,7 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitThis": true,
+    "noImplicitOverride": true,
     "noLib": false,
     "noUnusedLocals": true,
     "outDir": "dist",
