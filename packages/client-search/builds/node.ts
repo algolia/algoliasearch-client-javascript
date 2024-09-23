@@ -4,6 +4,7 @@ import { createHmac } from 'node:crypto';
 
 import type { ClientOptions } from '@algolia/client-common';
 import {
+  createNullLogger,
   createMemoryCache,
   createNullCache,
   serializeQueryParameters,
@@ -43,6 +44,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
         read: DEFAULT_READ_TIMEOUT_NODE,
         write: DEFAULT_WRITE_TIMEOUT_NODE,
       },
+      logger: createNullLogger(),
       requester: createHttpRequester(),
       algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
       responsesCache: createNullCache(),

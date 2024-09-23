@@ -2,6 +2,7 @@
 
 import type { ClientOptions } from '@algolia/client-common';
 import {
+  createNullLogger,
   createMemoryCache,
   createNullCache,
   DEFAULT_CONNECT_TIMEOUT_NODE,
@@ -35,6 +36,7 @@ export function monitoringClient(appId: string, apiKey: string, options?: Client
         read: DEFAULT_READ_TIMEOUT_NODE,
         write: DEFAULT_WRITE_TIMEOUT_NODE,
       },
+      logger: createNullLogger(),
       requester: createHttpRequester(),
       algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
       responsesCache: createNullCache(),

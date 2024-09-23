@@ -2,6 +2,7 @@
 
 import type { ClientOptions } from '@algolia/client-common';
 import {
+  createNullLogger,
   createMemoryCache,
   createNullCache,
   DEFAULT_CONNECT_TIMEOUT_NODE,
@@ -46,6 +47,7 @@ export function insightsClient(
         read: DEFAULT_READ_TIMEOUT_NODE,
         write: DEFAULT_WRITE_TIMEOUT_NODE,
       },
+      logger: createNullLogger(),
       algoliaAgents: [{ segment: 'Fetch' }],
       requester: createFetchRequester(),
       responsesCache: createNullCache(),

@@ -2,6 +2,7 @@
 
 import type { ClientOptions } from '@algolia/client-common';
 import {
+  createNullLogger,
   createMemoryCache,
   createFallbackableCache,
   createBrowserLocalStorageCache,
@@ -46,6 +47,7 @@ export function analyticsClient(
       read: DEFAULT_READ_TIMEOUT_BROWSER,
       write: DEFAULT_WRITE_TIMEOUT_BROWSER,
     },
+    logger: createNullLogger(),
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',

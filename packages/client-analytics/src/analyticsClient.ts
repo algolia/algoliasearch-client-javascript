@@ -339,9 +339,11 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
+
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -392,6 +394,7 @@ export function createAnalyticsClient({
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
+
       if (tags !== undefined) {
         queryParameters.tags = tags.toString();
       }
@@ -430,6 +433,7 @@ export function createAnalyticsClient({
       const requestPath = '/2/clicks/clickThroughRate';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
@@ -531,7 +535,6 @@ export function createAnalyticsClient({
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
-
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -583,7 +586,6 @@ export function createAnalyticsClient({
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
-
       if (tags !== undefined) {
         queryParameters.tags = tags.toString();
       }
@@ -622,10 +624,10 @@ export function createAnalyticsClient({
       const requestPath = '/2/conversions/purchaseRate';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
+
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -673,7 +675,6 @@ export function createAnalyticsClient({
       if (index !== undefined) {
         queryParameters.index = index.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -725,7 +726,6 @@ export function createAnalyticsClient({
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
-
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }

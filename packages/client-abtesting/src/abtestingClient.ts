@@ -351,14 +351,13 @@ export function createAbtestingClient({
       const requestPath = '/2/abtests';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (offset !== undefined) {
         queryParameters.offset = offset.toString();
       }
+
       if (limit !== undefined) {
         queryParameters.limit = limit.toString();
       }
-
       if (indexPrefix !== undefined) {
         queryParameters.indexPrefix = indexPrefix.toString();
       }

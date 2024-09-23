@@ -103,6 +103,11 @@ describe('api', () => {
           url: 'APP_ID-2.algolianet.com',
         },
       ]),
+      logger: {
+        debug: expect.any(Function),
+        error: expect.any(Function),
+        info: expect.any(Function),
+      },
       hostsCache: {
         clear: expect.any(Function),
         delete: expect.any(Function),

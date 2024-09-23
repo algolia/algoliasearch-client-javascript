@@ -1,0 +1,52 @@
+{
+  "name": "@algolia/logger-console",
+  "version": "5.5.3",
+  "description": "Promise-based log library using console log.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/algolia/algoliasearch-client-javascript.git"
+  },
+  "license": "MIT",
+  "author": "Algolia",
+  "type": "module",
+  "files": [
+    "dist",
+    "src",
+    "index.ts"
+  ],
+  "exports": {
+    ".": {
+      "types": {
+        "import": "./dist/logger.d.ts",
+        "module": "./dist/logger.d.ts",
+        "require": "./dist/logger.d.cts"
+      },
+      "import": "./dist/logger.js",
+      "module": "./dist/logger.js",
+      "require": "./dist/logger.cjs"
+    },
+    "./src/*": "./src/*.ts"
+  },
+  "scripts": {
+    "build": "yarn clean && yarn tsup",
+    "clean": "rm -rf ./dist || true",
+    "test": "vitest --run",
+    "test:bundle": "publint . && attw --pack ."
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "0.16.4",
+    "@types/node": "22.5.5",
+    "jsdom": "25.0.0",
+    "publint": "0.2.11",
+    "ts-node": "10.9.2",
+    "tsup": "8.3.0",
+    "typescript": "5.6.2",
+    "vitest": "2.1.1"
+  },
+  "dependencies": {
+    "@algolia/client-common": "5.5.3"
+  },
+  "engines": {
+    "node": ">= 14.0.0"
+  }
+}

@@ -1185,6 +1185,7 @@ export function createIngestionClient({
       const requestPath = '/1/authentications';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
@@ -1254,7 +1255,6 @@ export function createIngestionClient({
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
-
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
@@ -1300,10 +1300,10 @@ export function createIngestionClient({
       const requestPath = '/1/runs/{runID}/events'.replace('{runID}', encodeURIComponent(runID));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
-
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
+
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
@@ -1322,7 +1322,6 @@ export function createIngestionClient({
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
-
       if (endDate !== undefined) {
         queryParameters.endDate = endDate.toString();
       }
@@ -1380,14 +1379,13 @@ export function createIngestionClient({
       if (taskID !== undefined) {
         queryParameters.taskID = taskID.toString();
       }
-
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
-
       if (startDate !== undefined) {
         queryParameters.startDate = startDate.toString();
       }
@@ -1432,14 +1430,13 @@ export function createIngestionClient({
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
-
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
+
       if (type !== undefined) {
         queryParameters.type = type.toString();
       }
-
       if (authenticationID !== undefined) {
         queryParameters.authenticationID = authenticationID.toString();
       }
@@ -1493,14 +1490,13 @@ export function createIngestionClient({
       if (page !== undefined) {
         queryParameters.page = page.toString();
       }
-
       if (action !== undefined) {
         queryParameters.action = action.toString();
       }
+
       if (enabled !== undefined) {
         queryParameters.enabled = enabled.toString();
       }
-
       if (sourceID !== undefined) {
         queryParameters.sourceID = sourceID.toString();
       }
@@ -1554,6 +1550,7 @@ export function createIngestionClient({
       const requestPath = '/1/tasks';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
       if (itemsPerPage !== undefined) {
         queryParameters.itemsPerPage = itemsPerPage.toString();
       }
@@ -1576,10 +1573,10 @@ export function createIngestionClient({
       if (triggerType !== undefined) {
         queryParameters.triggerType = triggerType.toString();
       }
-
       if (sort !== undefined) {
         queryParameters.sort = sort.toString();
       }
+
       if (order !== undefined) {
         queryParameters.order = order.toString();
       }
