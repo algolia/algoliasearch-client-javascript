@@ -29,7 +29,7 @@ import type { InventoryResponse } from '../model/inventoryResponse';
 import type { LatencyResponse } from '../model/latencyResponse';
 import type { StatusResponse } from '../model/statusResponse';
 
-export const apiClientVersion = '1.5.3';
+export const apiClientVersion = '1.6.0';
 
 function getDefaultHosts(): Host[] {
   return [{ url: 'status.algolia.com', accept: 'readWrite', protocol: 'https' }];
