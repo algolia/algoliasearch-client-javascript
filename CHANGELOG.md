@@ -1,3 +1,8 @@
+## [5.6.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.6.0...5.6.1)
+
+- [847ce7753](https://github.com/algolia/api-clients-automation/commit/847ce7753) chore(javascript): update READMEs ([#3829](https://github.com/algolia/api-clients-automation/pull/3829)) by [@shortcuts](https://github.com/shortcuts/)
+- [022131871](https://github.com/algolia/api-clients-automation/commit/022131871) fix(specs): correct query params for ingestion [skip-bc] ([#3830](https://github.com/algolia/api-clients-automation/pull/3830)) by [@millotp](https://github.com/millotp/)
+
 ## [5.6.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.5.3...5.6.0)
 
 - [1939114e1](https://github.com/algolia/api-clients-automation/commit/1939114e1) chore(deps): dependencies 2024-09-23 ([#3790](https://github.com/algolia/api-clients-automation/pull/3790)) by [@algolia-bot](https://github.com/algolia-bot/)
