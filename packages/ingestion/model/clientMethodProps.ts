@@ -17,7 +17,6 @@ import type { RunSortKeys } from './runSortKeys';
 import type { RunSourcePayload } from './runSourcePayload';
 import type { RunStatus } from './runStatus';
 import type { RunType } from './runType';
-import type { SortKeys } from './sortKeys';
 import type { SourceSortKeys } from './sourceSortKeys';
 import type { SourceType } from './sourceType';
 import type { SourceUpdate } from './sourceUpdate';
@@ -25,6 +24,7 @@ import type { TaskSortKeys } from './taskSortKeys';
 import type { TaskUpdate } from './taskUpdate';
 import type { TaskUpdateV1 } from './taskUpdateV1';
 import type { TransformationCreate } from './transformationCreate';
+import type { TransformationSortKeys } from './transformationSortKeys';
 import type { TransformationTry } from './transformationTry';
 import type { TriggerType } from './triggerType';
 
@@ -293,11 +293,11 @@ export type ListAuthenticationsProps = {
    */
   type?: AuthenticationType[];
   /**
-   * Ecommerce platform for which to retrieve authentication resources.
+   * Ecommerce platform for which to retrieve authentications.
    */
   platform?: PlatformWithNone[];
   /**
-   * Property by which to sort the list of authentication resources.
+   * Property by which to sort the list of authentications.
    */
   sort?: AuthenticationSortKeys;
   /**
@@ -326,6 +326,10 @@ export type ListDestinationsProps = {
    * Authentication ID used by destinations.
    */
   authenticationID?: string[];
+  /**
+   * Get the list of destinations used by a transformation.
+   */
+  transformationID?: string;
   /**
    * Property by which to sort the destinations.
    */
@@ -437,7 +441,7 @@ export type ListSourcesProps = {
    */
   type?: SourceType[];
   /**
-   * Authentication IDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication resource.
+   * Authentication IDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication.
    */
   authenticationID?: string[];
   /**
@@ -547,9 +551,9 @@ export type ListTransformationsProps = {
    */
   page?: number;
   /**
-   * Property by which to sort the list.
+   * Property by which to sort the list of transformations.
    */
-  sort?: SortKeys;
+  sort?: TransformationSortKeys;
   /**
    * Sort order of the response, ascending or descending.
    */

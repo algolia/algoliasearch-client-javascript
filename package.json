@@ -6,14 +6,14 @@
     "packages/*"
   ],
   "scripts": {
-    "build:all": "lerna run build --skip-nx-cache --include-dependencies",
-    "build:many": "lerna run build --skip-nx-cache --include-dependencies --scope ${0:-'{@algolia/*,algoliasearch}'}",
-    "clean": "lerna run clean --include-dependencies",
+    "build:all": "lerna run build --include-dependencies",
+    "build:many": "lerna run build --scope '@algolia/requester-testing' --scope ${0:-'{@algolia/*,algoliasearch}'} --include-dependencies",
+    "clean": "lerna run clean",
     "release:bump": "lerna version ${0:-patch} --no-changelog --no-git-tag-version --no-push --exact --force-publish --yes",
     "release:publish": "tsc --project scripts/tsconfig.json && node scripts/dist/scripts/publish.js",
     "test": "lerna run test $*",
     "test:size": "bundlesize",
-    "test:bundle": "lerna run test:bundle --verbose --skip-nx-cache --include-dependencies"
+    "test:bundle": "lerna run test:bundle --verbose --include-dependencies"
   },
   "devDependencies": {
     "@types/node": "22.5.5",
