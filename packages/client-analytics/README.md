@@ -32,23 +32,32 @@
 
 ## 💡 Getting Started
 
-To get started, you first need to install @algolia/client-analytics (or any other available API client package).
+> [!TIP]
+> This API client is already a dependency of [the algoliasearch client](https://www.npmjs.com/package/algoliasearch), you don't need to manually install `@algolia/client-analytics` if you already have `algoliasearch` installed.
 
+To get started, you first need to install @algolia/client-analytics (or any other available API client package).
 All of our clients comes with type definition, and are available for both browser and node environments.
 
+### With a package manager
+
+
 ```bash
-yarn add @algolia/client-analytics
+yarn add @algolia/client-analytics@5.6.0
 # or
-npm install @algolia/client-analytics
+npm install @algolia/client-analytics@5.6.0
+# or
+pnpm add @algolia/client-analytics@5.6.0
 ```
 
-Without a package manager
+### Without a package manager
 
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/algoliasearch/dist/client-analytics.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/client-analytics@5.6.0/dist/builds/browser.umd.js"></script>
 ```
+
+### Usage
 
 You can now import the Algolia API client in your project and play with it.
 
@@ -58,7 +67,7 @@ import { analyticsClient } from '@algolia/client-analytics';
 const client = analyticsClient('YOUR_APP_ID', 'YOUR_API_KEY');
 ```
 
-For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/)**.
+For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/v5/methods/analytics/)**.
 
 ## ❓ Troubleshooting
 
