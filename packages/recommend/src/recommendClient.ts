@@ -11,6 +11,7 @@ import type {
 } from '@algolia/client-common';
 
 import type {
+  BatchRecommendRulesProps,
   CustomDeleteProps,
   CustomGetProps,
   CustomPostProps,
@@ -26,6 +27,7 @@ import type { GetRecommendTaskResponse } from '../model/getRecommendTaskResponse
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
 import type { RecommendRule } from '../model/recommendRule';
+import type { RecommendUpdatedAtResponse } from '../model/recommendUpdatedAtResponse';
 import type { SearchRecommendRulesResponse } from '../model/searchRecommendRulesResponse';
 
 export const apiClientVersion = '5.6.1';
@@ -137,6 +139,47 @@ export function createRecommendClient({
       } else {
         transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
       }
+    },
+
+    /**
+     * Create or update a batch of Recommend Rules  Each Recommend Rule is created or updated, depending on whether a Recommend Rule with the same `objectID` already exists. You may also specify `true` for `clearExistingRules`, in which case the batch will atomically replace all the existing Recommend Rules.  Recommend Rules are similar to Search Rules, except that the conditions and consequences apply to a [source item](/doc/guides/algolia-recommend/overview/#recommend-models) instead of a query. The main differences are the following: - Conditions `pattern` and `anchoring` are unavailable. - Condition `filters` triggers if the source item matches the specified filters. - Condition `filters` accepts numeric filters. - Consequence `params` only covers filtering parameters. - Consequence `automaticFacetFilters` doesn\'t require a facet value placeholder (it tries to match the data source item\'s attributes instead).
+     *
+     * Required API Key ACLs:
+     * - editSettings.
+     *
+     * @param batchRecommendRules - The batchRecommendRules object.
+     * @param batchRecommendRules.indexName - Name of the index on which to perform the operation.
+     * @param batchRecommendRules.model - [Recommend model](https://www.algolia.com/doc/guides/algolia-recommend/overview/#recommend-models).
+     * @param batchRecommendRules.recommendRule - The recommendRule object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    batchRecommendRules(
+      { indexName, model, recommendRule }: BatchRecommendRulesProps,
+      requestOptions?: RequestOptions,
+    ): Promise<RecommendUpdatedAtResponse> {
+      if (!indexName) {
+        throw new Error('Parameter `indexName` is required when calling `batchRecommendRules`.');
+      }
+
+      if (!model) {
+        throw new Error('Parameter `model` is required when calling `batchRecommendRules`.');
+      }
+
+      const requestPath = '/1/indexes/{indexName}/{model}/recommend/rules/batch'
+        .replace('{indexName}', encodeURIComponent(indexName))
+        .replace('{model}', encodeURIComponent(model));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: recommendRule ? recommendRule : {},
+      };
+
+      return transporter.request(request, requestOptions);
     },
 
     /**

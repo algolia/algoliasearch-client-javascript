@@ -3,6 +3,7 @@
 import type { Condition } from './condition';
 import type { Consequence } from './consequence';
 import type { RuleMetadata } from './ruleMetadata';
+import type { TimeRange } from './timeRange';
 
 /**
  * Recommend rule.
@@ -28,4 +29,9 @@ export type RecommendRule = {
    * Indicates whether to enable the rule. If it isn\'t enabled, it isn\'t applied at query time.
    */
   enabled?: boolean;
+
+  /**
+   * Time periods when the rule is active.
+   */
+  validity?: TimeRange[];
 };
