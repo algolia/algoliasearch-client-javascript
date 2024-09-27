@@ -1501,7 +1501,7 @@ export function createSearchClient({
     },
 
     /**
-     * Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application\'s keys. When authenticating with other API keys, you can only retrieve information for that key.
+     * Gets the permissions and restrictions of an API key.  When authenticating with the admin API key, you can request information for any of your application\'s keys. When authenticating with other API keys, you can only retrieve information for that key, with the description replaced by `<redacted>`.
      *
      * @param getApiKey - The getApiKey object.
      * @param getApiKey.key - API key.
