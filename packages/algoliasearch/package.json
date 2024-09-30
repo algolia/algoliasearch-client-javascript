@@ -86,10 +86,10 @@
   "devDependencies": {
     "@algolia/requester-testing": "5.6.1",
     "@arethetypeswrong/cli": "0.16.4",
-    "@types/node": "22.5.5",
+    "@types/node": "22.7.4",
     "jsdom": "25.0.1",
     "publint": "0.2.11",
-    "rollup": "4.22.4",
+    "rollup": "4.22.5",
     "tsup": "8.3.0",
     "typescript": "5.6.2",
     "vitest": "2.1.1",

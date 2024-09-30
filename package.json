@@ -16,12 +16,12 @@
     "test:bundle": "lerna run test:bundle --verbose --include-dependencies"
   },
   "devDependencies": {
-    "@types/node": "22.5.5",
+    "@types/node": "22.7.4",
     "@types/semver": "7.5.8",
     "bundlesize": "0.18.2",
     "execa": "9.4.0",
     "lerna": "8.1.8",
-    "rollup": "4.22.4",
+    "rollup": "4.22.5",
     "semver": "7.6.3",
     "typescript": "5.6.2"
   },
