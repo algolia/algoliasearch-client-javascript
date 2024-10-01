@@ -40,11 +40,11 @@ All of our clients comes with type definition, and are available for both browse
 
 
 ```bash
-yarn add algoliasearch@5.6.1
+yarn add algoliasearch@5.7.0
 # or
-npm install algoliasearch@5.6.1
+npm install algoliasearch@5.7.0
 # or
-pnpm add algoliasearch@5.6.1
+pnpm add algoliasearch@5.7.0
 ```
 
 ### Without a package manager
@@ -53,10 +53,10 @@ Add the following JavaScript snippet to the <head> of your website:
 
 ```html
 // for the full client
-<script src="https://cdn.jsdelivr.net/npm/algoliasearch@5.6.1/dist/algoliasearch.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@5.7.0/dist/algoliasearch.umd.js"></script>
 
 // for the lite client
-<script src="https://cdn.jsdelivr.net/npm/algoliasearch@5.6.1/dist/lite/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@5.7.0/dist/lite/builds/browser.umd.js"></script>
 ```
 
 ### Usage

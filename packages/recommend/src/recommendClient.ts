@@ -30,7 +30,7 @@ import type { RecommendRule } from '../model/recommendRule';
 import type { RecommendUpdatedAtResponse } from '../model/recommendUpdatedAtResponse';
 import type { SearchRecommendRulesResponse } from '../model/searchRecommendRulesResponse';
 
-export const apiClientVersion = '5.6.1';
+export const apiClientVersion = '5.7.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

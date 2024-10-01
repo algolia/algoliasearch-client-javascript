@@ -42,11 +42,11 @@ All of our clients comes with type definition, and are available for both browse
 
 
 ```bash
-yarn add @algolia/recommend@5.6.1
+yarn add @algolia/recommend@5.7.0
 # or
-npm install @algolia/recommend@5.6.1
+npm install @algolia/recommend@5.7.0
 # or
-pnpm add @algolia/recommend@5.6.1
+pnpm add @algolia/recommend@5.7.0
 ```
 
 ### Without a package manager
@@ -54,7 +54,7 @@ pnpm add @algolia/recommend@5.6.1
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/recommend@5.6.1/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/recommend@5.7.0/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage
