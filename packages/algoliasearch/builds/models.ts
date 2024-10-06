@@ -12,6 +12,11 @@ import type {
   AroundRadiusAll,
   AutomaticFacetFilter,
   AutomaticFacetFilters,
+  Banner,
+  BannerImage,
+  BannerImageUrl,
+  BannerLink,
+  Banners,
   BaseIndexSettings,
   BaseSearchParams,
   BaseSearchParamsWithoutQuery,
@@ -78,6 +83,7 @@ import type {
   TypoTolerance,
   TypoToleranceEnum,
   Value,
+  Widgets,
 } from '@algolia/client-search';
 import { apiClientVersion } from '@algolia/client-search';
 
@@ -101,6 +107,11 @@ export {
   AroundRadiusAll,
   AutomaticFacetFilter,
   AutomaticFacetFilters,
+  Banner,
+  BannerImage,
+  BannerImageUrl,
+  BannerLink,
+  Banners,
   BaseIndexSettings,
   BaseSearchParams,
   BaseSearchParamsWithoutQuery,
@@ -168,6 +179,7 @@ export {
   TypoTolerance,
   TypoToleranceEnum,
   Value,
+  Widgets,
 };
 
 /**
