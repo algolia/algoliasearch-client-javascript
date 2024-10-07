@@ -41,7 +41,7 @@ export type AddOrUpdateObjectProps = {
    */
   objectID: string;
   /**
-   * The record, a schemaless object with attributes that are useful in the context of search and discovery.
+   * The record. A schemaless object with attributes that are useful in the context of search and discovery.
    */
   body: Record<string, unknown>;
 };
@@ -526,7 +526,7 @@ export type SaveObjectProps = {
    */
   indexName: string;
   /**
-   * The record, a schemaless object with attributes that are useful in the context of search and discovery.
+   * The record. A schemaless object with attributes that are useful in the context of search and discovery.
    */
   body: Record<string, unknown>;
 };
