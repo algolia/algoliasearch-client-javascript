@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-common",
-  "version": "5.7.0",
+  "version": "5.8.0",
   "description": "Common package for the Algolia JavaScript API client.",
   "repository": {
     "type": "git",
@@ -41,7 +41,7 @@
     "ts-node": "10.9.2",
     "tsup": "8.3.0",
     "typescript": "5.6.2",
-    "vitest": "2.1.1"
+    "vitest": "2.1.2"
   },
   "engines": {
     "node": ">= 14.0.0"
