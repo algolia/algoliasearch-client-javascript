@@ -9,5 +9,5 @@ export type BigCommerceChannel = {
   /**
    * Currencies for the given channel.
    */
-  currencies?: string[];
+  currencies?: Array<string>;
 };

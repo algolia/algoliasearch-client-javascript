@@ -1,4 +1,4 @@
-import type { AlgoliaAgentOptions, AlgoliaAgent } from './types';
+import type { AlgoliaAgent, AlgoliaAgentOptions } from './types';
 
 export function createAlgoliaAgent(version: string): AlgoliaAgent {
   const algoliaAgent = {

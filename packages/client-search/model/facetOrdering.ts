@@ -12,5 +12,5 @@ export type FacetOrdering = {
   /**
    * Order of facet values. One object for each facet.
    */
-  values?: Record<string, Value>;
+  values?: { [key: string]: Value };
 };

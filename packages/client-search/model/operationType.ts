@@ -3,4 +3,4 @@
 /**
  * Operation to perform on the index.
  */
-export type OperationType = 'copy' | 'move';
+export type OperationType = 'move' | 'copy';

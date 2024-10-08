@@ -1,5 +1,4 @@
-import type { FallbackableCacheOptions, Cache, CacheEvents } from '../types';
-
+import type { Cache, CacheEvents, FallbackableCacheOptions } from '../types';
 import { createNullCache } from './createNullCache';
 
 export function createFallbackableCache(options: FallbackableCacheOptions): Cache {

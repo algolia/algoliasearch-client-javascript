@@ -11,7 +11,7 @@ export type AddABTestsRequest = {
   /**
    * A/B test variants.
    */
-  variants: AddABTestsVariant[];
+  variants: Array<AddABTestsVariant>;
 
   /**
    * End date and time of the A/B test, in RFC 3339 format.

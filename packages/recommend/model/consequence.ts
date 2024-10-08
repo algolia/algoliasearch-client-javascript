@@ -11,12 +11,12 @@ export type Consequence = {
   /**
    * Exclude items from recommendations.
    */
-  hide?: HideConsequenceObject[];
+  hide?: Array<HideConsequenceObject>;
 
   /**
    * Place items at specific positions in the list of recommendations.
    */
-  promote?: PromoteConsequenceObject[];
+  promote?: Array<PromoteConsequenceObject>;
 
   params?: ParamsConsequence;
 };

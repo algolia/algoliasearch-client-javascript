@@ -6,4 +6,4 @@ import type { SupportedLanguage } from './supportedLanguage';
 /**
  * Treat singular, plurals, and other forms of declensions as equivalent. You should only use this feature for the languages used in your index.
  */
-export type IgnorePlurals = BooleanString | SupportedLanguage[] | boolean;
+export type IgnorePlurals = Array<SupportedLanguage> | BooleanString | boolean;

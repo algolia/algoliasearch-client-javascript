@@ -2,6 +2,7 @@
 
 export * from './appID';
 export * from './baseResponse';
+export * from './clientMethodProps';
 export * from './configStatus';
 export * from './configuration';
 export * from './configurationResponse';
@@ -12,4 +13,3 @@ export * from './languages';
 export * from './logFile';
 export * from './logLevel';
 export * from './sourceIndex';
-export * from './clientMethodProps';

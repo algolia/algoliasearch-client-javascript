@@ -4,7 +4,7 @@ import type { Destination } from './destination';
 import type { Pagination } from './pagination';
 
 export type ListDestinationsResponse = {
-  destinations: Destination[];
+  destinations: Array<Destination>;
 
   pagination: Pagination;
 };

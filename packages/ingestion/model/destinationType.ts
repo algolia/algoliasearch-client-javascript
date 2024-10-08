@@ -3,4 +3,4 @@
 /**
  * Destination type.  - `search`.   Data is stored in an Algolia index.  - `insights`.   Data is recorded as user events in the Insights API.
  */
-export type DestinationType = 'insights' | 'search';
+export type DestinationType = 'search' | 'insights';

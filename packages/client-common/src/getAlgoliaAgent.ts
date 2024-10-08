@@ -1,5 +1,5 @@
 import { createAlgoliaAgent } from './createAlgoliaAgent';
-import type { AlgoliaAgentOptions, AlgoliaAgent } from './types';
+import type { AlgoliaAgent, AlgoliaAgentOptions } from './types';
 
 export type GetAlgoliaAgent = {
   algoliaAgents: AlgoliaAgentOptions[];

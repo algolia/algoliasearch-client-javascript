@@ -21,5 +21,5 @@ export type DestinationUpdate = {
    */
   authenticationID?: string;
 
-  transformationIDs?: string[];
+  transformationIDs?: Array<string>;
 };

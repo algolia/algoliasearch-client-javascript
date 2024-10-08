@@ -6,5 +6,5 @@ export type GetTopCountriesResponse = {
   /**
    * Countries and number of searches.
    */
-  countries: TopCountry[];
+  countries: Array<TopCountry>;
 };

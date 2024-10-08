@@ -7,7 +7,7 @@ import type { TaskV1 } from './taskV1';
  * Configured tasks and pagination information.
  */
 export type ListTasksResponseV1 = {
-  tasks: TaskV1[];
+  tasks: Array<TaskV1>;
 
   pagination: Pagination;
 };

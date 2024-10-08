@@ -8,9 +8,9 @@ import type { AuthGoogleServiceAccountPartial } from './authGoogleServiceAccount
 import type { AuthOAuthPartial } from './authOAuthPartial';
 
 export type AuthInputPartial =
-  | AuthAlgoliaInsightsPartial
-  | AuthAlgoliaPartial
-  | AuthAPIKeyPartial
-  | AuthBasicPartial
   | AuthGoogleServiceAccountPartial
-  | AuthOAuthPartial;
+  | AuthBasicPartial
+  | AuthAPIKeyPartial
+  | AuthOAuthPartial
+  | AuthAlgoliaPartial
+  | AuthAlgoliaInsightsPartial;

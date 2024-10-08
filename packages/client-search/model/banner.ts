@@ -4,7 +4,7 @@ import type { BannerImage } from './bannerImage';
 import type { BannerLink } from './bannerLink';
 
 /**
- * A search banner with image and url.
+ * a search banner with image and url.
  */
 export type Banner = {
   image?: BannerImage;

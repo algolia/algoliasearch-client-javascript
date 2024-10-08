@@ -6,7 +6,7 @@ export type ListIndicesResponse = {
   /**
    * All indices in your Algolia application.
    */
-  items: FetchedIndex[];
+  items: Array<FetchedIndex>;
 
   /**
    * Number of pages.

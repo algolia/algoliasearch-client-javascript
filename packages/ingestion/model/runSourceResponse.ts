@@ -4,7 +4,7 @@ export type RunSourceResponse = {
   /**
    * Map of taskID sent for reindex with the corresponding runID.
    */
-  taskWithRunID: Record<string, string>;
+  taskWithRunID: { [key: string]: string };
 
   /**
    * Date of creation in RFC 3339 format.

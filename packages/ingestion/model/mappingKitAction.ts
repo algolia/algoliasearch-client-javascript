@@ -21,5 +21,5 @@ export type MappingKitAction = {
    */
   trigger: string;
 
-  fieldDirectives: MappingFieldDirective[];
+  fieldDirectives: Array<MappingFieldDirective>;
 };

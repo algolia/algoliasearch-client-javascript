@@ -12,5 +12,5 @@ export type MappingFieldDirective = {
   /**
    * How the destination field should be resolved from the source.
    */
-  value: Record<string, any>;
+  value: { [key: string]: any };
 };

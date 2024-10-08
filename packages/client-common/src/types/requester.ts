@@ -1,4 +1,6 @@
-import type { Headers, QueryParameters } from './transporter';
+export type Headers = Record<string, string>;
+
+export type QueryParameters = Record<string, any>;
 
 /**
  * The method of the request.

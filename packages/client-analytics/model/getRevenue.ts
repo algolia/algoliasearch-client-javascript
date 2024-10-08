@@ -7,10 +7,10 @@ export type GetRevenue = {
   /**
    * Revenue associated with this search, broken-down by currencies.
    */
-  currencies: Record<string, CurrencyCode>;
+  currencies: { [key: string]: CurrencyCode };
 
   /**
    * Daily revenue.
    */
-  dates: DailyRevenue[];
+  dates: Array<DailyRevenue>;
 };

@@ -2,4 +2,4 @@
 
 import type { BuiltInOperation } from './builtInOperation';
 
-export type AttributeToUpdate = BuiltInOperation | string;
+export type AttributeToUpdate = string | BuiltInOperation;

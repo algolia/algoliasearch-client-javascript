@@ -17,7 +17,7 @@ export type SourceCSV = {
   /**
    * Key-value pairs of column names and their expected types.
    */
-  mapping?: Record<string, MappingTypeCSV>;
+  mapping?: { [key: string]: MappingTypeCSV };
 
   method?: MethodType;
 

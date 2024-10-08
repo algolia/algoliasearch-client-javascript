@@ -8,21 +8,23 @@ import type { ClickedObjectIDsAfterSearch } from './clickedObjectIDsAfterSearch'
 import type { ConvertedFilters } from './convertedFilters';
 import type { ConvertedObjectIDs } from './convertedObjectIDs';
 import type { ConvertedObjectIDsAfterSearch } from './convertedObjectIDsAfterSearch';
+
 import type { PurchasedObjectIDs } from './purchasedObjectIDs';
 import type { PurchasedObjectIDsAfterSearch } from './purchasedObjectIDsAfterSearch';
+
 import type { ViewedFilters } from './viewedFilters';
 import type { ViewedObjectIDs } from './viewedObjectIDs';
 
 export type EventsItems =
-  | AddedToCartObjectIDs
-  | AddedToCartObjectIDsAfterSearch
-  | ClickedFilters
-  | ClickedObjectIDs
   | ClickedObjectIDsAfterSearch
-  | ConvertedFilters
-  | ConvertedObjectIDs
-  | ConvertedObjectIDsAfterSearch
-  | PurchasedObjectIDs
+  | AddedToCartObjectIDsAfterSearch
   | PurchasedObjectIDsAfterSearch
-  | ViewedFilters
-  | ViewedObjectIDs;
+  | ConvertedObjectIDsAfterSearch
+  | ClickedObjectIDs
+  | PurchasedObjectIDs
+  | AddedToCartObjectIDs
+  | ConvertedObjectIDs
+  | ClickedFilters
+  | ConvertedFilters
+  | ViewedObjectIDs
+  | ViewedFilters;

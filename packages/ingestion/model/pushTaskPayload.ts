@@ -6,5 +6,5 @@ import type { PushTaskRecords } from './pushTaskRecords';
 export type PushTaskPayload = {
   action: Action;
 
-  records: PushTaskRecords[];
+  records: Array<PushTaskRecords>;
 };

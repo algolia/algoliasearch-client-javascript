@@ -1,4 +1,4 @@
-import type { Request, EndRequest, Requester, Response } from '@algolia/client-common';
+import type { EndRequest, Request, Requester, Response } from '@algolia/client-common';
 
 export type EchoResponse = Omit<EndRequest, 'data'> &
   Pick<Request, 'data' | 'path'> & {

@@ -4,12 +4,7 @@
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "esModuleInterop": true,
-    "lib": [
-      "dom",
-      "esnext",
-      "dom.iterable",
-      "scripthost"
-    ],
+    "lib": ["dom", "esnext", "dom.iterable", "scripthost"],
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -22,15 +17,8 @@
     "sourceMap": true,
     "strict": true,
     "target": "esnext",
-    "types": [
-      "node"
-    ]
+    "types": ["node"]
   },
-  "include": [
-    "packages/**/*.ts"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ]
+  "include": ["packages/**/*.ts"],
+  "exclude": ["dist", "node_modules"]
 }

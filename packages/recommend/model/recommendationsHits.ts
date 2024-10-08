@@ -3,5 +3,5 @@
 import type { RecommendationsHit } from './recommendationsHit';
 
 export type RecommendationsHits = {
-  hits: RecommendationsHit[];
+  hits: Array<RecommendationsHit>;
 };

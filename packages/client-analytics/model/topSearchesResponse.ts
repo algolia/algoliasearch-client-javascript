@@ -6,5 +6,5 @@ export type TopSearchesResponse = {
   /**
    * Most popular searches and their number of search results (hits).
    */
-  searches: TopSearch[];
+  searches: Array<TopSearch>;
 };

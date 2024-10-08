@@ -37,7 +37,7 @@ export type SearchRecommendRulesParams = {
   /**
    * Include facets and facet values in the response. Use `[\'*\']` to include all facets.
    */
-  facets?: string[];
+  facets?: Array<string>;
 
   /**
    * Maximum number of values to return for each facet.

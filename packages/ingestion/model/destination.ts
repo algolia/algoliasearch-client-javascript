@@ -36,5 +36,5 @@ export type Destination = {
    */
   authenticationID?: string;
 
-  transformationIDs?: string[];
+  transformationIDs?: Array<string>;
 };

@@ -3,4 +3,4 @@
 /**
  * Image type.
  */
-export type DockerImageType = 'airbyte' | 'custom' | 'singer';
+export type DockerImageType = 'singer' | 'custom' | 'airbyte';

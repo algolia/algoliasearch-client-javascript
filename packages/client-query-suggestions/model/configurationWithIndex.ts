@@ -5,4 +5,4 @@ import type { Configuration } from './configuration';
 /**
  * Query Suggestions configuration.
  */
-export type ConfigurationWithIndex = Configuration & Record<string, unknown>;
+export type ConfigurationWithIndex = Record<string, unknown> & Configuration;

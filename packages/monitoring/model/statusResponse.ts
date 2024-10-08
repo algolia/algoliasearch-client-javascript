@@ -3,5 +3,5 @@
 import type { Status } from './status';
 
 export type StatusResponse = {
-  status?: Record<string, Status>;
+  status?: { [key: string]: Status };
 };

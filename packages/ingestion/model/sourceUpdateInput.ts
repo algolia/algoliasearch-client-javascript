@@ -9,10 +9,10 @@ import type { SourceUpdateDocker } from './sourceUpdateDocker';
 import type { SourceUpdateShopify } from './sourceUpdateShopify';
 
 export type SourceUpdateInput =
-  | SourceBigQuery
-  | SourceCSV
-  | SourceGA4BigQueryExport
-  | SourceJSON
   | SourceUpdateCommercetools
+  | SourceJSON
+  | SourceCSV
+  | SourceBigQuery
+  | SourceGA4BigQueryExport
   | SourceUpdateDocker
   | SourceUpdateShopify;

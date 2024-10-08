@@ -21,5 +21,5 @@ export type GetPurchaseRateResponse = {
   /**
    * Daily purchase rates.
    */
-  dates: DailyPurchaseRates[];
+  dates: Array<DailyPurchaseRates>;
 };

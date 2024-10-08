@@ -3,12 +3,12 @@
 import type { CommercetoolsCustomFields } from './commercetoolsCustomFields';
 
 export type SourceCommercetools = {
-  storeKeys?: string[];
+  storeKeys?: Array<string>;
 
   /**
    * Locales for your commercetools stores.
    */
-  locales?: string[];
+  locales?: Array<string>;
 
   url: string;
 

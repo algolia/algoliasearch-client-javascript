@@ -6,10 +6,10 @@ export type ConsequenceQueryObject = {
   /**
    * Words to remove from the search query.
    */
-  remove?: string[];
+  remove?: Array<string>;
 
   /**
    * Changes to make to the search query.
    */
-  edits?: Edit[];
+  edits?: Array<Edit>;
 };

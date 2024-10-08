@@ -9,5 +9,5 @@ import type { MappingKitAction } from './mappingKitAction';
 export type MappingInput = {
   format: MappingFormatSchema;
 
-  actions: MappingKitAction[];
+  actions: Array<MappingKitAction>;
 };

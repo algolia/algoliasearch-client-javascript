@@ -14,5 +14,5 @@ export type BatchDictionaryEntriesParams = {
   /**
    * List of additions and deletions to your dictionaries.
    */
-  requests: BatchDictionaryEntriesRequest[];
+  requests: Array<BatchDictionaryEntriesRequest>;
 };

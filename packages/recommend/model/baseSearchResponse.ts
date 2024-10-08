@@ -46,12 +46,12 @@ export type BaseSearchResponse = Record<string, any> & {
   /**
    * Facet counts.
    */
-  facets?: Record<string, Record<string, number>>;
+  facets?: { [key: string]: { [key: string]: number } };
 
   /**
    * Statistics for numerical facets.
    */
-  facets_stats?: Record<string, FacetStats>;
+  facets_stats?: { [key: string]: FacetStats };
 
   /**
    * Index name used for the query.

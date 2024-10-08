@@ -4,10 +4,10 @@ export type MultipleBatchResponse = {
   /**
    * Task IDs. One for each index.
    */
-  taskID: Record<string, number>;
+  taskID: { [key: string]: number };
 
   /**
    * Unique record identifiers.
    */
-  objectIDs: string[];
+  objectIDs: Array<string>;
 };

@@ -7,7 +7,7 @@ export type PromoteObjectIDs = {
   /**
    * Object IDs of the records you want to promote.  The records are placed as a group at the `position`. For example, if you want to promote four records to position `0`, they will be the first four search results.
    */
-  objectIDs: string[];
+  objectIDs: Array<string>;
 
   /**
    * Position in the search results where you want to show the promoted records.

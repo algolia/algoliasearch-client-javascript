@@ -3,4 +3,4 @@
 /**
  * Property by which to sort the destinations.
  */
-export type DestinationSortKeys = 'createdAt' | 'name' | 'type' | 'updatedAt';
+export type DestinationSortKeys = 'name' | 'type' | 'updatedAt' | 'createdAt';

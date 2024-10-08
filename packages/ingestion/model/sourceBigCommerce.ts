@@ -11,9 +11,9 @@ export type SourceBigCommerce = {
 
   channel?: BigCommerceChannel;
 
-  customFields?: string[];
+  customFields?: Array<string>;
 
-  productMetafields?: BigCommerceMetafield[];
+  productMetafields?: Array<BigCommerceMetafield>;
 
-  variantMetafields?: BigCommerceMetafield[];
+  variantMetafields?: Array<BigCommerceMetafield>;
 };

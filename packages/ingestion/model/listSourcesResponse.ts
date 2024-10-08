@@ -4,7 +4,7 @@ import type { Pagination } from './pagination';
 import type { Source } from './source';
 
 export type ListSourcesResponse = {
-  sources: Source[];
+  sources: Array<Source>;
 
   pagination: Pagination;
 };

@@ -6,5 +6,5 @@ export type ListApiKeysResponse = {
   /**
    * API keys.
    */
-  keys: GetApiKeyResponse[];
+  keys: Array<GetApiKeyResponse>;
 };

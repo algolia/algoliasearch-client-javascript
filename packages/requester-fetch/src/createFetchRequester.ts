@@ -1,4 +1,4 @@
-import type { EndRequest, Requester, Response as AlgoliaResponse } from '@algolia/client-common';
+import type { Response as AlgoliaResponse, EndRequest, Requester } from '@algolia/client-common';
 
 function isAbortError(error: unknown): boolean {
   return error instanceof Error && error.name === 'AbortError';

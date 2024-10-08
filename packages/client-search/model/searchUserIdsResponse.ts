@@ -3,13 +3,13 @@
 import type { UserHit } from './userHit';
 
 /**
- * UserIDs data.
+ * userIDs data.
  */
 export type SearchUserIdsResponse = {
   /**
    * User objects that match the query.
    */
-  hits: UserHit[];
+  hits: Array<UserHit>;
 
   /**
    * Number of results (hits).

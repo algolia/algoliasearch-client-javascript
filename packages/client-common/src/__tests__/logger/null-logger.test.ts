@@ -1,6 +1,5 @@
 /* eslint no-console: 0 */
-
-import { vi, describe, test, expect } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 
 import { createNullLogger } from '../../logger';
 

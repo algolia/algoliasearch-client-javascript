@@ -6,5 +6,5 @@ export type GetSearchesNoResultsResponse = {
   /**
    * Searches without results.
    */
-  searches: DailySearchesNoResults[];
+  searches: Array<DailySearchesNoResults>;
 };

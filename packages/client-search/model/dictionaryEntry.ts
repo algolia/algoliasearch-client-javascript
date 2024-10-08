@@ -23,12 +23,12 @@ export type DictionaryEntry = Record<string, any> & {
   /**
    * Matching words in the `plurals` dictionary including declensions.
    */
-  words?: string[];
+  words?: Array<string>;
 
   /**
    * Invividual components of a compound word in the `compounds` dictionary.
    */
-  decomposition?: string[];
+  decomposition?: Array<string>;
 
   state?: DictionaryEntryState;
 

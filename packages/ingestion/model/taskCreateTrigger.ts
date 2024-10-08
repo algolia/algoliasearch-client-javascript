@@ -3,6 +3,7 @@
 import type { OnDemandTriggerInput } from './onDemandTriggerInput';
 import type { ScheduleTriggerInput } from './scheduleTriggerInput';
 import type { StreamingTrigger } from './streamingTrigger';
+
 import type { SubscriptionTrigger } from './subscriptionTrigger';
 
-export type TaskCreateTrigger = OnDemandTriggerInput | ScheduleTriggerInput | StreamingTrigger | SubscriptionTrigger;
+export type TaskCreateTrigger = OnDemandTriggerInput | ScheduleTriggerInput | SubscriptionTrigger | StreamingTrigger;

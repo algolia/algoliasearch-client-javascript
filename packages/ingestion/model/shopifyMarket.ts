@@ -4,9 +4,9 @@
  * Represents a market in Shopify.
  */
 export type ShopifyMarket = {
-  countries: string[];
+  countries: Array<string>;
 
-  currencies: string[];
+  currencies: Array<string>;
 
-  locales: string[];
+  locales: Array<string>;
 };

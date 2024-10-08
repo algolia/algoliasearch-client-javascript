@@ -6,5 +6,5 @@ export type GetTopFilterAttributesResponse = {
   /**
    * Most frequent filters.
    */
-  attributes: GetTopFilterAttribute[];
+  attributes: Array<GetTopFilterAttribute>;
 };

@@ -10,11 +10,11 @@ import type { SourceJSON } from './sourceJSON';
 import type { SourceShopify } from './sourceShopify';
 
 export type SourceInput =
-  | SourceBigCommerce
-  | SourceBigQuery
   | SourceCommercetools
-  | SourceCSV
-  | SourceDocker
-  | SourceGA4BigQueryExport
+  | SourceBigCommerce
   | SourceJSON
+  | SourceCSV
+  | SourceBigQuery
+  | SourceGA4BigQueryExport
+  | SourceDocker
   | SourceShopify;

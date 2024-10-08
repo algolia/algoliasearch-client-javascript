@@ -1,20 +1,20 @@
 import http from 'http';
 import https from 'https';
+import nock from 'nock';
 import { Readable } from 'stream';
+import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
 import type { EndRequest } from '@algolia/client-common';
-import nock from 'nock';
-import { vi, describe, test, beforeAll, afterAll, expect } from 'vitest';
 
 import { createHttpRequester } from '../..';
 import {
-  headers,
-  timeoutRequest,
-  requestStub,
-  testQueryHeader,
-  testQueryBaseUrl,
-  getStringifiedBody,
   createTestServer,
+  getStringifiedBody,
+  headers,
+  requestStub,
+  testQueryBaseUrl,
+  testQueryHeader,
+  timeoutRequest,
 } from '../../../../tests/utils';
 
 const requester = createHttpRequester();

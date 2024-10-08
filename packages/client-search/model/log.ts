@@ -76,5 +76,5 @@ export type Log = {
   /**
    * Queries performed for the given request.
    */
-  inner_queries?: LogQuery[];
+  inner_queries?: Array<LogQuery>;
 };

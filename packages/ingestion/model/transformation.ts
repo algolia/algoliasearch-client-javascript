@@ -9,7 +9,7 @@ export type Transformation = {
   /**
    * The authentications associated for the current transformation.
    */
-  authenticationIDs?: string[];
+  authenticationIDs?: Array<string>;
 
   /**
    * The source code of the transformation.

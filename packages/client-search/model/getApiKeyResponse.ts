@@ -3,4 +3,4 @@
 import type { ApiKey } from './apiKey';
 import type { BaseGetApiKeyResponse } from './baseGetApiKeyResponse';
 
-export type GetApiKeyResponse = ApiKey & BaseGetApiKeyResponse;
+export type GetApiKeyResponse = BaseGetApiKeyResponse & ApiKey;

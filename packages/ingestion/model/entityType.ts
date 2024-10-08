@@ -3,4 +3,4 @@
 /**
  * Type of entity to update.
  */
-export type EntityType = 'collection' | 'product';
+export type EntityType = 'product' | 'collection';

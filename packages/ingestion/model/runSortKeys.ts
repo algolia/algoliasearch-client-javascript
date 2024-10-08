@@ -3,4 +3,4 @@
 /**
  * Property by which to sort the list of task runs.
  */
-export type RunSortKeys = 'createdAt' | 'status' | 'updatedAt';
+export type RunSortKeys = 'status' | 'updatedAt' | 'createdAt';

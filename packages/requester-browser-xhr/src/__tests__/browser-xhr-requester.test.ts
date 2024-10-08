@@ -1,18 +1,18 @@
 import type http from 'http';
-
-import type { EndRequest } from '@algolia/client-common';
-import { describe, test, beforeAll, afterAll, beforeEach, afterEach, expect } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 import type { MockRequest, MockResponse } from 'xhr-mock';
 import mock from 'xhr-mock';
+
+import type { EndRequest } from '@algolia/client-common';
 
 import { createXhrRequester } from '../..';
 import {
   BASE_URL,
-  headers,
-  timeoutRequest,
-  requestStub,
-  getStringifiedBody,
   createTestServer,
+  getStringifiedBody,
+  headers,
+  requestStub,
+  timeoutRequest,
 } from '../../../../tests/utils';
 
 const requester = createXhrRequester();

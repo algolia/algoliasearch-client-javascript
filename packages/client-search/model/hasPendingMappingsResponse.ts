@@ -9,5 +9,5 @@ export type HasPendingMappingsResponse = {
   /**
    * Cluster pending mapping state: migrating, creating, deleting.
    */
-  clusters?: Record<string, string[]>;
+  clusters?: { [key: string]: Array<string> };
 };

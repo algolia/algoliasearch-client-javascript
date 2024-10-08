@@ -1,10 +1,7 @@
 import type { Cache } from './cache';
 import type { Host } from './host';
 import type { Logger } from './logger';
-import type { Request, Requester, EndRequest, Response } from './requester';
-
-export type Headers = Record<string, string>;
-export type QueryParameters = Record<string, any>;
+import type { EndRequest, Headers, QueryParameters, Request, Requester, Response } from './requester';
 
 export type RequestOptions = Pick<Request, 'cacheable'> & {
   /**

@@ -3,4 +3,4 @@
 import type { SearchForFacets } from './searchForFacets';
 import type { SearchForHits } from './searchForHits';
 
-export type SearchQuery = SearchForFacets | SearchForHits;
+export type SearchQuery = SearchForHits | SearchForFacets;

@@ -6,5 +6,5 @@ export type GetTopFilterForAttributeResponse = {
   /**
    * Filter values for an attribute.
    */
-  values: GetTopFilterForAttribute[];
+  values: Array<GetTopFilterForAttribute>;
 };

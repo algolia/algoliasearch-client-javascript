@@ -35,12 +35,12 @@ export type BaseSearchParamsWithoutQuery = {
   /**
    * Restricts a search to a subset of your searchable attributes. Attribute names are case-sensitive.
    */
-  restrictSearchableAttributes?: string[];
+  restrictSearchableAttributes?: Array<string>;
 
   /**
    * Facets for which to retrieve facet values that match the search criteria and the number of matching facet values.  To retrieve all facets, use the wildcard character `*`. For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
    */
-  facets?: string[];
+  facets?: Array<string>;
 
   /**
    * Whether faceting should be applied after deduplication with `distinct`.  This leads to accurate facet counts when using faceting in combination with `distinct`. It\'s usually better to use `afterDistinct` modifiers in the `attributesForFaceting` setting, as `facetingAfterDistinct` only computes correct facet counts if all records have the same facet values for the `attributeForDistinct`.
@@ -84,22 +84,22 @@ export type BaseSearchParamsWithoutQuery = {
   /**
    * Coordinates for a rectangular area in which to search.  Each bounding box is defined by the two opposite points of its diagonal, and expressed as latitude and longitude pair: `[p1 lat, p1 long, p2 lat, p2 long]`. Provide multiple bounding boxes as nested arrays. For more information, see [rectangular area](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas).
    */
-  insideBoundingBox?: number[][];
+  insideBoundingBox?: Array<Array<number>>;
 
   /**
    * Coordinates of a polygon in which to search.  Polygons are defined by 3 to 10,000 points. Each point is represented by its latitude and longitude. Provide multiple polygons as nested arrays. For more information, see [filtering inside polygons](https://www.algolia.com/doc/guides/managing-results/refine-results/geolocation/#filtering-inside-rectangular-or-polygonal-areas). This parameter is ignored if you also specify `insideBoundingBox`.
    */
-  insidePolygon?: number[][];
+  insidePolygon?: Array<Array<number>>;
 
   /**
    * ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches):  - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets `removeWordsIfNoResults` to `allOptional`. - Adds a `natural_language` attribute to `ruleContexts` and `analyticsTags`.
    */
-  naturalLanguages?: SupportedLanguage[];
+  naturalLanguages?: Array<SupportedLanguage>;
 
   /**
    * Assigns a rule context to the search query.  [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
    */
-  ruleContexts?: string[];
+  ruleContexts?: Array<string>;
 
   /**
    * Impact that Personalization should have on this search.  The higher this value is, the more Personalization determines the ranking compared to other factors. For more information, see [Understanding Personalization impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
@@ -134,7 +134,7 @@ export type BaseSearchParamsWithoutQuery = {
   /**
    * Tags to apply to the query for [segmenting analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  analyticsTags?: string[];
+  analyticsTags?: Array<string>;
 
   /**
    * Whether to include this search when calculating processing-time percentiles.

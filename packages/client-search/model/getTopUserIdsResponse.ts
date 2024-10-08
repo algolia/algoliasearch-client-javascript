@@ -9,5 +9,5 @@ export type GetTopUserIdsResponse = {
   /**
    * Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values.
    */
-  topUsers: Array<Record<string, UserId[]>>;
+  topUsers: Array<{ [key: string]: Array<UserId> }>;
 };

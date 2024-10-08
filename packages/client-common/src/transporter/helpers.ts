@@ -1,5 +1,4 @@
 import type { Headers, Host, QueryParameters, Request, RequestOptions, Response, StackFrame } from '../types';
-
 import { ApiError, DeserializationError, DetailedApiError } from './errors';
 
 export function shuffle<TData>(array: TData[]): TData[] {

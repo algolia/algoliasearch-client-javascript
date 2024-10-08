@@ -11,7 +11,7 @@ export type ScheduleABTestsRequest = {
   /**
    * A/B test variants.
    */
-  variants: AddABTestsVariant[];
+  variants: Array<AddABTestsVariant>;
 
   /**
    * Date and time when the A/B test is scheduled to start, in RFC 3339 format.

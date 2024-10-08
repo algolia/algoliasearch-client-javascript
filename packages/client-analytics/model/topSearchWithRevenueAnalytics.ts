@@ -27,7 +27,7 @@ export type TopSearchWithRevenueAnalytics = {
   /**
    * List of positions in the search results and clicks associated with this search.
    */
-  clickPositions: ClickPosition[];
+  clickPositions: Array<ClickPosition>;
 
   /**
    * Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
@@ -57,7 +57,7 @@ export type TopSearchWithRevenueAnalytics = {
   /**
    * Revenue associated with this search, broken-down by currencies.
    */
-  currencies: Record<string, CurrencyCode>;
+  currencies: { [key: string]: CurrencyCode };
 
   /**
    * Add-to-cart rate, calculated as number of tracked searches with at least one add-to-cart event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.

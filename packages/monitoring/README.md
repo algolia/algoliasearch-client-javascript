@@ -32,12 +32,10 @@
 
 ## 💡 Getting Started
 
-
 To get started, you first need to install @algolia/monitoring (or any other available API client package).
 All of our clients comes with type definition, and are available for both browser and node environments.
 
 ### With a package manager
-
 
 ```bash
 yarn add @algolia/monitoring@1.8.0

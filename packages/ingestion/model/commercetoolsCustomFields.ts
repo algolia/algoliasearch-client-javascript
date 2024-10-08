@@ -7,15 +7,15 @@ export type CommercetoolsCustomFields = {
   /**
    * Inventory custom fields.
    */
-  inventory?: string[] | null;
+  inventory?: Array<string> | null;
 
   /**
    * Price custom fields.
    */
-  price?: string[] | null;
+  price?: Array<string> | null;
 
   /**
    * Category custom fields.
    */
-  category?: string[] | null;
+  category?: Array<string> | null;
 };

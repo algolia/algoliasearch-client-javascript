@@ -9,5 +9,5 @@ export type BatchResponse = {
   /**
    * Unique record identifiers.
    */
-  objectIDs: string[];
+  objectIDs: Array<string>;
 };

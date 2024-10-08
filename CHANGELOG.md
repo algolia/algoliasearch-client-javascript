@@ -53,7 +53,7 @@
 
 - [d4df544d6](https://github.com/algolia/api-clients-automation/commit/d4df544d6) fix(specs): remove usage [skip-bc] ([#3691](https://github.com/algolia/api-clients-automation/pull/3691)) by [@kai687](https://github.com/kai687/)
 - [d39b87726](https://github.com/algolia/api-clients-automation/commit/d39b87726) chore: assert node helpers ([#3689](https://github.com/algolia/api-clients-automation/pull/3689)) by [@shortcuts](https://github.com/shortcuts/)
-- [46d9d8fd0](https://github.com/algolia/api-clients-automation/commit/46d9d8fd0) feat(specs): add (optional) _automaticInsights to search result ([#3688](https://github.com/algolia/api-clients-automation/pull/3688)) by [@raed667](https://github.com/raed667/)
+- [46d9d8fd0](https://github.com/algolia/api-clients-automation/commit/46d9d8fd0) feat(specs): add (optional) \_automaticInsights to search result ([#3688](https://github.com/algolia/api-clients-automation/pull/3688)) by [@raed667](https://github.com/raed667/)
 
 ## [5.4.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.3.2...5.4.0)
 
@@ -765,7 +765,7 @@ New major version released! Browse [our documentation](https://www.algolia.com/d
 
 ## [5.0.0-alpha.12](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.11...5.0.0-alpha.12)
 
-- [ff02ba09](https://github.com/algolia/api-clients-automation/commit/ff02ba09) fix(javascript): revert: do not send user-agent for Predict  (#957) ([#919](https://github.com/algolia/api-clients-automation/pull/919)) by [@shortcuts](https://github.com/shortcuts/)
+- [ff02ba09](https://github.com/algolia/api-clients-automation/commit/ff02ba09) fix(javascript): revert: do not send user-agent for Predict (#957) ([#919](https://github.com/algolia/api-clients-automation/pull/919)) by [@shortcuts](https://github.com/shortcuts/)
 
 ## [5.0.0-alpha.11](https://github.com/algolia/algoliasearch-client-javascript/compare/5.0.0-alpha.10...5.0.0-alpha.11)
 

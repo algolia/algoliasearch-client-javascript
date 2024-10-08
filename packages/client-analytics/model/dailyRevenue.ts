@@ -6,7 +6,7 @@ export type DailyRevenue = {
   /**
    * Revenue associated with this search, broken-down by currencies.
    */
-  currencies: Record<string, CurrencyCode>;
+  currencies: { [key: string]: CurrencyCode };
 
   /**
    * Date in the format YYYY-MM-DD.

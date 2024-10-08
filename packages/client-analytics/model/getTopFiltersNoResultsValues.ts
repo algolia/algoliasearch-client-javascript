@@ -11,5 +11,5 @@ export type GetTopFiltersNoResultsValues = {
   /**
    * Filters with no results.
    */
-  values: GetTopFiltersNoResultsValue[];
+  values: Array<GetTopFiltersNoResultsValue>;
 };

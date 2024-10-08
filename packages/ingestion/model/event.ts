@@ -31,7 +31,7 @@ export type Event = {
    */
   batchSize: number;
 
-  data?: Record<string, any>;
+  data?: { [key: string]: any };
 
   /**
    * Date of publish RFC 3339 format.

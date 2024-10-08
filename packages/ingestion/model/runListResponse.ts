@@ -5,7 +5,7 @@ import type { Run } from './run';
 import type { Window } from './window';
 
 export type RunListResponse = {
-  runs: Run[];
+  runs: Array<Run>;
 
   pagination: Pagination;
 

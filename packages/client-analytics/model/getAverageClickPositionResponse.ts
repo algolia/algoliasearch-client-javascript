@@ -16,5 +16,5 @@ export type GetAverageClickPositionResponse = {
   /**
    * Daily average click positions.
    */
-  dates: DailyAverageClicks[];
+  dates: Array<DailyAverageClicks>;
 };

@@ -7,7 +7,7 @@ import type { ShopifyMetafield } from './shopifyMetafield';
  * Represents the required elements of the task input when using a `shopify` source.
  */
 export type ShopifyInput = {
-  metafields: ShopifyMetafield[];
+  metafields: Array<ShopifyMetafield>;
 
   market: ShopifyMarket;
 };

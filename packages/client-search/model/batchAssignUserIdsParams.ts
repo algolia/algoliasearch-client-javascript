@@ -12,5 +12,5 @@ export type BatchAssignUserIdsParams = {
   /**
    * User IDs to assign.
    */
-  users: string[];
+  users: Array<string>;
 };

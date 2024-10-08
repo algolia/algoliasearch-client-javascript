@@ -9,17 +9,17 @@ export type SourceWatchResponse = {
   runID?: string;
 
   /**
-   * Depending on the source type, the validation returns sampling data of your source (JSON, CSV, BigQuery).
+   * depending on the source type, the validation returns sampling data of your source (JSON, CSV, BigQuery).
    */
   data?: Array<Record<string, unknown>>;
 
   /**
-   * In case of error, observability events will be added to the response, if any.
+   * in case of error, observability events will be added to the response, if any.
    */
-  events?: Event[];
+  events?: Array<Event>;
 
   /**
-   * A message describing the outcome of a validate run.
+   * a message describing the outcome of a validate run.
    */
   message: string;
 };

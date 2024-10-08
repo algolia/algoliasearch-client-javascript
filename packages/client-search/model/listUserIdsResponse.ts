@@ -9,5 +9,5 @@ export type ListUserIdsResponse = {
   /**
    * User IDs.
    */
-  userIDs: UserId[];
+  userIDs: Array<UserId>;
 };

@@ -3,7 +3,7 @@
 import type { Banner } from './banner';
 
 /**
- * Banners defined in the merchandising studio for the given search.
+ * banners defined in the merchandising studio for the given search.
  */
 export type Banners = {
   banners?: Banner;

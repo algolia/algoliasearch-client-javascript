@@ -3,4 +3,4 @@
 import type { Cursor } from './cursor';
 import type { SearchParamsObject } from './searchParamsObject';
 
-export type BrowseParamsObject = Cursor & SearchParamsObject;
+export type BrowseParamsObject = SearchParamsObject & Cursor;

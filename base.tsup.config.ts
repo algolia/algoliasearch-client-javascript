@@ -1,5 +1,4 @@
 import path from 'path';
-
 import type { Options } from 'tsup';
 
 type PKG = {

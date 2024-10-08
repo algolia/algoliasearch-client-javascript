@@ -3,5 +3,5 @@
 import type { TimeEntry } from './timeEntry';
 
 export type IndexingMetric = {
-  indexing?: Record<string, TimeEntry[]>;
+  indexing?: { [key: string]: Array<TimeEntry> };
 };

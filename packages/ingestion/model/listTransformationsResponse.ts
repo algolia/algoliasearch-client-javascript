@@ -7,7 +7,7 @@ import type { Transformation } from './transformation';
  * Configured transformations and pagination information.
  */
 export type ListTransformationsResponse = {
-  transformations: Transformation[];
+  transformations: Array<Transformation>;
 
   pagination: Pagination;
 };

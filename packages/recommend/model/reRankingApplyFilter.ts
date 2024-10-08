@@ -3,4 +3,4 @@
 /**
  * Restrict [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) to records that match these filters.
  */
-export type ReRankingApplyFilter = ReRankingApplyFilter[] | string;
+export type ReRankingApplyFilter = Array<ReRankingApplyFilter> | string;

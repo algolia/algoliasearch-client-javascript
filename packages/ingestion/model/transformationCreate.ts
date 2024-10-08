@@ -22,5 +22,5 @@ export type TransformationCreate = {
   /**
    * The authentications associated for the current transformation.
    */
-  authenticationIDs?: string[];
+  authenticationIDs?: Array<string>;
 };

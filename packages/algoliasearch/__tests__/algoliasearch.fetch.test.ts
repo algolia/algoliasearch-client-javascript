@@ -1,6 +1,5 @@
 /* eslint no-console: 0 */
-
-import { vi, test, expect } from 'vitest';
+import { expect, test, vi } from 'vitest';
 
 import { LogLevelEnum } from '../../client-common/src/types';
 import { createConsoleLogger } from '../../logger-console/src/logger';

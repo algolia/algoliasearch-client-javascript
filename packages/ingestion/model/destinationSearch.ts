@@ -4,5 +4,5 @@
  * API request body for searching destinations.
  */
 export type DestinationSearch = {
-  destinationIDs: string[];
+  destinationIDs: Array<string>;
 };

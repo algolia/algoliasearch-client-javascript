@@ -42,7 +42,7 @@ export type Variant = {
   /**
    * A/B test currencies.
    */
-  currencies?: Record<string, Currency>;
+  currencies?: { [key: string]: Currency };
 
   /**
    * Description for this variant.

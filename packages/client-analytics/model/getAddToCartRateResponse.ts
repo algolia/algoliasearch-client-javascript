@@ -21,5 +21,5 @@ export type GetAddToCartRateResponse = {
   /**
    * Daily add-to-cart rates.
    */
-  dates: DailyAddToCartRates[];
+  dates: Array<DailyAddToCartRates>;
 };

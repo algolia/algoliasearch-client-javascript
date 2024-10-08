@@ -21,5 +21,5 @@ export type GetClickThroughRateResponse = {
   /**
    * Daily click-through rates.
    */
-  dates: DailyClickThroughRates[];
+  dates: Array<DailyClickThroughRates>;
 };

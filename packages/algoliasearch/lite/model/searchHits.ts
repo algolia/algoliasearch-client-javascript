@@ -6,7 +6,7 @@ export type SearchHits<T = Record<string, any>> = Record<string, any> & {
   /**
    * Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
    */
-  hits: Array<Hit<T>>;
+  hits: Hit<T>[];
 
   /**
    * Search query.

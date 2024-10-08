@@ -3,4 +3,4 @@
 import type { SourceShopifyBase } from './sourceShopifyBase';
 import type { SourceUpdateShopify } from './sourceUpdateShopify';
 
-export type SourceShopify = SourceShopifyBase & SourceUpdateShopify;
+export type SourceShopify = SourceUpdateShopify & SourceShopifyBase;

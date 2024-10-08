@@ -11,5 +11,5 @@ export type GetUsersCountResponse = {
   /**
    * Daily number of unique users.
    */
-  dates: DailyUsers[];
+  dates: Array<DailyUsers>;
 };

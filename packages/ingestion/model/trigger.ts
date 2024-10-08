@@ -3,9 +3,10 @@
 import type { OnDemandTrigger } from './onDemandTrigger';
 import type { ScheduleTrigger } from './scheduleTrigger';
 import type { StreamingTrigger } from './streamingTrigger';
+
 import type { SubscriptionTrigger } from './subscriptionTrigger';
 
 /**
  * Trigger that runs the task.
  */
-export type Trigger = OnDemandTrigger | ScheduleTrigger | StreamingTrigger | SubscriptionTrigger;
+export type Trigger = OnDemandTrigger | ScheduleTrigger | SubscriptionTrigger | StreamingTrigger;

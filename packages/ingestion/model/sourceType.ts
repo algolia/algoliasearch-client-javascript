@@ -8,6 +8,6 @@ export type SourceType =
   | 'docker'
   | 'ga4BigqueryExport'
   | 'json'
-  | 'push'
+  | 'shopify'
   | 'sfcc'
-  | 'shopify';
+  | 'push';

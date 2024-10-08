@@ -10,11 +10,11 @@ export type Configuration = {
   /**
    * Algolia indices from which to get the popular searches for query suggestions.
    */
-  sourceIndices: SourceIndex[];
+  sourceIndices: Array<SourceIndex>;
 
   languages?: Languages;
 
-  exclude?: string[] | null;
+  exclude?: Array<string> | null;
 
   /**
    * Whether to turn on personalized query suggestions.

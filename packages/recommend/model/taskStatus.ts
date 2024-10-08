@@ -3,4 +3,4 @@
 /**
  * Task status, `published` if the task is completed, `notPublished` otherwise.
  */
-export type TaskStatus = 'notPublished' | 'published';
+export type TaskStatus = 'published' | 'notPublished';

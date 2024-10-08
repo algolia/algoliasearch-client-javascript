@@ -3,4 +3,4 @@
 /**
  * Property by which to sort the list of task run events.
  */
-export type EventSortKeys = 'publishedAt' | 'status' | 'type';
+export type EventSortKeys = 'status' | 'type' | 'publishedAt';

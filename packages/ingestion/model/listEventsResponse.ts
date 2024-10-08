@@ -5,7 +5,7 @@ import type { Pagination } from './pagination';
 import type { Window } from './window';
 
 export type ListEventsResponse = {
-  events: Event[];
+  events: Array<Event>;
 
   pagination: Pagination;
 

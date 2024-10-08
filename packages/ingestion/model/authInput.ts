@@ -8,9 +8,9 @@ import type { AuthGoogleServiceAccount } from './authGoogleServiceAccount';
 import type { AuthOAuth } from './authOAuth';
 
 export type AuthInput =
-  | AuthAlgolia
-  | AuthAlgoliaInsights
-  | AuthAPIKey
-  | AuthBasic
   | AuthGoogleServiceAccount
-  | AuthOAuth;
+  | AuthBasic
+  | AuthAPIKey
+  | AuthOAuth
+  | AuthAlgolia
+  | AuthAlgoliaInsights;

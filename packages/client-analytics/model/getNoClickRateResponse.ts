@@ -21,5 +21,5 @@ export type GetNoClickRateResponse = {
   /**
    * Daily no click rates.
    */
-  dates: DailyNoClickRates[];
+  dates: Array<DailyNoClickRates>;
 };

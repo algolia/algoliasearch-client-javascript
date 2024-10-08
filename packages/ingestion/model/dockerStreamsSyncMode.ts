@@ -3,4 +3,4 @@
 /**
  * The strategy to use to fetch the data.
  */
-export type DockerStreamsSyncMode = 'fullTable' | 'incremental';
+export type DockerStreamsSyncMode = 'incremental' | 'fullTable';

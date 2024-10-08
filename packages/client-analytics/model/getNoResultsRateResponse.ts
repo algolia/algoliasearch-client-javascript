@@ -21,5 +21,5 @@ export type GetNoResultsRateResponse = {
   /**
    * Daily no results rates.
    */
-  dates: DailyNoResultsRates[];
+  dates: Array<DailyNoResultsRates>;
 };

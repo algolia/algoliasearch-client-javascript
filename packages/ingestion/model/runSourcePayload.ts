@@ -6,17 +6,17 @@ export type RunSourcePayload = {
   /**
    * List of index names to include in reidexing/update.
    */
-  indexToInclude?: string[];
+  indexToInclude?: Array<string>;
 
   /**
    * List of index names to exclude in reidexing/update.
    */
-  indexToExclude?: string[];
+  indexToExclude?: Array<string>;
 
   /**
    * List of entityID to update.
    */
-  entityIDs?: string[];
+  entityIDs?: Array<string>;
 
   entityType?: EntityType;
 };

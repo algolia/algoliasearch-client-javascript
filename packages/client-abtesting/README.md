@@ -40,7 +40,6 @@ All of our clients comes with type definition, and are available for both browse
 
 ### With a package manager
 
-
 ```bash
 yarn add @algolia/client-abtesting@5.8.0
 # or

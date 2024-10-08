@@ -1,20 +1,20 @@
+import crossFetch from 'cross-fetch';
 import type http from 'http';
+import nock from 'nock';
 import { Readable } from 'stream';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 
 import type { EndRequest } from '@algolia/client-common';
-import crossFetch from 'cross-fetch';
-import nock from 'nock';
-import { describe, test, beforeAll, afterAll, beforeEach, afterEach, expect } from 'vitest';
 
 import { createFetchRequester } from '../..';
 import {
-  headers,
-  timeoutRequest,
-  requestStub,
-  testQueryHeader,
-  testQueryBaseUrl,
-  getStringifiedBody,
   createTestServer,
+  getStringifiedBody,
+  headers,
+  requestStub,
+  testQueryBaseUrl,
+  testQueryHeader,
+  timeoutRequest,
 } from '../../../../tests/utils';
 
 const originalFetch = window.fetch;

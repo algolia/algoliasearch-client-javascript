@@ -3,4 +3,4 @@
 /**
  * Task trigger, describing when a task should run.  - `onDemand`.   Manually trigger the task with the `/run` endpoint.  - `schedule`.   Regularly trigger the task on a `cron` schedule.  - `subscription`.   Trigger the task after an event is received, such as, a webhook.  - `streaming`.   Run the task continuously.
  */
-export type TriggerType = 'onDemand' | 'schedule' | 'streaming' | 'subscription';
+export type TriggerType = 'onDemand' | 'schedule' | 'subscription' | 'streaming';

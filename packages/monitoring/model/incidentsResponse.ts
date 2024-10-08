@@ -3,5 +3,5 @@
 import type { IncidentEntry } from './incidentEntry';
 
 export type IncidentsResponse = {
-  incidents?: Record<string, IncidentEntry[]>;
+  incidents?: { [key: string]: Array<IncidentEntry> };
 };

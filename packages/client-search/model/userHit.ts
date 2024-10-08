@@ -24,7 +24,7 @@ export type UserHit = {
   dataSize: number;
 
   /**
-   * UserID of the requested user. Same as userID.
+   * userID of the requested user. Same as userID.
    */
   objectID: string;
 

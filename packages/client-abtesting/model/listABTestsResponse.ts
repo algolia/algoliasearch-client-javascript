@@ -6,7 +6,7 @@ export type ListABTestsResponse = {
   /**
    * A/B tests.
    */
-  abtests: ABTest[] | null;
+  abtests: Array<ABTest> | null;
 
   /**
    * Number of A/B tests.

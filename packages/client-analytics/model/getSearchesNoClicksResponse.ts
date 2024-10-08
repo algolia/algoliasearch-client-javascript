@@ -6,5 +6,5 @@ export type GetSearchesNoClicksResponse = {
   /**
    * Searches without any clicks.
    */
-  searches: DailySearchesNoClicks[];
+  searches: Array<DailySearchesNoClicks>;
 };

@@ -61,5 +61,5 @@ export type TopHitWithRevenueAnalytics = {
   /**
    * Revenue associated with this search, broken-down by currencies.
    */
-  currencies: Record<string, CurrencyCode>;
+  currencies: { [key: string]: CurrencyCode };
 };

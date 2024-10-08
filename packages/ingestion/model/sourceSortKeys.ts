@@ -3,4 +3,4 @@
 /**
  * Property by which to sort the list of sources.
  */
-export type SourceSortKeys = 'createdAt' | 'name' | 'type' | 'updatedAt';
+export type SourceSortKeys = 'name' | 'type' | 'updatedAt' | 'createdAt';

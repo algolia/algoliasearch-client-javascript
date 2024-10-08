@@ -1,20 +1,19 @@
 import type {
   EndRequest,
   Host,
+  QueryParameters,
   Request,
   RequestOptions,
   Response,
   StackFrame,
-  TransporterOptions,
   Transporter,
-  QueryParameters,
+  TransporterOptions,
 } from '../types';
-
 import { createStatefulHost } from './createStatefulHost';
 import { RetryError } from './errors';
 import { deserializeFailure, deserializeSuccess, serializeData, serializeHeaders, serializeUrl } from './helpers';
 import { isRetryable, isSuccess } from './responses';
-import { stackTraceWithoutCredentials, stackFrameWithoutCredentials } from './stackTrace';
+import { stackFrameWithoutCredentials, stackTraceWithoutCredentials } from './stackTrace';
 
 type RetryableOptions = {
   hosts: Host[];

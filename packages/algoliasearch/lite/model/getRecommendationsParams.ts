@@ -9,5 +9,5 @@ export type GetRecommendationsParams = {
   /**
    * Recommendation request with parameters depending on the requested model.
    */
-  requests: RecommendationsRequest[];
+  requests: Array<RecommendationsRequest>;
 };

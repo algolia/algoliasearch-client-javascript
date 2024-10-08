@@ -1,4 +1,4 @@
-import { vi, describe, test, beforeEach, expect } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { createBrowserLocalStorageCache } from '../../cache';
 

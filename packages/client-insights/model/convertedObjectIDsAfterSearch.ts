@@ -21,7 +21,7 @@ export type ConvertedObjectIDsAfterSearch = {
   /**
    * Object IDs of the records that are part of the event.
    */
-  objectIDs: string[];
+  objectIDs: Array<string>;
 
   /**
    * Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.

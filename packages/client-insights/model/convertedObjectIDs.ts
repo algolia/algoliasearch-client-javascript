@@ -21,7 +21,7 @@ export type ConvertedObjectIDs = {
   /**
    * Object IDs of the records that are part of the event.
    */
-  objectIDs: string[];
+  objectIDs: Array<string>;
 
   /**
    * Anonymous or pseudonymous user identifier.  Don\'t use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).

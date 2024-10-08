@@ -6,7 +6,7 @@ export type SearchRecommendRulesResponse = {
   /**
    * Recommend rules that match the search criteria.
    */
-  hits: RecommendRule[];
+  hits: Array<RecommendRule>;
 
   /**
    * Number of results (hits).

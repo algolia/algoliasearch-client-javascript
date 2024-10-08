@@ -89,11 +89,11 @@ import { apiClientVersion } from '@algolia/client-search';
 
 type Region = AbTestingRegion | AnalyticsRegion;
 
+export * from '@algolia/client-abtesting';
+export * from '@algolia/client-analytics';
+export * from '@algolia/client-personalization';
 export * from '@algolia/client-search';
 export * from '@algolia/recommend';
-export * from '@algolia/client-personalization';
-export * from '@algolia/client-analytics';
-export * from '@algolia/client-abtesting';
 
 export {
   AbTestingRegion,

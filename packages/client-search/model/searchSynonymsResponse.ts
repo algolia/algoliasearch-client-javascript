@@ -6,7 +6,7 @@ export type SearchSynonymsResponse = Record<string, any> & {
   /**
    * Matching synonyms.
    */
-  hits: SynonymHit[];
+  hits: Array<SynonymHit>;
 
   /**
    * Number of results (hits).

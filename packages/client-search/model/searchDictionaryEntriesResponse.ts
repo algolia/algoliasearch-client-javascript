@@ -6,7 +6,7 @@ export type SearchDictionaryEntriesResponse = {
   /**
    * Dictionary entries matching the search criteria.
    */
-  hits: DictionaryEntry[];
+  hits: Array<DictionaryEntry>;
 
   /**
    * Requested page of the API response.

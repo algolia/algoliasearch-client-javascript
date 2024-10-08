@@ -21,5 +21,5 @@ export type DestinationCreate = {
    */
   authenticationID?: string;
 
-  transformationIDs?: string[];
+  transformationIDs?: Array<string>;
 };

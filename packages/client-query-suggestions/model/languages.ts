@@ -3,4 +3,4 @@
 /**
  * Languages for deduplicating singular and plural suggestions. If specified, only the more popular form is included.
  */
-export type Languages = string[] | boolean;
+export type Languages = Array<string> | boolean;

@@ -16,7 +16,7 @@ export type SynonymHit = {
   /**
    * Words or phrases considered equivalent.
    */
-  synonyms?: string[];
+  synonyms?: Array<string>;
 
   /**
    * Word or phrase to appear in query strings (for [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).
@@ -31,7 +31,7 @@ export type SynonymHit = {
   /**
    * Words to be matched in records.
    */
-  corrections?: string[];
+  corrections?: Array<string>;
 
   /**
    * [Placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/) to be put inside records.
@@ -41,5 +41,5 @@ export type SynonymHit = {
   /**
    * Query words that will match the [placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).
    */
-  replacements?: string[];
+  replacements?: Array<string>;
 };

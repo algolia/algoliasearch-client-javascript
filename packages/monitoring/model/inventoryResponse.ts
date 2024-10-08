@@ -3,5 +3,5 @@
 import type { Server } from './server';
 
 export type InventoryResponse = {
-  inventory?: Server[];
+  inventory?: Array<Server>;
 };

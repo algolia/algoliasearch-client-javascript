@@ -2,4 +2,4 @@
 
 import type { HighlightResultOption } from './highlightResultOption';
 
-export type HighlightResult = HighlightResult[] | HighlightResultOption | { [key: string]: HighlightResult };
+export type HighlightResult = HighlightResultOption | { [key: string]: HighlightResult } | Array<HighlightResult>;

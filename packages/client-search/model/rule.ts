@@ -16,7 +16,7 @@ export type Rule = {
   /**
    * Conditions that trigger a rule.  Some consequences require specific conditions or don\'t require any condition. For more information, see [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions).
    */
-  conditions?: Condition[];
+  conditions?: Array<Condition>;
 
   consequence?: Consequence;
 
@@ -33,5 +33,5 @@ export type Rule = {
   /**
    * Time periods when the rule is active.
    */
-  validity?: TimeRange[];
+  validity?: Array<TimeRange>;
 };

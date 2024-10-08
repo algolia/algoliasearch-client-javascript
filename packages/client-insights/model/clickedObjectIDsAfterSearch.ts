@@ -21,12 +21,12 @@ export type ClickedObjectIDsAfterSearch = {
   /**
    * Object IDs of the records that are part of the event.
    */
-  objectIDs: string[];
+  objectIDs: Array<string>;
 
   /**
    * Position of the clicked item the search results.  You must provide 1 `position` for each `objectID`.
    */
-  positions: number[];
+  positions: Array<number>;
 
   /**
    * Unique identifier for a search query.  The query ID is required for events related to search or browse requests. If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.

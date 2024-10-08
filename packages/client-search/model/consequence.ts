@@ -13,7 +13,7 @@ export type Consequence = {
   /**
    * Records you want to pin to a specific position in the search results.  You can promote up to 300 records, either individually, or as groups of up to 100 records each.
    */
-  promote?: Promote[];
+  promote?: Array<Promote>;
 
   /**
    * Whether promoted records must match an active filter for the consequence to be applied.  This ensures that user actions (filtering the search) are given a higher precendence. For example, if you promote a record with the `color: red` attribute, and the user filters the search for `color: blue`, the \"red\" record won\'t be shown.
@@ -23,7 +23,7 @@ export type Consequence = {
   /**
    * Records you want to hide from the search results.
    */
-  hide?: ConsequenceHide[];
+  hide?: Array<ConsequenceHide>;
 
   /**
    * A JSON object with custom data that will be appended to the `userData` array in the response. This object isn\'t interpreted by the API and is limited to 1&nbsp;kB of minified JSON.

@@ -33,5 +33,5 @@ export type RecommendRule = {
   /**
    * Time periods when the rule is active.
    */
-  validity?: TimeRange[];
+  validity?: Array<TimeRange>;
 };

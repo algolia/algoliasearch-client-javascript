@@ -3,4 +3,4 @@
 /**
  * A/B test status.  - `active`. The A/B test is live and search traffic is split between the two variants. - `stopped`. You stopped the A/B test. The A/B test data is still available for analysis. - `expired`. The A/B test was automatically stopped after reaching its end date. - `failed`. Creating the A/B test failed.
  */
-export type Status = 'active' | 'expired' | 'failed' | 'stopped';
+export type Status = 'active' | 'stopped' | 'expired' | 'failed';

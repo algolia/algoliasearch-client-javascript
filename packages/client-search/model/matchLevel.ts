@@ -3,4 +3,4 @@
 /**
  * Whether the whole query string matches or only a part.
  */
-export type MatchLevel = 'full' | 'none' | 'partial';
+export type MatchLevel = 'none' | 'partial' | 'full';

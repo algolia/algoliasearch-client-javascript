@@ -9,7 +9,7 @@ export type ReplaceAllObjectsResponse = {
   /**
    * The response of the `batch` request(s).
    */
-  batchResponses: BatchResponse[];
+  batchResponses: Array<BatchResponse>;
 
   moveOperationResponse: UpdatedAtResponse;
 };

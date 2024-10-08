@@ -3,4 +3,4 @@
 /**
  * Search mode the index will use to query for results.  This setting only applies to indices, for which Algolia enabled NeuralSearch for you.
  */
-export type Mode = 'keywordSearch' | 'neuralSearch';
+export type Mode = 'neuralSearch' | 'keywordSearch';

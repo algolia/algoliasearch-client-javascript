@@ -3,4 +3,4 @@
 /**
  * Property by which to sort the list of transformations.
  */
-export type TransformationSortKeys = 'createdAt' | 'name' | 'updatedAt';
+export type TransformationSortKeys = 'name' | 'updatedAt' | 'createdAt';

@@ -1,7 +1,7 @@
 import type { Options } from 'tsup';
 import { defineConfig } from 'tsup';
 
-import { getBaseNodeOptions, getBaseBrowserOptions, getDependencies } from '../../base.tsup.config';
+import { getBaseBrowserOptions, getBaseNodeOptions, getDependencies } from '../../base.tsup.config';
 
 import pkg from './package.json' with { type: 'json' };
 

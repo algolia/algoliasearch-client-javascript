@@ -16,9 +16,9 @@ export type SourceIndex = {
    */
   replicas?: boolean;
 
-  analyticsTags?: string[] | null;
+  analyticsTags?: Array<string> | null;
 
-  facets?: Facet[] | null;
+  facets?: Array<Facet> | null;
 
   /**
    * Minimum number of hits required to be included as a suggestion.  A search query must at least generate `minHits` search results to be included in the Query Suggestions index.
@@ -30,7 +30,7 @@ export type SourceIndex = {
    */
   minLetters?: number;
 
-  generate?: string[][] | null;
+  generate?: Array<Array<string>> | null;
 
-  external?: string[] | null;
+  external?: Array<string> | null;
 };

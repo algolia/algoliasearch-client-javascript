@@ -18,7 +18,7 @@ export type ABTest = {
 
   purchaseSignificance?: number | null;
 
-  revenueSignificance?: Record<string, number> | null;
+  revenueSignificance?: { [key: string]: number } | null;
 
   /**
    * Date and time when the A/B test was last updated, in RFC 3339 format.
@@ -45,7 +45,7 @@ export type ABTest = {
   /**
    * A/B test variants.  The first variant is your _control_ index, typically your production index. The second variant is an index with changed settings that you want to test against the control.
    */
-  variants: Variant[];
+  variants: Array<Variant>;
 
   configuration?: ABTestConfiguration;
 };

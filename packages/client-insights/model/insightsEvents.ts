@@ -6,5 +6,5 @@ export type InsightsEvents = {
   /**
    * Click and conversion events.  **All** events must be valid, otherwise the API returns an error.
    */
-  events: EventsItems[];
+  events: Array<EventsItems>;
 };

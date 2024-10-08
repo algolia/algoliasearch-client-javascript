@@ -4,5 +4,5 @@
  * Request body for searching for authentication resources.
  */
 export type AuthenticationSearch = {
-  authenticationIDs: string[];
+  authenticationIDs: Array<string>;
 };

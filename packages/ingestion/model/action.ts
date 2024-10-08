@@ -5,9 +5,9 @@
  */
 export type Action =
   | 'addObject'
-  | 'clear'
-  | 'delete'
-  | 'deleteObject'
+  | 'updateObject'
   | 'partialUpdateObject'
   | 'partialUpdateObjectNoCreate'
-  | 'updateObject';
+  | 'deleteObject'
+  | 'delete'
+  | 'clear';

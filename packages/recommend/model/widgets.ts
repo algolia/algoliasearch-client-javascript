@@ -3,7 +3,7 @@
 import type { Banners } from './banners';
 
 /**
- * Widgets returned from any rules that are applied to the current search.
+ * widgets returned from any rules that are applied to the current search.
  */
 export type Widgets = {
   banners?: Banners;

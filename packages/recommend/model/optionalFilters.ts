@@ -3,4 +3,4 @@
 /**
  * Filters to promote or demote records in the search results.  Optional filters work like facet filters, but they don\'t exclude records from the search results. Records that match the optional filter rank before records that don\'t match. If you\'re using a negative filter `facet:-value`, matching records rank after records that don\'t match.  - Optional filters don\'t work on virtual replicas. - Optional filters are applied _after_ sort-by attributes. - Optional filters don\'t work with numeric attributes.
  */
-export type OptionalFilters = OptionalFilters[] | string;
+export type OptionalFilters = Array<OptionalFilters> | string;

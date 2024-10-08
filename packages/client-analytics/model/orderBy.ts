@@ -3,4 +3,4 @@
 /**
  * Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
  */
-export type OrderBy = 'averageClickPosition' | 'clickThroughRate' | 'conversionRate' | 'searchCount';
+export type OrderBy = 'searchCount' | 'clickThroughRate' | 'conversionRate' | 'averageClickPosition';

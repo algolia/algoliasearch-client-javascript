@@ -3,4 +3,4 @@
 /**
  * Whether a dictionary entry is active.
  */
-export type DictionaryEntryState = 'disabled' | 'enabled';
+export type DictionaryEntryState = 'enabled' | 'disabled';

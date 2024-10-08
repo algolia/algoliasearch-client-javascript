@@ -6,7 +6,7 @@ export type SearchRulesResponse = {
   /**
    * Rules that matched the search criteria.
    */
-  hits: Rule[];
+  hits: Array<Rule>;
 
   /**
    * Number of rules that matched the search criteria.

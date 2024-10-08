@@ -16,7 +16,7 @@ export type HighlightResultOption = {
   /**
    * List of matched words from the search query.
    */
-  matchedWords: string[];
+  matchedWords: Array<string>;
 
   /**
    * Whether the entire attribute value is highlighted.

@@ -11,5 +11,5 @@ export type GetSearchesCountResponse = {
   /**
    * Daily number of searches.
    */
-  dates: DailySearches[];
+  dates: Array<DailySearches>;
 };

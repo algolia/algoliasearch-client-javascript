@@ -9,7 +9,7 @@ export type ApiKey = {
   /**
    * Permissions that determine the type of API requests this key can make. The required ACL is listed in each endpoint\'s reference. For more information, see [access control list](https://www.algolia.com/doc/guides/security/api-keys/#access-control-list-acl).
    */
-  acl: Acl[];
+  acl: Array<Acl>;
 
   /**
    * Description of an API key to help you identify this API key.
@@ -19,7 +19,7 @@ export type ApiKey = {
   /**
    * Index names or patterns that this API key can access. By default, an API key can access all indices in the same application.  You can use leading and trailing wildcard characters (`*`):  - `dev_*` matches all indices starting with \"dev_\". - `*_dev` matches all indices ending with \"_dev\". - `*_products_*` matches all indices containing \"_products_\".
    */
-  indexes?: string[];
+  indexes?: Array<string>;
 
   /**
    * Maximum number of results this API key can retrieve in one query. By default, there\'s no limit.
@@ -39,7 +39,7 @@ export type ApiKey = {
   /**
    * Allowed HTTP referrers for this API key.  By default, all referrers are allowed. You can use leading and trailing wildcard characters (`*`):  - `https://algolia.com/_*` allows all referrers starting with \"https://algolia.com/\" - `*.algolia.com` allows all referrers ending with \".algolia.com\" - `*algolia.com*` allows all referrers in the domain \"algolia.com\".  Like all HTTP headers, referrers can be spoofed. Don\'t rely on them to secure your data. For more information, see [HTTP referrer restrictions](https://www.algolia.com/doc/guides/security/security-best-practices/#http-referrers-restrictions).
    */
-  referers?: string[];
+  referers?: Array<string>;
 
   /**
    * Duration (in seconds) after which the API key expires. By default, API keys don\'t expire.

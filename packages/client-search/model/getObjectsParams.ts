@@ -6,5 +6,5 @@ import type { GetObjectsRequest } from './getObjectsRequest';
  * Request parameters.
  */
 export type GetObjectsParams = {
-  requests: GetObjectsRequest[];
+  requests: Array<GetObjectsRequest>;
 };

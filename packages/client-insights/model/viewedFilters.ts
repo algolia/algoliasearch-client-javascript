@@ -21,7 +21,7 @@ export type ViewedFilters = {
   /**
    * Applied facet filters.  Facet filters are `facet:value` pairs. Facet values must be URL-encoded, such as, `discount:10%25`.
    */
-  filters: string[];
+  filters: Array<string>;
 
   /**
    * Anonymous or pseudonymous user identifier.  Don\'t use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).

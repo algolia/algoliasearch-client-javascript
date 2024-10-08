@@ -4,7 +4,7 @@ import type { Authentication } from './authentication';
 import type { Pagination } from './pagination';
 
 export type ListAuthenticationsResponse = {
-  authentications: Authentication[];
+  authentications: Array<Authentication>;
 
   pagination: Pagination;
 };

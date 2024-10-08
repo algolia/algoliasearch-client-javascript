@@ -6,5 +6,5 @@ export type TopSearchesResponseWithRevenueAnalytics = {
   /**
    * Most popular searches, including their click and revenue metrics.
    */
-  searches: TopSearchWithRevenueAnalytics[];
+  searches: Array<TopSearchWithRevenueAnalytics>;
 };

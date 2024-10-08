@@ -21,5 +21,5 @@ export type GetConversionRateResponse = {
   /**
    * Daily conversion rates.
    */
-  dates: DailyConversionRates[];
+  dates: Array<DailyConversionRates>;
 };

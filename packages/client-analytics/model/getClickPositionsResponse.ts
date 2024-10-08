@@ -6,5 +6,5 @@ export type GetClickPositionsResponse = {
   /**
    * List of positions in the search results and clicks associated with this search.
    */
-  positions: ClickPosition[];
+  positions: Array<ClickPosition>;
 };

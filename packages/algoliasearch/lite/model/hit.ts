@@ -16,12 +16,12 @@ export type Hit<T = Record<string, any>> = T & {
   /**
    * Surround words that match the query with HTML tags for highlighting.
    */
-  _highlightResult?: Record<string, HighlightResult>;
+  _highlightResult?: { [key: string]: HighlightResult };
 
   /**
    * Snippets that show the context around a matching search query.
    */
-  _snippetResult?: Record<string, SnippetResult>;
+  _snippetResult?: { [key: string]: SnippetResult };
 
   _rankingInfo?: RankingInfo;
 

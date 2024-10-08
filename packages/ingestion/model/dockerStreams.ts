@@ -4,14 +4,14 @@ import type { DockerStreamsSyncMode } from './dockerStreamsSyncMode';
 
 export type DockerStreams = {
   /**
-   * The name of the stream to fetch the data from (e.g. Table name).
+   * The name of the stream to fetch the data from (e.g. table name).
    */
   name: string;
 
   /**
-   * The properties of the stream to select (e.g. Column).
+   * The properties of the stream to select (e.g. column).
    */
-  properties?: string[];
+  properties?: Array<string>;
 
   syncMode: DockerStreamsSyncMode;
 };

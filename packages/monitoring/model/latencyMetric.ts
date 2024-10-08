@@ -3,5 +3,5 @@
 import type { TimeEntry } from './timeEntry';
 
 export type LatencyMetric = {
-  latency?: Record<string, TimeEntry[]>;
+  latency?: { [key: string]: Array<TimeEntry> };
 };

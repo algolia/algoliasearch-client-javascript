@@ -3,4 +3,4 @@
 /**
  * Task run type.
  */
-export type RunType = 'discover' | 'push' | 'reindex' | 'update' | 'validate';
+export type RunType = 'reindex' | 'update' | 'discover' | 'validate' | 'push';

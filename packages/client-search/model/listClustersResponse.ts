@@ -7,5 +7,5 @@ export type ListClustersResponse = {
   /**
    * Key-value pairs with cluster names as keys and lists of users with the highest number of records per cluster as values.
    */
-  topUsers: string[];
+  topUsers: Array<string>;
 };

@@ -26,7 +26,7 @@ export type AddedToCartObjectIDs = {
   /**
    * Object IDs of the records that are part of the event.
    */
-  objectIDs: string[];
+  objectIDs: Array<string>;
 
   /**
    * Anonymous or pseudonymous user identifier.  Don\'t use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
@@ -46,7 +46,7 @@ export type AddedToCartObjectIDs = {
   /**
    * Extra information about the records involved in a purchase or add-to-cart event.  If specified, it must have the same length as `objectIDs`.
    */
-  objectData?: ObjectData[];
+  objectData?: Array<ObjectData>;
 
   /**
    * Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the time it receives an event as its timestamp.
