@@ -5,6 +5,10 @@
 - [844e57f35](https://github.com/algolia/api-clients-automation/commit/844e57f35) fix(specs): correct typos is Search API ([#3898](https://github.com/algolia/api-clients-automation/pull/3898)) by [@gazconroy](https://github.com/gazconroy/)
 - [3c4c87619](https://github.com/algolia/api-clients-automation/commit/3c4c87619) chore(deps): dependencies 2024-10-07 ([#3876](https://github.com/algolia/api-clients-automation/pull/3876)) by [@algolia-bot](https://github.com/algolia-bot/)
 - [3d5828d61](https://github.com/algolia/api-clients-automation/commit/3d5828d61) fix(javascript): node 14 compatibility ([#3897](https://github.com/algolia/api-clients-automation/pull/3897)) by [@shortcuts](https://github.com/shortcuts/)
+- [8d896f0d2](https://github.com/algolia/api-clients-automation/commit/8d896f0d2) chore: prepare release 2024-10-07 ([#3917](https://github.com/algolia/api-clients-automation/pull/3917)) by [@shortcuts](https://github.com/shortcuts/)
+- [aa23ba891](https://github.com/algolia/api-clients-automation/commit/aa23ba891) chore: release 2024-10-07 [skip ci]
+- [ed6f4ba0e](https://github.com/algolia/api-clients-automation/commit/ed6f4ba0e) chore(javascript): use oxlint ([#3895](https://github.com/algolia/api-clients-automation/pull/3895)) by [@shortcuts](https://github.com/shortcuts/)
+- [fa55c04ce](https://github.com/algolia/api-clients-automation/commit/fa55c04ce) chore: revert "chore: prepare release 2024-10-07 " (#3919) ([#3917](https://github.com/algolia/api-clients-automation/pull/3917)) by [@shortcuts](https://github.com/shortcuts/)
 
 ## [5.7.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.6.1...5.7.0)
 
