@@ -38,11 +38,11 @@ All of our clients comes with type definition, and are available for both browse
 ### With a package manager
 
 ```bash
-yarn add @algolia/client-insights@5.7.0
+yarn add @algolia/client-insights@5.8.0
 # or
-npm install @algolia/client-insights@5.7.0
+npm install @algolia/client-insights@5.8.0
 # or
-pnpm add @algolia/client-insights@5.7.0
+pnpm add @algolia/client-insights@5.8.0
 ```
 
 ### Without a package manager
@@ -50,7 +50,7 @@ pnpm add @algolia/client-insights@5.7.0
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/client-insights@5.7.0/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/client-insights@5.8.0/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage
