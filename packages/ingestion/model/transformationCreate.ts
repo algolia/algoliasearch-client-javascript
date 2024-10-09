@@ -20,7 +20,7 @@ export type TransformationCreate = {
   description?: string;
 
   /**
-   * The authentications associated for the current transformation.
+   * The authentications associated with the current transformation.
    */
   authenticationIDs?: Array<string>;
 };

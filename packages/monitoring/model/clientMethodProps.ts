@@ -72,7 +72,7 @@ export type CustomPutProps = {
  */
 export type GetClusterIncidentsProps = {
   /**
-   * Subset of clusters, separated by comma.
+   * Subset of clusters, separated by commas.
    */
   clusters: string;
 };
@@ -82,7 +82,7 @@ export type GetClusterIncidentsProps = {
  */
 export type GetClusterStatusProps = {
   /**
-   * Subset of clusters, separated by comma.
+   * Subset of clusters, separated by commas.
    */
   clusters: string;
 };
@@ -92,7 +92,7 @@ export type GetClusterStatusProps = {
  */
 export type GetIndexingTimeProps = {
   /**
-   * Subset of clusters, separated by comma.
+   * Subset of clusters, separated by commas.
    */
   clusters: string;
 };
@@ -102,7 +102,7 @@ export type GetIndexingTimeProps = {
  */
 export type GetLatencyProps = {
   /**
-   * Subset of clusters, separated by comma.
+   * Subset of clusters, separated by commas.
    */
   clusters: string;
 };
@@ -126,7 +126,7 @@ export type GetMetricsProps = {
  */
 export type GetReachabilityProps = {
   /**
-   * Subset of clusters, separated by comma.
+   * Subset of clusters, separated by commas.
    */
   clusters: string;
 };
