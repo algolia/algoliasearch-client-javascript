@@ -10,7 +10,6 @@ export * from './banner';
 export * from './bannerImage';
 export * from './bannerImageUrl';
 export * from './bannerLink';
-export * from './banners';
 export * from './baseIndexSettings';
 export * from './baseRecommendIndexSettings';
 export * from './baseRecommendRequest';

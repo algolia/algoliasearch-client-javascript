@@ -6,7 +6,7 @@ import type { BannerImageUrl } from './bannerImageUrl';
  * image of a search banner.
  */
 export type BannerImage = {
-  urls?: BannerImageUrl;
+  urls?: Array<BannerImageUrl>;
 
   title?: string;
 };
