@@ -20,7 +20,6 @@ import { Region, REGIONS } from '../src/abtestingClient';
 export * from '../model';
 export { apiClientVersion, Region } from '../src/abtestingClient';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function abtestingClient(
   appId: string,
   apiKey: string,

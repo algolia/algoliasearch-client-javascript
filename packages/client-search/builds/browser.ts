@@ -18,7 +18,6 @@ import { apiClientVersion, createSearchClient } from '../src/searchClient';
 export * from '../model';
 export { apiClientVersion } from '../src/searchClient';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function searchClient(appId: string, apiKey: string, options?: ClientOptions): SearchClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');

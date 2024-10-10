@@ -82,7 +82,6 @@ describe('status code handling', () => {
     const data = Buffer.from('äöü');
 
     // create a test response stream that is chunked inside a unicode character
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     function* generate() {
       yield data.subarray(0, 3);
       yield data.subarray(3);

@@ -27,7 +27,6 @@ import {
 
 import { createHmac } from 'node:crypto';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function searchClient(appId: string, apiKey: string, options?: ClientOptions): SearchClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
@@ -78,7 +77,6 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
         .sort()
         .reduce(
           (acc, key) => {
-            // eslint-disable-next-line no-param-reassign
             acc[key] = (mergedRestrictions as any)[key];
             return acc;
           },

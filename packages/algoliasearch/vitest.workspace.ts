@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import { defineWorkspace } from 'vitest/config';
 
 export default defineWorkspace([

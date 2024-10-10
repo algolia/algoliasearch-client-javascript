@@ -37,7 +37,6 @@ function getDefaultHosts(): Host[] {
   return [{ url: 'status.algolia.com', accept: 'readWrite', protocol: 'https' }];
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createMonitoringClient({
   appId: appIdOption,
   apiKey: apiKeyOption,

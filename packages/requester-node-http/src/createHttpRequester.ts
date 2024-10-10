@@ -31,7 +31,6 @@ export function createHttpRequester({
   function send(request: EndRequest): Promise<Response> {
     return new Promise((resolve) => {
       let responseTimeout: NodeJS.Timeout | undefined;
-      // eslint-disable-next-line prefer-const -- linter thinks this is not reassigned
       let connectTimeout: NodeJS.Timeout | undefined;
       const url = new URL(request.url);
       const path = url.search === null ? url.pathname : `${url.pathname}${url.search}`;

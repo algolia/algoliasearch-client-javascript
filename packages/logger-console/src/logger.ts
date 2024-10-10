@@ -1,4 +1,3 @@
-/* eslint no-console: 0 */
 import type { LogLevelType, Logger } from '@algolia/client-common';
 import { LogLevelEnum } from '@algolia/client-common';
 

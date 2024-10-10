@@ -1,4 +1,3 @@
-/* eslint no-console: 0 */
 import { expect, test, vi } from 'vitest';
 
 import { LogLevelEnum } from '../../client-common/src/types';

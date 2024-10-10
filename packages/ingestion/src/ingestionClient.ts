@@ -158,7 +158,6 @@ export function isSubscriptionTrigger(trigger: TaskCreateTrigger | Trigger): tri
   return trigger.type === 'subscription';
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createIngestionClient({
   appId: appIdOption,
   apiKey: apiKeyOption,

@@ -19,7 +19,6 @@ import { createLiteClient } from '../src/liteClient';
 export * from '../model';
 export { apiClientVersion } from '../src/liteClient';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function liteClient(appId: string, apiKey: string, options?: ClientOptions): LiteClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');

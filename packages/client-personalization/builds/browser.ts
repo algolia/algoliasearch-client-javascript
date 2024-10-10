@@ -20,7 +20,6 @@ import { Region, REGIONS } from '../src/personalizationClient';
 export * from '../model';
 export { apiClientVersion, Region } from '../src/personalizationClient';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function personalizationClient(
   appId: string,
   apiKey: string,

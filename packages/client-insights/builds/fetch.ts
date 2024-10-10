@@ -20,7 +20,6 @@ import { Region, REGIONS } from '../src/insightsClient';
 export * from '../model';
 export { apiClientVersion, Region } from '../src/insightsClient';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function insightsClient(
   appId: string,
   apiKey: string,

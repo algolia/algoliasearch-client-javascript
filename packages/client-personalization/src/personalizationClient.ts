@@ -36,7 +36,6 @@ function getDefaultHosts(region: Region): Host[] {
   return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createPersonalizationClient({
   appId: appIdOption,
   apiKey: apiKeyOption,
