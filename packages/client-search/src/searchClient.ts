@@ -1029,6 +1029,7 @@ export function createSearchClient({
         queryParameters,
         headers,
         data: browseParams ? browseParams : {},
+        useReadTransporter: true,
       };
 
       return transporter.request(request, requestOptions);
