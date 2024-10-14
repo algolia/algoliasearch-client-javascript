@@ -37,8 +37,8 @@
   "react-native": "./dist/requester.fetch.browser.js",
   "files": [
     "dist",
-    "src",
-    "index.ts"
+    "index.d.ts",
+    "index.js"
   ],
   "scripts": {
     "build": "yarn clean && yarn tsup",

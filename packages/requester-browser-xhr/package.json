@@ -21,8 +21,8 @@
   "react-native": "./dist/requester.xhr.js",
   "files": [
     "dist",
-    "src",
-    "index.ts"
+    "index.d.ts",
+    "index.js"
   ],
   "scripts": {
     "build": "yarn clean && yarn tsup",
