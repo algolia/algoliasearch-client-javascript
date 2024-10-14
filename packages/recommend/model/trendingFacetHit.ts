@@ -7,7 +7,7 @@ export type TrendingFacetHit = {
   /**
    * Recommendation score.
    */
-  _score: number;
+  _score?: number;
 
   /**
    * Facet attribute. To be used in combination with `facetValue`. If specified, only recommendations matching the facet filter will be returned.

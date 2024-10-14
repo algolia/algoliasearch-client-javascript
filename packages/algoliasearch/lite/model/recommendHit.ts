@@ -30,5 +30,5 @@ export type RecommendHit = Record<string, any> & {
   /**
    * Recommendation score.
    */
-  _score: number;
+  _score?: number;
 };
