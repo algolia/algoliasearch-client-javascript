@@ -54,7 +54,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-insights@workspace:packages/client-insights":
+"@algolia/client-insights@npm:5.8.1, @algolia/client-insights@workspace:packages/client-insights":
   version: 0.0.0-use.local
   resolution: "@algolia/client-insights@workspace:packages/client-insights"
   dependencies:
@@ -88,7 +88,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-query-suggestions@workspace:packages/client-query-suggestions":
+"@algolia/client-query-suggestions@npm:5.8.1, @algolia/client-query-suggestions@workspace:packages/client-query-suggestions":
   version: 0.0.0-use.local
   resolution: "@algolia/client-query-suggestions@workspace:packages/client-query-suggestions"
   dependencies:
@@ -105,7 +105,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-search@npm:5.8.1, @algolia/client-search@workspace:packages/client-search":
+"@algolia/client-search@workspace:packages/client-search":
   version: 0.0.0-use.local
   resolution: "@algolia/client-search@workspace:packages/client-search"
   dependencies:
@@ -122,7 +122,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/ingestion@workspace:packages/ingestion":
+"@algolia/ingestion@npm:1.8.1, @algolia/ingestion@workspace:packages/ingestion":
   version: 0.0.0-use.local
   resolution: "@algolia/ingestion@workspace:packages/ingestion"
   dependencies:
@@ -155,7 +155,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/monitoring@workspace:packages/monitoring":
+"@algolia/monitoring@npm:1.8.1, @algolia/monitoring@workspace:packages/monitoring":
   version: 0.0.0-use.local
   resolution: "@algolia/monitoring@workspace:packages/monitoring"
   dependencies:
@@ -2088,8 +2088,11 @@ __metadata:
     "@algolia/client-abtesting": "npm:5.8.1"
     "@algolia/client-analytics": "npm:5.8.1"
     "@algolia/client-common": "npm:5.8.1"
+    "@algolia/client-insights": "npm:5.8.1"
     "@algolia/client-personalization": "npm:5.8.1"
-    "@algolia/client-search": "npm:5.8.1"
+    "@algolia/client-query-suggestions": "npm:5.8.1"
+    "@algolia/ingestion": "npm:1.8.1"
+    "@algolia/monitoring": "npm:1.8.1"
     "@algolia/recommend": "npm:5.8.1"
     "@algolia/requester-browser-xhr": "npm:5.8.1"
     "@algolia/requester-fetch": "npm:5.8.1"
@@ -3938,13 +3941,13 @@ __metadata:
   linkType: hard
 
 "form-data@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "form-data@npm:4.0.0"
+  version: 4.0.1
+  resolution: "form-data@npm:4.0.1"
   dependencies:
     asynckit: "npm:^0.4.0"
     combined-stream: "npm:^1.0.8"
     mime-types: "npm:^2.1.12"
-  checksum: 10/7264aa760a8cf09482816d8300f1b6e2423de1b02bba612a136857413fdc96d7178298ced106817655facc6b89036c6e12ae31c9eb5bdc16aabf502ae8a5d805
+  checksum: 10/6adb1cff557328bc6eb8a68da205f9ae44ab0e88d4d9237aaf91eed591ffc64f77411efb9016af7d87f23d0a038c45a788aa1c6634e51175c4efa36c2bc53774
   languageName: node
   linkType: hard
 
@@ -5819,11 +5822,11 @@ __metadata:
   linkType: hard
 
 "nan@npm:^2.14.0":
-  version: 2.20.0
-  resolution: "nan@npm:2.20.0"
+  version: 2.21.0
+  resolution: "nan@npm:2.21.0"
   dependencies:
     node-gyp: "npm:latest"
-  checksum: 10/5f16e4c9953075d9920229c703c1d781c0b74118ce3d9e926b448a4eef92b7d8be5ac6adc748a13a5fafb594436cbfe63250e3471aefdd78e3a0cd14603b9ba7
+  checksum: 10/4517d316776b509a961c65241b72863e70f63aa5b0c354ca19fbbbf7c78254e54aa1f0de142fac1df986a04c27e74a1fb7e4aa85e9e3834daa172b8d9d1bbb07
   languageName: node
   linkType: hard
 

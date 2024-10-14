@@ -32,6 +32,9 @@
 
 ## 💡 Getting Started
 
+> [!TIP]
+> This API client is already a dependency of [the algoliasearch client](https://www.npmjs.com/package/algoliasearch), you don't need to manually install `@algolia/client-insights` if you already have `algoliasearch` installed.
+
 To get started, you first need to install @algolia/client-insights (or any other available API client package).
 All of our clients comes with type definition, and are available for both browser and node environments.
 

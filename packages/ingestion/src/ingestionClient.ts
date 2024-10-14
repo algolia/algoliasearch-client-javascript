@@ -121,6 +121,7 @@ export const apiClientVersion = '1.8.1';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
+export type RegionOptions = { region: Region };
 
 function getDefaultHosts(region: Region): Host[] {
   const url = 'data.{region}.algolia.com'.replace('{region}', region);
@@ -165,7 +166,7 @@ export function createIngestionClient({
   algoliaAgents,
   region: regionOption,
   ...options
-}: CreateClientOptions & { region: Region }) {
+}: CreateClientOptions & RegionOptions) {
   const auth = createAuth(appIdOption, apiKeyOption, authMode);
   const transporter = createTransporter({
     hosts: getDefaultHosts(regionOption),

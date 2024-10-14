@@ -19,7 +19,7 @@ import { createPersonalizationClient } from '../src/personalizationClient';
 import { Region, REGIONS } from '../src/personalizationClient';
 
 export * from '../model';
-export { apiClientVersion, Region } from '../src/personalizationClient';
+export { apiClientVersion, Region, RegionOptions } from '../src/personalizationClient';
 
 export function personalizationClient(
   appId: string,

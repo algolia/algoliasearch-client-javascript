@@ -19,7 +19,7 @@ import { createAnalyticsClient } from '../src/analyticsClient';
 import { Region, REGIONS } from '../src/analyticsClient';
 
 export * from '../model';
-export { apiClientVersion, Region } from '../src/analyticsClient';
+export { apiClientVersion, Region, RegionOptions } from '../src/analyticsClient';
 
 export function analyticsClient(
   appId: string,

@@ -19,7 +19,7 @@ import { createInsightsClient } from '../src/insightsClient';
 import { Region, REGIONS } from '../src/insightsClient';
 
 export * from '../model';
-export { apiClientVersion, Region } from '../src/insightsClient';
+export { apiClientVersion, Region, RegionOptions } from '../src/insightsClient';
 
 export function insightsClient(
   appId: string,
