@@ -8,7 +8,7 @@ import type { Outliers } from './outliers';
  * A/B test configuration.
  */
 export type ABTestConfiguration = {
-  outliers: Outliers;
+  outliers?: Outliers;
 
   emptySearch?: EmptySearch;
 

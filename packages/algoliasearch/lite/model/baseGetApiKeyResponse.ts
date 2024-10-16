@@ -4,7 +4,7 @@ export type BaseGetApiKeyResponse = {
   /**
    * API key.
    */
-  value?: string;
+  value: string;
 
   /**
    * Timestamp when the object was created, in milliseconds since the Unix epoch.

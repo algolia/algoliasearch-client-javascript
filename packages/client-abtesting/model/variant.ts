@@ -47,7 +47,7 @@ export type Variant = {
   /**
    * Description for this variant.
    */
-  description: string;
+  description?: string;
 
   /**
    * Estimated number of searches required to achieve the desired statistical significance.  The A/B test configuration must include a `mininmumDetectableEffect` setting for this number to be included in the response.

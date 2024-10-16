@@ -29,6 +29,11 @@ export type BaseSearchResponse = Record<string, any> & {
   exhaustive?: Exhaustive;
 
   /**
+   * Rules applied to the query.
+   */
+  appliedRules?: Array<Record<string, unknown>>;
+
+  /**
    * See the `facetsCount` field of the `exhaustive` object in the response.
    */
   exhaustiveFacetsCount?: boolean;

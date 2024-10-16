@@ -4,5 +4,5 @@ export type GetObjectsResponse<T = Record<string, any>> = {
   /**
    * Retrieved records.
    */
-  results: T[];
+  results?: T[];
 };
