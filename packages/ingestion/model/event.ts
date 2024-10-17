@@ -17,11 +17,6 @@ export type Event = {
    */
   runID: string;
 
-  /**
-   * The parent event, the cause of this event.
-   */
-  parentID?: string;
-
   status: EventStatus;
 
   type: EventType;
