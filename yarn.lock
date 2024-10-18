@@ -105,7 +105,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-search@workspace:packages/client-search":
+"@algolia/client-search@npm:5.9.0, @algolia/client-search@workspace:packages/client-search":
   version: 0.0.0-use.local
   resolution: "@algolia/client-search@workspace:packages/client-search"
   dependencies:
@@ -2082,6 +2082,7 @@ __metadata:
     "@algolia/client-insights": "npm:5.9.0"
     "@algolia/client-personalization": "npm:5.9.0"
     "@algolia/client-query-suggestions": "npm:5.9.0"
+    "@algolia/client-search": "npm:5.9.0"
     "@algolia/ingestion": "npm:1.9.0"
     "@algolia/monitoring": "npm:1.9.0"
     "@algolia/recommend": "npm:5.9.0"

@@ -79,6 +79,7 @@
     "@algolia/client-insights": "5.9.0",
     "@algolia/client-personalization": "5.9.0",
     "@algolia/client-query-suggestions": "5.9.0",
+    "@algolia/client-search": "5.9.0",
     "@algolia/ingestion": "1.9.0",
     "@algolia/monitoring": "1.9.0",
     "@algolia/recommend": "5.9.0",
