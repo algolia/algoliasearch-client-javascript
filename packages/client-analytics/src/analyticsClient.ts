@@ -770,8 +770,8 @@ export function createAnalyticsClient({
      * @param getSearchesNoClicks.index - Index name.
      * @param getSearchesNoClicks.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getSearchesNoClicks.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
-     * @param getSearchesNoClicks.limit - Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
-     * @param getSearchesNoClicks.offset - Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+     * @param getSearchesNoClicks.limit - Number of items to return.
+     * @param getSearchesNoClicks.offset - Position of the first item to return.
      * @param getSearchesNoClicks.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -830,8 +830,8 @@ export function createAnalyticsClient({
      * @param getSearchesNoResults.index - Index name.
      * @param getSearchesNoResults.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getSearchesNoResults.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
-     * @param getSearchesNoResults.limit - Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
-     * @param getSearchesNoResults.offset - Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+     * @param getSearchesNoResults.limit - Number of items to return.
+     * @param getSearchesNoResults.offset - Position of the first item to return.
      * @param getSearchesNoResults.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -922,8 +922,8 @@ export function createAnalyticsClient({
      * @param getTopCountries.index - Index name.
      * @param getTopCountries.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopCountries.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
-     * @param getTopCountries.limit - Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
-     * @param getTopCountries.offset - Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+     * @param getTopCountries.limit - Number of items to return.
+     * @param getTopCountries.offset - Position of the first item to return.
      * @param getTopCountries.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -983,8 +983,8 @@ export function createAnalyticsClient({
      * @param getTopFilterAttributes.search - Search query.
      * @param getTopFilterAttributes.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopFilterAttributes.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
-     * @param getTopFilterAttributes.limit - Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
-     * @param getTopFilterAttributes.offset - Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+     * @param getTopFilterAttributes.limit - Number of items to return.
+     * @param getTopFilterAttributes.offset - Position of the first item to return.
      * @param getTopFilterAttributes.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1049,8 +1049,8 @@ export function createAnalyticsClient({
      * @param getTopFilterForAttribute.search - Search query.
      * @param getTopFilterForAttribute.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopFilterForAttribute.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
-     * @param getTopFilterForAttribute.limit - Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
-     * @param getTopFilterForAttribute.offset - Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+     * @param getTopFilterForAttribute.limit - Number of items to return.
+     * @param getTopFilterForAttribute.offset - Position of the first item to return.
      * @param getTopFilterForAttribute.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1118,8 +1118,8 @@ export function createAnalyticsClient({
      * @param getTopFiltersNoResults.search - Search query.
      * @param getTopFiltersNoResults.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopFiltersNoResults.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
-     * @param getTopFiltersNoResults.limit - Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
-     * @param getTopFiltersNoResults.offset - Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+     * @param getTopFiltersNoResults.limit - Number of items to return.
+     * @param getTopFiltersNoResults.offset - Position of the first item to return.
      * @param getTopFiltersNoResults.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1185,8 +1185,8 @@ export function createAnalyticsClient({
      * @param getTopHits.revenueAnalytics - Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
      * @param getTopHits.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopHits.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
-     * @param getTopHits.limit - Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
-     * @param getTopHits.offset - Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+     * @param getTopHits.limit - Number of items to return.
+     * @param getTopHits.offset - Position of the first item to return.
      * @param getTopHits.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -1261,8 +1261,8 @@ export function createAnalyticsClient({
      * @param getTopSearches.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTopSearches.orderBy - Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
      * @param getTopSearches.direction - Sorting direction of the results: ascending or descending.
-     * @param getTopSearches.limit - Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
-     * @param getTopSearches.offset - Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+     * @param getTopSearches.limit - Number of items to return.
+     * @param getTopSearches.offset - Position of the first item to return.
      * @param getTopSearches.tags - Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */

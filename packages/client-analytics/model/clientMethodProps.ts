@@ -305,11 +305,11 @@ export type GetSearchesNoClicksProps = {
    */
   endDate?: string;
   /**
-   * Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -335,11 +335,11 @@ export type GetSearchesNoResultsProps = {
    */
   endDate?: string;
   /**
-   * Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -375,11 +375,11 @@ export type GetTopCountriesProps = {
    */
   endDate?: string;
   /**
-   * Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -409,11 +409,11 @@ export type GetTopFilterAttributesProps = {
    */
   endDate?: string;
   /**
-   * Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -447,11 +447,11 @@ export type GetTopFilterForAttributeProps = {
    */
   endDate?: string;
   /**
-   * Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -481,11 +481,11 @@ export type GetTopFiltersNoResultsProps = {
    */
   endDate?: string;
   /**
-   * Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -523,11 +523,11 @@ export type GetTopHitsProps = {
    */
   endDate?: string;
   /**
-   * Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
@@ -569,11 +569,11 @@ export type GetTopSearchesProps = {
    */
   direction?: Direction;
   /**
-   * Number of items to return.  Combined with the `offset` parameter, only the first 1000 items can be retrieved.
+   * Number of items to return.
    */
   limit?: number;
   /**
-   * Position of the first item to return.  Combined with the `limit` parameter, only the first 1000 items can be retrieved.
+   * Position of the first item to return.
    */
   offset?: number;
   /**
