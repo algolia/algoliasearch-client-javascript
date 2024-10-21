@@ -7,7 +7,7 @@ import type { SnippetResult } from './snippetResult';
 /**
  * Search result.  A hit is a record from your index, augmented with special attributes for highlighting, snippeting, and ranking.
  */
-export type Hit<T = Record<string, any>> = T & {
+export type Hit<T = Record<string, unknown>> = T & {
   /**
    * Unique record identifier.
    */

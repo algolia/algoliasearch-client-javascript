@@ -4,4 +4,4 @@ import type { BaseSearchResponse } from './baseSearchResponse';
 import type { SearchHits } from './searchHits';
 import type { SearchPagination } from './searchPagination';
 
-export type SearchResponse<T = Record<string, any>> = BaseSearchResponse & SearchPagination & SearchHits<T>;
+export type SearchResponse<T = Record<string, unknown>> = BaseSearchResponse & SearchPagination & SearchHits<T>;

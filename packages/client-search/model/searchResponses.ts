@@ -2,6 +2,6 @@
 
 import type { SearchResult } from './searchResult';
 
-export type SearchResponses<T = Record<string, any>> = {
+export type SearchResponses<T = Record<string, unknown>> = {
   results: SearchResult<T>[];
 };

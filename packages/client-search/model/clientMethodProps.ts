@@ -861,7 +861,7 @@ export type ReplaceAllObjectsOptions = {
   /**
    * The array of `objects` to store in the given Algolia `indexName`.
    */
-  objects: Array<Record<string, any>>;
+  objects: Array<Record<string, unknown>>;
 
   /**
    * The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
