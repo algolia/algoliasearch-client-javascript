@@ -44,7 +44,6 @@
   "react-native": "./dist/builds/browser.js",
   "files": [
     "dist",
-    "model",
     "index.js",
     "index.d.ts"
   ],

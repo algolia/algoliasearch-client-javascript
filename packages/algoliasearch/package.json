@@ -65,10 +65,8 @@
   },
   "files": [
     "dist",
-    "builds",
     "index.js",
     "index.d.ts",
-    "lite",
     "lite.js",
     "lite.d.ts"
   ],
