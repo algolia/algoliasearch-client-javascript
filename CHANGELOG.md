@@ -1,3 +1,12 @@
+## [5.10.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.9.1...5.10.0)
+
+- [0a84faf07](https://github.com/algolia/api-clients-automation/commit/0a84faf07) feat(javascript): assert algoliasearch bundle ([#3991](https://github.com/algolia/api-clients-automation/pull/3991)) by [@shortcuts](https://github.com/shortcuts/)
+- [d3ef71cde](https://github.com/algolia/api-clients-automation/commit/d3ef71cde) fix(javascript): do not publish ts ([#4009](https://github.com/algolia/api-clients-automation/pull/4009)) by [@shortcuts](https://github.com/shortcuts/)
+- [b8fc14883](https://github.com/algolia/api-clients-automation/commit/b8fc14883) chore(deps): dependencies 2024-10-21 ([#3992](https://github.com/algolia/api-clients-automation/pull/3992)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [2c53b455d](https://github.com/algolia/api-clients-automation/commit/2c53b455d) fix(javascript): use unknown over any ([#4011](https://github.com/algolia/api-clients-automation/pull/4011)) by [@shortcuts](https://github.com/shortcuts/)
+- [fe2c8440e](https://github.com/algolia/api-clients-automation/commit/fe2c8440e) docs(analytics): constrain pagination only to limit query parameter ([#4012](https://github.com/algolia/api-clients-automation/pull/4012)) by [@febeck](https://github.com/febeck/)
+- [003bd28f0](https://github.com/algolia/api-clients-automation/commit/003bd28f0) chore(javascript): build algoliasearch everytime ([#4013](https://github.com/algolia/api-clients-automation/pull/4013)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.9.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.9.0...5.9.1)
 
 - [b076b69ba](https://github.com/algolia/api-clients-automation/commit/b076b69ba) fix(javascript): missing search dependency ([#3988](https://github.com/algolia/api-clients-automation/pull/3988)) by [@shortcuts](https://github.com/shortcuts/)
