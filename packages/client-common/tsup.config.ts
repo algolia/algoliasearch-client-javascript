@@ -8,13 +8,13 @@ export default defineConfig([
   {
     ...getBaseNodeOptions(pkg, __dirname),
     format: 'cjs',
-    dts: { entry: { common: 'index.ts' } },
-    entry: { common: 'index.ts' },
+    dts: { entry: { common: 'src/index.ts' } },
+    entry: { common: 'src/index.ts' },
   },
   {
     ...getBaseNodeOptions(pkg, __dirname),
     format: 'esm',
-    dts: { entry: { common: 'index.ts' } },
-    entry: { common: 'index.ts' },
+    dts: { entry: { common: 'src/index.ts' } },
+    entry: { common: 'src/index.ts' },
   },
 ]);

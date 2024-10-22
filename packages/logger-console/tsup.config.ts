@@ -8,13 +8,13 @@ export default defineConfig([
   {
     ...getBaseNodeOptions(pkg, __dirname),
     format: 'cjs',
-    dts: { entry: { logger: 'index.ts' } },
-    entry: { logger: 'index.ts' },
+    dts: { entry: { logger: 'src/logger.ts' } },
+    entry: { logger: 'src/logger.ts' },
   },
   {
     ...getBaseNodeOptions(pkg, __dirname),
     format: 'esm',
-    dts: { entry: { logger: 'index.ts' } },
-    entry: { logger: 'index.ts' },
+    dts: { entry: { logger: 'src/logger.ts' } },
+    entry: { logger: 'src/logger.ts' },
   },
 ]);

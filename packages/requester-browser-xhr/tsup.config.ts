@@ -8,6 +8,6 @@ export default defineConfig({
   ...getBaseBrowserOptions(pkg, __dirname),
   minify: true,
   globalName: 'requesterxhr',
-  entry: { 'requester.xhr': 'index.ts' },
-  dts: { entry: { 'requester.xhr': 'index.ts' } },
+  entry: { 'requester.xhr': 'src/index.ts' },
+  dts: { entry: { 'requester.xhr': 'src/index.ts' } },
 });
