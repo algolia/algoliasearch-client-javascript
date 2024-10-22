@@ -1,3 +1,7 @@
+## [5.10.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.10.0...5.10.1)
+
+- [25de7005c](https://github.com/algolia/api-clients-automation/commit/25de7005c) fix(javascript): common package types ([#4015](https://github.com/algolia/api-clients-automation/pull/4015)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.10.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.9.1...5.10.0)
 
 - [0a84faf07](https://github.com/algolia/api-clients-automation/commit/0a84faf07) feat(javascript): assert algoliasearch bundle ([#3991](https://github.com/algolia/api-clients-automation/pull/3991)) by [@shortcuts](https://github.com/shortcuts/)
