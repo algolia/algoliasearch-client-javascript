@@ -27,7 +27,7 @@ jobs:
 
       - name: Build clients
         shell: bash
-        run: yarn build:all
+        run: yarn build
 
       - name: Publish to NPM
         shell: bash

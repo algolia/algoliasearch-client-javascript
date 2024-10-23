@@ -1,7 +1,3 @@
-## [5.10.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.10.1...5.10.2)
-
-- [39a7d5216](https://github.com/algolia/api-clients-automation/commit/39a7d5216) fix(javascript): import type for bundler ([#4020](https://github.com/algolia/api-clients-automation/pull/4020)) by [@shortcuts](https://github.com/shortcuts/)
-
 ## [5.10.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.10.0...5.10.1)
 
 - [25de7005c](https://github.com/algolia/api-clients-automation/commit/25de7005c) fix(javascript): common package types ([#4015](https://github.com/algolia/api-clients-automation/pull/4015)) by [@shortcuts](https://github.com/shortcuts/)
