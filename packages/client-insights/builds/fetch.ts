@@ -3,7 +3,6 @@
 export type InsightsClient = ReturnType<typeof createInsightsClient>;
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -13,12 +12,18 @@ import {
 } from '@algolia/client-common';
 import { createFetchRequester } from '@algolia/requester-fetch';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createInsightsClient } from '../src/insightsClient';
 
-import { Region, REGIONS } from '../src/insightsClient';
+import type { Region } from '../src/insightsClient';
+import { REGIONS } from '../src/insightsClient';
+
+export type { Region, RegionOptions } from '../src/insightsClient';
+
+export { apiClientVersion } from '../src/insightsClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/insightsClient';
 
 export function insightsClient(
   appId: string,

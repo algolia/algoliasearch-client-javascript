@@ -3,7 +3,6 @@
 export type AnalyticsClient = ReturnType<typeof createAnalyticsClient>;
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -13,12 +12,18 @@ import {
 } from '@algolia/client-common';
 import { createFetchRequester } from '@algolia/requester-fetch';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createAnalyticsClient } from '../src/analyticsClient';
 
-import { Region, REGIONS } from '../src/analyticsClient';
+import type { Region } from '../src/analyticsClient';
+import { REGIONS } from '../src/analyticsClient';
+
+export type { Region, RegionOptions } from '../src/analyticsClient';
+
+export { apiClientVersion } from '../src/analyticsClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/analyticsClient';
 
 export function analyticsClient(
   appId: string,

@@ -3,7 +3,6 @@
 export type IngestionClient = ReturnType<typeof createIngestionClient>;
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -13,19 +12,18 @@ import {
 } from '@algolia/client-common';
 import { createFetchRequester } from '@algolia/requester-fetch';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createIngestionClient } from '../src/ingestionClient';
 
-import { Region, REGIONS } from '../src/ingestionClient';
+import type { Region } from '../src/ingestionClient';
+import { REGIONS } from '../src/ingestionClient';
+
+export type { Region, RegionOptions } from '../src/ingestionClient';
+
+export { apiClientVersion, isOnDemandTrigger, isScheduleTrigger, isSubscriptionTrigger } from '../src/ingestionClient';
 
 export * from '../model';
-export {
-  apiClientVersion,
-  isOnDemandTrigger,
-  isScheduleTrigger,
-  isSubscriptionTrigger,
-  Region,
-  RegionOptions,
-} from '../src/ingestionClient';
 
 export function ingestionClient(
   appId: string,

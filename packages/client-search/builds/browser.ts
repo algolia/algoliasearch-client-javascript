@@ -3,7 +3,6 @@
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import {
-  ClientOptions,
   createBrowserLocalStorageCache,
   createFallbackableCache,
   createMemoryCache,
@@ -13,10 +12,13 @@ import {
   DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { apiClientVersion, createSearchClient } from '../src/searchClient';
 
-export * from '../model';
 export { apiClientVersion } from '../src/searchClient';
+
+export * from '../model';
 
 export function searchClient(appId: string, apiKey: string, options?: ClientOptions): SearchClient {
   if (!appId || typeof appId !== 'string') {

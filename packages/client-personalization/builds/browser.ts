@@ -3,7 +3,6 @@
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import {
-  ClientOptions,
   createBrowserLocalStorageCache,
   createFallbackableCache,
   createMemoryCache,
@@ -13,12 +12,18 @@ import {
   DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { apiClientVersion, createPersonalizationClient } from '../src/personalizationClient';
 
-import { Region, REGIONS } from '../src/personalizationClient';
+import type { Region } from '../src/personalizationClient';
+import { REGIONS } from '../src/personalizationClient';
+
+export type { Region, RegionOptions } from '../src/personalizationClient';
+
+export { apiClientVersion } from '../src/personalizationClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/personalizationClient';
 
 export function personalizationClient(
   appId: string,

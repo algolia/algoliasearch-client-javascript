@@ -5,7 +5,6 @@ export type LiteClient = ReturnType<typeof createLiteClient>;
 import { createHttpRequester } from '@algolia/requester-node-http';
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -14,10 +13,13 @@ import {
   DEFAULT_WRITE_TIMEOUT_NODE,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createLiteClient } from '../src/liteClient';
 
-export * from '../model';
 export { apiClientVersion } from '../src/liteClient';
+
+export * from '../model';
 
 export function liteClient(appId: string, apiKey: string, options?: ClientOptions): LiteClient {
   if (!appId || typeof appId !== 'string') {

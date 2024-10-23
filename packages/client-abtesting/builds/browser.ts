@@ -3,7 +3,6 @@
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import {
-  ClientOptions,
   createBrowserLocalStorageCache,
   createFallbackableCache,
   createMemoryCache,
@@ -13,12 +12,18 @@ import {
   DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { apiClientVersion, createAbtestingClient } from '../src/abtestingClient';
 
-import { Region, REGIONS } from '../src/abtestingClient';
+import type { Region } from '../src/abtestingClient';
+import { REGIONS } from '../src/abtestingClient';
+
+export type { Region, RegionOptions } from '../src/abtestingClient';
+
+export { apiClientVersion } from '../src/abtestingClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/abtestingClient';
 
 export function abtestingClient(
   appId: string,

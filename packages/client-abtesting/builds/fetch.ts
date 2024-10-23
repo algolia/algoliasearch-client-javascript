@@ -3,7 +3,6 @@
 export type AbtestingClient = ReturnType<typeof createAbtestingClient>;
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -13,12 +12,18 @@ import {
 } from '@algolia/client-common';
 import { createFetchRequester } from '@algolia/requester-fetch';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createAbtestingClient } from '../src/abtestingClient';
 
-import { Region, REGIONS } from '../src/abtestingClient';
+import type { Region } from '../src/abtestingClient';
+import { REGIONS } from '../src/abtestingClient';
+
+export type { Region, RegionOptions } from '../src/abtestingClient';
+
+export { apiClientVersion } from '../src/abtestingClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/abtestingClient';
 
 export function abtestingClient(
   appId: string,

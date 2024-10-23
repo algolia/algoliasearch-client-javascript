@@ -5,7 +5,6 @@ export type RecommendClient = ReturnType<typeof createRecommendClient>;
 import { createHttpRequester } from '@algolia/requester-node-http';
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -14,10 +13,13 @@ import {
   DEFAULT_WRITE_TIMEOUT_NODE,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createRecommendClient } from '../src/recommendClient';
 
-export * from '../model';
 export { apiClientVersion } from '../src/recommendClient';
+
+export * from '../model';
 
 export function recommendClient(appId: string, apiKey: string, options?: ClientOptions): RecommendClient {
   if (!appId || typeof appId !== 'string') {

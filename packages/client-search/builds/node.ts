@@ -5,7 +5,6 @@ export type SearchClient = ReturnType<typeof createSearchClient> & SearchClientN
 import { createHttpRequester } from '@algolia/requester-node-http';
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -15,12 +14,15 @@ import {
   serializeQueryParameters,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createSearchClient } from '../src/searchClient';
 
-export * from '../model';
 export { apiClientVersion } from '../src/searchClient';
 
-import {
+export * from '../model';
+
+import type {
   GenerateSecuredApiKeyOptions,
   GetSecuredApiKeyRemainingValidityOptions,
   SearchClientNodeHelpers,

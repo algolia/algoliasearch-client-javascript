@@ -3,7 +3,6 @@
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import {
-  ClientOptions,
   createBrowserLocalStorageCache,
   createFallbackableCache,
   createMemoryCache,
@@ -13,12 +12,18 @@ import {
   DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { apiClientVersion, createAnalyticsClient } from '../src/analyticsClient';
 
-import { Region, REGIONS } from '../src/analyticsClient';
+import type { Region } from '../src/analyticsClient';
+import { REGIONS } from '../src/analyticsClient';
+
+export type { Region, RegionOptions } from '../src/analyticsClient';
+
+export { apiClientVersion } from '../src/analyticsClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/analyticsClient';
 
 export function analyticsClient(
   appId: string,

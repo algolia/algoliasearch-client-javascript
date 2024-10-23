@@ -3,7 +3,6 @@
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import {
-  ClientOptions,
   createBrowserLocalStorageCache,
   createFallbackableCache,
   createMemoryCache,
@@ -13,12 +12,18 @@ import {
   DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { apiClientVersion, createQuerySuggestionsClient } from '../src/querySuggestionsClient';
 
-import { Region, REGIONS } from '../src/querySuggestionsClient';
+import type { Region } from '../src/querySuggestionsClient';
+import { REGIONS } from '../src/querySuggestionsClient';
+
+export type { Region, RegionOptions } from '../src/querySuggestionsClient';
+
+export { apiClientVersion } from '../src/querySuggestionsClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/querySuggestionsClient';
 
 export function querySuggestionsClient(
   appId: string,

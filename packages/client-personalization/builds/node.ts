@@ -5,7 +5,6 @@ export type PersonalizationClient = ReturnType<typeof createPersonalizationClien
 import { createHttpRequester } from '@algolia/requester-node-http';
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -14,12 +13,18 @@ import {
   DEFAULT_WRITE_TIMEOUT_NODE,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createPersonalizationClient } from '../src/personalizationClient';
 
-import { Region, REGIONS } from '../src/personalizationClient';
+import type { Region } from '../src/personalizationClient';
+import { REGIONS } from '../src/personalizationClient';
+
+export type { Region, RegionOptions } from '../src/personalizationClient';
+
+export { apiClientVersion } from '../src/personalizationClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/personalizationClient';
 
 export function personalizationClient(
   appId: string,

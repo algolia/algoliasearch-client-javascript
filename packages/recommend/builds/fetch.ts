@@ -3,7 +3,6 @@
 export type RecommendClient = ReturnType<typeof createRecommendClient>;
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -13,10 +12,13 @@ import {
 } from '@algolia/client-common';
 import { createFetchRequester } from '@algolia/requester-fetch';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createRecommendClient } from '../src/recommendClient';
 
-export * from '../model';
 export { apiClientVersion } from '../src/recommendClient';
+
+export * from '../model';
 
 export function recommendClient(appId: string, apiKey: string, options?: ClientOptions): RecommendClient {
   if (!appId || typeof appId !== 'string') {

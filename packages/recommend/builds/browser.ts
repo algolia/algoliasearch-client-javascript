@@ -3,7 +3,6 @@
 import { createXhrRequester } from '@algolia/requester-browser-xhr';
 
 import {
-  ClientOptions,
   createBrowserLocalStorageCache,
   createFallbackableCache,
   createMemoryCache,
@@ -13,10 +12,13 @@ import {
   DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { apiClientVersion, createRecommendClient } from '../src/recommendClient';
 
-export * from '../model';
 export { apiClientVersion } from '../src/recommendClient';
+
+export * from '../model';
 
 export function recommendClient(appId: string, apiKey: string, options?: ClientOptions): RecommendClient {
   if (!appId || typeof appId !== 'string') {

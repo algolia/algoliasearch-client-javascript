@@ -5,7 +5,6 @@ export type QuerySuggestionsClient = ReturnType<typeof createQuerySuggestionsCli
 import { createHttpRequester } from '@algolia/requester-node-http';
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -14,12 +13,18 @@ import {
   DEFAULT_WRITE_TIMEOUT_NODE,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createQuerySuggestionsClient } from '../src/querySuggestionsClient';
 
-import { Region, REGIONS } from '../src/querySuggestionsClient';
+import type { Region } from '../src/querySuggestionsClient';
+import { REGIONS } from '../src/querySuggestionsClient';
+
+export type { Region, RegionOptions } from '../src/querySuggestionsClient';
+
+export { apiClientVersion } from '../src/querySuggestionsClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/querySuggestionsClient';
 
 export function querySuggestionsClient(
   appId: string,

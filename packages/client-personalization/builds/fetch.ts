@@ -3,7 +3,6 @@
 export type PersonalizationClient = ReturnType<typeof createPersonalizationClient>;
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -13,12 +12,18 @@ import {
 } from '@algolia/client-common';
 import { createFetchRequester } from '@algolia/requester-fetch';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createPersonalizationClient } from '../src/personalizationClient';
 
-import { Region, REGIONS } from '../src/personalizationClient';
+import type { Region } from '../src/personalizationClient';
+import { REGIONS } from '../src/personalizationClient';
+
+export type { Region, RegionOptions } from '../src/personalizationClient';
+
+export { apiClientVersion } from '../src/personalizationClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/personalizationClient';
 
 export function personalizationClient(
   appId: string,

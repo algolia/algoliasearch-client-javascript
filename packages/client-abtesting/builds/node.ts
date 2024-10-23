@@ -5,7 +5,6 @@ export type AbtestingClient = ReturnType<typeof createAbtestingClient>;
 import { createHttpRequester } from '@algolia/requester-node-http';
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -14,12 +13,18 @@ import {
   DEFAULT_WRITE_TIMEOUT_NODE,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createAbtestingClient } from '../src/abtestingClient';
 
-import { Region, REGIONS } from '../src/abtestingClient';
+import type { Region } from '../src/abtestingClient';
+import { REGIONS } from '../src/abtestingClient';
+
+export type { Region, RegionOptions } from '../src/abtestingClient';
+
+export { apiClientVersion } from '../src/abtestingClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/abtestingClient';
 
 export function abtestingClient(
   appId: string,

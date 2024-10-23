@@ -3,7 +3,7 @@
 import type { RecommendationsRequest } from './recommendationsRequest';
 import type { SearchForFacetsOptions } from './searchForFacetsOptions';
 import type { SearchForHitsOptions } from './searchForHitsOptions';
-import { SearchParamsObject } from './searchParamsObject';
+import type { SearchParamsObject } from './searchParamsObject';
 
 /**
  * Properties for the `customPost` method.

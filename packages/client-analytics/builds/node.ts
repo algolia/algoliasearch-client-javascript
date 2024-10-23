@@ -5,7 +5,6 @@ export type AnalyticsClient = ReturnType<typeof createAnalyticsClient>;
 import { createHttpRequester } from '@algolia/requester-node-http';
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -14,12 +13,18 @@ import {
   DEFAULT_WRITE_TIMEOUT_NODE,
 } from '@algolia/client-common';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createAnalyticsClient } from '../src/analyticsClient';
 
-import { Region, REGIONS } from '../src/analyticsClient';
+import type { Region } from '../src/analyticsClient';
+import { REGIONS } from '../src/analyticsClient';
+
+export type { Region, RegionOptions } from '../src/analyticsClient';
+
+export { apiClientVersion } from '../src/analyticsClient';
 
 export * from '../model';
-export { apiClientVersion, Region, RegionOptions } from '../src/analyticsClient';
 
 export function analyticsClient(
   appId: string,

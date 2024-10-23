@@ -3,7 +3,6 @@
 export type MonitoringClient = ReturnType<typeof createMonitoringClient>;
 
 import {
-  ClientOptions,
   createMemoryCache,
   createNullCache,
   createNullLogger,
@@ -13,10 +12,13 @@ import {
 } from '@algolia/client-common';
 import { createFetchRequester } from '@algolia/requester-fetch';
 
+import type { ClientOptions } from '@algolia/client-common';
+
 import { createMonitoringClient } from '../src/monitoringClient';
 
-export * from '../model';
 export { apiClientVersion } from '../src/monitoringClient';
+
+export * from '../model';
 
 export function monitoringClient(appId: string, apiKey: string, options?: ClientOptions): MonitoringClient {
   if (!appId || typeof appId !== 'string') {

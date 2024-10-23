@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": false,
+    "verbatimModuleSyntax": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "esModuleInterop": true,

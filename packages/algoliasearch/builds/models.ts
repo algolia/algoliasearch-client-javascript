@@ -14,9 +14,9 @@ import type {
   RegionOptions as QuerySuggestionsRegionOptions,
 } from '@algolia/client-query-suggestions';
 
-import { Status } from '@algolia/client-abtesting';
+import type { Status } from '@algolia/client-abtesting';
 import type { ClientOptions } from '@algolia/client-common';
-import { EventType } from '@algolia/client-personalization';
+import type { EventType } from '@algolia/client-personalization';
 import type {
   Action,
   AdvancedSyntaxFeatures,
@@ -130,7 +130,7 @@ export * from '@algolia/ingestion';
 export * from '@algolia/monitoring';
 export * from '@algolia/recommend';
 
-export {
+export type {
   AbtestingRegion,
   AbtestingRegionOptions,
   Action,
