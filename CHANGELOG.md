@@ -1,3 +1,8 @@
+## [5.10.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.10.1...5.10.2)
+
+- [209553724](https://github.com/algolia/api-clients-automation/commit/209553724) chore(javascript): update release script ([#4022](https://github.com/algolia/api-clients-automation/pull/4022)) by [@shortcuts](https://github.com/shortcuts/)
+- [1f36e8f93](https://github.com/algolia/api-clients-automation/commit/1f36e8f93) fix(specs): results in getObjects is required ([#4024](https://github.com/algolia/api-clients-automation/pull/4024)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.10.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.10.0...5.10.1)
 
 - [25de7005c](https://github.com/algolia/api-clients-automation/commit/25de7005c) fix(javascript): common package types ([#4015](https://github.com/algolia/api-clients-automation/pull/4015)) by [@shortcuts](https://github.com/shortcuts/)
