@@ -2,6 +2,11 @@
 
 export type GetObjectsResponse<T = Record<string, unknown>> = {
   /**
+   * An optional status message.
+   */
+  message?: string;
+
+  /**
    * Retrieved records.
    */
   results: T[];
