@@ -3,4 +3,12 @@
 /**
  * Synonym type.
  */
-export type SynonymType = 'synonym' | 'onewaysynonym' | 'altcorrection1' | 'altcorrection2' | 'placeholder';
+export type SynonymType =
+  | 'synonym'
+  | 'onewaysynonym'
+  | 'altcorrection1'
+  | 'altcorrection2'
+  | 'placeholder'
+  | 'oneWaySynonym'
+  | 'altCorrection1'
+  | 'altCorrection2';
