@@ -55,10 +55,10 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.16.4",
-    "@types/node": "22.7.7",
-    "publint": "0.2.11",
-    "rollup": "4.24.0",
-    "tsup": "8.3.0",
+    "@types/node": "22.8.1",
+    "publint": "0.2.12",
+    "rollup": "4.24.2",
+    "tsup": "8.3.5",
     "typescript": "5.6.3"
   },
   "engines": {
