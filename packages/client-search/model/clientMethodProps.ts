@@ -824,21 +824,21 @@ export type SearchClientNodeHelpers = {
   getSecuredApiKeyRemainingValidity: (opts: GetSecuredApiKeyRemainingValidityOptions) => number;
 };
 
-export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName'> & {
+export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'waitForTasks'> & {
   /**
    * The objectIDs to delete.
    */
   objectIDs: string[];
 };
 
-export type PartialUpdateObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'objects'> & {
+export type PartialUpdateObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'objects' | 'waitForTasks'> & {
   /**
    *To be provided if non-existing objects are passed, otherwise, the call will fail.
    */
   createIfNotExists?: boolean;
 };
 
-export type SaveObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'objects'>;
+export type SaveObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'objects' | 'waitForTasks'>;
 
 export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
   /**
