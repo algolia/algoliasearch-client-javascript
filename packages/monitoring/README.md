@@ -41,11 +41,11 @@ All of our clients comes with type definition, and are available for both browse
 ### With a package manager
 
 ```bash
-yarn add @algolia/monitoring@1.10.2
+yarn add @algolia/monitoring@1.11.0
 # or
-npm install @algolia/monitoring@1.10.2
+npm install @algolia/monitoring@1.11.0
 # or
-pnpm add @algolia/monitoring@1.10.2
+pnpm add @algolia/monitoring@1.11.0
 ```
 
 ### Without a package manager
@@ -53,7 +53,7 @@ pnpm add @algolia/monitoring@1.10.2
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/monitoring@1.10.2/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/monitoring@1.11.0/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage
