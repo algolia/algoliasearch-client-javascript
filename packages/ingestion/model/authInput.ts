@@ -13,4 +13,5 @@ export type AuthInput =
   | AuthAPIKey
   | AuthOAuth
   | AuthAlgolia
-  | AuthAlgoliaInsights;
+  | AuthAlgoliaInsights
+  | { [key: string]: string };
