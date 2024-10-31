@@ -37,7 +37,7 @@
         "default": "./dist/builds/browser.umd.js"
       }
     },
-    "./src/*": "./src/*.ts"
+    "./dist/builds/*": "./dist/builds/*.js"
   },
   "jsdelivr": "./dist/builds/browser.umd.js",
   "unpkg": "./dist/builds/browser.umd.js",
