@@ -13,4 +13,5 @@ export type AuthInputPartial =
   | AuthAPIKeyPartial
   | AuthOAuthPartial
   | AuthAlgoliaPartial
-  | AuthAlgoliaInsightsPartial;
+  | AuthAlgoliaInsightsPartial
+  | { [key: string]: string };
