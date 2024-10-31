@@ -412,6 +412,7 @@ export function createSearchClient({
               indexName,
               browseParams: {
                 cursor: previousResponse ? previousResponse.cursor : undefined,
+                hitsPerPage: 1000,
                 ...browseParams,
               },
             },
@@ -456,7 +457,7 @@ export function createSearchClient({
             requestOptions,
           );
         },
-        validate: (response) => response.nbHits < params.hitsPerPage,
+        validate: (response) => response.hits.length < params.hitsPerPage,
         ...browseRulesOptions,
       });
     },
@@ -501,7 +502,7 @@ export function createSearchClient({
           params.page += 1;
           return resp;
         },
-        validate: (response) => response.nbHits < params.hitsPerPage,
+        validate: (response) => response.hits.length < params.hitsPerPage,
         ...browseSynonymsOptions,
       });
     },
