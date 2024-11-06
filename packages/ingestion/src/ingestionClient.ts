@@ -117,7 +117,7 @@ import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.12.0';
+export const apiClientVersion = '1.13.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];

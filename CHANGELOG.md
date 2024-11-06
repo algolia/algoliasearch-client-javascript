@@ -1,3 +1,12 @@
+## [5.13.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.12.0...5.13.0)
+
+- [f598e77b1](https://github.com/algolia/api-clients-automation/commit/f598e77b1) fix(javascript): allow import from dist ([#4060](https://github.com/algolia/api-clients-automation/pull/4060)) by [@shortcuts](https://github.com/shortcuts/)
+- [801241e12](https://github.com/algolia/api-clients-automation/commit/801241e12) fix(specs): add secrets payload for updates ([#4061](https://github.com/algolia/api-clients-automation/pull/4061)) by [@shortcuts](https://github.com/shortcuts/)
+- [625421783](https://github.com/algolia/api-clients-automation/commit/625421783) fix(clients): update browse iterator ([#4058](https://github.com/algolia/api-clients-automation/pull/4058)) by [@Fluf22](https://github.com/Fluf22/)
+- [ff2d23c14](https://github.com/algolia/api-clients-automation/commit/ff2d23c14) chore(deps): dependencies 2024-11-04 ([#4065](https://github.com/algolia/api-clients-automation/pull/4065)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [bf9173f47](https://github.com/algolia/api-clients-automation/commit/bf9173f47) feat(scripts): compute eligibility dates ([#4064](https://github.com/algolia/api-clients-automation/pull/4064)) by [@shortcuts](https://github.com/shortcuts/)
+- [a38ceecc8](https://github.com/algolia/api-clients-automation/commit/a38ceecc8) feat(specs): add composition API ([#4056](https://github.com/algolia/api-clients-automation/pull/4056)) by [@e-krebs](https://github.com/e-krebs/)
+
 ## [5.12.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.11.0...5.12.0)
 
 - [be40cf61d](https://github.com/algolia/api-clients-automation/commit/be40cf61d) feat(specs): add secrets authentications to ingestion ([#4054](https://github.com/algolia/api-clients-automation/pull/4054)) by [@shortcuts](https://github.com/shortcuts/)
