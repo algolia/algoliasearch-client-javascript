@@ -14,6 +14,8 @@ import type { ABTest } from '../model/aBTest';
 import type { ABTestResponse } from '../model/aBTestResponse';
 import type { AddABTestsRequest } from '../model/addABTestsRequest';
 
+import type { EstimateABTestRequest } from '../model/estimateABTestRequest';
+import type { EstimateABTestResponse } from '../model/estimateABTestResponse';
 import type { ListABTestsResponse } from '../model/listABTestsResponse';
 import type { ScheduleABTestResponse } from '../model/scheduleABTestResponse';
 import type { ScheduleABTestsRequest } from '../model/scheduleABTestsRequest';
@@ -293,6 +295,44 @@ export function createAbtestingClient({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     * @param estimateABTestRequest - The estimateABTestRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    estimateABTest(
+      estimateABTestRequest: EstimateABTestRequest,
+      requestOptions?: RequestOptions,
+    ): Promise<EstimateABTestResponse> {
+      if (!estimateABTestRequest) {
+        throw new Error('Parameter `estimateABTestRequest` is required when calling `estimateABTest`.');
+      }
+
+      if (!estimateABTestRequest.configuration) {
+        throw new Error('Parameter `estimateABTestRequest.configuration` is required when calling `estimateABTest`.');
+      }
+      if (!estimateABTestRequest.variants) {
+        throw new Error('Parameter `estimateABTestRequest.variants` is required when calling `estimateABTest`.');
+      }
+
+      const requestPath = '/2/abtests/estimate';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: estimateABTestRequest,
       };
 
       return transporter.request(request, requestOptions);
