@@ -46,7 +46,7 @@ export type Task = {
    */
   failureThreshold?: number;
 
-  action: ActionType;
+  action?: ActionType;
 
   /**
    * Date of the last cursor in RFC 3339 format.
