@@ -7,12 +7,7 @@ export type EstimateABTestResponse = {
   durationDays?: number;
 
   /**
-   * Number of tracked searches needed to be able to detect the configured effect for the control variant.
+   * Sample size estimates for each variant. The first element is the control variant. Each element is the estimated number of searches required to achieve the desired statistical significance.
    */
-  controlSampleSize?: number;
-
-  /**
-   * Number of tracked searches needed to be able to detect the configured effect for the experiment variant.
-   */
-  experimentSampleSize?: number;
+  sampleSizes?: Array<number>;
 };
