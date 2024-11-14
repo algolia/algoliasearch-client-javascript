@@ -17,12 +17,12 @@ import type { CompositionRule } from '../model/compositionRule';
 import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { ListCompositionsResponse } from '../model/listCompositionsResponse';
 import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
+
 import type { RulesMultipleBatchResponse } from '../model/rulesMultipleBatchResponse';
 
 import type { SearchCompositionRulesResponse } from '../model/searchCompositionRulesResponse';
 
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
-
 import type { SearchResponse } from '../model/searchResponse';
 
 import type {
@@ -34,10 +34,10 @@ import type {
   GetRuleProps,
   GetTaskProps,
   ListCompositionsProps,
-  RunSingleCompositionProps,
   SaveRulesProps,
   SearchCompositionRulesProps,
   SearchForFacetValuesProps,
+  SearchProps,
   WaitForCompositionTaskOptions,
 } from '../model/clientMethodProps';
 
@@ -478,44 +478,6 @@ export function createCompositionClient({
     },
 
     /**
-     * Runs a query on a single composition and returns matching results.
-     *
-     * Required API Key ACLs:
-     *  - search
-     * @param runSingleComposition - The runSingleComposition object.
-     * @param runSingleComposition.compositionID - Unique Composition ObjectID.
-     * @param runSingleComposition.searchParams - The searchParams object.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    runSingleComposition<T>(
-      { compositionID, searchParams }: RunSingleCompositionProps,
-      requestOptions?: RequestOptions,
-    ): Promise<SearchResponse<T>> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `runSingleComposition`.');
-      }
-
-      const requestPath = '/1/compositions/{compositionID}/run'.replace(
-        '{compositionID}',
-        encodeURIComponent(compositionID),
-      );
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'POST',
-        path: requestPath,
-        queryParameters,
-        headers,
-        data: searchParams ? searchParams : {},
-        useReadTransporter: true,
-        cacheable: true,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
      * Create or update or delete multiple composition rules.
      *
      * Required API Key ACLs:
@@ -550,6 +512,48 @@ export function createCompositionClient({
         queryParameters,
         headers,
         data: rules,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Runs a query on a single composition and returns matching results.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param search - The search object.
+     * @param search.compositionID - Unique Composition ObjectID.
+     * @param search.requestBody - The requestBody object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    search<T>(
+      { compositionID, requestBody }: SearchProps,
+      requestOptions?: RequestOptions,
+    ): Promise<SearchResponse<T>> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `search`.');
+      }
+
+      if (!requestBody) {
+        throw new Error('Parameter `requestBody` is required when calling `search`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}/run'.replace(
+        '{compositionID}',
+        encodeURIComponent(compositionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: requestBody,
+        useReadTransporter: true,
+        cacheable: true,
       };
 
       return transporter.request(request, requestOptions);

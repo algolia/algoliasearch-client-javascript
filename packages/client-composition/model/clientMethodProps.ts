@@ -2,11 +2,11 @@
 
 import type { CompositionRulesBatchParams } from '../model/compositionRulesBatchParams';
 
+import type { RequestBody } from '../model/requestBody';
+
 import type { SearchCompositionRulesParams } from '../model/searchCompositionRulesParams';
 
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
-
-import type { SearchParams } from '../model/searchParams';
 
 /**
  * Properties for the `customDelete` method.
@@ -125,17 +125,6 @@ export type ListCompositionsProps = {
 };
 
 /**
- * Properties for the `runSingleComposition` method.
- */
-export type RunSingleCompositionProps = {
-  /**
-   * Unique Composition ObjectID.
-   */
-  compositionID: string;
-  searchParams?: SearchParams;
-};
-
-/**
  * Properties for the `saveRules` method.
  */
 export type SaveRulesProps = {
@@ -144,6 +133,17 @@ export type SaveRulesProps = {
    */
   compositionID: string;
   rules: CompositionRulesBatchParams;
+};
+
+/**
+ * Properties for the `search` method.
+ */
+export type SearchProps = {
+  /**
+   * Unique Composition ObjectID.
+   */
+  compositionID: string;
+  requestBody: RequestBody;
 };
 
 /**

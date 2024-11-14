@@ -7,7 +7,7 @@ import type { NumericFilters } from './numericFilters';
 import type { OptionalFilters } from './optionalFilters';
 import type { SupportedLanguage } from './supportedLanguage';
 
-export type SearchParamsSearchParams = {
+export type Params = {
   /**
    * Search query.
    */
