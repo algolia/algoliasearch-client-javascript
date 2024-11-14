@@ -10,7 +10,7 @@
     },
     {
       "path": "packages/client-abtesting/dist/builds/browser.umd.js",
-      "maxSize": "4.15KB"
+      "maxSize": "4.20KB"
     },
     {
       "path": "packages/client-analytics/dist/builds/browser.umd.js",

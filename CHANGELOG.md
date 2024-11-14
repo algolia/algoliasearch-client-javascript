@@ -1,3 +1,11 @@
+## [5.14.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.13.0...5.14.0)
+
+- [4c73f4c9a](https://github.com/algolia/api-clients-automation/commit/4c73f4c9a) feat(specs): add estimate path and responses ([#4057](https://github.com/algolia/api-clients-automation/pull/4057)) by [@cdhawke](https://github.com/cdhawke/)
+- [4a6d17540](https://github.com/algolia/api-clients-automation/commit/4a6d17540) chore(deps): dependencies 2024-11-11 ([#4080](https://github.com/algolia/api-clients-automation/pull/4080)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [39ad05495](https://github.com/algolia/api-clients-automation/commit/39ad05495) feat(specs): update estimate response type ([#4101](https://github.com/algolia/api-clients-automation/pull/4101)) by [@cdhawke](https://github.com/cdhawke/)
+- [dd18afe8d](https://github.com/algolia/api-clients-automation/commit/dd18afe8d) fix(specs): rename composition run endpoint ([#4099](https://github.com/algolia/api-clients-automation/pull/4099)) by [@e-krebs](https://github.com/e-krebs/)
+- [66acf19b8](https://github.com/algolia/api-clients-automation/commit/66acf19b8) fix(scripts): dart and js releases ([#4104](https://github.com/algolia/api-clients-automation/pull/4104)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.13.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.12.0...5.13.0)
 
 - [f598e77b1](https://github.com/algolia/api-clients-automation/commit/f598e77b1) fix(javascript): allow import from dist ([#4060](https://github.com/algolia/api-clients-automation/pull/4060)) by [@shortcuts](https://github.com/shortcuts/)
