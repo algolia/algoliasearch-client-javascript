@@ -4,7 +4,6 @@ import type { BoughtTogetherQuery } from './boughtTogetherQuery';
 
 import type { LookingSimilarQuery } from './lookingSimilarQuery';
 
-import type { RecommendedForYouQuery } from './recommendedForYouQuery';
 import type { RelatedQuery } from './relatedQuery';
 import type { TrendingFacetsQuery } from './trendingFacetsQuery';
 import type { TrendingItemsQuery } from './trendingItemsQuery';
@@ -14,5 +13,4 @@ export type RecommendationsRequest =
   | RelatedQuery
   | TrendingItemsQuery
   | TrendingFacetsQuery
-  | LookingSimilarQuery
-  | RecommendedForYouQuery;
+  | LookingSimilarQuery;
