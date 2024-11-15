@@ -46,8 +46,8 @@ import type {
   CustomGetProps,
   CustomPostProps,
   CustomPutProps,
-  DeleteSourceProps,
   DeletedAtResponse,
+  DeleteSourceProps,
   Distinct,
   Edit,
   EditType,
@@ -56,19 +56,21 @@ import type {
   Exhaustive,
   FacetFilters,
   FacetOrdering,
-  FacetStats,
   Facets,
+  FacetStats,
   GetTaskProps,
   HighlightResult,
   HighlightResultOption,
   IgnorePlurals,
   IndexSettingsAsSearchParams,
+  InsideBoundingBox,
   Languages,
-  MatchLevel,
   MatchedGeoLocation,
+  MatchLevel,
   Mode,
   NumericFilters,
   OptionalFilters,
+  OptionalWords,
   Params,
   Personalization,
   Promote,
@@ -77,7 +79,6 @@ import type {
   QueryType,
   Range,
   RankingInfo,
-  ReRankingApplyFilter,
   Redirect,
   RedirectRuleIndexData,
   RedirectRuleIndexMetadata,
@@ -85,6 +86,7 @@ import type {
   RemoveStopWords,
   RemoveWordsIfNoResults,
   RenderingContent,
+  ReRankingApplyFilter,
   SearchPagination,
   SearchParams,
   SearchParamsObject,
@@ -105,21 +107,6 @@ import type {
 } from '@algolia/client-search';
 import { apiClientVersion } from '@algolia/client-search';
 
-type Region =
-  | AbtestingRegion
-  | AnalyticsRegion
-  | IngestionRegion
-  | InsightsRegion
-  | PersonalizationRegion
-  | QuerySuggestionsRegion;
-type RegionOptions =
-  | AbtestingRegionOptions
-  | AnalyticsRegionOptions
-  | IngestionRegionOptions
-  | InsightsRegionOptions
-  | PersonalizationRegionOptions
-  | QuerySuggestionsRegionOptions;
-
 export * from '@algolia/client-abtesting';
 export * from '@algolia/client-analytics';
 export * from '@algolia/client-insights';
@@ -130,14 +117,42 @@ export * from '@algolia/ingestion';
 export * from '@algolia/monitoring';
 export * from '@algolia/recommend';
 
+export type Region =
+  | AbtestingRegion
+  | AnalyticsRegion
+  | IngestionRegion
+  | InsightsRegion
+  | PersonalizationRegion
+  | QuerySuggestionsRegion;
+export type RegionOptions =
+  | AbtestingRegionOptions
+  | AnalyticsRegionOptions
+  | IngestionRegionOptions
+  | InsightsRegionOptions
+  | PersonalizationRegionOptions
+  | QuerySuggestionsRegionOptions;
+
 export type {
   AbtestingRegion,
   AbtestingRegionOptions,
+  AnalyticsRegion,
+  AnalyticsRegionOptions,
+  EventType,
+  IngestionRegion,
+  IngestionRegionOptions,
+  InsightsRegion,
+  InsightsRegionOptions,
+  PersonalizationRegion,
+  PersonalizationRegionOptions,
+  QuerySuggestionsRegion,
+  QuerySuggestionsRegionOptions,
+  Status,
+};
+
+export type {
   Action,
   AdvancedSyntaxFeatures,
   AlternativesAsExact,
-  AnalyticsRegion,
-  AnalyticsRegionOptions,
   Anchoring,
   AroundPrecision,
   AroundRadius,
@@ -163,56 +178,47 @@ export type {
   CustomGetProps,
   CustomPostProps,
   CustomPutProps,
-  DeleteSourceProps,
   DeletedAtResponse,
+  DeleteSourceProps,
   Distinct,
   Edit,
   EditType,
   ErrorBase,
-  EventType,
   ExactOnSingleWordQuery,
   Exhaustive,
   FacetFilters,
   FacetOrdering,
-  FacetStats,
   Facets,
+  FacetStats,
   GetTaskProps,
   HighlightResult,
   HighlightResultOption,
   IgnorePlurals,
   IndexSettingsAsSearchParams,
-  IngestionRegion,
-  IngestionRegionOptions,
-  InsightsRegion,
-  InsightsRegionOptions,
+  InsideBoundingBox,
   Languages,
-  MatchLevel,
   MatchedGeoLocation,
+  MatchLevel,
   Mode,
   NumericFilters,
   OptionalFilters,
+  OptionalWords,
   Params,
   Personalization,
-  PersonalizationRegion,
-  PersonalizationRegionOptions,
   Promote,
   PromoteObjectID,
   PromoteObjectIDs,
-  QuerySuggestionsRegion,
-  QuerySuggestionsRegionOptions,
   QueryType,
   Range,
   RankingInfo,
-  ReRankingApplyFilter,
   Redirect,
   RedirectRuleIndexData,
   RedirectRuleIndexMetadata,
   RedirectURL,
-  Region,
-  RegionOptions,
   RemoveStopWords,
   RemoveWordsIfNoResults,
   RenderingContent,
+  ReRankingApplyFilter,
   SearchPagination,
   SearchParams,
   SearchParamsObject,
@@ -222,7 +228,6 @@ export type {
   SnippetResultOption,
   SortRemainingBy,
   Source,
-  Status,
   SupportedLanguage,
   TagFilters,
   TaskStatus,
@@ -231,8 +236,9 @@ export type {
   TypoToleranceEnum,
   Value,
   Widgets,
-  apiClientVersion,
 };
+
+export { apiClientVersion };
 
 /**
  * Options forwarded to the client initialized via the `init` method.
