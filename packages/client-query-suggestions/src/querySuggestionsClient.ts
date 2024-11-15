@@ -30,7 +30,7 @@ import type {
   UpdateConfigProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.14.0';
+export const apiClientVersion = '5.14.1';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];

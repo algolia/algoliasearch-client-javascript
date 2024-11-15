@@ -1,3 +1,9 @@
+## [5.14.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.14.0...5.14.1)
+
+- [b97a88beb](https://github.com/algolia/api-clients-automation/commit/b97a88beb) fix(javascript): add support for private package publish ([#4106](https://github.com/algolia/api-clients-automation/pull/4106)) by [@shortcuts](https://github.com/shortcuts/)
+- [36d583e35](https://github.com/algolia/api-clients-automation/commit/36d583e35) fix(specs): make the searchParams compatible with v4 ([#4108](https://github.com/algolia/api-clients-automation/pull/4108)) by [@millotp](https://github.com/millotp/)
+- [996ba5036](https://github.com/algolia/api-clients-automation/commit/996ba5036) fix(specs): remove private beta endpoint from recommend ([#4110](https://github.com/algolia/api-clients-automation/pull/4110)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.14.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.13.0...5.14.0)
 
 - [4c73f4c9a](https://github.com/algolia/api-clients-automation/commit/4c73f4c9a) feat(specs): add estimate path and responses ([#4057](https://github.com/algolia/api-clients-automation/pull/4057)) by [@cdhawke](https://github.com/cdhawke/)

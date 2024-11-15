@@ -1,6 +1,6 @@
 {
   "name": "@algolia/logger-console",
-  "version": "5.14.0",
+  "version": "5.14.1",
   "description": "Promise-based log library using console log.",
   "repository": {
     "type": "git",
@@ -44,7 +44,7 @@
     "vitest": "2.1.4"
   },
   "dependencies": {
-    "@algolia/client-common": "5.14.0"
+    "@algolia/client-common": "5.14.1"
   },
   "engines": {
     "node": ">= 14.0.0"
