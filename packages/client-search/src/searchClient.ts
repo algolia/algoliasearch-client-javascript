@@ -1298,7 +1298,7 @@ export function createSearchClient({
     deleteBy(
       { indexName, deleteByParams }: DeleteByProps,
       requestOptions?: RequestOptions,
-    ): Promise<DeletedAtResponse> {
+    ): Promise<UpdatedAtResponse> {
       if (!indexName) {
         throw new Error('Parameter `indexName` is required when calling `deleteBy`.');
       }
