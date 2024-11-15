@@ -8,7 +8,7 @@
   "scripts": {
     "build": "lerna run build --scope '@algolia/requester-testing' --scope '@algolia/logger-console' --scope 'algoliasearch' --scope '@algolia/client-composition' --include-dependencies",
     "clean": "lerna run clean",
-    "release:publish": "tsc --project scripts/tsconfig.json && node scripts/dist/scripts/publish.js",
+    "release:publish": "tsc --project scripts/tsconfig.json && node scripts/dist/publish.js",
     "test": "lerna run test $*",
     "test:size": "bundlesize",
     "test:bundle": "lerna run test:bundle --verbose --include-dependencies"

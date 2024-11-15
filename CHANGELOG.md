@@ -1,4 +1,4 @@
-## [5.14.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.14.0...5.14.1)
+## [5.14.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.14.0...5.14.2)
 
 - [b97a88beb](https://github.com/algolia/api-clients-automation/commit/b97a88beb) fix(javascript): add support for private package publish ([#4106](https://github.com/algolia/api-clients-automation/pull/4106)) by [@shortcuts](https://github.com/shortcuts/)
 - [36d583e35](https://github.com/algolia/api-clients-automation/commit/36d583e35) fix(specs): make the searchParams compatible with v4 ([#4108](https://github.com/algolia/api-clients-automation/pull/4108)) by [@millotp](https://github.com/millotp/)
