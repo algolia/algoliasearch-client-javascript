@@ -93,10 +93,10 @@
     "@types/node": "22.9.0",
     "jsdom": "25.0.1",
     "publint": "0.2.12",
-    "rollup": "4.25.0",
+    "rollup": "4.27.2",
     "tsup": "8.3.5",
     "typescript": "5.6.3",
-    "vitest": "2.1.4",
+    "vitest": "2.1.5",
     "vitest-environment-miniflare": "2.14.4"
   },
   "engines": {

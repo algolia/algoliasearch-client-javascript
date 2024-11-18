@@ -18,7 +18,7 @@
     "bundlesize": "0.18.2",
     "execa": "9.5.1",
     "lerna": "8.1.9",
-    "rollup": "4.25.0",
+    "rollup": "4.27.2",
     "typescript": "5.6.3"
   },
   "engines": {
