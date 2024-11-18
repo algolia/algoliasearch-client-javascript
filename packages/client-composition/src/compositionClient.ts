@@ -590,8 +590,6 @@ export function createCompositionClient({
         queryParameters,
         headers,
         data: searchCompositionRulesParams ? searchCompositionRulesParams : {},
-        useReadTransporter: true,
-        cacheable: true,
       };
 
       return transporter.request(request, requestOptions);
