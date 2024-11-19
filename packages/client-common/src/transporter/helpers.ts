@@ -82,6 +82,29 @@ export function deserializeSuccess<TObject>(response: Response): TObject {
   }
 }
 
+const httpMessages: Record<number, string> = {
+  400: 'Bad Request',
+  401: 'Unauthorized',
+  402: 'Payment Required',
+  403: 'Forbidden',
+  404: 'Not Found',
+  405: 'Method Not Allowed',
+  406: 'Not Acceptable',
+  407: 'Proxy Authentication Required',
+  408: 'Request Timeout',
+  409: 'Conflict',
+  410: 'Gone',
+  411: 'Length Required',
+  412: 'Precondition Required',
+  413: 'Request Entry Too Large',
+  414: 'Request-URI Too Long',
+  415: 'Unsupported Media Type',
+  416: 'Requested Range Not Satisfiable',
+  417: 'Expectation Failed',
+  418: "I'm a teapot",
+  429: 'Too Many Requests',
+};
+
 export function deserializeFailure({ content, status }: Response, stackFrame: StackFrame[]): Error {
   try {
     const parsed = JSON.parse(content);
@@ -92,5 +115,5 @@ export function deserializeFailure({ content, status }: Response, stackFrame: St
   } catch {
     // ..
   }
-  return new ApiError(content, status, stackFrame);
+  return new ApiError(status in httpMessages ? httpMessages[status] : content, status, stackFrame);
 }
