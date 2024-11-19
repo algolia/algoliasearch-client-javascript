@@ -10,16 +10,68 @@
     "clean": "lerna run clean",
     "release:publish": "tsc --project scripts/tsconfig.json && node scripts/dist/publish.js",
     "test": "lerna run test $*",
-    "test:size": "bundlesize",
+    "test:size": "bundlewatch",
     "test:bundle": "lerna run test:bundle --verbose --include-dependencies"
   },
   "devDependencies": {
     "@types/node": "22.9.0",
-    "bundlesize": "0.18.2",
+    "bundlewatch": "0.4.0",
     "execa": "9.5.1",
     "lerna": "8.1.9",
     "rollup": "4.27.2",
     "typescript": "5.6.3"
+  },
+  "bundlewatch": {
+    "files": [
+      {
+        "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
+        "maxSize": "18.15KB"
+      },
+      {
+        "path": "packages/algoliasearch/dist/lite/builds/browser.umd.js",
+        "maxSize": "3.95KB"
+      },
+      {
+        "path": "packages/client-abtesting/dist/builds/browser.umd.js",
+        "maxSize": "4.20KB"
+      },
+      {
+        "path": "packages/client-analytics/dist/builds/browser.umd.js",
+        "maxSize": "4.85KB"
+      },
+      {
+        "path": "packages/client-composition/dist/builds/browser.umd.js",
+        "maxSize": "4.55KB"
+      },
+      {
+        "path": "packages/client-insights/dist/builds/browser.umd.js",
+        "maxSize": "3.90KB"
+      },
+      {
+        "path": "packages/client-personalization/dist/builds/browser.umd.js",
+        "maxSize": "4.05KB"
+      },
+      {
+        "path": "packages/client-query-suggestions/dist/builds/browser.umd.js",
+        "maxSize": "4.05KB"
+      },
+      {
+        "path": "packages/client-search/dist/builds/browser.umd.js",
+        "maxSize": "7.25KB"
+      },
+      {
+        "path": "packages/ingestion/dist/builds/browser.umd.js",
+        "maxSize": "5.90KB"
+      },
+      {
+        "path": "packages/monitoring/dist/builds/browser.umd.js",
+        "maxSize": "3.95KB"
+      },
+      {
+        "path": "packages/recommend/dist/builds/browser.umd.js",
+        "maxSize": "4.15KB"
+      }
+    ]
   },
   "engines": {
     "node": ">= 14.0.0",

@@ -1,3 +1,12 @@
+## [5.15.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.14.2...5.15.0)
+
+- [0787a3d2a](https://github.com/algolia/api-clients-automation/commit/0787a3d2a) chore(scripts): change dist folder and bump ([#4113](https://github.com/algolia/api-clients-automation/pull/4113)) by [@millotp](https://github.com/millotp/)
+- [f246995a7](https://github.com/algolia/api-clients-automation/commit/f246995a7) chore(deps): dependencies 2024-11-18 ([#4109](https://github.com/algolia/api-clients-automation/pull/4109)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [ff954678e](https://github.com/algolia/api-clients-automation/commit/ff954678e) fix(playground): add formatter for python ([#4125](https://github.com/algolia/api-clients-automation/pull/4125)) by [@millotp](https://github.com/millotp/)
+- [da4169e1b](https://github.com/algolia/api-clients-automation/commit/da4169e1b) fix(specs): do not cache searchCompositionRules ([#4127](https://github.com/algolia/api-clients-automation/pull/4127)) by [@e-krebs](https://github.com/e-krebs/)
+- [08669e2b3](https://github.com/algolia/api-clients-automation/commit/08669e2b3) feat(specs): default authMode to WithinHeaders for Composition Client ([#4129](https://github.com/algolia/api-clients-automation/pull/4129)) by [@e-krebs](https://github.com/e-krebs/)
+- [f97e44ce0](https://github.com/algolia/api-clients-automation/commit/f97e44ce0) fix(cts): add tests for HTML error ([#4097](https://github.com/algolia/api-clients-automation/pull/4097)) by [@millotp](https://github.com/millotp/)
+
 ## [5.14.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.14.0...5.14.2)
 
 - [b97a88beb](https://github.com/algolia/api-clients-automation/commit/b97a88beb) fix(javascript): add support for private package publish ([#4106](https://github.com/algolia/api-clients-automation/pull/4106)) by [@shortcuts](https://github.com/shortcuts/)
