@@ -11,7 +11,7 @@ async function publish(): Promise<void> {
 
   // publish the prereleases private packages
   await execaCommand(
-    `yarn lerna exec --scope '@algolia/client-composition' --no-bail -- npm_config_registry=https://registry.npmjs.org/ npm publish --access private --tag alpha`,
+    `yarn lerna exec --scope '@algolia/client-composition' --no-bail -- npm_config_registry=https://registry.npmjs.org/ npm publish --access private --tag alpha --tag latest`,
     {
       shell: 'bash',
     },
