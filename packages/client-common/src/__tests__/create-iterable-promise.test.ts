@@ -53,6 +53,26 @@ describe('createIterablePromise', () => {
       await expect(promise).resolves.toEqual(3);
       expect(calls).toBe(3);
     });
+
+    test('allow async function', async () => {
+      createIterablePromise({
+        func: () => {
+          return Promise.resolve({
+            hits: [],
+            cursor: '',
+          });
+        },
+        validate: async () => {
+          return await Promise.resolve(true);
+        },
+        aggregator: async (res) => {
+          return await Promise.resolve(res);
+        },
+        timeout: async () => {
+          return await Promise.resolve(1000);
+        },
+      });
+    });
   });
 
   describe('aggregator', () => {

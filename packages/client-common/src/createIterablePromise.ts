@@ -20,22 +20,25 @@ export function createIterablePromise<TResponse>({
   const retry = (previousResponse?: TResponse): Promise<TResponse> => {
     return new Promise<TResponse>((resolve, reject) => {
       func(previousResponse)
-        .then((response) => {
+        .then(async (response) => {
           if (aggregator) {
-            aggregator(response);
+            await aggregator(response);
           }
 
-          if (validate(response)) {
+          if (await validate(response)) {
             return resolve(response);
           }
 
-          if (error && error.validate(response)) {
-            return reject(new Error(error.message(response)));
+          if (error && (await error.validate(response))) {
+            return reject(new Error(await error.message(response)));
           }
 
-          return setTimeout(() => {
-            retry(response).then(resolve).catch(reject);
-          }, timeout());
+          return setTimeout(
+            () => {
+              retry(response).then(resolve).catch(reject);
+            },
+            await timeout(),
+          );
         })
         .catch((err) => {
           reject(err);

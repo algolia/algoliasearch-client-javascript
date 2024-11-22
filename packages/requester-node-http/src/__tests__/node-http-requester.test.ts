@@ -164,7 +164,7 @@ describe('timeout handling', () => {
 
   afterAll(
     () =>
-      new Promise((done) => {
+      new Promise<void>((done) => {
         done();
       }),
   );

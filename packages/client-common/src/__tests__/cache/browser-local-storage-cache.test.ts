@@ -91,7 +91,7 @@ describe('browser local storage cache', () => {
 
     await cache.clear();
 
-    const defaultValue = (): Promise<void> => Promise.resolve({ bar: 2 });
+    const defaultValue = (): Promise<{ bar: number }> => Promise.resolve({ bar: 2 });
 
     expect(localStorage.length).toBe(0);
 

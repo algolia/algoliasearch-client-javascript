@@ -10,7 +10,7 @@
   "scripts": {
     "build": "yarn clean && yarn tsup && yarn rollup -c rollup.config.js",
     "clean": "rm -rf ./dist || true",
-    "test": "vitest --run",
+    "test": "tsc -p __tests__/tsconfig.json && vitest --run",
     "test:bundle": "publint . && attw --pack ."
   },
   "name": "algoliasearch",

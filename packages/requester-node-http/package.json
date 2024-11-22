@@ -30,7 +30,7 @@
   "scripts": {
     "build": "yarn clean && yarn tsup",
     "clean": "rm -rf ./dist || true",
-    "test": "vitest --run",
+    "test": "tsc --noEmit && vitest --run",
     "test:bundle": "publint . && attw --pack ."
   },
   "dependencies": {

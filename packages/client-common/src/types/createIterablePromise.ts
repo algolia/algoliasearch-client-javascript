@@ -2,7 +2,7 @@ export type IterableOptions<TResponse> = Partial<{
   /**
    * The function that runs right after the API call has been resolved, allows you to do anything with the response before `validate`.
    */
-  aggregator: (response: TResponse) => void;
+  aggregator: (response: TResponse) => unknown | PromiseLike<unknown>;
 
   /**
    * The `validate` condition to throw an error and its message.
@@ -11,18 +11,18 @@ export type IterableOptions<TResponse> = Partial<{
     /**
      * The function to validate the error condition.
      */
-    validate: (response: TResponse) => boolean;
+    validate: (response: TResponse) => boolean | PromiseLike<boolean>;
 
     /**
      * The error message to throw.
      */
-    message: (response: TResponse) => string;
+    message: (response: TResponse) => string | PromiseLike<string>;
   };
 
   /**
    * The function to decide how long to wait between iterations.
    */
-  timeout: () => number;
+  timeout: () => number | PromiseLike<number>;
 }>;
 
 export type CreateIterablePromise<TResponse> = IterableOptions<TResponse> & {
@@ -36,5 +36,5 @@ export type CreateIterablePromise<TResponse> = IterableOptions<TResponse> & {
   /**
    * The validator function. It receive the resolved return of the API call.
    */
-  validate: (response: TResponse) => boolean;
+  validate: (response: TResponse) => boolean | PromiseLike<boolean>;
 };
