@@ -51,7 +51,7 @@ export type Log = {
   /**
    * Number of API requests.
    */
-  nb_api_calls: string;
+  nb_api_calls?: string;
 
   /**
    * Processing time for the query in milliseconds. This doesn\'t include latency due to the network.
