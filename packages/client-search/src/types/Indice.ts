@@ -55,6 +55,11 @@ export type Index = {
    * Contains the names of all linked replicas.
    */
   readonly replicas?: readonly string[];
+
+  /**
+   * Only present if the index is a virtual replica.
+   */
+  readonly virtual?: boolean;
 };
 
 /**

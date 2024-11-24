@@ -345,6 +345,10 @@ export type Settings = {
       readonly values?: {
         readonly [facet: string]: {
           /**
+           * Hide facet values
+           */
+          readonly hide?: readonly string[];
+          /**
            * pinned order of facet values
            */
           readonly order?: readonly string[];
@@ -357,6 +361,49 @@ export type Settings = {
           readonly sortRemainingBy?: 'count' | 'alpha' | 'hidden';
         };
       };
+    };
+    /**
+     * Defining UI widget configuration
+     */
+    readonly widgets?: {
+      /**
+       * Configuration for banners
+       */
+      readonly banners?: ReadonlyArray<{
+        /**
+         * Configuration for the banner image
+         */
+        readonly image: {
+          /**
+           * Set of possible URLs of the banner image
+           */
+          readonly urls: ReadonlyArray<{
+            /**
+             * URL of the banner image
+             */
+            readonly url: string;
+          }>;
+          /**
+           * Alt text of the banner image
+           */
+          readonly title?: string;
+        };
+        /**
+         * Configuration for the banner click navigation
+         */
+        readonly link?: {
+          /**
+           * URL to navigate to when the banner is clicked
+           */
+          readonly url?: string;
+          /**
+           * Target of the navigation
+           * - `_blank` opens the URL in a new tab
+           * - `_self` opens the URL in the same tab
+           */
+          readonly target?: '_blank' | '_self';
+        };
+      }>;
     };
   };
 
