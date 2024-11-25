@@ -49,10 +49,10 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.17.0",
-    "@types/node": "22.9.0",
+    "@types/node": "22.9.3",
     "publint": "0.2.12",
     "tsup": "8.3.5",
-    "typescript": "5.6.3"
+    "typescript": "5.7.2"
   },
   "engines": {
     "node": ">= 14.0.0"
