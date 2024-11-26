@@ -76,7 +76,6 @@ import type { SynonymHit } from '../model/synonymHit';
 import type { UpdateApiKeyResponse } from '../model/updateApiKeyResponse';
 import type { UpdatedAtResponse } from '../model/updatedAtResponse';
 import type { UpdatedAtWithObjectIdResponse } from '../model/updatedAtWithObjectIdResponse';
-import type { UpdatedRuleResponse } from '../model/updatedRuleResponse';
 import type { UserId } from '../model/userId';
 
 import type {
@@ -2330,7 +2329,7 @@ export function createSearchClient({
     saveRule(
       { indexName, objectID, rule, forwardToReplicas }: SaveRuleProps,
       requestOptions?: RequestOptions,
-    ): Promise<UpdatedRuleResponse> {
+    ): Promise<UpdatedAtResponse> {
       if (!indexName) {
         throw new Error('Parameter `indexName` is required when calling `saveRule`.');
       }

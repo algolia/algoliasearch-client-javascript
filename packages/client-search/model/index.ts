@@ -175,7 +175,6 @@ export * from './typoToleranceEnum';
 export * from './updateApiKeyResponse';
 export * from './updatedAtResponse';
 export * from './updatedAtWithObjectIdResponse';
-export * from './updatedRuleResponse';
 export * from './userHighlightResult';
 export * from './userHit';
 export * from './userId';
