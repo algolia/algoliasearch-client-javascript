@@ -18,7 +18,7 @@ export type Rule = {
    */
   conditions?: Array<Condition>;
 
-  consequence?: Consequence;
+  consequence: Consequence;
 
   /**
    * Description of the rule\'s purpose to help you distinguish between different rules.

@@ -2,6 +2,7 @@ export default [
   {
     input: 'dist/lite/builds/browser.min.js',
     external: ['dom'],
+    cache: false,
     output: {
       esModule: false,
       file: 'dist/lite/builds/browser.umd.js',

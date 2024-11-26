@@ -2346,6 +2346,9 @@ export function createSearchClient({
       if (!rule.objectID) {
         throw new Error('Parameter `rule.objectID` is required when calling `saveRule`.');
       }
+      if (!rule.consequence) {
+        throw new Error('Parameter `rule.consequence` is required when calling `saveRule`.');
+      }
 
       const requestPath = '/1/indexes/{indexName}/rules/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
