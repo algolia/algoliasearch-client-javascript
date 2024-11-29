@@ -550,14 +550,18 @@ export function createSearchClient({
      * @param saveObjects - The `saveObjects` object.
      * @param saveObjects.indexName - The `indexName` to save `objects` in.
      * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
+     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async saveObjects(
-      { indexName, objects, waitForTasks }: SaveObjectsOptions,
+      { indexName, objects, waitForTasks, batchSize }: SaveObjectsOptions,
       requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
-      return await this.chunkedBatch({ indexName, objects, action: 'addObject', waitForTasks }, requestOptions);
+      return await this.chunkedBatch(
+        { indexName, objects, action: 'addObject', waitForTasks, batchSize },
+        requestOptions,
+      );
     },
 
     /**
@@ -567,11 +571,12 @@ export function createSearchClient({
      * @param deleteObjects - The `deleteObjects` object.
      * @param deleteObjects.indexName - The `indexName` to delete `objectIDs` from.
      * @param deleteObjects.objectIDs - The objectIDs to delete.
+     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param deleteObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async deleteObjects(
-      { indexName, objectIDs, waitForTasks }: DeleteObjectsOptions,
+      { indexName, objectIDs, waitForTasks, batchSize }: DeleteObjectsOptions,
       requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -580,6 +585,7 @@ export function createSearchClient({
           objects: objectIDs.map((objectID) => ({ objectID })),
           action: 'deleteObject',
           waitForTasks,
+          batchSize,
         },
         requestOptions,
       );
@@ -593,11 +599,12 @@ export function createSearchClient({
      * @param partialUpdateObjects.indexName - The `indexName` to update `objects` in.
      * @param partialUpdateObjects.objects - The array of `objects` to update in the given Algolia `indexName`.
      * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail..
+     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async partialUpdateObjects(
-      { indexName, objects, createIfNotExists, waitForTasks }: PartialUpdateObjectsOptions,
+      { indexName, objects, createIfNotExists, waitForTasks, batchSize }: PartialUpdateObjectsOptions,
       requestOptions?: RequestOptions,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -605,6 +612,7 @@ export function createSearchClient({
           indexName,
           objects,
           action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
+          batchSize,
           waitForTasks,
         },
         requestOptions,
