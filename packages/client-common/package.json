@@ -35,13 +35,13 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.17.0",
-    "@types/node": "22.9.3",
+    "@types/node": "22.10.1",
     "jsdom": "25.0.1",
     "publint": "0.2.12",
     "ts-node": "10.9.2",
     "tsup": "8.3.5",
     "typescript": "5.7.2",
-    "vitest": "2.1.5"
+    "vitest": "2.1.6"
   },
   "engines": {
     "node": ">= 14.0.0"

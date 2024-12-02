@@ -90,13 +90,13 @@
   "devDependencies": {
     "@algolia/requester-testing": "5.15.0",
     "@arethetypeswrong/cli": "0.17.0",
-    "@types/node": "22.9.3",
+    "@types/node": "22.10.1",
     "jsdom": "25.0.1",
     "publint": "0.2.12",
-    "rollup": "4.27.4",
+    "rollup": "4.28.0",
     "tsup": "8.3.5",
     "typescript": "5.7.2",
-    "vitest": "2.1.5",
+    "vitest": "2.1.6",
     "vitest-environment-miniflare": "2.14.4"
   },
   "engines": {
