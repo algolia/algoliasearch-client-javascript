@@ -9,5 +9,4 @@ export type SourceType =
   | 'ga4BigqueryExport'
   | 'json'
   | 'shopify'
-  | 'sfcc'
   | 'push';
