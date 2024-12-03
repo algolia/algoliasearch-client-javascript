@@ -491,6 +491,10 @@ export type ListTasksProps = {
    */
   sourceID?: Array<string>;
   /**
+   * Filters the tasks with the specified source type.
+   */
+  sourceType?: Array<SourceType>;
+  /**
    * Destination IDs for filtering the list of tasks.
    */
   destinationID?: Array<string>;

@@ -1484,6 +1484,7 @@ export function createIngestionClient({
      * @param listTasks.action - Actions for filtering the list of tasks.
      * @param listTasks.enabled - Whether to filter the list of tasks by the `enabled` status.
      * @param listTasks.sourceID - Source IDs for filtering the list of tasks.
+     * @param listTasks.sourceType - Filters the tasks with the specified source type.
      * @param listTasks.destinationID - Destination IDs for filtering the list of tasks.
      * @param listTasks.triggerType - Type of task trigger for filtering the list of tasks.
      * @param listTasks.sort - Property by which to sort the list of tasks.
@@ -1491,7 +1492,18 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listTasks(
-      { itemsPerPage, page, action, enabled, sourceID, destinationID, triggerType, sort, order }: ListTasksProps = {},
+      {
+        itemsPerPage,
+        page,
+        action,
+        enabled,
+        sourceID,
+        sourceType,
+        destinationID,
+        triggerType,
+        sort,
+        order,
+      }: ListTasksProps = {},
       requestOptions: RequestOptions | undefined = undefined,
     ): Promise<ListTasksResponse> {
       const requestPath = '/2/tasks';
@@ -1516,6 +1528,10 @@ export function createIngestionClient({
 
       if (sourceID !== undefined) {
         queryParameters['sourceID'] = sourceID.toString();
+      }
+
+      if (sourceType !== undefined) {
+        queryParameters['sourceType'] = sourceType.toString();
       }
 
       if (destinationID !== undefined) {
