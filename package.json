@@ -1,6 +1,7 @@
 {
   "name": "algoliasearch-client-javascript",
   "private": true,
+  "homepage": "https://github.com/algolia/algoliasearch-client-javascript#readme",
   "type": "module",
   "workspaces": [
     "packages/*"

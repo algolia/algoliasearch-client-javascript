@@ -6,6 +6,7 @@
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
+  "homepage": "https://github.com/algolia/algoliasearch-client-javascript#readme",
   "license": "MIT",
   "author": "Algolia",
   "type": "module",
