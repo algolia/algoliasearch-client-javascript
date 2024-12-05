@@ -7,9 +7,6 @@ import {
   createFallbackableCache,
   createMemoryCache,
   createNullLogger,
-  DEFAULT_CONNECT_TIMEOUT_BROWSER,
-  DEFAULT_READ_TIMEOUT_BROWSER,
-  DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 
 import type { ClientOptions } from '@algolia/client-common';
@@ -48,9 +45,9 @@ export function ingestionClient(
     apiKey,
     region,
     timeouts: {
-      connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
-      read: DEFAULT_READ_TIMEOUT_BROWSER,
-      write: DEFAULT_WRITE_TIMEOUT_BROWSER,
+      connect: 25000,
+      read: 25000,
+      write: 25000,
     },
     logger: createNullLogger(),
     requester: createXhrRequester(),

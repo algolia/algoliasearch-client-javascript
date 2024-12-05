@@ -2,15 +2,7 @@
 
 export type SearchClient = ReturnType<typeof createSearchClient> & SearchClientNodeHelpers;
 
-import {
-  createMemoryCache,
-  createNullCache,
-  createNullLogger,
-  DEFAULT_CONNECT_TIMEOUT_NODE,
-  DEFAULT_READ_TIMEOUT_NODE,
-  DEFAULT_WRITE_TIMEOUT_NODE,
-  serializeQueryParameters,
-} from '@algolia/client-common';
+import { createMemoryCache, createNullCache, createNullLogger, serializeQueryParameters } from '@algolia/client-common';
 import { createFetchRequester } from '@algolia/requester-fetch';
 
 import type { ClientOptions } from '@algolia/client-common';
@@ -43,9 +35,9 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
       appId,
       apiKey,
       timeouts: {
-        connect: DEFAULT_CONNECT_TIMEOUT_NODE,
-        read: DEFAULT_READ_TIMEOUT_NODE,
-        write: DEFAULT_WRITE_TIMEOUT_NODE,
+        connect: 2000,
+        read: 5000,
+        write: 30000,
       },
       logger: createNullLogger(),
       algoliaAgents: [{ segment: 'Fetch' }],

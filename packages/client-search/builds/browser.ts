@@ -7,9 +7,6 @@ import {
   createFallbackableCache,
   createMemoryCache,
   createNullLogger,
-  DEFAULT_CONNECT_TIMEOUT_BROWSER,
-  DEFAULT_READ_TIMEOUT_BROWSER,
-  DEFAULT_WRITE_TIMEOUT_BROWSER,
 } from '@algolia/client-common';
 
 import type { ClientOptions } from '@algolia/client-common';
@@ -33,9 +30,9 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
     appId,
     apiKey,
     timeouts: {
-      connect: DEFAULT_CONNECT_TIMEOUT_BROWSER,
-      read: DEFAULT_READ_TIMEOUT_BROWSER,
-      write: DEFAULT_WRITE_TIMEOUT_BROWSER,
+      connect: 1000,
+      read: 2000,
+      write: 30000,
     },
     logger: createNullLogger(),
     requester: createXhrRequester(),

@@ -4,14 +4,7 @@ export type IngestionClient = ReturnType<typeof createIngestionClient>;
 
 import { createHttpRequester } from '@algolia/requester-node-http';
 
-import {
-  createMemoryCache,
-  createNullCache,
-  createNullLogger,
-  DEFAULT_CONNECT_TIMEOUT_NODE,
-  DEFAULT_READ_TIMEOUT_NODE,
-  DEFAULT_WRITE_TIMEOUT_NODE,
-} from '@algolia/client-common';
+import { createMemoryCache, createNullCache, createNullLogger } from '@algolia/client-common';
 
 import type { ClientOptions } from '@algolia/client-common';
 
@@ -50,9 +43,9 @@ export function ingestionClient(
       apiKey,
       region,
       timeouts: {
-        connect: DEFAULT_CONNECT_TIMEOUT_NODE,
-        read: DEFAULT_READ_TIMEOUT_NODE,
-        write: DEFAULT_WRITE_TIMEOUT_NODE,
+        connect: 25000,
+        read: 25000,
+        write: 25000,
       },
       logger: createNullLogger(),
       requester: createHttpRequester(),
