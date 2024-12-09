@@ -1,3 +1,20 @@
+## [5.16.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.15.0...5.16.0)
+
+- [068fdacb5](https://github.com/algolia/api-clients-automation/commit/068fdacb5) feat(specs): add info and link about indexing rate limits ([#4136](https://github.com/algolia/api-clients-automation/pull/4136)) by [@kai687](https://github.com/kai687/)
+- [2e894c9ed](https://github.com/algolia/api-clients-automation/commit/2e894c9ed) fix(javascript): set latest version on prereleases ([#4138](https://github.com/algolia/api-clients-automation/pull/4138)) by [@shortcuts](https://github.com/shortcuts/)
+- [9e0235697](https://github.com/algolia/api-clients-automation/commit/9e0235697) fix(specs): `nb_api_calls` in `getLogs` response is optional ([#4142](https://github.com/algolia/api-clients-automation/pull/4142)) by [@shortcuts](https://github.com/shortcuts/)
+- [c04440114](https://github.com/algolia/api-clients-automation/commit/c04440114) fix(javascript): allow async param on createIterablePromise ([#4144](https://github.com/algolia/api-clients-automation/pull/4144)) by [@millotp](https://github.com/millotp/)
+- [56fd73fb6](https://github.com/algolia/api-clients-automation/commit/56fd73fb6) chore(deps): dependencies 2024-11-25 ([#4145](https://github.com/algolia/api-clients-automation/pull/4145)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [b728c5f25](https://github.com/algolia/api-clients-automation/commit/b728c5f25) fix(specs): `consequence` is required when saving rules ([#4146](https://github.com/algolia/api-clients-automation/pull/4146)) by [@shortcuts](https://github.com/shortcuts/)
+- [afd94fac8](https://github.com/algolia/api-clients-automation/commit/afd94fac8) fix(specs): `saveRule` response type ([#4170](https://github.com/algolia/api-clients-automation/pull/4170)) by [@shortcuts](https://github.com/shortcuts/)
+- [2325c61b8](https://github.com/algolia/api-clients-automation/commit/2325c61b8) feat(clients): allow batch size on objects helper ([#4172](https://github.com/algolia/api-clients-automation/pull/4172)) by [@shortcuts](https://github.com/shortcuts/)
+- [641c1c37f](https://github.com/algolia/api-clients-automation/commit/641c1c37f) chore(deps): dependencies 2024-12-02 ([#4174](https://github.com/algolia/api-clients-automation/pull/4174)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [aae74cb38](https://github.com/algolia/api-clients-automation/commit/aae74cb38) fix(specs): remove SFCC source type ([#4190](https://github.com/algolia/api-clients-automation/pull/4190)) by [@millotp](https://github.com/millotp/)
+- [6cf044504](https://github.com/algolia/api-clients-automation/commit/6cf044504) chore: add homepage to JavaScript client package ([#4192](https://github.com/algolia/api-clients-automation/pull/4192)) by [@Adnan-Bacic](https://github.com/Adnan-Bacic/)
+- [254052857](https://github.com/algolia/api-clients-automation/commit/254052857) fix(specs): add sourceType to listTasks ([#4193](https://github.com/algolia/api-clients-automation/pull/4193)) by [@millotp](https://github.com/millotp/)
+- [106d64313](https://github.com/algolia/api-clients-automation/commit/106d64313) feat(generators): allow per-spec timeouts ([#4173](https://github.com/algolia/api-clients-automation/pull/4173)) by [@shortcuts](https://github.com/shortcuts/)
+- [9e1e60f9e](https://github.com/algolia/api-clients-automation/commit/9e1e60f9e) chore(deps): dependencies 2024-12-09 ([#4197](https://github.com/algolia/api-clients-automation/pull/4197)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.15.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.14.2...5.15.0)
 
 - [0787a3d2a](https://github.com/algolia/api-clients-automation/commit/0787a3d2a) chore(scripts): change dist folder and bump ([#4113](https://github.com/algolia/api-clients-automation/pull/4113)) by [@millotp](https://github.com/millotp/)

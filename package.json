@@ -58,11 +58,11 @@
       },
       {
         "path": "packages/client-search/dist/builds/browser.umd.js",
-        "maxSize": "7.25KB"
+        "maxSize": "7.30KB"
       },
       {
         "path": "packages/ingestion/dist/builds/browser.umd.js",
-        "maxSize": "5.90KB"
+        "maxSize": "5.95KB"
       },
       {
         "path": "packages/monitoring/dist/builds/browser.umd.js",
