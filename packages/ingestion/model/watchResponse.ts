@@ -2,14 +2,14 @@
 
 import type { Event } from './event';
 
-export type SourceWatchResponse = {
+export type WatchResponse = {
   /**
    * Universally unique identifier (UUID) of a task run.
    */
   runID?: string;
 
   /**
-   * depending on the source type, the validation returns sampling data of your source (JSON, CSV, BigQuery).
+   * when used with discovering or validating sources, the sampled data of your source is returned.
    */
   data?: Array<Record<string, unknown>>;
 

@@ -46,7 +46,6 @@ import type { SourceCreateResponse } from '../model/sourceCreateResponse';
 import type { SourceSearch } from '../model/sourceSearch';
 
 import type { SourceUpdateResponse } from '../model/sourceUpdateResponse';
-import type { SourceWatchResponse } from '../model/sourceWatchResponse';
 import type { Task } from '../model/task';
 import type { TaskCreate } from '../model/taskCreate';
 import type { TaskCreateResponse } from '../model/taskCreateResponse';
@@ -64,6 +63,8 @@ import type { TransformationSearch } from '../model/transformationSearch';
 import type { TransformationTry } from '../model/transformationTry';
 import type { TransformationTryResponse } from '../model/transformationTryResponse';
 import type { TransformationUpdateResponse } from '../model/transformationUpdateResponse';
+
+import type { WatchResponse } from '../model/watchResponse';
 
 import type {
   CustomDeleteProps,
@@ -1694,7 +1695,10 @@ export function createIngestionClient({
      * @param pushTask.watch - When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    pushTask({ taskID, pushTaskPayload, watch }: PushTaskProps, requestOptions?: RequestOptions): Promise<RunResponse> {
+    pushTask(
+      { taskID, pushTaskPayload, watch }: PushTaskProps,
+      requestOptions?: RequestOptions,
+    ): Promise<WatchResponse> {
       if (!taskID) {
         throw new Error('Parameter `taskID` is required when calling `pushTask`.');
       }
@@ -2055,7 +2059,7 @@ export function createIngestionClient({
     triggerDockerSourceDiscover(
       { sourceID }: TriggerDockerSourceDiscoverProps,
       requestOptions?: RequestOptions,
-    ): Promise<SourceWatchResponse> {
+    ): Promise<WatchResponse> {
       if (!sourceID) {
         throw new Error('Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.');
       }
@@ -2410,7 +2414,7 @@ export function createIngestionClient({
     validateSource(
       sourceCreate: SourceCreate,
       requestOptions: RequestOptions | undefined = undefined,
-    ): Promise<SourceWatchResponse> {
+    ): Promise<WatchResponse> {
       const requestPath = '/1/sources/validate';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -2441,7 +2445,7 @@ export function createIngestionClient({
     validateSourceBeforeUpdate(
       { sourceID, sourceUpdate }: ValidateSourceBeforeUpdateProps,
       requestOptions?: RequestOptions,
-    ): Promise<SourceWatchResponse> {
+    ): Promise<WatchResponse> {
       if (!sourceID) {
         throw new Error('Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.');
       }
