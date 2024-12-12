@@ -1,3 +1,8 @@
+## [5.17.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.17.0...5.17.1)
+
+- [cd59f445e](https://github.com/algolia/api-clients-automation/commit/cd59f445e) fix(specs): enable watcher for push ([#4229](https://github.com/algolia/api-clients-automation/pull/4229)) by [@shortcuts](https://github.com/shortcuts/)
+- [baf7d6f4d](https://github.com/algolia/api-clients-automation/commit/baf7d6f4d) fix(specs): add `ignoreConjugations` to `AlternativesAsExact` ([#4230](https://github.com/algolia/api-clients-automation/pull/4230)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.17.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.16.0...5.17.0)
 
 - [866d859f8](https://github.com/algolia/api-clients-automation/commit/866d859f8) fix(specs): different summaries for saveObject/addOrUpdate methods ([#4223](https://github.com/algolia/api-clients-automation/pull/4223)) by [@kai687](https://github.com/kai687/)
