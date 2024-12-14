@@ -10,7 +10,7 @@ test('sets the ua', () => {
     add: expect.any(Function),
     value: expect.stringContaining(
       `Algolia for JavaScript (${apiClientVersion}); Search (${apiClientVersion}); Node.js`
-    ),
+    )
   });
 });
 
