@@ -89,7 +89,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
         delete mergedRestrictions.searchParams;
       }
 
-     mergedRestrictions = Object.keys(mergedRestrictions)
+      mergedRestrictions = Object.keys(mergedRestrictions)
         .sort()
         .reduce(
           (acc, key) => {
