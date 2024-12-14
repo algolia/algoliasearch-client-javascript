@@ -3,6 +3,7 @@ import { expect, test, vi } from "vitest";
 import { LogLevelEnum } from "../../client-common/src/types";
 import { createConsoleLogger } from "../../logger-console/src/logger";
 import { algoliasearch, apiClientVersion } from "../builds/fetch";
+import { algoliasearch as node_algoliasearch } from "../builds/node";
 
 test("sets the ua", () => {
   const client = algoliasearch("APP_ID", "API_KEY");
@@ -20,6 +21,18 @@ test("forwards node search helpers", () => {
     const resp = await client.generateSecuredApiKey({ parentApiKey: "foo", restrictions: { validUntil: 200 } });
     client.getSecuredApiKeyRemainingValidity({ securedApiKey: resp });
   }).not.toThrow();
+});
+
+test("web crypto implementation gives the same result as node crypto", async () => {
+  const client = algoliasearch("APP_ID", "API_KEY");
+  const nodeClient = node_algoliasearch("APP_ID", "API_KEY");
+  const resp = await client.generateSecuredApiKey({ parentApiKey: "foo-bar", restrictions: { validUntil: 200 } });
+  const nodeResp = await nodeClient.generateSecuredApiKey({
+    parentApiKey: "foo-bar",
+    restrictions: { validUntil: 200 },
+  });
+
+  expect(resp).toEqual(nodeResp);
 });
 
 test("with logger", () => {
