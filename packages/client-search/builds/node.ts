@@ -73,14 +73,17 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
 
       mergedRestrictions = Object.keys(mergedRestrictions)
         .sort()
-        .reduce((acc, key) => {
-          acc[key] = (mergedRestrictions as any)[key];
-          return acc;
-        }, {} as Record<string, unknown>);
+        .reduce(
+          (acc, key) => {
+            acc[key] = (mergedRestrictions as any)[key];
+            return acc;
+          },
+          {} as Record<string, unknown>,
+        );
 
       const queryParameters = serializeQueryParameters(mergedRestrictions);
       return Buffer.from(
-        createHmac('sha256', parentApiKey).update(queryParameters).digest('hex') + queryParameters
+        createHmac('sha256', parentApiKey).update(queryParameters).digest('hex') + queryParameters,
       ).toString('base64');
     },
 
