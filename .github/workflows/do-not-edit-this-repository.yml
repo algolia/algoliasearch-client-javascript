@@ -1,7 +1,7 @@
 name: Do not edit files in this repository
 
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - synchronize
