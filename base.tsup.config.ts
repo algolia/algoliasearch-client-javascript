@@ -8,6 +8,7 @@ type PKG = {
 
 const requesters = {
   fetch: '@algolia/requester-fetch',
+  worker: '@algolia/requester-fetch',
   http: '@algolia/requester-node-http',
   xhr: '@algolia/requester-browser-xhr',
 };
@@ -36,6 +37,7 @@ export function getDependencies(pkg: PKG, requester: Requester): string[] {
     case 'xhr':
       return deps.filter((dep) => dep !== requesters.fetch && dep !== requesters.http);
     case 'fetch':
+    case 'worker':
       return deps.filter((dep) => dep !== requesters.xhr && dep !== requesters.http);
     default:
       throw new Error('unknown requester', requester);

@@ -48,6 +48,15 @@ const nodeConfigs: Options[] = [
     outDir: 'dist',
     external: getDependencies(pkg, 'fetch'),
   },
+  {
+    ...nodeOptions,
+    format: 'esm',
+    name: 'worker algoliasearch esm',
+    dts: { entry: { worker: 'builds/worker.ts' } },
+    entry: ['builds/worker.ts'],
+    outDir: 'dist',
+    external: getDependencies(pkg, 'worker'),
+  },
 ];
 
 const browserOptions: Options = {

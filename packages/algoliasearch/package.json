@@ -29,8 +29,8 @@
         "require": "./dist/node.cjs"
       },
       "worker": {
-        "types": "./dist/fetch.d.ts",
-        "default": "./dist/fetch.js"
+        "types": "./dist/worker.d.ts",
+        "default": "./dist/worker.js"
       },
       "default": {
         "types": "./dist/browser.d.ts",

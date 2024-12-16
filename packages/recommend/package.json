@@ -28,8 +28,8 @@
         "require": "./dist/builds/node.cjs"
       },
       "worker": {
-        "types": "./dist/fetch.d.ts",
-        "default": "./dist/builds/fetch.js"
+        "types": "./dist/worker.d.ts",
+        "default": "./dist/builds/worker.js"
       },
       "default": {
         "types": "./dist/browser.d.ts",

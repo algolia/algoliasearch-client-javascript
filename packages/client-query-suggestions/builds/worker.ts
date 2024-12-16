@@ -48,7 +48,7 @@ export function querySuggestionsClient(
       },
       logger: createNullLogger(),
       requester: createFetchRequester(),
-      algoliaAgents: [{ segment: 'Fetch' }],
+      algoliaAgents: [{ segment: 'Worker' }],
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),

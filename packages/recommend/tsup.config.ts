@@ -30,6 +30,14 @@ const nodeConfigs: Options[] = [
     external: getDependencies(pkg, 'fetch'),
     entry: ['builds/fetch.ts', 'src/*.ts'],
   },
+  {
+    ...nodeOptions,
+    format: 'esm',
+    name: `worker ${pkg.name} esm`,
+    dts: { entry: { worker: 'builds/worker.ts' } },
+    external: getDependencies(pkg, 'worker'),
+    entry: ['builds/worker.ts', 'src/*.ts'],
+  },
 ];
 
 const browserOptions: Options = {
