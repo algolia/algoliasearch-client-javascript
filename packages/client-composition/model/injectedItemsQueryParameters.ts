@@ -15,7 +15,7 @@ import type { RemoveWordsIfNoResults } from './removeWordsIfNoResults';
 import type { SupportedLanguage } from './supportedLanguage';
 import type { TypoTolerance } from './typoTolerance';
 
-export type InsetsQueryParameters = {
+export type InjectedItemsQueryParameters = {
   /**
    * Attributes to include in the API response.  To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive.  - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
    */
