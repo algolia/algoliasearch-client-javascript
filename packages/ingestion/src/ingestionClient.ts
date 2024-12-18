@@ -1730,6 +1730,15 @@ export function createIngestionClient({
         data: pushTaskPayload,
       };
 
+      requestOptions = {
+        timeouts: {
+          connect: 180000,
+          read: 180000,
+          write: 180000,
+          ...requestOptions?.timeouts,
+        },
+      };
+
       return transporter.request(request, requestOptions);
     },
 
@@ -2073,6 +2082,15 @@ export function createIngestionClient({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      requestOptions = {
+        timeouts: {
+          connect: 180000,
+          read: 180000,
+          write: 180000,
+          ...requestOptions?.timeouts,
+        },
       };
 
       return transporter.request(request, requestOptions);
@@ -2427,6 +2445,15 @@ export function createIngestionClient({
         data: sourceCreate ? sourceCreate : {},
       };
 
+      requestOptions = {
+        timeouts: {
+          connect: 180000,
+          read: 180000,
+          write: 180000,
+          ...requestOptions?.timeouts,
+        },
+      };
+
       return transporter.request(request, requestOptions);
     },
 
@@ -2464,6 +2491,15 @@ export function createIngestionClient({
         queryParameters,
         headers,
         data: sourceUpdate,
+      };
+
+      requestOptions = {
+        timeouts: {
+          connect: 180000,
+          read: 180000,
+          write: 180000,
+          ...requestOptions?.timeouts,
+        },
       };
 
       return transporter.request(request, requestOptions);
