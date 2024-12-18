@@ -1,3 +1,11 @@
+## [5.18.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.17.1...5.18.0)
+
+- [966fe05ae6](https://github.com/algolia/api-clients-automation/commit/966fe05ae6) chore(deps): dependencies 2024-12-16 ([#4235](https://github.com/algolia/api-clients-automation/pull/4235)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [0481473fe0](https://github.com/algolia/api-clients-automation/commit/0481473fe0) chore: trigger auto close pr ([#4250](https://github.com/algolia/api-clients-automation/pull/4250)) by [@shortcuts](https://github.com/shortcuts/)
+- [d6f48a40ce](https://github.com/algolia/api-clients-automation/commit/d6f48a40ce) feat(javascript): add `worker` build ([#4249](https://github.com/algolia/api-clients-automation/pull/4249)) by [@shortcuts](https://github.com/shortcuts/)
+- [679a8cdb60](https://github.com/algolia/api-clients-automation/commit/679a8cdb60) fix(specs): endpoint level timeout for ingestion ([#4251](https://github.com/algolia/api-clients-automation/pull/4251)) by [@shortcuts](https://github.com/shortcuts/)
+- [448aad70ee](https://github.com/algolia/api-clients-automation/commit/448aad70ee) feat(specs): update composition specs according to upcoming API changes ([#4234](https://github.com/algolia/api-clients-automation/pull/4234)) by [@e-krebs](https://github.com/e-krebs/)
+
 ## [5.17.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.17.0...5.17.1)
 
 - [cd59f445e](https://github.com/algolia/api-clients-automation/commit/cd59f445e) fix(specs): enable watcher for push ([#4229](https://github.com/algolia/api-clients-automation/pull/4229)) by [@shortcuts](https://github.com/shortcuts/)

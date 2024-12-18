@@ -62,7 +62,7 @@
       },
       {
         "path": "packages/ingestion/dist/builds/browser.umd.js",
-        "maxSize": "6.00KB"
+        "maxSize": "6.05KB"
       },
       {
         "path": "packages/monitoring/dist/builds/browser.umd.js",
