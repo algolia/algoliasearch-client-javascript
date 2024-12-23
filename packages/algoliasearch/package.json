@@ -90,11 +90,11 @@
   },
   "devDependencies": {
     "@algolia/requester-testing": "5.18.0",
-    "@arethetypeswrong/cli": "0.17.1",
+    "@arethetypeswrong/cli": "0.17.2",
     "@types/node": "22.10.2",
     "jsdom": "25.0.1",
     "publint": "0.2.12",
-    "rollup": "4.28.1",
+    "rollup": "4.29.1",
     "tsup": "8.3.5",
     "typescript": "5.7.2",
     "vitest": "2.1.8",
