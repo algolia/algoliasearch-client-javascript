@@ -3,7 +3,7 @@
 import type { DockerStreams } from './dockerStreams';
 
 /**
- * The selected streams of a singer or airbyte connector.
+ * The selected streams of an airbyte connector.
  */
 export type DockerStreamsInput = {
   streams: Array<DockerStreams>;
