@@ -114,6 +114,11 @@ export function createCompositionClient({
     appId: appIdOption,
 
     /**
+     * The `apiKey` currently in use.
+     */
+    apiKey: apiKeyOption,
+
+    /**
      * Clears the cache of the transporter for the `requestsCache` and `responsesCache` properties.
      */
     clearCache(): Promise<void> {

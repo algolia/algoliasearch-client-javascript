@@ -20,6 +20,10 @@ describe('api', () => {
     expect(client.appId).toEqual('APP_ID');
   });
 
+  test('exposes the `apiKey` currently in use at the root of the API', () => {
+    expect(client.apiKey).toEqual('API_KEY');
+  });
+
   test('provides a `clearCache` method', () => {
     expect(client.clearCache).not.toBeUndefined();
     expect(() => client.clearCache()).not.toThrow();
