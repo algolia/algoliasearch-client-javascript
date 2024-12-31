@@ -642,57 +642,63 @@ export function createSearchClient({
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
       const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
 
-      let copyOperationResponse = await this.operationIndex(
-        {
-          indexName,
-          operationIndexParams: {
-            operation: 'copy',
-            destination: tmpIndexName,
-            scope: ['settings', 'rules', 'synonyms'],
+      try {
+        let copyOperationResponse = await this.operationIndex(
+          {
+            indexName,
+            operationIndexParams: {
+              operation: 'copy',
+              destination: tmpIndexName,
+              scope: ['settings', 'rules', 'synonyms'],
+            },
           },
-        },
-        requestOptions,
-      );
+          requestOptions,
+        );
 
-      const batchResponses = await this.chunkedBatch(
-        { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
-        requestOptions,
-      );
+        const batchResponses = await this.chunkedBatch(
+          { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
+          requestOptions,
+        );
 
-      await this.waitForTask({
-        indexName: tmpIndexName,
-        taskID: copyOperationResponse.taskID,
-      });
-
-      copyOperationResponse = await this.operationIndex(
-        {
-          indexName,
-          operationIndexParams: {
-            operation: 'copy',
-            destination: tmpIndexName,
-            scope: ['settings', 'rules', 'synonyms'],
-          },
-        },
-        requestOptions,
-      );
-      await this.waitForTask({
-        indexName: tmpIndexName,
-        taskID: copyOperationResponse.taskID,
-      });
-
-      const moveOperationResponse = await this.operationIndex(
-        {
+        await this.waitForTask({
           indexName: tmpIndexName,
-          operationIndexParams: { operation: 'move', destination: indexName },
-        },
-        requestOptions,
-      );
-      await this.waitForTask({
-        indexName: tmpIndexName,
-        taskID: moveOperationResponse.taskID,
-      });
+          taskID: copyOperationResponse.taskID,
+        });
 
-      return { copyOperationResponse, batchResponses, moveOperationResponse };
+        copyOperationResponse = await this.operationIndex(
+          {
+            indexName,
+            operationIndexParams: {
+              operation: 'copy',
+              destination: tmpIndexName,
+              scope: ['settings', 'rules', 'synonyms'],
+            },
+          },
+          requestOptions,
+        );
+        await this.waitForTask({
+          indexName: tmpIndexName,
+          taskID: copyOperationResponse.taskID,
+        });
+
+        const moveOperationResponse = await this.operationIndex(
+          {
+            indexName: tmpIndexName,
+            operationIndexParams: { operation: 'move', destination: indexName },
+          },
+          requestOptions,
+        );
+        await this.waitForTask({
+          indexName: tmpIndexName,
+          taskID: moveOperationResponse.taskID,
+        });
+
+        return { copyOperationResponse, batchResponses, moveOperationResponse };
+      } catch (error) {
+        await this.deleteIndex({ indexName: tmpIndexName });
+
+        throw error;
+      }
     },
 
     async indexExists({ indexName }: GetSettingsProps): Promise<boolean> {
