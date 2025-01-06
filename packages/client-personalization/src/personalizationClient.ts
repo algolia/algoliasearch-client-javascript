@@ -338,14 +338,14 @@ export function createPersonalizationClient({
         );
       }
 
-      if (!personalizationStrategyParams.eventScoring) {
+      if (!personalizationStrategyParams.eventsScoring) {
         throw new Error(
-          'Parameter `personalizationStrategyParams.eventScoring` is required when calling `setPersonalizationStrategy`.',
+          'Parameter `personalizationStrategyParams.eventsScoring` is required when calling `setPersonalizationStrategy`.',
         );
       }
-      if (!personalizationStrategyParams.facetScoring) {
+      if (!personalizationStrategyParams.facetsScoring) {
         throw new Error(
-          'Parameter `personalizationStrategyParams.facetScoring` is required when calling `setPersonalizationStrategy`.',
+          'Parameter `personalizationStrategyParams.facetsScoring` is required when calling `setPersonalizationStrategy`.',
         );
       }
       if (!personalizationStrategyParams.personalizationImpact) {
