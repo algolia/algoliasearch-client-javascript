@@ -503,6 +503,10 @@ export type ListTasksProps = {
    */
   triggerType?: Array<TriggerType>;
   /**
+   * If specified, the response only includes tasks with notifications.email.enabled set to this value.
+   */
+  withEmailNotifications?: boolean;
+  /**
    * Property by which to sort the list of tasks.
    */
   sort?: TaskSortKeys;

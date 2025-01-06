@@ -1493,6 +1493,7 @@ export function createIngestionClient({
      * @param listTasks.sourceType - Filters the tasks with the specified source type.
      * @param listTasks.destinationID - Destination IDs for filtering the list of tasks.
      * @param listTasks.triggerType - Type of task trigger for filtering the list of tasks.
+     * @param listTasks.withEmailNotifications - If specified, the response only includes tasks with notifications.email.enabled set to this value.
      * @param listTasks.sort - Property by which to sort the list of tasks.
      * @param listTasks.order - Sort order of the response, ascending or descending.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1507,6 +1508,7 @@ export function createIngestionClient({
         sourceType,
         destinationID,
         triggerType,
+        withEmailNotifications,
         sort,
         order,
       }: ListTasksProps = {},
@@ -1546,6 +1548,10 @@ export function createIngestionClient({
 
       if (triggerType !== undefined) {
         queryParameters['triggerType'] = triggerType.toString();
+      }
+
+      if (withEmailNotifications !== undefined) {
+        queryParameters['withEmailNotifications'] = withEmailNotifications.toString();
       }
 
       if (sort !== undefined) {
