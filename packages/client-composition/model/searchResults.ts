@@ -6,5 +6,5 @@ export type SearchResults<T = Record<string, unknown>> = {
   /**
    * Search results.
    */
-  results?: SearchResultsItem<T>[];
+  results: SearchResultsItem<T>[];
 };
