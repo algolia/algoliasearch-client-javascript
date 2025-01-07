@@ -1,3 +1,16 @@
+## [5.19.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.18.0...5.19.0)
+
+- [f9d890bbc4](https://github.com/algolia/api-clients-automation/commit/f9d890bbc4) chore(deps): dependencies 2024-12-23 ([#4258](https://github.com/algolia/api-clients-automation/pull/4258)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [b569646304](https://github.com/algolia/api-clients-automation/commit/b569646304) fix(specs): drop singer from ingestion specs ([#4281](https://github.com/algolia/api-clients-automation/pull/4281)) by [@shortcuts](https://github.com/shortcuts/)
+- [e972f9b28c](https://github.com/algolia/api-clients-automation/commit/e972f9b28c) feat(javascript): expose current apiKey on the client instance ([#4285](https://github.com/algolia/api-clients-automation/pull/4285)) by [@Haroenv](https://github.com/Haroenv/)
+- [b2b5acddab](https://github.com/algolia/api-clients-automation/commit/b2b5acddab) chore(deps): dependencies 2024-12-30 ([#4286](https://github.com/algolia/api-clients-automation/pull/4286)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [37223c9779](https://github.com/algolia/api-clients-automation/commit/37223c9779) feat(clients): cleanup after replaceAllObjects failure ([#3824](https://github.com/algolia/api-clients-automation/pull/3824)) by [@millotp](https://github.com/millotp/)
+- [47b567fd0d](https://github.com/algolia/api-clients-automation/commit/47b567fd0d) chore(deps): dependencies 2025-01-06 ([#4299](https://github.com/algolia/api-clients-automation/pull/4299)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [784e40ac53](https://github.com/algolia/api-clients-automation/commit/784e40ac53) feat(specs): improve Composition Client searchResponse specs (matches SearchClient more closely for IS) ([#4300](https://github.com/algolia/api-clients-automation/pull/4300)) by [@e-krebs](https://github.com/e-krebs/)
+- [5328ce8333](https://github.com/algolia/api-clients-automation/commit/5328ce8333) feat(specs): add notification settings to tasks ([#4297](https://github.com/algolia/api-clients-automation/pull/4297)) by [@millotp](https://github.com/millotp/)
+- [e7b3898f06](https://github.com/algolia/api-clients-automation/commit/e7b3898f06) feat(clients): add optionnal scopes to replaceAllObjects ([#4296](https://github.com/algolia/api-clients-automation/pull/4296)) by [@millotp](https://github.com/millotp/)
+- [47193ad3d1](https://github.com/algolia/api-clients-automation/commit/47193ad3d1) chore: revert release ([#4314](https://github.com/algolia/api-clients-automation/pull/4314)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.18.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.17.1...5.18.0)
 
 - [966fe05ae6](https://github.com/algolia/api-clients-automation/commit/966fe05ae6) chore(deps): dependencies 2024-12-16 ([#4235](https://github.com/algolia/api-clients-automation/pull/4235)) by [@algolia-bot](https://github.com/algolia-bot/)
