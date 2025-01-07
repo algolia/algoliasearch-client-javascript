@@ -633,14 +633,19 @@ export function createSearchClient({
      * @param replaceAllObjects.indexName - The `indexName` to replace `objects` in.
      * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
      * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
+     * @param replaceAllObjects.scopes - The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch`, `operationIndex` and `getTask` method and merged with the transporter requestOptions.
      */
     async replaceAllObjects(
-      { indexName, objects, batchSize }: ReplaceAllObjectsOptions,
+      { indexName, objects, batchSize, scopes }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions,
     ): Promise<ReplaceAllObjectsResponse> {
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
       const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
+
+      if (scopes === undefined) {
+        scopes = ['settings', 'rules', 'synonyms'];
+      }
 
       try {
         let copyOperationResponse = await this.operationIndex(
@@ -649,7 +654,7 @@ export function createSearchClient({
             operationIndexParams: {
               operation: 'copy',
               destination: tmpIndexName,
-              scope: ['settings', 'rules', 'synonyms'],
+              scope: scopes,
             },
           },
           requestOptions,
@@ -671,7 +676,7 @@ export function createSearchClient({
             operationIndexParams: {
               operation: 'copy',
               destination: tmpIndexName,
-              scope: ['settings', 'rules', 'synonyms'],
+              scope: scopes,
             },
           },
           requestOptions,

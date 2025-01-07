@@ -23,6 +23,7 @@ import type { OperationIndexParams } from '../model/operationIndexParams';
 
 import type { Rule } from '../model/rule';
 
+import type { ScopeType } from '../model/scopeType';
 import type { SearchDictionaryEntriesParams } from '../model/searchDictionaryEntriesParams';
 
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
@@ -870,4 +871,9 @@ export type ReplaceAllObjectsOptions = {
    * The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    */
   batchSize?: number;
+
+  /**
+   * The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
+   */
+  scopes?: Array<ScopeType>;
 };
