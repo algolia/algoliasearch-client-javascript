@@ -40,8 +40,6 @@ export * from './destinationSortKeys';
 export * from './destinationType';
 export * from './destinationUpdate';
 export * from './destinationUpdateResponse';
-export * from './dockerImageType';
-export * from './dockerRegistry';
 export * from './dockerStreams';
 export * from './dockerStreamsInput';
 export * from './dockerStreamsSyncMode';
