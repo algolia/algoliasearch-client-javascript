@@ -2,7 +2,7 @@
 
 export type DailyNoClickRates = {
   /**
-   * No click rate, calculated as number of tracked searches without any click divided by the number of tracked searches.
+   * No click rate: calculated as the number of tracked searches without clicks divided by the number of tracked searches.
    */
   rate: number;
 

@@ -4,7 +4,7 @@ import type { CurrencyCode } from './currencyCode';
 
 export type TopHitWithRevenueAnalytics = {
   /**
-   * Object ID of a record that\'s returned as a search result.
+   * Object ID of a record returned as a search result.
    */
   hit: string;
 
@@ -14,12 +14,12 @@ export type TopHitWithRevenueAnalytics = {
   count: number;
 
   /**
-   * Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
+   * Click-through rate: calculated as the number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
    */
   clickThroughRate: number | null;
 
   /**
-   * Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
+   * Conversion rate: calculated as the number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
    */
   conversionRate: number | null;
 
@@ -39,7 +39,7 @@ export type TopHitWithRevenueAnalytics = {
   conversionCount: number;
 
   /**
-   * Add-to-cart rate, calculated as number of tracked searches with at least one add-to-cart event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
+   * Add-to-cart rate: calculated as the number of tracked searches with at least one add-to-cart event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
    */
   addToCartRate: number | null;
 
@@ -49,7 +49,7 @@ export type TopHitWithRevenueAnalytics = {
   addToCartCount: number;
 
   /**
-   * Purchase rate, calculated as number of tracked searches with at least one purchase event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
+   * Purchase rate: calculated as the number of tracked searches with at least one purchase event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
    */
   purchaseRate: number | null;
 
@@ -59,7 +59,7 @@ export type TopHitWithRevenueAnalytics = {
   purchaseCount: number;
 
   /**
-   * Revenue associated with this search, broken-down by currencies.
+   * Revenue associated with this search: broken down by currency.
    */
   currencies: { [key: string]: CurrencyCode };
 };

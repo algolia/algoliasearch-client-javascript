@@ -5,7 +5,7 @@ import type { DailyRevenue } from './dailyRevenue';
 
 export type GetRevenue = {
   /**
-   * Revenue associated with this search, broken-down by currencies.
+   * Revenue associated with this search: broken down by currency.
    */
   currencies: { [key: string]: CurrencyCode };
 

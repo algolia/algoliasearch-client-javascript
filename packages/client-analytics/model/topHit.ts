@@ -2,7 +2,7 @@
 
 export type TopHit = {
   /**
-   * Object ID of a record that\'s returned as a search result.
+   * Object ID of a record returned as a search result.
    */
   hit: string;
 

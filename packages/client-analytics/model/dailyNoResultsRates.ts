@@ -17,7 +17,7 @@ export type DailyNoResultsRates = {
   count: number;
 
   /**
-   * No results rate, calculated as number of searches with zero results divided by the total number of searches.
+   * No results rate: calculated as the number of searches with zero results divided by the total number of searches.
    */
   rate: number;
 };

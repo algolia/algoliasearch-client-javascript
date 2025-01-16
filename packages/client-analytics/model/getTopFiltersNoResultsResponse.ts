@@ -4,7 +4,7 @@ import type { GetTopFiltersNoResultsValues } from './getTopFiltersNoResultsValue
 
 export type GetTopFiltersNoResultsResponse = {
   /**
-   * Filters for searches without any results. If null, the search term specified with the `search` parameter is not a search without results, or the `search` parameter is absent from the request.
+   * Filters for searches without any results. If null, the search term specified with the `search` parameter isn\'t a search without results, or the `search` parameter is absent from the request.
    */
   values: Array<GetTopFiltersNoResultsValues> | null;
 };

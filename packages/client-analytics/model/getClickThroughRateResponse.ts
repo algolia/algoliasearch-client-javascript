@@ -4,7 +4,7 @@ import type { DailyClickThroughRates } from './dailyClickThroughRates';
 
 export type GetClickThroughRateResponse = {
   /**
-   * Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
+   * Click-through rate: calculated as the number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
    */
   rate: number | null;
 

@@ -511,7 +511,7 @@ export type GetTopHitsProps = {
    */
   clickAnalytics?: boolean;
   /**
-   * Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+   * Whether to include metrics related to revenue events in the response.
    */
   revenueAnalytics?: boolean;
   /**
@@ -549,7 +549,7 @@ export type GetTopSearchesProps = {
    */
   clickAnalytics?: boolean;
   /**
-   * Whether to include revenue-related metrics in the response.  If true, metrics related to click and conversion events are also included in the response.
+   * Whether to include metrics related to revenue events in the response.
    */
   revenueAnalytics?: boolean;
   /**

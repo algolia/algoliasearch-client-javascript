@@ -4,7 +4,7 @@ import type { DailyAddToCartRates } from './dailyAddToCartRates';
 
 export type GetAddToCartRateResponse = {
   /**
-   * Add-to-cart rate, calculated as number of tracked searches with at least one add-to-cart event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
+   * Add-to-cart rate: calculated as the number of tracked searches with at least one add-to-cart event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
    */
   rate: number | null;
 

@@ -2,7 +2,7 @@
 
 export type TopHitWithAnalytics = {
   /**
-   * Object ID of a record that\'s returned as a search result.
+   * Object ID of a record returned as a search result.
    */
   hit: string;
 
@@ -12,12 +12,12 @@ export type TopHitWithAnalytics = {
   count: number;
 
   /**
-   * Click-through rate, calculated as number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
+   * Click-through rate: calculated as the number of tracked searches with at least one click event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
    */
   clickThroughRate: number | null;
 
   /**
-   * Conversion rate, calculated as number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
+   * Conversion rate: calculated as the number of tracked searches with at least one conversion event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
    */
   conversionRate: number | null;
 

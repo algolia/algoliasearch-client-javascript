@@ -4,7 +4,7 @@ import type { DailyPurchaseRates } from './dailyPurchaseRates';
 
 export type GetPurchaseRateResponse = {
   /**
-   * Purchase rate, calculated as number of tracked searches with at least one purchase event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
+   * Purchase rate: calculated as the number of tracked searches with at least one purchase event divided by the number of tracked searches. If null, Algolia didn\'t receive any search requests with `clickAnalytics` set to true.
    */
   rate: number | null;
 
