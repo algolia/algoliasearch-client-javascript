@@ -3,4 +3,4 @@
 /**
  * Task run outcome.
  */
-export type RunOutcome = 'success' | 'failure' | 'processing';
+export type RunOutcome = 'success' | 'failure';
