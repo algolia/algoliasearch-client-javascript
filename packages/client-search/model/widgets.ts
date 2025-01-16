@@ -3,11 +3,11 @@
 import type { Banner } from './banner';
 
 /**
- * widgets returned from any rules that are applied to the current search.
+ * Widgets returned from any rules that are applied to the current search.
  */
 export type Widgets = {
   /**
-   * banners defined in the merchandising studio for the given search.
+   * Banners defined in the Merchandising Studio for a given search.
    */
   banners?: Array<Banner>;
 };
