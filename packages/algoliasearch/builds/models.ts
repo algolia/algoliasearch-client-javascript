@@ -2,7 +2,6 @@
 
 import type { Region as AbtestingRegion, RegionOptions as AbtestingRegionOptions } from '@algolia/client-abtesting';
 import type { Region as AnalyticsRegion, RegionOptions as AnalyticsRegionOptions } from '@algolia/client-analytics';
-
 import type { Region as InsightsRegion, RegionOptions as InsightsRegionOptions } from '@algolia/client-insights';
 import type { Region as IngestionRegion, RegionOptions as IngestionRegionOptions } from '@algolia/ingestion';
 
@@ -121,7 +120,6 @@ export * from '@algolia/client-insights';
 export * from '@algolia/client-personalization';
 export * from '@algolia/client-query-suggestions';
 export * from '@algolia/client-search';
-export * from '@algolia/composition';
 export * from '@algolia/ingestion';
 export * from '@algolia/monitoring';
 export * from '@algolia/recommend';

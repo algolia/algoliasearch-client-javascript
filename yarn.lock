@@ -139,7 +139,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/composition@npm:0.0.1, @algolia/composition@workspace:packages/composition":
+"@algolia/composition@workspace:packages/composition":
   version: 0.0.0-use.local
   resolution: "@algolia/composition@workspace:packages/composition"
   dependencies:
@@ -2317,7 +2317,6 @@ __metadata:
     "@algolia/client-personalization": "npm:5.19.0"
     "@algolia/client-query-suggestions": "npm:5.19.0"
     "@algolia/client-search": "npm:5.19.0"
-    "@algolia/composition": "npm:0.0.1"
     "@algolia/ingestion": "npm:1.19.0"
     "@algolia/monitoring": "npm:1.19.0"
     "@algolia/recommend": "npm:5.19.0"
