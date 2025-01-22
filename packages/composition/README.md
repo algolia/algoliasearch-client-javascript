@@ -6,9 +6,9 @@
   <h4 align="center">The perfect starting point to integrate <a href="https://algolia.com" target="_blank">Algolia</a> within your JavaScript project</h4>
 
   <p align="center">
-    <a href="https://npmjs.org/package/@algolia/client-composition"><img src="https://img.shields.io/npm/v/@algolia/client-composition.svg?style=flat-square" alt="NPM version"></img></a>
-    <a href="http://npm-stat.com/charts.html?package=@algolia/client-composition"><img src="https://img.shields.io/npm/dm/@algolia/client-composition.svg?style=flat-square" alt="NPM downloads"></a>
-    <a href="https://www.jsdelivr.com/package/npm/@algolia/client-composition"><img src="https://data.jsdelivr.com/v1/package/npm/@algolia/client-composition/badge" alt="jsDelivr Downloads"></img></a>
+    <a href="https://npmjs.org/package/@algolia/composition"><img src="https://img.shields.io/npm/v/@algolia/composition.svg?style=flat-square" alt="NPM version"></img></a>
+    <a href="http://npm-stat.com/charts.html?package=@algolia/composition"><img src="https://img.shields.io/npm/dm/@algolia/composition.svg?style=flat-square" alt="NPM downloads"></a>
+    <a href="https://www.jsdelivr.com/package/npm/@algolia/composition"><img src="https://data.jsdelivr.com/v1/package/npm/@algolia/composition/badge" alt="jsDelivr Downloads"></img></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>
   </p>
 </p>
@@ -33,19 +33,19 @@
 ## 💡 Getting Started
 
 > [!TIP]
-> This API client is already a dependency of [the algoliasearch client](https://www.npmjs.com/package/algoliasearch), you don't need to manually install `@algolia/client-composition` if you already have `algoliasearch` installed.
+> This API client is already a dependency of [the algoliasearch client](https://www.npmjs.com/package/algoliasearch), you don't need to manually install `@algolia/composition` if you already have `algoliasearch` installed.
 
-To get started, you first need to install @algolia/client-composition (or any other available API client package).
+To get started, you first need to install @algolia/composition (or any other available API client package).
 All of our clients comes with type definition, and are available for both browser and node environments.
 
 ### With a package manager
 
 ```bash
-yarn add @algolia/client-composition@0.0.1-alpha.9
+yarn add @algolia/composition@0.0.1
 # or
-npm install @algolia/client-composition@0.0.1-alpha.9
+npm install @algolia/composition@0.0.1
 # or
-pnpm add @algolia/client-composition@0.0.1-alpha.9
+pnpm add @algolia/composition@0.0.1
 ```
 
 ### Without a package manager
@@ -53,7 +53,7 @@ pnpm add @algolia/client-composition@0.0.1-alpha.9
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/client-composition@0.0.1-alpha.9/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/composition@0.0.1/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage
@@ -61,12 +61,12 @@ Add the following JavaScript snippet to the <head> of your website:
 You can now import the Algolia API client in your project and play with it.
 
 ```js
-import { compositionClient } from '@algolia/client-composition';
+import { compositionClient } from '@algolia/composition';
 
 const client = compositionClient('YOUR_APP_ID', 'YOUR_API_KEY');
 ```
 
-For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/v5/methods/composition-full/)**.
+For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/v5/methods/composition/)**.
 
 ## ❓ Troubleshooting
 

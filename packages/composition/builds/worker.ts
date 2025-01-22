@@ -2,15 +2,14 @@
 
 export type CompositionClient = ReturnType<typeof createCompositionClient>;
 
-import { createHttpRequester } from '@algolia/requester-node-http';
-
 import { createMemoryCache, createNullCache, createNullLogger } from '@algolia/client-common';
+import { createFetchRequester } from '@algolia/requester-fetch';
 
 import type { ClientOptions } from '@algolia/client-common';
 
-import { createCompositionClient } from '../src/compositionFullClient';
+import { createCompositionClient } from '../src/compositionClient';
 
-export { apiClientVersion } from '../src/compositionFullClient';
+export { apiClientVersion } from '../src/compositionClient';
 
 export * from '../model';
 
@@ -33,8 +32,8 @@ export function compositionClient(appId: string, apiKey: string, options?: Clien
         write: 30000,
       },
       logger: createNullLogger(),
-      requester: createHttpRequester(),
-      algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
+      requester: createFetchRequester(),
+      algoliaAgents: [{ segment: 'Worker' }],
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),

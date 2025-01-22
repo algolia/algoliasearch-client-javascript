@@ -91,7 +91,7 @@ export function createCompositionClient({
     ...options,
     algoliaAgent: getAlgoliaAgent({
       algoliaAgents,
-      client: 'Composition',
+      client: 'CompositionFull',
       version: apiClientVersion,
     }),
     baseHeaders: {

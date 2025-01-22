@@ -139,6 +139,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@algolia/composition@npm:0.0.1, @algolia/composition@workspace:packages/composition":
+  version: 0.0.0-use.local
+  resolution: "@algolia/composition@workspace:packages/composition"
+  dependencies:
+    "@algolia/client-common": "npm:5.19.0"
+    "@algolia/requester-browser-xhr": "npm:5.19.0"
+    "@algolia/requester-fetch": "npm:5.19.0"
+    "@algolia/requester-node-http": "npm:5.19.0"
+    "@arethetypeswrong/cli": "npm:0.17.3"
+    "@types/node": "npm:22.10.7"
+    publint: "npm:0.3.2"
+    rollup: "npm:4.30.1"
+    tsup: "npm:8.3.5"
+    typescript: "npm:5.7.3"
+  languageName: unknown
+  linkType: soft
+
 "@algolia/ingestion@npm:1.19.0, @algolia/ingestion@workspace:packages/ingestion":
   version: 0.0.0-use.local
   resolution: "@algolia/ingestion@workspace:packages/ingestion"
@@ -2300,6 +2317,7 @@ __metadata:
     "@algolia/client-personalization": "npm:5.19.0"
     "@algolia/client-query-suggestions": "npm:5.19.0"
     "@algolia/client-search": "npm:5.19.0"
+    "@algolia/composition": "npm:0.0.1"
     "@algolia/ingestion": "npm:1.19.0"
     "@algolia/monitoring": "npm:1.19.0"
     "@algolia/recommend": "npm:5.19.0"

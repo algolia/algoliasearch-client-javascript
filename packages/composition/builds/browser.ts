@@ -11,9 +11,9 @@ import {
 
 import type { ClientOptions } from '@algolia/client-common';
 
-import { apiClientVersion, createCompositionClient } from '../src/compositionFullClient';
+import { apiClientVersion, createCompositionClient } from '../src/compositionClient';
 
-export { apiClientVersion } from '../src/compositionFullClient';
+export { apiClientVersion } from '../src/compositionClient';
 
 export * from '../model';
 

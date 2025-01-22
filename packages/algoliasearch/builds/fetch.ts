@@ -14,6 +14,8 @@ import type { QuerySuggestionsClient } from '@algolia/client-query-suggestions';
 import { querySuggestionsClient } from '@algolia/client-query-suggestions';
 import type { SearchClient } from '@algolia/client-search';
 import { searchClient } from '@algolia/client-search';
+import type { CompositionClient } from '@algolia/composition';
+import { compositionClient } from '@algolia/composition';
 import type { IngestionClient } from '@algolia/ingestion';
 import { ingestionClient } from '@algolia/ingestion';
 import type { MonitoringClient } from '@algolia/monitoring';
@@ -36,6 +38,7 @@ export * from './models';
 export type Algoliasearch = SearchClient & {
   initAbtesting: (initOptions: InitClientOptions & AbtestingRegionOptions) => AbtestingClient;
   initAnalytics: (initOptions: InitClientOptions & AnalyticsRegionOptions) => AnalyticsClient;
+  initComposition: (initOptions?: InitClientOptions) => CompositionClient;
   initIngestion: (initOptions: InitClientOptions & IngestionRegionOptions) => IngestionClient;
   initInsights: (initOptions: InitClientOptions & InsightsRegionOptions) => InsightsClient;
   initMonitoring: (initOptions?: InitClientOptions) => MonitoringClient;
@@ -81,6 +84,10 @@ export function algoliasearch(appId: string, apiKey: string, options?: ClientOpt
         initOptions.region,
         initOptions.options,
       );
+    },
+
+    initComposition: (initOptions: InitClientOptions = {}): CompositionClient => {
+      return compositionClient(initOptions.appId || appId, initOptions.apiKey || apiKey, initOptions.options);
     },
 
     initIngestion: (initOptions: InitClientOptions & IngestionRegionOptions): IngestionClient => {

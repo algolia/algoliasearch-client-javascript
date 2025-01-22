@@ -7,9 +7,9 @@ import { createFetchRequester } from '@algolia/requester-fetch';
 
 import type { ClientOptions } from '@algolia/client-common';
 
-import { createCompositionClient } from '../src/compositionClient';
+import { createCompositionClient } from '../src/compositionFullClient';
 
-export { apiClientVersion } from '../src/compositionClient';
+export { apiClientVersion } from '../src/compositionFullClient';
 
 export * from '../model';
 
