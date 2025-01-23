@@ -28,5 +28,5 @@ export type Consequence = {
   /**
    * A JSON object with custom data that will be appended to the `userData` array in the response. This object isn\'t interpreted by the API and is limited to 1&nbsp;kB of minified JSON.
    */
-  userData?: any | null;
+  userData?: Record<string, unknown>;
 };

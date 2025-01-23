@@ -7,7 +7,7 @@ export type TrendingFacets = {
   /**
    * Facet attribute for which to retrieve trending facet values.
    */
-  facetName: any | null;
+  facetName: string;
 
   model: TrendingFacetsModel;
 
