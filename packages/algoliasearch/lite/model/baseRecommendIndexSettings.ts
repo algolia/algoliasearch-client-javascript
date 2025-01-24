@@ -147,7 +147,7 @@ export type BaseRecommendIndexSettings = {
   minProximity?: number;
 
   /**
-   * Properties to include in the API response of `search` and `browse` requests.  By default, all response properties are included. To reduce the response size, you can select, which attributes should be included.  You can\'t exclude these properties: `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`, `abTestVariantID`, `parsedQuery`, or any property triggered by the `getRankingInfo` parameter.  Don\'t exclude properties that you might need in your search UI.
+   * Properties to include in the API response of search and browse requests.  By default, all response properties are included. To reduce the response size, you can select which properties should be included.  An empty list may lead to an empty API response (except properties you can\'t exclude).  You can\'t exclude these properties: `message`, `warning`, `cursor`, `abTestVariantID`, or any property added by setting `getRankingInfo` to true.  Your search depends on the `hits` field. If you omit this field, searches won\'t return any results. Your UI might also depend on other properties, for example, for pagination. Before restricting the response size, check the impact on your search experience.
    */
   responseFields?: Array<string>;
 
