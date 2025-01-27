@@ -36,13 +36,13 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.17.3",
-    "@types/node": "22.10.7",
+    "@types/node": "22.10.10",
     "jsdom": "26.0.0",
     "publint": "0.3.2",
     "ts-node": "10.9.2",
-    "tsup": "8.3.5",
+    "tsup": "8.3.6",
     "typescript": "5.7.3",
-    "vitest": "3.0.2"
+    "vitest": "3.0.4"
   },
   "dependencies": {
     "@algolia/client-common": "5.20.0"
