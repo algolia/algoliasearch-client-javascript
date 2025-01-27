@@ -4,7 +4,7 @@ import type { ABTest } from './aBTest';
 
 export type ListABTestsResponse = {
   /**
-   * A/B tests.
+   * The list of A/B tests, null if no A/B tests are configured for this application.
    */
   abtests: Array<ABTest> | null;
 
