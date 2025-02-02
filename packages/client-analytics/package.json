@@ -4,7 +4,7 @@
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
-  "homepage": "https://github.com/algolia/algoliasearch-client-javascript/packages/client-analytics#readme",
+  "homepage": "https://github.com/algolia/algoliasearch-client-javascript/tree/main/packages/client-analytics#readme",
   "type": "module",
   "license": "MIT",
   "author": "Algolia",
