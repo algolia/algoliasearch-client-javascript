@@ -1,3 +1,7 @@
+## [5.20.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.20.1...5.20.2)
+
+- [c0e70d9864](https://github.com/algolia/api-clients-automation/commit/c0e70d9864) chore(deps): dependencies 2025-02-10 ([#4432](https://github.com/algolia/api-clients-automation/pull/4432)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.20.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.20.0...5.20.1)
 
 - [506b8a5636](https://github.com/algolia/api-clients-automation/commit/506b8a5636) fix(specs): responseFields description ([#4399](https://github.com/algolia/api-clients-automation/pull/4399)) by [@kai687](https://github.com/kai687/)

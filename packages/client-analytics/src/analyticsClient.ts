@@ -58,7 +58,7 @@ import type {
   GetUsersCountProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.20.1';
+export const apiClientVersion = '5.20.2';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
