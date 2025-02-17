@@ -1,3 +1,7 @@
+## [5.20.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.20.2...5.20.3)
+
+- [ecd6bc4fed](https://github.com/algolia/api-clients-automation/commit/ecd6bc4fed) chore(deps): dependencies 2025-02-17 ([#4459](https://github.com/algolia/api-clients-automation/pull/4459)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.20.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.20.1...5.20.2)
 
 - [c0e70d9864](https://github.com/algolia/api-clients-automation/commit/c0e70d9864) chore(deps): dependencies 2025-02-10 ([#4432](https://github.com/algolia/api-clients-automation/pull/4432)) by [@algolia-bot](https://github.com/algolia-bot/)
