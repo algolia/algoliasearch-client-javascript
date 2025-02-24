@@ -36,11 +36,16 @@ jobs:
                     id: '10001'
                   },
                   parent: {
-                    key: 'DI-2737'
+                    key: 'DI-3523'
                   },
                   project: {
                     id: '10118'
                   },
+                  components: [
+                    {
+                      id: '10872'
+                    }
+                  ],
                   summary: `[GH-ISSUE] ${title}`
                 },
                 update: {}
