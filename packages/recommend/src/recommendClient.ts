@@ -34,7 +34,7 @@ import type {
   SearchRecommendRulesProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.20.3';
+export const apiClientVersion = '5.20.4';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
