@@ -41,11 +41,11 @@ All of our clients comes with type definition, and are available for both browse
 ### With a package manager
 
 ```bash
-yarn add @algolia/composition@0.0.1-beta.6
+yarn add @algolia/composition@0.0.1-beta.7
 # or
-npm install @algolia/composition@0.0.1-beta.6
+npm install @algolia/composition@0.0.1-beta.7
 # or
-pnpm add @algolia/composition@0.0.1-beta.6
+pnpm add @algolia/composition@0.0.1-beta.7
 ```
 
 ### Without a package manager
@@ -53,7 +53,7 @@ pnpm add @algolia/composition@0.0.1-beta.6
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/composition@0.0.1-beta.6/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/composition@0.0.1-beta.7/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage
