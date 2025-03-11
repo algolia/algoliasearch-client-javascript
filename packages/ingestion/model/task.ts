@@ -50,6 +50,8 @@ export type Task = {
 
   action?: ActionType;
 
+  subscriptionAction?: ActionType;
+
   /**
    * Date of the last cursor in RFC 3339 format.
    */

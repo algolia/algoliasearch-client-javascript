@@ -21,6 +21,8 @@ export type TaskCreate = {
 
   action: ActionType;
 
+  subscriptionAction?: ActionType;
+
   /**
    * Cron expression for the task\'s schedule.
    */
