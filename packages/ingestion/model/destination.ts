@@ -19,6 +19,11 @@ export type Destination = {
    */
   name: string;
 
+  /**
+   * Owner of the resource.
+   */
+  owner?: string | null;
+
   input: DestinationInput;
 
   /**

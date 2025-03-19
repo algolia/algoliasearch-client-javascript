@@ -36,6 +36,11 @@ export type Task = {
    */
   nextRun?: string;
 
+  /**
+   * Owner of the resource.
+   */
+  owner?: string | null;
+
   input?: TaskInput;
 
   /**

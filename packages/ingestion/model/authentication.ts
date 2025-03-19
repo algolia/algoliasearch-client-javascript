@@ -22,6 +22,11 @@ export type Authentication = {
 
   platform?: Platform | null;
 
+  /**
+   * Owner of the resource.
+   */
+  owner?: string | null;
+
   input: AuthInputPartial;
 
   /**

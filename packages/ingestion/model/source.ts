@@ -13,6 +13,11 @@ export type Source = {
 
   name: string;
 
+  /**
+   * Owner of the resource.
+   */
+  owner?: string | null;
+
   input?: SourceInput;
 
   /**
