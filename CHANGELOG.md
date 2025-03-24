@@ -1,3 +1,9 @@
+## [5.22.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.21.0...5.22.0)
+
+- [03a7074763](https://github.com/algolia/api-clients-automation/commit/03a7074763) chore(deps): dependencies 2025-03-10 ([#4566](https://github.com/algolia/api-clients-automation/pull/4566)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [26457d0ec8](https://github.com/algolia/api-clients-automation/commit/26457d0ec8) feat(specs): add the owner attributes to ingestion resources ([#4616](https://github.com/algolia/api-clients-automation/pull/4616)) by [@millotp](https://github.com/millotp/)
+- [cdf605e369](https://github.com/algolia/api-clients-automation/commit/cdf605e369) chore(deps): dependencies 2025-03-24 ([#4617](https://github.com/algolia/api-clients-automation/pull/4617)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.21.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.20.4...5.21.0)
 
 - [ab623194e](https://github.com/algolia/api-clients-automation/commit/ab623194e) feat(specs): add `subscriptionAction` to ingestion specs ([#4587](https://github.com/algolia/api-clients-automation/pull/4587)) by [@shortcuts](https://github.com/shortcuts/)
