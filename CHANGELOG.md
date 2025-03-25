@@ -1,3 +1,9 @@
+## [5.23.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.22.0...5.23.0)
+
+- [3994f53d4](https://github.com/algolia/api-clients-automation/commit/3994f53d4) feat(clients): add new realtime-personalization api ([#4613](https://github.com/algolia/api-clients-automation/pull/4613)) by [@benamib](https://github.com/benamib/)
+- [6d8c0548d](https://github.com/algolia/api-clients-automation/commit/6d8c0548d) chore: do not generate realtime personalization ([#4655](https://github.com/algolia/api-clients-automation/pull/4655)) by [@shortcuts](https://github.com/shortcuts/)
+- [c3addb449](https://github.com/algolia/api-clients-automation/commit/c3addb449) feat(specs): add CT Query predicate property ([#4654](https://github.com/algolia/api-clients-automation/pull/4654)) by [@morganleroi](https://github.com/morganleroi/)
+
 ## [5.22.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.21.0...5.22.0)
 
 - [03a7074763](https://github.com/algolia/api-clients-automation/commit/03a7074763) chore(deps): dependencies 2025-03-10 ([#4566](https://github.com/algolia/api-clients-automation/pull/4566)) by [@algolia-bot](https://github.com/algolia-bot/)
