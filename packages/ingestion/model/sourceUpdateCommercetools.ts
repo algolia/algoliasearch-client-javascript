@@ -17,5 +17,10 @@ export type SourceUpdateCommercetools = {
    */
   fallbackIsInStockValue?: boolean;
 
+  /**
+   * Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
+   */
+  productQueryPredicate?: string;
+
   customFields?: CommercetoolsCustomFields;
 };
