@@ -863,6 +863,8 @@ export function createSearchClient({
      *
      * Required API Key ACLs:
      *  - admin
+     *
+     * @deprecated
      * @param assignUserId - The assignUserId object.
      * @param assignUserId.xAlgoliaUserID - Unique identifier of the user who makes the search request.
      * @param assignUserId.assignUserIdParams - The assignUserIdParams object.
@@ -943,6 +945,8 @@ export function createSearchClient({
      *
      * Required API Key ACLs:
      *  - admin
+     *
+     * @deprecated
      * @param batchAssignUserIds - The batchAssignUserIds object.
      * @param batchAssignUserIds.xAlgoliaUserID - Unique identifier of the user who makes the search request.
      * @param batchAssignUserIds.batchAssignUserIdsParams - The batchAssignUserIdsParams object.
@@ -1905,6 +1909,8 @@ export function createSearchClient({
      *
      * Required API Key ACLs:
      *  - admin
+     *
+     * @deprecated
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTopUserIds(requestOptions?: RequestOptions): Promise<GetTopUserIdsResponse> {
@@ -1927,6 +1933,8 @@ export function createSearchClient({
      *
      * Required API Key ACLs:
      *  - admin
+     *
+     * @deprecated
      * @param getUserId - The getUserId object.
      * @param getUserId.userID - Unique identifier of the user who makes the search request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1955,6 +1963,8 @@ export function createSearchClient({
      *
      * Required API Key ACLs:
      *  - admin
+     *
+     * @deprecated
      * @param hasPendingMappings - The hasPendingMappings object.
      * @param hasPendingMappings.getClusters - Whether to include the cluster\'s pending mapping state in the response.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2008,6 +2018,8 @@ export function createSearchClient({
      *
      * Required API Key ACLs:
      *  - admin
+     *
+     * @deprecated
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listClusters(requestOptions?: RequestOptions): Promise<ListClustersResponse> {
@@ -2066,6 +2078,8 @@ export function createSearchClient({
      *
      * Required API Key ACLs:
      *  - admin
+     *
+     * @deprecated
      * @param listUserIds - The listUserIds object.
      * @param listUserIds.page - Requested page of the API response. If `null`, the API response is not paginated.
      * @param listUserIds.hitsPerPage - Number of hits per page.
@@ -2224,6 +2238,8 @@ export function createSearchClient({
      *
      * Required API Key ACLs:
      *  - admin
+     *
+     * @deprecated
      * @param removeUserId - The removeUserId object.
      * @param removeUserId.userID - Unique identifier of the user who makes the search request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2810,6 +2826,8 @@ export function createSearchClient({
      *
      * Required API Key ACLs:
      *  - admin
+     *
+     * @deprecated
      * @param searchUserIdsParams - The searchUserIdsParams object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */

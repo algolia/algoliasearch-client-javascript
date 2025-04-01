@@ -399,6 +399,8 @@ export function createIngestionClient({
 
     /**
      * Creates a new task using the v1 endpoint, please use `createTask` instead.
+     *
+     * @deprecated
      * @param taskCreate - Request body for creating a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -716,6 +718,8 @@ export function createIngestionClient({
 
     /**
      * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+     *
+     * @deprecated
      * @param deleteTaskV1 - The deleteTaskV1 object.
      * @param deleteTaskV1.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -807,6 +811,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param disableTaskV1 - The disableTaskV1 object.
      * @param disableTaskV1.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -867,6 +873,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param enableTaskV1 - The enableTaskV1 object.
      * @param enableTaskV1.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1093,6 +1101,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param getTaskV1 - The getTaskV1 object.
      * @param getTaskV1.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1579,6 +1589,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param listTasksV1 - The listTasksV1 object.
      * @param listTasksV1.itemsPerPage - Number of items per page.
      * @param listTasksV1.page - Page number of the paginated API response.
@@ -1825,6 +1837,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param runTaskV1 - The runTaskV1 object.
      * @param runTaskV1.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1999,6 +2013,8 @@ export function createIngestionClient({
      *  - addObject
      *  - deleteIndex
      *  - editSettings
+     *
+     * @deprecated
      * @param taskSearch - The taskSearch object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2354,6 +2370,8 @@ export function createIngestionClient({
 
     /**
      * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+     *
+     * @deprecated
      * @param updateTaskV1 - The updateTaskV1 object.
      * @param updateTaskV1.taskID - Unique identifier of a task.
      * @param updateTaskV1.taskUpdate - The taskUpdate object.
