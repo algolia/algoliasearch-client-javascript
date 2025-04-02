@@ -4,9 +4,9 @@ import type { TransformationError } from './transformationError';
 
 export type TransformationTryResponse = {
   /**
-   * The array of records returned by the transformation service.
+   * The array of stringified records returned by the transformation service.
    */
-  payloads: Array<Record<string, unknown>>;
+  payloads: Array<string>;
 
   error?: TransformationError;
 };

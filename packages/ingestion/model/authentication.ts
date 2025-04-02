@@ -37,5 +37,5 @@ export type Authentication = {
   /**
    * Date of last update in RFC 3339 format.
    */
-  updatedAt?: string;
+  updatedAt: string;
 };
