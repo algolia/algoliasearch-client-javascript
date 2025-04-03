@@ -1,3 +1,7 @@
+## [5.23.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.23.1...5.23.2)
+
+- [ac400354a9](https://github.com/algolia/api-clients-automation/commit/ac400354a9) fix(specs): make the updateAt non-null in ingestion ([#4697](https://github.com/algolia/api-clients-automation/pull/4697)) by [@millotp](https://github.com/millotp/)
+
 ## [5.23.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.23.0...5.23.1)
 
 - [8b5413f002](https://github.com/algolia/api-clients-automation/commit/8b5413f002) chore(deps): dependencies 2025-03-31 ([#4661](https://github.com/algolia/api-clients-automation/pull/4661)) by [@algolia-bot](https://github.com/algolia-bot/)
