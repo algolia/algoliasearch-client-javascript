@@ -1,6 +1,6 @@
-import { defineWorkspace } from 'vitest/config';
+import { defineWorkersConfig } from '@cloudflare/vitest-pool-workers/config';
 
-export default defineWorkspace([
+export default defineWorkersConfig([
   {
     resolve: {
       alias: {
@@ -34,7 +34,9 @@ export default defineWorkspace([
     test: {
       include: ['__tests__/algoliasearch.fetch.test.ts'],
       name: 'miniflare fetch',
-      environment: 'miniflare',
+      poolOptions: {
+        workers: {},
+      },
     },
   },
   {
@@ -46,7 +48,9 @@ export default defineWorkspace([
     test: {
       include: ['__tests__/algoliasearch.worker.test.ts'],
       name: 'miniflare worker',
-      environment: 'miniflare',
+      poolOptions: {
+        workers: {},
+      },
     },
   },
 ]);

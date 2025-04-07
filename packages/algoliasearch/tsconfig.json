@@ -4,7 +4,7 @@
     "types": [
       "node",
       "@cloudflare/workers-types",
-      "vitest-environment-miniflare/globals",
+      "@cloudflare/vitest-pool-workers",
       "vitest/globals"
     ],
     "outDir": "dist"
