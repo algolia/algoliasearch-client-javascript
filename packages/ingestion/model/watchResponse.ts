@@ -6,7 +6,7 @@ export type WatchResponse = {
   /**
    * Universally unique identifier (UUID) of a task run.
    */
-  runID?: string;
+  runID: string;
 
   /**
    * when used with discovering or validating sources, the sampled data of your source is returned.
@@ -21,5 +21,5 @@ export type WatchResponse = {
   /**
    * a message describing the outcome of a validate run.
    */
-  message: string;
+  message?: string;
 };
