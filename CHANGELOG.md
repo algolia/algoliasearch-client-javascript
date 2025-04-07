@@ -1,3 +1,10 @@
+## [5.23.3](https://github.com/algolia/algoliasearch-client-javascript/compare/5.23.2...5.23.3)
+
+- [dbaef6696](https://github.com/algolia/api-clients-automation/commit/dbaef6696) fix(specs): userData is any type ([#4702](https://github.com/algolia/api-clients-automation/pull/4702)) by [@millotp](https://github.com/millotp/)
+- [a922dca5a](https://github.com/algolia/api-clients-automation/commit/a922dca5a) docs(partialUpdate): add note about multiple operations ([#4721](https://github.com/algolia/api-clients-automation/pull/4721)) by [@Jerska](https://github.com/Jerska/)
+- [931095383](https://github.com/algolia/api-clients-automation/commit/931095383) chore(deps): dependencies 2025-04-07 ([#4703](https://github.com/algolia/api-clients-automation/pull/4703)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [e150cd934](https://github.com/algolia/api-clients-automation/commit/e150cd934) fix(specs): message is not required in WatchResponse ([#4723](https://github.com/algolia/api-clients-automation/pull/4723)) by [@millotp](https://github.com/millotp/)
+
 ## [5.23.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.23.1...5.23.2)
 
 - [ac400354a9](https://github.com/algolia/api-clients-automation/commit/ac400354a9) fix(specs): make the updateAt non-null in ingestion ([#4697](https://github.com/algolia/api-clients-automation/pull/4697)) by [@millotp](https://github.com/millotp/)
