@@ -17,7 +17,7 @@ export type Event = {
    */
   runID: string;
 
-  status: EventStatus;
+  status: EventStatus | null;
 
   type: EventType;
 
@@ -26,7 +26,7 @@ export type Event = {
    */
   batchSize: number;
 
-  data?: { [key: string]: any };
+  data?: { [key: string]: any } | null;
 
   /**
    * Date of publish RFC 3339 format.

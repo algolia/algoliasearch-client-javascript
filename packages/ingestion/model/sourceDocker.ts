@@ -2,7 +2,7 @@
 
 export type SourceDocker = {
   /**
-   * Shortname of the image, as returned by the referential.
+   * Name of the connector.
    */
   image: string;
 
