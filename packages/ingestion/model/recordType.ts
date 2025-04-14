@@ -3,4 +3,4 @@
 /**
  * Record type for ecommerce sources.
  */
-export type RecordType = 'product' | 'variant';
+export type RecordType = 'product' | 'variant' | 'collection';
