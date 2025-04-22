@@ -38,10 +38,10 @@
     "@arethetypeswrong/cli": "0.17.4",
     "@types/node": "22.14.1",
     "jsdom": "26.1.0",
-    "publint": "0.3.11",
+    "publint": "0.3.12",
     "tsup": "8.4.0",
     "typescript": "5.8.3",
-    "vitest": "3.1.1",
+    "vitest": "3.1.2",
     "xhr-mock": "2.5.1"
   },
   "engines": {
