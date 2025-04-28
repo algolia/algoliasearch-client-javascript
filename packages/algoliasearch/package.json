@@ -91,12 +91,12 @@
   "devDependencies": {
     "@algolia/requester-testing": "5.23.4",
     "@arethetypeswrong/cli": "0.17.4",
-    "@cloudflare/vitest-pool-workers": "0.8.18",
-    "@cloudflare/workers-types": "4.20250422.0",
-    "@types/node": "22.14.1",
+    "@cloudflare/vitest-pool-workers": "0.8.22",
+    "@cloudflare/workers-types": "4.20250428.0",
+    "@types/node": "22.15.3",
     "jsdom": "26.1.0",
     "publint": "0.3.12",
-    "rollup": "4.39.0",
+    "rollup": "4.40.1",
     "tsup": "8.4.0",
     "typescript": "5.8.3",
     "vitest": "3.1.2"
