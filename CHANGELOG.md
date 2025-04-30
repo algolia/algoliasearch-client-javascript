@@ -1,3 +1,10 @@
+## [5.24.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.23.4...5.24.0)
+
+- [efec6baf1c](https://github.com/algolia/api-clients-automation/commit/efec6baf1c) chore(deps): dependencies 2025-04-21 ([#4762](https://github.com/algolia/api-clients-automation/pull/4762)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [b61b6feb7a](https://github.com/algolia/api-clients-automation/commit/b61b6feb7a) feat(javascript): prepare composition for stable release ([#4782](https://github.com/algolia/api-clients-automation/pull/4782)) by [@shortcuts](https://github.com/shortcuts/)
+- [53ac749807](https://github.com/algolia/api-clients-automation/commit/53ac749807) chore(deps): dependencies 2025-04-28 ([#4785](https://github.com/algolia/api-clients-automation/pull/4785)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [065093aeef](https://github.com/algolia/api-clients-automation/commit/065093aeef) feat(javascript): add `accountCopyIndex` helper ([#4798](https://github.com/algolia/api-clients-automation/pull/4798)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.23.4](https://github.com/algolia/algoliasearch-client-javascript/compare/5.23.3...5.23.4)
 
 - [369c14232](https://github.com/algolia/api-clients-automation/commit/369c14232) fix(specs): condition cant be numeric filter ([#4726](https://github.com/algolia/api-clients-automation/pull/4726)) by [@kai687](https://github.com/kai687/)
