@@ -4,10 +4,19 @@ export type SearchClient = ReturnType<typeof createSearchClient> & SearchClientN
 
 import { createHmac } from 'node:crypto';
 
-import { createMemoryCache, createNullCache, createNullLogger, serializeQueryParameters } from '@algolia/client-common';
+import {
+  IndexAlreadyExistsError,
+  IndexNotFoundError,
+  IndicesInSameAppError,
+  createMemoryCache,
+  createNullCache,
+  createNullLogger,
+  serializeQueryParameters,
+} from '@algolia/client-common';
 import { createFetchRequester } from '@algolia/requester-fetch';
+import { createHttpRequester } from '@algolia/requester-node-http';
 
-import type { ClientOptions } from '@algolia/client-common';
+import type { ClientOptions, RequestOptions } from '@algolia/client-common';
 
 import { createSearchClient } from '../src/searchClient';
 
@@ -16,9 +25,14 @@ export { apiClientVersion } from '../src/searchClient';
 export * from '../model';
 
 import type {
+  AccountCopyIndexOptions,
+  BrowseResponse,
   GenerateSecuredApiKeyOptions,
   GetSecuredApiKeyRemainingValidityOptions,
   SearchClientNodeHelpers,
+  SearchRulesResponse,
+  SearchSynonymsResponse,
+  UpdatedAtResponse,
 } from '../model';
 
 export function searchClient(appId: string, apiKey: string, options?: ClientOptions): SearchClient {
@@ -81,6 +95,104 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
       return Buffer.from(
         createHmac('sha256', parentApiKey).update(queryParameters).digest('hex') + queryParameters,
       ).toString('base64');
+    },
+
+    /**
+     * Helper: Copies the given `sourceIndexName` records, rules and synonyms to an other Algolia application for the given `destinationIndexName`.
+     * See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
+     *
+     * @summary Helper: Copies the given `sourceIndexName` records, rules and synonyms to an other Algolia application for the given `destinationIndexName`.
+     * @param accountCopyIndex - The `accountCopyIndex` object.
+     * @param accountCopyIndex.sourceIndexName - The name of the index to copy.
+     * @param accountCopyIndex.destinationAppID - The application ID to write the index to.
+     * @param accountCopyIndex.destinationApiKey - The API Key of the `destinationAppID` to write the index to, must have write ACLs.
+     * @param accountCopyIndex.destinationIndexName - The name of the index to write the copied index to.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `setSettings`, `saveRules`, `saveSynonyms` and `saveObjects` method and merged with the transporter requestOptions.
+     */
+    async accountCopyIndex(
+      { sourceIndexName, destinationAppID, destinationApiKey, destinationIndexName }: AccountCopyIndexOptions,
+      requestOptions?: RequestOptions,
+    ): Promise<void> {
+      const responses: Array<{ taskID: UpdatedAtResponse['taskID'] }> = [];
+
+      if (this.appId === destinationAppID) {
+        throw new IndicesInSameAppError();
+      }
+
+      if (!(await this.indexExists({ indexName: sourceIndexName }))) {
+        throw new IndexNotFoundError(sourceIndexName);
+      }
+
+      const destinationClient = createSearchClient({
+        appId: destinationAppID,
+        apiKey: destinationApiKey,
+        timeouts: {
+          connect: 2000,
+          read: 5000,
+          write: 30000,
+        },
+        logger: createNullLogger(),
+        requester: createHttpRequester(),
+        algoliaAgents: [{ segment: 'accountCopyIndex', version: process.versions.node }],
+        responsesCache: createNullCache(),
+        requestsCache: createNullCache(),
+        hostsCache: createMemoryCache(),
+        ...options,
+      });
+
+      if (await destinationClient.indexExists({ indexName: destinationIndexName })) {
+        throw new IndexAlreadyExistsError(destinationIndexName);
+      }
+
+      responses.push(
+        await destinationClient.setSettings(
+          {
+            indexName: destinationIndexName,
+            indexSettings: await this.getSettings({ indexName: sourceIndexName }),
+          },
+          requestOptions,
+        ),
+      );
+
+      await this.browseRules({
+        indexName: sourceIndexName,
+        async aggregator(response: SearchRulesResponse) {
+          responses.push(
+            await destinationClient.saveRules(
+              { indexName: destinationIndexName, rules: response.hits },
+              requestOptions,
+            ),
+          );
+        },
+      });
+
+      await this.browseSynonyms({
+        indexName: sourceIndexName,
+        async aggregator(response: SearchSynonymsResponse) {
+          responses.push(
+            await destinationClient.saveSynonyms(
+              { indexName: destinationIndexName, synonymHit: response.hits },
+              requestOptions,
+            ),
+          );
+        },
+      });
+
+      await this.browseObjects({
+        indexName: sourceIndexName,
+        async aggregator(response: BrowseResponse) {
+          responses.push(
+            ...(await destinationClient.saveObjects(
+              { indexName: destinationIndexName, objects: response.hits },
+              requestOptions,
+            )),
+          );
+        },
+      });
+
+      for (const response of responses) {
+        await destinationClient.waitForTask({ indexName: destinationIndexName, taskID: response.taskID });
+      }
     },
     /**
      * Helper: Retrieves the remaining validity of the previous generated `securedApiKey`, the `ValidUntil` parameter must have been provided.

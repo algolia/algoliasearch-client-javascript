@@ -821,6 +821,7 @@ export type GetSecuredApiKeyRemainingValidityOptions = {
 };
 
 export type SearchClientNodeHelpers = {
+  accountCopyIndex: (opts: AccountCopyIndexOptions) => Promise<void>;
   generateSecuredApiKey: (opts: GenerateSecuredApiKeyOptions) => string;
   getSecuredApiKeyRemainingValidity: (opts: GetSecuredApiKeyRemainingValidityOptions) => number;
 };
@@ -876,4 +877,26 @@ export type ReplaceAllObjectsOptions = {
    * The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
    */
   scopes?: Array<ScopeType>;
+};
+
+export type AccountCopyIndexOptions = {
+  /**
+   * The name of the index to copy to the `destinationClient`.
+   */
+  sourceIndexName: string;
+
+  /**
+   * The application ID to write the index to.
+   */
+  destinationAppID: string;
+
+  /**
+   * The API Key of the `destinationAppID` to write the index to, must have write ACLs.
+   */
+  destinationApiKey: string;
+
+  /**
+   * The name of the index to write the copy in.
+   */
+  destinationIndexName: string;
 };

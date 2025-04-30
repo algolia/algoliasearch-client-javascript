@@ -12,6 +12,24 @@ export class AlgoliaError extends Error {
   }
 }
 
+export class IndexNotFoundError extends AlgoliaError {
+  constructor(indexName: string) {
+    super(`${indexName} does not exist`, 'IndexNotFoundError');
+  }
+}
+
+export class IndicesInSameAppError extends AlgoliaError {
+  constructor() {
+    super('Indices are in the same application. Use operationIndex instead.', 'IndicesInSameAppError');
+  }
+}
+
+export class IndexAlreadyExistsError extends AlgoliaError {
+  constructor(indexName: string) {
+    super(`${indexName} index already exists.`, 'IndexAlreadyExistsError');
+  }
+}
+
 export class ErrorWithStackTrace extends AlgoliaError {
   stackTrace: StackFrame[];
 
