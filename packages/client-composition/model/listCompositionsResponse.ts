@@ -12,4 +12,19 @@ export type ListCompositionsResponse = {
    * Number of pages.
    */
   nbPages: number;
+
+  /**
+   * Current page.
+   */
+  page?: number;
+
+  /**
+   * Number of items per page.
+   */
+  hitsPerPage?: number;
+
+  /**
+   * Number of items.
+   */
+  nbHits?: number;
 };
