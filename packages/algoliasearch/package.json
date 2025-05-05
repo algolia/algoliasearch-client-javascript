@@ -91,7 +91,7 @@
   "devDependencies": {
     "@algolia/requester-testing": "5.24.0",
     "@arethetypeswrong/cli": "0.17.4",
-    "@cloudflare/vitest-pool-workers": "0.8.22",
+    "@cloudflare/vitest-pool-workers": "0.8.24",
     "@cloudflare/workers-types": "4.20250428.0",
     "@types/node": "22.15.3",
     "jsdom": "26.1.0",
