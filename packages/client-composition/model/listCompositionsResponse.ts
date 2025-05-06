@@ -16,15 +16,15 @@ export type ListCompositionsResponse = {
   /**
    * Current page.
    */
-  page?: number;
+  page: number;
 
   /**
    * Number of items per page.
    */
-  hitsPerPage?: number;
+  hitsPerPage: number;
 
   /**
    * Number of items.
    */
-  nbHits?: number;
+  nbHits: number;
 };
