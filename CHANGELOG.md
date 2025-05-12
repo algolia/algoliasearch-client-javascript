@@ -1,3 +1,12 @@
+## [5.25.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.24.0...5.25.0)
+
+- [e5387adf09](https://github.com/algolia/api-clients-automation/commit/e5387adf09) chore(deps): dependencies 2025-05-05 ([#4804](https://github.com/algolia/api-clients-automation/pull/4804)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [d26cbaa311](https://github.com/algolia/api-clients-automation/commit/d26cbaa311) feat(specs): enrich response for list composition endpoint ([#4819](https://github.com/algolia/api-clients-automation/pull/4819)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [95f3208e92](https://github.com/algolia/api-clients-automation/commit/95f3208e92) feat(specs): make response fields required for composition list endpoint ([#4821](https://github.com/algolia/api-clients-automation/pull/4821)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [bebb56e0b9](https://github.com/algolia/api-clients-automation/commit/bebb56e0b9) fix(specs): add x-acl to insights endpoints ([#4822](https://github.com/algolia/api-clients-automation/pull/4822)) by [@kai687](https://github.com/kai687/)
+- [d29371295f](https://github.com/algolia/api-clients-automation/commit/d29371295f) chore(deps): dependencies 2025-05-12 ([#4823](https://github.com/algolia/api-clients-automation/pull/4823)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [7e226c4559](https://github.com/algolia/api-clients-automation/commit/7e226c4559) feat(scripts): add push to mcp-node on release ([#4784](https://github.com/algolia/api-clients-automation/pull/4784)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.24.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.23.4...5.24.0)
 
 - [efec6baf1c](https://github.com/algolia/api-clients-automation/commit/efec6baf1c) chore(deps): dependencies 2025-04-21 ([#4762](https://github.com/algolia/api-clients-automation/pull/4762)) by [@algolia-bot](https://github.com/algolia-bot/)
