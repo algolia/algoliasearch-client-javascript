@@ -231,6 +231,9 @@ export function createInsightsClient({
 
     /**
      * Deletes all events related to the specified user token from events metrics and analytics. The deletion is asynchronous, and processed within 48 hours. To delete a personalization user profile, see `Delete a user profile` in the Personalization API.
+     *
+     * Required API Key ACLs:
+     *  - deleteObject
      * @param deleteUserToken - The deleteUserToken object.
      * @param deleteUserToken.userToken - User token for which to delete all associated events.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -256,6 +259,9 @@ export function createInsightsClient({
 
     /**
      * Sends a list of events to the Insights API.  You can include up to 1,000 events in a single request, but the request body must be smaller than 2&nbsp;MB.
+     *
+     * Required API Key ACLs:
+     *  - search
      * @param insightsEvents - The insightsEvents object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
