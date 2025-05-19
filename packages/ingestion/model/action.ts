@@ -3,11 +3,4 @@
 /**
  * Type of indexing operation.
  */
-export type Action =
-  | 'addObject'
-  | 'updateObject'
-  | 'partialUpdateObject'
-  | 'partialUpdateObjectNoCreate'
-  | 'deleteObject'
-  | 'delete'
-  | 'clear';
+export type Action = 'addObject' | 'updateObject' | 'partialUpdateObject' | 'partialUpdateObjectNoCreate';
