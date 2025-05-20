@@ -3,6 +3,8 @@ import { ClientTransporterOptions } from '@algolia/client-common';
 import { PersonalizationClientOptions } from '@algolia/client-personalization';
 import { SearchClientOptions } from '@algolia/client-search';
 
+import { TransformationOptions } from '.';
+
 type Credentials = { readonly appId: string; readonly apiKey: string };
 export type WithoutCredentials<TClientOptions extends Credentials> = Omit<
   TClientOptions,
@@ -15,7 +17,8 @@ export type OptionalCredentials<TClientOptions extends Credentials> = Omit<
   Pick<Partial<TClientOptions>, keyof Credentials>;
 
 export type AlgoliaSearchOptions = Partial<ClientTransporterOptions> &
-  WithoutCredentials<SearchClientOptions>;
+  WithoutCredentials<SearchClientOptions> &
+  TransformationOptions;
 
 export type InitAnalyticsOptions = Partial<ClientTransporterOptions> &
   OptionalCredentials<AnalyticsClientOptions>;
