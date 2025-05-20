@@ -206,14 +206,16 @@ import { createNodeHttpRequester } from '@algolia/requester-node-http';
 import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
 
 import {
-  AlgoliaSearchOptions,
   createIngestionClient,
   IngestionClient,
+  partialUpdateObjectsWithTransformation,
+  saveObjectsWithTransformation,
+} from '../ingestion';
+import {
+  AlgoliaSearchOptions,
   IngestionMethods,
   InitAnalyticsOptions,
   InitPersonalizationOptions,
-  partialUpdateObjectsWithTransformation,
-  saveObjectsWithTransformation,
 } from '../types';
 
 export default function algoliasearch(
