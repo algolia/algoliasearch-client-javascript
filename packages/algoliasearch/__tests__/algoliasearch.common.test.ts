@@ -143,131 +143,110 @@ describe('api', () => {
     });
   });
 
-  describe('init clients', () => {
-    test('provides an init method for the analytics client', () => {
-      expect(client.initAnalytics).not.toBeUndefined();
+  describe('bridge methods', () => {
+    test('throws when missing transformation.region', () => {
+      //@ts-expect-error
+      expect(() => algoliasearch('APP_ID', 'API_KEY', { transformation: {} })).toThrow(
+        '`region` must be provided when leveraging the transformation pipeline',
+      );
     });
 
-    test('provides an init method for the abtesting client', () => {
-      expect(client.initAbtesting).not.toBeUndefined();
+    test('throws when calling the transformation methods without init parameters', async () => {
+      await expect(
+        client.saveObjectsWithTransformation({
+          indexName: 'foo',
+          objects: [{ objectID: 'bar', baz: 42 }],
+          waitForTasks: true,
+        }),
+      ).rejects.toThrow('`transformation.region` must be provided at client instantiation before calling this method.');
+
+      await expect(
+        client.partialUpdateObjectsWithTransformation({
+          indexName: 'foo',
+          objects: [{ objectID: 'bar', baz: 42 }],
+          waitForTasks: true,
+        }),
+      ).rejects.toThrow('`transformation.region` must be provided at client instantiation before calling this method.');
     });
 
-    test('provides an init method for the personalization client', () => {
-      expect(client.initPersonalization).not.toBeUndefined();
-    });
-
-    test('provides an init method for the recommend client', () => {
-      expect(client.initRecommend).not.toBeUndefined();
-    });
-
-    test('default `init` clients to the root `algoliasearch` credentials', async () => {
-      const abtestingClient = client.initAbtesting({ options: { requester: browserEchoRequester() } });
-      const analyticsClient = client.initAnalytics({ options: { requester: browserEchoRequester() } });
-      const recommendClient = client.initRecommend({ options: { requester: browserEchoRequester() } });
-      const personalizationClient = client.initPersonalization({
-        region: 'eu',
-        options: { requester: browserEchoRequester() },
+    test('exposes the transformation methods at the root of the client', async () => {
+      const ingestionClient = algoliasearch('APP_ID', 'API_KEY', {
+        requester: browserEchoRequester(),
+        transformation: { region: 'us' },
       });
 
-      const res1 = (await abtestingClient.customGet({
-        path: 'abtestingClient',
-      })) as unknown as EchoResponse;
-      const res2 = (await analyticsClient.customGet({
-        path: 'analyticsClient',
-      })) as unknown as EchoResponse;
-      const res3 = (await personalizationClient.customGet({
-        path: 'personalizationClient',
-      })) as unknown as EchoResponse;
-      const res4 = (await recommendClient.customGet({
-        path: 'recommendClient',
+      expect(ingestionClient.saveObjectsWithTransformation).not.toBeUndefined();
+
+      let res = (await ingestionClient.saveObjectsWithTransformation({
+        indexName: 'foo',
+        objects: [{ objectID: 'bar', baz: 42 }],
+        waitForTasks: true,
       })) as unknown as EchoResponse;
 
-      expect(res1.headers).toEqual(
+      expect(res.headers).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
         }),
       );
-      expect(res2.headers).toEqual(
+      expect(res.url.startsWith('https://data.us.algolia.com/1/push/foo?watch=true')).toBeTruthy();
+      expect(res.data).toEqual({
+        action: 'addObject',
+        records: [
+          {
+            baz: 42,
+            objectID: 'bar',
+          },
+        ],
+      });
+      expect(ingestionClient.partialUpdateObjectsWithTransformation).not.toBeUndefined();
+
+      res = (await ingestionClient.partialUpdateObjectsWithTransformation({
+        indexName: 'foo',
+        objects: [{ objectID: 'bar', baz: 42 }],
+        waitForTasks: true,
+        createIfNotExists: true,
+      })) as unknown as EchoResponse;
+
+      expect(res.headers).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
         }),
       );
-      expect(res3.headers).toEqual(
+      expect(res.url.startsWith('https://data.us.algolia.com/1/push/foo?watch=true')).toBeTruthy();
+      expect(res.data).toEqual({
+        action: 'partialUpdateObject',
+        records: [
+          {
+            baz: 42,
+            objectID: 'bar',
+          },
+        ],
+      });
+
+      res = (await ingestionClient.partialUpdateObjectsWithTransformation({
+        indexName: 'foo',
+        objects: [{ objectID: 'bar', baz: 42 }],
+        waitForTasks: true,
+      })) as unknown as EchoResponse;
+
+      expect(res.headers).toEqual(
         expect.objectContaining({
           'x-algolia-application-id': 'APP_ID',
           'x-algolia-api-key': 'API_KEY',
         }),
       );
-      expect(res4.headers).toEqual(
-        expect.objectContaining({
-          'x-algolia-application-id': 'APP_ID',
-          'x-algolia-api-key': 'API_KEY',
-        }),
-      );
-    });
-
-    test('`init` clients accept different credentials', async () => {
-      const abtestingClient = client.initAbtesting({
-        appId: 'appId1',
-        apiKey: 'apiKey1',
-        options: { requester: browserEchoRequester() },
+      expect(res.url.startsWith('https://data.us.algolia.com/1/push/foo?watch=true')).toBeTruthy();
+      expect(res.data).toEqual({
+        action: 'partialUpdateObjectNoCreate',
+        records: [
+          {
+            baz: 42,
+            objectID: 'bar',
+          },
+        ],
       });
-      const analyticsClient = client.initAnalytics({
-        appId: 'appId2',
-        apiKey: 'apiKey2',
-        options: { requester: browserEchoRequester() },
-      });
-      const personalizationClient = client.initPersonalization({
-        appId: 'appId3',
-        apiKey: 'apiKey3',
-        region: 'eu',
-        options: { requester: browserEchoRequester() },
-      });
-      const recommendClient = client.initRecommend({
-        appId: 'appId4',
-        apiKey: 'apiKey4',
-        options: { requester: browserEchoRequester() },
-      });
-
-      const res1 = (await abtestingClient.customGet({
-        path: 'abtestingClient',
-      })) as unknown as EchoResponse;
-      const res2 = (await analyticsClient.customGet({
-        path: 'analyticsClient',
-      })) as unknown as EchoResponse;
-      const res3 = (await personalizationClient.customGet({
-        path: 'personalizationClient',
-      })) as unknown as EchoResponse;
-      const res4 = (await recommendClient.customGet({
-        path: 'recommendClient',
-      })) as unknown as EchoResponse;
-
-      expect(res1.headers).toEqual(
-        expect.objectContaining({
-          'x-algolia-application-id': 'appId1',
-          'x-algolia-api-key': 'apiKey1',
-        }),
-      );
-      expect(res2.headers).toEqual(
-        expect.objectContaining({
-          'x-algolia-application-id': 'appId2',
-          'x-algolia-api-key': 'apiKey2',
-        }),
-      );
-      expect(res3.headers).toEqual(
-        expect.objectContaining({
-          'x-algolia-application-id': 'appId3',
-          'x-algolia-api-key': 'apiKey3',
-        }),
-      );
-      expect(res4.headers).toEqual(
-        expect.objectContaining({
-          'x-algolia-application-id': 'appId4',
-          'x-algolia-api-key': 'apiKey4',
-        }),
-      );
     });
   });
 });

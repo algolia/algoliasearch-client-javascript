@@ -555,7 +555,7 @@ export function createSearchClient({
      * @param saveObjects - The `saveObjects` object.
      * @param saveObjects.indexName - The `indexName` to save `objects` in.
      * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
-     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param saveObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
@@ -576,7 +576,7 @@ export function createSearchClient({
      * @param deleteObjects - The `deleteObjects` object.
      * @param deleteObjects.indexName - The `indexName` to delete `objectIDs` from.
      * @param deleteObjects.objectIDs - The objectIDs to delete.
-     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param deleteObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param deleteObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
@@ -604,7 +604,7 @@ export function createSearchClient({
      * @param partialUpdateObjects.indexName - The `indexName` to update `objects` in.
      * @param partialUpdateObjects.objects - The array of `objects` to update in the given Algolia `indexName`.
      * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail..
-     * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param partialUpdateObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
