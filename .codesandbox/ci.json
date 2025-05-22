@@ -1,7 +1,6 @@
 {
-  "installCommand": "install",
   "buildCommand": "build",
   "packages": ["packages/*"],
   "sandboxes": ["vanilla", "github/algolia/instantsearch/tree/3331ed781d3627bc10e73b6eff89b5037a78a0fc/javascript-client"],
-  "node": "14"
+  "node": "12"
 }
