@@ -3,3 +3,4 @@
  */
 
 export * from './AlgoliaSearchOptions';
+export * from './Ingestion';
