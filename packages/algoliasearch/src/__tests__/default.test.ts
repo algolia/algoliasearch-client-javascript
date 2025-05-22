@@ -191,7 +191,7 @@ describe('default preset', () => {
       await expect(
         index.saveObjectsWithTransformation([{ objectID: 'bar', baz: 42 }], { waitForTasks: true })
       ).rejects.toThrow(
-        '`options.transformation.region` must be provided at client instantiation before calling this method.'
+        '`transformation.region` must be provided at client instantiation before calling this method.'
       );
 
       await expect(

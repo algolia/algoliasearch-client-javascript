@@ -207,13 +207,17 @@ import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
 
 import {
   createIngestionClient,
-  IngestionClient,
-  IngestionMethods,
   partialUpdateObjectsWithTransformation,
   saveObjectsWithTransformation,
-  TransformationOptions,
 } from '../ingestion';
-import { AlgoliaSearchOptions, InitAnalyticsOptions, InitPersonalizationOptions } from '../types';
+import {
+  AlgoliaSearchOptions,
+  IngestionClient,
+  IngestionMethods,
+  InitAnalyticsOptions,
+  InitPersonalizationOptions,
+  TransformationOptions,
+} from '../types';
 
 export default function algoliasearch(
   appId: string,
