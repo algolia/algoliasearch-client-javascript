@@ -206,20 +206,17 @@ import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
 import {
   createIngestionClient,
   IngestionClient,
+  IngestionMethods,
   partialUpdateObjectsWithTransformation,
   saveObjectsWithTransformation,
+  TransformationOptions,
 } from '../ingestion';
-import {
-  AlgoliaSearchOptions,
-  IngestionMethods,
-  InitAnalyticsOptions,
-  InitPersonalizationOptions,
-} from '../types';
+import { AlgoliaSearchOptions, InitAnalyticsOptions, InitPersonalizationOptions } from '../types';
 
 export default function algoliasearch(
   appId: string,
   apiKey: string,
-  options?: AlgoliaSearchOptions
+  options?: AlgoliaSearchOptions & TransformationOptions
 ): SearchClient {
   const commonOptions = {
     appId,
@@ -258,7 +255,7 @@ export default function algoliasearch(
   /* eslint functional/no-let: "off" */
   let ingestionTransporter: IngestionClient | undefined;
 
-  if (options?.transformation) {
+  if (options && options.transformation) {
     if (!options.transformation.region) {
       throw new Error('`region` must be provided when leveraging the transformation pipeline');
     }
