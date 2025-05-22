@@ -1,6 +1,5 @@
 {
   "packages": ["packages/*"],
-  "sandboxes": ["github/algolia/instantsearch/tree/master/examples/js/getting-started"],
-  "buildCommand": "build",
-  "node": "20"
+  "sandboxes": ["github/algolia/instantsearch/tree/3331ed781d3627bc10e73b6eff89b5037a78a0fc/javascript-client"],
+  "node": "18"
 }
