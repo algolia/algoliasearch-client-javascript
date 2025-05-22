@@ -26,11 +26,7 @@ export function createIngestionClient(
 
   const appId = options.appId;
 
-  const auth = createAuth(
-    options.authMode !== undefined ? options.authMode : AuthMode.WithinHeaders,
-    appId,
-    options.apiKey
-  );
+  const auth = createAuth(AuthMode.WithinHeaders, appId, options.apiKey);
 
   const transporter = createTransporter({
     hosts: [
@@ -43,7 +39,7 @@ export function createIngestionClient(
     ...options,
     headers: {
       ...auth.headers(),
-      ...{ 'content-type': 'application/x-www-form-urlencoded' },
+      ...{ 'content-type': 'text/plain' },
       ...options.headers,
     },
     queryParameters: {
@@ -57,6 +53,7 @@ export function createIngestionClient(
     appId,
     addAlgoliaAgent(segment: string, version?: string): void {
       transporter.userAgent.add({ segment, version });
+      transporter.userAgent.add({ segment: 'Ingestion', version });
       transporter.userAgent.add({ segment: 'Ingestion via Algoliasearch' });
     },
     clearCache(): Readonly<Promise<void>> {
