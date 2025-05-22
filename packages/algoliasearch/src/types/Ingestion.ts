@@ -51,18 +51,31 @@ export type WatchResponse = {
    * Universally unique identifier (UUID) of a task run.
    */
   readonly runID: string;
+
+  /**
+   * Universally unique identifier (UUID) of an event.
+   */
+  readonly eventID?: string;
+
   /**
    * when used with discovering or validating sources, the sampled data of your source is returned.
    */
   readonly data?: ReadonlyArray<Record<string, unknown>>;
+
   /**
    * in case of error, observability events will be added to the response, if any.
    */
   readonly events?: readonly Event[];
+
   /**
    * a message describing the outcome of a validate run.
    */
   readonly message?: string;
+
+  /**
+   * Date of creation in RFC 3339 format.
+   */
+  readonly createdAt?: string;
 };
 
 /**
