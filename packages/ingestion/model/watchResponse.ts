@@ -9,6 +9,11 @@ export type WatchResponse = {
   runID: string;
 
   /**
+   * Universally unique identifier (UUID) of an event.
+   */
+  eventID?: string;
+
+  /**
    * when used with discovering or validating sources, the sampled data of your source is returned.
    */
   data?: Array<Record<string, unknown>>;
@@ -22,4 +27,9 @@ export type WatchResponse = {
    * a message describing the outcome of a validate run.
    */
   message?: string;
+
+  /**
+   * Date of creation in RFC 3339 format.
+   */
+  createdAt?: string;
 };
