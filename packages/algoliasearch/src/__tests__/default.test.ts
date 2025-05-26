@@ -187,6 +187,13 @@ describe('default preset', () => {
       );
     });
 
+    test('throws when wrong transformation.region', () => {
+      expect(() =>
+        // @ts-ignore
+        algoliasearch('APP_ID', 'API_KEY', { transformation: { region: 'cn' } })
+      ).toThrow('`region` is required and must be one of the following: eu, us}`');
+    });
+
     test('throws when calling the transformation methods without init parameters', async () => {
       await expect(
         index.saveObjectsWithTransformation([{ objectID: 'bar', baz: 42 }], { waitForTasks: true })

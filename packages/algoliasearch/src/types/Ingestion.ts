@@ -7,11 +7,14 @@ import {
 } from '@algolia/client-search';
 import { RequestOptions } from '@algolia/transporter';
 
+export const REGIONS = ['eu', 'us'] as const;
+export type Region = typeof REGIONS[number];
+
 export type TransformationOptions = {
   // When provided, a second transporter will be created in order to leverage the `*WithTransformation` methods exposed by the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
   readonly transformation?: {
     // The region of your Algolia application ID, used to target the correct hosts of the transformation service.
-    readonly region: 'eu' | 'us';
+    readonly region: Region;
   };
 };
 
