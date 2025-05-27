@@ -13,7 +13,6 @@ import {
   IngestionClient,
   PushOptions,
   PushProps,
-  REGIONS,
   TransformationOptions,
   WatchResponse,
 } from './types';
@@ -25,10 +24,8 @@ export function createIngestionClient(
     throw new Error('`region` must be provided when leveraging the transformation pipeline');
   }
 
-  if (!REGIONS.includes(options.transformation.region)) {
-    throw new Error(
-      `\`region\` is required and must be one of the following: ${REGIONS.join(', ')}`
-    );
+  if (options.transformation.region !== 'eu' && options.transformation.region !== 'us') {
+    throw new Error('`region` is required and must be one of the following: eu, us');
   }
 
   const appId = options.appId;
