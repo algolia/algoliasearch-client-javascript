@@ -1,4 +1,6 @@
 {
+  "buildCommand": "build",
   "packages": ["packages/*"],
-  "sandboxes": ["github/algolia/create-instantsearch-app/tree/templates/javascript-client"]
+  "sandboxes": ["vanilla", "github/algolia/instantsearch/tree/3331ed781d3627bc10e73b6eff89b5037a78a0fc/javascript-client"],
+  "node": "12"
 }

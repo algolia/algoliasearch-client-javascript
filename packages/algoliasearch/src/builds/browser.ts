@@ -203,12 +203,24 @@ import {
 import { createBrowserXhrRequester } from '@algolia/requester-browser-xhr';
 import { createUserAgent, Request, RequestOptions } from '@algolia/transporter';
 
-import { AlgoliaSearchOptions, InitAnalyticsOptions, InitPersonalizationOptions } from '../types';
+import {
+  createIngestionClient,
+  partialUpdateObjectsWithTransformation,
+  saveObjectsWithTransformation,
+} from '../ingestion';
+import {
+  AlgoliaSearchOptions,
+  IngestionClient,
+  IngestionMethods,
+  InitAnalyticsOptions,
+  InitPersonalizationOptions,
+  TransformationOptions,
+} from '../types';
 
 export default function algoliasearch(
   appId: string,
   apiKey: string,
-  options?: AlgoliaSearchOptions
+  options?: AlgoliaSearchOptions & TransformationOptions
 ): SearchClient {
   const commonOptions = {
     appId,
@@ -243,6 +255,17 @@ export default function algoliasearch(
       },
     });
   };
+
+  /* eslint functional/no-let: "off" */
+  let ingestionTransporter: IngestionClient | undefined;
+
+  if (options && options.transformation) {
+    if (!options.transformation.region) {
+      throw new Error('`region` must be provided when leveraging the transformation pipeline');
+    }
+
+    ingestionTransporter = createIngestionClient({ ...options, ...commonOptions });
+  }
 
   return createSearchClient({
     ...searchClientOptions,
@@ -285,50 +308,60 @@ export default function algoliasearch(
       setDictionarySettings,
       waitAppTask,
       customRequest,
-      initIndex: base => (indexName: string): SearchIndex => {
-        return initIndex(base)(indexName, {
-          methods: {
-            batch,
-            delete: deleteIndex,
-            findAnswers,
-            getObject,
-            getObjects,
-            saveObject,
-            saveObjects,
-            search,
-            searchForFacetValues,
-            waitTask,
-            setSettings,
-            getSettings,
-            partialUpdateObject,
-            partialUpdateObjects,
-            deleteObject,
-            deleteObjects,
-            deleteBy,
-            clearObjects,
-            browseObjects,
-            getObjectPosition,
-            findObject,
-            exists,
-            saveSynonym,
-            saveSynonyms,
-            getSynonym,
-            searchSynonyms,
-            browseSynonyms,
-            deleteSynonym,
-            clearSynonyms,
-            replaceAllObjects,
-            replaceAllSynonyms,
-            searchRules,
-            getRule,
-            deleteRule,
-            saveRule,
-            saveRules,
-            replaceAllRules,
-            browseRules,
-            clearRules,
-          },
-        });
+      initIndex: base => (indexName: string): SearchIndex & IngestionMethods => {
+        return {
+          ...initIndex(base)(indexName, {
+            methods: {
+              batch,
+              delete: deleteIndex,
+              findAnswers,
+              getObject,
+              getObjects,
+              saveObject,
+              saveObjects,
+              search,
+              searchForFacetValues,
+              waitTask,
+              setSettings,
+              getSettings,
+              partialUpdateObject,
+              partialUpdateObjects,
+              deleteObject,
+              deleteObjects,
+              deleteBy,
+              clearObjects,
+              browseObjects,
+              getObjectPosition,
+              findObject,
+              exists,
+              saveSynonym,
+              saveSynonyms,
+              getSynonym,
+              searchSynonyms,
+              browseSynonyms,
+              deleteSynonym,
+              clearSynonyms,
+              replaceAllObjects,
+              replaceAllSynonyms,
+              searchRules,
+              getRule,
+              deleteRule,
+              saveRule,
+              saveRules,
+              replaceAllRules,
+              browseRules,
+              clearRules,
+            },
+          }),
+          saveObjectsWithTransformation: saveObjectsWithTransformation(
+            indexName,
+            ingestionTransporter
+          ),
+          partialUpdateObjectsWithTransformation: partialUpdateObjectsWithTransformation(
+            indexName,
+            ingestionTransporter
+          ),
+        };
       },
       initAnalytics: () => (clientOptions?: InitAnalyticsOptions): AnalyticsClient => {
         return createAnalyticsClient({
@@ -546,7 +579,7 @@ export type SearchIndex = BaseSearchIndex & {
 };
 
 export type SearchClient = BaseSearchClient & {
-  readonly initIndex: (indexName: string) => SearchIndex;
+  readonly initIndex: (indexName: string) => SearchIndex & IngestionMethods;
   readonly search: <TObject>(
     queries: readonly MultipleQueriesQuery[],
     requestOptions?: RequestOptions & MultipleQueriesOptions

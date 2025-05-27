@@ -172,4 +172,47 @@ describe('default preset', () => {
       expect(client).toHaveProperty('destroy');
     }
   });
+
+  describe('bridge methods', () => {
+    const clientWithTransformation = algoliasearch('appId', 'apiKey', {
+      transformation: { region: 'us' },
+    });
+    const indexWithTransformation = clientWithTransformation.initIndex('foo');
+    const index = client.initIndex('foo');
+
+    test('throws when missing transformation.region', () => {
+      // @ts-ignore
+      expect(() => algoliasearch('APP_ID', 'API_KEY', { transformation: {} })).toThrow(
+        '`region` must be provided when leveraging the transformation pipeline'
+      );
+    });
+
+    test('throws when wrong transformation.region', () => {
+      expect(() =>
+        // @ts-ignore
+        algoliasearch('APP_ID', 'API_KEY', { transformation: { region: 'cn' } })
+      ).toThrow('`region` is required and must be one of the following: eu, us}`');
+    });
+
+    test('throws when calling the transformation methods without init parameters', async () => {
+      await expect(
+        index.saveObjectsWithTransformation([{ objectID: 'bar', baz: 42 }], { waitForTasks: true })
+      ).rejects.toThrow(
+        '`transformation.region` must be provided at client instantiation before calling this method.'
+      );
+
+      await expect(
+        index.partialUpdateObjectsWithTransformation([{ objectID: 'bar', baz: 42 }], {
+          waitForTasks: true,
+        })
+      ).rejects.toThrow(
+        '`transformation.region` must be provided at client instantiation before calling this method.'
+      );
+    });
+
+    test('exposes the transformation methods at the root of the client', () => {
+      expect(indexWithTransformation.saveObjectsWithTransformation).not.toBeUndefined();
+      expect(indexWithTransformation.partialUpdateObjectsWithTransformation).not.toBeUndefined();
+    });
+  });
 });
