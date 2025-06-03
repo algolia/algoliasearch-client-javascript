@@ -4,7 +4,7 @@ import type { AuthenticationCreate } from './authenticationCreate';
 
 export type TransformationTry = {
   /**
-   * The source code of the transformation.
+   * It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
    */
   code: string;
 
