@@ -48,7 +48,7 @@ import type { CreateIterablePromise } from '@algolia/client-common';
 /**
  * Properties for the `addOrUpdateObject` method.
  */
-export type AddOrUpdateObjectProps = {
+export type AddOrUpdateObjectProps<T extends object> = {
   /**
    * Name of the index on which to perform the operation.
    */
@@ -60,7 +60,7 @@ export type AddOrUpdateObjectProps = {
   /**
    * The record. A schemaless object with attributes that are useful in the context of search and discovery.
    */
-  body: Record<string, unknown>;
+  body: T;
 };
 
 /**
@@ -537,7 +537,7 @@ export type RestoreApiKeyProps = {
 /**
  * Properties for the `saveObject` method.
  */
-export type SaveObjectProps = {
+export type SaveObjectProps<T extends object> = {
   /**
    * Name of the index on which to perform the operation.
    */
@@ -545,7 +545,7 @@ export type SaveObjectProps = {
   /**
    * The record. A schemaless object with attributes that are useful in the context of search and discovery.
    */
-  body: Record<string, unknown>;
+  body: T;
 };
 
 /**

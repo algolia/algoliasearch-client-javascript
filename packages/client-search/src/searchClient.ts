@@ -793,8 +793,8 @@ export function createSearchClient({
      * @param addOrUpdateObject.body - The record. A schemaless object with attributes that are useful in the context of search and discovery.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    addOrUpdateObject(
-      { indexName, objectID, body }: AddOrUpdateObjectProps,
+    addOrUpdateObject<T extends object>(
+      { indexName, objectID, body }: AddOrUpdateObjectProps<T>,
       requestOptions?: RequestOptions,
     ): Promise<UpdatedAtWithObjectIdResponse> {
       if (!indexName) {
@@ -2330,7 +2330,10 @@ export function createSearchClient({
      * @param saveObject.body - The record. A schemaless object with attributes that are useful in the context of search and discovery.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    saveObject({ indexName, body }: SaveObjectProps, requestOptions?: RequestOptions): Promise<SaveObjectResponse> {
+    saveObject<T extends object>(
+      { indexName, body }: SaveObjectProps<T>,
+      requestOptions?: RequestOptions,
+    ): Promise<SaveObjectResponse> {
       if (!indexName) {
         throw new Error('Parameter `indexName` is required when calling `saveObject`.');
       }
