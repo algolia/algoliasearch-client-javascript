@@ -21,7 +21,7 @@ import type {
   DeleteUserTokenProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.25.0';
+export const apiClientVersion = '5.26.0';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];

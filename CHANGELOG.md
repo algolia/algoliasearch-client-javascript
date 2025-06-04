@@ -1,3 +1,17 @@
+## [5.26.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.25.0...5.26.0)
+
+- [9db03b532b](https://github.com/algolia/api-clients-automation/commit/9db03b532b) fix(specs): typo ([#4854](https://github.com/algolia/api-clients-automation/pull/4854)) by [@kai687](https://github.com/kai687/)
+- [db02a51d50](https://github.com/algolia/api-clients-automation/commit/db02a51d50) chore(deps): dependencies 2025-05-19 ([#4853](https://github.com/algolia/api-clients-automation/pull/4853)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [90b49b1e1b](https://github.com/algolia/api-clients-automation/commit/90b49b1e1b) feat(specs): add global push endpoint ([#4855](https://github.com/algolia/api-clients-automation/pull/4855)) by [@shortcuts](https://github.com/shortcuts/)
+- [8cb1e50d92](https://github.com/algolia/api-clients-automation/commit/8cb1e50d92) feat(javascript): add bridge to transformation on algoliasearch ([#4852](https://github.com/algolia/api-clients-automation/pull/4852)) by [@shortcuts](https://github.com/shortcuts/)
+- [cf416e6b91](https://github.com/algolia/api-clients-automation/commit/cf416e6b91) fix(specs): updated watchResponse ([#4879](https://github.com/algolia/api-clients-automation/pull/4879)) by [@shortcuts](https://github.com/shortcuts/)
+- [e46e762c0c](https://github.com/algolia/api-clients-automation/commit/e46e762c0c) chore(deps): dependencies 2025-05-26 ([#4880](https://github.com/algolia/api-clients-automation/pull/4880)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [06ad06e4a8](https://github.com/algolia/api-clients-automation/commit/06ad06e4a8) feat(specs): update transformation specs for no-code ([#4901](https://github.com/algolia/api-clients-automation/pull/4901)) by [@mehmetaligok](https://github.com/mehmetaligok/)
+- [820156b1d1](https://github.com/algolia/api-clients-automation/commit/820156b1d1) chore(deps): dependencies 2025-06-02 ([#4899](https://github.com/algolia/api-clients-automation/pull/4899)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [aa5c34ca65](https://github.com/algolia/api-clients-automation/commit/aa5c34ca65) feat(clients): add generic parameter ([#4922](https://github.com/algolia/api-clients-automation/pull/4922)) by [@millotp](https://github.com/millotp/)
+- [4ec0e13e28](https://github.com/algolia/api-clients-automation/commit/4ec0e13e28) fix(specs): more indexing actions to push ([#4930](https://github.com/algolia/api-clients-automation/pull/4930)) by [@shortcuts](https://github.com/shortcuts/)
+- [1951e4d127](https://github.com/algolia/api-clients-automation/commit/1951e4d127) fix(specs): wrong ACL for getSettings ([#4933](https://github.com/algolia/api-clients-automation/pull/4933)) by [@kai687](https://github.com/kai687/)
+
 ## [5.25.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.24.0...5.25.0)
 
 - [e5387adf09](https://github.com/algolia/api-clients-automation/commit/e5387adf09) chore(deps): dependencies 2025-05-05 ([#4804](https://github.com/algolia/api-clients-automation/pull/4804)) by [@algolia-bot](https://github.com/algolia-bot/)
