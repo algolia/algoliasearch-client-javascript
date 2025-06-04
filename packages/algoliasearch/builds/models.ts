@@ -113,6 +113,7 @@ import type {
   Widgets,
 } from '@algolia/client-search';
 import { apiClientVersion } from '@algolia/client-search';
+import type { Event, EventStatus, WatchResponse } from '@algolia/ingestion';
 
 export * from '@algolia/client-abtesting';
 export * from '@algolia/client-analytics';
@@ -191,6 +192,8 @@ export type {
   Edit,
   EditType,
   ErrorBase,
+  Event,
+  EventStatus,
   ExactOnSingleWordQuery,
   Exhaustive,
   FacetFilters,
@@ -249,6 +252,7 @@ export type {
   TypoTolerance,
   TypoToleranceEnum,
   Value,
+  WatchResponse,
   Widgets,
 };
 
