@@ -13,25 +13,25 @@ export type SourceBigQuery = {
    */
   datasetID: string;
 
-  dataType?: BigQueryDataType;
+  dataType?: BigQueryDataType | undefined;
 
   /**
    * Table name for the BigQuery export.
    */
-  table?: string;
+  table?: string | undefined;
 
   /**
    * Table prefix for a Google Analytics 4 data export to BigQuery.
    */
-  tablePrefix?: string;
+  tablePrefix?: string | undefined;
 
   /**
    * Custom SQL request to extract data from the BigQuery table.
    */
-  customSQLRequest?: string;
+  customSQLRequest?: string | undefined;
 
   /**
    * Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
    */
-  uniqueIDColumn?: string;
+  uniqueIDColumn?: string | undefined;
 };

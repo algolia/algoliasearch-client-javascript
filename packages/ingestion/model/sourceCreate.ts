@@ -11,10 +11,10 @@ export type SourceCreate = {
    */
   name: string;
 
-  input?: SourceInput;
+  input?: SourceInput | undefined;
 
   /**
    * Universally unique identifier (UUID) of an authentication resource.
    */
-  authenticationID?: string;
+  authenticationID?: string | undefined;
 };

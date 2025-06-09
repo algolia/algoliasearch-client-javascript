@@ -7,5 +7,5 @@ export type EmptySearch = {
   /**
    * Whether to exclude empty searches when calculating A/B test results.
    */
-  exclude?: boolean;
+  exclude?: boolean | undefined;
 };

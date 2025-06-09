@@ -14,18 +14,18 @@ export type Request = {
    */
   path: string;
   queryParameters: QueryParameters;
-  data?: Array<Record<string, any>> | Record<string, any>;
+  data?: Array<Record<string, any>> | Record<string, any> | undefined;
   headers: Headers;
   /**
    * If the given request should persist on the cache. Keep in mind,
    * that some methods may have this option enabled by default.
    */
-  cacheable?: boolean;
+  cacheable?: boolean | undefined;
   /**
    * Some POST methods in the Algolia REST API uses the `read` transporter.
    * This information is defined at the spec level.
    */
-  useReadTransporter?: boolean;
+  useReadTransporter?: boolean | undefined;
 };
 
 export type EndRequest = Pick<Request, 'headers' | 'method'> & {
@@ -41,7 +41,7 @@ export type EndRequest = Pick<Request, 'headers' | 'method'> & {
    * The response timeout, in milliseconds.
    */
   responseTimeout: number;
-  data?: string;
+  data?: string | undefined;
 };
 
 export type Response = {

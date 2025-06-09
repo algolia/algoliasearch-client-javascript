@@ -24,24 +24,24 @@ export type Task = {
   /**
    * Cron expression for the task\'s schedule.
    */
-  cron?: string;
+  cron?: string | undefined;
 
   /**
    * The last time the scheduled task ran in RFC 3339 format.
    */
-  lastRun?: string;
+  lastRun?: string | undefined;
 
   /**
    * The next scheduled run of the task in RFC 3339 format.
    */
-  nextRun?: string;
+  nextRun?: string | undefined;
 
   /**
    * Owner of the resource.
    */
-  owner?: string | null;
+  owner?: string | null | undefined;
 
-  input?: TaskInput;
+  input?: TaskInput | undefined;
 
   /**
    * Whether the task is enabled.
@@ -51,20 +51,20 @@ export type Task = {
   /**
    * Maximum accepted percentage of failures for a task run to finish successfully.
    */
-  failureThreshold?: number;
+  failureThreshold?: number | undefined;
 
-  action?: ActionType;
+  action?: ActionType | undefined;
 
-  subscriptionAction?: ActionType;
+  subscriptionAction?: ActionType | undefined;
 
   /**
    * Date of the last cursor in RFC 3339 format.
    */
-  cursor?: string;
+  cursor?: string | undefined;
 
-  notifications?: Notifications;
+  notifications?: Notifications | undefined;
 
-  policies?: Policies;
+  policies?: Policies | undefined;
 
   /**
    * Date of creation in RFC 3339 format.

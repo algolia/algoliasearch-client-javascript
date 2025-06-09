@@ -3,5 +3,5 @@
 import type { SearchForFacetValuesParams } from './searchForFacetValuesParams';
 
 export type SearchForFacetValuesRequest = {
-  params?: SearchForFacetValuesParams;
+  params?: SearchForFacetValuesParams | undefined;
 };

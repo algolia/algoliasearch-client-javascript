@@ -22,5 +22,5 @@ export type AuthOAuth = {
   /**
    * OAuth scope.
    */
-  scope?: string;
+  scope?: string | undefined;
 };

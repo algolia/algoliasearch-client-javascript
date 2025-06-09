@@ -41,22 +41,22 @@ export type AddedToCartObjectIDsAfterSearch = {
   /**
    * Identifier for authenticated users.  When the user signs in, you can get an identifier from your system and send it as `authenticatedUserToken`. This lets you keep using the `userToken` from before the user signed in, while providing a reliable way to identify users across sessions. Don\'t use personally identifiable information in user tokens. For more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken/).
    */
-  authenticatedUserToken?: string;
+  authenticatedUserToken?: string | undefined;
 
   /**
    * Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html).
    */
-  currency?: string;
+  currency?: string | undefined;
 
   /**
    * Extra information about the records involved in a purchase or add-to-cart events.  If provided, it must be the same length as `objectIDs`.
    */
-  objectData?: Array<ObjectDataAfterSearch>;
+  objectData?: Array<ObjectDataAfterSearch> | undefined;
 
   /**
    * Timestamp of the event, measured in milliseconds since the Unix epoch. By default, the Insights API uses the time it receives an event as its timestamp.
    */
-  timestamp?: number;
+  timestamp?: number | undefined;
 
-  value?: Value;
+  value?: Value | undefined;
 };

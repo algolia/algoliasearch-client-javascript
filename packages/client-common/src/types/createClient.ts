@@ -8,7 +8,7 @@ export type CreateClientOptions = Omit<TransporterOptions, OverriddenTransporter
   Partial<Pick<TransporterOptions, OverriddenTransporterOptions>> & {
     appId: string;
     apiKey: string;
-    authMode?: AuthMode;
+    authMode?: AuthMode | undefined;
     algoliaAgents: AlgoliaAgentOptions[];
   };
 

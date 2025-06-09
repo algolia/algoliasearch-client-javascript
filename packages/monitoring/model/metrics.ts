@@ -6,25 +6,25 @@ export type Metrics = {
   /**
    * CPU idleness in %.
    */
-  cpu_usage?: { [key: string]: Array<ProbesMetric> };
+  cpu_usage?: { [key: string]: Array<ProbesMetric> } | undefined;
 
   /**
    * RAM used for indexing in MB.
    */
-  ram_indexing_usage?: { [key: string]: Array<ProbesMetric> };
+  ram_indexing_usage?: { [key: string]: Array<ProbesMetric> } | undefined;
 
   /**
    * RAM used for search in MB.
    */
-  ram_search_usage?: { [key: string]: Array<ProbesMetric> };
+  ram_search_usage?: { [key: string]: Array<ProbesMetric> } | undefined;
 
   /**
    * Solid-state disk (SSD) usage expressed as % of RAM.  0% means no SSD usage. A value of 50% indicates 32&nbsp;GB SSD usage for a machine with 64&nbsp;RAM.
    */
-  ssd_usage?: { [key: string]: Array<ProbesMetric> };
+  ssd_usage?: { [key: string]: Array<ProbesMetric> } | undefined;
 
   /**
    * Average build time of the indices in seconds.
    */
-  avg_build_time?: { [key: string]: Array<ProbesMetric> };
+  avg_build_time?: { [key: string]: Array<ProbesMetric> } | undefined;
 };

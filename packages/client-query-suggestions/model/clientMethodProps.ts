@@ -13,7 +13,7 @@ export type CustomDeleteProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -27,7 +27,7 @@ export type CustomGetProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -41,11 +41,11 @@ export type CustomPostProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -59,11 +59,11 @@ export type CustomPutProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**

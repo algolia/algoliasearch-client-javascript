@@ -4,5 +4,5 @@ export type WithPrimary = {
   /**
    * Replica indices only: the name of the primary index for this replica.
    */
-  primary?: string;
+  primary?: string | undefined;
 };

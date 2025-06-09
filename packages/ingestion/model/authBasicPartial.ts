@@ -7,10 +7,10 @@ export type AuthBasicPartial = {
   /**
    * Username.
    */
-  username?: string;
+  username?: string | undefined;
 
   /**
    * Password. This field is `null` in the API response.
    */
-  password?: string;
+  password?: string | undefined;
 };

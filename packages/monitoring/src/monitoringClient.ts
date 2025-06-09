@@ -97,7 +97,7 @@ export function createMonitoringClient({
      * @param segment - The algolia agent (user-agent) segment to add.
      * @param version - The version of the agent.
      */
-    addAlgoliaAgent(segment: string, version?: string): void {
+    addAlgoliaAgent(segment: string, version?: string | undefined): void {
       transporter.algoliaAgent.add({ segment, version });
     },
 
@@ -289,7 +289,7 @@ export function createMonitoringClient({
      * Retrieves known incidents for all clusters.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getIncidents(requestOptions?: RequestOptions): Promise<IncidentsResponse> {
+    getIncidents(requestOptions?: RequestOptions | undefined): Promise<IncidentsResponse> {
       const requestPath = '/1/incidents';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -421,7 +421,7 @@ export function createMonitoringClient({
      * Retrieves the servers that belong to clusters.  The response depends on whether you authenticate your API request:  - With authentication, the response lists the servers assigned to your Algolia application\'s cluster.  - Without authentication, the response lists the servers for all Algolia clusters.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getServers(requestOptions?: RequestOptions): Promise<InventoryResponse> {
+    getServers(requestOptions?: RequestOptions | undefined): Promise<InventoryResponse> {
       const requestPath = '/1/inventory/servers';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -440,7 +440,7 @@ export function createMonitoringClient({
      * Retrieves the status of all Algolia clusters and instances.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getStatus(requestOptions?: RequestOptions): Promise<StatusResponse> {
+    getStatus(requestOptions?: RequestOptions | undefined): Promise<StatusResponse> {
       const requestPath = '/1/status';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};

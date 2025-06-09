@@ -11,7 +11,7 @@ export type CustomDeleteProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -25,7 +25,7 @@ export type CustomGetProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -39,11 +39,11 @@ export type CustomPostProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -57,11 +57,11 @@ export type CustomPutProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -91,19 +91,19 @@ export type ListABTestsProps = {
   /**
    * Position of the first item to return.
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * Number of items to return.
    */
-  limit?: number;
+  limit?: number | undefined;
   /**
    * Index name prefix. Only A/B tests for indices starting with this string are included in the response.
    */
-  indexPrefix?: string;
+  indexPrefix?: string | undefined;
   /**
    * Index name suffix. Only A/B tests for indices ending with this string are included in the response.
    */
-  indexSuffix?: string;
+  indexSuffix?: string | undefined;
 };
 
 /**

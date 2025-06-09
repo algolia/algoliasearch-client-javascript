@@ -3,15 +3,15 @@
 import type { EditType } from './editType';
 
 export type Edit = {
-  type?: EditType;
+  type?: EditType | undefined;
 
   /**
    * Text or patterns to remove from the query string.
    */
-  delete?: string;
+  delete?: string | undefined;
 
   /**
    * Text to be added in place of the deleted text inside the query string.
    */
-  insert?: string;
+  insert?: string | undefined;
 };

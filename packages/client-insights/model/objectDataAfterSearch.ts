@@ -7,14 +7,14 @@ export type ObjectDataAfterSearch = {
   /**
    * Unique identifier for a search query, used to track purchase events with multiple records that originate from different searches.
    */
-  queryID?: string;
+  queryID?: string | undefined;
 
-  price?: Price;
+  price?: Price | undefined;
 
   /**
    * Quantity of a product that has been purchased or added to the cart. The total purchase value is the sum of `quantity` multiplied with the `price` for each purchased item.
    */
-  quantity?: number;
+  quantity?: number | undefined;
 
-  discount?: Discount;
+  discount?: Discount | undefined;
 };

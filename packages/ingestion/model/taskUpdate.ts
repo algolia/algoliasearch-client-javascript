@@ -12,28 +12,28 @@ export type TaskUpdate = {
   /**
    * Universally unique identifier (UUID) of a destination resource.
    */
-  destinationID?: string;
+  destinationID?: string | undefined;
 
   /**
    * Cron expression for the task\'s schedule.
    */
-  cron?: string;
+  cron?: string | undefined;
 
-  input?: TaskInput;
+  input?: TaskInput | undefined;
 
   /**
    * Whether the task is enabled.
    */
-  enabled?: boolean;
+  enabled?: boolean | undefined;
 
-  subscriptionAction?: ActionType;
+  subscriptionAction?: ActionType | undefined;
 
   /**
    * Maximum accepted percentage of failures for a task run to finish successfully.
    */
-  failureThreshold?: number;
+  failureThreshold?: number | undefined;
 
-  notifications?: Notifications;
+  notifications?: Notifications | undefined;
 
-  policies?: Policies;
+  policies?: Policies | undefined;
 };

@@ -21,5 +21,5 @@ export type HighlightResultOption = {
   /**
    * Whether the entire attribute value is highlighted.
    */
-  fullyHighlighted?: boolean;
+  fullyHighlighted?: boolean | undefined;
 };

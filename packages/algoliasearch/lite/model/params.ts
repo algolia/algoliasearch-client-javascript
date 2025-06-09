@@ -8,11 +8,11 @@ import type { RenderingContent } from './renderingContent';
  * Parameters to apply to this search.  You can use all search parameters, plus special `automaticFacetFilters`, `automaticOptionalFacetFilters`, and `query`.
  */
 export type Params = {
-  query?: ConsequenceQuery;
+  query?: ConsequenceQuery | undefined;
 
-  automaticFacetFilters?: AutomaticFacetFilters;
+  automaticFacetFilters?: AutomaticFacetFilters | undefined;
 
-  automaticOptionalFacetFilters?: AutomaticFacetFilters;
+  automaticOptionalFacetFilters?: AutomaticFacetFilters | undefined;
 
-  renderingContent?: RenderingContent;
+  renderingContent?: RenderingContent | undefined;
 };

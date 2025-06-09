@@ -11,5 +11,5 @@ export type OnDemandTrigger = {
   /**
    * The last time the scheduled task ran in RFC 3339 format.
    */
-  lastRun?: string;
+  lastRun?: string | undefined;
 };

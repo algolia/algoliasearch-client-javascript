@@ -4,15 +4,15 @@ export type LogQuery = {
   /**
    * Index targeted by the query.
    */
-  index_name?: string;
+  index_name?: string | undefined;
 
   /**
    * A user identifier.
    */
-  user_token?: string;
+  user_token?: string | undefined;
 
   /**
    * Unique query identifier.
    */
-  query_id?: string;
+  query_id?: string | undefined;
 };

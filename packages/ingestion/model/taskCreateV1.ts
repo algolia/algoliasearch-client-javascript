@@ -25,17 +25,17 @@ export type TaskCreateV1 = {
   /**
    * Whether the task is enabled.
    */
-  enabled?: boolean;
+  enabled?: boolean | undefined;
 
   /**
    * Maximum accepted percentage of failures for a task run to finish successfully.
    */
-  failureThreshold?: number;
+  failureThreshold?: number | undefined;
 
-  input?: TaskInput;
+  input?: TaskInput | undefined;
 
   /**
    * Date of the last cursor in RFC 3339 format.
    */
-  cursor?: string;
+  cursor?: string | undefined;
 };

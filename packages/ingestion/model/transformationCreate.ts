@@ -10,7 +10,7 @@ export type TransformationCreate = {
   /**
    * It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
    */
-  code?: string;
+  code?: string | undefined;
 
   /**
    * The uniquely identified name of your transformation.
@@ -24,10 +24,10 @@ export type TransformationCreate = {
   /**
    * A descriptive name for your transformation of what it does.
    */
-  description?: string;
+  description?: string | undefined;
 
   /**
    * The authentications associated with the current transformation.
    */
-  authenticationIDs?: Array<string>;
+  authenticationIDs?: Array<string> | undefined;
 };

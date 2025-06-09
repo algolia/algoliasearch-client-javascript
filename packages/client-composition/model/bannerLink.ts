@@ -4,5 +4,5 @@
  * Link for a banner defined in the Merchandising Studio.
  */
 export type BannerLink = {
-  url?: string;
+  url?: string | undefined;
 };

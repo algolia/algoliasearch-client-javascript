@@ -7,10 +7,10 @@ export type TransformationError = {
   /**
    * The error status code.
    */
-  code?: number;
+  code?: number | undefined;
 
   /**
    * A descriptive message explaining the failure.
    */
-  message?: string;
+  message?: string | undefined;
 };

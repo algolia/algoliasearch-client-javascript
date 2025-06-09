@@ -7,10 +7,10 @@ export type EventsResponse = {
   /**
    * Details about the response, such as error messages.
    */
-  message?: string;
+  message?: string | undefined;
 
   /**
    * The HTTP status code of the response.
    */
-  status?: number;
+  status?: number | undefined;
 };

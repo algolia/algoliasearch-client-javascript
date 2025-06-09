@@ -7,19 +7,19 @@ import type { DestinationType } from './destinationType';
  * API request body for updating a destination.
  */
 export type DestinationUpdate = {
-  type?: DestinationType;
+  type?: DestinationType | undefined;
 
   /**
    * Descriptive name for the resource.
    */
-  name?: string;
+  name?: string | undefined;
 
-  input?: DestinationInput;
+  input?: DestinationInput | undefined;
 
   /**
    * Universally unique identifier (UUID) of an authentication resource.
    */
-  authenticationID?: string;
+  authenticationID?: string | undefined;
 
-  transformationIDs?: Array<string>;
+  transformationIDs?: Array<string> | undefined;
 };

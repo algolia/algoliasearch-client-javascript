@@ -7,10 +7,10 @@ export type Range = {
   /**
    * Lower boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
    */
-  from?: number;
+  from?: number | undefined;
 
   /**
    * Upper boundary of a range in meters. The Geo ranking criterion considers all records within the range to be equal.
    */
-  value?: number;
+  value?: number | undefined;
 };

@@ -11,5 +11,5 @@ export type TrendingFacets = {
 
   model: TrendingFacetsModel;
 
-  fallbackParameters?: FallbackParams;
+  fallbackParameters?: FallbackParams | undefined;
 };

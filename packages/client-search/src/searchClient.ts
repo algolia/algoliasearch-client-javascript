@@ -239,7 +239,7 @@ export function createSearchClient({
      * @param segment - The algolia agent (user-agent) segment to add.
      * @param version - The version of the agent.
      */
-    addAlgoliaAgent(segment: string, version?: string): void {
+    addAlgoliaAgent(segment: string, version?: string | undefined): void {
       transporter.algoliaAgent.add({ segment, version });
     },
 
@@ -275,7 +275,7 @@ export function createSearchClient({
         maxRetries = 50,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForTaskOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<GetTaskResponse> {
       let retryCount = 0;
 
@@ -307,7 +307,7 @@ export function createSearchClient({
         maxRetries = 50,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForAppTaskOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<GetTaskResponse> {
       let retryCount = 0;
 
@@ -343,7 +343,7 @@ export function createSearchClient({
         maxRetries = 50,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForApiKeyOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<GetApiKeyResponse | undefined> {
       let retryCount = 0;
       const baseIteratorOptions: IterableOptions<GetApiKeyResponse | undefined> = {
@@ -407,7 +407,7 @@ export function createSearchClient({
      */
     browseObjects<T>(
       { indexName, browseParams, ...browseObjectsOptions }: BrowseOptions<BrowseResponse<T>> & BrowseProps,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<BrowseResponse<T>> {
       return createIterablePromise<BrowseResponse<T>>({
         func: (previousResponse) => {
@@ -441,11 +441,11 @@ export function createSearchClient({
      */
     browseRules(
       { indexName, searchRulesParams, ...browseRulesOptions }: BrowseOptions<SearchRulesResponse> & SearchRulesProps,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<SearchRulesResponse> {
       const params = {
-        hitsPerPage: 1000,
         ...searchRulesParams,
+        hitsPerPage: searchRulesParams?.hitsPerPage || 1000,
       };
 
       return createIterablePromise<SearchRulesResponse>({
@@ -483,11 +483,11 @@ export function createSearchClient({
         searchSynonymsParams,
         ...browseSynonymsOptions
       }: BrowseOptions<SearchSynonymsResponse> & SearchSynonymsProps,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<SearchSynonymsResponse> {
       const params = {
-        page: 0,
         ...searchSynonymsParams,
+        page: searchSynonymsParams?.page || 0,
         hitsPerPage: 1000,
       };
 
@@ -561,7 +561,7 @@ export function createSearchClient({
      */
     async saveObjects(
       { indexName, objects, waitForTasks, batchSize }: SaveObjectsOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
         { indexName, objects, action: 'addObject', waitForTasks, batchSize },
@@ -582,7 +582,7 @@ export function createSearchClient({
      */
     async deleteObjects(
       { indexName, objectIDs, waitForTasks, batchSize }: DeleteObjectsOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
         {
@@ -610,7 +610,7 @@ export function createSearchClient({
      */
     async partialUpdateObjects(
       { indexName, objects, createIfNotExists, waitForTasks, batchSize }: PartialUpdateObjectsOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
         {
@@ -638,7 +638,7 @@ export function createSearchClient({
      */
     async replaceAllObjects(
       { indexName, objects, batchSize, scopes }: ReplaceAllObjectsOptions,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsResponse> {
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
       const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
@@ -729,7 +729,7 @@ export function createSearchClient({
      */
     searchForHits<T>(
       searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<{ results: Array<SearchResponse<T>> }> {
       return this.search(searchMethodParams, requestOptions) as Promise<{ results: Array<SearchResponse<T>> }>;
     },
@@ -744,7 +744,7 @@ export function createSearchClient({
      */
     searchForFacets(
       searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<{ results: Array<SearchForFacetValuesResponse> }> {
       return this.search(searchMethodParams, requestOptions) as Promise<{
         results: Array<SearchForFacetValuesResponse>;
@@ -1589,7 +1589,7 @@ export function createSearchClient({
      *  - settings
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getDictionaryLanguages(requestOptions?: RequestOptions): Promise<{ [key: string]: Languages }> {
+    getDictionaryLanguages(requestOptions?: RequestOptions | undefined): Promise<{ [key: string]: Languages }> {
       const requestPath = '/1/dictionaries/*/languages';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1611,7 +1611,7 @@ export function createSearchClient({
      *  - settings
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getDictionarySettings(requestOptions?: RequestOptions): Promise<GetDictionarySettingsResponse> {
+    getDictionarySettings(requestOptions?: RequestOptions | undefined): Promise<GetDictionarySettingsResponse> {
       const requestPath = '/1/dictionaries/*/settings';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1819,7 +1819,7 @@ export function createSearchClient({
      *  - admin
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getSources(requestOptions?: RequestOptions): Promise<Array<Source>> {
+    getSources(requestOptions?: RequestOptions | undefined): Promise<Array<Source>> {
       const requestPath = '/1/security/sources';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1913,7 +1913,7 @@ export function createSearchClient({
      * @deprecated
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getTopUserIds(requestOptions?: RequestOptions): Promise<GetTopUserIdsResponse> {
+    getTopUserIds(requestOptions?: RequestOptions | undefined): Promise<GetTopUserIdsResponse> {
       const requestPath = '/1/clusters/mapping/top';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -1998,7 +1998,7 @@ export function createSearchClient({
      *  - admin
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    listApiKeys(requestOptions?: RequestOptions): Promise<ListApiKeysResponse> {
+    listApiKeys(requestOptions?: RequestOptions | undefined): Promise<ListApiKeysResponse> {
       const requestPath = '/1/keys';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
@@ -2022,7 +2022,7 @@ export function createSearchClient({
      * @deprecated
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    listClusters(requestOptions?: RequestOptions): Promise<ListClustersResponse> {
+    listClusters(requestOptions?: RequestOptions | undefined): Promise<ListClustersResponse> {
       const requestPath = '/1/clusters';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};

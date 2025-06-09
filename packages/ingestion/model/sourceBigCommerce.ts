@@ -9,11 +9,11 @@ export type SourceBigCommerce = {
    */
   storeHash: string;
 
-  channel?: BigCommerceChannel;
+  channel?: BigCommerceChannel | undefined;
 
-  customFields?: Array<string>;
+  customFields?: Array<string> | undefined;
 
-  productMetafields?: Array<BigCommerceMetafield>;
+  productMetafields?: Array<BigCommerceMetafield> | undefined;
 
-  variantMetafields?: Array<BigCommerceMetafield>;
+  variantMetafields?: Array<BigCommerceMetafield> | undefined;
 };

@@ -11,5 +11,5 @@ export type RelatedProducts = {
    */
   objectID: string;
 
-  fallbackParameters?: FallbackParams;
+  fallbackParameters?: FallbackParams | undefined;
 };

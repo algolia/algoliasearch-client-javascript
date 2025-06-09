@@ -4,10 +4,10 @@ export type EstimateABTestResponse = {
   /**
    * Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
    */
-  durationDays?: number;
+  durationDays?: number | undefined;
 
   /**
    * Sample size estimates for each variant. The first element is the control variant. Each element is the estimated number of searches required to achieve the desired statistical significance.
    */
-  sampleSizes?: Array<number>;
+  sampleSizes?: Array<number> | undefined;
 };

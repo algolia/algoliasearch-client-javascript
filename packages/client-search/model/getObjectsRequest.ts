@@ -7,7 +7,7 @@ export type GetObjectsRequest = {
   /**
    * Attributes to retrieve. If not specified, all retrievable attributes are returned.
    */
-  attributesToRetrieve?: Array<string>;
+  attributesToRetrieve?: Array<string> | undefined;
 
   /**
    * Object ID for the record to retrieve.

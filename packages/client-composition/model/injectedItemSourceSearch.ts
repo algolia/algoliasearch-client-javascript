@@ -8,5 +8,5 @@ export type InjectedItemSourceSearch = {
    */
   index: string;
 
-  params?: InjectedItemsQueryParameters;
+  params?: InjectedItemsQueryParameters | undefined;
 };

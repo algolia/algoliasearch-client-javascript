@@ -4,5 +4,5 @@ export type SourceUpdateShopify = {
   /**
    * Feature flags for the Shopify source.
    */
-  featureFlags?: { [key: string]: any };
+  featureFlags?: { [key: string]: any } | undefined;
 };

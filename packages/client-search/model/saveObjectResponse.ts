@@ -14,5 +14,5 @@ export type SaveObjectResponse = {
   /**
    * Unique record identifier.
    */
-  objectID?: string;
+  objectID?: string | undefined;
 };

@@ -19,7 +19,7 @@ export type CustomDeleteProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -33,7 +33,7 @@ export type CustomGetProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -47,11 +47,11 @@ export type CustomPostProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -65,11 +65,11 @@ export type CustomPutProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -117,11 +117,11 @@ export type ListCompositionsProps = {
   /**
    * Requested page of the API response. If `null`, the API response is not paginated.
    */
-  page?: number;
+  page?: number | undefined;
   /**
    * Number of hits per page.
    */
-  hitsPerPage?: number;
+  hitsPerPage?: number | undefined;
 };
 
 /**
@@ -154,7 +154,7 @@ export type SearchCompositionRulesProps = {
    * Unique Composition ObjectID.
    */
   compositionID: string;
-  searchCompositionRulesParams?: SearchCompositionRulesParams;
+  searchCompositionRulesParams?: SearchCompositionRulesParams | undefined;
 };
 
 /**
@@ -169,14 +169,14 @@ export type SearchForFacetValuesProps = {
    * Facet attribute in which to search for values.  This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier.
    */
   facetName: string;
-  searchForFacetValuesRequest?: SearchForFacetValuesRequest;
+  searchForFacetValuesRequest?: SearchForFacetValuesRequest | undefined;
 };
 
 export type WaitForCompositionTaskOptions = {
   /**
    * The maximum number of retries. 50 by default.
    */
-  maxRetries?: number;
+  maxRetries?: number | undefined;
 
   /**
    * The function to decide how long to wait between retries.

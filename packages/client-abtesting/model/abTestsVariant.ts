@@ -14,5 +14,5 @@ export type AbTestsVariant = {
   /**
    * Description for this variant.
    */
-  description?: string;
+  description?: string | undefined;
 };

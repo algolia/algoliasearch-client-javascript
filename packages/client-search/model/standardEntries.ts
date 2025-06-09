@@ -7,15 +7,15 @@ export type StandardEntries = {
   /**
    * Key-value pair of a language ISO code and a boolean value.
    */
-  plurals?: { [key: string]: boolean } | null;
+  plurals?: { [key: string]: boolean } | null | undefined;
 
   /**
    * Key-value pair of a language ISO code and a boolean value.
    */
-  stopwords?: { [key: string]: boolean } | null;
+  stopwords?: { [key: string]: boolean } | null | undefined;
 
   /**
    * Key-value pair of a language ISO code and a boolean value.
    */
-  compounds?: { [key: string]: boolean } | null;
+  compounds?: { [key: string]: boolean } | null | undefined;
 };

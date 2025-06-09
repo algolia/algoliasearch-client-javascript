@@ -12,17 +12,17 @@ export type SourceCSV = {
   /**
    * Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
    */
-  uniqueIDColumn?: string;
+  uniqueIDColumn?: string | undefined;
 
   /**
    * Key-value pairs of column names and their expected types.
    */
-  mapping?: { [key: string]: MappingTypeCSV };
+  mapping?: { [key: string]: MappingTypeCSV } | undefined;
 
-  method?: MethodType;
+  method?: MethodType | undefined;
 
   /**
    * The character used to split the value on each line, default to a comma (\\r, \\n, 0xFFFD, and space are forbidden).
    */
-  delimiter?: string;
+  delimiter?: string | undefined;
 };

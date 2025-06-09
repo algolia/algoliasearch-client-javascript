@@ -6,7 +6,7 @@ export type IncidentEntry = {
   /**
    * Timestamp, measured in milliseconds since the Unix epoch.
    */
-  t?: number;
+  t?: number | undefined;
 
-  v?: Incident;
+  v?: Incident | undefined;
 };

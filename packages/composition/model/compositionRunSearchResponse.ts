@@ -8,5 +8,5 @@ export type CompositionRunSearchResponse = Record<string, any> & {
    */
   objectID: string;
 
-  appliedRules?: Array<CompositionRunAppliedRules>;
+  appliedRules?: Array<CompositionRunAppliedRules> | undefined;
 };

@@ -3,5 +3,5 @@
 import type { Metrics } from './metrics';
 
 export type InfrastructureResponse = {
-  metrics?: Metrics;
+  metrics?: Metrics | undefined;
 };

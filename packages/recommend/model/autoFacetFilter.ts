@@ -7,10 +7,10 @@ export type AutoFacetFilter = {
   /**
    * Facet attribute.
    */
-  facet?: string;
+  facet?: string | undefined;
 
   /**
    * Whether the filter is negative. If true, recommendations must not have the same value for the `facet` attribute. If false, recommendations must have the same value for the `facet` attribute.
    */
-  negative?: boolean;
+  negative?: boolean | undefined;
 };

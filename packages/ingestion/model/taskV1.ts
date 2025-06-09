@@ -27,7 +27,7 @@ export type TaskV1 = {
 
   trigger: Trigger;
 
-  input?: TaskInput;
+  input?: TaskInput | undefined;
 
   /**
    * Whether the task is enabled.
@@ -37,18 +37,18 @@ export type TaskV1 = {
   /**
    * Maximum accepted percentage of failures for a task run to finish successfully.
    */
-  failureThreshold?: number;
+  failureThreshold?: number | undefined;
 
-  action?: ActionType;
+  action?: ActionType | undefined;
 
   /**
    * Date of the last cursor in RFC 3339 format.
    */
-  cursor?: string;
+  cursor?: string | undefined;
 
-  notifications?: Notifications;
+  notifications?: Notifications | undefined;
 
-  policies?: Policies;
+  policies?: Policies | undefined;
 
   /**
    * Date of creation in RFC 3339 format.

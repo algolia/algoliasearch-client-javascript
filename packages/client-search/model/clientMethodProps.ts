@@ -115,7 +115,7 @@ export type BrowseProps = {
    * Name of the index on which to perform the operation.
    */
   indexName: string;
-  browseParams?: BrowseParams;
+  browseParams?: BrowseParams | undefined;
 };
 
 /**
@@ -139,7 +139,7 @@ export type ClearRulesProps = {
   /**
    * Whether changes are applied to replica indices.
    */
-  forwardToReplicas?: boolean;
+  forwardToReplicas?: boolean | undefined;
 };
 
 /**
@@ -153,7 +153,7 @@ export type ClearSynonymsProps = {
   /**
    * Whether changes are applied to replica indices.
    */
-  forwardToReplicas?: boolean;
+  forwardToReplicas?: boolean | undefined;
 };
 
 /**
@@ -167,7 +167,7 @@ export type CustomDeleteProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -181,7 +181,7 @@ export type CustomGetProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -195,11 +195,11 @@ export type CustomPostProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -213,11 +213,11 @@ export type CustomPutProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -280,7 +280,7 @@ export type DeleteRuleProps = {
   /**
    * Whether changes are applied to replica indices.
    */
-  forwardToReplicas?: boolean;
+  forwardToReplicas?: boolean | undefined;
 };
 
 /**
@@ -308,7 +308,7 @@ export type DeleteSynonymProps = {
   /**
    * Whether changes are applied to replica indices.
    */
-  forwardToReplicas?: boolean;
+  forwardToReplicas?: boolean | undefined;
 };
 
 /**
@@ -338,19 +338,19 @@ export type GetLogsProps = {
   /**
    * First log entry to retrieve. The most recent entries are listed first.
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * Maximum number of entries to retrieve.
    */
-  length?: number;
+  length?: number | undefined;
   /**
    * Index for which to retrieve log entries. By default, log entries are retrieved for all indices.
    */
-  indexName?: string;
+  indexName?: string | undefined;
   /**
    * Type of log entries to retrieve. By default, all log entries are retrieved.
    */
-  type?: LogType;
+  type?: LogType | undefined;
 };
 
 /**
@@ -368,7 +368,7 @@ export type GetObjectProps = {
   /**
    * Attributes to include with the records in the response. This is useful to reduce the size of the API response. By default, all retrievable attributes are returned.  `objectID` is always retrieved.  Attributes included in `unretrievableAttributes` won\'t be retrieved unless the request is authenticated with the admin API key.
    */
-  attributesToRetrieve?: Array<string>;
+  attributesToRetrieve?: Array<string> | undefined;
 };
 
 /**
@@ -440,7 +440,7 @@ export type HasPendingMappingsProps = {
   /**
    * Whether to include the cluster\'s pending mapping state in the response.
    */
-  getClusters?: boolean;
+  getClusters?: boolean | undefined;
 };
 
 /**
@@ -450,11 +450,11 @@ export type ListIndicesProps = {
   /**
    * Requested page of the API response. If `null`, the API response is not paginated.
    */
-  page?: number;
+  page?: number | undefined;
   /**
    * Number of hits per page.
    */
-  hitsPerPage?: number;
+  hitsPerPage?: number | undefined;
 };
 
 /**
@@ -464,11 +464,11 @@ export type ListUserIdsProps = {
   /**
    * Requested page of the API response. If `null`, the API response is not paginated.
    */
-  page?: number;
+  page?: number | undefined;
   /**
    * Number of hits per page.
    */
-  hitsPerPage?: number;
+  hitsPerPage?: number | undefined;
 };
 
 /**
@@ -501,7 +501,7 @@ export type PartialUpdateObjectProps = {
   /**
    * Whether to create a new record if it doesn\'t exist.
    */
-  createIfNotExists?: boolean;
+  createIfNotExists?: boolean | undefined;
 };
 
 /**
@@ -564,7 +564,7 @@ export type SaveRuleProps = {
   /**
    * Whether changes are applied to replica indices.
    */
-  forwardToReplicas?: boolean;
+  forwardToReplicas?: boolean | undefined;
 };
 
 /**
@@ -579,11 +579,11 @@ export type SaveRulesProps = {
   /**
    * Whether changes are applied to replica indices.
    */
-  forwardToReplicas?: boolean;
+  forwardToReplicas?: boolean | undefined;
   /**
    * Whether existing rules should be deleted before adding this batch.
    */
-  clearExistingRules?: boolean;
+  clearExistingRules?: boolean | undefined;
 };
 
 /**
@@ -602,7 +602,7 @@ export type SaveSynonymProps = {
   /**
    * Whether changes are applied to replica indices.
    */
-  forwardToReplicas?: boolean;
+  forwardToReplicas?: boolean | undefined;
 };
 
 /**
@@ -617,11 +617,11 @@ export type SaveSynonymsProps = {
   /**
    * Whether changes are applied to replica indices.
    */
-  forwardToReplicas?: boolean;
+  forwardToReplicas?: boolean | undefined;
   /**
    * Whether to replace all synonyms in the index with the ones sent with this request.
    */
-  replaceExistingSynonyms?: boolean;
+  replaceExistingSynonyms?: boolean | undefined;
 };
 
 /**
@@ -630,7 +630,7 @@ export type SaveSynonymsProps = {
  * @deprecated The `search` method now accepts flat `searchParams` at the root of the method.
  */
 type LegacySearchParams = {
-  params?: SearchParamsObject;
+  params?: SearchParamsObject | undefined;
 };
 
 /**
@@ -679,7 +679,7 @@ export type SearchForFacetValuesProps = {
    * Facet attribute in which to search for values.  This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier.
    */
   facetName: string;
-  searchForFacetValuesRequest?: SearchForFacetValuesRequest;
+  searchForFacetValuesRequest?: SearchForFacetValuesRequest | undefined;
 };
 
 /**
@@ -690,7 +690,7 @@ export type SearchRulesProps = {
    * Name of the index on which to perform the operation.
    */
   indexName: string;
-  searchRulesParams?: SearchRulesParams;
+  searchRulesParams?: SearchRulesParams | undefined;
 };
 
 /**
@@ -701,7 +701,7 @@ export type SearchSingleIndexProps = {
    * Name of the index on which to perform the operation.
    */
   indexName: string;
-  searchParams?: SearchParams;
+  searchParams?: SearchParams | undefined;
 };
 
 /**
@@ -715,7 +715,7 @@ export type SearchSynonymsProps = {
   /**
    * Body of the `searchSynonyms` operation.
    */
-  searchSynonymsParams?: SearchSynonymsParams;
+  searchSynonymsParams?: SearchSynonymsParams | undefined;
 };
 
 /**
@@ -730,7 +730,7 @@ export type SetSettingsProps = {
   /**
    * Whether changes are applied to replica indices.
    */
-  forwardToReplicas?: boolean;
+  forwardToReplicas?: boolean | undefined;
 };
 
 /**
@@ -810,7 +810,7 @@ export type GenerateSecuredApiKeyOptions = {
   /**
    * A set of properties defining the restrictions of the secured API key.
    */
-  restrictions?: SecuredApiKeyRestrictions;
+  restrictions?: SecuredApiKeyRestrictions | undefined;
 };
 
 export type GetSecuredApiKeyRemainingValidityOptions = {
@@ -840,7 +840,7 @@ export type PartialUpdateObjectsOptions = Pick<
   /**
    *To be provided if non-existing objects are passed, otherwise, the call will fail.
    */
-  createIfNotExists?: boolean;
+  createIfNotExists?: boolean | undefined;
 };
 
 export type SaveObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'objects' | 'waitForTasks' | 'batchSize'>;
@@ -849,12 +849,12 @@ export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
   /**
    * The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
    */
-  action?: Action;
+  action?: Action | undefined;
 
   /**
    * Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
    */
-  waitForTasks?: boolean;
+  waitForTasks?: boolean | undefined;
 };
 
 export type ReplaceAllObjectsOptions = {
@@ -871,12 +871,12 @@ export type ReplaceAllObjectsOptions = {
   /**
    * The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    */
-  batchSize?: number;
+  batchSize?: number | undefined;
 
   /**
    * The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
    */
-  scopes?: Array<ScopeType>;
+  scopes?: Array<ScopeType> | undefined;
 };
 
 export type AccountCopyIndexOptions = {

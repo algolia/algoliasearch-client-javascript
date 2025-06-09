@@ -4,10 +4,10 @@ export type BaseResponse = {
   /**
    * HTTP status code.
    */
-  status?: number;
+  status?: number | undefined;
 
   /**
    * Details about the response, such as error messages.
    */
-  message?: string;
+  message?: string | undefined;
 };

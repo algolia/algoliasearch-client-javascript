@@ -4,5 +4,5 @@ export type AppID = {
   /**
    * Algolia application ID to which this Query Suggestions configuration belongs.
    */
-  appID?: string;
+  appID?: string | undefined;
 };

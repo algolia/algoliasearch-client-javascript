@@ -21,31 +21,31 @@ export type TaskCreate = {
 
   action: ActionType;
 
-  subscriptionAction?: ActionType;
+  subscriptionAction?: ActionType | undefined;
 
   /**
    * Cron expression for the task\'s schedule.
    */
-  cron?: string;
+  cron?: string | undefined;
 
   /**
    * Whether the task is enabled.
    */
-  enabled?: boolean;
+  enabled?: boolean | undefined;
 
   /**
    * Maximum accepted percentage of failures for a task run to finish successfully.
    */
-  failureThreshold?: number;
+  failureThreshold?: number | undefined;
 
-  input?: TaskInput;
+  input?: TaskInput | undefined;
 
   /**
    * Date of the last cursor in RFC 3339 format.
    */
-  cursor?: string;
+  cursor?: string | undefined;
 
-  notifications?: Notifications;
+  notifications?: Notifications | undefined;
 
-  policies?: Policies;
+  policies?: Policies | undefined;
 };

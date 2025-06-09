@@ -15,7 +15,7 @@ export type CustomDeleteProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -29,7 +29,7 @@ export type CustomGetProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -43,11 +43,11 @@ export type CustomPostProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -61,11 +61,11 @@ export type CustomPutProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -79,15 +79,15 @@ export type GetAddToCartRateProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -101,15 +101,15 @@ export type GetAverageClickPositionProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -123,15 +123,15 @@ export type GetClickPositionsProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -145,15 +145,15 @@ export type GetClickThroughRateProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -167,15 +167,15 @@ export type GetConversionRateProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -189,15 +189,15 @@ export type GetNoClickRateProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -211,15 +211,15 @@ export type GetNoResultsRateProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -233,15 +233,15 @@ export type GetPurchaseRateProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -255,15 +255,15 @@ export type GetRevenueProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -277,15 +277,15 @@ export type GetSearchesCountProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -299,23 +299,23 @@ export type GetSearchesNoClicksProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Number of items to return.
    */
-  limit?: number;
+  limit?: number | undefined;
   /**
    * Position of the first item to return.
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -329,23 +329,23 @@ export type GetSearchesNoResultsProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Number of items to return.
    */
-  limit?: number;
+  limit?: number | undefined;
   /**
    * Position of the first item to return.
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -369,23 +369,23 @@ export type GetTopCountriesProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Number of items to return.
    */
-  limit?: number;
+  limit?: number | undefined;
   /**
    * Position of the first item to return.
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -399,27 +399,27 @@ export type GetTopFilterAttributesProps = {
   /**
    * Search query.
    */
-  search?: string;
+  search?: string | undefined;
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Number of items to return.
    */
-  limit?: number;
+  limit?: number | undefined;
   /**
    * Position of the first item to return.
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -437,27 +437,27 @@ export type GetTopFilterForAttributeProps = {
   /**
    * Search query.
    */
-  search?: string;
+  search?: string | undefined;
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Number of items to return.
    */
-  limit?: number;
+  limit?: number | undefined;
   /**
    * Position of the first item to return.
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -471,27 +471,27 @@ export type GetTopFiltersNoResultsProps = {
   /**
    * Search query.
    */
-  search?: string;
+  search?: string | undefined;
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Number of items to return.
    */
-  limit?: number;
+  limit?: number | undefined;
   /**
    * Position of the first item to return.
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -505,35 +505,35 @@ export type GetTopHitsProps = {
   /**
    * Search query.
    */
-  search?: string;
+  search?: string | undefined;
   /**
    * Whether to include metrics related to click and conversion events in the response.
    */
-  clickAnalytics?: boolean;
+  clickAnalytics?: boolean | undefined;
   /**
    * Whether to include metrics related to revenue events in the response.
    */
-  revenueAnalytics?: boolean;
+  revenueAnalytics?: boolean | undefined;
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Number of items to return.
    */
-  limit?: number;
+  limit?: number | undefined;
   /**
    * Position of the first item to return.
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -547,39 +547,39 @@ export type GetTopSearchesProps = {
   /**
    * Whether to include metrics related to click and conversion events in the response.
    */
-  clickAnalytics?: boolean;
+  clickAnalytics?: boolean | undefined;
   /**
    * Whether to include metrics related to revenue events in the response.
    */
-  revenueAnalytics?: boolean;
+  revenueAnalytics?: boolean | undefined;
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Attribute by which to order the response items.  If the `clickAnalytics` parameter is false, only `searchCount` is available.
    */
-  orderBy?: OrderBy;
+  orderBy?: OrderBy | undefined;
   /**
    * Sorting direction of the results: ascending or descending.
    */
-  direction?: Direction;
+  direction?: Direction | undefined;
   /**
    * Number of items to return.
    */
-  limit?: number;
+  limit?: number | undefined;
   /**
    * Position of the first item to return.
    */
-  offset?: number;
+  offset?: number | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };
 
 /**
@@ -593,13 +593,13 @@ export type GetUsersCountProps = {
   /**
    * Start date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * End date of the period to analyze, in `YYYY-MM-DD` format.
    */
-  endDate?: string;
+  endDate?: string | undefined;
   /**
    * Tags by which to segment the analytics.  You can combine multiple tags with `OR` and `AND`. Tags must be URL-encoded. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
    */
-  tags?: string;
+  tags?: string | undefined;
 };

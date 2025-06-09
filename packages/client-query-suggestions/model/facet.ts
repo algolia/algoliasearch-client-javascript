@@ -7,10 +7,10 @@ export type Facet = {
   /**
    * Facet name.
    */
-  attribute?: string;
+  attribute?: string | undefined;
 
   /**
    * Number of suggestions.
    */
-  amount?: number;
+  amount?: number | undefined;
 };

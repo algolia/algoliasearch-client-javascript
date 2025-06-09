@@ -16,30 +16,30 @@ export type SynonymHit = {
   /**
    * Words or phrases considered equivalent.
    */
-  synonyms?: Array<string>;
+  synonyms?: Array<string> | undefined;
 
   /**
    * Word or phrase to appear in query strings (for [`onewaysynonym`s](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/one-way-synonyms/)).
    */
-  input?: string;
+  input?: string | undefined;
 
   /**
    * Word or phrase to appear in query strings (for [`altcorrection1` and `altcorrection2`](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-alternative-corrections/)).
    */
-  word?: string;
+  word?: string | undefined;
 
   /**
    * Words to be matched in records.
    */
-  corrections?: Array<string>;
+  corrections?: Array<string> | undefined;
 
   /**
    * [Placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/) to be put inside records.
    */
-  placeholder?: string;
+  placeholder?: string | undefined;
 
   /**
    * Query words that will match the [placeholder token](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/in-depth/synonyms-placeholders/).
    */
-  replacements?: Array<string>;
+  replacements?: Array<string> | undefined;
 };

@@ -4,25 +4,25 @@ export type ConfigStatus = {
   /**
    * Name of the Query Suggestions index (case-sensitive).
    */
-  indexName?: string;
+  indexName?: string | undefined;
 
   /**
    * Whether the creation or update of the Query Suggestions index is in progress.
    */
-  isRunning?: boolean;
+  isRunning?: boolean | undefined;
 
   /**
    * Date and time when the Query Suggestions index was last built, in RFC 3339 format.
    */
-  lastBuiltAt?: string;
+  lastBuiltAt?: string | undefined;
 
   /**
    * Date and time when the Query Suggestions index was last updated successfully.
    */
-  lastSuccessfulBuiltAt?: string;
+  lastSuccessfulBuiltAt?: string | undefined;
 
   /**
    * Duration of the last successful build in seconds.
    */
-  lastSuccessfulBuildDuration?: string;
+  lastSuccessfulBuildDuration?: string | undefined;
 };

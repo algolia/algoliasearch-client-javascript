@@ -7,10 +7,10 @@ export type CurrencyCode = {
   /**
    * Currency code.
    */
-  currency?: string;
+  currency?: string | undefined;
 
   /**
    * Revenue associated with this search in this currency.
    */
-  revenue?: number;
+  revenue?: number | undefined;
 };

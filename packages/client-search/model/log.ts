@@ -51,7 +51,7 @@ export type Log = {
   /**
    * Number of API requests.
    */
-  nb_api_calls?: string;
+  nb_api_calls?: string | undefined;
 
   /**
    * Processing time for the query in milliseconds. This doesn\'t include latency due to the network.
@@ -61,20 +61,20 @@ export type Log = {
   /**
    * Index targeted by the query.
    */
-  index?: string;
+  index?: string | undefined;
 
   /**
    * Query parameters sent with the request.
    */
-  query_params?: string;
+  query_params?: string | undefined;
 
   /**
    * Number of search results (hits) returned for the query.
    */
-  query_nb_hits?: string;
+  query_nb_hits?: string | undefined;
 
   /**
    * Queries performed for the given request.
    */
-  inner_queries?: Array<LogQuery>;
+  inner_queries?: Array<LogQuery> | undefined;
 };

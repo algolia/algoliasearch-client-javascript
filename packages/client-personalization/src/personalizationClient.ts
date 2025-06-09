@@ -98,7 +98,7 @@ export function createPersonalizationClient({
      * @param segment - The algolia agent (user-agent) segment to add.
      * @param version - The version of the agent.
      */
-    addAlgoliaAgent(segment: string, version?: string): void {
+    addAlgoliaAgent(segment: string, version?: string | undefined): void {
       transporter.algoliaAgent.add({ segment, version });
     },
 
@@ -271,7 +271,7 @@ export function createPersonalizationClient({
      *  - recommendation
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getPersonalizationStrategy(requestOptions?: RequestOptions): Promise<PersonalizationStrategyParams> {
+    getPersonalizationStrategy(requestOptions?: RequestOptions | undefined): Promise<PersonalizationStrategyParams> {
       const requestPath = '/1/strategies/personalization';
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};

@@ -11,5 +11,5 @@ export type LookingSimilar = {
    */
   objectID: string;
 
-  fallbackParameters?: FallbackParams;
+  fallbackParameters?: FallbackParams | undefined;
 };

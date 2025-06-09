@@ -16,7 +16,7 @@ export type Composition = {
   /**
    * Composition description.
    */
-  description?: string;
+  description?: string | undefined;
 
   behavior: CompositionBehavior;
 };

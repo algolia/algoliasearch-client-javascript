@@ -13,7 +13,11 @@ export { apiClientVersion } from '../src/compositionFullClient';
 
 export * from '../model';
 
-export function compositionClient(appId: string, apiKey: string, options?: ClientOptions): CompositionClient {
+export function compositionClient(
+  appId: string,
+  apiKey: string,
+  options?: ClientOptions | undefined,
+): CompositionClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

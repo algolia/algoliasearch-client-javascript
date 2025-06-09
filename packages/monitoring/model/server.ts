@@ -8,26 +8,26 @@ export type Server = {
   /**
    * Server name.
    */
-  name?: string;
+  name?: string | undefined;
 
-  region?: Region;
+  region?: Region | undefined;
 
   /**
    * Included to support legacy applications. Use `is_replica` instead.
    */
-  is_slave?: boolean;
+  is_slave?: boolean | undefined;
 
   /**
    * Whether this server is a replica of another server.
    */
-  is_replica?: boolean;
+  is_replica?: boolean | undefined;
 
   /**
    * Name of the cluster to which this server belongs.
    */
-  cluster?: string;
+  cluster?: string | undefined;
 
-  status?: ServerStatus;
+  status?: ServerStatus | undefined;
 
-  type?: Type;
+  type?: Type | undefined;
 };

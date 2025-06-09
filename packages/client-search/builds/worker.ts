@@ -20,7 +20,7 @@ export * from '../model';
 
 import type { GenerateSecuredApiKeyOptions, GetSecuredApiKeyRemainingValidityOptions } from '../model';
 
-export function searchClient(appId: string, apiKey: string, options?: ClientOptions): SearchClient {
+export function searchClient(appId: string, apiKey: string, options?: ClientOptions | undefined): SearchClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

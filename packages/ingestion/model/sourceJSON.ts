@@ -11,7 +11,7 @@ export type SourceJSON = {
   /**
    * Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
    */
-  uniqueIDColumn?: string;
+  uniqueIDColumn?: string | undefined;
 
-  method?: MethodType;
+  method?: MethodType | undefined;
 };

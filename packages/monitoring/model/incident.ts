@@ -9,7 +9,7 @@ export type Incident = {
   /**
    * Description of the incident.
    */
-  title?: string;
+  title?: string | undefined;
 
-  status?: Status;
+  status?: Status | undefined;
 };

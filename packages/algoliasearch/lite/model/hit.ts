@@ -16,14 +16,14 @@ export type Hit<T = Record<string, unknown>> = T & {
   /**
    * Surround words that match the query with HTML tags for highlighting.
    */
-  _highlightResult?: { [key: string]: HighlightResult };
+  _highlightResult?: { [key: string]: HighlightResult } | undefined;
 
   /**
    * Snippets that show the context around a matching search query.
    */
-  _snippetResult?: { [key: string]: SnippetResult };
+  _snippetResult?: { [key: string]: SnippetResult } | undefined;
 
-  _rankingInfo?: RankingInfo;
+  _rankingInfo?: RankingInfo | undefined;
 
-  _distinctSeqID?: number;
+  _distinctSeqID?: number | undefined;
 };

@@ -13,24 +13,24 @@ export type DictionaryEntry = Record<string, any> & {
    */
   objectID: string;
 
-  language?: SupportedLanguage;
+  language?: SupportedLanguage | undefined;
 
   /**
    * Matching dictionary word for `stopwords` and `compounds` dictionaries.
    */
-  word?: string;
+  word?: string | undefined;
 
   /**
    * Matching words in the `plurals` dictionary including declensions.
    */
-  words?: Array<string>;
+  words?: Array<string> | undefined;
 
   /**
    * Invividual components of a compound word in the `compounds` dictionary.
    */
-  decomposition?: Array<string>;
+  decomposition?: Array<string> | undefined;
 
-  state?: DictionaryEntryState;
+  state?: DictionaryEntryState | undefined;
 
-  type?: DictionaryEntryType;
+  type?: DictionaryEntryType | undefined;
 };

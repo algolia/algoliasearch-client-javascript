@@ -22,7 +22,7 @@ export function personalizationClient(
   appId: string,
   apiKey: string,
   region: Region,
-  options?: ClientOptions,
+  options?: ClientOptions | undefined,
 ): PersonalizationClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');

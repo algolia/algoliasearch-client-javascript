@@ -7,5 +7,5 @@ export type RuleMetadata = {
   /**
    * Date and time when the object was updated, in RFC 3339 format.
    */
-  lastUpdate?: string;
+  lastUpdate?: string | undefined;
 };

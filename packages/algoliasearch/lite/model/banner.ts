@@ -7,7 +7,7 @@ import type { BannerLink } from './bannerLink';
  * Banner with image and link to redirect users.
  */
 export type Banner = {
-  image?: BannerImage;
+  image?: BannerImage | undefined;
 
-  link?: BannerLink;
+  link?: BannerLink | undefined;
 };

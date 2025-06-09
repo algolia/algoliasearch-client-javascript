@@ -4,20 +4,20 @@ export type SearchPagination = {
   /**
    * Page of search results to retrieve.
    */
-  page?: number;
+  page?: number | undefined;
 
   /**
    * Number of results (hits).
    */
-  nbHits?: number;
+  nbHits?: number | undefined;
 
   /**
    * Number of pages of results.
    */
-  nbPages?: number;
+  nbPages?: number | undefined;
 
   /**
    * Number of hits per page.
    */
-  hitsPerPage?: number;
+  hitsPerPage?: number | undefined;
 };

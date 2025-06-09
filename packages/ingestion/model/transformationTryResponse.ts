@@ -8,5 +8,5 @@ export type TransformationTryResponse = {
    */
   payloads: Array<string>;
 
-  error?: TransformationError;
+  error?: TransformationError | undefined;
 };

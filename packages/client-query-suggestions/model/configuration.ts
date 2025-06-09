@@ -12,17 +12,17 @@ export type Configuration = {
    */
   sourceIndices: Array<SourceIndex>;
 
-  languages?: Languages;
+  languages?: Languages | undefined;
 
-  exclude?: Array<string> | null;
+  exclude?: Array<string> | null | undefined;
 
   /**
    * Whether to turn on personalized query suggestions.
    */
-  enablePersonalization?: boolean;
+  enablePersonalization?: boolean | undefined;
 
   /**
    * Whether to include suggestions with special characters.
    */
-  allowSpecialCharacters?: boolean;
+  allowSpecialCharacters?: boolean | undefined;
 };

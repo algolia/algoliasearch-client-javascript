@@ -8,5 +8,5 @@ export type SearchForHitsOptions = {
    */
   indexName: string;
 
-  type?: SearchTypeDefault;
-} & { facet?: never; maxFacetHits?: never; facetQuery?: never };
+  type?: SearchTypeDefault | undefined;
+} & { facet?: never | undefined; maxFacetHits?: never | undefined; facetQuery?: never | undefined };

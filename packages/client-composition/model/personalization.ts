@@ -4,15 +4,15 @@ export type Personalization = {
   /**
    * The score of the filters.
    */
-  filtersScore?: number;
+  filtersScore?: number | undefined;
 
   /**
    * The score of the ranking.
    */
-  rankingScore?: number;
+  rankingScore?: number | undefined;
 
   /**
    * The score of the event.
    */
-  score?: number;
+  score?: number | undefined;
 };

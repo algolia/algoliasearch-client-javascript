@@ -6,5 +6,5 @@ import type { RulesMultipleBatchRequest } from './rulesMultipleBatchRequest';
  * Composition rules batch parameters.
  */
 export type CompositionRulesBatchParams = {
-  requests?: Array<RulesMultipleBatchRequest>;
+  requests?: Array<RulesMultipleBatchRequest> | undefined;
 };

@@ -6,12 +6,12 @@ export type SourceUpdate = {
   /**
    * Descriptive name of the source.
    */
-  name?: string;
+  name?: string | undefined;
 
-  input?: SourceUpdateInput;
+  input?: SourceUpdateInput | undefined;
 
   /**
    * Universally unique identifier (UUID) of an authentication resource.
    */
-  authenticationID?: string;
+  authenticationID?: string | undefined;
 };

@@ -14,23 +14,23 @@ export type SourceIndex = {
   /**
    * If true, Query Suggestions uses all replica indices to find popular searches. If false, only the primary index is used.
    */
-  replicas?: boolean;
+  replicas?: boolean | undefined;
 
-  analyticsTags?: Array<string> | null;
+  analyticsTags?: Array<string> | null | undefined;
 
-  facets?: Array<Facet> | null;
+  facets?: Array<Facet> | null | undefined;
 
   /**
    * Minimum number of hits required to be included as a suggestion.  A search query must at least generate `minHits` search results to be included in the Query Suggestions index.
    */
-  minHits?: number;
+  minHits?: number | undefined;
 
   /**
    * Minimum letters required to be included as a suggestion.  A search query must be at least `minLetters` long to be included in the Query Suggestions index.
    */
-  minLetters?: number;
+  minLetters?: number | undefined;
 
-  generate?: Array<Array<string>> | null;
+  generate?: Array<Array<string>> | null | undefined;
 
-  external?: Array<string> | null;
+  external?: Array<string> | null | undefined;
 };

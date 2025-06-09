@@ -7,5 +7,5 @@ export type Outliers = {
   /**
    * Whether to exclude outliers when calculating A/B test results.
    */
-  exclude?: boolean;
+  exclude?: boolean | undefined;
 };

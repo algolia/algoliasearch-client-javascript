@@ -9,7 +9,7 @@ export type MappingKitAction = {
   /**
    * ID to uniquely identify this action.
    */
-  id?: string;
+  id?: string | undefined;
 
   /**
    * Whether this action has any effect.

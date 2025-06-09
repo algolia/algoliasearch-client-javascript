@@ -3,5 +3,5 @@
 import type { IncidentEntry } from './incidentEntry';
 
 export type IncidentsResponse = {
-  incidents?: { [key: string]: Array<IncidentEntry> };
+  incidents?: { [key: string]: Array<IncidentEntry> } | undefined;
 };

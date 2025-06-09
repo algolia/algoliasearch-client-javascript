@@ -11,7 +11,7 @@ export type DockerStreams = {
   /**
    * The properties of the stream to select (e.g. column).
    */
-  properties?: Array<string>;
+  properties?: Array<string> | undefined;
 
   syncMode: DockerStreamsSyncMode;
 };

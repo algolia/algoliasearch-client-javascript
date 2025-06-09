@@ -10,19 +10,19 @@ export type TaskUpdateV1 = {
   /**
    * Universally unique identifier (UUID) of a destination resource.
    */
-  destinationID?: string;
+  destinationID?: string | undefined;
 
-  trigger?: TriggerUpdateInput;
+  trigger?: TriggerUpdateInput | undefined;
 
-  input?: TaskInput;
+  input?: TaskInput | undefined;
 
   /**
    * Whether the task is enabled.
    */
-  enabled?: boolean;
+  enabled?: boolean | undefined;
 
   /**
    * Maximum accepted percentage of failures for a task run to finish successfully.
    */
-  failureThreshold?: number;
+  failureThreshold?: number | undefined;
 };

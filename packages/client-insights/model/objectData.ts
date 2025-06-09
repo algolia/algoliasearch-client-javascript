@@ -4,12 +4,12 @@ import type { Discount } from './discount';
 import type { Price } from './price';
 
 export type ObjectData = {
-  price?: Price;
+  price?: Price | undefined;
 
   /**
    * Quantity of a product that has been purchased or added to the cart. The total purchase value is the sum of `quantity` multiplied with the `price` for each purchased item.
    */
-  quantity?: number;
+  quantity?: number | undefined;
 
-  discount?: Discount;
+  discount?: Discount | undefined;
 };

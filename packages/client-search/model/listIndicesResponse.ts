@@ -11,5 +11,5 @@ export type ListIndicesResponse = {
   /**
    * Number of pages.
    */
-  nbPages?: number;
+  nbPages?: number | undefined;
 };

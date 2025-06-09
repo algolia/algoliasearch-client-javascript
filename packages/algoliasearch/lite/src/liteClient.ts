@@ -121,7 +121,7 @@ export function createLiteClient({
      * @param segment - The algolia agent (user-agent) segment to add.
      * @param version - The version of the agent.
      */
-    addAlgoliaAgent(segment: string, version?: string): void {
+    addAlgoliaAgent(segment: string, version?: string | undefined): void {
       transporter.algoliaAgent.add({ segment, version });
     },
 
@@ -149,7 +149,7 @@ export function createLiteClient({
      */
     searchForHits<T>(
       searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<{ results: Array<SearchResponse<T>> }> {
       return this.search(searchMethodParams, requestOptions) as Promise<{ results: Array<SearchResponse<T>> }>;
     },
@@ -164,7 +164,7 @@ export function createLiteClient({
      */
     searchForFacets(
       searchMethodParams: LegacySearchMethodProps | SearchMethodParams,
-      requestOptions?: RequestOptions,
+      requestOptions?: RequestOptions | undefined,
     ): Promise<{ results: Array<SearchForFacetValuesResponse> }> {
       return this.search(searchMethodParams, requestOptions) as Promise<{
         results: Array<SearchForFacetValuesResponse>;

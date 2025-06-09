@@ -19,7 +19,7 @@ export type DestinationCreate = {
   /**
    * Universally unique identifier (UUID) of an authentication resource.
    */
-  authenticationID?: string;
+  authenticationID?: string | undefined;
 
-  transformationIDs?: Array<string>;
+  transformationIDs?: Array<string> | undefined;
 };

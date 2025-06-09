@@ -23,7 +23,7 @@ export function querySuggestionsClient(
   appId: string,
   apiKey: string,
   region: Region,
-  options?: ClientOptions,
+  options?: ClientOptions | undefined,
 ): QuerySuggestionsClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');

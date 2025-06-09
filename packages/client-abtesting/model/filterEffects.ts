@@ -7,7 +7,7 @@ import type { OutliersFilter } from './outliersFilter';
  * A/B test filter effects resulting from configuration settings.
  */
 export type FilterEffects = {
-  outliers?: OutliersFilter;
+  outliers?: OutliersFilter | undefined;
 
-  emptySearch?: EmptySearchFilter;
+  emptySearch?: EmptySearchFilter | undefined;
 };

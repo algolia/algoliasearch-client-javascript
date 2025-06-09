@@ -9,15 +9,15 @@ export type ParamsConsequence = {
   /**
    * Filter recommendations that match or don\'t match the same `facet:facet_value` combination as the viewed item.
    */
-  automaticFacetFilters?: Array<AutoFacetFilter>;
+  automaticFacetFilters?: Array<AutoFacetFilter> | undefined;
 
   /**
    * Filter expression to only include items that match the filter criteria in the response.  You can use these filter expressions:  - **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`. - **Ranges.** `<facet>:<lower> TO <upper>` where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive). - **Facet filters.** `<facet>:<value>` where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value. - **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive). - **Boolean filters.** `<facet>: true | false`.  You can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:  - You can only combine filters of the same type with `OR`.   **Not supported:** `facet:value OR num > 3`. - You can\'t use `NOT` with combinations of filters.   **Not supported:** `NOT(facet:value OR facet:value)` - You can\'t combine conjunctions (`AND`) with `OR`.   **Not supported:** `facet:value OR (facet:value AND facet:value)`  Use quotes around your filters, if the facet attribute name or facet value has spaces, keywords (`OR`, `AND`, `NOT`), or quotes. If a facet attribute is an array, the filter matches if it matches at least one element of the array.  For more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering/).
    */
-  filters?: string;
+  filters?: string | undefined;
 
   /**
    * Filters to promote or demote records in the search results.  Optional filters work like facet filters, but they don\'t exclude records from the search results. Records that match the optional filter rank before records that don\'t match. Matches with higher weights (`<score=N>`) rank before matches with lower weights. If you\'re using a negative filter `facet:-value`, matching records rank after records that don\'t match.
    */
-  optionalFilters?: Array<string>;
+  optionalFilters?: Array<string> | undefined;
 };

@@ -7,5 +7,5 @@ export type Policies = {
   /**
    * The number of critical failures in a row before blocking the task and sending a notification.
    */
-  criticalThreshold?: number;
+  criticalThreshold?: number | undefined;
 };

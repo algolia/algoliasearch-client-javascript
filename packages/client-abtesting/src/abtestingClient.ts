@@ -35,9 +35,9 @@ export const apiClientVersion = '5.27.0';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
-export type RegionOptions = { region?: Region };
+export type RegionOptions = { region?: Region | undefined };
 
-function getDefaultHosts(region?: Region): Host[] {
+function getDefaultHosts(region?: Region | undefined): Host[] {
   const url = !region ? 'analytics.algolia.com' : 'analytics.{region}.algolia.com'.replace('{region}', region);
 
   return [{ url, accept: 'readWrite', protocol: 'https' }];
@@ -104,7 +104,7 @@ export function createAbtestingClient({
      * @param segment - The algolia agent (user-agent) segment to add.
      * @param version - The version of the agent.
      */
-    addAlgoliaAgent(segment: string, version?: string): void {
+    addAlgoliaAgent(segment: string, version?: string | undefined): void {
       transporter.algoliaAgent.add({ segment, version });
     },
 

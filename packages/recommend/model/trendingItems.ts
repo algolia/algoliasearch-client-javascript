@@ -7,14 +7,14 @@ export type TrendingItems = {
   /**
    * Facet attribute. To be used in combination with `facetValue`. If specified, only recommendations matching the facet filter will be returned.
    */
-  facetName?: string;
+  facetName?: string | undefined;
 
   /**
    * Facet value. To be used in combination with `facetName`. If specified, only recommendations matching the facet filter will be returned.
    */
-  facetValue?: string;
+  facetValue?: string | undefined;
 
   model: TrendingItemsModel;
 
-  fallbackParameters?: FallbackParams;
+  fallbackParameters?: FallbackParams | undefined;
 };

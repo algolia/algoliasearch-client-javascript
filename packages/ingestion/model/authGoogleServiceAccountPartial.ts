@@ -7,10 +7,10 @@ export type AuthGoogleServiceAccountPartial = {
   /**
    * Email address of the Google service account.
    */
-  clientEmail?: string;
+  clientEmail?: string | undefined;
 
   /**
    * Private key of the Google service account. This field is `null` in the API response.
    */
-  privateKey?: string;
+  privateKey?: string | undefined;
 };

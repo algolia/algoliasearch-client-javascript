@@ -7,10 +7,10 @@ export type OutliersFilter = {
   /**
    * Number of users removed from the A/B test.
    */
-  usersCount?: number;
+  usersCount?: number | undefined;
 
   /**
    * Number of tracked searches removed from the A/B test.
    */
-  trackedSearchesCount?: number;
+  trackedSearchesCount?: number | undefined;
 };

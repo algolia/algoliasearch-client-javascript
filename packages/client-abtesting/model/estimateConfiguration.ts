@@ -8,9 +8,9 @@ import type { Outliers } from './outliers';
  * A/B test configuration for estimating the sample size and duration using minimum detectable effect.
  */
 export type EstimateConfiguration = {
-  outliers?: Outliers;
+  outliers?: Outliers | undefined;
 
-  emptySearch?: EmptySearch;
+  emptySearch?: EmptySearch | undefined;
 
   minimumDetectableEffect: MinimumDetectableEffect;
 };

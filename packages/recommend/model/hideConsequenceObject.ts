@@ -7,5 +7,5 @@ export type HideConsequenceObject = {
   /**
    * Unique record identifier.
    */
-  objectID?: string;
+  objectID?: string | undefined;
 };

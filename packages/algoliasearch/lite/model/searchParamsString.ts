@@ -7,5 +7,5 @@ export type SearchParamsString = {
   /**
    * Search parameters as a URL-encoded query string.
    */
-  params?: string;
+  params?: string | undefined;
 };

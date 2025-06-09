@@ -6,5 +6,5 @@ import type { SearchStrategy } from './searchStrategy';
 export type SearchMethodParams = {
   requests: Array<SearchQuery>;
 
-  strategy?: SearchStrategy;
+  strategy?: SearchStrategy | undefined;
 };

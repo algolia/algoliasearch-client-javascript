@@ -3,5 +3,5 @@
 import type { CompositionsSearchResponse } from './compositionsSearchResponse';
 
 export type CompositionBaseSearchResponse = Record<string, any> & {
-  compositions?: CompositionsSearchResponse;
+  compositions?: CompositionsSearchResponse | undefined;
 };

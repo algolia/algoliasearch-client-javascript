@@ -14,5 +14,5 @@ export type OperationIndexParams = {
   /**
    * **Only for copying.**  If you specify a scope, only the selected scopes are copied. Records and the other scopes are left unchanged. If you omit the `scope` parameter, everything is copied: records, settings, synonyms, and rules.
    */
-  scope?: Array<ScopeType>;
+  scope?: Array<ScopeType> | undefined;
 };

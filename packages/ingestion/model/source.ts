@@ -16,14 +16,14 @@ export type Source = {
   /**
    * Owner of the resource.
    */
-  owner?: string | null;
+  owner?: string | null | undefined;
 
-  input?: SourceInput;
+  input?: SourceInput | undefined;
 
   /**
    * Universally unique identifier (UUID) of an authentication resource.
    */
-  authenticationID?: string;
+  authenticationID?: string | undefined;
 
   /**
    * Date of creation in RFC 3339 format.

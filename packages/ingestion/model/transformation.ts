@@ -12,16 +12,16 @@ export type Transformation = {
   /**
    * The authentications associated with the current transformation.
    */
-  authenticationIDs?: Array<string>;
+  authenticationIDs?: Array<string> | undefined;
 
   /**
    * It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
    */
   code: string;
 
-  type?: TransformationType;
+  type?: TransformationType | undefined;
 
-  input?: TransformationInput;
+  input?: TransformationInput | undefined;
 
   /**
    * The uniquely identified name of your transformation.
@@ -31,12 +31,12 @@ export type Transformation = {
   /**
    * A descriptive name for your transformation of what it does.
    */
-  description?: string;
+  description?: string | undefined;
 
   /**
    * Owner of the resource.
    */
-  owner?: string | null;
+  owner?: string | null | undefined;
 
   /**
    * Date of creation in RFC 3339 format.

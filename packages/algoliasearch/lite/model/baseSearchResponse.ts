@@ -9,79 +9,79 @@ export type BaseSearchResponse = Record<string, any> & {
   /**
    * A/B test ID. This is only included in the response for indices that are part of an A/B test.
    */
-  abTestID?: number;
+  abTestID?: number | undefined;
 
   /**
    * Variant ID. This is only included in the response for indices that are part of an A/B test.
    */
-  abTestVariantID?: number;
+  abTestVariantID?: number | undefined;
 
   /**
    * Computed geographical location.
    */
-  aroundLatLng?: string;
+  aroundLatLng?: string | undefined;
 
   /**
    * Distance from a central coordinate provided by `aroundLatLng`.
    */
-  automaticRadius?: string;
+  automaticRadius?: string | undefined;
 
-  exhaustive?: Exhaustive;
+  exhaustive?: Exhaustive | undefined;
 
   /**
    * Rules applied to the query.
    */
-  appliedRules?: Array<Record<string, unknown>>;
+  appliedRules?: Array<Record<string, unknown>> | undefined;
 
   /**
    * See the `facetsCount` field of the `exhaustive` object in the response.
    */
-  exhaustiveFacetsCount?: boolean;
+  exhaustiveFacetsCount?: boolean | undefined;
 
   /**
    * See the `nbHits` field of the `exhaustive` object in the response.
    */
-  exhaustiveNbHits?: boolean;
+  exhaustiveNbHits?: boolean | undefined;
 
   /**
    * See the `typo` field of the `exhaustive` object in the response.
    */
-  exhaustiveTypo?: boolean;
+  exhaustiveTypo?: boolean | undefined;
 
   /**
    * Facet counts.
    */
-  facets?: { [key: string]: { [key: string]: number } };
+  facets?: { [key: string]: { [key: string]: number } } | undefined;
 
   /**
    * Statistics for numerical facets.
    */
-  facets_stats?: { [key: string]: FacetStats };
+  facets_stats?: { [key: string]: FacetStats } | undefined;
 
   /**
    * Index name used for the query.
    */
-  index?: string;
+  index?: string | undefined;
 
   /**
    * Index name used for the query. During A/B testing, the targeted index isn\'t always the index used by the query.
    */
-  indexUsed?: string;
+  indexUsed?: string | undefined;
 
   /**
    * Warnings about the query.
    */
-  message?: string;
+  message?: string | undefined;
 
   /**
    * Number of hits selected and sorted by the relevant sort algorithm.
    */
-  nbSortedHits?: number;
+  nbSortedHits?: number | undefined;
 
   /**
    * Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean) query string that will be searched.
    */
-  parsedQuery?: string;
+  parsedQuery?: string | undefined;
 
   /**
    * Time the server took to process the request, in milliseconds.
@@ -91,39 +91,39 @@ export type BaseSearchResponse = Record<string, any> & {
   /**
    * Experimental. List of processing steps and their times, in milliseconds. You can use this list to investigate performance issues.
    */
-  processingTimingsMS?: Record<string, unknown>;
+  processingTimingsMS?: Record<string, unknown> | undefined;
 
   /**
    * Markup text indicating which parts of the original query have been removed to retrieve a non-empty result set.
    */
-  queryAfterRemoval?: string;
+  queryAfterRemoval?: string | undefined;
 
-  redirect?: Redirect;
+  redirect?: Redirect | undefined;
 
-  renderingContent?: RenderingContent;
+  renderingContent?: RenderingContent | undefined;
 
   /**
    * Time the server took to process the request, in milliseconds.
    */
-  serverTimeMS?: number;
+  serverTimeMS?: number | undefined;
 
   /**
    * Host name of the server that processed the request.
    */
-  serverUsed?: string;
+  serverUsed?: string | undefined;
 
   /**
    * An object with custom data.  You can store up to 32kB as custom data.
    */
-  userData?: any | null;
+  userData?: any | null | undefined;
 
   /**
    * Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
    */
-  queryID?: string;
+  queryID?: string | undefined;
 
   /**
    * Whether automatic events collection is enabled for the application.
    */
-  _automaticInsights?: boolean;
+  _automaticInsights?: boolean | undefined;
 };

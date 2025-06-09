@@ -7,10 +7,10 @@ import type { Value } from './value';
  * Order of facet names and facet values in your UI.
  */
 export type FacetOrdering = {
-  facets?: IndexSettingsFacets;
+  facets?: IndexSettingsFacets | undefined;
 
   /**
    * Order of facet values. One object for each facet.
    */
-  values?: { [key: string]: Value };
+  values?: { [key: string]: Value } | undefined;
 };

@@ -51,7 +51,7 @@ export type CustomDeleteProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -65,7 +65,7 @@ export type CustomGetProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
 };
 
 /**
@@ -79,11 +79,11 @@ export type CustomPostProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -97,11 +97,11 @@ export type CustomPutProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -295,27 +295,27 @@ export type ListAuthenticationsProps = {
   /**
    * Number of items per page.
    */
-  itemsPerPage?: number;
+  itemsPerPage?: number | undefined;
   /**
    * Page number of the paginated API response.
    */
-  page?: number;
+  page?: number | undefined;
   /**
    * Type of authentication resource to retrieve.
    */
-  type?: Array<AuthenticationType>;
+  type?: Array<AuthenticationType> | undefined;
   /**
    * Ecommerce platform for which to retrieve authentications.
    */
-  platform?: Array<PlatformWithNone>;
+  platform?: Array<PlatformWithNone> | undefined;
   /**
    * Property by which to sort the list of authentications.
    */
-  sort?: AuthenticationSortKeys;
+  sort?: AuthenticationSortKeys | undefined;
   /**
    * Sort order of the response, ascending or descending.
    */
-  order?: OrderKeys;
+  order?: OrderKeys | undefined;
 };
 
 /**
@@ -325,31 +325,31 @@ export type ListDestinationsProps = {
   /**
    * Number of items per page.
    */
-  itemsPerPage?: number;
+  itemsPerPage?: number | undefined;
   /**
    * Page number of the paginated API response.
    */
-  page?: number;
+  page?: number | undefined;
   /**
    * Destination type.
    */
-  type?: Array<DestinationType>;
+  type?: Array<DestinationType> | undefined;
   /**
    * Authentication ID used by destinations.
    */
-  authenticationID?: Array<string>;
+  authenticationID?: Array<string> | undefined;
   /**
    * Get the list of destinations used by a transformation.
    */
-  transformationID?: string;
+  transformationID?: string | undefined;
   /**
    * Property by which to sort the destinations.
    */
-  sort?: DestinationSortKeys;
+  sort?: DestinationSortKeys | undefined;
   /**
    * Sort order of the response, ascending or descending.
    */
-  order?: OrderKeys;
+  order?: OrderKeys | undefined;
 };
 
 /**
@@ -363,35 +363,35 @@ export type ListEventsProps = {
   /**
    * Number of items per page.
    */
-  itemsPerPage?: number;
+  itemsPerPage?: number | undefined;
   /**
    * Page number of the paginated API response.
    */
-  page?: number;
+  page?: number | undefined;
   /**
    * Event status for filtering the list of task runs.
    */
-  status?: Array<EventStatus>;
+  status?: Array<EventStatus> | undefined;
   /**
    * Event type for filtering the list of task runs.
    */
-  type?: Array<EventType>;
+  type?: Array<EventType> | undefined;
   /**
    * Property by which to sort the list of task run events.
    */
-  sort?: EventSortKeys;
+  sort?: EventSortKeys | undefined;
   /**
    * Sort order of the response, ascending or descending.
    */
-  order?: OrderKeys;
+  order?: OrderKeys | undefined;
   /**
    * Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
    */
-  endDate?: string;
+  endDate?: string | undefined;
 };
 
 /**
@@ -401,39 +401,39 @@ export type ListRunsProps = {
   /**
    * Number of items per page.
    */
-  itemsPerPage?: number;
+  itemsPerPage?: number | undefined;
   /**
    * Page number of the paginated API response.
    */
-  page?: number;
+  page?: number | undefined;
   /**
    * Run status for filtering the list of task runs.
    */
-  status?: Array<RunStatus>;
+  status?: Array<RunStatus> | undefined;
   /**
    * Run type for filtering the list of task runs.
    */
-  type?: Array<RunType>;
+  type?: Array<RunType> | undefined;
   /**
    * Task ID for filtering the list of task runs.
    */
-  taskID?: string;
+  taskID?: string | undefined;
   /**
    * Property by which to sort the list of task runs.
    */
-  sort?: RunSortKeys;
+  sort?: RunSortKeys | undefined;
   /**
    * Sort order of the response, ascending or descending.
    */
-  order?: OrderKeys;
+  order?: OrderKeys | undefined;
   /**
    * Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
    */
-  startDate?: string;
+  startDate?: string | undefined;
   /**
    * Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
    */
-  endDate?: string;
+  endDate?: string | undefined;
 };
 
 /**
@@ -443,27 +443,27 @@ export type ListSourcesProps = {
   /**
    * Number of items per page.
    */
-  itemsPerPage?: number;
+  itemsPerPage?: number | undefined;
   /**
    * Page number of the paginated API response.
    */
-  page?: number;
+  page?: number | undefined;
   /**
    * Source type. Some sources require authentication.
    */
-  type?: Array<SourceType>;
+  type?: Array<SourceType> | undefined;
   /**
    * Authentication IDs of the sources to retrieve. \'none\' returns sources that doesn\'t have an authentication.
    */
-  authenticationID?: Array<string>;
+  authenticationID?: Array<string> | undefined;
   /**
    * Property by which to sort the list of sources.
    */
-  sort?: SourceSortKeys;
+  sort?: SourceSortKeys | undefined;
   /**
    * Sort order of the response, ascending or descending.
    */
-  order?: OrderKeys;
+  order?: OrderKeys | undefined;
 };
 
 /**
@@ -473,47 +473,47 @@ export type ListTasksProps = {
   /**
    * Number of items per page.
    */
-  itemsPerPage?: number;
+  itemsPerPage?: number | undefined;
   /**
    * Page number of the paginated API response.
    */
-  page?: number;
+  page?: number | undefined;
   /**
    * Actions for filtering the list of tasks.
    */
-  action?: Array<ActionType>;
+  action?: Array<ActionType> | undefined;
   /**
    * Whether to filter the list of tasks by the `enabled` status.
    */
-  enabled?: boolean;
+  enabled?: boolean | undefined;
   /**
    * Source IDs for filtering the list of tasks.
    */
-  sourceID?: Array<string>;
+  sourceID?: Array<string> | undefined;
   /**
    * Filters the tasks with the specified source type.
    */
-  sourceType?: Array<SourceType>;
+  sourceType?: Array<SourceType> | undefined;
   /**
    * Destination IDs for filtering the list of tasks.
    */
-  destinationID?: Array<string>;
+  destinationID?: Array<string> | undefined;
   /**
    * Type of task trigger for filtering the list of tasks.
    */
-  triggerType?: Array<TriggerType>;
+  triggerType?: Array<TriggerType> | undefined;
   /**
    * If specified, the response only includes tasks with notifications.email.enabled set to this value.
    */
-  withEmailNotifications?: boolean;
+  withEmailNotifications?: boolean | undefined;
   /**
    * Property by which to sort the list of tasks.
    */
-  sort?: TaskSortKeys;
+  sort?: TaskSortKeys | undefined;
   /**
    * Sort order of the response, ascending or descending.
    */
-  order?: OrderKeys;
+  order?: OrderKeys | undefined;
 };
 
 /**
@@ -523,39 +523,39 @@ export type ListTasksV1Props = {
   /**
    * Number of items per page.
    */
-  itemsPerPage?: number;
+  itemsPerPage?: number | undefined;
   /**
    * Page number of the paginated API response.
    */
-  page?: number;
+  page?: number | undefined;
   /**
    * Actions for filtering the list of tasks.
    */
-  action?: Array<ActionType>;
+  action?: Array<ActionType> | undefined;
   /**
    * Whether to filter the list of tasks by the `enabled` status.
    */
-  enabled?: boolean;
+  enabled?: boolean | undefined;
   /**
    * Source IDs for filtering the list of tasks.
    */
-  sourceID?: Array<string>;
+  sourceID?: Array<string> | undefined;
   /**
    * Destination IDs for filtering the list of tasks.
    */
-  destinationID?: Array<string>;
+  destinationID?: Array<string> | undefined;
   /**
    * Type of task trigger for filtering the list of tasks.
    */
-  triggerType?: Array<TriggerType>;
+  triggerType?: Array<TriggerType> | undefined;
   /**
    * Property by which to sort the list of tasks.
    */
-  sort?: TaskSortKeys;
+  sort?: TaskSortKeys | undefined;
   /**
    * Sort order of the response, ascending or descending.
    */
-  order?: OrderKeys;
+  order?: OrderKeys | undefined;
 };
 
 /**
@@ -565,19 +565,19 @@ export type ListTransformationsProps = {
   /**
    * Number of items per page.
    */
-  itemsPerPage?: number;
+  itemsPerPage?: number | undefined;
   /**
    * Page number of the paginated API response.
    */
-  page?: number;
+  page?: number | undefined;
   /**
    * Property by which to sort the list of transformations.
    */
-  sort?: TransformationSortKeys;
+  sort?: TransformationSortKeys | undefined;
   /**
    * Sort order of the response, ascending or descending.
    */
-  order?: OrderKeys;
+  order?: OrderKeys | undefined;
 };
 
 /**
@@ -592,7 +592,7 @@ export type PushProps = {
   /**
    * When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
    */
-  watch?: boolean;
+  watch?: boolean | undefined;
 };
 
 /**
@@ -607,7 +607,7 @@ export type PushTaskProps = {
   /**
    * When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
    */
-  watch?: boolean;
+  watch?: boolean | undefined;
 };
 
 /**
@@ -621,7 +621,7 @@ export type RunSourceProps = {
   /**
    *
    */
-  runSourcePayload?: RunSourcePayload;
+  runSourcePayload?: RunSourcePayload | undefined;
 };
 
 /**

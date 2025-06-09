@@ -3,5 +3,5 @@
 import type { LatencyMetric } from './latencyMetric';
 
 export type LatencyResponse = {
-  metrics?: LatencyMetric;
+  metrics?: LatencyMetric | undefined;
 };

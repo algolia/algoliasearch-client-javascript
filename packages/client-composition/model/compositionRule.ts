@@ -20,15 +20,15 @@ export type CompositionRule = {
   /**
    * Description of the rule\'s purpose to help you distinguish between different rules.
    */
-  description?: string;
+  description?: string | undefined;
 
   /**
    * Whether the rule is active.
    */
-  enabled?: boolean;
+  enabled?: boolean | undefined;
 
   /**
    * Time periods when the rule is active.
    */
-  validity?: Array<TimeRange>;
+  validity?: Array<TimeRange> | undefined;
 };

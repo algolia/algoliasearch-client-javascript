@@ -4,10 +4,10 @@ export type ProbesMetric = {
   /**
    * Timestamp, measured in milliseconds since the Unix epoch.
    */
-  t?: number;
+  t?: number | undefined;
 
   /**
    * Value of the metric.
    */
-  v?: number;
+  v?: number | undefined;
 };

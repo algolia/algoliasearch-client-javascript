@@ -4,20 +4,20 @@ export type FacetStats = {
   /**
    * Minimum value in the results.
    */
-  min?: number;
+  min?: number | undefined;
 
   /**
    * Maximum value in the results.
    */
-  max?: number;
+  max?: number | undefined;
 
   /**
    * Average facet value in the results.
    */
-  avg?: number;
+  avg?: number | undefined;
 
   /**
    * Sum of all values in the results.
    */
-  sum?: number;
+  sum?: number | undefined;
 };

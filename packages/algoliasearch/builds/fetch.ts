@@ -62,7 +62,7 @@ export type Algoliasearch = SearchClient & {
    */
   saveObjectsWithTransformation: (
     options: SaveObjectsOptions,
-    requestOptions?: RequestOptions,
+    requestOptions?: RequestOptions | undefined,
   ) => Promise<WatchResponse>;
 
   /**
@@ -79,22 +79,24 @@ export type Algoliasearch = SearchClient & {
    */
   partialUpdateObjectsWithTransformation: (
     options: PartialUpdateObjectsOptions,
-    requestOptions?: RequestOptions,
+    requestOptions?: RequestOptions | undefined,
   ) => Promise<WatchResponse>;
 };
 
 export type TransformationOptions = {
   // When provided, a second transporter will be created in order to leverage the `*WithTransformation` methods exposed by the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
-  transformation?: {
-    // The region of your Algolia application ID, used to target the correct hosts of the transformation service.
-    region: IngestionRegion;
-  };
+  transformation?:
+    | {
+        // The region of your Algolia application ID, used to target the correct hosts of the transformation service.
+        region: IngestionRegion;
+      }
+    | undefined;
 };
 
 export function algoliasearch(
   appId: string,
   apiKey: string,
-  options?: ClientOptions & TransformationOptions,
+  options?: (ClientOptions & TransformationOptions) | undefined,
 ): Algoliasearch {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');

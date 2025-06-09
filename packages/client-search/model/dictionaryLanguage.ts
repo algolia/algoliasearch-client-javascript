@@ -7,5 +7,5 @@ export type DictionaryLanguage = {
   /**
    * Number of custom dictionary entries.
    */
-  nbCustomEntries?: number;
+  nbCustomEntries?: number | undefined;
 };

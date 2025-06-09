@@ -14,7 +14,7 @@ export { apiClientVersion } from '../src/liteClient';
 
 export * from '../model';
 
-export function liteClient(appId: string, apiKey: string, options?: ClientOptions): LiteClient {
+export function liteClient(appId: string, apiKey: string, options?: ClientOptions | undefined): LiteClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

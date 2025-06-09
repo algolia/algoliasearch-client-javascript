@@ -4,7 +4,7 @@ export type GetObjectsResponse<T = Record<string, unknown>> = {
   /**
    * An optional status message.
    */
-  message?: string;
+  message?: string | undefined;
 
   /**
    * Retrieved records.

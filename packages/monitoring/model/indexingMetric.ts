@@ -3,5 +3,5 @@
 import type { TimeEntry } from './timeEntry';
 
 export type IndexingMetric = {
-  indexing?: { [key: string]: Array<TimeEntry> };
+  indexing?: { [key: string]: Array<TimeEntry> } | undefined;
 };

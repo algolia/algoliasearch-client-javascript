@@ -20,12 +20,12 @@ export type Authentication = {
    */
   name: string;
 
-  platform?: Platform | null;
+  platform?: Platform | null | undefined;
 
   /**
    * Owner of the resource.
    */
-  owner?: string | null;
+  owner?: string | null | undefined;
 
   input: AuthInputPartial;
 

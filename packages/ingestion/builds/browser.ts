@@ -26,7 +26,7 @@ export function ingestionClient(
   appId: string,
   apiKey: string,
   region: Region,
-  options?: ClientOptions,
+  options?: ClientOptions | undefined,
 ): IngestionClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');

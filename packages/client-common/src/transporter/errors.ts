@@ -76,12 +76,12 @@ export type DetailedErrorWithMessage = {
 export type DetailedErrorWithTypeID = {
   id: string;
   type: string;
-  name?: string;
+  name?: string | undefined;
 };
 
 export type DetailedError = {
   code: string;
-  details?: DetailedErrorWithMessage[] | DetailedErrorWithTypeID[];
+  details?: DetailedErrorWithMessage[] | DetailedErrorWithTypeID[] | undefined;
 };
 
 // DetailedApiError is only used by the ingestion client to return more informative error, other clients will use ApiClient.

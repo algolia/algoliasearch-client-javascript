@@ -6,7 +6,7 @@ import type { BannerImageUrl } from './bannerImageUrl';
  * Image to show inside a banner.
  */
 export type BannerImage = {
-  urls?: Array<BannerImageUrl>;
+  urls?: Array<BannerImageUrl> | undefined;
 
-  title?: string;
+  title?: string | undefined;
 };

@@ -12,7 +12,7 @@ function getErrorMessage(error: unknown, abortContent: string): string {
 }
 
 export type FetchRequesterOptions = {
-  readonly requesterOptions?: RequestInit;
+  readonly requesterOptions?: RequestInit | undefined;
 };
 
 export function createFetchRequester({ requesterOptions = {} }: FetchRequesterOptions = {}): Requester {

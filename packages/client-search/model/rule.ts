@@ -16,22 +16,22 @@ export type Rule = {
   /**
    * Conditions that trigger a rule.  Some consequences require specific conditions or don\'t require any condition. For more information, see [Conditions](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/#conditions).
    */
-  conditions?: Array<Condition>;
+  conditions?: Array<Condition> | undefined;
 
   consequence: Consequence;
 
   /**
    * Description of the rule\'s purpose to help you distinguish between different rules.
    */
-  description?: string;
+  description?: string | undefined;
 
   /**
    * Whether the rule is active.
    */
-  enabled?: boolean;
+  enabled?: boolean | undefined;
 
   /**
    * Time periods when the rule is active.
    */
-  validity?: Array<TimeRange>;
+  validity?: Array<TimeRange> | undefined;
 };

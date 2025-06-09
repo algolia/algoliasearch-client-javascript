@@ -5,5 +5,5 @@ import type { ResultsInjectedItemAppliedRulesInfoResponse } from './resultsInjec
 export type ResultsInjectedItemInfoResponse = Record<string, any> & {
   key: string;
 
-  appliedRules?: Array<ResultsInjectedItemAppliedRulesInfoResponse>;
+  appliedRules?: Array<ResultsInjectedItemAppliedRulesInfoResponse> | undefined;
 };

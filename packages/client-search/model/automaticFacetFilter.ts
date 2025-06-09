@@ -12,10 +12,10 @@ export type AutomaticFacetFilter = {
   /**
    * Filter scores to give different weights to individual filters.
    */
-  score?: number;
+  score?: number | undefined;
 
   /**
    * Whether the filter is disjunctive or conjunctive.  If true the filter has multiple matches, multiple occurences are combined with the logical `OR` operation. If false, multiple occurences are combined with the logical `AND` operation.
    */
-  disjunctive?: boolean;
+  disjunctive?: boolean | undefined;
 };

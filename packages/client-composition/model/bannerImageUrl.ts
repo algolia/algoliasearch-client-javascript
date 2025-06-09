@@ -4,5 +4,5 @@
  * URL for an image to show inside a banner.
  */
 export type BannerImageUrl = {
-  url?: string;
+  url?: string | undefined;
 };

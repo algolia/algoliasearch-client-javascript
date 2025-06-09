@@ -16,11 +16,11 @@ export type CustomPostProps = {
   /**
    * Query parameters to apply to the current query.
    */
-  parameters?: { [key: string]: any };
+  parameters?: { [key: string]: any } | undefined;
   /**
    * Parameters to send with the custom request.
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 };
 
 /**
@@ -36,7 +36,7 @@ export type LegacyGetRecommendationsParams = RecommendationsRequest[];
  * @deprecated The `search` method now accepts flat `searchParams` at the root of the method.
  */
 type LegacySearchParams = {
-  params?: SearchParamsObject;
+  params?: SearchParamsObject | undefined;
 };
 
 /**

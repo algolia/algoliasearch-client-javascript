@@ -7,5 +7,5 @@ export type AuthAPIKeyPartial = {
   /**
    * API key. This field is `null` in the API response.
    */
-  key?: string;
+  key?: string | undefined;
 };

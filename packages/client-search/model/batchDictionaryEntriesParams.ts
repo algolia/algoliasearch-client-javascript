@@ -9,7 +9,7 @@ export type BatchDictionaryEntriesParams = {
   /**
    * Whether to replace all custom entries in the dictionary with the ones sent with this request.
    */
-  clearExistingDictionaryEntries?: boolean;
+  clearExistingDictionaryEntries?: boolean | undefined;
 
   /**
    * List of additions and deletions to your dictionaries.

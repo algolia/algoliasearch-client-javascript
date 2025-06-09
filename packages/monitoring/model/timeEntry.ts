@@ -4,10 +4,10 @@ export type TimeEntry = {
   /**
    * Timestamp, measured in milliseconds since the Unix epoch.
    */
-  t?: number;
+  t?: number | undefined;
 
   /**
    * Time in ms.
    */
-  v?: number;
+  v?: number | undefined;
 };

@@ -9,5 +9,5 @@ export type Injection = {
   /**
    * list of injected items of the current Composition.
    */
-  injectedItems?: Array<InjectedItem>;
+  injectedItems?: Array<InjectedItem> | undefined;
 };

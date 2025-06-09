@@ -6,17 +6,17 @@ export type LogFile = {
   /**
    * Date and time of the log entry, in RFC 3339 format.
    */
-  timestamp?: string;
+  timestamp?: string | undefined;
 
-  level?: LogLevel;
+  level?: LogLevel | undefined;
 
   /**
    * Details about this log entry.
    */
-  message?: string;
+  message?: string | undefined;
 
   /**
    * Level indicating the position of a suggestion in a hierarchy of records.  For example, a `contextLevel` of 1 indicates that this suggestion belongs to a previous suggestion with `contextLevel` 0.
    */
-  contextLevel?: number;
+  contextLevel?: number | undefined;
 };

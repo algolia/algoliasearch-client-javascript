@@ -8,5 +8,5 @@ export type CompositionSourceSearch = {
    */
   index: string;
 
-  params?: MainInjectionQueryParameters;
+  params?: MainInjectionQueryParameters | undefined;
 };

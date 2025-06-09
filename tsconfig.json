@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
     "allowJs": false,
-    "verbatimModuleSyntax": true,
     "allowSyntheticDefaultImports": true,
     "declaration": true,
     "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
     "lib": ["dom", "esnext", "dom.iterable", "scripthost"],
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
-    "noImplicitThis": true,
     "noImplicitOverride": true,
+    "noImplicitThis": true,
     "noLib": false,
     "noUnusedLocals": true,
     "outDir": "dist",
@@ -18,7 +18,8 @@
     "sourceMap": true,
     "strict": true,
     "target": "esnext",
-    "types": ["node"]
+    "types": ["node"],
+    "verbatimModuleSyntax": true
   },
   "include": ["packages/**/*.ts"],
   "exclude": ["dist", "node_modules"]

@@ -31,7 +31,7 @@ export type CreateIterablePromise<TResponse> = IterableOptions<TResponse> & {
    *
    * The `previousResponse` parameter (`undefined` on the first call) allows you to build your request with incremental logic, to iterate on `page` or `cursor` for example.
    */
-  func: (previousResponse?: TResponse) => Promise<TResponse>;
+  func: (previousResponse?: TResponse | undefined) => Promise<TResponse>;
 
   /**
    * The validator function. It receive the resolved return of the API call.

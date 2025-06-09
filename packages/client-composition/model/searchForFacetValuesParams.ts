@@ -6,12 +6,12 @@ export type SearchForFacetValuesParams = {
   /**
    * Search query.
    */
-  query?: string;
+  query?: string | undefined;
 
   /**
    * Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
    */
-  maxFacetHits?: number;
+  maxFacetHits?: number | undefined;
 
-  searchQuery?: Params;
+  searchQuery?: Params | undefined;
 };

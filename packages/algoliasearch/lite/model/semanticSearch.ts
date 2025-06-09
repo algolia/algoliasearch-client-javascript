@@ -7,5 +7,5 @@ export type SemanticSearch = {
   /**
    * Indices from which to collect click and conversion events.  If null, the current index and all its replicas are used.
    */
-  eventSources?: Array<string> | null;
+  eventSources?: Array<string> | null | undefined;
 };

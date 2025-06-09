@@ -7,10 +7,10 @@ export type PromoteConsequenceObject = {
   /**
    * Unique record identifier.
    */
-  objectID?: string;
+  objectID?: string | undefined;
 
   /**
    * Index in the list of recommendations where to place this item.
    */
-  position?: number;
+  position?: number | undefined;
 };

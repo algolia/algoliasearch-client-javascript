@@ -4,15 +4,15 @@ export type MatchedGeoLocation = {
   /**
    * Latitude of the matched location.
    */
-  lat?: number;
+  lat?: number | undefined;
 
   /**
    * Longitude of the matched location.
    */
-  lng?: number;
+  lng?: number | undefined;
 
   /**
    * Distance between the matched location and the search location (in meters).
    */
-  distance?: number;
+  distance?: number | undefined;
 };

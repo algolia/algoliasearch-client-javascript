@@ -22,8 +22,8 @@ export * from '../model';
 export function analyticsClient(
   appId: string,
   apiKey: string,
-  region?: Region,
-  options?: ClientOptions,
+  region?: Region | undefined,
+  options?: ClientOptions | undefined,
 ): AnalyticsClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');

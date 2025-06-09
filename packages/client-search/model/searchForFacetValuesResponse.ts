@@ -16,5 +16,5 @@ export type SearchForFacetValuesResponse = {
   /**
    * Time the server took to process the request, in milliseconds.
    */
-  processingTimeMS?: number;
+  processingTimeMS?: number | undefined;
 };

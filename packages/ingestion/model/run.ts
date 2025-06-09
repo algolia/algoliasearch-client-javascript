@@ -21,21 +21,21 @@ export type Run = {
 
   status: RunStatus;
 
-  progress?: RunProgress;
+  progress?: RunProgress | undefined;
 
-  outcome?: RunOutcome;
+  outcome?: RunOutcome | undefined;
 
   /**
    * Maximum accepted percentage of failures for a task run to finish successfully.
    */
-  failureThreshold?: number;
+  failureThreshold?: number | undefined;
 
   /**
    * More information about the task run\'s outcome.
    */
-  reason?: string;
+  reason?: string | undefined;
 
-  reasonCode?: RunReasonCode;
+  reasonCode?: RunReasonCode | undefined;
 
   type: RunType;
 
@@ -47,10 +47,10 @@ export type Run = {
   /**
    * Date of start in RFC 3339 format.
    */
-  startedAt?: string;
+  startedAt?: string | undefined;
 
   /**
    * Date of finish in RFC 3339 format.
    */
-  finishedAt?: string;
+  finishedAt?: string | undefined;
 };

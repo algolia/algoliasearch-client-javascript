@@ -4,7 +4,7 @@ export type EchoResponse = Omit<EndRequest, 'data'> &
   Pick<Request, 'data' | 'path'> & {
     host: string;
     algoliaAgent: string;
-    searchParams?: Record<string, string>;
+    searchParams?: Record<string, string> | undefined;
   };
 
 type BasicURL = {
@@ -15,7 +15,7 @@ type BasicURL = {
 
 export type EchoRequesterParams = {
   getURL: (url: string) => BasicURL;
-  status?: number;
+  status?: number | undefined;
 };
 
 function getUrlParams({

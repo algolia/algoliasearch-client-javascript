@@ -4,5 +4,5 @@ export type SearchParamsQuery = {
   /**
    * Search query.
    */
-  query?: string;
+  query?: string | undefined;
 };

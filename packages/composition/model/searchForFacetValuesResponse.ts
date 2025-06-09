@@ -6,5 +6,5 @@ export type SearchForFacetValuesResponse = {
   /**
    * Search for facet values results.
    */
-  results?: Array<SearchForFacetValuesResults>;
+  results?: Array<SearchForFacetValuesResults> | undefined;
 };

@@ -7,20 +7,20 @@ export type AuthOAuthPartial = {
   /**
    * URL for the OAuth endpoint.
    */
-  url?: string;
+  url?: string | undefined;
 
   /**
    * Client ID.
    */
-  client_id?: string;
+  client_id?: string | undefined;
 
   /**
    * Client secret. This field is `null` in the API response.
    */
-  client_secret?: string;
+  client_secret?: string | undefined;
 
   /**
    * OAuth scope.
    */
-  scope?: string;
+  scope?: string | undefined;
 };

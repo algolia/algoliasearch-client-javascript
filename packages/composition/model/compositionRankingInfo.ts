@@ -3,5 +3,5 @@
 import type { CompositionIdRankingInfo } from './compositionIdRankingInfo';
 
 export type CompositionRankingInfo = {
-  composed?: { [key: string]: CompositionIdRankingInfo };
+  composed?: { [key: string]: CompositionIdRankingInfo } | undefined;
 };

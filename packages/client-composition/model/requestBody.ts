@@ -3,5 +3,5 @@
 import type { Params } from './params';
 
 export type RequestBody = {
-  params?: Params;
+  params?: Params | undefined;
 };

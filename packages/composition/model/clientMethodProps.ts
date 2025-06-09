@@ -26,5 +26,5 @@ export type SearchForFacetValuesProps = {
    * Facet attribute in which to search for values.  This attribute must be included in the `attributesForFaceting` index setting with the `searchable()` modifier.
    */
   facetName: string;
-  searchForFacetValuesRequest?: SearchForFacetValuesRequest;
+  searchForFacetValuesRequest?: SearchForFacetValuesRequest | undefined;
 };

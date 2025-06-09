@@ -13,5 +13,5 @@ export type TransformationTry = {
    */
   sampleRecord: Record<string, unknown>;
 
-  authentications?: Array<AuthenticationCreate>;
+  authentications?: Array<AuthenticationCreate> | undefined;
 };

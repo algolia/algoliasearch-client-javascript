@@ -11,25 +11,25 @@ export type WatchResponse = {
   /**
    * Universally unique identifier (UUID) of an event.
    */
-  eventID?: string;
+  eventID?: string | undefined;
 
   /**
    * This field is always null when used with the Push endpoint. When used for a source discover or source validate run, it will include the sampled data of the source.
    */
-  data?: Array<Record<string, unknown>>;
+  data?: Array<Record<string, unknown>> | undefined;
 
   /**
    * in case of error, observability events will be added to the response.
    */
-  events?: Array<Event>;
+  events?: Array<Event> | undefined;
 
   /**
    * a message describing the outcome of the operation that has been ran (push, discover or validate) run.
    */
-  message?: string;
+  message?: string | undefined;
 
   /**
    * Date of creation in RFC 3339 format.
    */
-  createdAt?: string;
+  createdAt?: string | undefined;
 };

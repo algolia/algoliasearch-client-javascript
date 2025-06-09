@@ -12,15 +12,15 @@ export type SearchUserIdsParams = {
   /**
    * Cluster name.
    */
-  clusterName?: string;
+  clusterName?: string | undefined;
 
   /**
    * Page of search results to retrieve.
    */
-  page?: number;
+  page?: number | undefined;
 
   /**
    * Number of hits per page.
    */
-  hitsPerPage?: number;
+  hitsPerPage?: number | undefined;
 };

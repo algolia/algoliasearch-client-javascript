@@ -7,10 +7,10 @@ export type AuthAlgoliaInsightsPartial = {
   /**
    * Algolia application ID.
    */
-  appID?: string;
+  appID?: string | undefined;
 
   /**
    * Algolia API key with the ACL: `search`. This field is `null` in the API response.
    */
-  apiKey?: string;
+  apiKey?: string | undefined;
 };

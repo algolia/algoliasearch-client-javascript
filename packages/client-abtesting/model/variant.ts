@@ -12,12 +12,12 @@ export type Variant = {
   /**
    * [Add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate) for this variant.
    */
-  addToCartRate?: number | null;
+  addToCartRate?: number | null | undefined;
 
   /**
    * [Average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) for this variant.
    */
-  averageClickPosition?: number | null;
+  averageClickPosition?: number | null | undefined;
 
   /**
    * Number of click events for this variant.
@@ -27,7 +27,7 @@ export type Variant = {
   /**
    * [Click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate) for this variant.
    */
-  clickThroughRate?: number | null;
+  clickThroughRate?: number | null | undefined;
 
   /**
    * Number of click events for this variant.
@@ -37,24 +37,24 @@ export type Variant = {
   /**
    * [Conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate) for this variant.
    */
-  conversionRate?: number | null;
+  conversionRate?: number | null | undefined;
 
   /**
    * A/B test currencies.
    */
-  currencies?: { [key: string]: Currency };
+  currencies?: { [key: string]: Currency } | undefined;
 
   /**
    * Description for this variant.
    */
-  description?: string;
+  description?: string | undefined;
 
   /**
    * Estimated number of searches required to achieve the desired statistical significance.  The A/B test configuration must include a `mininmumDetectableEffect` setting for this number to be included in the response.
    */
-  estimatedSampleSize?: number;
+  estimatedSampleSize?: number | undefined;
 
-  filterEffects?: FilterEffects;
+  filterEffects?: FilterEffects | undefined;
 
   /**
    * Index name of the A/B test variant (case-sensitive).
@@ -74,7 +74,7 @@ export type Variant = {
   /**
    * [Purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate) for this variant.
    */
-  purchaseRate?: number | null;
+  purchaseRate?: number | null | undefined;
 
   /**
    * Number of searches for this variant.
@@ -84,7 +84,7 @@ export type Variant = {
   /**
    * Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
    */
-  trackedSearchCount?: number;
+  trackedSearchCount?: number | undefined;
 
   /**
    * Percentage of search requests each variant receives.

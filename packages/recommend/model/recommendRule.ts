@@ -9,29 +9,29 @@ import type { TimeRange } from './timeRange';
  * Recommend rule.
  */
 export type RecommendRule = {
-  _metadata?: RuleMetadata;
+  _metadata?: RuleMetadata | undefined;
 
   /**
    * Unique identifier of a rule object.
    */
-  objectID?: string;
+  objectID?: string | undefined;
 
-  condition?: Condition;
+  condition?: Condition | undefined;
 
-  consequence?: Consequence;
+  consequence?: Consequence | undefined;
 
   /**
    * Description of the rule\'s purpose. This can be helpful for display in the Algolia dashboard.
    */
-  description?: string;
+  description?: string | undefined;
 
   /**
    * Indicates whether to enable the rule. If it isn\'t enabled, it isn\'t applied at query time.
    */
-  enabled?: boolean;
+  enabled?: boolean | undefined;
 
   /**
    * Time periods when the rule is active.
    */
-  validity?: Array<TimeRange>;
+  validity?: Array<TimeRange> | undefined;
 };

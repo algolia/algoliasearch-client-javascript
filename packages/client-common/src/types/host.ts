@@ -17,7 +17,7 @@ export type Host = {
   /**
    * The port of the host URL.
    */
-  port?: number;
+  port?: number | undefined;
 };
 
 export type StatefulHost = Host & {

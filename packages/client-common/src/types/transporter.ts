@@ -9,25 +9,25 @@ export type RequestOptions = Pick<Request, 'cacheable'> & {
    * the given timeout will be applied. But the transporter layer may
    * increase this timeout if there is need for it.
    */
-  timeouts?: Partial<Timeouts>;
+  timeouts?: Partial<Timeouts> | undefined;
 
   /**
    * Custom headers for the request. This headers are
    * going to be merged the transporter headers.
    */
-  headers?: Headers;
+  headers?: Headers | undefined;
 
   /**
    * Custom query parameters for the request. This query parameters are
    * going to be merged the transporter query parameters.
    */
-  queryParameters?: QueryParameters;
+  queryParameters?: QueryParameters | undefined;
 
   /**
    * Custom data for the request. This data is
    * going to be merged the transporter data.
    */
-  data?: Array<Record<string, any>> | Record<string, any>;
+  data?: Array<Record<string, any>> | Record<string, any> | undefined;
 };
 
 export type StackFrame = {
@@ -46,7 +46,7 @@ export type AlgoliaAgentOptions = {
   /**
    * The version. Usually the integration version.
    */
-  version?: string;
+  version?: string | undefined;
 };
 
 export type AlgoliaAgent = {

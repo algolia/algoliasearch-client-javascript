@@ -9,5 +9,5 @@ export type Widgets = {
   /**
    * Banners defined in the Merchandising Studio for a given search.
    */
-  banners?: Array<Banner>;
+  banners?: Array<Banner> | undefined;
 };

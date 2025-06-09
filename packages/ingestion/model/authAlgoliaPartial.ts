@@ -7,10 +7,10 @@ export type AuthAlgoliaPartial = {
   /**
    * Algolia application ID.
    */
-  appID?: string;
+  appID?: string | undefined;
 
   /**
    * Algolia API key with the ACL: `addObject`, `deleteObject`, `settings`, `editSettings`, `listIndexes`, `deleteIndex`. This field is `null` in the API response.
    */
-  apiKey?: string;
+  apiKey?: string | undefined;
 };

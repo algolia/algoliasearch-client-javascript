@@ -6,12 +6,12 @@ export type Value = {
   /**
    * Explicit order of facets or facet values.  This setting lets you always show specific facets or facet values at the top of the list.
    */
-  order?: Array<string>;
+  order?: Array<string> | undefined;
 
-  sortRemainingBy?: SortRemainingBy;
+  sortRemainingBy?: SortRemainingBy | undefined;
 
   /**
    * Hide facet values.
    */
-  hide?: Array<string>;
+  hide?: Array<string> | undefined;
 };

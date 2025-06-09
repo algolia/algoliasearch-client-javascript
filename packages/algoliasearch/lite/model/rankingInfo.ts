@@ -10,7 +10,7 @@ export type RankingInfo = {
   /**
    * Whether a filter matched the query.
    */
-  filters?: number;
+  filters?: number | undefined;
 
   /**
    * Position of the first matched word in the best matching attribute of the record.
@@ -25,11 +25,11 @@ export type RankingInfo = {
   /**
    * Precision used when computing the geo distance, in meters.
    */
-  geoPrecision?: number;
+  geoPrecision?: number | undefined;
 
-  matchedGeoLocation?: MatchedGeoLocation;
+  matchedGeoLocation?: MatchedGeoLocation | undefined;
 
-  personalization?: Personalization;
+  personalization?: Personalization | undefined;
 
   /**
    * Number of exactly matched words.
@@ -44,12 +44,12 @@ export type RankingInfo = {
   /**
    * Whether the record was promoted by a rule.
    */
-  promoted?: boolean;
+  promoted?: boolean | undefined;
 
   /**
    * Number of words between multiple matches in the query plus 1. For single word queries, `proximityDistance` is 0.
    */
-  proximityDistance?: number;
+  proximityDistance?: number | undefined;
 
   /**
    * Overall ranking of the record, expressed as a single integer. This attribute is internal.
@@ -59,10 +59,10 @@ export type RankingInfo = {
   /**
    * Number of matched words.
    */
-  words?: number;
+  words?: number | undefined;
 
   /**
    * Whether the record is re-ranked.
    */
-  promotedByReRanking?: boolean;
+  promotedByReRanking?: boolean | undefined;
 };

@@ -4,5 +4,5 @@
  * The redirect rule container.
  */
 export type RedirectURL = {
-  url?: string;
+  url?: string | undefined;
 };

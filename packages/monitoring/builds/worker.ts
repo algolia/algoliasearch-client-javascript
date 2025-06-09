@@ -13,7 +13,7 @@ export { apiClientVersion } from '../src/monitoringClient';
 
 export * from '../model';
 
-export function monitoringClient(appId: string, apiKey: string, options?: ClientOptions): MonitoringClient {
+export function monitoringClient(appId: string, apiKey: string, options?: ClientOptions | undefined): MonitoringClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

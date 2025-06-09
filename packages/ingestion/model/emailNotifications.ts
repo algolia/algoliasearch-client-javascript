@@ -4,5 +4,5 @@ export type EmailNotifications = {
   /**
    * Whether to send email notifications, note that this doesn\'t prevent the task from being blocked.
    */
-  enabled?: boolean;
+  enabled?: boolean | undefined;
 };

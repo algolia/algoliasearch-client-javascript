@@ -56,7 +56,7 @@ export function serializeData(request: Request, requestOptions: RequestOptions):
 export function serializeHeaders(
   baseHeaders: Headers,
   requestHeaders: Headers,
-  requestOptionsHeaders?: Headers,
+  requestOptionsHeaders?: Headers | undefined,
 ): Headers {
   const headers: Headers = {
     Accept: 'application/json',

@@ -49,15 +49,15 @@ export type FetchedIndex = {
   /**
    * Only present if the index is a replica. Contains the name of the related primary index.
    */
-  primary?: string;
+  primary?: string | undefined;
 
   /**
    * Only present if the index is a primary index with replicas. Contains the names of all linked replicas.
    */
-  replicas?: Array<string>;
+  replicas?: Array<string> | undefined;
 
   /**
    * Only present if the index is a [virtual replica](https://www.algolia.com/doc/guides/managing-results/refine-results/sorting/how-to/sort-an-index-alphabetically/#virtual-replicas).
    */
-  virtual?: boolean;
+  virtual?: boolean | undefined;
 };

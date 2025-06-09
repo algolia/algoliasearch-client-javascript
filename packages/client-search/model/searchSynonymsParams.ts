@@ -6,17 +6,17 @@ export type SearchSynonymsParams = {
   /**
    * Search query.
    */
-  query?: string;
+  query?: string | undefined;
 
-  type?: SynonymType;
+  type?: SynonymType | undefined;
 
   /**
    * Page of search results to retrieve.
    */
-  page?: number;
+  page?: number | undefined;
 
   /**
    * Number of hits per page.
    */
-  hitsPerPage?: number;
+  hitsPerPage?: number | undefined;
 };

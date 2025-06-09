@@ -4,20 +4,20 @@ export type Currency = {
   /**
    * Currency code.
    */
-  currency?: string;
+  currency?: string | undefined;
 
   /**
    * Revenue for this currency.
    */
-  revenue?: number;
+  revenue?: number | undefined;
 
   /**
    * Mean for this currency.
    */
-  mean?: number;
+  mean?: number | undefined;
 
   /**
    * Standard deviation for this currency.
    */
-  standardDeviation?: number;
+  standardDeviation?: number | undefined;
 };

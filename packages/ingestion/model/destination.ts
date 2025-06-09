@@ -22,7 +22,7 @@ export type Destination = {
   /**
    * Owner of the resource.
    */
-  owner?: string | null;
+  owner?: string | null | undefined;
 
   input: DestinationInput;
 
@@ -39,7 +39,7 @@ export type Destination = {
   /**
    * Universally unique identifier (UUID) of an authentication resource.
    */
-  authenticationID?: string;
+  authenticationID?: string | undefined;
 
-  transformationIDs?: Array<string>;
+  transformationIDs?: Array<string> | undefined;
 };

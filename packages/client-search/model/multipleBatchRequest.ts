@@ -8,7 +8,7 @@ export type MultipleBatchRequest = {
   /**
    * Operation arguments (varies with specified `action`).
    */
-  body?: Record<string, unknown>;
+  body?: Record<string, unknown> | undefined;
 
   /**
    * Index name (case-sensitive).

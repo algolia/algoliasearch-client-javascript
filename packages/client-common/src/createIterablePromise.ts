@@ -17,7 +17,7 @@ export function createIterablePromise<TResponse>({
   error,
   timeout = (): number => 0,
 }: CreateIterablePromise<TResponse>): Promise<TResponse> {
-  const retry = (previousResponse?: TResponse): Promise<TResponse> => {
+  const retry = (previousResponse?: TResponse | undefined): Promise<TResponse> => {
     return new Promise<TResponse>((resolve, reject) => {
       func(previousResponse)
         .then(async (response) => {

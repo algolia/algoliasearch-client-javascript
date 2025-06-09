@@ -4,15 +4,15 @@ export type SearchForFacetValuesRequest = {
   /**
    * Search parameters as a URL-encoded query string.
    */
-  params?: string;
+  params?: string | undefined;
 
   /**
    * Text to search inside the facet\'s values.
    */
-  facetQuery?: string;
+  facetQuery?: string | undefined;
 
   /**
    * Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
    */
-  maxFacetHits?: number;
+  maxFacetHits?: number | undefined;
 };

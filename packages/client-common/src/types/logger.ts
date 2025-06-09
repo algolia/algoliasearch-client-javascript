@@ -10,15 +10,15 @@ export type Logger = {
   /**
    * Logs debug messages.
    */
-  debug: (message: string, args?: any) => Promise<void>;
+  debug: (message: string, args?: any | undefined) => Promise<void>;
 
   /**
    * Logs info messages.
    */
-  info: (message: string, args?: any) => Promise<void>;
+  info: (message: string, args?: any | undefined) => Promise<void>;
 
   /**
    * Logs error messages.
    */
-  error: (message: string, args?: any) => Promise<void>;
+  error: (message: string, args?: any | undefined) => Promise<void>;
 };

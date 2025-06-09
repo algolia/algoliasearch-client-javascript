@@ -5,7 +5,7 @@ export type Cache = {
   get: <TValue>(
     key: Record<string, any> | string,
     defaultValue: () => Promise<TValue>,
-    events?: CacheEvents<TValue>,
+    events?: CacheEvents<TValue> | undefined,
   ) => Promise<TValue>;
 
   /**
@@ -35,7 +35,7 @@ export type MemoryCacheOptions = {
   /**
    * If keys and values should be serialized using `JSON.stringify`.
    */
-  serializable?: boolean;
+  serializable?: boolean | undefined;
 };
 
 export type BrowserLocalStorageOptions = {
@@ -47,12 +47,12 @@ export type BrowserLocalStorageOptions = {
   /**
    * The time to live for each cached item in seconds.
    */
-  timeToLive?: number;
+  timeToLive?: number | undefined;
 
   /**
    * The native local storage implementation.
    */
-  localStorage?: Storage;
+  localStorage?: Storage | undefined;
 };
 
 export type BrowserLocalStorageCacheItem = {

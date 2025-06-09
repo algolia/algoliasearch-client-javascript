@@ -14,7 +14,7 @@ export { apiClientVersion } from '../src/recommendClient';
 
 export * from '../model';
 
-export function recommendClient(appId: string, apiKey: string, options?: ClientOptions): RecommendClient {
+export function recommendClient(appId: string, apiKey: string, options?: ClientOptions | undefined): RecommendClient {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }

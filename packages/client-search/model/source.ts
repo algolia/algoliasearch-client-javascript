@@ -12,5 +12,5 @@ export type Source = {
   /**
    * Source description.
    */
-  description?: string;
+  description?: string | undefined;
 };

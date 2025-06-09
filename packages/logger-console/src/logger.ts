@@ -3,7 +3,7 @@ import { LogLevelEnum } from '@algolia/client-common';
 
 export function createConsoleLogger(logLevel: LogLevelType): Logger {
   return {
-    debug(message: string, args?: any): Readonly<Promise<void>> {
+    debug(message: string, args?: any | undefined): Readonly<Promise<void>> {
       if (LogLevelEnum.Debug >= logLevel) {
         console.debug(message, args);
       }
@@ -11,7 +11,7 @@ export function createConsoleLogger(logLevel: LogLevelType): Logger {
       return Promise.resolve();
     },
 
-    info(message: string, args?: any): Readonly<Promise<void>> {
+    info(message: string, args?: any | undefined): Readonly<Promise<void>> {
       if (LogLevelEnum.Info >= logLevel) {
         console.info(message, args);
       }
@@ -19,7 +19,7 @@ export function createConsoleLogger(logLevel: LogLevelType): Logger {
       return Promise.resolve();
     },
 
-    error(message: string, args?: any): Readonly<Promise<void>> {
+    error(message: string, args?: any | undefined): Readonly<Promise<void>> {
       console.error(message, args);
 
       return Promise.resolve();

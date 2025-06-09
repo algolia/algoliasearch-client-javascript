@@ -3,5 +3,5 @@
 import type { IndexingMetric } from './indexingMetric';
 
 export type IndexingTimeResponse = {
-  metrics?: IndexingMetric;
+  metrics?: IndexingMetric | undefined;
 };

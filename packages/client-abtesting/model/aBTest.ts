@@ -10,15 +10,15 @@ export type ABTest = {
    */
   abTestID: number;
 
-  clickSignificance?: number | null;
+  clickSignificance?: number | null | undefined;
 
-  conversionSignificance?: number | null;
+  conversionSignificance?: number | null | undefined;
 
-  addToCartSignificance?: number | null;
+  addToCartSignificance?: number | null | undefined;
 
-  purchaseSignificance?: number | null;
+  purchaseSignificance?: number | null | undefined;
 
-  revenueSignificance?: { [key: string]: number } | null;
+  revenueSignificance?: { [key: string]: number } | null | undefined;
 
   /**
    * Date and time when the A/B test was last updated, in RFC 3339 format.
@@ -47,5 +47,5 @@ export type ABTest = {
    */
   variants: Array<Variant>;
 
-  configuration?: ABTestConfiguration;
+  configuration?: ABTestConfiguration | undefined;
 };

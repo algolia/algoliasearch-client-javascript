@@ -3,12 +3,12 @@
 import type { CommercetoolsCustomFields } from './commercetoolsCustomFields';
 
 export type SourceCommercetools = {
-  storeKeys?: Array<string>;
+  storeKeys?: Array<string> | undefined;
 
   /**
    * Locales for your commercetools stores.
    */
-  locales?: Array<string>;
+  locales?: Array<string> | undefined;
 
   url: string;
 
@@ -17,12 +17,12 @@ export type SourceCommercetools = {
   /**
    * Whether a fallback value is stored in the Algolia record if there\'s no inventory information about the product.
    */
-  fallbackIsInStockValue?: boolean;
+  fallbackIsInStockValue?: boolean | undefined;
 
   /**
    * Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
    */
-  productQueryPredicate?: string;
+  productQueryPredicate?: string | undefined;
 
-  customFields?: CommercetoolsCustomFields;
+  customFields?: CommercetoolsCustomFields | undefined;
 };
