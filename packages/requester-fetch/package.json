@@ -51,14 +51,14 @@
     "@algolia/client-common": "5.27.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.1",
-    "@types/node": "22.15.29",
+    "@arethetypeswrong/cli": "0.18.2",
+    "@types/node": "22.15.30",
     "cross-fetch": "4.1.0",
     "nock": "14.0.5",
     "publint": "0.3.12",
     "tsup": "8.5.0",
     "typescript": "5.8.3",
-    "vitest": "3.2.0"
+    "vitest": "3.2.3"
   },
   "engines": {
     "node": ">= 14.0.0"

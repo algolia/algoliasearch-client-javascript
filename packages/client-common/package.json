@@ -35,14 +35,14 @@
     "test:bundle": "publint . && attw --pack ."
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.1",
-    "@types/node": "22.15.29",
+    "@arethetypeswrong/cli": "0.18.2",
+    "@types/node": "22.15.30",
     "jsdom": "26.1.0",
     "publint": "0.3.12",
     "ts-node": "10.9.2",
     "tsup": "8.5.0",
     "typescript": "5.8.3",
-    "vitest": "3.2.0"
+    "vitest": "3.2.3"
   },
   "engines": {
     "node": ">= 14.0.0"
