@@ -454,12 +454,6 @@ export function createIngestionClient({
       if (!transformationCreate.name) {
         throw new Error('Parameter `transformationCreate.name` is required when calling `createTransformation`.');
       }
-      if (!transformationCreate.type) {
-        throw new Error('Parameter `transformationCreate.type` is required when calling `createTransformation`.');
-      }
-      if (!transformationCreate.input) {
-        throw new Error('Parameter `transformationCreate.input` is required when calling `createTransformation`.');
-      }
 
       const requestPath = '/1/transformations';
       const headers: Headers = {};
@@ -2202,9 +2196,6 @@ export function createIngestionClient({
         throw new Error('Parameter `transformationTry` is required when calling `tryTransformation`.');
       }
 
-      if (!transformationTry.code) {
-        throw new Error('Parameter `transformationTry.code` is required when calling `tryTransformation`.');
-      }
       if (!transformationTry.sampleRecord) {
         throw new Error('Parameter `transformationTry.sampleRecord` is required when calling `tryTransformation`.');
       }
@@ -2248,9 +2239,6 @@ export function createIngestionClient({
         throw new Error('Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.');
       }
 
-      if (!transformationTry.code) {
-        throw new Error('Parameter `transformationTry.code` is required when calling `tryTransformationBeforeUpdate`.');
-      }
       if (!transformationTry.sampleRecord) {
         throw new Error(
           'Parameter `transformationTry.sampleRecord` is required when calling `tryTransformationBeforeUpdate`.',
@@ -2486,12 +2474,6 @@ export function createIngestionClient({
 
       if (!transformationCreate.name) {
         throw new Error('Parameter `transformationCreate.name` is required when calling `updateTransformation`.');
-      }
-      if (!transformationCreate.type) {
-        throw new Error('Parameter `transformationCreate.type` is required when calling `updateTransformation`.');
-      }
-      if (!transformationCreate.input) {
-        throw new Error('Parameter `transformationCreate.input` is required when calling `updateTransformation`.');
       }
 
       const requestPath = '/1/transformations/{transformationID}'.replace(

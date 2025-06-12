@@ -17,9 +17,9 @@ export type TransformationCreate = {
    */
   name: string;
 
-  type: TransformationType;
+  type?: TransformationType | undefined;
 
-  input: TransformationInput;
+  input?: TransformationInput | undefined;
 
   /**
    * A descriptive name for your transformation of what it does.
