@@ -86,7 +86,7 @@ export type BaseSearchResponse = Record<string, any> & {
   /**
    * Time the server took to process the request, in milliseconds.
    */
-  processingTimeMS: number;
+  processingTimeMS?: number | undefined;
 
   /**
    * Experimental. List of processing steps and their times, in milliseconds. You can use this list to investigate performance issues.
