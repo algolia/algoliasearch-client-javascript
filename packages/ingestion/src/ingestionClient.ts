@@ -1714,9 +1714,13 @@ export function createIngestionClient({
      * @param push.indexName - Name of the index on which to perform the operation.
      * @param push.pushTaskPayload - The pushTaskPayload object.
      * @param push.watch - When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+     * @param push.referenceIndexName - This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index\'s transformation to it (e.g. the source index name).
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    push({ indexName, pushTaskPayload, watch }: PushProps, requestOptions?: RequestOptions): Promise<WatchResponse> {
+    push(
+      { indexName, pushTaskPayload, watch, referenceIndexName }: PushProps,
+      requestOptions?: RequestOptions,
+    ): Promise<WatchResponse> {
       if (!indexName) {
         throw new Error('Parameter `indexName` is required when calling `push`.');
       }
@@ -1738,6 +1742,10 @@ export function createIngestionClient({
 
       if (watch !== undefined) {
         queryParameters['watch'] = watch.toString();
+      }
+
+      if (referenceIndexName !== undefined) {
+        queryParameters['referenceIndexName'] = referenceIndexName.toString();
       }
 
       const request: Request = {

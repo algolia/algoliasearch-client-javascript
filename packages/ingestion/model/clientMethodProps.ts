@@ -593,6 +593,10 @@ export type PushProps = {
    * When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
    */
   watch?: boolean | undefined;
+  /**
+   * This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index\'s transformation to it (e.g. the source index name).
+   */
+  referenceIndexName?: string | undefined;
 };
 
 /**
