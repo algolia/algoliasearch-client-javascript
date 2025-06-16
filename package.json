@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "lerna run build --skip-nx-cache --scope '@algolia/requester-testing' --scope '@algolia/logger-console' --scope 'algoliasearch' --scope '@algolia/client-composition' --scope '@algolia/composition' --include-dependencies",
+    "build": "lerna run build --skip-nx-cache --scope '@algolia/requester-testing' --scope '@algolia/logger-console' --scope 'algoliasearch' --scope '@algolia/client-composition' --scope '@algolia/composition' --scope '@algolia/advanced-personalization' --include-dependencies ",
     "clean": "lerna run clean",
     "release:publish": "tsc --project scripts/tsconfig.json && node scripts/dist/publish.js",
     "test": "lerna run test $*",
