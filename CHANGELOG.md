@@ -1,3 +1,13 @@
+## [5.28.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.27.0...5.28.0)
+
+- [e0689b5b76](https://github.com/algolia/api-clients-automation/commit/e0689b5b76) feat(javascript): add `exactOptionalPropertyTypes` to tsconfig ([#4935](https://github.com/algolia/api-clients-automation/pull/4935)) by [@shortcuts](https://github.com/shortcuts/)
+- [dc68c76106](https://github.com/algolia/api-clients-automation/commit/dc68c76106) chore(deps): dependencies 2025-06-09 ([#4943](https://github.com/algolia/api-clients-automation/pull/4943)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [6031284e24](https://github.com/algolia/api-clients-automation/commit/6031284e24) feat(specs): update try transformation specs for no-code ([#4974](https://github.com/algolia/api-clients-automation/pull/4974)) by [@mehmetaligok](https://github.com/mehmetaligok/)
+- [0ea1d0ca98](https://github.com/algolia/api-clients-automation/commit/0ea1d0ca98) feat(clients): add real-time personalization to advanced-personalization [PRED-3870] ([#4976](https://github.com/algolia/api-clients-automation/pull/4976)) by [@raed667](https://github.com/raed667/)
+- [60ade79465](https://github.com/algolia/api-clients-automation/commit/60ade79465) chore(deps): dependencies 2025-06-16 ([#4977](https://github.com/algolia/api-clients-automation/pull/4977)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [2561c945f7](https://github.com/algolia/api-clients-automation/commit/2561c945f7) fix(clients): processingTimeMS should be optional ([#5004](https://github.com/algolia/api-clients-automation/pull/5004)) by [@Fluf22](https://github.com/Fluf22/)
+- [973cc0c07e](https://github.com/algolia/api-clients-automation/commit/973cc0c07e) feat(specs): add new ingestion property for push ([#5007](https://github.com/algolia/api-clients-automation/pull/5007)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.27.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.26.0...5.27.0)
 
 - [835daccb48](https://github.com/algolia/api-clients-automation/commit/835daccb48) feat(specs): add with transformation helpers ([#4931](https://github.com/algolia/api-clients-automation/pull/4931)) by [@shortcuts](https://github.com/shortcuts/)
