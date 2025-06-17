@@ -2,7 +2,7 @@
 
 import type { SearchFilters } from './searchFilters';
 
-export type RealtimeUserUser = {
+export type RealtimeUser = {
   /**
    * Version of the response format.
    */

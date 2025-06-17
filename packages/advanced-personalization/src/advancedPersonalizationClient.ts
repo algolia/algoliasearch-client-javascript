@@ -18,7 +18,7 @@ import type { DeleteUserResponse } from '../model/deleteUserResponse';
 
 import type { GetUsersResponse } from '../model/getUsersResponse';
 import type { PutConfigResponse } from '../model/putConfigResponse';
-import type { RealtimeUserUser } from '../model/realtimeUserUser';
+import type { RealtimeUser } from '../model/realtimeUser';
 
 import type { User } from '../model/user';
 
@@ -336,7 +336,7 @@ export function createAdvancedPersonalizationClient({
      * @param getRealtimeUser.userToken - Unique identifier representing a user for which to fetch the personalization profile.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getRealtimeUser({ userToken }: GetRealtimeUserProps, requestOptions?: RequestOptions): Promise<RealtimeUserUser> {
+    getRealtimeUser({ userToken }: GetRealtimeUserProps, requestOptions?: RequestOptions): Promise<RealtimeUser> {
       if (!userToken) {
         throw new Error('Parameter `userToken` is required when calling `getRealtimeUser`.');
       }

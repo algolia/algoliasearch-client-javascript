@@ -42,7 +42,7 @@ export * from './personalizationReRanking';
 export * from './profileType';
 export * from './putConfigResponse';
 export * from './realtime';
-export * from './realtimeUserUser';
+export * from './realtimeUser';
 export * from './searchFilter';
 export * from './searchFilters';
 export * from './source';
