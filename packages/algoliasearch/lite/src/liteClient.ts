@@ -173,7 +173,7 @@ export function createLiteClient({
     /**
      * This method lets you send requests to the Algolia REST API.
      * @param customPost - The customPost object.
-     * @param customPost.path - Path of the endpoint, anything after \"/1\" must be specified.
+     * @param customPost.path - Path of the endpoint, for example `1/newFeature`.
      * @param customPost.parameters - Query parameters to apply to the current query.
      * @param customPost.body - Parameters to send with the custom request.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.

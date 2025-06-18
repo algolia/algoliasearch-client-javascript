@@ -45,7 +45,7 @@ import type { TriggerType } from '../model/triggerType';
  */
 export type CustomDeleteProps = {
   /**
-   * Path of the endpoint, anything after \"/1\" must be specified.
+   * Path of the endpoint, for example `1/newFeature`.
    */
   path: string;
   /**
@@ -59,7 +59,7 @@ export type CustomDeleteProps = {
  */
 export type CustomGetProps = {
   /**
-   * Path of the endpoint, anything after \"/1\" must be specified.
+   * Path of the endpoint, for example `1/newFeature`.
    */
   path: string;
   /**
@@ -73,7 +73,7 @@ export type CustomGetProps = {
  */
 export type CustomPostProps = {
   /**
-   * Path of the endpoint, anything after \"/1\" must be specified.
+   * Path of the endpoint, for example `1/newFeature`.
    */
   path: string;
   /**
@@ -91,7 +91,7 @@ export type CustomPostProps = {
  */
 export type CustomPutProps = {
   /**
-   * Path of the endpoint, anything after \"/1\" must be specified.
+   * Path of the endpoint, for example `1/newFeature`.
    */
   path: string;
   /**

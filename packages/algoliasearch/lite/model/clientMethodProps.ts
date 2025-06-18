@@ -10,7 +10,7 @@ import type { SearchParamsObject } from './searchParamsObject';
  */
 export type CustomPostProps = {
   /**
-   * Path of the endpoint, anything after \"/1\" must be specified.
+   * Path of the endpoint, for example `1/newFeature`.
    */
   path: string;
   /**
