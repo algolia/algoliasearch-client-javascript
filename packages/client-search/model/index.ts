@@ -125,6 +125,7 @@ export * from './removeUserIdResponse';
 export * from './removeWordsIfNoResults';
 export * from './renderingContent';
 export * from './replaceAllObjectsResponse';
+export * from './replaceAllObjectsWithTransformationResponse';
 export * from './replaceSourceResponse';
 export * from './reRankingApplyFilter';
 export * from './rule';
