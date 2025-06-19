@@ -1,3 +1,9 @@
+## [v4.25.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.24.0...4.25.0)
+
+[Please upgrade to v5](https://www.algolia.com/doc/libraries/javascript/v5/upgrade/)
+
+* feat: add transformation bridge methods (#1586) ([2218b19](https://github.com/algolia/algoliasearch-client-javascript/commit/2218b19f6cded417cdca9de8a11e408eac3e56fd)), closes [#1528](https://github.com/algolia/algoliasearch-client-javascript/issues/1586)
+
 ## [v4.24.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.23.3...4.24.0)
 
 * chore: release v4.24.0 (#1528) ([9f8956c](https://github.com/algolia/algoliasearch-client-javascript/commit/9f8956c)), closes [#1528](https://github.com/algolia/algoliasearch-client-javascript/issues/1528)
