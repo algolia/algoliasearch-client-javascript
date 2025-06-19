@@ -1,3 +1,10 @@
+## [5.29.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.28.0...5.29.0)
+
+- [928de4a7d5](https://github.com/algolia/api-clients-automation/commit/928de4a7d5) fix(specs): fix type in realtime_user ([#5012](https://github.com/algolia/api-clients-automation/pull/5012)) by [@raed667](https://github.com/raed667/)
+- [a2ebbf496c](https://github.com/algolia/api-clients-automation/commit/a2ebbf496c) feat(clients): add `replaceAllObjectsWithTransformation` ([#5008](https://github.com/algolia/api-clients-automation/pull/5008)) by [@shortcuts](https://github.com/shortcuts/)
+- [5e3869931b](https://github.com/algolia/api-clients-automation/commit/5e3869931b) chore(spec): fix comment of custom path ([#5014](https://github.com/algolia/api-clients-automation/pull/5014)) by [@millotp](https://github.com/millotp/)
+- [9dec2bb122](https://github.com/algolia/api-clients-automation/commit/9dec2bb122) fix(clients): allow chunked requests on WithTransformation methods ([#5011](https://github.com/algolia/api-clients-automation/pull/5011)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.28.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.27.0...5.28.0)
 
 - [e0689b5b76](https://github.com/algolia/api-clients-automation/commit/e0689b5b76) feat(javascript): add `exactOptionalPropertyTypes` to tsconfig ([#4935](https://github.com/algolia/api-clients-automation/pull/4935)) by [@shortcuts](https://github.com/shortcuts/)
