@@ -1,3 +1,7 @@
+## [v4.25.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.25.0...4.25.1)
+
+4.25.0 release is broken, please use 4.25.1
+
 ## [v4.25.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.24.0...4.25.0)
 
 [Please upgrade to v5](https://www.algolia.com/doc/libraries/javascript/v5/upgrade/)

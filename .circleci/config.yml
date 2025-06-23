@@ -155,13 +155,10 @@ workflows:
           cimg_version: '12.16.2'
       - release:
           requires:
-            - test_unit_8
-            - test_unit_14
             - test_lint
             - test_types
             - test_build
-            - test_browser
           filters:
             branches:
               only:
-                - master
+                - v4

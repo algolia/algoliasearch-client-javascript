@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-fetch",
-  "version": "4.25.0",
+  "version": "4.25.1",
   "private": false,
   "description": "Promise-based request library for Fetch.",
   "repository": {
@@ -17,6 +17,6 @@
     "dist"
   ],
   "dependencies": {
-    "@algolia/requester-common": "4.25.0"
+    "@algolia/requester-common": "4.25.1"
   }
 }
