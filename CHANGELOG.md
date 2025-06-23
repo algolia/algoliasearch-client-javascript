@@ -1,3 +1,14 @@
+## [v4.25.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.25.0...4.25.1)
+
+
+
+
+## [v4.25.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.24.0...4.25.0)
+
+* chore: release v4.25.0 ([85a1f84](https://github.com/algolia/algoliasearch-client-javascript/commit/85a1f84))
+
+
+
 ## [v4.25.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.24.0...4.25.0)
 
 [Please upgrade to v5](https://www.algolia.com/doc/libraries/javascript/v5/upgrade/)
