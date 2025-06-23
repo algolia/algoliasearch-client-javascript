@@ -1,3 +1,9 @@
+## [v4.25.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.25.1...4.25.2)
+
+* chore: ie 11 support (#1591) ([3621e21](https://github.com/algolia/algoliasearch-client-javascript/commit/3621e21)), closes [#1591](https://github.com/algolia/algoliasearch-client-javascript/issues/1591)
+
+
+
 ## [v4.25.1](https://github.com/algolia/algoliasearch-client-javascript/compare/4.25.0...4.25.1)
 
 4.25.0 release is broken, please use 4.25.1
