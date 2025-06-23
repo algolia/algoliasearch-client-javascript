@@ -148,7 +148,7 @@ export class TestSuite {
 
     envs.forEach(env => {
       if (process.env[env] === undefined) {
-        // throw new Error(`Missing '${env}' environment variable.`);
+        throw new Error(`Missing '${env}' environment variable.`);
       }
     });
   }
