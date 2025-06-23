@@ -25,7 +25,7 @@ export type IngestionMethods = {
   readonly saveObjectsWithTransformation: (
     objects: ReadonlyArray<Readonly<Record<string, any>>>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions & PushOptions
-  ) => Promise<WatchResponse>;
+  ) => Readonly<Promise<WatchResponse>>;
 
   /**
    * Helper: Similar to the `partialUpdateObjects` method but requires a Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/) to be created first, in order to transform records before indexing them to Algolia. The `region` must've been passed to the client instantiation method.
@@ -36,7 +36,7 @@ export type IngestionMethods = {
   readonly partialUpdateObjectsWithTransformation: (
     objects: ReadonlyArray<Readonly<Record<string, any>>>,
     requestOptions?: RequestOptions & ChunkOptions & PartialUpdateObjectsOptions & PushOptions
-  ) => Promise<WatchResponse>;
+  ) => Readonly<Promise<WatchResponse>>;
 };
 
 export type WatchResponse = {
@@ -108,5 +108,5 @@ export type IngestionClient = BaseSearchClient & {
   readonly push: (
     { indexName, pushTaskPayload, watch }: PushProps,
     requestOptions?: RequestOptions
-  ) => Promise<WatchResponse>;
+  ) => Readonly<Promise<WatchResponse>>;
 };
