@@ -21,11 +21,15 @@ export function createIngestionClient(
   options: SearchClientOptions & ClientTransporterOptions & TransformationOptions
 ): IngestionClient {
   if (!options || !options.transformation || !options.transformation.region) {
-    throw new Error('`region` must be provided when leveraging the transformation pipeline');
+    throw transformationConfigurationError(
+      '`region` must be provided when leveraging the transformation pipeline'
+    );
   }
 
   if (options.transformation.region !== 'eu' && options.transformation.region !== 'us') {
-    throw new Error('`region` is required and must be one of the following: eu, us');
+    throw transformationConfigurationError(
+      '`region` is required and must be one of the following: eu, us'
+    );
   }
 
   const appId = options.appId;
@@ -66,29 +70,37 @@ export function createIngestionClient(
         transporter.responsesCache.clear(),
       ]).then(() => undefined);
     },
-    async push(
+    push(
       { indexName, pushTaskPayload, watch }: PushProps,
       requestOptions?: RequestOptions
-    ): Promise<WatchResponse> {
+    ): Readonly<Promise<WatchResponse>> {
       if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `push`.');
+        throw transformationConfigurationError(
+          'Parameter `indexName` is required when calling `push`.'
+        );
       }
 
       if (!pushTaskPayload) {
-        throw new Error('Parameter `pushTaskPayload` is required when calling `push`.');
+        throw transformationConfigurationError(
+          'Parameter `pushTaskPayload` is required when calling `push`.'
+        );
       }
 
       if (!pushTaskPayload.action) {
-        throw new Error('Parameter `pushTaskPayload.action` is required when calling `push`.');
+        throw transformationConfigurationError(
+          'Parameter `pushTaskPayload.action` is required when calling `push`.'
+        );
       }
 
       if (!pushTaskPayload.records) {
-        throw new Error('Parameter `pushTaskPayload.records` is required when calling `push`.');
+        throw transformationConfigurationError(
+          'Parameter `pushTaskPayload.records` is required when calling `push`.'
+        );
       }
 
       const opts: RequestOptions = requestOptions || { queryParameters: {} };
 
-      return await transporter.write<WatchResponse>(
+      return transporter.write<WatchResponse>(
         {
           method: MethodEnum.Post,
           path: encode('1/push/%s', indexName),
@@ -107,12 +119,12 @@ export function createIngestionClient(
 }
 
 export function saveObjectsWithTransformation(indexName: string, client?: IngestionClient) {
-  return async (
+  return (
     objects: ReadonlyArray<Readonly<Record<string, any>>>,
     requestOptions?: RequestOptions & ChunkOptions & SaveObjectsOptions & PushOptions
-  ): Promise<WatchResponse> => {
+  ): Readonly<Promise<WatchResponse>> => {
     if (!client) {
-      throw new Error(
+      throw transformationConfigurationError(
         '`options.transformation.region` must be provided at client instantiation before calling this method.'
       );
     }
@@ -124,7 +136,7 @@ export function saveObjectsWithTransformation(indexName: string, client?: Ingest
       : BatchActionEnum.UpdateObject;
 
     /* eslint functional/immutable-data: "off" */
-    return await client.push(
+    return client.push(
       {
         indexName,
         pushTaskPayload: { action, records: objects },
@@ -139,12 +151,12 @@ export function partialUpdateObjectsWithTransformation(
   indexName: string,
   client?: IngestionClient
 ) {
-  return async (
+  return (
     objects: ReadonlyArray<Readonly<Record<string, any>>>,
     requestOptions?: RequestOptions & ChunkOptions & PartialUpdateObjectsOptions & PushOptions
-  ): Promise<WatchResponse> => {
+  ): Readonly<Promise<WatchResponse>> => {
     if (!client) {
-      throw new Error(
+      throw transformationConfigurationError(
         '`options.transformation.region` must be provided at client instantiation before calling this method.'
       );
     }
@@ -156,7 +168,7 @@ export function partialUpdateObjectsWithTransformation(
       : BatchActionEnum.PartialUpdateObjectNoCreate;
 
     /* eslint functional/immutable-data: "off" */
-    return await client.push(
+    return client.push(
       {
         indexName,
         pushTaskPayload: { action, records: objects },
@@ -164,5 +176,12 @@ export function partialUpdateObjectsWithTransformation(
       },
       rest
     );
+  };
+}
+
+export function transformationConfigurationError(message: string): Error {
+  return {
+    name: 'TransformationConfigurationError',
+    message,
   };
 }

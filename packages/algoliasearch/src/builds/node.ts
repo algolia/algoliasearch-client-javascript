@@ -209,6 +209,7 @@ import {
   createIngestionClient,
   partialUpdateObjectsWithTransformation,
   saveObjectsWithTransformation,
+  transformationConfigurationError,
 } from '../ingestion';
 import {
   AlgoliaSearchOptions,
@@ -261,7 +262,9 @@ export default function algoliasearch(
 
   if (options && options.transformation) {
     if (!options.transformation.region) {
-      throw new Error('`region` must be provided when leveraging the transformation pipeline');
+      throw transformationConfigurationError(
+        '`region` must be provided when leveraging the transformation pipeline'
+      );
     }
 
     ingestionTransporter = createIngestionClient({ ...options, ...commonOptions });
