@@ -1,3 +1,9 @@
+## [5.30.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.29.0...5.30.0)
+
+- [2ca05ef173](https://github.com/algolia/api-clients-automation/commit/2ca05ef173) chore(deps): dependencies 2025-06-23 ([#5016](https://github.com/algolia/api-clients-automation/pull/5016)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [d1e9835e53](https://github.com/algolia/api-clients-automation/commit/d1e9835e53) chore(deps): dependencies 2025-06-30 ([#5031](https://github.com/algolia/api-clients-automation/pull/5031)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [791a0c045d](https://github.com/algolia/api-clients-automation/commit/791a0c045d) feat(specs): abtesting winsorizedAmount ([#5053](https://github.com/algolia/api-clients-automation/pull/5053)) by [@cdhawke](https://github.com/cdhawke/)
+
 ## [5.29.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.28.0...5.29.0)
 
 - [928de4a7d5](https://github.com/algolia/api-clients-automation/commit/928de4a7d5) fix(specs): fix type in realtime_user ([#5012](https://github.com/algolia/api-clients-automation/pull/5012)) by [@raed667](https://github.com/raed667/)
