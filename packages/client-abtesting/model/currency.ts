@@ -20,4 +20,9 @@ export type Currency = {
    * Standard deviation for this currency.
    */
   standardDeviation?: number | undefined;
+
+  /**
+   * The amount of revenue for this currency that was removed after capping purchase amounts to the 95th percentile.
+   */
+  winsorizedAmount?: number | undefined;
 };
