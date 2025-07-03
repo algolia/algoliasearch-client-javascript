@@ -4,17 +4,17 @@ import type { EntityType } from './entityType';
 
 export type RunSourcePayload = {
   /**
-   * List of index names to include in reidexing/update.
+   * List of index names to include in reindex/update.
    */
   indexToInclude?: Array<string> | undefined;
 
   /**
-   * List of index names to exclude in reidexing/update.
+   * List of index names to exclude in reindex/update.
    */
   indexToExclude?: Array<string> | undefined;
 
   /**
-   * List of entityID to update.
+   * List of entityIDs to update.
    */
   entityIDs?: Array<string> | undefined;
 
