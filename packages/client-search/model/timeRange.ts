@@ -4,10 +4,10 @@ export type TimeRange = {
   /**
    * When the rule should start to be active, in Unix epoch time.
    */
-  from: number;
+  from?: number | undefined;
 
   /**
    * When the rule should stop to be active, in Unix epoch time.
    */
-  until: number;
+  until?: number | undefined;
 };
