@@ -1,3 +1,10 @@
+## [5.31.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.30.0...5.31.0)
+
+- [4c9416a9fe](https://github.com/algolia/api-clients-automation/commit/4c9416a9fe) fix(specs): update sourceRun docs ([#5057](https://github.com/algolia/api-clients-automation/pull/5057)) by [@DevinCodes](https://github.com/DevinCodes/)
+- [754efceb80](https://github.com/algolia/api-clients-automation/commit/754efceb80) fix(specs): allow one sided rule validity ([#5060](https://github.com/algolia/api-clients-automation/pull/5060)) by [@millotp](https://github.com/millotp/)
+- [2ba91d1df9](https://github.com/algolia/api-clients-automation/commit/2ba91d1df9) chore(deps): dependencies 2025-07-07 ([#5063](https://github.com/algolia/api-clients-automation/pull/5063)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [fd5dcdf800](https://github.com/algolia/api-clients-automation/commit/fd5dcdf800) feat(javascript): generate abtesting v3 alpha client ([#4783](https://github.com/algolia/api-clients-automation/pull/4783)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.30.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.29.0...5.30.0)
 
 - [2ca05ef173](https://github.com/algolia/api-clients-automation/commit/2ca05ef173) chore(deps): dependencies 2025-06-23 ([#5016](https://github.com/algolia/api-clients-automation/pull/5016)) by [@algolia-bot](https://github.com/algolia-bot/)

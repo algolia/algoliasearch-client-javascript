@@ -1,10 +1,10 @@
 {
-  "version": "5.30.0",
+  "version": "5.31.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
   },
-  "homepage": "https://github.com/algolia/algoliasearch-client-javascript/packages/client-abtesting#readme",
+  "homepage": "https://github.com/algolia/algoliasearch-client-javascript/tree/main/packages/client-abtesting#readme",
   "type": "module",
   "license": "MIT",
   "author": "Algolia",
@@ -49,10 +49,10 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "@algolia/client-common": "5.30.0",
-    "@algolia/requester-browser-xhr": "5.30.0",
-    "@algolia/requester-fetch": "5.30.0",
-    "@algolia/requester-node-http": "5.30.0"
+    "@algolia/client-common": "5.31.0",
+    "@algolia/requester-browser-xhr": "5.31.0",
+    "@algolia/requester-fetch": "5.31.0",
+    "@algolia/requester-node-http": "5.31.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
