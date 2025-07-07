@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@types/node": "22.15.34",
+    "@types/node": "22.16.0",
     "cross-fetch": "4.1.0",
     "nock": "14.0.5",
     "publint": "0.3.12",
