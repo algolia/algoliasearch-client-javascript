@@ -8,9 +8,9 @@ import { createMemoryCache, createNullCache, createNullLogger } from '@algolia/c
 
 import type { ClientOptions } from '@algolia/client-common';
 
-import { createCompositionClient } from '../src/compositionFullClient';
+import { createCompositionClient } from '../src/compositionClient';
 
-export { apiClientVersion } from '../src/compositionFullClient';
+export { apiClientVersion } from '../src/compositionClient';
 
 export * from '../model';
 

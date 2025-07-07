@@ -5,6 +5,23 @@ __metadata:
   version: 8
   cacheKey: 10
 
+"@algolia/abtesting@workspace:packages/abtesting":
+  version: 0.0.0-use.local
+  resolution: "@algolia/abtesting@workspace:packages/abtesting"
+  dependencies:
+    "@algolia/client-common": "npm:5.30.0"
+    "@algolia/requester-browser-xhr": "npm:5.30.0"
+    "@algolia/requester-fetch": "npm:5.30.0"
+    "@algolia/requester-node-http": "npm:5.30.0"
+    "@arethetypeswrong/cli": "npm:0.18.2"
+    "@types/node": "npm:22.16.0"
+    publint: "npm:0.3.12"
+    rollup: "npm:4.41.0"
+    tsup: "npm:8.5.0"
+    typescript: "npm:5.8.3"
+  languageName: unknown
+  linkType: soft
+
 "@algolia/advanced-personalization@workspace:packages/advanced-personalization":
   version: 0.0.0-use.local
   resolution: "@algolia/advanced-personalization@workspace:packages/advanced-personalization"
