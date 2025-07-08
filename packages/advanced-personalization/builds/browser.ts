@@ -52,7 +52,7 @@ export function advancedPersonalizationClient(
     logger: createNullLogger(),
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
-    authMode: 'WithinQueryParameters',
+    authMode: 'WithinHeaders',
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({
