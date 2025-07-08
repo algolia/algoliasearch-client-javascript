@@ -1,3 +1,7 @@
+## [5.32.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.31.0...5.32.0)
+
+- [6a90357d7d](https://github.com/algolia/api-clients-automation/commit/6a90357d7d) feat(templates): use headers in js advanced perso client ([#5083](https://github.com/algolia/api-clients-automation/pull/5083)) by [@bengreenbank](https://github.com/bengreenbank/)
+
 ## [5.31.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.30.0...5.31.0)
 
 - [4c9416a9fe](https://github.com/algolia/api-clients-automation/commit/4c9416a9fe) fix(specs): update sourceRun docs ([#5057](https://github.com/algolia/api-clients-automation/pull/5057)) by [@DevinCodes](https://github.com/DevinCodes/)
