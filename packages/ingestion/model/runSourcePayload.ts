@@ -19,4 +19,9 @@ export type RunSourcePayload = {
   entityIDs?: Array<string> | undefined;
 
   entityType?: EntityType | undefined;
+
+  /**
+   * Additional information that will be passed to the created runs.
+   */
+  runMetadata?: { [key: string]: any } | undefined;
 };

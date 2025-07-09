@@ -23,6 +23,7 @@ import type { RunSortKeys } from '../model/runSortKeys';
 import type { RunSourcePayload } from '../model/runSourcePayload';
 
 import type { RunStatus } from '../model/runStatus';
+import type { RunTaskPayload } from '../model/runTaskPayload';
 import type { RunType } from '../model/runType';
 
 import type { SourceSortKeys } from '../model/sourceSortKeys';
@@ -637,6 +638,10 @@ export type RunTaskProps = {
    * Unique identifier of a task.
    */
   taskID: string;
+  /**
+   *
+   */
+  runTaskPayload?: RunTaskPayload | undefined;
 };
 
 /**
@@ -647,6 +652,10 @@ export type RunTaskV1Props = {
    * Unique identifier of a task.
    */
   taskID: string;
+  /**
+   *
+   */
+  runTaskPayload?: RunTaskPayload | undefined;
 };
 
 /**

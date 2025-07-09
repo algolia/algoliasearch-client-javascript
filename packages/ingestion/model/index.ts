@@ -85,6 +85,7 @@ export * from './runSortKeys';
 export * from './runSourcePayload';
 export * from './runSourceResponse';
 export * from './runStatus';
+export * from './runTaskPayload';
 export * from './runType';
 export * from './scheduleTrigger';
 export * from './scheduleTriggerInput';

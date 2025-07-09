@@ -1949,9 +1949,10 @@ export function createIngestionClient({
      *  - editSettings
      * @param runTask - The runTask object.
      * @param runTask.taskID - Unique identifier of a task.
+     * @param runTask.runTaskPayload -
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    runTask({ taskID }: RunTaskProps, requestOptions?: RequestOptions): Promise<RunResponse> {
+    runTask({ taskID, runTaskPayload }: RunTaskProps, requestOptions?: RequestOptions): Promise<RunResponse> {
       if (!taskID) {
         throw new Error('Parameter `taskID` is required when calling `runTask`.');
       }
@@ -1965,6 +1966,7 @@ export function createIngestionClient({
         path: requestPath,
         queryParameters,
         headers,
+        data: runTaskPayload ? runTaskPayload : {},
       };
 
       return transporter.request(request, requestOptions);
@@ -1981,9 +1983,10 @@ export function createIngestionClient({
      * @deprecated
      * @param runTaskV1 - The runTaskV1 object.
      * @param runTaskV1.taskID - Unique identifier of a task.
+     * @param runTaskV1.runTaskPayload -
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    runTaskV1({ taskID }: RunTaskV1Props, requestOptions?: RequestOptions): Promise<RunResponse> {
+    runTaskV1({ taskID, runTaskPayload }: RunTaskV1Props, requestOptions?: RequestOptions): Promise<RunResponse> {
       if (!taskID) {
         throw new Error('Parameter `taskID` is required when calling `runTaskV1`.');
       }
@@ -1997,6 +2000,7 @@ export function createIngestionClient({
         path: requestPath,
         queryParameters,
         headers,
+        data: runTaskPayload ? runTaskPayload : {},
       };
 
       return transporter.request(request, requestOptions);
