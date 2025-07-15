@@ -34,7 +34,7 @@ import type {
   StopABTestProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '0.0.1-alpha.3';
+export const apiClientVersion = '0.0.1-alpha.4';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];

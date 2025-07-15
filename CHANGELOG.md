@@ -1,3 +1,9 @@
+## [5.33.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.32.0...5.33.0)
+
+- [a7a3c5fc95](https://github.com/algolia/api-clients-automation/commit/a7a3c5fc95) feat(specs): document runMetadata parameter ([#5087](https://github.com/algolia/api-clients-automation/pull/5087)) by [@DevinCodes](https://github.com/DevinCodes/)
+- [c23e62ed53](https://github.com/algolia/api-clients-automation/commit/c23e62ed53) chore(deps): dependencies 2025-07-14 ([#5091](https://github.com/algolia/api-clients-automation/pull/5091)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [fe3312f9e5](https://github.com/algolia/api-clients-automation/commit/fe3312f9e5) fix(specs): abtest v3 naming conflict with Metric type ([#5090](https://github.com/algolia/api-clients-automation/pull/5090)) by [@cdhawke](https://github.com/cdhawke/)
+
 ## [5.32.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.31.0...5.32.0)
 
 - [6a90357d7d](https://github.com/algolia/api-clients-automation/commit/6a90357d7d) feat(templates): use headers in js advanced perso client ([#5083](https://github.com/algolia/api-clients-automation/pull/5083)) by [@bengreenbank](https://github.com/bengreenbank/)
