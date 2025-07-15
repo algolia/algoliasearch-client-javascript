@@ -2,7 +2,7 @@
 
 import type { ABTestConfiguration } from './aBTestConfiguration';
 import type { AddABTestsVariant } from './addABTestsVariant';
-import type { ParametersMetric } from './parametersMetric';
+import type { CreateMetric } from './createMetric';
 
 export type ScheduleABTestsRequest = {
   /**
@@ -18,7 +18,7 @@ export type ScheduleABTestsRequest = {
   /**
    * A/B test metrics involved in the test. Only these metrics will be considered when calculating results.
    */
-  metrics: Array<ParametersMetric>;
+  metrics: Array<CreateMetric>;
 
   configuration?: ABTestConfiguration | undefined;
 

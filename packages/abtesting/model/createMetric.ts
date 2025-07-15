@@ -3,7 +3,7 @@
 /**
  * Defines a metric to be retrieved during an A/B test.
  */
-export type ParametersMetric = {
+export type CreateMetric = {
   /**
    * Name of the metric.
    */
