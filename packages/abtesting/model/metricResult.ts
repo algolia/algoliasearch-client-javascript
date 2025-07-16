@@ -13,12 +13,12 @@ export type MetricResult = {
   value: number;
 
   /**
-   * The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using  either the relative ratio or relative difference between the metric values for the control and the variant. Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate),  while relative difference is used for continuous metrics (e.g., revenue).
+   * The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using either the relative ratio or relative difference between the metric values for the control and the variant. Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), while relative difference is used for continuous metrics (e.g., revenue).
    */
   valueCIHigh?: number | undefined;
 
   /**
-   * The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using  either the relative ratio or relative difference between the metric values for the control and the variant. Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate),  while relative difference is used for continuous metrics (e.g., revenue).
+   * The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using either the relative ratio or relative difference between the metric values for the control and the variant. Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate), while relative difference is used for continuous metrics (e.g., revenue).
    */
   valueCILow?: number | undefined;
 
@@ -35,7 +35,7 @@ export type MetricResult = {
   metadata?: MetricMetadata | undefined;
 
   /**
-   * The value that was computed during error correction. It is used to determine significance of the metric pValue. The critical value is calculated using Bonferroni or Benjamini-Hochberg corrections, based on the given  configuration during the A/B test creation.
+   * The value that was computed during error correction. It is used to determine significance of the metric pValue. The critical value is calculated using Bonferroni or Benjamini-Hochberg corrections, based on the given configuration during the A/B test creation.
    */
   criticalValue?: number | undefined;
 
