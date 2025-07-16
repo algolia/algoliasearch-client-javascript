@@ -11,11 +11,6 @@ export type Condition = {
   anchoring?: Anchoring | undefined;
 
   /**
-   * Whether the pattern should match plurals, synonyms, and typos.
-   */
-  alternatives?: boolean | undefined;
-
-  /**
    * An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter. For example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`. A rule context must only contain alphanumeric characters.
    */
   context?: string | undefined;
