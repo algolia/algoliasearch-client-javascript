@@ -6,7 +6,7 @@ import type { TimeRange } from './timeRange';
 
 export type CompositionRule = {
   /**
-   * Unique record identifier.
+   * Composition rule unique identifier.
    */
   objectID: string;
 

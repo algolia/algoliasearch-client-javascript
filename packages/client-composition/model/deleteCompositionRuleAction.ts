@@ -5,7 +5,7 @@
  */
 export type DeleteCompositionRuleAction = {
   /**
-   * Unique record identifier.
+   * Composition rule unique identifier.
    */
   objectID: string;
 };

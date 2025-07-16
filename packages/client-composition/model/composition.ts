@@ -4,7 +4,7 @@ import type { CompositionBehavior } from './compositionBehavior';
 
 export type Composition = {
   /**
-   * Unique record identifier.
+   * Composition unique identifier.
    */
   objectID: string;
 
