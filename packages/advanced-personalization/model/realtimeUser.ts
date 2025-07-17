@@ -14,6 +14,11 @@ export type RealtimeUser = {
   userID: string;
 
   /**
+   * Date and time when the profile was last computed, in RFC 3339 format.
+   */
+  lastUpdatedAt: string;
+
+  /**
    * Index personalization filters by index name.
    */
   search: { [key: string]: SearchFilters };
