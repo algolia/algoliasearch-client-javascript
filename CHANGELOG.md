@@ -1,3 +1,10 @@
+## [5.34.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.33.0...5.34.0)
+
+- [d05999769a](https://github.com/algolia/api-clients-automation/commit/d05999769a) fix(specs): abtests metadata mean ([#5121](https://github.com/algolia/api-clients-automation/pull/5121)) by [@cdhawke](https://github.com/cdhawke/)
+- [278a9e6832](https://github.com/algolia/api-clients-automation/commit/278a9e6832) fix(specs): cleanup for composition API clients ([#5119](https://github.com/algolia/api-clients-automation/pull/5119)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [e7dfb35f92](https://github.com/algolia/api-clients-automation/commit/e7dfb35f92) refactor(specs): group files for composition api ([#5122](https://github.com/algolia/api-clients-automation/pull/5122)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [2ee13af721](https://github.com/algolia/api-clients-automation/commit/2ee13af721) feat(specs): add lastUpdatedAt to personalization real-time user ([#5126](https://github.com/algolia/api-clients-automation/pull/5126)) by [@raed667](https://github.com/raed667/)
+
 ## [5.33.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.32.0...5.33.0)
 
 - [a7a3c5fc95](https://github.com/algolia/api-clients-automation/commit/a7a3c5fc95) feat(specs): document runMetadata parameter ([#5087](https://github.com/algolia/api-clients-automation/pull/5087)) by [@DevinCodes](https://github.com/DevinCodes/)
