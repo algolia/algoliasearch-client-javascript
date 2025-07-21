@@ -30,4 +30,9 @@ export type Variant = {
   metrics: Array<MetricResult>;
 
   metadata?: VariantMetadata | undefined;
+
+  /**
+   * Search parameters applied to this variant when the same index is used for multiple variants. Only present if custom search parameters were provided during test creation.
+   */
+  customSearchParameters?: Record<string, unknown> | undefined;
 };

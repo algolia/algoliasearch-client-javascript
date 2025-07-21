@@ -10,6 +10,7 @@ export * from './addABTestsVariant';
 export * from './clientMethodProps';
 export * from './createMetric';
 export * from './customSearchParams';
+export * from './direction';
 export * from './effectMetric';
 export * from './emptySearchFilter';
 export * from './errorBase';

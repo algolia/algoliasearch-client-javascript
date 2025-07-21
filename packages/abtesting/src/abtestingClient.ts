@@ -433,10 +433,11 @@ export function createAbtestingClient({
      * @param listABTests.limit - Number of items to return.
      * @param listABTests.indexPrefix - Index name prefix. Only A/B tests for indices starting with this string are included in the response.
      * @param listABTests.indexSuffix - Index name suffix. Only A/B tests for indices ending with this string are included in the response.
+     * @param listABTests.direction - Sort order for A/B tests by start date. Use \'asc\' for ascending or \'desc\' for descending. Active A/B tests are always listed first.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listABTests(
-      { offset, limit, indexPrefix, indexSuffix }: ListABTestsProps = {},
+      { offset, limit, indexPrefix, indexSuffix, direction }: ListABTestsProps = {},
       requestOptions: RequestOptions | undefined = undefined,
     ): Promise<ListABTestsResponse> {
       const requestPath = '/3/abtests';
@@ -457,6 +458,10 @@ export function createAbtestingClient({
 
       if (indexSuffix !== undefined) {
         queryParameters['indexSuffix'] = indexSuffix.toString();
+      }
+
+      if (direction !== undefined) {
+        queryParameters['direction'] = direction.toString();
       }
 
       const request: Request = {
