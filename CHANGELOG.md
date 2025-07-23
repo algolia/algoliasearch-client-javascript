@@ -1,3 +1,11 @@
+## [5.34.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.34.0...5.34.1)
+
+- [84a1f4e422](https://github.com/algolia/api-clients-automation/commit/84a1f4e422) refactor(specs): add interface to manipulate query parameter between composition API & Search API ([#5123](https://github.com/algolia/api-clients-automation/pull/5123)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [995f185c07](https://github.com/algolia/api-clients-automation/commit/995f185c07) chore(deps): dependencies 2025-07-21 ([#5129](https://github.com/algolia/api-clients-automation/pull/5129)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [d1596a814e](https://github.com/algolia/api-clients-automation/commit/d1596a814e) fix(specs): Add customSearchParameters to Variant schema, and add direction query param for GET abtests ([#5130](https://github.com/algolia/api-clients-automation/pull/5130)) by [@leonardogavaudan](https://github.com/leonardogavaudan/)
+- [f25e156dde](https://github.com/algolia/api-clients-automation/commit/f25e156dde) fix(specs): value/price clarifications in the Insights API ([#5154](https://github.com/algolia/api-clients-automation/pull/5154)) by [@kai687](https://github.com/kai687/)
+- [3160f87f7b](https://github.com/algolia/api-clients-automation/commit/3160f87f7b) fix(clients): reduce chances of Push rate limiting ([#5153](https://github.com/algolia/api-clients-automation/pull/5153)) by [@shortcuts](https://github.com/shortcuts/)
+
 ## [5.34.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.33.0...5.34.0)
 
 - [d05999769a](https://github.com/algolia/api-clients-automation/commit/d05999769a) fix(specs): abtests metadata mean ([#5121](https://github.com/algolia/api-clients-automation/pull/5121)) by [@cdhawke](https://github.com/cdhawke/)

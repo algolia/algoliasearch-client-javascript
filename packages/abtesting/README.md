@@ -41,11 +41,11 @@ All of our clients comes with type definition, and are available for both browse
 ### With a package manager
 
 ```bash
-yarn add @algolia/abtesting@0.0.1-alpha.5
+yarn add @algolia/abtesting@0.0.1-alpha.6
 # or
-npm install @algolia/abtesting@0.0.1-alpha.5
+npm install @algolia/abtesting@0.0.1-alpha.6
 # or
-pnpm add @algolia/abtesting@0.0.1-alpha.5
+pnpm add @algolia/abtesting@0.0.1-alpha.6
 ```
 
 ### Without a package manager
@@ -53,7 +53,7 @@ pnpm add @algolia/abtesting@0.0.1-alpha.5
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/abtesting@0.0.1-alpha.5/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/abtesting@0.0.1-alpha.6/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage

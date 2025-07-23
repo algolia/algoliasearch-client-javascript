@@ -15,7 +15,7 @@ import type { SearchResponse } from '../model/searchResponse';
 
 import type { SearchForFacetValuesProps, SearchProps } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.10.0';
+export const apiClientVersion = '1.10.1';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
