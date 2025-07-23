@@ -268,7 +268,9 @@ export function createIngestionClient({
       requestOptions?: RequestOptions,
     ): Promise<Array<WatchResponse>> {
       let records: Array<PushTaskRecords> = [];
+      let offset = 0;
       const responses: Array<WatchResponse> = [];
+      const waitBatchSize = Math.floor(batchSize / 10) || batchSize;
 
       const objectEntries = objects.entries();
       for (const [i, obj] of objectEntries) {
@@ -279,44 +281,48 @@ export function createIngestionClient({
           );
           records = [];
         }
-      }
 
-      let retryCount = 0;
+        if (
+          waitForTasks &&
+          responses.length > 0 &&
+          (responses.length % waitBatchSize === 0 || i === objects.length - 1)
+        ) {
+          for (const resp of responses.slice(offset, offset + waitBatchSize)) {
+            if (!resp.eventID) {
+              throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
+            }
 
-      if (waitForTasks) {
-        for (const resp of responses) {
-          if (!resp.eventID) {
-            throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
-          }
+            let retryCount = 0;
 
-          await createIterablePromise({
-            func: async () => {
-              if (resp.eventID === undefined || !resp.eventID) {
-                throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
-              }
-
-              return this.getEvent({ runID: resp.runID, eventID: resp.eventID }).catch((error: ApiError) => {
-                if (error.status === 404) {
-                  return undefined;
+            await createIterablePromise({
+              func: async () => {
+                if (resp.eventID === undefined || !resp.eventID) {
+                  throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
                 }
 
-                throw error;
-              });
-            },
-            validate: (response) => response !== undefined,
-            aggregator: () => (retryCount += 1),
-            error: {
-              validate: () => retryCount >= 50,
-              message: () => `The maximum number of retries exceeded. (${retryCount}/${50})`,
-            },
-            timeout: (): number => Math.min(retryCount * 500, 5000),
-          });
+                return this.getEvent({ runID: resp.runID, eventID: resp.eventID }).catch((error: ApiError) => {
+                  if (error.status === 404) {
+                    return undefined;
+                  }
+
+                  throw error;
+                });
+              },
+              validate: (response) => response !== undefined,
+              aggregator: () => (retryCount += 1),
+              error: {
+                validate: () => retryCount >= 50,
+                message: () => `The maximum number of retries exceeded. (${retryCount}/${50})`,
+              },
+              timeout: (): number => Math.min(retryCount * 500, 5000),
+            });
+          }
+          offset += waitBatchSize;
         }
       }
 
       return responses;
     },
-
     /**
      * Creates a new authentication resource.
      *
