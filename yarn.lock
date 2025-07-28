@@ -281,7 +281,7 @@ __metadata:
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:22.16.5"
     cross-fetch: "npm:4.1.0"
-    nock: "npm:14.0.6"
+    nock: "npm:14.0.7"
     publint: "npm:0.3.12"
     tsup: "npm:8.5.0"
     typescript: "npm:5.8.3"
@@ -296,7 +296,7 @@ __metadata:
     "@algolia/client-common": "npm:5.34.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
     "@types/node": "npm:22.16.5"
-    nock: "npm:14.0.6"
+    nock: "npm:14.0.7"
     publint: "npm:0.3.12"
     tsup: "npm:8.5.0"
     typescript: "npm:5.8.3"
@@ -407,35 +407,35 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/unenv-preset@npm:2.3.3":
-  version: 2.3.3
-  resolution: "@cloudflare/unenv-preset@npm:2.3.3"
+"@cloudflare/unenv-preset@npm:2.4.1":
+  version: 2.4.1
+  resolution: "@cloudflare/unenv-preset@npm:2.4.1"
   peerDependencies:
     unenv: 2.0.0-rc.17
-    workerd: ^1.20250508.0
+    workerd: ^1.20250521.0
   peerDependenciesMeta:
     workerd:
       optional: true
-  checksum: 10/0fcea9f8baff183950061b2fb5c905a04526d1e7c8c4990c36805376280d2682d313daf747dee30a7822a46654e5bd197386377a45ffe130cfcc948d94d9489d
+  checksum: 10/8ff3cd5a19896c2c8bf0f7b4b04b9d3cccd94f60a222c97187da5f84a21ac5e7244442c6ba6d4022d04a74761245ce4082de964eb440df67ce6db1bd3ebdd59c
   languageName: node
   linkType: hard
 
-"@cloudflare/vitest-pool-workers@npm:0.8.55":
-  version: 0.8.55
-  resolution: "@cloudflare/vitest-pool-workers@npm:0.8.55"
+"@cloudflare/vitest-pool-workers@npm:0.8.57":
+  version: 0.8.57
+  resolution: "@cloudflare/vitest-pool-workers@npm:0.8.57"
   dependencies:
     birpc: "npm:0.2.14"
     cjs-module-lexer: "npm:^1.2.3"
     devalue: "npm:^4.3.0"
-    miniflare: "npm:4.20250712.0"
+    miniflare: "npm:4.20250712.2"
     semver: "npm:^7.7.1"
-    wrangler: "npm:4.25.0"
+    wrangler: "npm:4.26.0"
     zod: "npm:^3.22.3"
   peerDependencies:
     "@vitest/runner": 2.0.x - 3.2.x
     "@vitest/snapshot": 2.0.x - 3.2.x
     vitest: 2.0.x - 3.2.x
-  checksum: 10/eb136e48639ff029031fc90aa098fc4c2825d99cac50c375764578cce0ba318167b7c25aec0c36911792cf183e51e67fbb5bae14c4dc2778116e8c0b4d86bcf8
+  checksum: 10/f3683061403ec330a0e8a4e5339acf7ec8cf2fd7d1175271938d0af13ccdd6a563cf320d71689b8c5fd6ee205bafd136308015e2463df8819b0133972eef8a22
   languageName: node
   linkType: hard
 
@@ -2538,7 +2538,7 @@ __metadata:
     "@algolia/requester-node-http": "npm:5.34.1"
     "@algolia/requester-testing": "npm:5.34.1"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@cloudflare/vitest-pool-workers": "npm:0.8.55"
+    "@cloudflare/vitest-pool-workers": "npm:0.8.57"
     "@cloudflare/workers-types": "npm:4.20250428.0"
     "@types/node": "npm:22.16.5"
     jsdom: "npm:26.1.0"
@@ -5791,9 +5791,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"miniflare@npm:4.20250712.0":
-  version: 4.20250712.0
-  resolution: "miniflare@npm:4.20250712.0"
+"miniflare@npm:4.20250712.2":
+  version: 4.20250712.2
+  resolution: "miniflare@npm:4.20250712.2"
   dependencies:
     "@cspotcode/source-map-support": "npm:0.8.1"
     acorn: "npm:8.14.0"
@@ -5809,7 +5809,7 @@ __metadata:
     zod: "npm:3.22.3"
   bin:
     miniflare: bootstrap.js
-  checksum: 10/805d77c5bed73b706bcdceb9b804fd7f9ad392e1b758b8ce13bc64915768872622943ade9f592234bb29fcc2d7b87dd3e9beadd96561ee0a8dcc0beff50f459a
+  checksum: 10/4a75465e7a35ffae8ae1f504ca8b2e9050090c637150de733ab5650e4b49e92c114e71296b8f23be944db7dd480ab675dd35731ee0c3cd8e3ef6e858f1eb9342
   languageName: node
   linkType: hard
 
@@ -6119,14 +6119,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nock@npm:14.0.6":
-  version: 14.0.6
-  resolution: "nock@npm:14.0.6"
+"nock@npm:14.0.7":
+  version: 14.0.7
+  resolution: "nock@npm:14.0.7"
   dependencies:
     "@mswjs/interceptors": "npm:^0.39.3"
     json-stringify-safe: "npm:^5.0.1"
     propagate: "npm:^2.0.0"
-  checksum: 10/32048a34b1109b6ff85b25a9c9a939e57779929ac6d33332dd09a8803ae9dc2296f577d9f9ba9b0482e503b0eb01ca2b5f3e25678db2619b5a0364f2fd2b0f5e
+  checksum: 10/b7d52d539e04430c9299a36654b15f62e15ed79ed4adda865ff1a4023d8eb23471024f16dc84095bb025f5bd84515df996f4be273ba7c8cc96976427e43cf4b3
   languageName: node
   linkType: hard
 
@@ -9072,16 +9072,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:4.25.0":
-  version: 4.25.0
-  resolution: "wrangler@npm:4.25.0"
+"wrangler@npm:4.26.0":
+  version: 4.26.0
+  resolution: "wrangler@npm:4.26.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.4.0"
-    "@cloudflare/unenv-preset": "npm:2.3.3"
+    "@cloudflare/unenv-preset": "npm:2.4.1"
     blake3-wasm: "npm:2.1.5"
     esbuild: "npm:0.25.4"
     fsevents: "npm:~2.3.2"
-    miniflare: "npm:4.20250712.0"
+    miniflare: "npm:4.20250712.2"
     path-to-regexp: "npm:6.3.0"
     unenv: "npm:2.0.0-rc.17"
     workerd: "npm:1.20250712.0"
@@ -9096,7 +9096,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10/10bbda3a613c3550bf301e6a38989d63b0c8f1e500d6e9dfed22d81d984546d6cb79bfdef871e902d5a33ad6b1e5bb8fb5619868904d521404b9bcdad60df91d
+  checksum: 10/0566f8ccdbba0ae31cab9f6fb36a1c3aea36cf63a64c0cc7a455ccf1e3a6e1f4c999d522603142b1b0c6f026a27c8dbb29125118cfa73b54175d7dfc6f531a3a
   languageName: node
   linkType: hard
 

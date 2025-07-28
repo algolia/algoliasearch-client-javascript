@@ -54,7 +54,7 @@
     "@arethetypeswrong/cli": "0.18.2",
     "@types/node": "22.16.5",
     "cross-fetch": "4.1.0",
-    "nock": "14.0.6",
+    "nock": "14.0.7",
     "publint": "0.3.12",
     "tsup": "8.5.0",
     "typescript": "5.8.3",
