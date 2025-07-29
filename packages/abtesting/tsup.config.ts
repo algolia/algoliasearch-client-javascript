@@ -42,7 +42,7 @@ const nodeConfigs: Options[] = [
 
 const browserOptions: Options = {
   ...getBaseBrowserOptions(pkg, __dirname),
-  globalName: 'abtestingClient',
+  globalName: 'abtestingV3Client',
 };
 
 const browserConfigs: Options[] = [

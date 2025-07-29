@@ -41,11 +41,11 @@ All of our clients comes with type definition, and are available for both browse
 ### With a package manager
 
 ```bash
-yarn add @algolia/abtesting@0.0.1-alpha.6
+yarn add @algolia/abtesting@1.0.0
 # or
-npm install @algolia/abtesting@0.0.1-alpha.6
+npm install @algolia/abtesting@1.0.0
 # or
-pnpm add @algolia/abtesting@0.0.1-alpha.6
+pnpm add @algolia/abtesting@1.0.0
 ```
 
 ### Without a package manager
@@ -53,7 +53,7 @@ pnpm add @algolia/abtesting@0.0.1-alpha.6
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/abtesting@0.0.1-alpha.6/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/abtesting@1.0.0/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage
@@ -61,12 +61,12 @@ Add the following JavaScript snippet to the <head> of your website:
 You can now import the Algolia API client in your project and play with it.
 
 ```js
-import { abtestingClient } from '@algolia/abtesting';
+import { abtestingV3Client } from '@algolia/abtesting';
 
-const client = abtestingClient('YOUR_APP_ID', 'YOUR_API_KEY');
+const client = abtestingV3Client('YOUR_APP_ID', 'YOUR_API_KEY');
 ```
 
-For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/v5/methods/abtesting/)**.
+For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/v5/methods/abtesting-v3/)**.
 
 ## ❓ Troubleshooting
 

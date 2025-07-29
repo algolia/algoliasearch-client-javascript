@@ -74,6 +74,7 @@
     "lite.d.ts"
   ],
   "dependencies": {
+    "@algolia/abtesting": "1.0.0",
     "@algolia/client-abtesting": "5.34.1",
     "@algolia/client-analytics": "5.34.1",
     "@algolia/client-common": "5.34.1",

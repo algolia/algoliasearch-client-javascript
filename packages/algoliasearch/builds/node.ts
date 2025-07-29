@@ -2,6 +2,8 @@
 
 import type { ClientOptions, RequestOptions } from '@algolia/client-common';
 
+import type { AbtestingV3Client } from '@algolia/abtesting';
+import { abtestingV3Client } from '@algolia/abtesting';
 import type { AbtestingClient } from '@algolia/client-abtesting';
 import { abtestingClient } from '@algolia/client-abtesting';
 import type { AnalyticsClient } from '@algolia/client-analytics';
@@ -31,6 +33,7 @@ import type { WatchResponse } from '@algolia/ingestion';
 
 import type {
   AbtestingRegionOptions,
+  AbtestingV3RegionOptions,
   AnalyticsRegionOptions,
   IngestionRegion,
   IngestionRegionOptions,
@@ -44,6 +47,7 @@ export * from './models';
 
 export type Algoliasearch = SearchClient & {
   initAbtesting: (initOptions: InitClientOptions & AbtestingRegionOptions) => AbtestingClient;
+  initAbtestingV3: (initOptions: InitClientOptions & AbtestingV3RegionOptions) => AbtestingV3Client;
   initAnalytics: (initOptions: InitClientOptions & AnalyticsRegionOptions) => AnalyticsClient;
   initIngestion: (initOptions: InitClientOptions & IngestionRegionOptions) => IngestionClient;
   initInsights: (initOptions: InitClientOptions & InsightsRegionOptions) => InsightsClient;
@@ -270,6 +274,15 @@ export function algoliasearch(
 
     initAbtesting: (initOptions: InitClientOptions & AbtestingRegionOptions): AbtestingClient => {
       return abtestingClient(
+        initOptions.appId || appId,
+        initOptions.apiKey || apiKey,
+        initOptions.region,
+        initOptions.options,
+      );
+    },
+
+    initAbtestingV3: (initOptions: InitClientOptions & AbtestingV3RegionOptions): AbtestingV3Client => {
+      return abtestingV3Client(
         initOptions.appId || appId,
         initOptions.apiKey || apiKey,
         initOptions.region,

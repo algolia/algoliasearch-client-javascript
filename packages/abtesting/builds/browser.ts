@@ -11,23 +11,23 @@ import {
 
 import type { ClientOptions } from '@algolia/client-common';
 
-import { apiClientVersion, createAbtestingClient } from '../src/abtestingClient';
+import { apiClientVersion, createAbtestingV3Client } from '../src/abtestingV3Client';
 
-import type { Region } from '../src/abtestingClient';
-import { REGIONS } from '../src/abtestingClient';
+import type { Region } from '../src/abtestingV3Client';
+import { REGIONS } from '../src/abtestingV3Client';
 
-export type { Region, RegionOptions } from '../src/abtestingClient';
+export type { Region, RegionOptions } from '../src/abtestingV3Client';
 
-export { apiClientVersion } from '../src/abtestingClient';
+export { apiClientVersion } from '../src/abtestingV3Client';
 
 export * from '../model';
 
-export function abtestingClient(
+export function abtestingV3Client(
   appId: string,
   apiKey: string,
   region?: Region | undefined,
   options?: ClientOptions | undefined,
-): AbtestingClient {
+): AbtestingV3Client {
   if (!appId || typeof appId !== 'string') {
     throw new Error('`appId` is missing.');
   }
@@ -40,7 +40,7 @@ export function abtestingClient(
     throw new Error(`\`region\` must be one of the following: ${REGIONS.join(', ')}`);
   }
 
-  return createAbtestingClient({
+  return createAbtestingV3Client({
     appId,
     apiKey,
     region,
@@ -62,4 +62,4 @@ export function abtestingClient(
   });
 }
 
-export type AbtestingClient = ReturnType<typeof createAbtestingClient>;
+export type AbtestingV3Client = ReturnType<typeof createAbtestingV3Client>;

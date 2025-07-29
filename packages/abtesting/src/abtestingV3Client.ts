@@ -34,7 +34,7 @@ import type {
   StopABTestProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '0.0.1-alpha.6';
+export const apiClientVersion = '1.0.0';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -46,7 +46,7 @@ function getDefaultHosts(region?: Region | undefined): Host[] {
   return [{ url, accept: 'readWrite', protocol: 'https' }];
 }
 
-export function createAbtestingClient({
+export function createAbtestingV3Client({
   appId: appIdOption,
   apiKey: apiKeyOption,
   authMode,
@@ -60,7 +60,7 @@ export function createAbtestingClient({
     ...options,
     algoliaAgent: getAlgoliaAgent({
       algoliaAgents,
-      client: 'Abtesting',
+      client: 'AbtestingV3',
       version: apiClientVersion,
     }),
     baseHeaders: {

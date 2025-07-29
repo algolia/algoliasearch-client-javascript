@@ -10,7 +10,7 @@ export default [
       format: 'umd',
       sourcemap: false,
       globals: {
-        ['abtestingClient']: 'abtestingClient',
+        ['abtestingV3Client']: 'abtestingV3Client',
       },
     },
   },
