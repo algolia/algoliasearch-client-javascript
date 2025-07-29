@@ -1,3 +1,9 @@
+## [5.35.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.34.1...5.35.0)
+
+- [050aacef17](https://github.com/algolia/api-clients-automation/commit/050aacef17) chore(deps): dependencies 2025-07-28 ([#5161](https://github.com/algolia/api-clients-automation/pull/5161)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [256482c023](https://github.com/algolia/api-clients-automation/commit/256482c023) fix(clients): add batchSize to accountCopyIndex ([#5181](https://github.com/algolia/api-clients-automation/pull/5181)) by [@millotp](https://github.com/millotp/)
+- [66bc4eee9e](https://github.com/algolia/api-clients-automation/commit/66bc4eee9e) feat(clients): add new abtesting-v3 package to clients + stabilize alpha js package ([#5157](https://github.com/algolia/api-clients-automation/pull/5157)) by [@leonardogavaudan](https://github.com/leonardogavaudan/)
+
 ## [5.34.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.34.0...5.34.1)
 
 - [84a1f4e422](https://github.com/algolia/api-clients-automation/commit/84a1f4e422) refactor(specs): add interface to manipulate query parameter between composition API & Search API ([#5123](https://github.com/algolia/api-clients-automation/pull/5123)) by [@ClaraMuller](https://github.com/ClaraMuller/)
