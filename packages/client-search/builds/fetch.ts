@@ -107,10 +107,17 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
      * @param accountCopyIndex.destinationAppID - The application ID to write the index to.
      * @param accountCopyIndex.destinationApiKey - The API Key of the `destinationAppID` to write the index to, must have write ACLs.
      * @param accountCopyIndex.destinationIndexName - The name of the index to write the copied index to.
+     * @param accountCopyIndex.batchSize - The size of the chunk of `objects`. Defaults to 1000.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `setSettings`, `saveRules`, `saveSynonyms` and `saveObjects` method and merged with the transporter requestOptions.
      */
     async accountCopyIndex(
-      { sourceIndexName, destinationAppID, destinationApiKey, destinationIndexName }: AccountCopyIndexOptions,
+      {
+        sourceIndexName,
+        destinationAppID,
+        destinationApiKey,
+        destinationIndexName,
+        batchSize,
+      }: AccountCopyIndexOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<void> {
       const responses: Array<{ taskID: UpdatedAtResponse['taskID'] }> = [];
@@ -180,10 +187,11 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
 
       await this.browseObjects({
         indexName: sourceIndexName,
+        browseParams: batchSize ? { hitsPerPage: batchSize } : undefined,
         async aggregator(response: BrowseResponse) {
           responses.push(
             ...(await destinationClient.saveObjects(
-              { indexName: destinationIndexName, objects: response.hits },
+              { indexName: destinationIndexName, objects: response.hits, batchSize },
               requestOptions,
             )),
           );

@@ -899,4 +899,9 @@ export type AccountCopyIndexOptions = {
    * The name of the index to write the copy in.
    */
   destinationIndexName: string;
+
+  /**
+   * The size of the chunk of `objects`. Defaults to 1000.
+   */
+  batchSize?: number | undefined;
 };
