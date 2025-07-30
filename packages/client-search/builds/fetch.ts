@@ -99,7 +99,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
 
     /**
      * Helper: Copies the given `sourceIndexName` records, rules and synonyms to an other Algolia application for the given `destinationIndexName`.
-     * See https://api-clients-automation.netlify.app/docs/add-new-api-client#5-helpers for implementation details.
+     * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
      *
      * @summary Helper: Copies the given `sourceIndexName` records, rules and synonyms to an other Algolia application for the given `destinationIndexName`.
      * @param accountCopyIndex - The `accountCopyIndex` object.
