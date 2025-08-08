@@ -8,6 +8,7 @@ import type { FacetFilters } from './facetFilters';
 import type { IgnorePlurals } from './ignorePlurals';
 import type { NumericFilters } from './numericFilters';
 import type { OptionalFilters } from './optionalFilters';
+import type { OptionalWords } from './optionalWords';
 import type { QueryType } from './queryType';
 import type { RemoveStopWords } from './removeStopWords';
 import type { RemoveWordsIfNoResults } from './removeWordsIfNoResults';
@@ -51,7 +52,7 @@ export type BaseInjectionQueryParameters = {
   attributesToHighlight?: Array<string> | undefined;
 
   /**
-   * Attributes to include in the API response.  To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive.  - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
+   * Attributes to include in the API response To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
    */
   attributesToRetrieve?: Array<string> | undefined;
 
@@ -157,10 +158,7 @@ export type BaseInjectionQueryParameters = {
 
   optionalFilters?: OptionalFilters | undefined;
 
-  /**
-   * Words that should be considered optional when found in the query By default, records must match all words in the search query to be included in the search results. Adding optional words can help to increase the number of search results by running an additional search query that doesn\'t include the optional words. For example, if the search query is \"action video\" and \"video\" is an optional word, the search engine runs two queries. One for \"action video\" and one for \"action\". Records that match all words are ranked higher For a search query with 4 or more words **and** all its words are optional, the number of matched words required for a record to be included in the search results increases for every 1,000 records - If `optionalWords` has less than 10 words, the required number of matched words increases by 1:   results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 2 matched words. - If `optionalWords` has 10 or more words, the number of required matched words increases by the number of optional words divided by 5 (rounded down).   For example, with 18 optional words: results 1 to 1,000 require 1 matched word, results 1,001 to 2000 need 4 matched words For more information, see [Optional words](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/#creating-a-list-of-optional-words).
-   */
-  optionalWords?: Array<string> | undefined;
+  optionalWords?: OptionalWords | null | undefined;
 
   /**
    * Whether to include this search when calculating processing-time percentiles.
@@ -173,7 +171,7 @@ export type BaseInjectionQueryParameters = {
   personalizationImpact?: number | undefined;
 
   /**
-   * Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first** **You should always specify a query language.** If you don\'t specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
+   * Languages for language-specific query processing steps such as plurals, stop-word removal, and word-detection dictionaries  This setting sets a default list of languages used by the `removeStopWords` and `ignorePlurals` settings. This setting also sets a dictionary for word detection in the logogram-based [CJK](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/normalization/#normalization-for-logogram-based-languages-cjk) languages. To support this, you must place the CJK language **first**  **You should always specify a query language.** If you don\'t specify an indexing language, the search engine uses all [supported languages](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/supported-languages/), or the languages you specified with the `ignorePlurals` or `removeStopWords` parameters. This can lead to unexpected search results. For more information, see [Language-specific configuration](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/).
    */
   queryLanguages?: Array<SupportedLanguage> | undefined;
 
@@ -189,7 +187,7 @@ export type BaseInjectionQueryParameters = {
   replaceSynonymsInHighlight?: boolean | undefined;
 
   /**
-   * Properties to include in the API response of `search` and `browse` requests By default, all response properties are included. To reduce the response size, you can select, which attributes should be included You can\'t exclude these properties: `message`, `warning`, `cursor`, `serverUsed`, `indexUsed`, `abTestVariantID`, `parsedQuery`, or any property triggered by the `getRankingInfo` parameter Don\'t exclude properties that you might need in your search UI.
+   * Properties to include in the API response of search and browse requests By default, all response properties are included. To reduce the response size, you can select which properties should be included An empty list may lead to an empty API response (except properties you can\'t exclude) You can\'t exclude these properties: `message`, `warning`, `cursor`, `abTestVariantID`, or any property added by setting `getRankingInfo` to true Your search depends on the `hits` field. If you omit this field, searches won\'t return any results. Your UI might also depend on other properties, for example, for pagination. Before restricting the response size, check the impact on your search experience.
    */
   responseFields?: Array<string> | undefined;
 

@@ -62,6 +62,7 @@ export * from './multipleBatchRequest';
 export * from './multipleBatchResponse';
 export * from './numericFilters';
 export * from './optionalFilters';
+export * from './optionalWords';
 export * from './params';
 export * from './personalization';
 export * from './queryType';
