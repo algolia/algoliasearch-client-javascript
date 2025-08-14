@@ -25,6 +25,7 @@ export * from './facetStats';
 export * from './highlightResult';
 export * from './highlightResultOption';
 export * from './hit';
+export * from './hitMetadata';
 export * from './hitRankingInfo';
 export * from './insideBoundingBox';
 export * from './matchedGeoLocation';
