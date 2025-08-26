@@ -36,6 +36,11 @@ export type ABTest = {
   endAt: string;
 
   /**
+   * Date and time when the A/B test was stopped, in RFC 3339 format.
+   */
+  stoppedAt?: string | null | undefined;
+
+  /**
    * A/B test name.
    */
   name: string;
