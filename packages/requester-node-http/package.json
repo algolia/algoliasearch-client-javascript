@@ -39,8 +39,8 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@types/node": "22.17.0",
-    "nock": "14.0.8",
+    "@types/node": "22.18.0",
+    "nock": "14.0.10",
     "publint": "0.3.12",
     "tsup": "8.5.0",
     "typescript": "5.9.2",
