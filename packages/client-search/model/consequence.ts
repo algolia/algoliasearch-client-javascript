@@ -16,7 +16,7 @@ export type Consequence = {
   promote?: Array<Promote> | undefined;
 
   /**
-   * Whether promoted records must match an active filter for the consequence to be applied.  This ensures that user actions (filtering the search) are given a higher precendence. For example, if you promote a record with the `color: red` attribute, and the user filters the search for `color: blue`, the \"red\" record won\'t be shown.
+   * Determines whether promoted records must also match active filters for the consequence to apply.  This ensures user-applied filters take priority and irrelevant matches aren\'t shown. For example, if you promote a record with `color: red` but the user filters for `color: blue`, the \"red\" record won\'t be shown.  > In the Algolia dashboard, when you use the **Pin an item** consequence, `filterPromotes` appears as the checkbox: **Pinned items must match active filters to be displayed.** For examples, see [Promote results with rules](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/promote-hits/#promote-results-matching-active-filters).
    */
   filterPromotes?: boolean | undefined;
 
