@@ -126,6 +126,7 @@ export * from './taskCreateResponse';
 export * from './taskCreateTrigger';
 export * from './taskCreateV1';
 export * from './taskInput';
+export * from './taskReplace';
 export * from './taskSearch';
 export * from './taskSortKeys';
 export * from './taskUpdate';

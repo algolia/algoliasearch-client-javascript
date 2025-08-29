@@ -30,6 +30,8 @@ import type { SourceSortKeys } from '../model/sourceSortKeys';
 import type { SourceType } from '../model/sourceType';
 import type { SourceUpdate } from '../model/sourceUpdate';
 
+import type { TaskReplace } from '../model/taskReplace';
+
 import type { TaskSortKeys } from '../model/taskSortKeys';
 import type { TaskUpdate } from '../model/taskUpdate';
 
@@ -614,6 +616,17 @@ export type PushTaskProps = {
    * When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
    */
   watch?: boolean | undefined;
+};
+
+/**
+ * Properties for the `replaceTask` method.
+ */
+export type ReplaceTaskProps = {
+  /**
+   * Unique identifier of a task.
+   */
+  taskID: string;
+  taskReplace: TaskReplace;
 };
 
 /**

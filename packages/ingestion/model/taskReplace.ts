@@ -6,32 +6,39 @@ import type { Policies } from './policies';
 import type { TaskInput } from './taskInput';
 
 /**
- * API request body for partially updating a task.
+ * API request body for updating a task.
  */
-export type TaskUpdate = {
+export type TaskReplace = {
   /**
    * Universally unique identifier (UUID) of a destination resource.
    */
-  destinationID?: string | undefined;
+  destinationID: string;
+
+  action: ActionType;
+
+  subscriptionAction?: ActionType | undefined;
 
   /**
    * Cron expression for the task\'s schedule.
    */
   cron?: string | undefined;
 
-  input?: TaskInput | undefined;
-
   /**
    * Whether the task is enabled.
    */
   enabled?: boolean | undefined;
 
-  subscriptionAction?: ActionType | undefined;
-
   /**
    * Maximum accepted percentage of failures for a task run to finish successfully.
    */
   failureThreshold?: number | undefined;
+
+  input?: TaskInput | undefined;
+
+  /**
+   * Date of the last cursor in RFC 3339 format.
+   */
+  cursor?: string | undefined;
 
   notifications?: Notifications | undefined;
 

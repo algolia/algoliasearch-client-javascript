@@ -51,6 +51,7 @@ import type { Task } from '../model/task';
 import type { TaskCreate } from '../model/taskCreate';
 import type { TaskCreateResponse } from '../model/taskCreateResponse';
 import type { TaskCreateV1 } from '../model/taskCreateV1';
+
 import type { TaskSearch } from '../model/taskSearch';
 
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
@@ -101,6 +102,7 @@ import type {
   ListTransformationsProps,
   PushProps,
   PushTaskProps,
+  ReplaceTaskProps,
   RunSourceProps,
   RunTaskProps,
   RunTaskV1Props,
@@ -1912,6 +1914,47 @@ export function createIngestionClient({
     },
 
     /**
+     * Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
+     * @param replaceTask - The replaceTask object.
+     * @param replaceTask.taskID - Unique identifier of a task.
+     * @param replaceTask.taskReplace - The taskReplace object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    replaceTask(
+      { taskID, taskReplace }: ReplaceTaskProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TaskUpdateResponse> {
+      if (!taskID) {
+        throw new Error('Parameter `taskID` is required when calling `replaceTask`.');
+      }
+
+      if (!taskReplace) {
+        throw new Error('Parameter `taskReplace` is required when calling `replaceTask`.');
+      }
+
+      if (!taskReplace.destinationID) {
+        throw new Error('Parameter `taskReplace.destinationID` is required when calling `replaceTask`.');
+      }
+      if (!taskReplace.action) {
+        throw new Error('Parameter `taskReplace.action` is required when calling `replaceTask`.');
+      }
+
+      const requestPath = '/2/tasks/{taskID}'.replace('{taskID}', encodeURIComponent(taskID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: taskReplace,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools sources. Creates one run per task.
      *
      * Required API Key ACLs:
@@ -2482,7 +2525,7 @@ export function createIngestionClient({
     },
 
     /**
-     * Updates a task by its ID.
+     * Partially updates a task by its ID.
      * @param updateTask - The updateTask object.
      * @param updateTask.taskID - Unique identifier of a task.
      * @param updateTask.taskUpdate - The taskUpdate object.
