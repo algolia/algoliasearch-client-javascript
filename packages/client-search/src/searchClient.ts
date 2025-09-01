@@ -1792,9 +1792,13 @@ export function createSearchClient({
      *  - settings
      * @param getSettings - The getSettings object.
      * @param getSettings.indexName - Name of the index on which to perform the operation.
+     * @param getSettings.getVersion - When set to 2, the endpoint will not include `synonyms` in the response. This parameter is here for backward compatibility.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getSettings({ indexName }: GetSettingsProps, requestOptions?: RequestOptions): Promise<SettingsResponse> {
+    getSettings(
+      { indexName, getVersion }: GetSettingsProps,
+      requestOptions?: RequestOptions,
+    ): Promise<SettingsResponse> {
       if (!indexName) {
         throw new Error('Parameter `indexName` is required when calling `getSettings`.');
       }
@@ -1802,6 +1806,10 @@ export function createSearchClient({
       const requestPath = '/1/indexes/{indexName}/settings'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
+      if (getVersion !== undefined) {
+        queryParameters['getVersion'] = getVersion.toString();
+      }
 
       const request: Request = {
         method: 'GET',

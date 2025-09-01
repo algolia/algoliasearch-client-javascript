@@ -393,6 +393,10 @@ export type GetSettingsProps = {
    * Name of the index on which to perform the operation.
    */
   indexName: string;
+  /**
+   * When set to 2, the endpoint will not include `synonyms` in the response. This parameter is here for backward compatibility.
+   */
+  getVersion?: number | undefined;
 };
 
 /**
