@@ -101,6 +101,7 @@ export * from './snippetResult';
 export * from './snippetResultOption';
 export * from './sortRemainingBy';
 export * from './supportedLanguage';
+export * from './taskIDResponse';
 export * from './taskStatus';
 export * from './timeRange';
 export * from './typoTolerance';

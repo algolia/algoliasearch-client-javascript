@@ -24,16 +24,21 @@ import type { SearchCompositionRulesResponse } from '../model/searchCompositionR
 
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchResponse } from '../model/searchResponse';
+import type { TaskIDResponse } from '../model/taskIDResponse';
 
 import type {
   CustomDeleteProps,
   CustomGetProps,
   CustomPostProps,
   CustomPutProps,
+  DeleteCompositionProps,
+  DeleteCompositionRuleProps,
   GetCompositionProps,
   GetRuleProps,
   GetTaskProps,
   ListCompositionsProps,
+  PutCompositionProps,
+  PutCompositionRuleProps,
   SaveRulesProps,
   SearchCompositionRulesProps,
   SearchForFacetValuesProps,
@@ -308,6 +313,80 @@ export function createCompositionClient({
     },
 
     /**
+     * Delete a composition from the current Algolia application.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     *  - settings
+     * @param deleteComposition - The deleteComposition object.
+     * @param deleteComposition.compositionID - Unique Composition ObjectID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    deleteComposition(
+      { compositionID }: DeleteCompositionProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TaskIDResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `deleteComposition`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}'.replace(
+        '{compositionID}',
+        encodeURIComponent(compositionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Delete a Composition Rule from the specified Composition ID.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     *  - settings
+     * @param deleteCompositionRule - The deleteCompositionRule object.
+     * @param deleteCompositionRule.compositionID - Unique Composition ObjectID.
+     * @param deleteCompositionRule.objectID - Unique identifier of a rule object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    deleteCompositionRule(
+      { compositionID, objectID }: DeleteCompositionRuleProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TaskIDResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `deleteCompositionRule`.');
+      }
+
+      if (!objectID) {
+        throw new Error('Parameter `objectID` is required when calling `deleteCompositionRule`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}/rules/{objectID}'
+        .replace('{compositionID}', encodeURIComponent(compositionID))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Retrieve a single composition in the current Algolia application.
      *
      * Required API Key ACLs:
@@ -477,6 +556,112 @@ export function createCompositionClient({
         queryParameters,
         headers,
         data: batchParams,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Upsert a composition in the current Algolia application.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     *  - settings
+     * @param putComposition - The putComposition object.
+     * @param putComposition.compositionID - Unique Composition ObjectID.
+     * @param putComposition.composition - The composition object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    putComposition(
+      { compositionID, composition }: PutCompositionProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TaskIDResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `putComposition`.');
+      }
+
+      if (!composition) {
+        throw new Error('Parameter `composition` is required when calling `putComposition`.');
+      }
+
+      if (!composition.objectID) {
+        throw new Error('Parameter `composition.objectID` is required when calling `putComposition`.');
+      }
+      if (!composition.name) {
+        throw new Error('Parameter `composition.name` is required when calling `putComposition`.');
+      }
+      if (!composition.behavior) {
+        throw new Error('Parameter `composition.behavior` is required when calling `putComposition`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}'.replace(
+        '{compositionID}',
+        encodeURIComponent(compositionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: composition,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Upsert a Composition Rule for the specified composition ID.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     *  - settings
+     * @param putCompositionRule - The putCompositionRule object.
+     * @param putCompositionRule.compositionID - Unique Composition ObjectID.
+     * @param putCompositionRule.objectID - Unique identifier of a rule object.
+     * @param putCompositionRule.compositionRule - The compositionRule object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    putCompositionRule(
+      { compositionID, objectID, compositionRule }: PutCompositionRuleProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TaskIDResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `putCompositionRule`.');
+      }
+
+      if (!objectID) {
+        throw new Error('Parameter `objectID` is required when calling `putCompositionRule`.');
+      }
+
+      if (!compositionRule) {
+        throw new Error('Parameter `compositionRule` is required when calling `putCompositionRule`.');
+      }
+
+      if (!compositionRule.objectID) {
+        throw new Error('Parameter `compositionRule.objectID` is required when calling `putCompositionRule`.');
+      }
+      if (!compositionRule.conditions) {
+        throw new Error('Parameter `compositionRule.conditions` is required when calling `putCompositionRule`.');
+      }
+      if (!compositionRule.consequence) {
+        throw new Error('Parameter `compositionRule.consequence` is required when calling `putCompositionRule`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}/rules/{objectID}'
+        .replace('{compositionID}', encodeURIComponent(compositionID))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: compositionRule,
       };
 
       return transporter.request(request, requestOptions);
