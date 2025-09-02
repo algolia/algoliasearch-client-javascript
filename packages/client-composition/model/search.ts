@@ -2,9 +2,9 @@
 
 import type { BaseInjectionQueryParameters } from './baseInjectionQueryParameters';
 
-export type InjectedItemSourceSearch = {
+export type Search = {
   /**
-   * Composition Main Index name.
+   * Composition Index name.
    */
   index: string;
 

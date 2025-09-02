@@ -17,6 +17,8 @@ export * from './compositionRunSearchResponse';
 export * from './compositionsSearchResponse';
 export * from './errorBase';
 export * from './exhaustive';
+export * from './externalInjectedItem';
+export * from './externalInjection';
 export * from './facetFilters';
 export * from './facetHits';
 export * from './facetOrdering';

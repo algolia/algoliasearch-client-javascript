@@ -2,6 +2,7 @@
 
 import type { AroundPrecision } from './aroundPrecision';
 import type { AroundRadius } from './aroundRadius';
+import type { ExternalInjectedItem } from './externalInjectedItem';
 import type { FacetFilters } from './facetFilters';
 import type { InsideBoundingBox } from './insideBoundingBox';
 import type { NumericFilters } from './numericFilters';
@@ -120,4 +121,9 @@ export type Params = {
    * Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking/) This setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
    */
   enableReRanking?: boolean | undefined;
+
+  /**
+   * A list of extenrally injected objectID groups into from an external source.
+   */
+  injectedItems?: { [key: string]: ExternalInjectedItem } | undefined;
 };
