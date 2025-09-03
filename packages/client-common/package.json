@@ -1,6 +1,6 @@
 {
   "name": "@algolia/client-common",
-  "version": "5.36.0",
+  "version": "5.37.0",
   "description": "Common package for the Algolia JavaScript API client.",
   "repository": {
     "type": "git",
