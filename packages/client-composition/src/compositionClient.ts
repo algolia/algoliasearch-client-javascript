@@ -317,7 +317,6 @@ export function createCompositionClient({
      *
      * Required API Key ACLs:
      *  - editSettings
-     *  - settings
      * @param deleteComposition - The deleteComposition object.
      * @param deleteComposition.compositionID - Unique Composition ObjectID.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -352,7 +351,6 @@ export function createCompositionClient({
      *
      * Required API Key ACLs:
      *  - editSettings
-     *  - settings
      * @param deleteCompositionRule - The deleteCompositionRule object.
      * @param deleteCompositionRule.compositionID - Unique Composition ObjectID.
      * @param deleteCompositionRule.objectID - Unique identifier of a rule object.
@@ -422,6 +420,7 @@ export function createCompositionClient({
      * Retrieves a rule by its ID. To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
      *
      * Required API Key ACLs:
+     *  - editSettings
      *  - settings
      * @param getRule - The getRule object.
      * @param getRule.compositionID - Unique Composition ObjectID.
@@ -566,7 +565,6 @@ export function createCompositionClient({
      *
      * Required API Key ACLs:
      *  - editSettings
-     *  - settings
      * @param putComposition - The putComposition object.
      * @param putComposition.compositionID - Unique Composition ObjectID.
      * @param putComposition.composition - The composition object.
@@ -617,7 +615,6 @@ export function createCompositionClient({
      *
      * Required API Key ACLs:
      *  - editSettings
-     *  - settings
      * @param putCompositionRule - The putCompositionRule object.
      * @param putCompositionRule.compositionID - Unique Composition ObjectID.
      * @param putCompositionRule.objectID - Unique identifier of a rule object.
