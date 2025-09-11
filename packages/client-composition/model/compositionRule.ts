@@ -31,4 +31,9 @@ export type CompositionRule = {
    * Time periods when the rule is active.
    */
   validity?: Array<TimeRange> | undefined;
+
+  /**
+   * A list of tags.
+   */
+  tags?: Array<string> | undefined;
 };
