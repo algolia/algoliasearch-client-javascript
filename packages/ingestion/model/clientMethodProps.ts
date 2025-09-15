@@ -42,6 +42,8 @@ import type { TransformationCreate } from '../model/transformationCreate';
 import type { TransformationSortKeys } from '../model/transformationSortKeys';
 import type { TransformationTry } from '../model/transformationTry';
 
+import type { TransformationType } from '../model/transformationType';
+
 import type { TriggerType } from '../model/triggerType';
 
 /**
@@ -582,6 +584,10 @@ export type ListTransformationsProps = {
    * Sort order of the response, ascending or descending.
    */
   order?: OrderKeys | undefined;
+  /**
+   * Whether to filter the list of transformations by the type of transformation.
+   */
+  type?: TransformationType | undefined;
 };
 
 /**

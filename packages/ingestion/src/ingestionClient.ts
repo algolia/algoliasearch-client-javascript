@@ -64,6 +64,7 @@ import type { TransformationSearch } from '../model/transformationSearch';
 
 import type { TransformationTry } from '../model/transformationTry';
 import type { TransformationTryResponse } from '../model/transformationTryResponse';
+
 import type { TransformationUpdateResponse } from '../model/transformationUpdateResponse';
 
 import type { WatchResponse } from '../model/watchResponse';
@@ -1752,10 +1753,11 @@ export function createIngestionClient({
      * @param listTransformations.page - Page number of the paginated API response.
      * @param listTransformations.sort - Property by which to sort the list of transformations.
      * @param listTransformations.order - Sort order of the response, ascending or descending.
+     * @param listTransformations.type - Whether to filter the list of transformations by the type of transformation.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listTransformations(
-      { itemsPerPage, page, sort, order }: ListTransformationsProps = {},
+      { itemsPerPage, page, sort, order, type }: ListTransformationsProps = {},
       requestOptions: RequestOptions | undefined = undefined,
     ): Promise<ListTransformationsResponse> {
       const requestPath = '/1/transformations';
@@ -1776,6 +1778,10 @@ export function createIngestionClient({
 
       if (order !== undefined) {
         queryParameters['order'] = order.toString();
+      }
+
+      if (type !== undefined) {
+        queryParameters['type'] = type.toString();
       }
 
       const request: Request = {
