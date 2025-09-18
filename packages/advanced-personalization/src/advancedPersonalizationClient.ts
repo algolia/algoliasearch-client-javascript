@@ -126,10 +126,12 @@ export function createAdvancedPersonalizationClient({
     },
 
     /**
-     * Sends a request to compute the user\'s personalization profile.
+     * Sends a request to compute the real-time user\'s personalization profile.
      *
      * Required API Key ACLs:
      *  - recommendation
+     *
+     * @deprecated
      * @param computeRealtimeUser - The computeRealtimeUser object.
      * @param computeRealtimeUser.userToken - Unique identifier representing a user for which to fetch the personalization profile.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -328,7 +330,7 @@ export function createAdvancedPersonalizationClient({
     },
 
     /**
-     * Retrieves the user\'s personalization profiles containing search filters.
+     * Retrieves the real-time user\'s personalization profiles containing search filters.
      *
      * Required API Key ACLs:
      *  - recommendation
