@@ -8,12 +8,43 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createTransporter, getAlgoliaAgent, shuffle } from '@algolia/client-common';
+import { createAuth, createIterablePromise, createTransporter, getAlgoliaAgent, shuffle } from '@algolia/client-common';
+
+import type { BatchParams } from '../model/batchParams';
+import type { Composition } from '../model/composition';
+import type { CompositionRule } from '../model/compositionRule';
+
+import type { GetTaskResponse } from '../model/getTaskResponse';
+import type { ListCompositionsResponse } from '../model/listCompositionsResponse';
+import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
+
+import type { RulesMultipleBatchResponse } from '../model/rulesMultipleBatchResponse';
+
+import type { SearchCompositionRulesResponse } from '../model/searchCompositionRulesResponse';
 
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchResponse } from '../model/searchResponse';
+import type { TaskIDResponse } from '../model/taskIDResponse';
 
-import type { SearchForFacetValuesProps, SearchProps } from '../model/clientMethodProps';
+import type {
+  CustomDeleteProps,
+  CustomGetProps,
+  CustomPostProps,
+  CustomPutProps,
+  DeleteCompositionProps,
+  DeleteCompositionRuleProps,
+  GetCompositionProps,
+  GetRuleProps,
+  GetTaskProps,
+  ListCompositionsProps,
+  PutCompositionProps,
+  PutCompositionRuleProps,
+  SaveRulesProps,
+  SearchCompositionRulesProps,
+  SearchForFacetValuesProps,
+  SearchProps,
+  WaitForCompositionTaskOptions,
+} from '../model/clientMethodProps';
 
 export const apiClientVersion = '1.13.0';
 
@@ -131,6 +162,549 @@ export function createCompositionClient({
     },
 
     /**
+     * Helper: Wait for a composition-level task to be published (completed) for a given `compositionID` and `taskID`.
+     *
+     * @summary Helper method that waits for a task to be published (completed).
+     * @param WaitForCompositionTaskOptions - The `WaitForCompositionTaskOptions` object.
+     * @param WaitForCompositionTaskOptions.compositionID - The `compositionID` where the operation was performed.
+     * @param WaitForCompositionTaskOptions.taskID - The `taskID` returned in the method response.
+     * @param WaitForCompositionTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param WaitForCompositionTaskOptions.timeout - The function to decide how long to wait between retries.
+     * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
+     */
+    waitForCompositionTask(
+      {
+        compositionID,
+        taskID,
+        maxRetries = 50,
+        timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
+      }: WaitForCompositionTaskOptions,
+      requestOptions?: RequestOptions,
+    ): Promise<GetTaskResponse> {
+      let retryCount = 0;
+
+      return createIterablePromise({
+        func: () => this.getTask({ compositionID, taskID }, requestOptions),
+        validate: (response) => response.status === 'published',
+        aggregator: () => (retryCount += 1),
+        error: {
+          validate: () => retryCount >= maxRetries,
+          message: () => `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+        },
+        timeout: () => timeout(retryCount),
+      });
+    },
+
+    /**
+     * This method lets you send requests to the Algolia REST API.
+     * @param customDelete - The customDelete object.
+     * @param customDelete.path - Path of the endpoint, for example `1/newFeature`.
+     * @param customDelete.parameters - Query parameters to apply to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    customDelete(
+      { path, parameters }: CustomDeleteProps,
+      requestOptions?: RequestOptions,
+    ): Promise<Record<string, unknown>> {
+      if (!path) {
+        throw new Error('Parameter `path` is required when calling `customDelete`.');
+      }
+
+      const requestPath = '/{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * This method lets you send requests to the Algolia REST API.
+     * @param customGet - The customGet object.
+     * @param customGet.path - Path of the endpoint, for example `1/newFeature`.
+     * @param customGet.parameters - Query parameters to apply to the current query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
+      if (!path) {
+        throw new Error('Parameter `path` is required when calling `customGet`.');
+      }
+
+      const requestPath = '/{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * This method lets you send requests to the Algolia REST API.
+     * @param customPost - The customPost object.
+     * @param customPost.path - Path of the endpoint, for example `1/newFeature`.
+     * @param customPost.parameters - Query parameters to apply to the current query.
+     * @param customPost.body - Parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    customPost(
+      { path, parameters, body }: CustomPostProps,
+      requestOptions?: RequestOptions,
+    ): Promise<Record<string, unknown>> {
+      if (!path) {
+        throw new Error('Parameter `path` is required when calling `customPost`.');
+      }
+
+      const requestPath = '/{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: body ? body : {},
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * This method lets you send requests to the Algolia REST API.
+     * @param customPut - The customPut object.
+     * @param customPut.path - Path of the endpoint, for example `1/newFeature`.
+     * @param customPut.parameters - Query parameters to apply to the current query.
+     * @param customPut.body - Parameters to send with the custom request.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    customPut(
+      { path, parameters, body }: CustomPutProps,
+      requestOptions?: RequestOptions,
+    ): Promise<Record<string, unknown>> {
+      if (!path) {
+        throw new Error('Parameter `path` is required when calling `customPut`.');
+      }
+
+      const requestPath = '/{path}'.replace('{path}', path);
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = parameters ? parameters : {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: body ? body : {},
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Delete a composition from the current Algolia application.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     * @param deleteComposition - The deleteComposition object.
+     * @param deleteComposition.compositionID - Unique Composition ObjectID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    deleteComposition(
+      { compositionID }: DeleteCompositionProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TaskIDResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `deleteComposition`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}'.replace(
+        '{compositionID}',
+        encodeURIComponent(compositionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Delete a Composition Rule from the specified Composition ID.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     * @param deleteCompositionRule - The deleteCompositionRule object.
+     * @param deleteCompositionRule.compositionID - Unique Composition ObjectID.
+     * @param deleteCompositionRule.objectID - Unique identifier of a rule object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    deleteCompositionRule(
+      { compositionID, objectID }: DeleteCompositionRuleProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TaskIDResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `deleteCompositionRule`.');
+      }
+
+      if (!objectID) {
+        throw new Error('Parameter `objectID` is required when calling `deleteCompositionRule`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}/rules/{objectID}'
+        .replace('{compositionID}', encodeURIComponent(compositionID))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'DELETE',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieve a single composition in the current Algolia application.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     *  - settings
+     * @param getComposition - The getComposition object.
+     * @param getComposition.compositionID - Unique Composition ObjectID.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getComposition({ compositionID }: GetCompositionProps, requestOptions?: RequestOptions): Promise<Composition> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `getComposition`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}'.replace(
+        '{compositionID}',
+        encodeURIComponent(compositionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Retrieves a rule by its ID. To find the object ID of rules, use the [`search` operation](#tag/Rules/operation/searchRules).
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     *  - settings
+     * @param getRule - The getRule object.
+     * @param getRule.compositionID - Unique Composition ObjectID.
+     * @param getRule.objectID - Unique identifier of a rule object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getRule({ compositionID, objectID }: GetRuleProps, requestOptions?: RequestOptions): Promise<CompositionRule> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `getRule`.');
+      }
+
+      if (!objectID) {
+        throw new Error('Parameter `objectID` is required when calling `getRule`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}/rules/{objectID}'
+        .replace('{compositionID}', encodeURIComponent(compositionID))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Checks the status of a given task.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     *  - settings
+     *  - addObject
+     *  - deleteObject
+     *  - deleteIndex
+     * @param getTask - The getTask object.
+     * @param getTask.compositionID - Unique Composition ObjectID.
+     * @param getTask.taskID - Unique task identifier.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getTask({ compositionID, taskID }: GetTaskProps, requestOptions?: RequestOptions): Promise<GetTaskResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `getTask`.');
+      }
+
+      if (!taskID) {
+        throw new Error('Parameter `taskID` is required when calling `getTask`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}/task/{taskID}'
+        .replace('{compositionID}', encodeURIComponent(compositionID))
+        .replace('{taskID}', encodeURIComponent(taskID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Lists all compositions in the current Algolia application.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     *  - settings
+     * @param listCompositions - The listCompositions object.
+     * @param listCompositions.page - Requested page of the API response. If `null`, the API response is not paginated.
+     * @param listCompositions.hitsPerPage - Number of hits per page.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    listCompositions(
+      { page, hitsPerPage }: ListCompositionsProps = {},
+      requestOptions: RequestOptions | undefined = undefined,
+    ): Promise<ListCompositionsResponse> {
+      const requestPath = '/1/compositions';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (page !== undefined) {
+        queryParameters['page'] = page.toString();
+      }
+
+      if (hitsPerPage !== undefined) {
+        queryParameters['hitsPerPage'] = hitsPerPage.toString();
+      }
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Adds, updates, or deletes compositions with a single API request.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     * @param batchParams - The batchParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    multipleBatch(batchParams: BatchParams, requestOptions?: RequestOptions): Promise<MultipleBatchResponse> {
+      if (!batchParams) {
+        throw new Error('Parameter `batchParams` is required when calling `multipleBatch`.');
+      }
+
+      if (!batchParams.requests) {
+        throw new Error('Parameter `batchParams.requests` is required when calling `multipleBatch`.');
+      }
+
+      const requestPath = '/1/compositions/*/batch';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: batchParams,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Upsert a composition in the current Algolia application.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     * @param putComposition - The putComposition object.
+     * @param putComposition.compositionID - Unique Composition ObjectID.
+     * @param putComposition.composition - The composition object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    putComposition(
+      { compositionID, composition }: PutCompositionProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TaskIDResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `putComposition`.');
+      }
+
+      if (!composition) {
+        throw new Error('Parameter `composition` is required when calling `putComposition`.');
+      }
+
+      if (!composition.objectID) {
+        throw new Error('Parameter `composition.objectID` is required when calling `putComposition`.');
+      }
+      if (!composition.name) {
+        throw new Error('Parameter `composition.name` is required when calling `putComposition`.');
+      }
+      if (!composition.behavior) {
+        throw new Error('Parameter `composition.behavior` is required when calling `putComposition`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}'.replace(
+        '{compositionID}',
+        encodeURIComponent(compositionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: composition,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Upsert a Composition Rule for the specified composition ID.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     * @param putCompositionRule - The putCompositionRule object.
+     * @param putCompositionRule.compositionID - Unique Composition ObjectID.
+     * @param putCompositionRule.objectID - Unique identifier of a rule object.
+     * @param putCompositionRule.compositionRule - The compositionRule object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    putCompositionRule(
+      { compositionID, objectID, compositionRule }: PutCompositionRuleProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TaskIDResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `putCompositionRule`.');
+      }
+
+      if (!objectID) {
+        throw new Error('Parameter `objectID` is required when calling `putCompositionRule`.');
+      }
+
+      if (!compositionRule) {
+        throw new Error('Parameter `compositionRule` is required when calling `putCompositionRule`.');
+      }
+
+      if (!compositionRule.objectID) {
+        throw new Error('Parameter `compositionRule.objectID` is required when calling `putCompositionRule`.');
+      }
+      if (!compositionRule.conditions) {
+        throw new Error('Parameter `compositionRule.conditions` is required when calling `putCompositionRule`.');
+      }
+      if (!compositionRule.consequence) {
+        throw new Error('Parameter `compositionRule.consequence` is required when calling `putCompositionRule`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}/rules/{objectID}'
+        .replace('{compositionID}', encodeURIComponent(compositionID))
+        .replace('{objectID}', encodeURIComponent(objectID));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PUT',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: compositionRule,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Create or update or delete multiple composition rules.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     * @param saveRules - The saveRules object.
+     * @param saveRules.compositionID - Unique Composition ObjectID.
+     * @param saveRules.rules - The rules object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    saveRules(
+      { compositionID, rules }: SaveRulesProps,
+      requestOptions?: RequestOptions,
+    ): Promise<RulesMultipleBatchResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `saveRules`.');
+      }
+
+      if (!rules) {
+        throw new Error('Parameter `rules` is required when calling `saveRules`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}/rules/batch'.replace(
+        '{compositionID}',
+        encodeURIComponent(compositionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: rules,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
      * Runs a query on a single composition and returns matching results.
      *
      * Required API Key ACLs:
@@ -167,6 +741,42 @@ export function createCompositionClient({
         data: requestBody,
         useReadTransporter: true,
         cacheable: true,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Searches for composition rules in your index.
+     *
+     * Required API Key ACLs:
+     *  - settings
+     * @param searchCompositionRules - The searchCompositionRules object.
+     * @param searchCompositionRules.compositionID - Unique Composition ObjectID.
+     * @param searchCompositionRules.searchCompositionRulesParams - The searchCompositionRulesParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    searchCompositionRules(
+      { compositionID, searchCompositionRulesParams }: SearchCompositionRulesProps,
+      requestOptions?: RequestOptions,
+    ): Promise<SearchCompositionRulesResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `searchCompositionRules`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}/rules/search'.replace(
+        '{compositionID}',
+        encodeURIComponent(compositionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: searchCompositionRulesParams ? searchCompositionRulesParams : {},
       };
 
       return transporter.request(request, requestOptions);

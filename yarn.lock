@@ -88,23 +88,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@algolia/client-composition@workspace:packages/client-composition":
-  version: 0.0.0-use.local
-  resolution: "@algolia/client-composition@workspace:packages/client-composition"
-  dependencies:
-    "@algolia/client-common": "npm:5.37.0"
-    "@algolia/requester-browser-xhr": "npm:5.37.0"
-    "@algolia/requester-fetch": "npm:5.37.0"
-    "@algolia/requester-node-http": "npm:5.37.0"
-    "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.3"
-    publint: "npm:0.3.12"
-    rollup: "npm:4.41.0"
-    tsup: "npm:8.5.0"
-    typescript: "npm:5.9.2"
-  languageName: unknown
-  linkType: soft
-
 "@algolia/client-insights@npm:5.37.0, @algolia/client-insights@workspace:packages/client-insights":
   version: 0.0.0-use.local
   resolution: "@algolia/client-insights@workspace:packages/client-insights"
