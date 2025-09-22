@@ -41,7 +41,7 @@
     "@arethetypeswrong/cli": "0.18.2",
     "@types/node": "22.18.1",
     "nock": "14.0.10",
-    "publint": "0.3.12",
+    "publint": "0.3.13",
     "tsup": "8.5.0",
     "typescript": "5.9.2",
     "vitest": "3.2.4"
