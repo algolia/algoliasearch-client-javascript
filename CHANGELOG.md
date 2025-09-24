@@ -1,3 +1,14 @@
+## [5.38.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.37.0...5.38.0)
+
+- [ca25c44e2](https://github.com/algolia/api-clients-automation/commit/ca25c44e2) chore(deps): dependencies 2025-09-08 ([#5310](https://github.com/algolia/api-clients-automation/pull/5310)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [67a3abdc3](https://github.com/algolia/api-clients-automation/commit/67a3abdc3) test(javascript): update compositions testcases for metadata and external injected items ([#5331](https://github.com/algolia/api-clients-automation/pull/5331)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+- [cfbd9aa3c](https://github.com/algolia/api-clients-automation/commit/cfbd9aa3c) fix(specs): normalize spelling of summaries ([#5340](https://github.com/algolia/api-clients-automation/pull/5340)) by [@kai687](https://github.com/kai687/)
+- [353f4a08f](https://github.com/algolia/api-clients-automation/commit/353f4a08f) feat(specs): allow filtering transformations type ([#5363](https://github.com/algolia/api-clients-automation/pull/5363)) by [@shortcuts](https://github.com/shortcuts/)
+- [6631c7f11](https://github.com/algolia/api-clients-automation/commit/6631c7f11) feat(specs): deprecate Predict real-time endpoints ([#5364](https://github.com/algolia/api-clients-automation/pull/5364)) by [@raed667](https://github.com/raed667/)
+- [323e06d6f](https://github.com/algolia/api-clients-automation/commit/323e06d6f) chore(deps): dependencies 2025-09-15 ([#5341](https://github.com/algolia/api-clients-automation/pull/5341)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [9884be690](https://github.com/algolia/api-clients-automation/commit/9884be690) feat(specs): merge `composition` & `composition-full` ([#5333](https://github.com/algolia/api-clients-automation/pull/5333)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [bdc670bfa](https://github.com/algolia/api-clients-automation/commit/bdc670bfa) chore(deps): dependencies 2025-09-22 ([#5369](https://github.com/algolia/api-clients-automation/pull/5369)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.37.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.36.0...5.37.0)
 
 - [8f4abf3a1](https://github.com/algolia/api-clients-automation/commit/8f4abf3a1) fix(specs): Cross-reference filerPromotes to relevant guide ([#5279](https://github.com/algolia/api-clients-automation/pull/5279)) by [@gazconroy](https://github.com/gazconroy/)
