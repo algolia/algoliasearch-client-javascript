@@ -3,4 +3,4 @@
 /**
  * Action to perform on the Algolia index.
  */
-export type ActionType = 'replace' | 'save' | 'partial' | 'append';
+export type ActionType = 'replace' | 'save' | 'partial' | 'partialNoCreate' | 'append';
