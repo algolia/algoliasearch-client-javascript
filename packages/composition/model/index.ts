@@ -31,6 +31,8 @@ export * from './compositionSource';
 export * from './compositionSourceSearch';
 export * from './compositionsSearchResponse';
 export * from './condition';
+export * from './deduplication';
+export * from './dedupPositioning';
 export * from './deleteCompositionAction';
 export * from './deleteCompositionRuleAction';
 export * from './distinct';
