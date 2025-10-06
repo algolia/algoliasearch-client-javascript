@@ -118,7 +118,7 @@ export type BaseSearchResponse = Record<string, any> & {
   userData?: any | null | undefined;
 
   /**
-   * Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics/).
+   * Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics).
    */
   queryID?: string | undefined;
 
