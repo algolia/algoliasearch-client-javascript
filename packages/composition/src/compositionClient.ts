@@ -194,7 +194,6 @@ export function createCompositionClient({
         timeout: () => timeout(retryCount),
       });
     },
-
     /**
      * This method lets you send requests to the Algolia REST API.
      * @param customDelete - The customDelete object.

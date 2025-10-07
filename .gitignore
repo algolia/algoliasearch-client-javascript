@@ -14,3 +14,5 @@ lerna-debug.log
 node_modules
 
 .nx
+.cursor/rules/nx-rules.mdc
+.github/instructions/nx.instructions.md

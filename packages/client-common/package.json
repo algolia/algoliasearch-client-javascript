@@ -37,11 +37,11 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
     "@types/node": "22.18.1",
-    "jsdom": "26.1.0",
-    "publint": "0.3.13",
+    "jsdom": "27.0.0",
+    "publint": "0.3.14",
     "ts-node": "10.9.2",
     "tsup": "8.5.0",
-    "typescript": "5.9.2",
+    "typescript": "5.9.3",
     "vitest": "3.2.4"
   },
   "engines": {
