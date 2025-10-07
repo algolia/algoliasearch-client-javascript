@@ -1,3 +1,9 @@
+## [5.40.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.39.0...5.40.0)
+
+- [7de94353f](https://github.com/algolia/api-clients-automation/commit/7de94353f) feat(specs): add compositions deduplication setting ([#5418](https://github.com/algolia/api-clients-automation/pull/5418)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+- [8bee10f1a](https://github.com/algolia/api-clients-automation/commit/8bee10f1a) fix(clients): add a default idleConnTimeout ([#5442](https://github.com/algolia/api-clients-automation/pull/5442)) by [@millotp](https://github.com/millotp/)
+- [01261eceb](https://github.com/algolia/api-clients-automation/commit/01261eceb) chore(deps): dependencies 2025-09-29 ([#5393](https://github.com/algolia/api-clients-automation/pull/5393)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.39.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.38.0...5.39.0)
 
 - [ad51f60561](https://github.com/algolia/api-clients-automation/commit/ad51f60561) feat(specs): add partialNoCreate action to ingestion specs ([#5389](https://github.com/algolia/api-clients-automation/pull/5389)) by [@shortcuts](https://github.com/shortcuts/)
