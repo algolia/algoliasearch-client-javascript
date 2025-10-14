@@ -6,7 +6,7 @@
   <h4 align="center">The perfect starting point to integrate <a href="https://algolia.com" target="_blank">Algolia</a> within your JavaScript project</h4>
 
   <p align="center">
-    <a href="https://npmjs.org/package/@algolia/client-search"><img src="https://img.shields.io/npm/v/@algolia/client-search.svg?style=flat-square" alt="NPM version"></img></a>
+    <a href="https://npmjs.com/package/@algolia/client-search"><img src="https://img.shields.io/npm/v/@algolia/client-search.svg?style=flat-square" alt="NPM version"></img></a>
     <a href="http://npm-stat.com/charts.html?package=@algolia/client-search"><img src="https://img.shields.io/npm/dm/@algolia/client-search.svg?style=flat-square" alt="NPM downloads"></a>
     <a href="https://www.jsdelivr.com/package/npm/@algolia/client-search"><img src="https://data.jsdelivr.com/v1/package/npm/@algolia/client-search/badge" alt="jsDelivr Downloads"></img></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat-square" alt="License"></a>

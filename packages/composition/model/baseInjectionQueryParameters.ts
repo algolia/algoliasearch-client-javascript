@@ -62,7 +62,7 @@ export type BaseInjectionQueryParameters = {
   attributesToSnippet?: Array<string> | undefined;
 
   /**
-   * Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/guides/sending-events/getting-started).
+   * Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started).
    */
   clickAnalytics?: boolean | undefined;
 

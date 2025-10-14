@@ -11,7 +11,7 @@ export type SearchForFacetValuesResults = {
   facetHits: Array<FacetHits>;
 
   /**
-   * Whether the facet count is exhaustive (true) or approximate (false). For more information, see [Why are my facet and hit counts not accurate](https://support.algolia.com/hc/en-us/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate-).
+   * Whether the facet count is exhaustive (true) or approximate (false). For more information, see [Why are my facet and hit counts not accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).
    */
   exhaustiveFacetsCount: boolean;
 
