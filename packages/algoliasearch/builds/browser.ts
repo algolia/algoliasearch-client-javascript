@@ -81,7 +81,7 @@ export type Algoliasearch = SearchClient & {
    * @param partialUpdateObjects - The `partialUpdateObjects` object.
    * @param partialUpdateObjects.indexName - The `indexName` to update `objects` in.
    * @param partialUpdateObjects.objects - The array of `objects` to update in the given Algolia `indexName`.
-   * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail..
+   * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail.
    * @param partialUpdateObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
    * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
    * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `push` method and merged with the transporter requestOptions.

@@ -4,7 +4,7 @@ import type { EventStatus } from './eventStatus';
 import type { EventType } from './eventType';
 
 /**
- * An event describe a step of the task execution flow..
+ * An event describe a step of the task execution flow.
  */
 export type Event = {
   /**
