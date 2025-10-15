@@ -14,12 +14,11 @@
 </p>
 
 <p align="center">
-  <a href="https://www.algolia.com/doc/libraries/javascript/" target="_blank">Documentation</a>  •
+  <a href="https://www.algolia.com/doc/libraries/sdk/install#javascript" target="_blank">Documentation</a>  •
   <a href="https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/" target="_blank">InstantSearch</a>  •
   <a href="https://discourse.algolia.com" target="_blank">Community Forum</a>  •
   <a href="http://stackoverflow.com/questions/tagged/algolia" target="_blank">Stack Overflow</a>  •
   <a href="https://github.com/algolia/algoliasearch-client-javascript/issues" target="_blank">Report a bug</a>  •
-  <a href="https://www.algolia.com/doc/libraries/javascript/v5/" target="_blank">FAQ</a>  •
   <a href="https://alg.li/support" target="_blank">Support</a>
 </p>
 
@@ -66,11 +65,11 @@ import { abtestingV3Client } from '@algolia/abtesting';
 const client = abtestingV3Client('YOUR_APP_ID', 'YOUR_API_KEY');
 ```
 
-For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/javascript/v5/methods/abtesting-v3/)**.
+For full documentation, visit the **[Algolia JavaScript API Client](https://www.algolia.com/doc/libraries/sdk/methods/abtesting-v3/)**.
 
 ## ❓ Troubleshooting
 
-Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://www.algolia.com/doc/libraries/javascript/v5/) where you will find answers for the most common issues and gotchas with the client. You can also open [a GitHub issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=&projects=&template=Bug_report.md)
+Encountering an issue? Before reaching out to support, we recommend heading to our [FAQ](https://support.algolia.com/hc/en-us/sections/15061037630609-API-Client-FAQs) where you will find answers for the most common issues and gotchas with the client. You can also open [a GitHub issue](https://github.com/algolia/api-clients-automation/issues/new?assignees=&labels=&projects=&template=Bug_report.md)
 
 ## 📄 License
 
