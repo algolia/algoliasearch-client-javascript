@@ -3,6 +3,9 @@
 import type { BigCommerceChannel } from './bigCommerceChannel';
 import type { BigCommerceMetafield } from './bigCommerceMetafield';
 
+/**
+ * Specific configuration attributes of a `bigcommerce` source.
+ */
 export type SourceBigCommerce = {
   /**
    * Store hash identifying your BigCommerce store.

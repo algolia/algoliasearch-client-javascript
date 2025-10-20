@@ -2,7 +2,6 @@
 
 import type { AuthInputPartial } from './authInputPartial';
 import type { AuthenticationType } from './authenticationType';
-import type { Platform } from './platform';
 
 /**
  * Request body for updating an authentication resource.
@@ -14,8 +13,6 @@ export type AuthenticationUpdate = {
    * Descriptive name for the resource.
    */
   name?: string | undefined;
-
-  platform?: Platform | null | undefined;
 
   input?: AuthInputPartial | undefined;
 };

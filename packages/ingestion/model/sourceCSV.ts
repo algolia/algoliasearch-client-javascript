@@ -3,6 +3,9 @@
 import type { MappingTypeCSV } from './mappingTypeCSV';
 import type { MethodType } from './methodType';
 
+/**
+ * Specific configuration attributes of a `csv` source.
+ */
 export type SourceCSV = {
   /**
    * URL of the file.

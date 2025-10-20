@@ -2,6 +2,9 @@
 
 import type { CommercetoolsCustomFields } from './commercetoolsCustomFields';
 
+/**
+ * Specific configuration attributes of a `commercetools` source.
+ */
 export type SourceUpdateCommercetools = {
   storeKeys?: Array<string> | undefined;
 

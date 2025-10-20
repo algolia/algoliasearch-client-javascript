@@ -2,6 +2,9 @@
 
 import type { MethodType } from './methodType';
 
+/**
+ * Specific configuration attributes of a `json` source.
+ */
 export type SourceJSON = {
   /**
    * URL of the file.

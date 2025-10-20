@@ -2,6 +2,9 @@
 
 import type { BigQueryDataType } from './bigQueryDataType';
 
+/**
+ * Specific configuration attributes of a `bigquery` source.
+ */
 export type SourceBigQuery = {
   /**
    * Project ID of the BigQuery source.
