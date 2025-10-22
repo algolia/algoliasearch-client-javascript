@@ -35,6 +35,11 @@ export type Params = {
    */
   relevancyStrictness?: number | undefined;
 
+  /**
+   * Facets for which to retrieve facet values that match the search criteria and the number of matching facet values To retrieve all facets, use the wildcard character `*`. For more information, see [facets](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#contextual-facet-values-and-counts).
+   */
+  facets?: Array<string> | undefined;
+
   facetFilters?: FacetFilters | undefined;
 
   optionalFilters?: OptionalFilters | undefined;
