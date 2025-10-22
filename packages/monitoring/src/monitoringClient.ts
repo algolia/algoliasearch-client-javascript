@@ -31,7 +31,7 @@ import type {
   GetReachabilityProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.40.1';
+export const apiClientVersion = '1.41.0';
 
 function getDefaultHosts(): Host[] {
   return [{ url: 'status.algolia.com', accept: 'readWrite', protocol: 'https' }];
