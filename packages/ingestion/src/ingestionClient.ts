@@ -451,6 +451,11 @@ export function createIngestionClient({
 
     /**
      * Creates a new task.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
      * @param taskCreate - Request body for creating a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -486,6 +491,11 @@ export function createIngestionClient({
 
     /**
      * Creates a new task using the v1 endpoint, please use `createTask` instead.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
      *
      * @deprecated
      * @param taskCreate - Request body for creating a task.
@@ -526,6 +536,11 @@ export function createIngestionClient({
 
     /**
      * Creates a new transformation.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
      * @param transformationCreate - Request body for creating a transformation.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -777,6 +792,11 @@ export function createIngestionClient({
 
     /**
      * Deletes a task by its ID.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
      * @param deleteTask - The deleteTask object.
      * @param deleteTask.taskID - Unique identifier of a task.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -802,6 +822,11 @@ export function createIngestionClient({
 
     /**
      * Deletes a task by its ID using the v1 endpoint, please use `deleteTask` instead.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
      *
      * @deprecated
      * @param deleteTaskV1 - The deleteTaskV1 object.
@@ -829,6 +854,11 @@ export function createIngestionClient({
 
     /**
      * Deletes a transformation by its ID.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
      * @param deleteTransformation - The deleteTransformation object.
      * @param deleteTransformation.transformationID - Unique identifier of a transformation.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -1921,6 +1951,11 @@ export function createIngestionClient({
 
     /**
      * Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
      * @param replaceTask - The replaceTask object.
      * @param replaceTask.taskID - Unique identifier of a task.
      * @param replaceTask.taskReplace - The taskReplace object.
@@ -2532,6 +2567,11 @@ export function createIngestionClient({
 
     /**
      * Partially updates a task by its ID.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
      * @param updateTask - The updateTask object.
      * @param updateTask.taskID - Unique identifier of a task.
      * @param updateTask.taskUpdate - The taskUpdate object.
@@ -2563,6 +2603,11 @@ export function createIngestionClient({
 
     /**
      * Updates a task by its ID using the v1 endpoint, please use `updateTask` instead.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
      *
      * @deprecated
      * @param updateTaskV1 - The updateTaskV1 object.
@@ -2599,6 +2644,11 @@ export function createIngestionClient({
 
     /**
      * Updates a transformation by its ID.
+     *
+     * Required API Key ACLs:
+     *  - addObject
+     *  - deleteIndex
+     *  - editSettings
      * @param updateTransformation - The updateTransformation object.
      * @param updateTransformation.transformationID - Unique identifier of a transformation.
      * @param updateTransformation.transformationCreate - The transformationCreate object.
