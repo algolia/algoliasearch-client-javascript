@@ -52,13 +52,13 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@types/node": "22.18.11",
+    "@types/node": "22.18.12",
     "cross-fetch": "4.1.0",
     "nock": "14.0.10",
     "publint": "0.3.15",
     "tsup": "8.5.0",
     "typescript": "5.9.3",
-    "vitest": "3.2.4"
+    "vitest": "4.0.3"
   },
   "engines": {
     "node": ">= 14.0.0"
