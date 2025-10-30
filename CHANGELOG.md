@@ -1,3 +1,9 @@
+## [5.42.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.41.0...5.42.0)
+
+- [1eee2a5f7](https://github.com/algolia/api-clients-automation/commit/1eee2a5f7) fix(specs): add ACL to missing endpoints ([#5529](https://github.com/algolia/api-clients-automation/pull/5529)) by [@millotp](https://github.com/millotp/)
+- [564d615ca](https://github.com/algolia/api-clients-automation/commit/564d615ca) chore(deps): dependencies 2025-10-27 ([#5530](https://github.com/algolia/api-clients-automation/pull/5530)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [38ae444d7](https://github.com/algolia/api-clients-automation/commit/38ae444d7) feat(specs): add specific documentation for `facets` query parameter in Composition API ([#5477](https://github.com/algolia/api-clients-automation/pull/5477)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [5.41.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.40.1...5.41.0)
 
 - [7f9de7cd9](https://github.com/algolia/api-clients-automation/commit/7f9de7cd9) fix(specs): ingestion small fix + added source input descriptions ([#5515](https://github.com/algolia/api-clients-automation/pull/5515)) by [@sbellone](https://github.com/sbellone/)
