@@ -22,7 +22,5 @@ export * from './listABTestsResponse';
 export * from './minimumDetectableEffect';
 export * from './outliers';
 export * from './outliersFilter';
-export * from './scheduleABTestResponse';
-export * from './scheduleABTestsRequest';
 export * from './status';
 export * from './variant';

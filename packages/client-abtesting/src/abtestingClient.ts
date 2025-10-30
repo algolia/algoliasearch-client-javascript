@@ -17,8 +17,6 @@ import type { AddABTestsRequest } from '../model/addABTestsRequest';
 import type { EstimateABTestRequest } from '../model/estimateABTestRequest';
 import type { EstimateABTestResponse } from '../model/estimateABTestResponse';
 import type { ListABTestsResponse } from '../model/listABTestsResponse';
-import type { ScheduleABTestResponse } from '../model/scheduleABTestResponse';
-import type { ScheduleABTestsRequest } from '../model/scheduleABTestsRequest';
 
 import type {
   CustomDeleteProps,
@@ -412,50 +410,6 @@ export function createAbtestingClient({
         path: requestPath,
         queryParameters,
         headers,
-      };
-
-      return transporter.request(request, requestOptions);
-    },
-
-    /**
-     * Schedule an A/B test to be started at a later time.
-     *
-     * Required API Key ACLs:
-     *  - editSettings
-     * @param scheduleABTestsRequest - The scheduleABTestsRequest object.
-     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
-     */
-    scheduleABTest(
-      scheduleABTestsRequest: ScheduleABTestsRequest,
-      requestOptions?: RequestOptions,
-    ): Promise<ScheduleABTestResponse> {
-      if (!scheduleABTestsRequest) {
-        throw new Error('Parameter `scheduleABTestsRequest` is required when calling `scheduleABTest`.');
-      }
-
-      if (!scheduleABTestsRequest.name) {
-        throw new Error('Parameter `scheduleABTestsRequest.name` is required when calling `scheduleABTest`.');
-      }
-      if (!scheduleABTestsRequest.variants) {
-        throw new Error('Parameter `scheduleABTestsRequest.variants` is required when calling `scheduleABTest`.');
-      }
-      if (!scheduleABTestsRequest.scheduledAt) {
-        throw new Error('Parameter `scheduleABTestsRequest.scheduledAt` is required when calling `scheduleABTest`.');
-      }
-      if (!scheduleABTestsRequest.endAt) {
-        throw new Error('Parameter `scheduleABTestsRequest.endAt` is required when calling `scheduleABTest`.');
-      }
-
-      const requestPath = '/2/abtests/schedule';
-      const headers: Headers = {};
-      const queryParameters: QueryParameters = {};
-
-      const request: Request = {
-        method: 'POST',
-        path: requestPath,
-        queryParameters,
-        headers,
-        data: scheduleABTestsRequest,
       };
 
       return transporter.request(request, requestOptions);

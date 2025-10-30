@@ -27,8 +27,6 @@ export * from './metricResult';
 export * from './metricsFilter';
 export * from './minimumDetectableEffect';
 export * from './outliersFilter';
-export * from './scheduleABTestResponse';
-export * from './scheduleABTestsRequest';
 export * from './status';
 export * from './timeseries';
 export * from './timeseriesVariant';
