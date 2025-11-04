@@ -5,6 +5,13 @@ __metadata:
   version: 8
   cacheKey: 10
 
+"@acemir/cssom@npm:^0.9.19":
+  version: 0.9.19
+  resolution: "@acemir/cssom@npm:0.9.19"
+  checksum: 10/1c7066c002c170d5a775533cb83ff7eb7415a8cc514995325c3d135803fa4a3feffccf21ba0b520b804cdc5fccef8476d7ef83d0e4876dd7bd007ab64d535588
+  languageName: node
+  linkType: hard
+
 "@algolia/abtesting@npm:1.8.0, @algolia/abtesting@workspace:packages/abtesting":
   version: 0.0.0-use.local
   resolution: "@algolia/abtesting@workspace:packages/abtesting"
@@ -14,7 +21,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -31,7 +38,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -48,7 +55,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -65,7 +72,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -78,13 +85,13 @@ __metadata:
   resolution: "@algolia/client-common@workspace:packages/client-common"
   dependencies:
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
-    jsdom: "npm:27.0.1"
+    "@types/node": "npm:24.10.0"
+    jsdom: "npm:27.1.0"
     publint: "npm:0.3.15"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.5.0"
     typescript: "npm:5.9.3"
-    vitest: "npm:4.0.3"
+    vitest: "npm:4.0.6"
   languageName: unknown
   linkType: soft
 
@@ -97,7 +104,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -114,7 +121,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -131,7 +138,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -148,7 +155,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -165,7 +172,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -182,7 +189,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -196,13 +203,13 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
-    jsdom: "npm:27.0.1"
+    "@types/node": "npm:24.10.0"
+    jsdom: "npm:27.1.0"
     publint: "npm:0.3.15"
     ts-node: "npm:10.9.2"
     tsup: "npm:8.5.0"
     typescript: "npm:5.9.3"
-    vitest: "npm:4.0.3"
+    vitest: "npm:4.0.6"
   languageName: unknown
   linkType: soft
 
@@ -215,7 +222,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -232,7 +239,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
@@ -246,12 +253,12 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
-    jsdom: "npm:27.0.1"
+    "@types/node": "npm:24.10.0"
+    jsdom: "npm:27.1.0"
     publint: "npm:0.3.15"
     tsup: "npm:8.5.0"
     typescript: "npm:5.9.3"
-    vitest: "npm:4.0.3"
+    vitest: "npm:4.0.6"
     xhr-mock: "npm:2.5.1"
   languageName: unknown
   linkType: soft
@@ -262,13 +269,13 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     cross-fetch: "npm:4.1.0"
     nock: "npm:14.0.10"
     publint: "npm:0.3.15"
     tsup: "npm:8.5.0"
     typescript: "npm:5.9.3"
-    vitest: "npm:4.0.3"
+    vitest: "npm:4.0.6"
   languageName: unknown
   linkType: soft
 
@@ -278,12 +285,12 @@ __metadata:
   dependencies:
     "@algolia/client-common": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     nock: "npm:14.0.10"
     publint: "npm:0.3.15"
     tsup: "npm:8.5.0"
     typescript: "npm:5.9.3"
-    vitest: "npm:4.0.3"
+    vitest: "npm:4.0.6"
   languageName: unknown
   linkType: soft
 
@@ -296,7 +303,7 @@ __metadata:
     "@algolia/requester-fetch": "npm:5.42.0"
     "@algolia/requester-node-http": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     publint: "npm:0.3.15"
     tsup: "npm:8.5.0"
     typescript: "npm:5.9.3"
@@ -356,16 +363,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@asamuzakjp/dom-selector@npm:^6.7.2":
-  version: 6.7.2
-  resolution: "@asamuzakjp/dom-selector@npm:6.7.2"
+"@asamuzakjp/dom-selector@npm:^6.7.3":
+  version: 6.7.4
+  resolution: "@asamuzakjp/dom-selector@npm:6.7.4"
   dependencies:
     "@asamuzakjp/nwsapi": "npm:^2.3.9"
     bidi-js: "npm:^1.0.3"
     css-tree: "npm:^3.1.0"
     is-potential-custom-element-name: "npm:^1.0.1"
     lru-cache: "npm:^11.2.2"
-  checksum: 10/a78422cbb124f87addaafb4e8991fac89cb21a99e16033da69def3b14174bb35893254c9ad6218c1f499d07dfb33b0dedfc4129335de572e87db63d9d07aa2de
+  checksum: 10/dc550a4e32b956bfc820795e73bb3cae963496101a6dc1ebbd0cad409e734dadbcfbac22a44034c28ec401ee1454a379c64cc02d11eb2186e74c638482d8b2e1
   languageName: node
   linkType: hard
 
@@ -423,22 +430,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/vitest-pool-workers@npm:0.10.0":
-  version: 0.10.0
-  resolution: "@cloudflare/vitest-pool-workers@npm:0.10.0"
+"@cloudflare/vitest-pool-workers@npm:0.10.3":
+  version: 0.10.3
+  resolution: "@cloudflare/vitest-pool-workers@npm:0.10.3"
   dependencies:
     birpc: "npm:0.2.14"
     cjs-module-lexer: "npm:^1.2.3"
     devalue: "npm:^5.3.2"
     miniflare: "npm:4.20251011.1"
     semver: "npm:^7.7.1"
-    wrangler: "npm:4.45.0"
+    wrangler: "npm:4.45.3"
     zod: "npm:^3.22.3"
   peerDependencies:
     "@vitest/runner": 2.0.x - 3.2.x
     "@vitest/snapshot": 2.0.x - 3.2.x
     vitest: 2.0.x - 3.2.x
-  checksum: 10/8ef4fe9b4b167b85da61ed5841344fa9ce2dfad5c148fe0e9eca4c4932c86b2fcd57185510f16228c8775f66f048b83506ed9adf9232ff5c6a645a8da41ad229
+  checksum: 10/e151334a1cd423e79c191cce7b1521c6ecffb91ed27903b51befd178d8f15819461f0295d638ac4a1af107dfd9174bd2bd3b9d36225a48022344e3105b7ec513
   languageName: node
   linkType: hard
 
@@ -2556,12 +2563,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.18.12":
-  version: 22.18.12
-  resolution: "@types/node@npm:22.18.12"
+"@types/node@npm:24.10.0":
+  version: 24.10.0
+  resolution: "@types/node@npm:24.10.0"
   dependencies:
-    undici-types: "npm:~6.21.0"
-  checksum: 10/41b8853302deac6895aa978193fcab53bf8d1f6f5df5fad38e2a33c2c853c3689e905c9dde373e45bb87273b2690e5ac2d6f40809fe72f45264952ba3ae3b196
+    undici-types: "npm:~7.16.0"
+  checksum: 10/bc3abd9adc61423b1a72324208f3fcfe4f957b9fc8b9e81bf3fed584deb0b40f0e2af63cd0e2afa8f408d06f14bdba899ac638ac619f646badf8e72de246c052
   languageName: node
   linkType: hard
 
@@ -2572,25 +2579,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitest/expect@npm:4.0.3":
-  version: 4.0.3
-  resolution: "@vitest/expect@npm:4.0.3"
+"@vitest/expect@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@vitest/expect@npm:4.0.6"
   dependencies:
     "@standard-schema/spec": "npm:^1.0.0"
     "@types/chai": "npm:^5.2.2"
-    "@vitest/spy": "npm:4.0.3"
-    "@vitest/utils": "npm:4.0.3"
+    "@vitest/spy": "npm:4.0.6"
+    "@vitest/utils": "npm:4.0.6"
     chai: "npm:^6.0.1"
     tinyrainbow: "npm:^3.0.3"
-  checksum: 10/663936d8f3abd91cb9725196ec542d109d7c64ddcdb6a483d89c9d67aa78a8ddd4468348c54b69f9c801fc3add9a8ae35dd0491c9f2bd19ec17b9b7a9ebf0d82
+  checksum: 10/70d6e03d413d208df722461ff7136a41249a0f8c34f985b4e7104f85e85583f272c3a92c4d7c9ea0ebd40ad77b64cb3b66d7ecd628210333ebd6813659a3422f
   languageName: node
   linkType: hard
 
-"@vitest/mocker@npm:4.0.3":
-  version: 4.0.3
-  resolution: "@vitest/mocker@npm:4.0.3"
+"@vitest/mocker@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@vitest/mocker@npm:4.0.6"
   dependencies:
-    "@vitest/spy": "npm:4.0.3"
+    "@vitest/spy": "npm:4.0.6"
     estree-walker: "npm:^3.0.3"
     magic-string: "npm:^0.30.19"
   peerDependencies:
@@ -2601,54 +2608,54 @@ __metadata:
       optional: true
     vite:
       optional: true
-  checksum: 10/933cab25563f68335a9871a6deba8f886f6be155c4a2146ee2b3b625578a0b4e068a4a26cf1a8d4ba3b5eb34771276f0365e51320fd06ad3f3f19163c5521d77
+  checksum: 10/82a1726ea7589a33e0a598cbe8c614ebd49900d3470b597e02a315a3a57c3fc9dcf84ea01a61df7cf1f9a23e273213b059cc721fc3a9b7fa87f49f4604f024d4
   languageName: node
   linkType: hard
 
-"@vitest/pretty-format@npm:4.0.3":
-  version: 4.0.3
-  resolution: "@vitest/pretty-format@npm:4.0.3"
+"@vitest/pretty-format@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@vitest/pretty-format@npm:4.0.6"
   dependencies:
     tinyrainbow: "npm:^3.0.3"
-  checksum: 10/1b1197e53e5bcf9f77c842005ff11068f754b87286c6a7669b78c08a05bdbaa5cf4c7326c3b13347b02341b084bf97992c3fe89ea98fb77019e28fd96bc4c5b4
+  checksum: 10/34e7c423233fefdb9c45d4873d38dde0641121e0639cd5109fea9d57d298a70b4a516284ff7a044db6373e2b39e98ed1d18f8ad55471a3d774bc96eac3de4560
   languageName: node
   linkType: hard
 
-"@vitest/runner@npm:4.0.3":
-  version: 4.0.3
-  resolution: "@vitest/runner@npm:4.0.3"
+"@vitest/runner@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@vitest/runner@npm:4.0.6"
   dependencies:
-    "@vitest/utils": "npm:4.0.3"
+    "@vitest/utils": "npm:4.0.6"
     pathe: "npm:^2.0.3"
-  checksum: 10/a028898045cedac1939cc1adeff8fe36cbba2714d08e8524c8028b6fef7d617440bf0dfd72f1e264e8bff876979c49923bf268cb5920305a0ca9562a8318a80c
+  checksum: 10/40abea31fa33985d13d0eff46abd25f139c6634d34164642e48a9359e2469d592ca985d95d9df9ab9b3bec9857f9d5abbcf9865473a5e942e650487eb36a00be
   languageName: node
   linkType: hard
 
-"@vitest/snapshot@npm:4.0.3":
-  version: 4.0.3
-  resolution: "@vitest/snapshot@npm:4.0.3"
+"@vitest/snapshot@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@vitest/snapshot@npm:4.0.6"
   dependencies:
-    "@vitest/pretty-format": "npm:4.0.3"
+    "@vitest/pretty-format": "npm:4.0.6"
     magic-string: "npm:^0.30.19"
     pathe: "npm:^2.0.3"
-  checksum: 10/38d0707ad66b33987c4066ee713f22d4535712ca016cece007c84736fa543d3ad3a314e759632b63e369e6a5454b03b142f66f5d661ac81ce7c4f1d6f6d325f4
+  checksum: 10/3477e1ab6a5ce23f4bf24c44a5d55f3e44448e9f4564022b3e0a4aaa0de6eef9cc4c913989a092a05345b4dd92e7545b681eb394d94f064be74479ac78911c7c
   languageName: node
   linkType: hard
 
-"@vitest/spy@npm:4.0.3":
-  version: 4.0.3
-  resolution: "@vitest/spy@npm:4.0.3"
-  checksum: 10/4fc8e3aae425fdbbe96126291079f67f1e6be9545ffbaab7a31de8d6e6825b115eb3fafbf24167eab91dbbb4ed6fcd120c387116f181de1e3369e8d5fdd75f17
+"@vitest/spy@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@vitest/spy@npm:4.0.6"
+  checksum: 10/ddbb1aff00719f90b051e86c49071e74af780c9536c03987d5e89bf139fd6f6c00f7927efc8f894252ec60db5b16dfeb0235f98f038779a39c1b62dcba1a6b44
   languageName: node
   linkType: hard
 
-"@vitest/utils@npm:4.0.3":
-  version: 4.0.3
-  resolution: "@vitest/utils@npm:4.0.3"
+"@vitest/utils@npm:4.0.6":
+  version: 4.0.6
+  resolution: "@vitest/utils@npm:4.0.6"
   dependencies:
-    "@vitest/pretty-format": "npm:4.0.3"
+    "@vitest/pretty-format": "npm:4.0.6"
     tinyrainbow: "npm:^3.0.3"
-  checksum: 10/d4ddb293e908d43b954c5e41f351a61f719e30e9ea058e47af5b18389d74cb073ea1638ab28dbbd5b365ed31a21577bb090b8a3594292c59df18798fd292f002
+  checksum: 10/cb556e63e3f0f98a0eba21ec03793b44182bf343a5fdfd8ac2a70c5dfb3b14fbacf0de2aa5df0c3a14b2b4b634ce86f40077b8503e7486e79caffee2f07840e0
   languageName: node
   linkType: hard
 
@@ -2761,7 +2768,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "algoliasearch-client-javascript@workspace:."
   dependencies:
-    "@types/node": "npm:22.18.12"
+    "@types/node": "npm:24.10.0"
     bundlewatch: "npm:0.4.1"
     execa: "npm:9.6.0"
     lerna: "npm:9.0.0"
@@ -2790,15 +2797,15 @@ __metadata:
     "@algolia/requester-node-http": "npm:5.42.0"
     "@algolia/requester-testing": "npm:5.42.0"
     "@arethetypeswrong/cli": "npm:0.18.2"
-    "@cloudflare/vitest-pool-workers": "npm:0.10.0"
+    "@cloudflare/vitest-pool-workers": "npm:0.10.3"
     "@cloudflare/workers-types": "npm:4.20251014.0"
-    "@types/node": "npm:22.18.12"
-    jsdom: "npm:27.0.1"
+    "@types/node": "npm:24.10.0"
+    jsdom: "npm:27.1.0"
     publint: "npm:0.3.15"
     rollup: "npm:4.52.5"
     tsup: "npm:8.5.0"
     typescript: "npm:5.9.3"
-    vitest: "npm:4.0.3"
+    vitest: "npm:4.0.6"
   languageName: unknown
   linkType: soft
 
@@ -3744,14 +3751,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cssstyle@npm:^5.3.1":
-  version: 5.3.1
-  resolution: "cssstyle@npm:5.3.1"
+"cssstyle@npm:^5.3.2":
+  version: 5.3.2
+  resolution: "cssstyle@npm:5.3.2"
   dependencies:
     "@asamuzakjp/css-color": "npm:^4.0.3"
     "@csstools/css-syntax-patches-for-csstree": "npm:^1.0.14"
     css-tree: "npm:^3.1.0"
-  checksum: 10/090f3a82b1731d346af369fd8e4b85a954ce738071caab6bfd20cc669f26952a60ef517acb17b18c95b90a17e3a0659a7a293c03bab1e77c68bb7301e906fd2d
+  checksum: 10/2f628254c738556c6394dbe705d7cadd8a8867767feb00bc8a4980a43b405fc891f72687cc2f04a8b15185009e9713f0f96bc9311e7781d848b0d145056b9f1f
   languageName: node
   linkType: hard
 
@@ -5426,12 +5433,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsdom@npm:27.0.1":
-  version: 27.0.1
-  resolution: "jsdom@npm:27.0.1"
+"jsdom@npm:27.1.0":
+  version: 27.1.0
+  resolution: "jsdom@npm:27.1.0"
   dependencies:
-    "@asamuzakjp/dom-selector": "npm:^6.7.2"
-    cssstyle: "npm:^5.3.1"
+    "@acemir/cssom": "npm:^0.9.19"
+    "@asamuzakjp/dom-selector": "npm:^6.7.3"
+    cssstyle: "npm:^5.3.2"
     data-urls: "npm:^6.0.0"
     decimal.js: "npm:^10.6.0"
     html-encoding-sniffer: "npm:^4.0.0"
@@ -5439,7 +5447,6 @@ __metadata:
     https-proxy-agent: "npm:^7.0.6"
     is-potential-custom-element-name: "npm:^1.0.1"
     parse5: "npm:^8.0.0"
-    rrweb-cssom: "npm:^0.8.0"
     saxes: "npm:^6.0.0"
     symbol-tree: "npm:^3.2.4"
     tough-cookie: "npm:^6.0.0"
@@ -5455,7 +5462,7 @@ __metadata:
   peerDependenciesMeta:
     canvas:
       optional: true
-  checksum: 10/94ad4c909cf977fc6c9a649e59c8118502de24ed4998272d9b3e14a4b8dbd63ae93625253cb3bcef3c64120f61b7b000ba508b60fa1c40559ee714007e3b2c25
+  checksum: 10/9e2bd9824abed594da64fc58f1bdb817c7f82ba3025cef4817e6709807f886ac71b7b6a0f4f69ba604e9137bbcd6b7246b98dec53bde95500f5ac4b39a8ebb00
   languageName: node
   linkType: hard
 
@@ -7663,13 +7670,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rrweb-cssom@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "rrweb-cssom@npm:0.8.0"
-  checksum: 10/07521ee36fb6569c17906afad1ac7ff8f099d49ade9249e190693ac36cdf27f88d9acf0cc66978935d5d0a23fca105643d7e9125b9a9d91ed9db9e02d31d7d80
-  languageName: node
-  linkType: hard
-
 "run-async@npm:^4.0.5":
   version: 4.0.6
   resolution: "run-async@npm:4.0.6"
@@ -8705,10 +8705,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~6.21.0":
-  version: 6.21.0
-  resolution: "undici-types@npm:6.21.0"
-  checksum: 10/ec8f41aa4359d50f9b59fa61fe3efce3477cc681908c8f84354d8567bb3701fafdddf36ef6bff307024d3feb42c837cf6f670314ba37fc8145e219560e473d14
+"undici-types@npm:~7.16.0":
+  version: 7.16.0
+  resolution: "undici-types@npm:7.16.0"
+  checksum: 10/db43439f69c2d94cc29f75cbfe9de86df87061d6b0c577ebe9bb3255f49b22c50162a7d7eb413b0458b6510b8ca299ac7cff38c3a29fbd31af9f504bcf7fbc0d
   languageName: node
   linkType: hard
 
@@ -8897,17 +8897,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vitest@npm:4.0.3":
-  version: 4.0.3
-  resolution: "vitest@npm:4.0.3"
+"vitest@npm:4.0.6":
+  version: 4.0.6
+  resolution: "vitest@npm:4.0.6"
   dependencies:
-    "@vitest/expect": "npm:4.0.3"
-    "@vitest/mocker": "npm:4.0.3"
-    "@vitest/pretty-format": "npm:4.0.3"
-    "@vitest/runner": "npm:4.0.3"
-    "@vitest/snapshot": "npm:4.0.3"
-    "@vitest/spy": "npm:4.0.3"
-    "@vitest/utils": "npm:4.0.3"
+    "@vitest/expect": "npm:4.0.6"
+    "@vitest/mocker": "npm:4.0.6"
+    "@vitest/pretty-format": "npm:4.0.6"
+    "@vitest/runner": "npm:4.0.6"
+    "@vitest/snapshot": "npm:4.0.6"
+    "@vitest/spy": "npm:4.0.6"
+    "@vitest/utils": "npm:4.0.6"
     debug: "npm:^4.4.3"
     es-module-lexer: "npm:^1.7.0"
     expect-type: "npm:^1.2.2"
@@ -8925,10 +8925,10 @@ __metadata:
     "@edge-runtime/vm": "*"
     "@types/debug": ^4.1.12
     "@types/node": ^20.0.0 || ^22.0.0 || >=24.0.0
-    "@vitest/browser-playwright": 4.0.3
-    "@vitest/browser-preview": 4.0.3
-    "@vitest/browser-webdriverio": 4.0.3
-    "@vitest/ui": 4.0.3
+    "@vitest/browser-playwright": 4.0.6
+    "@vitest/browser-preview": 4.0.6
+    "@vitest/browser-webdriverio": 4.0.6
+    "@vitest/ui": 4.0.6
     happy-dom: "*"
     jsdom: "*"
   peerDependenciesMeta:
@@ -8952,7 +8952,7 @@ __metadata:
       optional: true
   bin:
     vitest: vitest.mjs
-  checksum: 10/535ef75a39d5d3233eeb1050a09cd9b3c9353daad610a442aec16ef657887c16d4a6264d37a4181d487cd07cbb4b2e763ce74b1df037b2850a184983545f3db6
+  checksum: 10/79c723a7a76130af3ed4a08a1a073200fa28ec80431e431b3a88d5b91d6683be8909e2f05b286aae7f7671d5fae136294e06fc34a6e4d1b266970c4892e07182
   languageName: node
   linkType: hard
 
@@ -9125,9 +9125,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:4.45.0":
-  version: 4.45.0
-  resolution: "wrangler@npm:4.45.0"
+"wrangler@npm:4.45.3":
+  version: 4.45.3
+  resolution: "wrangler@npm:4.45.3"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.4.0"
     "@cloudflare/unenv-preset": "npm:2.7.8"
@@ -9149,7 +9149,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10/fc03974abd958632fe90460a191982c2492c3dfb70f98f59ac38b2696c2c05fdef900dc27f5a42a044265fd0e9ed362aaa6c81281b6321b5214b38e1f7c7a026
+  checksum: 10/cb0774dbe42c3fd96a58cee41a84ef7e8d620f557b4fc3fc148bbf1d6937d4da21ff227b184fbd63effa68ca90044f3cad83e9848322e4c0f403096306a32f61
   languageName: node
   linkType: hard
 
