@@ -5,6 +5,7 @@ import { RequestOptions } from '@algolia/transporter';
 import {
   ChunkedBatchResponse,
   ChunkOptions,
+  deleteIndex,
   IndexOperationResponse,
   ReplaceAllObjectsOptions,
   saveObjects,
@@ -100,6 +101,21 @@ export const replaceAllObjects = (base: SearchIndex) => {
           objectIDs: saveObjectsResponse.objectIDs,
           taskIDs: [copyResponse.taskID, ...saveObjectsResponse.taskIDs, moveResponse.taskID],
         };
+      })
+      .catch(error => {
+        // Clean up temporary index if there's an error
+        // eslint-disable-next-line promise/no-nesting
+        return deleteIndex({
+          appId: base.appId,
+          transporter: base.transporter,
+          indexName: temporaryIndexName,
+        })()
+          .catch(() => {
+            // Ignore delete errors
+          })
+          .then(() => {
+            throw error;
+          });
       });
 
     return createWaitablePromise(result, (_, waitRequestOptions) => {
