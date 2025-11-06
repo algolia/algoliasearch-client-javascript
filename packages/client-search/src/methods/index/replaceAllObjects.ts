@@ -107,7 +107,7 @@ export const replaceAllObjects = (base: SearchIndex) => {
           appId: base.appId,
           transporter: base.transporter,
           indexName: temporaryIndexName,
-        })();
+        })().wait();
 
         throw error;
       });
