@@ -103,11 +103,16 @@ export const replaceAllObjects = (base: SearchIndex) => {
         };
       })
       .catch(error => {
+        // eslint-disable-next-line promise/no-nesting
         deleteIndex({
           appId: base.appId,
           transporter: base.transporter,
           indexName: temporaryIndexName,
-        })().wait();
+        })()
+          .wait()
+          .catch(() => {
+            // Ignore error
+          });
 
         throw error;
       });
