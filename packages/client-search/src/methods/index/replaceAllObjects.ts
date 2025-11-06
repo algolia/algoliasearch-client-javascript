@@ -5,6 +5,7 @@ import { RequestOptions } from '@algolia/transporter';
 import {
   ChunkedBatchResponse,
   ChunkOptions,
+  deleteIndex,
   IndexOperationResponse,
   ReplaceAllObjectsOptions,
   saveObjects,
@@ -100,6 +101,15 @@ export const replaceAllObjects = (base: SearchIndex) => {
           objectIDs: saveObjectsResponse.objectIDs,
           taskIDs: [copyResponse.taskID, ...saveObjectsResponse.taskIDs, moveResponse.taskID],
         };
+      })
+      .catch(error => {
+        deleteIndex({
+          appId: base.appId,
+          transporter: base.transporter,
+          indexName: temporaryIndexName,
+        })();
+
+        throw error;
       });
 
     return createWaitablePromise(result, (_, waitRequestOptions) => {
