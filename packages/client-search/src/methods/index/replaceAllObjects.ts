@@ -103,13 +103,19 @@ export const replaceAllObjects = (base: SearchIndex) => {
         };
       })
       .catch(error => {
-        deleteIndex({
+        // Clean up temporary index if there's an error
+        // eslint-disable-next-line promise/no-nesting
+        return deleteIndex({
           appId: base.appId,
           transporter: base.transporter,
           indexName: temporaryIndexName,
-        })().wait();
-
-        throw error;
+        })()
+          .catch(() => {
+            // Ignore delete errors
+          })
+          .then(() => {
+            throw error;
+          });
       });
 
     return createWaitablePromise(result, (_, waitRequestOptions) => {
