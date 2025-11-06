@@ -1,3 +1,9 @@
+## [v4.25.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.25.2...4.25.3)
+
+* fix: always delete temporary index in replaceAllObjects (#1598) ([83ea90f](https://github.com/algolia/algoliasearch-client-javascript/commit/83ea90f)), closes [#1598](https://github.com/algolia/algoliasearch-client-javascript/issues/1598)
+
+
+
 ## [v4.25.2](https://github.com/algolia/algoliasearch-client-javascript/compare/4.25.1...4.25.2)
 
 * chore: ie 11 support (#1591) ([3621e21](https://github.com/algolia/algoliasearch-client-javascript/commit/3621e21)), closes [#1591](https://github.com/algolia/algoliasearch-client-javascript/issues/1591)
