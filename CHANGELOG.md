@@ -1,3 +1,9 @@
+## [5.43.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.42.0...5.43.0)
+
+- [ecfea56dc](https://github.com/algolia/api-clients-automation/commit/ecfea56dc) feat(clients): remove schedule capabilities ([#5552](https://github.com/algolia/api-clients-automation/pull/5552)) by [@cdhawke](https://github.com/cdhawke/)
+- [391059ed9](https://github.com/algolia/api-clients-automation/commit/391059ed9) chore(deps): dependencies 2025-11-03 ([#5553](https://github.com/algolia/api-clients-automation/pull/5553)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [ff4b8f02c](https://github.com/algolia/api-clients-automation/commit/ff4b8f02c) feat(specs): add fallbackParameters to Frequently bought together [RECO-2443] ([#5579](https://github.com/algolia/api-clients-automation/pull/5579)) by [@raed667](https://github.com/raed667/)
+
 ## [5.42.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.41.0...5.42.0)
 
 - [1eee2a5f7](https://github.com/algolia/api-clients-automation/commit/1eee2a5f7) fix(specs): add ACL to missing endpoints ([#5529](https://github.com/algolia/api-clients-automation/pull/5529)) by [@millotp](https://github.com/millotp/)
