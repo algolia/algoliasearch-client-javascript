@@ -25,5 +25,10 @@ export type SourceUpdateCommercetools = {
    */
   productQueryPredicate?: string | undefined;
 
+  /**
+   * When set to true, the connector indexes objects with all images attributes instead of only the URLs.
+   */
+  useImagesObjects?: boolean | undefined;
+
   customFields?: CommercetoolsCustomFields | undefined;
 };
