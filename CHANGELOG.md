@@ -1,3 +1,11 @@
+## [5.44.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.43.0...5.44.0)
+
+- [7d189e024](https://github.com/algolia/api-clients-automation/commit/7d189e024) feat(specs): add useImagesObjects property in commercetools source input ([#5586](https://github.com/algolia/api-clients-automation/pull/5586)) by [@sbellone](https://github.com/sbellone/)
+- [ee5542a32](https://github.com/algolia/api-clients-automation/commit/ee5542a32) fix(specs): Add title values to key oneOfs ([#5581](https://github.com/algolia/api-clients-automation/pull/5581)) by [@gazconroy](https://github.com/gazconroy/)
+- [cdace3169](https://github.com/algolia/api-clients-automation/commit/cdace3169) chore(deps): dependencies 2025-11-10 ([#5585](https://github.com/algolia/api-clients-automation/pull/5585)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [354d28b7c](https://github.com/algolia/api-clients-automation/commit/354d28b7c) fix(specs): update run reason in observability ([#5623](https://github.com/algolia/api-clients-automation/pull/5623)) by [@millotp](https://github.com/millotp/)
+- [ae9ac597f](https://github.com/algolia/api-clients-automation/commit/ae9ac597f) fix(specs): add tags and scope to rules ([#5625](https://github.com/algolia/api-clients-automation/pull/5625)) by [@millotp](https://github.com/millotp/)
+
 ## [5.43.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.42.0...5.43.0)
 
 - [ecfea56dc](https://github.com/algolia/api-clients-automation/commit/ecfea56dc) feat(clients): remove schedule capabilities ([#5552](https://github.com/algolia/api-clients-automation/pull/5552)) by [@cdhawke](https://github.com/cdhawke/)
