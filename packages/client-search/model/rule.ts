@@ -34,4 +34,8 @@ export type Rule = {
    * Time periods when the rule is active.
    */
   validity?: Array<TimeRange> | undefined;
+
+  tags?: Array<string> | undefined;
+
+  scope?: string | undefined;
 };
