@@ -3,4 +3,4 @@
 /**
  * Task run status.
  */
-export type RunStatus = 'created' | 'started' | 'idled' | 'finished' | 'skipped';
+export type RunStatus = 'created' | 'started' | 'finished' | 'skipped';

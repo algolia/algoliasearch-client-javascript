@@ -3,4 +3,13 @@
 /**
  * A code for the task run\'s outcome. A readable description of the code is included in the `reason` response property.
  */
-export type RunReasonCode = 'internal' | 'critical' | 'no_events' | 'too_many_errors' | 'ok' | 'discarded' | 'blocking';
+export type RunReasonCode =
+  | 'internal'
+  | 'cancelled'
+  | 'critical'
+  | 'no_events'
+  | 'too_many_errors'
+  | 'lacking_events'
+  | 'ok'
+  | 'blocking'
+  | 'idle';
