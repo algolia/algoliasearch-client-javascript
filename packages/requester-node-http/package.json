@@ -42,9 +42,9 @@
     "@types/node": "24.10.1",
     "nock": "14.0.10",
     "publint": "0.3.15",
-    "tsup": "8.5.0",
+    "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.0.8"
+    "vitest": "4.0.9"
   },
   "engines": {
     "node": ">= 14.0.0"

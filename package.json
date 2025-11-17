@@ -18,7 +18,7 @@
     "@types/node": "24.10.1",
     "bundlewatch": "0.4.1",
     "execa": "9.6.0",
-    "lerna": "9.0.0",
+    "lerna": "9.0.1",
     "rollup": "4.53.2",
     "typescript": "5.9.3"
   },
