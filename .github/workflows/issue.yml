@@ -41,11 +41,6 @@ jobs:
                   project: {
                     id: '11316'
                   },
-                  components: [
-                    {
-                      id: '10872'
-                    }
-                  ],
                   summary: `[GH-ISSUE] ${title}`
                 },
                 update: {}
