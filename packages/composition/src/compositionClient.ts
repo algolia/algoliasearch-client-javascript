@@ -43,6 +43,7 @@ import type {
   SearchCompositionRulesProps,
   SearchForFacetValuesProps,
   SearchProps,
+  UpdateSortingStrategyCompositionProps,
   WaitForCompositionTaskOptions,
 } from '../model/clientMethodProps';
 
@@ -818,6 +819,46 @@ export function createCompositionClient({
         data: searchForFacetValuesRequest ? searchForFacetValuesRequest : {},
         useReadTransporter: true,
         cacheable: true,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+
+    /**
+     * Updates the \"sortingStrategy\" field of an existing composition. This endpoint allows you to create a new sorting strategy mapping or replace the currently configured one. The provided sorting indices MUST be associated indices or replicas of the main targeted index.  WARNING: This endpoint cannot validate if the sort index is related to the composition\'s main index.   Validation will fail at runtime if the index you updated is not related!  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     * @param updateSortingStrategyComposition - The updateSortingStrategyComposition object.
+     * @param updateSortingStrategyComposition.compositionID - Unique Composition ObjectID.
+     * @param updateSortingStrategyComposition.requestBody - The requestBody object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    updateSortingStrategyComposition(
+      { compositionID, requestBody }: UpdateSortingStrategyCompositionProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TaskIDResponse> {
+      if (!compositionID) {
+        throw new Error('Parameter `compositionID` is required when calling `updateSortingStrategyComposition`.');
+      }
+
+      if (!requestBody) {
+        throw new Error('Parameter `requestBody` is required when calling `updateSortingStrategyComposition`.');
+      }
+
+      const requestPath = '/1/compositions/{compositionID}/sortingStrategy'.replace(
+        '{compositionID}',
+        encodeURIComponent(compositionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: requestBody,
       };
 
       return transporter.request(request, requestOptions);

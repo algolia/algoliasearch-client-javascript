@@ -224,6 +224,17 @@ export type SearchForFacetValuesProps = {
   searchForFacetValuesRequest?: SearchForFacetValuesRequest | undefined;
 };
 
+/**
+ * Properties for the `updateSortingStrategyComposition` method.
+ */
+export type UpdateSortingStrategyCompositionProps = {
+  /**
+   * Unique Composition ObjectID.
+   */
+  compositionID: string;
+  requestBody: { [key: string]: string };
+};
+
 export type WaitForCompositionTaskOptions = {
   /**
    * The maximum number of retries. 50 by default.
