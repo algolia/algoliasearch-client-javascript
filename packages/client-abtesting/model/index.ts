@@ -17,6 +17,7 @@ export * from './errorBase';
 export * from './estimateABTestRequest';
 export * from './estimateABTestResponse';
 export * from './estimateConfiguration';
+export * from './featureFilters';
 export * from './filterEffects';
 export * from './listABTestsResponse';
 export * from './minimumDetectableEffect';
