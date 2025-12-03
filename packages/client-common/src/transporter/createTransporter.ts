@@ -72,7 +72,7 @@ export function createTransporter({
   async function retryableRequest<TResponse>(
     request: Request,
     requestOptions: RequestOptions,
-    isRead = true,
+    isRead: boolean,
   ): Promise<TResponse> {
     const stackTrace: StackFrame[] = [];
 
@@ -211,27 +211,20 @@ export function createTransporter({
   }
 
   function createRequest<TResponse>(request: Request, requestOptions: RequestOptions = {}): Promise<TResponse> {
-    /**
-     * A read request is either a `GET` request, or a request that we make
-     * via the `read` transporter (e.g. `search`).
-     */
-    const isRead = request.useReadTransporter || request.method === 'GET';
-    if (!isRead) {
-      /**
-       * On write requests, no cache mechanisms are applied, and we
-       * proxy the request immediately to the requester.
-       */
-      return retryableRequest<TResponse>(request, requestOptions, isRead);
-    }
-
     const createRetryableRequest = (): Promise<TResponse> => {
       /**
        * Then, we prepare a function factory that contains the construction of
        * the retryable request. At this point, we may *not* perform the actual
        * request. But we want to have the function factory ready.
        */
-      return retryableRequest<TResponse>(request, requestOptions);
+      return retryableRequest<TResponse>(request, requestOptions, isRead);
     };
+
+    /**
+     * A read request is either a `GET` request, or a request that we make
+     * via the `read` transporter (e.g. `search`).
+     */
+    const isRead = request.useReadTransporter || request.method === 'GET';
 
     /**
      * Once we have the function factory ready, we need to determine of the
