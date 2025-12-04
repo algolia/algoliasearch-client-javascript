@@ -1,3 +1,13 @@
+## [5.46.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.45.0...5.46.0)
+
+- [5335918a5](https://github.com/algolia/api-clients-automation/commit/5335918a5) chore(scripts): update the jira action ([#5678](https://github.com/algolia/api-clients-automation/pull/5678)) by [@millotp](https://github.com/millotp/)
+- [d6bde0f0c](https://github.com/algolia/api-clients-automation/commit/d6bde0f0c) chore(scripts): remove component from jira ticket ([#5680](https://github.com/algolia/api-clients-automation/pull/5680)) by [@millotp](https://github.com/millotp/)
+- [bc8460c30](https://github.com/algolia/api-clients-automation/commit/bc8460c30) chore(specs): change oneOf order for docs ([#5676](https://github.com/algolia/api-clients-automation/pull/5676)) by [@shortcuts](https://github.com/shortcuts/)
+- [fe6e82c11](https://github.com/algolia/api-clients-automation/commit/fe6e82c11) feat(specs): add sortBy query param and sortingStrategy ([#5686](https://github.com/algolia/api-clients-automation/pull/5686)) by [@ben-kalmus](https://github.com/ben-kalmus/)
+- [cccfa9c86](https://github.com/algolia/api-clients-automation/commit/cccfa9c86) feat(specs): add `sortBy` trigger on Composition Rules ([#5707](https://github.com/algolia/api-clients-automation/pull/5707)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [260d8102c](https://github.com/algolia/api-clients-automation/commit/260d8102c) docs(abtests): Added documentation for featureFilters configuration i… ([#5688](https://github.com/algolia/api-clients-automation/pull/5688)) by [@samykettani](https://github.com/samykettani/)
+- [4ce8b7dc6](https://github.com/algolia/api-clients-automation/commit/4ce8b7dc6) feat(javascript): allow cache on POST ([#5675](https://github.com/algolia/api-clients-automation/pull/5675)) by [@Haroenv](https://github.com/Haroenv/)
+
 ## [5.45.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.44.0...5.45.0)
 
 - [5b042c47af](https://github.com/algolia/api-clients-automation/commit/5b042c47af) chore(deps): dependencies 2025-11-17 ([#5624](https://github.com/algolia/api-clients-automation/pull/5624)) by [@algolia-bot](https://github.com/algolia-bot/)
