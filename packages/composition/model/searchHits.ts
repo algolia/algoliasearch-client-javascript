@@ -9,7 +9,7 @@ export type SearchHits<T = Record<string, unknown>> = Record<string, any> & {
   hits: Hit<T>[];
 
   /**
-   * Search query.
+   * The search query string.
    */
   query: string;
 

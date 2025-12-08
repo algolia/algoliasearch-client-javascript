@@ -2,7 +2,7 @@
 
 export type SearchPagination = {
   /**
-   * Page of search results to retrieve.
+   * The current page of the results.
    */
   page: number;
 
@@ -17,7 +17,7 @@ export type SearchPagination = {
   nbPages: number;
 
   /**
-   * Number of hits per page.
+   * Number of hits returned per page.
    */
   hitsPerPage: number;
 };
