@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-22.04
     if: "startsWith(github.event.head_commit.message, 'chore: release')"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
