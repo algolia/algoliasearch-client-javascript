@@ -55,3 +55,4 @@ export * from './tooManyRequestsResponse';
 export * from './unauthorized';
 export * from './unprocessableEntity';
 export * from './user';
+export * from './userType';
