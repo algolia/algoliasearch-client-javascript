@@ -2,19 +2,39 @@
 
 import type { Hit } from './hit';
 
-export type SearchHits<T = Record<string, unknown>> = Record<string, any> & {
+export type SearchFields<T = Record<string, unknown>> = {
   /**
    * Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
    */
   hits: Hit<T>[];
 
   /**
-   * The search query string.
+   * Number of hits returned per page.
    */
-  query: string;
+  hitsPerPage: number;
+
+  /**
+   * Number of results (hits).
+   */
+  nbHits: number;
+
+  /**
+   * Number of pages of results.
+   */
+  nbPages: number;
+
+  /**
+   * The current page of the results.
+   */
+  page: number;
 
   /**
    * URL-encoded string of all search parameters.
    */
   params: string;
+
+  /**
+   * The search query string.
+   */
+  query: string;
 };

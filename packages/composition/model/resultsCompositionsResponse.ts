@@ -2,6 +2,6 @@
 
 import type { ResultsCompositionInfoResponse } from './resultsCompositionInfoResponse';
 
-export type ResultsCompositionsResponse = Record<string, any> & {
+export type ResultsCompositionsResponse = {
   compositions: { [key: string]: ResultsCompositionInfoResponse };
 };

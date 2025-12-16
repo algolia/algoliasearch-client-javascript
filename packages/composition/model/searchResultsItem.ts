@@ -2,10 +2,8 @@
 
 import type { BaseSearchResponse } from './baseSearchResponse';
 import type { ResultsCompositionsResponse } from './resultsCompositionsResponse';
-import type { SearchHits } from './searchHits';
-import type { SearchPagination } from './searchPagination';
+import type { SearchFields } from './searchFields';
 
 export type SearchResultsItem<T = Record<string, unknown>> = BaseSearchResponse &
-  SearchPagination &
-  SearchHits<T> &
+  SearchFields<T> &
   ResultsCompositionsResponse;

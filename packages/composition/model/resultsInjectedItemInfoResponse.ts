@@ -3,6 +3,9 @@
 import type { ResultsInjectedItemAppliedRulesInfoResponse } from './resultsInjectedItemAppliedRulesInfoResponse';
 
 export type ResultsInjectedItemInfoResponse = Record<string, any> & {
+  /**
+   * The key of the injected group.
+   */
   key: string;
 
   appliedRules?: Array<ResultsInjectedItemAppliedRulesInfoResponse> | undefined;

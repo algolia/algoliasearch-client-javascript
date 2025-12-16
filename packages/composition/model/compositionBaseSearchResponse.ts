@@ -2,6 +2,6 @@
 
 import type { CompositionsSearchResponse } from './compositionsSearchResponse';
 
-export type CompositionBaseSearchResponse = Record<string, any> & {
+export type CompositionBaseSearchResponse = {
   compositions?: CompositionsSearchResponse | undefined;
 };

@@ -2,7 +2,7 @@
 
 export type ResultsInjectedItemAppliedRulesInfoResponse = {
   /**
-   * Unique record identifier.
+   * The objectID of the applied index level rule on this injected group.
    */
   objectID: string;
 };

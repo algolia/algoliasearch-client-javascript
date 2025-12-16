@@ -4,7 +4,7 @@ import type { CompositionRunAppliedRules } from './compositionRunAppliedRules';
 
 export type CompositionRunSearchResponse = Record<string, any> & {
   /**
-   * Unique record identifier.
+   * The objectID of the composition which generated this result set.
    */
   objectID: string;
 
