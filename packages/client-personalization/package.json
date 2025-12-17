@@ -56,8 +56,8 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@types/node": "24.10.1",
-    "publint": "0.3.15",
+    "@types/node": "25.0.2",
+    "publint": "0.3.16",
     "rollup": "4.53.3",
     "tsup": "8.5.1",
     "typescript": "5.9.3"
