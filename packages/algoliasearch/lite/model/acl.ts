@@ -18,4 +18,12 @@ export type Acl =
   | 'search'
   | 'seeUnretrievableAttributes'
   | 'settings'
-  | 'usage';
+  | 'usage'
+  | 'nluWriteProject'
+  | 'nluReadProject'
+  | 'nluWriteEntity'
+  | 'nluReadEntity'
+  | 'nluWriteIntent'
+  | 'nluReadIntent'
+  | 'nluPrediction'
+  | 'nluReadAnswers';
