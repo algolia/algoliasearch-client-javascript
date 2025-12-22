@@ -92,15 +92,15 @@
   "devDependencies": {
     "@algolia/requester-testing": "5.46.1",
     "@arethetypeswrong/cli": "0.18.2",
-    "@cloudflare/vitest-pool-workers": "0.10.15",
+    "@cloudflare/vitest-pool-workers": "0.11.1",
     "@cloudflare/workers-types": "4.20251115.0",
-    "@types/node": "25.0.2",
+    "@types/node": "25.0.3",
     "jsdom": "27.3.0",
     "publint": "0.3.16",
-    "rollup": "4.53.3",
+    "rollup": "4.54.0",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.0.15"
+    "vitest": "4.0.16"
   },
   "engines": {
     "node": ">= 14.0.0"
