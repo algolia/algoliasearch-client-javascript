@@ -1,3 +1,8 @@
+## [5.46.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.46.1...5.46.2)
+
+- [c88b505d6](https://github.com/algolia/api-clients-automation/commit/c88b505d6) chore: migrate lerna config ([#5772](https://github.com/algolia/api-clients-automation/pull/5772)) by [@shortcuts](https://github.com/shortcuts/)
+- [005aa6524](https://github.com/algolia/api-clients-automation/commit/005aa6524) chore(deps): dependencies 2025-12-22 ([#5775](https://github.com/algolia/api-clients-automation/pull/5775)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.46.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.46.0...5.46.1)
 
 - [0ad34c60c](https://github.com/algolia/api-clients-automation/commit/0ad34c60c) chore: setup release workflow for npm trusted publisher ([#5717](https://github.com/algolia/api-clients-automation/pull/5717)) by [@Fluf22](https://github.com/Fluf22/)
