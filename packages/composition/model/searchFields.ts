@@ -6,35 +6,35 @@ export type SearchFields<T = Record<string, unknown>> = {
   /**
    * Search results (hits).  Hits are records from your index that match the search criteria, augmented with additional attributes, such as, for highlighting.
    */
-  hits: Hit<T>[];
+  hits?: Hit<T>[] | undefined;
 
   /**
    * Number of hits returned per page.
    */
-  hitsPerPage: number;
+  hitsPerPage?: number | undefined;
 
   /**
    * Number of results (hits).
    */
-  nbHits: number;
+  nbHits?: number | undefined;
 
   /**
    * Number of pages of results.
    */
-  nbPages: number;
+  nbPages?: number | undefined;
 
   /**
    * The current page of the results.
    */
-  page: number;
+  page?: number | undefined;
 
   /**
    * URL-encoded string of all search parameters.
    */
-  params: string;
+  params?: string | undefined;
 
   /**
    * The search query string.
    */
-  query: string;
+  query?: string | undefined;
 };
