@@ -40,11 +40,11 @@ All of our clients comes with type definition, and are available for both browse
 ### With a package manager
 
 ```bash
-yarn add @algolia/client-search@5.46.2
+yarn add @algolia/client-search@5.46.3
 # or
-npm install @algolia/client-search@5.46.2
+npm install @algolia/client-search@5.46.3
 # or
-pnpm add @algolia/client-search@5.46.2
+pnpm add @algolia/client-search@5.46.3
 ```
 
 ### Without a package manager
@@ -52,7 +52,7 @@ pnpm add @algolia/client-search@5.46.2
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/client-search@5.46.2/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/client-search@5.46.3/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage

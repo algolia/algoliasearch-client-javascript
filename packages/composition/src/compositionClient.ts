@@ -47,7 +47,7 @@ import type {
   WaitForCompositionTaskOptions,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.22.2';
+export const apiClientVersion = '1.22.3';
 
 function getDefaultHosts(appId: string): Host[] {
   return (

@@ -1,6 +1,6 @@
 {
   "name": "@algolia/requester-testing",
-  "version": "5.46.2",
+  "version": "5.46.3",
   "private": true,
   "description": "A package that contains the echo requester of the algoliasearch JavaScript requesters, for testing purposes",
   "repository": {
@@ -43,10 +43,10 @@
     "test:bundle": "publint . && attw --pack ."
   },
   "dependencies": {
-    "@algolia/client-common": "5.46.2",
-    "@algolia/requester-browser-xhr": "5.46.2",
-    "@algolia/requester-fetch": "5.46.2",
-    "@algolia/requester-node-http": "5.46.2"
+    "@algolia/client-common": "5.46.3",
+    "@algolia/requester-browser-xhr": "5.46.3",
+    "@algolia/requester-fetch": "5.46.3",
+    "@algolia/requester-node-http": "5.46.3"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
