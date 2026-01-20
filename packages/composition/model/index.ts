@@ -67,6 +67,7 @@ export * from './main';
 export * from './mainInjectionQueryParameters';
 export * from './matchedGeoLocation';
 export * from './matchLevel';
+export * from './multifeed';
 export * from './multipleBatchRequest';
 export * from './multipleBatchResponse';
 export * from './numericFilters';
