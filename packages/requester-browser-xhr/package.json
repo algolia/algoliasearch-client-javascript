@@ -36,12 +36,12 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@types/node": "24.10.7",
+    "@types/node": "24.10.9",
     "jsdom": "27.4.0",
     "publint": "0.3.16",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.0.16",
+    "vitest": "4.0.17",
     "xhr-mock": "2.5.1"
   },
   "engines": {
