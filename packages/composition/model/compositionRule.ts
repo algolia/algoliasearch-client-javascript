@@ -13,7 +13,7 @@ export type CompositionRule = {
   /**
    * Conditions that trigger a composition rule.
    */
-  conditions: Array<Condition>;
+  conditions?: Array<Condition> | undefined;
 
   consequence: CompositionRuleConsequence;
 

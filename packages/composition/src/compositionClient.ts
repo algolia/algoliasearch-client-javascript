@@ -640,9 +640,6 @@ export function createCompositionClient({
       if (!compositionRule.objectID) {
         throw new Error('Parameter `compositionRule.objectID` is required when calling `putCompositionRule`.');
       }
-      if (!compositionRule.conditions) {
-        throw new Error('Parameter `compositionRule.conditions` is required when calling `putCompositionRule`.');
-      }
       if (!compositionRule.consequence) {
         throw new Error('Parameter `compositionRule.consequence` is required when calling `putCompositionRule`.');
       }
