@@ -3,11 +3,8 @@
 import type { Composition } from '../model/composition';
 import type { CompositionRule } from '../model/compositionRule';
 import type { CompositionRulesBatchParams } from '../model/compositionRulesBatchParams';
-
 import type { RequestBody } from '../model/requestBody';
-
 import type { SearchCompositionRulesParams } from '../model/searchCompositionRulesParams';
-
 import type { SearchForFacetValuesRequest } from '../model/searchForFacetValuesRequest';
 
 /**

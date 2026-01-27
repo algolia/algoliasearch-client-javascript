@@ -12,10 +12,8 @@ import { createAuth, createTransporter, getAlgoliaAgent } from '@algolia/client-
 
 import type { BaseResponse } from '../model/baseResponse';
 import type { ConfigStatus } from '../model/configStatus';
-
 import type { ConfigurationResponse } from '../model/configurationResponse';
 import type { ConfigurationWithIndex } from '../model/configurationWithIndex';
-
 import type { LogFile } from '../model/logFile';
 
 import type {

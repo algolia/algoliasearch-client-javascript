@@ -11,7 +11,6 @@ import type {
 import { createAuth, createTransporter, getAlgoliaAgent } from '@algolia/client-common';
 
 import type { DeleteUserProfileResponse } from '../model/deleteUserProfileResponse';
-
 import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
 import type { PersonalizationStrategyParams } from '../model/personalizationStrategyParams';
 import type { SetPersonalizationStrategyResponse } from '../model/setPersonalizationStrategyResponse';

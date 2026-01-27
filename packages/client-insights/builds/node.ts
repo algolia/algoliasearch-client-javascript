@@ -2,9 +2,8 @@
 
 export type InsightsClient = ReturnType<typeof createInsightsClient>;
 
-import { createHttpRequester } from '@algolia/requester-node-http';
-
 import { createMemoryCache, createNullCache, createNullLogger } from '@algolia/client-common';
+import { createHttpRequester } from '@algolia/requester-node-http';
 
 import type { ClientOptions } from '@algolia/client-common';
 

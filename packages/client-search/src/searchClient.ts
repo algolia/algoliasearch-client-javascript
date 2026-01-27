@@ -20,18 +20,14 @@ import {
 
 import type { AddApiKeyResponse } from '../model/addApiKeyResponse';
 import type { ApiKey } from '../model/apiKey';
-
 import type { BatchParams } from '../model/batchParams';
 import type { BatchResponse } from '../model/batchResponse';
-
 import type { BrowseResponse } from '../model/browseResponse';
 import type { CreatedAtResponse } from '../model/createdAtResponse';
 import type { DeleteApiKeyResponse } from '../model/deleteApiKeyResponse';
-
 import type { DeleteSourceResponse } from '../model/deleteSourceResponse';
 import type { DeletedAtResponse } from '../model/deletedAtResponse';
 import type { DictionarySettingsParams } from '../model/dictionarySettingsParams';
-
 import type { GetApiKeyResponse } from '../model/getApiKeyResponse';
 import type { GetDictionarySettingsResponse } from '../model/getDictionarySettingsResponse';
 import type { GetLogsResponse } from '../model/getLogsResponse';
@@ -40,37 +36,27 @@ import type { GetObjectsResponse } from '../model/getObjectsResponse';
 import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { GetTopUserIdsResponse } from '../model/getTopUserIdsResponse';
 import type { HasPendingMappingsResponse } from '../model/hasPendingMappingsResponse';
-
 import type { Languages } from '../model/languages';
 import type { ListApiKeysResponse } from '../model/listApiKeysResponse';
 import type { ListClustersResponse } from '../model/listClustersResponse';
 import type { ListIndicesResponse } from '../model/listIndicesResponse';
 import type { ListUserIdsResponse } from '../model/listUserIdsResponse';
-
 import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
-
 import type { RemoveUserIdResponse } from '../model/removeUserIdResponse';
 import type { ReplaceAllObjectsResponse } from '../model/replaceAllObjectsResponse';
-
 import type { ReplaceSourceResponse } from '../model/replaceSourceResponse';
 import type { Rule } from '../model/rule';
 import type { SaveObjectResponse } from '../model/saveObjectResponse';
 import type { SaveSynonymResponse } from '../model/saveSynonymResponse';
-
 import type { SearchDictionaryEntriesResponse } from '../model/searchDictionaryEntriesResponse';
-
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchMethodParams } from '../model/searchMethodParams';
-
 import type { SearchResponse } from '../model/searchResponse';
 import type { SearchResponses } from '../model/searchResponses';
-
 import type { SearchRulesResponse } from '../model/searchRulesResponse';
-
 import type { SearchSynonymsResponse } from '../model/searchSynonymsResponse';
 import type { SearchUserIdsParams } from '../model/searchUserIdsParams';
 import type { SearchUserIdsResponse } from '../model/searchUserIdsResponse';
-
 import type { SettingsResponse } from '../model/settingsResponse';
 import type { Source } from '../model/source';
 import type { SynonymHit } from '../model/synonymHit';

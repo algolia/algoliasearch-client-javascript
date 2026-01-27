@@ -2,9 +2,8 @@
 
 export type AbtestingV3Client = ReturnType<typeof createAbtestingV3Client>;
 
-import { createHttpRequester } from '@algolia/requester-node-http';
-
 import { createMemoryCache, createNullCache, createNullLogger } from '@algolia/client-common';
+import { createHttpRequester } from '@algolia/requester-node-http';
 
 import type { ClientOptions } from '@algolia/client-common';
 

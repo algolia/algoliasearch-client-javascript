@@ -11,14 +11,11 @@ import type {
 import { createAuth, createTransporter, getAlgoliaAgent, shuffle } from '@algolia/client-common';
 
 import type { DeletedAtResponse } from '../model/deletedAtResponse';
-
 import type { GetRecommendTaskResponse } from '../model/getRecommendTaskResponse';
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
-
 import type { RecommendRule } from '../model/recommendRule';
 import type { RecommendUpdatedAtResponse } from '../model/recommendUpdatedAtResponse';
-
 import type { SearchRecommendRulesResponse } from '../model/searchRecommendRulesResponse';
 
 import type {

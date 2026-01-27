@@ -13,7 +13,6 @@ import { createAuth, createTransporter, getAlgoliaAgent } from '@algolia/client-
 import type { ABTest } from '../model/aBTest';
 import type { ABTestResponse } from '../model/aBTestResponse';
 import type { AddABTestsRequest } from '../model/addABTestsRequest';
-
 import type { EstimateABTestRequest } from '../model/estimateABTestRequest';
 import type { EstimateABTestResponse } from '../model/estimateABTestResponse';
 import type { ListABTestsResponse } from '../model/listABTestsResponse';

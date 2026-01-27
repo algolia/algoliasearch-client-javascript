@@ -13,13 +13,10 @@ import { createAuth, createTransporter, getAlgoliaAgent } from '@algolia/client-
 import type { AcceptedResponse } from '../model/acceptedResponse';
 import type { ConfigurationObject } from '../model/configurationObject';
 import type { ConfigurationParameters } from '../model/configurationParameters';
-
 import type { DeleteUserResponse } from '../model/deleteUserResponse';
-
 import type { GetUsersResponse } from '../model/getUsersResponse';
 import type { PutConfigResponse } from '../model/putConfigResponse';
 import type { RealtimeUser } from '../model/realtimeUser';
-
 import type { User } from '../model/user';
 
 import type {

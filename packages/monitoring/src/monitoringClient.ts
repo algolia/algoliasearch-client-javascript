@@ -15,7 +15,6 @@ import type { IndexingTimeResponse } from '../model/indexingTimeResponse';
 import type { InfrastructureResponse } from '../model/infrastructureResponse';
 import type { InventoryResponse } from '../model/inventoryResponse';
 import type { LatencyResponse } from '../model/latencyResponse';
-
 import type { StatusResponse } from '../model/statusResponse';
 
 import type {

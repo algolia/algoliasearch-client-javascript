@@ -2,7 +2,6 @@
 
 import type { RecommendModels } from '../model/recommendModels';
 import type { RecommendRule } from '../model/recommendRule';
-
 import type { SearchRecommendRulesParams } from '../model/searchRecommendRulesParams';
 
 import type { RecommendationsRequest } from './recommendationsRequest';

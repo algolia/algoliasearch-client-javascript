@@ -4,8 +4,6 @@ export type SearchClient = ReturnType<typeof createSearchClient> & SearchClientN
 
 import { createHmac } from 'node:crypto';
 
-import { createHttpRequester } from '@algolia/requester-node-http';
-
 import {
   IndexAlreadyExistsError,
   IndexNotFoundError,
@@ -15,6 +13,7 @@ import {
   createNullLogger,
   serializeQueryParameters,
 } from '@algolia/client-common';
+import { createHttpRequester } from '@algolia/requester-node-http';
 
 import type { ClientOptions, RequestOptions } from '@algolia/client-common';
 

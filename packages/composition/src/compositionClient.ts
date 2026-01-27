@@ -13,15 +13,11 @@ import { createAuth, createIterablePromise, createTransporter, getAlgoliaAgent, 
 import type { BatchParams } from '../model/batchParams';
 import type { Composition } from '../model/composition';
 import type { CompositionRule } from '../model/compositionRule';
-
 import type { GetTaskResponse } from '../model/getTaskResponse';
 import type { ListCompositionsResponse } from '../model/listCompositionsResponse';
 import type { MultipleBatchResponse } from '../model/multipleBatchResponse';
-
 import type { RulesMultipleBatchResponse } from '../model/rulesMultipleBatchResponse';
-
 import type { SearchCompositionRulesResponse } from '../model/searchCompositionRulesResponse';
-
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchResponse } from '../model/searchResponse';
 import type { TaskIDResponse } from '../model/taskIDResponse';

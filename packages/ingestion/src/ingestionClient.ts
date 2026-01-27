@@ -15,18 +15,14 @@ import type { Authentication } from '../model/authentication';
 import type { AuthenticationCreate } from '../model/authenticationCreate';
 import type { AuthenticationCreateResponse } from '../model/authenticationCreateResponse';
 import type { AuthenticationSearch } from '../model/authenticationSearch';
-
 import type { AuthenticationUpdateResponse } from '../model/authenticationUpdateResponse';
 import type { DeleteResponse } from '../model/deleteResponse';
 import type { Destination } from '../model/destination';
 import type { DestinationCreate } from '../model/destinationCreate';
 import type { DestinationCreateResponse } from '../model/destinationCreateResponse';
 import type { DestinationSearch } from '../model/destinationSearch';
-
 import type { DestinationUpdateResponse } from '../model/destinationUpdateResponse';
-
 import type { Event } from '../model/event';
-
 import type { ListAuthenticationsResponse } from '../model/listAuthenticationsResponse';
 import type { ListDestinationsResponse } from '../model/listDestinationsResponse';
 import type { ListEventsResponse } from '../model/listEventsResponse';
@@ -34,39 +30,29 @@ import type { ListSourcesResponse } from '../model/listSourcesResponse';
 import type { ListTasksResponse } from '../model/listTasksResponse';
 import type { ListTasksResponseV1 } from '../model/listTasksResponseV1';
 import type { ListTransformationsResponse } from '../model/listTransformationsResponse';
-
 import type { Run } from '../model/run';
 import type { RunListResponse } from '../model/runListResponse';
 import type { RunResponse } from '../model/runResponse';
-
 import type { RunSourceResponse } from '../model/runSourceResponse';
-
 import type { Source } from '../model/source';
 import type { SourceCreate } from '../model/sourceCreate';
 import type { SourceCreateResponse } from '../model/sourceCreateResponse';
 import type { SourceSearch } from '../model/sourceSearch';
-
 import type { SourceUpdateResponse } from '../model/sourceUpdateResponse';
 import type { Task } from '../model/task';
 import type { TaskCreate } from '../model/taskCreate';
 import type { TaskCreateResponse } from '../model/taskCreateResponse';
 import type { TaskCreateV1 } from '../model/taskCreateV1';
-
 import type { TaskSearch } from '../model/taskSearch';
-
 import type { TaskUpdateResponse } from '../model/taskUpdateResponse';
-
 import type { TaskV1 } from '../model/taskV1';
 import type { Transformation } from '../model/transformation';
 import type { TransformationCreate } from '../model/transformationCreate';
 import type { TransformationCreateResponse } from '../model/transformationCreateResponse';
 import type { TransformationSearch } from '../model/transformationSearch';
-
 import type { TransformationTry } from '../model/transformationTry';
 import type { TransformationTryResponse } from '../model/transformationTryResponse';
-
 import type { TransformationUpdateResponse } from '../model/transformationUpdateResponse';
-
 import type { WatchResponse } from '../model/watchResponse';
 
 import type {

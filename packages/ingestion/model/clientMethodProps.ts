@@ -2,48 +2,34 @@
 
 import type { Action } from '../model/action';
 import type { ActionType } from '../model/actionType';
-
 import type { AuthenticationSortKeys } from '../model/authenticationSortKeys';
 import type { AuthenticationType } from '../model/authenticationType';
 import type { AuthenticationUpdate } from '../model/authenticationUpdate';
-
 import type { DestinationSortKeys } from '../model/destinationSortKeys';
 import type { DestinationType } from '../model/destinationType';
 import type { DestinationUpdate } from '../model/destinationUpdate';
-
 import type { EventSortKeys } from '../model/eventSortKeys';
 import type { EventStatus } from '../model/eventStatus';
 import type { EventType } from '../model/eventType';
-
 import type { OrderKeys } from '../model/orderKeys';
 import type { PlatformWithNone } from '../model/platformWithNone';
 import type { PushTaskPayload } from '../model/pushTaskPayload';
-
 import type { RunSortKeys } from '../model/runSortKeys';
 import type { RunSourcePayload } from '../model/runSourcePayload';
-
 import type { RunStatus } from '../model/runStatus';
 import type { RunTaskPayload } from '../model/runTaskPayload';
 import type { RunType } from '../model/runType';
-
 import type { SourceSortKeys } from '../model/sourceSortKeys';
 import type { SourceType } from '../model/sourceType';
 import type { SourceUpdate } from '../model/sourceUpdate';
-
 import type { TaskReplace } from '../model/taskReplace';
-
 import type { TaskSortKeys } from '../model/taskSortKeys';
 import type { TaskUpdate } from '../model/taskUpdate';
-
 import type { TaskUpdateV1 } from '../model/taskUpdateV1';
-
 import type { TransformationCreate } from '../model/transformationCreate';
-
 import type { TransformationSortKeys } from '../model/transformationSortKeys';
 import type { TransformationTry } from '../model/transformationTry';
-
 import type { TransformationType } from '../model/transformationType';
-
 import type { TriggerType } from '../model/triggerType';
 
 /**
