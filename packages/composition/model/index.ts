@@ -21,6 +21,8 @@ export * from './composition';
 export * from './compositionBaseSearchResponse';
 export * from './compositionBehavior';
 export * from './compositionIdRankingInfo';
+export * from './compositionInjectionBehavior';
+export * from './compositionMultifeedBehavior';
 export * from './compositionRankingInfo';
 export * from './compositionRule';
 export * from './compositionRuleConsequence';
