@@ -24,7 +24,7 @@ import type {
   GetUserTokenProfileProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.47.0';
+export const apiClientVersion = '5.48.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];

@@ -1,3 +1,22 @@
+## [5.48.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.47.0...5.48.0)
+
+BREAKING CHANGES: this minor version includes multiple breaking changes related to fixes on different APIs. See below for more details.
+
+- [b39e3e013](https://github.com/algolia/api-clients-automation/commit/b39e3e013) feat(specs): `conditions` is not required anymore in composition rules ([#5853](https://github.com/algolia/api-clients-automation/pull/5853)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [9ef126ccd](https://github.com/algolia/api-clients-automation/commit/9ef126ccd) docs(SearchParams): Document that filter scores are supported in virtual replicas ([#5716](https://github.com/algolia/api-clients-automation/pull/5716)) by [@NixFrog](https://github.com/NixFrog/)
+- [6a3e60802](https://github.com/algolia/api-clients-automation/commit/6a3e60802) fix(specs): BREAKING CHANGE – remove baseRecommendRequest from trendingFacets [CR-10264] ([#5858](https://github.com/algolia/api-clients-automation/pull/5858)) by [@raed667](https://github.com/raed667/)
+  - The `TrendingFacets` model has been updated to reflect the API response.
+- [f9453e693](https://github.com/algolia/api-clients-automation/commit/f9453e693) docs: BREAKING CHANGE – authentication type can't be updated ([#5824](https://github.com/algolia/api-clients-automation/pull/5824)) by [@sbellone](https://github.com/sbellone/)
+  - The `AuthenticationUpdate` model has been updated to reflect that the `type` field can't be updated.
+- [2d1c05654](https://github.com/algolia/api-clients-automation/commit/2d1c05654) chore(deps): dependencies 2026-01-26 ([#5859](https://github.com/algolia/api-clients-automation/pull/5859)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [6591e14a6](https://github.com/algolia/api-clients-automation/commit/6591e14a6) feat(clients): Test python timeout ([#5883](https://github.com/algolia/api-clients-automation/pull/5883)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [52aed5b35](https://github.com/algolia/api-clients-automation/commit/52aed5b35) fix(specs): allow additionalProperties on insights-api events ([#5885](https://github.com/algolia/api-clients-automation/pull/5885)) by [@sirockin](https://github.com/sirockin/)
+- [2925f56d1](https://github.com/algolia/api-clients-automation/commit/2925f56d1) fix(specs): BREAKING CHANGE – more accurate composition behavior typing ([#5892](https://github.com/algolia/api-clients-automation/pull/5892)) by [@gavinwade12](https://github.com/gavinwade12/)
+  - The `CompositionBehavior` model is now a union type for better accuracy.
+- [63b0c5464](https://github.com/algolia/api-clients-automation/commit/63b0c5464) feat(specs): BREAKING CHANGE – Ingestion API: new `code` property in oauth authentication ([#5897](https://github.com/algolia/api-clients-automation/pull/5897)) by [@sbellone](https://github.com/sbellone/)
+  - The `AuthOAuth` and `AuthOAuthPartial` models have been updated to reflect that the `clientId` field is now optional, and the `code` field can be set.
+- [d4d385654](https://github.com/algolia/api-clients-automation/commit/d4d385654) chore(deps): dependencies 2026-02-02 ([#5898](https://github.com/algolia/api-clients-automation/pull/5898)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.47.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.46.4...5.47.0)
 
 - [f9ac3a711](https://github.com/algolia/api-clients-automation/commit/f9ac3a711) feat(specs): introduce multifeed composition behavior for beta release ([#5828](https://github.com/algolia/api-clients-automation/pull/5828)) by [@gavinwade12](https://github.com/gavinwade12/)
