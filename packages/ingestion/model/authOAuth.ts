@@ -12,12 +12,17 @@ export type AuthOAuth = {
   /**
    * Client ID.
    */
-  client_id: string;
+  client_id?: string | undefined;
 
   /**
    * Client secret. This field is `null` in the API response.
    */
-  client_secret: string;
+  client_secret?: string | undefined;
+
+  /**
+   * Authorization code. Used during an `authorization_code` grant type flow, to request an access_token when creating/updating the authentication. This field is not returned in the API response.
+   */
+  code?: string | undefined;
 
   /**
    * OAuth scope.

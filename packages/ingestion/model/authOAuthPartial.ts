@@ -20,6 +20,11 @@ export type AuthOAuthPartial = {
   client_secret?: string | undefined;
 
   /**
+   * Authorization code. Used during an `authorization_code` grant type flow, to request an access_token when creating/updating the authentication. This field is not returned in the API response.
+   */
+  code?: string | undefined;
+
+  /**
    * OAuth scope.
    */
   scope?: string | undefined;
