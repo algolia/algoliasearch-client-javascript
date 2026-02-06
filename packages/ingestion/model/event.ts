@@ -29,7 +29,7 @@ export type Event = {
   data?: { [key: string]: any } | null | undefined;
 
   /**
-   * Date of publish RFC 3339 format.
+   * Date and time when the resource was published, in RFC 3339 format.
    */
   publishedAt: string;
 };

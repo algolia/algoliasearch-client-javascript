@@ -109,11 +109,11 @@ export type GetUserProps = {
  */
 export type GetUsersProps = {
   /**
-   * Filter users by start date (in RFC3339 format). Only users that were updated after the passed date will be returned.
+   * Filter users by start date and time, in RFC 3339 format. Only users that were updated after the passed date will be returned.
    */
   startDate?: string | undefined;
   /**
-   * Filter users by end date (in RFC3339 format). Only users that were updated before the passed date will be returned.
+   * Filter users by end date and time, in RFC 3339 format. Only users that were updated before the passed date will be returned.
    */
   endDate?: string | undefined;
   /**

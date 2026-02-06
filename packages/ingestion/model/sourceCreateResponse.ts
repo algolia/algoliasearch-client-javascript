@@ -12,7 +12,7 @@ export type SourceCreateResponse = {
   name: string;
 
   /**
-   * Date of creation in RFC 3339 format.
+   * Date and time when the resource was created, in RFC 3339 format.
    */
   createdAt: string;
 };

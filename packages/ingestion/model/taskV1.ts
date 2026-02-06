@@ -7,7 +7,7 @@ import type { TaskInput } from './taskInput';
 import type { Trigger } from './trigger';
 
 /**
- * The V1 task object, please use methods and types that don\'t contain the V1 suffix.
+ * The V1 task object. Use methods and types that don\'t contain the V1 suffix.
  */
 export type TaskV1 = {
   /**
@@ -42,7 +42,7 @@ export type TaskV1 = {
   action?: ActionType | undefined;
 
   /**
-   * Date of the last cursor in RFC 3339 format.
+   * Date and time when the last cursor was created, in RFC 3339 format.
    */
   cursor?: string | undefined;
 
@@ -51,12 +51,12 @@ export type TaskV1 = {
   policies?: Policies | undefined;
 
   /**
-   * Date of creation in RFC 3339 format.
+   * Date and time when the resource was created, in RFC 3339 format.
    */
   createdAt: string;
 
   /**
-   * Date of last update in RFC 3339 format.
+   * Date and time when the resource was last updated, in RFC 3339 format.
    */
   updatedAt: string;
 };

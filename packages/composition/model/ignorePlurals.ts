@@ -4,6 +4,6 @@ import type { BooleanString } from './booleanString';
 import type { SupportedLanguage } from './supportedLanguage';
 
 /**
- * Treat singular, plurals, and other forms of declensions as equivalent. You should only use this feature for the languages used in your index.
+ * Treat singular, plurals, and other forms of declensions as equivalent. Only use this feature for the languages used in your index.
  */
 export type IgnorePlurals = Array<SupportedLanguage> | BooleanString | boolean;

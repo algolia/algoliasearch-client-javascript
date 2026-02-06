@@ -26,12 +26,12 @@ export type Source = {
   authenticationID?: string | undefined;
 
   /**
-   * Date of creation in RFC 3339 format.
+   * Date and time when the resource was created, in RFC 3339 format.
    */
   createdAt: string;
 
   /**
-   * Date of last update in RFC 3339 format.
+   * Date and time when the resource was last updated, in RFC 3339 format.
    */
   updatedAt: string;
 };

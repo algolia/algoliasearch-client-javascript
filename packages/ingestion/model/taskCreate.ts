@@ -41,7 +41,7 @@ export type TaskCreate = {
   input?: TaskInput | undefined;
 
   /**
-   * Date of the last cursor in RFC 3339 format.
+   * Date and time when the last cursor was created, in RFC 3339 format.
    */
   cursor?: string | undefined;
 

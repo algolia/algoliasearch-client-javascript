@@ -40,17 +40,17 @@ export type Run = {
   type: RunType;
 
   /**
-   * Date of creation in RFC 3339 format.
+   * Date and time when the resource was created, in RFC 3339 format.
    */
   createdAt: string;
 
   /**
-   * Date of start in RFC 3339 format.
+   * Date and time when the task started, in RFC 3339 format.
    */
   startedAt?: string | undefined;
 
   /**
-   * Date of finish in RFC 3339 format.
+   * Date and time when the task finished, in RFC 3339 format.
    */
   finishedAt?: string | undefined;
 };

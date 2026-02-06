@@ -5,7 +5,7 @@ import type { TaskCreateTrigger } from './taskCreateTrigger';
 import type { TaskInput } from './taskInput';
 
 /**
- * API request body for creating a task using the V1 shape, please use methods and types that don\'t contain the V1 suffix.
+ * API request body for creating a task using the V1 shape. Use methods and types that don\'t contain the V1 suffix.
  */
 export type TaskCreateV1 = {
   /**
@@ -35,7 +35,7 @@ export type TaskCreateV1 = {
   input?: TaskInput | undefined;
 
   /**
-   * Date of the last cursor in RFC 3339 format.
+   * Date and time when the last cursor was created, in RFC 3339 format.
    */
   cursor?: string | undefined;
 };

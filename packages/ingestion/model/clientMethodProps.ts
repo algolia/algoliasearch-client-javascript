@@ -419,11 +419,11 @@ export type ListRunsProps = {
    */
   order?: OrderKeys | undefined;
   /**
-   * Date in RFC 3339 format for the earliest run to retrieve. By default, the current day minus seven days is used.
+   * Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.
    */
   startDate?: string | undefined;
   /**
-   * Date in RFC 3339 format for the latest run to retrieve. By default, the current day is used.
+   * Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
    */
   endDate?: string | undefined;
 };
