@@ -5,6 +5,7 @@ import { Destroyable, Request, Requester, Response } from '@algolia/requester-co
 import * as http from 'http';
 import * as https from 'https';
 import * as URL from 'url';
+import * as zlib from 'zlib';
 
 export type NodeHttpRequesterOptions = {
   agent?: https.Agent | http.Agent;
@@ -33,6 +34,12 @@ export function createNodeHttpRequester({
 
         const path = url.query === null ? url.pathname : `${url.pathname}?${url.query}`;
 
+        const acceptEncoding = request.headers['accept-encoding'];
+        const shouldCompress =
+          request.data !== undefined &&
+          acceptEncoding !== undefined &&
+          acceptEncoding.toLowerCase().includes('gzip');
+
         const options: https.RequestOptions = {
           ...requesterOptions,
           agent: url.protocol === 'https:' ? httpsAgent : httpAgent,
@@ -42,30 +49,60 @@ export function createNodeHttpRequester({
           headers: {
             ...(requesterOptions && requesterOptions.headers ? requesterOptions.headers : {}),
             ...request.headers,
+            ...(shouldCompress ? { 'content-encoding': 'gzip' } : {}),
           },
           ...(url.port !== undefined ? { port: url.port || '' } : {}),
         };
 
+        // eslint-disable-next-line functional/no-let, prefer-const
+        let connectTimeout: NodeJS.Timeout;
+        // eslint-disable-next-line functional/no-let
+        let responseTimeout: NodeJS.Timeout | undefined;
+
+        const clearTimeouts = (): void => {
+          clearTimeout(connectTimeout);
+          clearTimeout(responseTimeout as NodeJS.Timeout);
+        };
+
+        const onError = (error: Error): void => {
+          clearTimeouts();
+          resolve({ status: 0, content: error.message, isTimedOut: false });
+        };
+
         const req = (url.protocol === 'https:' ? https : http).request(options, response => {
+          const contentEncoding = response.headers['content-encoding'];
+          const isGzipResponse =
+            contentEncoding !== undefined && contentEncoding.toLowerCase().includes('gzip');
+
           // eslint-disable-next-line functional/no-let
           let contentBuffers: Buffer[] = [];
 
-          response.on('data', chunk => {
+          const onData = (chunk: Buffer): void => {
             contentBuffers = contentBuffers.concat(chunk);
-          });
+          };
 
-          response.on('end', () => {
-            // eslint-disable-next-line @typescript-eslint/no-use-before-define
-            clearTimeout(connectTimeout);
-            // eslint-disable-next-line @typescript-eslint/no-use-before-define
-            clearTimeout(responseTimeout as NodeJS.Timeout);
+          const onEnd = (): void => {
+            clearTimeouts();
 
             resolve({
               status: response.statusCode || 0,
               content: Buffer.concat(contentBuffers).toString(),
               isTimedOut: false,
             });
-          });
+          };
+
+          if (isGzipResponse) {
+            const gunzip = zlib.createGunzip();
+
+            response.pipe(gunzip);
+
+            gunzip.on('data', onData);
+            gunzip.on('end', onEnd);
+            gunzip.on('error', onError);
+          } else {
+            response.on('data', onData);
+            response.on('end', onEnd);
+          }
         });
 
         const createTimeout = (timeout: number, content: string): NodeJS.Timeout => {
@@ -80,16 +117,9 @@ export function createNodeHttpRequester({
           }, timeout * 1000);
         };
 
-        const connectTimeout = createTimeout(request.connectTimeout, 'Connection timeout');
+        connectTimeout = createTimeout(request.connectTimeout, 'Connection timeout');
 
-        // eslint-disable-next-line functional/no-let
-        let responseTimeout: NodeJS.Timeout | undefined;
-
-        req.on('error', error => {
-          clearTimeout(connectTimeout);
-          clearTimeout(responseTimeout as NodeJS.Timeout);
-          resolve({ status: 0, content: error.message, isTimedOut: false });
-        });
+        req.on('error', onError);
 
         req.once('response', () => {
           clearTimeout(connectTimeout);
@@ -97,7 +127,11 @@ export function createNodeHttpRequester({
         });
 
         if (request.data !== undefined) {
-          req.write(request.data);
+          if (shouldCompress) {
+            req.write(zlib.gzipSync(request.data));
+          } else {
+            req.write(request.data);
+          }
         }
 
         req.end();
