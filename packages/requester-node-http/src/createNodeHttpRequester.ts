@@ -34,7 +34,7 @@ export function createNodeHttpRequester({
 
         const path = url.query === null ? url.pathname : `${url.pathname}?${url.query}`;
 
-        const COMPRESSION_THRESHOLD = 1024;
+        const COMPRESSION_THRESHOLD = 750;
         const acceptEncoding = request.headers['accept-encoding'];
         const shouldCompress =
           request.data !== undefined &&
