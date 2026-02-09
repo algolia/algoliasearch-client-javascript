@@ -286,6 +286,12 @@ describe('gzip compression', () => {
     nock.cleanAll();
   });
 
+  // Build a payload >= 1KB to exceed the compression threshold
+  const largePayload: Record<string, string> = {};
+  for (let i = 0; i < 50; i++) {
+    largePayload[`key${i}`] = `value${i}_padding`;
+  }
+
   const gzipRequestStub: Request = {
     url: 'https://algolia-dns.net/foo?x-algolia-header=foo',
     method: MethodEnum.Post,
@@ -293,7 +299,7 @@ describe('gzip compression', () => {
       'accept-encoding': 'gzip',
       'content-type': 'application/json',
     },
-    data: JSON.stringify({ foo: 'bar' }),
+    data: JSON.stringify(largePayload),
     responseTimeout: 2,
     connectTimeout: 1,
   };
@@ -305,7 +311,7 @@ describe('gzip compression', () => {
   };
 
   it('compresses request body when accept-encoding: gzip header is present', async () => {
-    const expectedBody = JSON.stringify({ foo: 'bar' });
+    const expectedBody = JSON.stringify(largePayload);
 
     nock('https://algolia-dns.net', {
       reqheaders: {
@@ -419,7 +425,7 @@ describe('gzip compression', () => {
       },
     };
 
-    const expectedBody = JSON.stringify({ foo: 'bar' });
+    const expectedBody = JSON.stringify(largePayload);
 
     nock('https://algolia-dns.net', {
       reqheaders: {
@@ -436,8 +442,26 @@ describe('gzip compression', () => {
     expect(response.content).toBe('ok');
   });
 
+  it('does not compress request body when below size threshold', async () => {
+    const smallBody = JSON.stringify({ foo: 'bar' });
+    const smallRequest: Request = {
+      ...gzipRequestStub,
+      data: smallBody,
+    };
+
+    nock('https://algolia-dns.net')
+      .post('/foo', smallBody)
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, 'ok');
+
+    const response = await requester.send(smallRequest);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe('ok');
+  });
+
   it('full round-trip: compressed request + gzip response', async () => {
-    const requestBody = JSON.stringify({ foo: 'bar' });
+    const requestBody = JSON.stringify(largePayload);
     const responseBody = JSON.stringify({ result: 'success' });
     const gzipResponseBuffer = zlib.gzipSync(responseBody);
 

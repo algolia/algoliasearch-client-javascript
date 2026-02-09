@@ -34,9 +34,11 @@ export function createNodeHttpRequester({
 
         const path = url.query === null ? url.pathname : `${url.pathname}?${url.query}`;
 
+        const COMPRESSION_THRESHOLD = 1024;
         const acceptEncoding = request.headers['accept-encoding'];
         const shouldCompress =
           request.data !== undefined &&
+          Buffer.byteLength(request.data) >= COMPRESSION_THRESHOLD &&
           acceptEncoding !== undefined &&
           acceptEncoding.toLowerCase().includes('gzip');
 
@@ -90,6 +92,8 @@ export function createNodeHttpRequester({
               isTimedOut: false,
             });
           };
+
+          response.on('error', onError);
 
           if (isGzipResponse) {
             const gunzip = zlib.createGunzip();
