@@ -60,14 +60,20 @@ export function createNodeHttpRequester({
         let connectTimeout: NodeJS.Timeout;
         // eslint-disable-next-line functional/no-let
         let responseTimeout: NodeJS.Timeout | undefined;
+        // eslint-disable-next-line functional/no-let
+        let gunzip: zlib.Gunzip | undefined;
 
-        const clearTimeouts = (): void => {
+        const cleanup = (): void => {
           clearTimeout(connectTimeout);
           clearTimeout(responseTimeout as NodeJS.Timeout);
+
+          if (gunzip) {
+            gunzip.destroy();
+          }
         };
 
         const onError = (error: Error): void => {
-          clearTimeouts();
+          cleanup();
           resolve({ status: 0, content: error.message, isTimedOut: false });
         };
 
@@ -84,7 +90,7 @@ export function createNodeHttpRequester({
           };
 
           const onEnd = (): void => {
-            clearTimeouts();
+            cleanup();
 
             resolve({
               status: response.statusCode || 0,
@@ -96,7 +102,7 @@ export function createNodeHttpRequester({
           response.on('error', onError);
 
           if (isGzipResponse) {
-            const gunzip = zlib.createGunzip();
+            gunzip = zlib.createGunzip();
 
             response.pipe(gunzip);
 
@@ -112,6 +118,10 @@ export function createNodeHttpRequester({
         const createTimeout = (timeout: number, content: string): NodeJS.Timeout => {
           return setTimeout(() => {
             req.abort();
+
+            if (gunzip) {
+              gunzip.destroy();
+            }
 
             resolve({
               status: 0,
