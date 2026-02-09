@@ -127,11 +127,10 @@ export function createNodeHttpRequester({
         });
 
         if (request.data !== undefined) {
-          if (shouldCompress) {
-            req.write(zlib.gzipSync(request.data));
-          } else {
-            req.write(request.data);
-          }
+          const body = shouldCompress ? zlib.gzipSync(request.data) : request.data;
+
+          req.setHeader('content-length', Buffer.byteLength(body));
+          req.write(body);
         }
 
         req.end();
