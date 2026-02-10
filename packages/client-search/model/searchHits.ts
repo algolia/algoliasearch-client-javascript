@@ -11,10 +11,10 @@ export type SearchHits<T = Record<string, unknown>> = Record<string, any> & {
   /**
    * Search query.
    */
-  query: string;
+  query?: string | undefined;
 
   /**
    * URL-encoded string of all search parameters.
    */
-  params: string;
+  params?: string | undefined;
 };
