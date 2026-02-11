@@ -140,14 +140,26 @@ export function createNodeHttpRequester({
           responseTimeout = createTimeout(request.responseTimeout, 'Socket timeout');
         });
 
-        if (request.data !== undefined) {
-          const body = shouldCompress ? zlib.gzipSync(request.data) : request.data;
+        if (request.data !== undefined && shouldCompress) {
+          zlib.gzip(request.data, (error, compressedBody) => {
+            if (error) {
+              onError(error);
 
-          req.setHeader('content-length', Buffer.byteLength(body));
-          req.write(body);
+              return;
+            }
+
+            req.setHeader('content-length', compressedBody.byteLength);
+            req.write(compressedBody);
+            req.end();
+          });
+        } else {
+          if (request.data !== undefined) {
+            req.setHeader('content-length', Buffer.byteLength(request.data));
+            req.write(request.data);
+          }
+
+          req.end();
         }
-
-        req.end();
       });
     },
 
