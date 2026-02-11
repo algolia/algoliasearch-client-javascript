@@ -2,6 +2,7 @@ import { MethodEnum, Request } from '@algolia/requester-common';
 import nock from 'nock';
 // @ts-ignore
 import { Readable } from 'readable-stream';
+import * as zlib from 'zlib';
 
 import { createNodeHttpRequester } from '../..';
 
@@ -277,5 +278,207 @@ describe('requesterOptions', () => {
 
     expect(response.status).toBe(200);
     expect(response.content).toBe(body);
+  });
+});
+
+describe('gzip compression', () => {
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
+  // Build a payload >= 1KB to exceed the compression threshold
+  const largePayload: Record<string, string> = {};
+  for (let i = 0; i < 50; i++) {
+    largePayload[`key${i}`] = `value${i}_padding`;
+  }
+
+  const gzipRequestStub: Request = {
+    url: 'https://algolia-dns.net/foo?x-algolia-header=foo',
+    method: MethodEnum.Post,
+    headers: {
+      'accept-encoding': 'gzip',
+      'content-type': 'application/json',
+    },
+    data: JSON.stringify(largePayload),
+    responseTimeout: 2,
+    connectTimeout: 1,
+  };
+
+  const isGzipBodyMatching = (expected: string) => (body: string): boolean => {
+    const decompressed = zlib.gunzipSync(Buffer.from(body, 'hex')).toString();
+
+    return decompressed === expected;
+  };
+
+  it('compresses request body when accept-encoding: gzip header is present', async () => {
+    const expectedBody = JSON.stringify(largePayload);
+
+    nock('https://algolia-dns.net', {
+      reqheaders: {
+        'content-encoding': 'gzip',
+        'accept-encoding': 'gzip',
+      },
+    })
+      .post('/foo', isGzipBodyMatching(expectedBody))
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, 'ok');
+
+    const response = await requester.send(gzipRequestStub);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe('ok');
+  });
+
+  it('does not compress request body when accept-encoding header is absent', async () => {
+    const body = JSON.stringify({ foo: 'bar' });
+
+    nock('https://algolia-dns.net')
+      .post('/foo', body)
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, 'ok');
+
+    const response = await requester.send(requestStub);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe('ok');
+  });
+
+  it('decompresses gzip response when content-encoding: gzip header is present', async () => {
+    const responseBody = JSON.stringify({ foo: 'bar' });
+    const gzipBuffer = zlib.gzipSync(responseBody);
+
+    nock('https://algolia-dns.net')
+      .post('/foo')
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, gzipBuffer, { 'content-encoding': 'gzip' });
+
+    const response = await requester.send(gzipRequestStub);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe(responseBody);
+    expect(response.isTimedOut).toBe(false);
+  });
+
+  it('does not decompress response when content-encoding header is absent', async () => {
+    const responseBody = JSON.stringify({ hello: 'world' });
+
+    nock('https://algolia-dns.net', {
+      reqheaders: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+    })
+      .post('/foo', JSON.stringify({ foo: 'bar' }))
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, responseBody);
+
+    const response = await requester.send(requestStub);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe(responseBody);
+    expect(response.isTimedOut).toBe(false);
+  });
+
+  it('handles decompression errors gracefully', async () => {
+    const invalidGzipData = Buffer.from('not-gzip-data');
+
+    nock('https://algolia-dns.net')
+      .post('/foo')
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, invalidGzipData, { 'content-encoding': 'gzip' });
+
+    const response = await requester.send(gzipRequestStub);
+
+    expect(response.status).toBe(0);
+    expect(response.isTimedOut).toBe(false);
+    expect(response.content).toBeTruthy();
+  });
+
+  it('does not compress request body when data is undefined', async () => {
+    const getRequest: Request = {
+      url: 'https://algolia-dns.net/foo?x-algolia-header=foo',
+      method: MethodEnum.Get,
+      headers: {
+        'accept-encoding': 'gzip',
+      },
+      data: undefined,
+      responseTimeout: 2,
+      connectTimeout: 1,
+    };
+
+    nock('https://algolia-dns.net')
+      .get('/foo')
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, 'ok');
+
+    const response = await requester.send(getRequest);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe('ok');
+  });
+
+  it('handles accept-encoding with multiple values (gzip, deflate)', async () => {
+    const multiEncodingRequest: Request = {
+      ...gzipRequestStub,
+      headers: {
+        'accept-encoding': 'gzip, deflate',
+        'content-type': 'application/json',
+      },
+    };
+
+    const expectedBody = JSON.stringify(largePayload);
+
+    nock('https://algolia-dns.net', {
+      reqheaders: {
+        'content-encoding': 'gzip',
+      },
+    })
+      .post('/foo', isGzipBodyMatching(expectedBody))
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, 'ok');
+
+    const response = await requester.send(multiEncodingRequest);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe('ok');
+  });
+
+  it('does not compress request body when below size threshold', async () => {
+    const smallBody = JSON.stringify({ foo: 'bar' });
+    const smallRequest: Request = {
+      ...gzipRequestStub,
+      data: smallBody,
+    };
+
+    nock('https://algolia-dns.net')
+      .post('/foo', smallBody)
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, 'ok');
+
+    const response = await requester.send(smallRequest);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe('ok');
+  });
+
+  it('full round-trip: compressed request + gzip response', async () => {
+    const requestBody = JSON.stringify(largePayload);
+    const responseBody = JSON.stringify({ result: 'success' });
+    const gzipResponseBuffer = zlib.gzipSync(responseBody);
+
+    nock('https://algolia-dns.net', {
+      reqheaders: {
+        'content-encoding': 'gzip',
+        'accept-encoding': 'gzip',
+      },
+    })
+      .post('/foo', isGzipBodyMatching(requestBody))
+      .query({ 'x-algolia-header': 'foo' })
+      .reply(200, gzipResponseBuffer, { 'content-encoding': 'gzip' });
+
+    const response = await requester.send(gzipRequestStub);
+
+    expect(response.status).toBe(200);
+    expect(response.content).toBe(responseBody);
+    expect(response.isTimedOut).toBe(false);
   });
 });
