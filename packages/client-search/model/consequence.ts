@@ -2,6 +2,7 @@
 
 import type { ConsequenceHide } from './consequenceHide';
 import type { ConsequenceParams } from './consequenceParams';
+import type { ConsequenceRedirect } from './consequenceRedirect';
 import type { Promote } from './promote';
 
 /**
@@ -24,6 +25,8 @@ export type Consequence = {
    * Records you want to hide from the search results.
    */
   hide?: Array<ConsequenceHide> | undefined;
+
+  redirect?: ConsequenceRedirect | undefined;
 
   /**
    * A JSON object with custom data that will be appended to the `userData` array in the response. This object isn\'t interpreted by the API and is limited to 1&nbsp;kB of minified JSON.

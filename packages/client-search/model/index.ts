@@ -46,6 +46,7 @@ export * from './consequenceHide';
 export * from './consequenceParams';
 export * from './consequenceQuery';
 export * from './consequenceQueryObject';
+export * from './consequenceRedirect';
 export * from './createdAtResponse';
 export * from './cursor';
 export * from './deleteApiKeyResponse';
