@@ -2,6 +2,17 @@ import { Cache, CacheEvents } from '@algolia/cache-common';
 
 import { BrowserLocalStorageCacheItem, BrowserLocalStorageOptions } from '.';
 
+function yieldToMain(): Promise<void> {
+  // eslint-disable-next-line no-undef
+  const g: any = typeof globalThis !== 'undefined' ? globalThis : undefined;
+
+  if (g?.scheduler?.yield) {
+    return g.scheduler.yield();
+  }
+
+  return new Promise(resolve => setTimeout(resolve, 0));
+}
+
 export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptions): Cache {
   const namespaceKey = `algoliasearch-client-js-${options.key}`;
 
@@ -23,30 +34,23 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
     getStorage().setItem(namespaceKey, JSON.stringify(namespace));
   };
 
-  const removeOutdatedCacheItems = () => {
+  const getFilteredNamespace = (): Record<string, BrowserLocalStorageCacheItem> => {
     const timeToLive = options.timeToLive ? options.timeToLive * 1000 : null;
     const namespace = getNamespace<BrowserLocalStorageCacheItem>();
 
-    const filteredNamespaceWithoutOldFormattedCacheItems = Object.fromEntries(
+    return Object.fromEntries(
       Object.entries(namespace).filter(([, cacheItem]) => {
-        return cacheItem.timestamp !== undefined;
+        if (cacheItem.timestamp === undefined) {
+          return false;
+        }
+
+        if (!timeToLive) {
+          return true;
+        }
+
+        return cacheItem.timestamp + timeToLive >= new Date().getTime();
       })
     );
-
-    setNamespace(filteredNamespaceWithoutOldFormattedCacheItems);
-
-    if (!timeToLive) return;
-
-    const filteredNamespaceWithoutExpiredItems = Object.fromEntries(
-      Object.entries(filteredNamespaceWithoutOldFormattedCacheItems).filter(([, cacheItem]) => {
-        const currentTimestamp = new Date().getTime();
-        const isExpired = cacheItem.timestamp + timeToLive < currentTimestamp;
-
-        return !isExpired;
-      })
-    );
-
-    setNamespace(filteredNamespaceWithoutExpiredItems);
   };
 
   return {
@@ -57,25 +61,33 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
         miss: () => Promise.resolve(),
       }
     ): Readonly<Promise<TValue>> {
-      return Promise.resolve()
-        .then(() => {
-          removeOutdatedCacheItems();
+      return Promise.resolve().then(async () => {
+        await yieldToMain();
 
-          const keyAsString = JSON.stringify(key);
+        const namespace = getFilteredNamespace();
+        const keyAsString = JSON.stringify(key);
+        const cachedItem = namespace[keyAsString];
 
-          return getNamespace<Promise<BrowserLocalStorageCacheItem>>()[keyAsString];
-        })
-        .then(value => {
-          return Promise.all([value ? value.value : defaultValue(), value !== undefined]);
-        })
-        .then(([value, exists]) => {
-          return Promise.all([value, exists || events.miss(value)]);
-        })
-        .then(([value]) => value);
+        setNamespace(namespace);
+
+        // eslint-disable-next-line functional/no-let
+        let value: TValue;
+
+        if (cachedItem) {
+          value = cachedItem.value;
+        } else {
+          value = await defaultValue();
+          await events.miss(value);
+        }
+
+        return value;
+      });
     },
 
     set<TValue>(key: object | string, value: TValue): Readonly<Promise<TValue>> {
-      return Promise.resolve().then(() => {
+      return Promise.resolve().then(async () => {
+        await yieldToMain();
+
         const namespace = getNamespace();
 
         // eslint-disable-next-line functional/immutable-data
@@ -91,7 +103,9 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
     },
 
     delete(key: object | string): Readonly<Promise<void>> {
-      return Promise.resolve().then(() => {
+      return Promise.resolve().then(async () => {
+        await yieldToMain();
+
         const namespace = getNamespace();
 
         // eslint-disable-next-line functional/immutable-data
