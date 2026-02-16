@@ -61,33 +61,27 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
         miss: () => Promise.resolve(),
       }
     ): Readonly<Promise<TValue>> {
-      return Promise.resolve().then(async () => {
-        await yieldToMain();
-
+      return yieldToMain().then(() => {
         const namespace = getFilteredNamespace();
         const keyAsString = JSON.stringify(key);
         const cachedItem = namespace[keyAsString];
 
         setNamespace(namespace);
 
-        // eslint-disable-next-line functional/no-let
-        let value: TValue;
-
         if (cachedItem) {
-          value = cachedItem.value;
-        } else {
-          value = await defaultValue();
-          await events.miss(value);
+          return cachedItem.value as TValue;
         }
 
-        return value;
+        // eslint-disable-next-line promise/no-nesting
+        return defaultValue().then((value: TValue) => {
+          // eslint-disable-next-line promise/no-nesting
+          return events.miss(value).then(() => value);
+        });
       });
     },
 
     set<TValue>(key: object | string, value: TValue): Readonly<Promise<TValue>> {
-      return Promise.resolve().then(async () => {
-        await yieldToMain();
-
+      return yieldToMain().then(() => {
         const namespace = getNamespace();
 
         // eslint-disable-next-line functional/immutable-data
@@ -103,9 +97,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
     },
 
     delete(key: object | string): Readonly<Promise<void>> {
-      return Promise.resolve().then(async () => {
-        await yieldToMain();
-
+      return yieldToMain().then(() => {
         const namespace = getNamespace();
 
         // eslint-disable-next-line functional/immutable-data
