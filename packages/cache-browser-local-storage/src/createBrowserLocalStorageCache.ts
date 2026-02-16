@@ -6,7 +6,7 @@ function yieldToMain(): Promise<void> {
   // eslint-disable-next-line no-undef
   const g: any = typeof globalThis !== 'undefined' ? globalThis : undefined;
 
-  if (g?.scheduler?.yield) {
+  if (g && g.scheduler && g.scheduler.yield) {
     return g.scheduler.yield();
   }
 
