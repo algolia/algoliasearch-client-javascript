@@ -98,10 +98,18 @@ export type TransporterOptions = {
   requester: Requester;
 
   /**
-   * The cache of the requests. When requests are
-   * `cacheable`, the returned promised persists
-   * in this cache to shared in similar requests
-   * before being resolved.
+   * Cache used to store in-flight requests.
+   * When a request is marked as `cacheable`, its returned Promise
+   * is stored in this cache so that identical requests can share
+   * the same Promise before it resolves.
+   *
+   * @warning
+   * The provided cache **must not** serialize stored values.
+   *
+   * Since in-flight requests are stored as Promises (which cannot be
+   * serialized to JSON), using a serializing cache will cause failures.
+   *
+   * Make sure to use a non-serializing cache implementation, such as `createMemoryCache({ serializable: false })` or to disable request caching with `createNullCache()`
    */
   requestsCache: Cache;
 
