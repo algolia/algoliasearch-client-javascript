@@ -31,7 +31,7 @@ import type {
   GetUsersProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '0.0.1-alpha.28';
+export const apiClientVersion = '0.0.1-alpha.29';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];

@@ -1,3 +1,7 @@
+## [5.48.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.48.1...5.48.2)
+
+- [19df12f31](https://github.com/algolia/api-clients-automation/commit/19df12f31) fix(javascript): Added warning in comment ([#5961](https://github.com/algolia/api-clients-automation/pull/5961)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [5.48.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.48.0...5.48.1)
 
 - [46be49a3f](https://github.com/algolia/api-clients-automation/commit/46be49a3f) docs(specs): align with style guides ([#5930](https://github.com/algolia/api-clients-automation/pull/5930)) by [@kai687](https://github.com/kai687/)
