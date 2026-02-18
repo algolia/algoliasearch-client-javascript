@@ -50,6 +50,7 @@ export * from './facetFilters';
 export * from './facetHits';
 export * from './facetOrdering';
 export * from './facetStats';
+export * from './feedInjection';
 export * from './getTaskResponse';
 export * from './highlightResult';
 export * from './highlightResultOption';
