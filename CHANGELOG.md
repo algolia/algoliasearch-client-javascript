@@ -1,3 +1,9 @@
+## [v4.26.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.25.3...4.26.0)
+
+* feat(requester-node-http): add gzip compression for requests and response decompression (#1603) ([9c9ead9](https://github.com/algolia/algoliasearch-client-javascript/commit/9c9ead9)), closes [#1603](https://github.com/algolia/algoliasearch-client-javascript/issues/1603)
+
+
+
 ## [v4.25.3](https://github.com/algolia/algoliasearch-client-javascript/compare/4.25.2...4.25.3)
 
 * fix: always delete temporary index in replaceAllObjects (#1598) ([83ea90f](https://github.com/algolia/algoliasearch-client-javascript/commit/83ea90f)), closes [#1598](https://github.com/algolia/algoliasearch-client-javascript/issues/1598)
