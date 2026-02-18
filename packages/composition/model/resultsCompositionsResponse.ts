@@ -3,5 +3,10 @@
 import type { ResultsCompositionInfoResponse } from './resultsCompositionInfoResponse';
 
 export type ResultsCompositionsResponse = {
+  /**
+   * The ID of the feed.
+   */
+  feedID?: string | undefined;
+
   compositions: { [key: string]: ResultsCompositionInfoResponse };
 };
