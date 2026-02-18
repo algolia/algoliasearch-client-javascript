@@ -1,3 +1,9 @@
+## [5.49.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.48.2...5.49.0)
+
+- [6d03afc03](https://github.com/algolia/api-clients-automation/commit/6d03afc03) chore(deps): dependencies 2026-02-16 ([#5965](https://github.com/algolia/api-clients-automation/pull/5965)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [93c834fee](https://github.com/algolia/api-clients-automation/commit/93c834fee) feat(specs): add optional feedID to composition result set ([#5991](https://github.com/algolia/api-clients-automation/pull/5991)) by [@gavinwade12](https://github.com/gavinwade12/)
+- [9aafd690b](https://github.com/algolia/api-clients-automation/commit/9aafd690b) fix(specs): invalid API format for multi feed in Comp API ([#5993](https://github.com/algolia/api-clients-automation/pull/5993)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+
 ## [5.48.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.48.1...5.48.2)
 
 - [19df12f31](https://github.com/algolia/api-clients-automation/commit/19df12f31) fix(javascript): Added warning in comment ([#5961](https://github.com/algolia/api-clients-automation/pull/5961)) by [@eric-zaharia](https://github.com/eric-zaharia/)
