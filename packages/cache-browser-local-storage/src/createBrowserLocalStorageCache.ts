@@ -7,7 +7,9 @@ function yieldToMain(): Promise<void> {
   const g: any = typeof globalThis !== 'undefined' ? globalThis : undefined;
 
   if (g && g.scheduler && g.scheduler.yield) {
-    return g.scheduler.yield();
+    return g.scheduler.yield().catch(() => {
+      return new Promise(resolve => setTimeout(resolve, 0));
+    });
   }
 
   return new Promise(resolve => setTimeout(resolve, 0));
@@ -37,10 +39,11 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
   const getFilteredNamespace = (): Record<string, BrowserLocalStorageCacheItem> => {
     const timeToLive = options.timeToLive ? options.timeToLive * 1000 : null;
     const namespace = getNamespace<BrowserLocalStorageCacheItem>();
+    const currentTime = new Date().getTime();
 
     return Object.fromEntries(
       Object.entries(namespace).filter(([, cacheItem]) => {
-        if (cacheItem.timestamp === undefined) {
+        if (!cacheItem || cacheItem.timestamp === undefined) {
           return false;
         }
 
@@ -48,7 +51,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
           return true;
         }
 
-        return cacheItem.timestamp + timeToLive >= new Date().getTime();
+        return cacheItem.timestamp + timeToLive >= currentTime;
       })
     );
   };
@@ -75,7 +78,10 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
         // eslint-disable-next-line promise/no-nesting
         return defaultValue().then((value: TValue) => {
           // eslint-disable-next-line promise/no-nesting
-          return events.miss(value).then(() => value);
+          return events
+            .miss(value)
+            .catch(error => console.error(error)) // eslint-disable-line no-console
+            .then(() => value);
         });
       });
     },
