@@ -7,7 +7,10 @@ function yieldToMain(): Promise<void> {
   const g: any = typeof globalThis !== 'undefined' ? globalThis : undefined;
 
   if (g && g.scheduler && g.scheduler.yield) {
-    return g.scheduler.yield().catch(() => {
+    return g.scheduler.yield().catch((error: any) => {
+      // eslint-disable-next-line no-console
+      console.error('Failed to yield to main: ', error);
+
       return new Promise(resolve => setTimeout(resolve, 0));
     });
   }
@@ -76,13 +79,7 @@ export function createBrowserLocalStorageCache(options: BrowserLocalStorageOptio
         }
 
         // eslint-disable-next-line promise/no-nesting
-        return defaultValue().then((value: TValue) => {
-          // eslint-disable-next-line promise/no-nesting
-          return events
-            .miss(value)
-            .catch(error => console.error(error)) // eslint-disable-line no-console
-            .then(() => value);
-        });
+        return defaultValue().then((value: TValue) => events.miss(value).then(() => value));
       });
     },
 
