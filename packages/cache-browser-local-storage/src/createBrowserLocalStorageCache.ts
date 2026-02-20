@@ -3,18 +3,6 @@ import { Cache, CacheEvents } from '@algolia/cache-common';
 import { BrowserLocalStorageCacheItem, BrowserLocalStorageOptions } from '.';
 
 function yieldToMain(): Promise<void> {
-  // eslint-disable-next-line no-undef
-  const g: any = typeof globalThis !== 'undefined' ? globalThis : undefined;
-
-  if (g && g.scheduler && g.scheduler.yield) {
-    return g.scheduler.yield().catch((error: any) => {
-      // eslint-disable-next-line no-console
-      console.error('Failed to yield to main: ', error);
-
-      return new Promise(resolve => setTimeout(resolve, 0));
-    });
-  }
-
   return new Promise(resolve => setTimeout(resolve, 0));
 }
 
