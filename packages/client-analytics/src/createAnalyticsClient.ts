@@ -29,6 +29,8 @@ export const createAnalyticsClient: CreateClient<
       ...auth.queryParameters(),
       ...options.queryParameters,
     },
+
+    data: auth.data(),
   });
 
   const appId = options.appId;

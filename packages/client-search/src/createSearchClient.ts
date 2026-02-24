@@ -44,6 +44,8 @@ export const createSearchClient: CreateClient<
       ...auth.queryParameters(),
       ...options.queryParameters,
     },
+
+    data: auth.data(),
   });
 
   const base = {
