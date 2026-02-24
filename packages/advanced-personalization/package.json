@@ -58,7 +58,7 @@
     "@arethetypeswrong/cli": "0.18.2",
     "@types/node": "25.1.0",
     "publint": "0.3.17",
-    "rollup": "4.57.1",
+    "rollup": "4.58.0",
     "tsup": "8.5.1",
     "typescript": "5.9.3"
   },
