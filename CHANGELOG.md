@@ -1,3 +1,7 @@
+## [5.49.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.49.0...5.49.1)
+
+- [969c6b510](https://github.com/algolia/api-clients-automation/commit/969c6b510) chore(deps): dependencies 2026-02-23 ([#5999](https://github.com/algolia/api-clients-automation/pull/5999)) by [@algolia-bot](https://github.com/algolia-bot/)
+
 ## [5.49.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.48.2...5.49.0)
 
 - [6d03afc03](https://github.com/algolia/api-clients-automation/commit/6d03afc03) chore(deps): dependencies 2026-02-16 ([#5965](https://github.com/algolia/api-clients-automation/pull/5965)) by [@algolia-bot](https://github.com/algolia-bot/)
