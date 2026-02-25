@@ -38,4 +38,6 @@ export type Rule = {
   tags?: Array<string> | undefined;
 
   scope?: string | undefined;
+
+  condition?: Condition | undefined;
 };
