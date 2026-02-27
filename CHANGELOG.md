@@ -1,3 +1,9 @@
+## [v4.27.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.26.0...4.27.0)
+
+* fix(js): fixed caching performance issues (#1604) ([83878ef](https://github.com/algolia/algoliasearch-client-javascript/commit/83878ef)), closes [#1604](https://github.com/algolia/algoliasearch-client-javascript/issues/1604)
+
+
+
 ## [v4.26.0](https://github.com/algolia/algoliasearch-client-javascript/compare/4.25.3...4.26.0)
 
 * feat(requester-node-http): add gzip compression for requests and response decompression (#1603) ([9c9ead9](https://github.com/algolia/algoliasearch-client-javascript/commit/9c9ead9)), closes [#1603](https://github.com/algolia/algoliasearch-client-javascript/issues/1603)
