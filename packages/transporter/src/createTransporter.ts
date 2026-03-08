@@ -21,6 +21,7 @@ export function createTransporter(options: TransporterOptions): Transporter {
     hosts,
     queryParameters,
     headers,
+    data,
   } = options;
 
   const transporter: Transporter = {
@@ -33,6 +34,7 @@ export function createTransporter(options: TransporterOptions): Transporter {
     userAgent,
     headers,
     queryParameters,
+    data,
     hosts: hosts.map(host => createStatelessHost(host)),
     read<TResponse>(
       request: Request,
@@ -40,7 +42,7 @@ export function createTransporter(options: TransporterOptions): Transporter {
     ): Readonly<Promise<TResponse>> {
       /**
        * First, we compute the user request options. Now, keep in mind,
-       * that using request options the user is able to modified the intire
+       * that using request options the user is able to modified the entire
        * payload of the request. Such as headers, query parameters, and others.
        */
       const mappedRequestOptions = createMappedRequestOptions(
@@ -73,7 +75,7 @@ export function createTransporter(options: TransporterOptions): Transporter {
           : request.cacheable;
 
       /**
-       * If is not "cacheable", we immediatly trigger the retryable request, no
+       * If is not "cacheable", we immediately trigger the retryable request, no
        * need to check cache implementations.
        */
       if (cacheable !== true) {
@@ -96,7 +98,7 @@ export function createTransporter(options: TransporterOptions): Transporter {
 
       /**
        * With the computed key, we first ask the responses cache
-       * implemention if this request was been resolved before.
+       * implementation if this request was been resolved before.
        */
       return transporter.responsesCache.get(
         key,
