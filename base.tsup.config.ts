@@ -17,7 +17,7 @@ type Requester = keyof typeof requesters;
 
 export function getBaseConfig(cwd: string): Options {
   return {
-    clean: true,
+    clean: false,
     sourcemap: true,
     splitting: false,
     tsconfig: path.resolve(cwd, 'tsconfig.json'),
