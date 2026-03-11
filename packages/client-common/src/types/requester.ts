@@ -41,7 +41,7 @@ export type EndRequest = Pick<Request, 'headers' | 'method'> & {
    * The response timeout, in milliseconds.
    */
   responseTimeout: number;
-  data?: string | undefined;
+  data?: string | Uint8Array | undefined;
 };
 
 export type Response = {

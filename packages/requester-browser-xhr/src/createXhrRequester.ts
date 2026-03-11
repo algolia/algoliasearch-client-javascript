@@ -59,7 +59,7 @@ export function createXhrRequester(): Requester {
         });
       };
 
-      baseRequester.send(request.data);
+      baseRequester.send(request.data as XMLHttpRequestBodyInit | null | undefined);
     });
   }
 

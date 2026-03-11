@@ -32,7 +32,7 @@ export function createFetchRequester({ requesterOptions = {} }: FetchRequesterOp
     try {
       fetchRes = await fetch(request.url, {
         method: request.method,
-        body: request.data || null,
+        body: (request.data as BodyInit) || null,
         redirect: 'manual',
         signal,
         ...requesterOptions,

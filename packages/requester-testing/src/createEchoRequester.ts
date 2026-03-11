@@ -63,7 +63,7 @@ export function createEchoRequester({ getURL, status = 200 }: EchoRequesterParam
 
     const content: EchoResponse = {
       ...request,
-      data: request.data ? JSON.parse(request.data) : undefined,
+      data: request.data ? JSON.parse(request.data as string) : undefined,
       path,
       host,
       algoliaAgent,

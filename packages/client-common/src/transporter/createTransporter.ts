@@ -9,6 +9,7 @@ import type {
   Transporter,
   TransporterOptions,
 } from '../types';
+import { compress, COMPRESSION_THRESHOLD } from './compress';
 import { createStatefulHost } from './createStatefulHost';
 import { RetryError } from './errors';
 import { deserializeFailure, deserializeSuccess, serializeData, serializeHeaders, serializeUrl } from './helpers';
@@ -31,6 +32,7 @@ export function createTransporter({
   requester,
   requestsCache,
   responsesCache,
+  compression,
 }: TransporterOptions): Transporter {
   async function createRetryableOptions(compatibleHosts: Host[]): Promise<RetryableOptions> {
     const statefulHosts = await Promise.all(
@@ -79,8 +81,19 @@ export function createTransporter({
     /**
      * First we prepare the payload that do not depend from hosts.
      */
-    const data = serializeData(request, requestOptions);
+    const serializedData = serializeData(request, requestOptions);
     const headers = serializeHeaders(baseHeaders, request.headers, requestOptions.headers);
+
+    const shouldCompress =
+      compression === 'gzip' &&
+      serializedData !== undefined &&
+      serializedData.length > COMPRESSION_THRESHOLD &&
+      (request.method === 'POST' || request.method === 'PUT');
+
+    const data = shouldCompress ? compress(serializedData) : serializedData;
+    if (shouldCompress) {
+      headers['content-encoding'] = 'gzip';
+    }
 
     // On `GET`, the data is proxied to query parameters.
     const dataQueryParameters: QueryParameters =
