@@ -1,6 +1,7 @@
 import http from 'http';
 import https from 'https';
 import { URL } from 'url';
+import zlib from 'zlib';
 
 import type { EndRequest, Requester, Response } from '@algolia/client-common';
 
@@ -41,6 +42,7 @@ export function createHttpRequester({
         method: request.method,
         ...requesterOptions,
         headers: {
+          'accept-encoding': 'gzip',
           ...request.headers,
           ...requesterOptions.headers,
         },
@@ -61,9 +63,14 @@ export function createHttpRequester({
           clearTimeout(connectTimeout as NodeJS.Timeout);
           clearTimeout(responseTimeout as NodeJS.Timeout);
 
+          let buffer = Buffer.concat(contentBuffers);
+          if (response.headers['content-encoding'] === 'gzip') {
+            buffer = zlib.gunzipSync(buffer);
+          }
+
           resolve({
             status: response.statusCode || 0,
-            content: Buffer.concat(contentBuffers).toString(),
+            content: buffer.toString(),
             isTimedOut: false,
           });
         });
