@@ -6,7 +6,7 @@ import pkg from './package.json' with { type: 'json' };
 
 export default defineConfig([
   {
-    ...getBaseNodeOptions(pkg, __dirname),
+    ...getBaseNodeOptions(pkg, __dirname, 'http', 'es2018'),
     format: 'cjs',
     name: 'node cjs',
     entry: { 'requester.fetch.node': 'src/index.ts' },

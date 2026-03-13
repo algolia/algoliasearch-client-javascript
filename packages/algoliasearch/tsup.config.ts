@@ -16,6 +16,7 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'cjs',
+    target: 'es2018',
     name: `node ${pkg.name} cjs`,
   },
   {
@@ -26,6 +27,7 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'cjs',
+    target: 'es2018',
     name: 'node algoliasearch cjs',
     dts: { entry: { node: 'builds/node.ts' } },
     entry: ['builds/node.ts'],

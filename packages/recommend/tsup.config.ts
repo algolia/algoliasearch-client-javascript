@@ -15,6 +15,7 @@ const nodeConfigs: Options[] = [
   {
     ...nodeOptions,
     format: 'cjs',
+    target: 'es2018',
     name: `node ${pkg.name} cjs`,
   },
   {

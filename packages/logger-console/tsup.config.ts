@@ -6,7 +6,7 @@ import pkg from './package.json' with { type: 'json' };
 
 export default defineConfig([
   {
-    ...getBaseNodeOptions(pkg, __dirname),
+    ...getBaseNodeOptions(pkg, __dirname, 'http', 'es2018'),
     format: 'cjs',
     dts: { entry: { logger: 'src/logger.ts' } },
     entry: { logger: 'src/logger.ts' },
