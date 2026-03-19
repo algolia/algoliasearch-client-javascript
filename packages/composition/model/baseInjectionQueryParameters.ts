@@ -37,11 +37,6 @@ export type BaseInjectionQueryParameters = {
   alternativesAsExact?: Array<AlternativesAsExact> | undefined;
 
   /**
-   * Whether this search will be included in Analytics.
-   */
-  analytics?: boolean | undefined;
-
-  /**
    * Whether the best matching attribute should be determined by minimum proximity This setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting. If true, the best matching attribute is selected based on the minimum proximity of multiple matches. Otherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.
    */
   attributeCriteriaComputedByMinProximity?: boolean | undefined;
@@ -65,11 +60,6 @@ export type BaseInjectionQueryParameters = {
    * Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started).
    */
   clickAnalytics?: boolean | undefined;
-
-  /**
-   * Whether to split compound words in the query into their building blocks For more information, see [Word segmentation](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/in-depth/language-specific-configurations/#splitting-compound-words). Word segmentation is supported for these languages: German, Dutch, Finnish, Swedish, and Norwegian. Decompounding doesn\'t work for words with [non-spacing mark Unicode characters](https://www.charactercodes.net/category/non-spacing_mark). For example, `Gartenstühle` won\'t be decompounded if the `ü` consists of `u` (U+0075) and `◌̈` (U+0308).
-   */
-  decompoundQuery?: boolean | undefined;
 
   /**
    * Searchable attributes for which you want to [turn off the Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes). Attribute names are case-sensitive This can be useful for attributes with long values, where the likelihood of an exact match is high, such as product descriptions. Turning off the Exact ranking criterion for these attributes favors exact matching on other attributes. This reduces the impact of individual attributes with a lot of content on ranking.
@@ -128,11 +118,6 @@ export type BaseInjectionQueryParameters = {
   highlightPreTag?: string | undefined;
 
   ignorePlurals?: IgnorePlurals | undefined;
-
-  /**
-   * Maximum number of facet values to return when [searching for facet values](https://www.algolia.com/doc/guides/managing-results/refine-results/faceting/#search-for-facet-values).
-   */
-  maxFacetHits?: number | undefined;
 
   /**
    * Minimum proximity score for two matching words This adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity) by equally scoring matches that are farther apart For example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.
