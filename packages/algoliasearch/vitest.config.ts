@@ -1,6 +1,7 @@
-import { defineWorkersConfig } from '@cloudflare/vitest-pool-workers/config';
+import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
+import { defineConfig } from 'vitest/config';
 
-export default defineWorkersConfig({
+export default defineConfig({
   test: {
     projects: [
       {
@@ -37,6 +38,7 @@ export default defineWorkersConfig({
         },
       },
       {
+        plugins: [cloudflareTest({ miniflare: {} })],
         resolve: {
           alias: {
             '@algolia/client-search': '../../client-search/builds/fetch',
@@ -45,12 +47,10 @@ export default defineWorkersConfig({
         test: {
           include: ['__tests__/algoliasearch.fetch.test.ts'],
           name: 'miniflare fetch',
-          poolOptions: {
-            workers: {},
-          },
         },
       },
       {
+        plugins: [cloudflareTest({ miniflare: {} })],
         resolve: {
           alias: {
             '@algolia/client-search': '../../client-search/builds/worker',
@@ -59,9 +59,6 @@ export default defineWorkersConfig({
         test: {
           include: ['__tests__/algoliasearch.worker.test.ts'],
           name: 'miniflare worker',
-          poolOptions: {
-            workers: {},
-          },
         },
       },
     ],
