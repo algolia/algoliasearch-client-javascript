@@ -1,3 +1,12 @@
+## [5.50.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.49.2...5.50.0)
+
+- [2d6c9b2727](https://github.com/algolia/api-clients-automation/commit/2d6c9b2727) feat(javascript): Implement gzip compression ([#6052](https://github.com/algolia/api-clients-automation/pull/6052)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [a196c9cf73](https://github.com/algolia/api-clients-automation/commit/a196c9cf73) feat(clients): response decompression ([#6095](https://github.com/algolia/api-clients-automation/pull/6095)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [1ad4bcd99b](https://github.com/algolia/api-clients-automation/commit/1ad4bcd99b) fix(javascript): Update Node options to target ES2018 ([#6101](https://github.com/algolia/api-clients-automation/pull/6101)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
+- [600f157a13](https://github.com/algolia/api-clients-automation/commit/600f157a13) fix(specs): remove query parameter that are not accepted by the Composition API ([#6128](https://github.com/algolia/api-clients-automation/pull/6128)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [90d96d575a](https://github.com/algolia/api-clients-automation/commit/90d96d575a) chore(deps): dependencies 2026-03-16 ([#6102](https://github.com/algolia/api-clients-automation/pull/6102)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [6064369533](https://github.com/algolia/api-clients-automation/commit/6064369533) fix(javascript): move gzip compression to node-only builds, remove fflate ([#6154](https://github.com/algolia/api-clients-automation/pull/6154)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.49.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.49.1...5.49.2)
 
 - [505136c9d](https://github.com/algolia/api-clients-automation/commit/505136c9d) fix(specs): add deprecated field `condition` in rule schemas ([#5983](https://github.com/algolia/api-clients-automation/pull/5983)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
