@@ -2,6 +2,8 @@
 
 export type SearchClient = ReturnType<typeof createSearchClient> & SearchClientNodeHelpers;
 
+import { gzipSync } from 'node:zlib';
+
 import { createHmac } from 'node:crypto';
 
 import {
@@ -59,6 +61,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
+      compress: async (data: string): Promise<Uint8Array> => gzipSync(Buffer.from(data)),
       ...options,
     }),
     /**

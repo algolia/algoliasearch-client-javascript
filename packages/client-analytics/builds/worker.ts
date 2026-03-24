@@ -36,6 +36,8 @@ export function analyticsClient(
     throw new Error(`\`region\` must be one of the following: ${REGIONS.join(', ')}`);
   }
 
+  const { compression: _compression, ...workerOptions } = options || {};
+
   return {
     ...createAnalyticsClient({
       appId,
@@ -52,7 +54,7 @@ export function analyticsClient(
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
-      ...options,
+      ...workerOptions,
     }),
   };
 }

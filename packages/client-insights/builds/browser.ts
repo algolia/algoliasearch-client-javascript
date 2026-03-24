@@ -39,6 +39,8 @@ export function insightsClient(
     throw new Error(`\`region\` must be one of the following: ${REGIONS.join(', ')}`);
   }
 
+  const { compression: _compression, ...browserOptions } = options || {};
+
   return createInsightsClient({
     appId,
     apiKey,
@@ -57,7 +59,7 @@ export function insightsClient(
     hostsCache: createFallbackableCache({
       caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
-    ...options,
+    ...browserOptions,
   });
 }
 

@@ -29,6 +29,8 @@ export function compositionClient(
     throw new Error('`apiKey` is missing.');
   }
 
+  const { compression: _compression, ...browserOptions } = options || {};
+
   return createCompositionClient({
     appId,
     apiKey,
@@ -46,7 +48,7 @@ export function compositionClient(
     hostsCache: createFallbackableCache({
       caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
-    ...options,
+    ...browserOptions,
   });
 }
 

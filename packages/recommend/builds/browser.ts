@@ -25,6 +25,8 @@ export function recommendClient(appId: string, apiKey: string, options?: ClientO
     throw new Error('`apiKey` is missing.');
   }
 
+  const { compression: _compression, ...browserOptions } = options || {};
+
   return createRecommendClient({
     appId,
     apiKey,
@@ -42,7 +44,7 @@ export function recommendClient(appId: string, apiKey: string, options?: ClientO
     hostsCache: createFallbackableCache({
       caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
-    ...options,
+    ...browserOptions,
   });
 }
 

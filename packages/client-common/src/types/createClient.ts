@@ -12,4 +12,4 @@ export type CreateClientOptions = Omit<TransporterOptions, OverriddenTransporter
     algoliaAgents: AlgoliaAgentOptions[];
   };
 
-export type ClientOptions = Partial<Omit<CreateClientOptions, 'apiKey' | 'appId'>>;
+export type ClientOptions = Partial<Omit<CreateClientOptions, 'apiKey' | 'appId' | 'compress'>>;

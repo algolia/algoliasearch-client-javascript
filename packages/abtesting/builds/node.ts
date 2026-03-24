@@ -2,6 +2,8 @@
 
 export type AbtestingV3Client = ReturnType<typeof createAbtestingV3Client>;
 
+import { gzipSync } from 'node:zlib';
+
 import { createMemoryCache, createNullCache, createNullLogger } from '@algolia/client-common';
 import { createHttpRequester } from '@algolia/requester-node-http';
 
@@ -52,6 +54,7 @@ export function abtestingV3Client(
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
+      compress: async (data: string): Promise<Uint8Array> => gzipSync(Buffer.from(data)),
       ...options,
     }),
   };

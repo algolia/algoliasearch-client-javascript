@@ -2,6 +2,8 @@
 
 export type MonitoringClient = ReturnType<typeof createMonitoringClient>;
 
+import { gzipSync } from 'node:zlib';
+
 import { createMemoryCache, createNullCache, createNullLogger } from '@algolia/client-common';
 import { createHttpRequester } from '@algolia/requester-node-http';
 
@@ -37,6 +39,7 @@ export function monitoringClient(appId: string, apiKey: string, options?: Client
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
+      compress: async (data: string): Promise<Uint8Array> => gzipSync(Buffer.from(data)),
       ...options,
     }),
   };

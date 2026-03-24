@@ -36,6 +36,8 @@ export function abtestingV3Client(
     throw new Error(`\`region\` must be one of the following: ${REGIONS.join(', ')}`);
   }
 
+  const { compression: _compression, ...workerOptions } = options || {};
+
   return {
     ...createAbtestingV3Client({
       appId,
@@ -52,7 +54,7 @@ export function abtestingV3Client(
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
-      ...options,
+      ...workerOptions,
     }),
   };
 }

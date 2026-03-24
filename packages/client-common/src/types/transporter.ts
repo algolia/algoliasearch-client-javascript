@@ -152,11 +152,13 @@ export type TransporterOptions = {
   algoliaAgent: AlgoliaAgent;
 
   /**
-   * The compression algorithm to use when sending POST/PUT request bodies.
-   * When set to `'gzip'`, request bodies are gzip-compressed and
-   * `Content-Encoding: gzip` is added to the headers.
-   * Works on all Node.js versions and browsers with no native API requirements.
+   * An optional function to compress request bodies before sending.
+   * When provided, POST/PUT bodies exceeding the compression threshold
+   * will be compressed and `Content-Encoding: gzip` is added to the headers.
+   * Node builds use node:zlib, browser/worker builds use CompressionStream when available.
    */
+  compress?: (data: string) => Promise<Uint8Array>;
+
   compression?: 'gzip';
 };
 

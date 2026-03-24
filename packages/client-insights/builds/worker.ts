@@ -36,6 +36,8 @@ export function insightsClient(
     throw new Error(`\`region\` must be one of the following: ${REGIONS.join(', ')}`);
   }
 
+  const { compression: _compression, ...workerOptions } = options || {};
+
   return {
     ...createInsightsClient({
       appId,
@@ -52,7 +54,7 @@ export function insightsClient(
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
-      ...options,
+      ...workerOptions,
     }),
   };
 }

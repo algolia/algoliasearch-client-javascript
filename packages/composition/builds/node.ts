@@ -2,6 +2,8 @@
 
 export type CompositionClient = ReturnType<typeof createCompositionClient>;
 
+import { gzipSync } from 'node:zlib';
+
 import { createMemoryCache, createNullCache, createNullLogger } from '@algolia/client-common';
 import { createHttpRequester } from '@algolia/requester-node-http';
 
@@ -41,6 +43,7 @@ export function compositionClient(
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
+      compress: async (data: string): Promise<Uint8Array> => gzipSync(Buffer.from(data)),
       ...options,
     }),
   };

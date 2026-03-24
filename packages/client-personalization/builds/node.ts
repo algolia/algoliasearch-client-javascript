@@ -2,6 +2,8 @@
 
 export type PersonalizationClient = ReturnType<typeof createPersonalizationClient>;
 
+import { gzipSync } from 'node:zlib';
+
 import { createMemoryCache, createNullCache, createNullLogger } from '@algolia/client-common';
 import { createHttpRequester } from '@algolia/requester-node-http';
 
@@ -52,6 +54,7 @@ export function personalizationClient(
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
+      compress: async (data: string): Promise<Uint8Array> => gzipSync(Buffer.from(data)),
       ...options,
     }),
   };

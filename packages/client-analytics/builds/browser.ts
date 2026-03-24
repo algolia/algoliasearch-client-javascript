@@ -39,6 +39,8 @@ export function analyticsClient(
     throw new Error(`\`region\` must be one of the following: ${REGIONS.join(', ')}`);
   }
 
+  const { compression: _compression, ...browserOptions } = options || {};
+
   return createAnalyticsClient({
     appId,
     apiKey,
@@ -57,7 +59,7 @@ export function analyticsClient(
     hostsCache: createFallbackableCache({
       caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
-    ...options,
+    ...browserOptions,
   });
 }
 

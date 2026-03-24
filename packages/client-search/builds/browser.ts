@@ -25,6 +25,8 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
     throw new Error('`apiKey` is missing.');
   }
 
+  const { compression: _compression, ...browserOptions } = options || {};
+
   return createSearchClient({
     appId,
     apiKey,
@@ -42,7 +44,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
     hostsCache: createFallbackableCache({
       caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
-    ...options,
+    ...browserOptions,
   });
 }
 

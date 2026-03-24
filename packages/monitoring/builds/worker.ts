@@ -22,6 +22,8 @@ export function monitoringClient(appId: string, apiKey: string, options?: Client
     throw new Error('`apiKey` is missing.');
   }
 
+  const { compression: _compression, ...workerOptions } = options || {};
+
   return {
     ...createMonitoringClient({
       appId,
@@ -37,7 +39,7 @@ export function monitoringClient(appId: string, apiKey: string, options?: Client
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
-      ...options,
+      ...workerOptions,
     }),
   };
 }

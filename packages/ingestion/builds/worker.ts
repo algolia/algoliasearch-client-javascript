@@ -36,6 +36,8 @@ export function ingestionClient(
     throw new Error(`\`region\` is required and must be one of the following: ${REGIONS.join(', ')}`);
   }
 
+  const { compression: _compression, ...workerOptions } = options || {};
+
   return {
     ...createIngestionClient({
       appId,
@@ -52,7 +54,7 @@ export function ingestionClient(
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
-      ...options,
+      ...workerOptions,
     }),
   };
 }

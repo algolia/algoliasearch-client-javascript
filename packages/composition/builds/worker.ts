@@ -26,6 +26,8 @@ export function compositionClient(
     throw new Error('`apiKey` is missing.');
   }
 
+  const { compression: _compression, ...workerOptions } = options || {};
+
   return {
     ...createCompositionClient({
       appId,
@@ -41,7 +43,7 @@ export function compositionClient(
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
-      ...options,
+      ...workerOptions,
     }),
   };
 }

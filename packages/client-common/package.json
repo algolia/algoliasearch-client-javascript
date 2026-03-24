@@ -34,9 +34,6 @@
     "test": "tsc --noEmit && vitest --run",
     "test:bundle": "publint . && attw --pack ."
   },
-  "dependencies": {
-    "fflate": "0.8.2"
-  },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
     "@types/node": "24.12.0",

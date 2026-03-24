@@ -9,7 +9,7 @@ import type {
   Transporter,
   TransporterOptions,
 } from '../types';
-import { compress, COMPRESSION_THRESHOLD } from './compress';
+import { COMPRESSION_THRESHOLD } from './compress';
 import { createStatefulHost } from './createStatefulHost';
 import { RetryError } from './errors';
 import { deserializeFailure, deserializeSuccess, serializeData, serializeHeaders, serializeUrl } from './helpers';
@@ -32,6 +32,7 @@ export function createTransporter({
   requester,
   requestsCache,
   responsesCache,
+  compress,
   compression,
 }: TransporterOptions): Transporter {
   async function createRetryableOptions(compatibleHosts: Host[]): Promise<RetryableOptions> {
@@ -84,13 +85,18 @@ export function createTransporter({
     const serializedData = serializeData(request, requestOptions);
     const headers = serializeHeaders(baseHeaders, request.headers, requestOptions.headers);
 
-    const shouldCompress =
+    const wantsCompression =
       compression === 'gzip' &&
       serializedData !== undefined &&
       serializedData.length > COMPRESSION_THRESHOLD &&
       (request.method === 'POST' || request.method === 'PUT');
 
-    const data = shouldCompress ? compress(serializedData) : serializedData;
+    if (wantsCompression && compress === undefined) {
+      logger.info('Compression is disabled because no compress method is available.');
+    }
+
+    const shouldCompress = wantsCompression && compress !== undefined;
+    const data = shouldCompress ? await compress(serializedData) : serializedData;
     if (shouldCompress) {
       headers['content-encoding'] = 'gzip';
     }

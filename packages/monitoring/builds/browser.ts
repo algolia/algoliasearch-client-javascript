@@ -25,6 +25,8 @@ export function monitoringClient(appId: string, apiKey: string, options?: Client
     throw new Error('`apiKey` is missing.');
   }
 
+  const { compression: _compression, ...browserOptions } = options || {};
+
   return createMonitoringClient({
     appId,
     apiKey,
@@ -42,7 +44,7 @@ export function monitoringClient(appId: string, apiKey: string, options?: Client
     hostsCache: createFallbackableCache({
       caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
-    ...options,
+    ...browserOptions,
   });
 }
 

@@ -36,6 +36,8 @@ export function personalizationClient(
     throw new Error(`\`region\` is required and must be one of the following: ${REGIONS.join(', ')}`);
   }
 
+  const { compression: _compression, ...workerOptions } = options || {};
+
   return {
     ...createPersonalizationClient({
       appId,
@@ -52,7 +54,7 @@ export function personalizationClient(
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
-      ...options,
+      ...workerOptions,
     }),
   };
 }

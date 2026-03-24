@@ -2,6 +2,8 @@
 
 export type AdvancedPersonalizationClient = ReturnType<typeof createAdvancedPersonalizationClient>;
 
+import { gzipSync } from 'node:zlib';
+
 import { createMemoryCache, createNullCache, createNullLogger } from '@algolia/client-common';
 import { createFetchRequester } from '@algolia/requester-fetch';
 
@@ -52,6 +54,7 @@ export function advancedPersonalizationClient(
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
+      compress: async (data: string): Promise<Uint8Array> => gzipSync(Buffer.from(data)),
       ...options,
     }),
   };

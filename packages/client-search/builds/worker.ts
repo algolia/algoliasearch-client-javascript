@@ -29,6 +29,8 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
     throw new Error('`apiKey` is missing.');
   }
 
+  const { compression: _compression, ...workerOptions } = options || {};
+
   return {
     ...createSearchClient({
       appId,
@@ -44,7 +46,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
-      ...options,
+      ...workerOptions,
     }),
     /**
      * Helper: Generates a secured API key based on the given `parentApiKey` and given `restrictions`.

@@ -25,6 +25,8 @@ export function liteClient(appId: string, apiKey: string, options?: ClientOption
     throw new Error('`apiKey` is missing.');
   }
 
+  const { compression: _compression, ...browserOptions } = options || {};
+
   return createLiteClient({
     appId,
     apiKey,
@@ -42,7 +44,7 @@ export function liteClient(appId: string, apiKey: string, options?: ClientOption
     hostsCache: createFallbackableCache({
       caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
-    ...options,
+    ...browserOptions,
   });
 }
 

@@ -39,6 +39,8 @@ export function querySuggestionsClient(
     throw new Error(`\`region\` is required and must be one of the following: ${REGIONS.join(', ')}`);
   }
 
+  const { compression: _compression, ...browserOptions } = options || {};
+
   return createQuerySuggestionsClient({
     appId,
     apiKey,
@@ -57,7 +59,7 @@ export function querySuggestionsClient(
     hostsCache: createFallbackableCache({
       caches: [createBrowserLocalStorageCache({ key: `${apiClientVersion}-${appId}` }), createMemoryCache()],
     }),
-    ...options,
+    ...browserOptions,
   });
 }
 
