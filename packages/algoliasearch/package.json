@@ -18,6 +18,10 @@
   "description": "A fully-featured and blazing-fast JavaScript API client to interact with Algolia API.",
   "exports": {
     ".": {
+      "react-native": {
+        "types": "./dist/browser.d.ts",
+        "default": "./dist/browser.js"
+      },
       "node": {
         "types": {
           "import": "./dist/node.d.ts",
@@ -40,6 +44,10 @@
       }
     },
     "./lite": {
+      "react-native": {
+        "types": "./dist/lite/browser.d.ts",
+        "default": "./dist/lite/builds/browser.js"
+      },
       "node": {
         "types": {
           "import": "./dist/lite/node.d.ts",
@@ -58,7 +66,9 @@
       }
     },
     "./dist/*": "./dist/*.js",
-    "./dist/lite/builds/*": "./dist/lite/builds/*.js"
+    "./dist/*.js": "./dist/*.js",
+    "./dist/lite/builds/*": "./dist/lite/builds/*.js",
+    "./dist/lite/builds/*.js": "./dist/lite/builds/*.js"
   },
   "jsdelivr": "./dist/algoliasearch.umd.js",
   "unpkg": "./dist/algoliasearch.umd.js",

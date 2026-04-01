@@ -17,6 +17,10 @@
   "description": "JavaScript client for recommend",
   "exports": {
     ".": {
+      "react-native": {
+        "types": "./dist/browser.d.ts",
+        "default": "./dist/builds/browser.js"
+      },
       "node": {
         "types": {
           "import": "./dist/node.d.ts",
@@ -38,7 +42,8 @@
         "default": "./dist/builds/browser.umd.js"
       }
     },
-    "./dist/builds/*": "./dist/builds/*.js"
+    "./dist/builds/*": "./dist/builds/*.js",
+    "./dist/builds/*.js": "./dist/builds/*.js"
   },
   "jsdelivr": "./dist/builds/browser.umd.js",
   "unpkg": "./dist/builds/browser.umd.js",
