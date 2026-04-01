@@ -1,3 +1,8 @@
+## [5.50.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.50.0...5.50.1)
+
+- [dc02ad1023](https://github.com/algolia/api-clients-automation/commit/dc02ad1023) chore(deps): dependencies 2026-03-30 ([#6169](https://github.com/algolia/api-clients-automation/pull/6169)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [748a90222a](https://github.com/algolia/api-clients-automation/commit/748a90222a) chore(javascript): correct export paths in package.mustache for consistency ([#5740](https://github.com/algolia/api-clients-automation/pull/5740)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.50.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.49.2...5.50.0)
 
 - [2d6c9b2727](https://github.com/algolia/api-clients-automation/commit/2d6c9b2727) feat(javascript): Implement gzip compression ([#6052](https://github.com/algolia/api-clients-automation/pull/6052)) by [@MarioAlexandruDan](https://github.com/MarioAlexandruDan/)
