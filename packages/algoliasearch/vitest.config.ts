@@ -1,6 +1,8 @@
 import { cloudflareTest } from '@cloudflare/vitest-pool-workers';
 import { defineConfig } from 'vitest/config';
 
+const compatibilityDate = '2026-04-08';
+
 export default defineConfig({
   test: {
     projects: [
@@ -38,7 +40,7 @@ export default defineConfig({
         },
       },
       {
-        plugins: [cloudflareTest({ miniflare: {} })],
+        plugins: [cloudflareTest({ miniflare: { compatibilityDate } })],
         resolve: {
           alias: {
             '@algolia/client-search': '../../client-search/builds/fetch',
@@ -50,7 +52,7 @@ export default defineConfig({
         },
       },
       {
-        plugins: [cloudflareTest({ miniflare: {} })],
+        plugins: [cloudflareTest({ miniflare: { compatibilityDate } })],
         resolve: {
           alias: {
             '@algolia/client-search': '../../client-search/builds/worker',
