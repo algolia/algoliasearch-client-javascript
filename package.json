@@ -79,6 +79,10 @@
       }
     ]
   },
+  "resolutions": {
+    "bundlewatch/axios": "^1.15.0",
+    "follow-redirects": "^1.16.0"
+  },
   "engines": {
     "node": ">= 14.0.0",
     "yarn": "^4.0.0"
