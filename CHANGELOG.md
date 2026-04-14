@@ -1,3 +1,9 @@
+## [5.50.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.50.1...5.50.2)
+
+- [d86a5438e2](https://github.com/algolia/api-clients-automation/commit/d86a5438e2) chore(deps): dependencies 2026-04-06 ([#6200](https://github.com/algolia/api-clients-automation/pull/6200)) by [@algolia-bot](https://github.com/algolia-bot/)
+- [4049f8aaf7](https://github.com/algolia/api-clients-automation/commit/4049f8aaf7) fix(deps): mitigate critical and high security vulnerabilities ([#6250](https://github.com/algolia/api-clients-automation/pull/6250)) by [@Fluf22](https://github.com/Fluf22/)
+- [526567a633](https://github.com/algolia/api-clients-automation/commit/526567a633) fix(deps): force axios ^1.15.0 globally in JS client workspace ([#6251](https://github.com/algolia/api-clients-automation/pull/6251)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.50.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.50.0...5.50.1)
 
 - [dc02ad1023](https://github.com/algolia/api-clients-automation/commit/dc02ad1023) chore(deps): dependencies 2026-03-30 ([#6169](https://github.com/algolia/api-clients-automation/pull/6169)) by [@algolia-bot](https://github.com/algolia-bot/)
