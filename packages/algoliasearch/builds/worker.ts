@@ -110,6 +110,11 @@ export type Algoliasearch = SearchClient & {
 
 export type TransformationOptions = {
   // When provided, a second transporter will be created in order to leverage the `*WithTransformation` methods exposed by the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push/).
+  transformationOptions?: {
+    region: IngestionRegion;
+  } & ClientOptions;
+
+  /** @deprecated Use `transformationOptions` instead. */
   transformation?:
     | {
         // The region of your Algolia application ID, used to target the correct hosts of the transformation service.
@@ -133,14 +138,24 @@ export function algoliasearch(
 
   const client = searchClient(appId, apiKey, options);
 
-  let ingestionTransporter: IngestionClient | undefined;
+  let transformationConfig: ({ region: IngestionRegion } & ClientOptions) | undefined;
 
-  if (options?.transformation) {
-    if (!options.transformation.region) {
-      throw new Error('`region` must be provided when leveraging the transformation pipeline');
+  if (options?.transformationOptions) {
+    transformationConfig = options.transformationOptions;
+  } else if (options?.transformation) {
+    transformationConfig = { region: options.transformation.region };
+  }
+
+  let ingestionTransporter: IngestionClient | undefined;
+  if (transformationConfig) {
+    if (!transformationConfig.region) {
+      throw new Error(
+        '`region` is required in `transformationOptions`. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/',
+      );
     }
 
-    ingestionTransporter = ingestionClient(appId, apiKey, options.transformation.region, options);
+    const { region, ...ingestionOptions } = transformationConfig;
+    ingestionTransporter = ingestionClient(appId, apiKey, region, ingestionOptions);
   }
 
   return {
@@ -151,11 +166,9 @@ export function algoliasearch(
       requestOptions,
     ): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
-        throw new Error('`transformation.region` must be provided at client instantiation before calling this method.');
-      }
-
-      if (!options?.transformation?.region) {
-        throw new Error('`region` must be provided when leveraging the transformation pipeline');
+        throw new Error(
+          '`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/',
+        );
       }
 
       return ingestionTransporter.chunkedPush(
@@ -169,11 +182,9 @@ export function algoliasearch(
       requestOptions,
     ): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
-        throw new Error('`transformation.region` must be provided at client instantiation before calling this method.');
-      }
-
-      if (!options?.transformation?.region) {
-        throw new Error('`region` must be provided when leveraging the transformation pipeline');
+        throw new Error(
+          '`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/',
+        );
       }
 
       return ingestionTransporter.chunkedPush(
@@ -192,11 +203,9 @@ export function algoliasearch(
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsWithTransformationResponse> {
       if (!ingestionTransporter) {
-        throw new Error('`transformation.region` must be provided at client instantiation before calling this method.');
-      }
-
-      if (!options?.transformation?.region) {
-        throw new Error('`region` must be provided when leveraging the transformation pipeline');
+        throw new Error(
+          '`transformationOptions` must be set in the client config before calling this method. It defaults to the Ingestion API defaults. See https://www.algolia.com/doc/libraries/sdk/methods/ingestion/',
+        );
       }
 
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
