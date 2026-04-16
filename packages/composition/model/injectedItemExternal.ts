@@ -3,7 +3,7 @@
 import type { BaseInjectionQueryParameters } from './baseInjectionQueryParameters';
 import type { ExternalOrdering } from './externalOrdering';
 
-export type External = {
+export type InjectedItemExternal = {
   /**
    * Composition Index name.
    */

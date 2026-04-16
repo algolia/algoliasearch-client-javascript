@@ -3,7 +3,7 @@
 import type { InjectedItemMetadata } from './injectedItemMetadata';
 import type { InjectedItemSource } from './injectedItemSource';
 
-export type InjectedItem = {
+export type InjectionInjectedItem = {
   /**
    * injected Item unique identifier.
    */
