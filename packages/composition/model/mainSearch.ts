@@ -4,7 +4,7 @@ import type { MainInjectionQueryParameters } from './mainInjectionQueryParameter
 
 export type MainSearch = {
   /**
-   * Targeted index name.
+   * Index to retrieve search results from.
    */
   index: string;
 
