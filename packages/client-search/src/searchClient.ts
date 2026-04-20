@@ -251,7 +251,7 @@ export function createSearchClient({
      * @param waitForTaskOptions - The `waitForTaskOptions` object.
      * @param waitForTaskOptions.indexName - The `indexName` where the operation was performed.
      * @param waitForTaskOptions.taskID - The `taskID` returned in the method response.
-     * @param waitForTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param waitForTaskOptions.maxRetries - The maximum number of retries. 100 by default.
      * @param waitForTaskOptions.timeout - The function to decide how long to wait between retries.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
@@ -259,7 +259,7 @@ export function createSearchClient({
       {
         indexName,
         taskID,
-        maxRetries = 50,
+        maxRetries = 100,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForTaskOptions,
       requestOptions?: RequestOptions | undefined,
@@ -272,7 +272,8 @@ export function createSearchClient({
         aggregator: () => (retryCount += 1),
         error: {
           validate: () => retryCount >= maxRetries,
-          message: () => `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+          message: () =>
+            `Stopped waiting for the task after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
         },
         timeout: () => timeout(retryCount),
       });
@@ -284,14 +285,14 @@ export function createSearchClient({
      * @summary Helper method that waits for a task to be published (completed).
      * @param waitForAppTaskOptions - The `waitForTaskOptions` object.
      * @param waitForAppTaskOptions.taskID - The `taskID` returned in the method response.
-     * @param waitForAppTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param waitForAppTaskOptions.maxRetries - The maximum number of retries. 100 by default.
      * @param waitForAppTaskOptions.timeout - The function to decide how long to wait between retries.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     waitForAppTask(
       {
         taskID,
-        maxRetries = 50,
+        maxRetries = 100,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForAppTaskOptions,
       requestOptions?: RequestOptions | undefined,
@@ -304,7 +305,8 @@ export function createSearchClient({
         aggregator: () => (retryCount += 1),
         error: {
           validate: () => retryCount >= maxRetries,
-          message: () => `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+          message: () =>
+            `Stopped waiting for the task after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
         },
         timeout: () => timeout(retryCount),
       });
@@ -318,7 +320,7 @@ export function createSearchClient({
      * @param waitForApiKeyOptions.operation - The `operation` that was done on a `key`.
      * @param waitForApiKeyOptions.key - The `key` that has been added, deleted or updated.
      * @param waitForApiKeyOptions.apiKey - Necessary to know if an `update` operation has been processed, compare fields of the response with it.
-     * @param waitForApiKeyOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param waitForApiKeyOptions.maxRetries - The maximum number of retries. 100 by default.
      * @param waitForApiKeyOptions.timeout - The function to decide how long to wait between retries.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getApikey` method and merged with the transporter requestOptions.
      */
@@ -327,7 +329,7 @@ export function createSearchClient({
         operation,
         key,
         apiKey,
-        maxRetries = 50,
+        maxRetries = 100,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForApiKeyOptions,
       requestOptions?: RequestOptions | undefined,
@@ -337,7 +339,8 @@ export function createSearchClient({
         aggregator: () => (retryCount += 1),
         error: {
           validate: () => retryCount >= maxRetries,
-          message: () => `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+          message: () =>
+            `Stopped waiting for the API key operation after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
         },
         timeout: () => timeout(retryCount),
       };

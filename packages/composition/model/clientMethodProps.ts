@@ -234,7 +234,7 @@ export type UpdateSortingStrategyCompositionProps = {
 
 export type WaitForCompositionTaskOptions = {
   /**
-   * The maximum number of retries. 50 by default.
+   * The maximum number of retries. 100 by default.
    */
   maxRetries?: number | undefined;
 

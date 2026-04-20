@@ -165,7 +165,7 @@ export function createCompositionClient({
      * @param WaitForCompositionTaskOptions - The `WaitForCompositionTaskOptions` object.
      * @param WaitForCompositionTaskOptions.compositionID - The `compositionID` where the operation was performed.
      * @param WaitForCompositionTaskOptions.taskID - The `taskID` returned in the method response.
-     * @param WaitForCompositionTaskOptions.maxRetries - The maximum number of retries. 50 by default.
+     * @param WaitForCompositionTaskOptions.maxRetries - The maximum number of retries. 100 by default.
      * @param WaitForCompositionTaskOptions.timeout - The function to decide how long to wait between retries.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
@@ -173,7 +173,7 @@ export function createCompositionClient({
       {
         compositionID,
         taskID,
-        maxRetries = 50,
+        maxRetries = 100,
         timeout = (retryCount: number): number => Math.min(retryCount * 200, 5000),
       }: WaitForCompositionTaskOptions,
       requestOptions?: RequestOptions,
@@ -186,7 +186,8 @@ export function createCompositionClient({
         aggregator: () => (retryCount += 1),
         error: {
           validate: () => retryCount >= maxRetries,
-          message: () => `The maximum number of retries exceeded. (${retryCount}/${maxRetries})`,
+          message: () =>
+            `Stopped waiting for the task after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
         },
         timeout: () => timeout(retryCount),
       });
