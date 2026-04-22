@@ -1,3 +1,14 @@
+## [5.51.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.50.2...5.51.0)
+
+BREAKING CHANGES: this minor version includes breaking changes in the Composition API. See below for more details.
+
+- [00271b6ba0](https://github.com/algolia/api-clients-automation/commit/00271b6ba0) feat(javascript): add transformationOptions and fix ingestion config leak ([#6252](https://github.com/algolia/api-clients-automation/pull/6252)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [39ea2c5cb3](https://github.com/algolia/api-clients-automation/commit/39ea2c5cb3) refactor(specs): split injection schema ([#6224](https://github.com/algolia/api-clients-automation/pull/6224)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [544091a5f2](https://github.com/algolia/api-clients-automation/commit/544091a5f2) feat(specs): introduce recommend source in Comp API client ([#6227](https://github.com/algolia/api-clients-automation/pull/6227)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [f73d69aae4](https://github.com/algolia/api-clients-automation/commit/f73d69aae4) fix(specs): clarify getIndexingTime ([#6276](https://github.com/algolia/api-clients-automation/pull/6276)) by [@kai687](https://github.com/kai687/)
+- [78ffb45894](https://github.com/algolia/api-clients-automation/commit/78ffb45894) fix(javascript): increase default retry max ([#6278](https://github.com/algolia/api-clients-automation/pull/6278)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [e48d5c4bbf](https://github.com/algolia/api-clients-automation/commit/e48d5c4bbf) feat(specs): query categorization ([#6258](https://github.com/algolia/api-clients-automation/pull/6258)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+
 ## [5.50.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.50.1...5.50.2)
 
 - [d86a5438e2](https://github.com/algolia/api-clients-automation/commit/d86a5438e2) chore(deps): dependencies 2026-04-06 ([#6200](https://github.com/algolia/api-clients-automation/pull/6200)) by [@algolia-bot](https://github.com/algolia-bot/)
