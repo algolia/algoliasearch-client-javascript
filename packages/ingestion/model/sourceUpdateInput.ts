@@ -4,6 +4,7 @@ import type { SourceBigQuery } from './sourceBigQuery';
 import type { SourceCSV } from './sourceCSV';
 import type { SourceGA4BigQueryExport } from './sourceGA4BigQueryExport';
 import type { SourceJSON } from './sourceJSON';
+import type { SourceUpdateAlgoliaIndex } from './sourceUpdateAlgoliaIndex';
 import type { SourceUpdateCommercetools } from './sourceUpdateCommercetools';
 import type { SourceUpdateDocker } from './sourceUpdateDocker';
 import type { SourceUpdateShopify } from './sourceUpdateShopify';
@@ -15,4 +16,5 @@ export type SourceUpdateInput =
   | SourceBigQuery
   | SourceGA4BigQueryExport
   | SourceUpdateDocker
-  | SourceUpdateShopify;
+  | SourceUpdateShopify
+  | SourceUpdateAlgoliaIndex;
