@@ -2,7 +2,7 @@
 
 export type ExternalInjection = {
   /**
-   * An objectID injected into an external source.
+   * An objectID injected from an external source and also present in the targeted index.
    */
   objectID: string;
 

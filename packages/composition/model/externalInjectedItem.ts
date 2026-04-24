@@ -2,6 +2,9 @@
 
 import type { ExternalInjection } from './externalInjection';
 
+/**
+ * Contains a list of objects to inject from an external source.
+ */
 export type ExternalInjectedItem = {
   items: Array<ExternalInjection>;
 };
