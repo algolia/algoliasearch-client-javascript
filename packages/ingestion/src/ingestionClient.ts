@@ -303,7 +303,7 @@ export function createIngestionClient({
                 validate: () => retryCount >= 50,
                 message: () => `The maximum number of retries exceeded. (${retryCount}/${50})`,
               },
-              timeout: (): number => Math.min(retryCount * 500, 5000),
+              timeout: (): number => Math.min(retryCount * 1500, 5000),
             });
           }
           offset += waitBatchSize;
