@@ -54,11 +54,11 @@
     "@arethetypeswrong/cli": "0.18.2",
     "@types/node": "24.12.2",
     "cross-fetch": "4.1.0",
-    "nock": "14.0.12",
+    "nock": "14.0.13",
     "publint": "0.3.18",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.1.4"
+    "vitest": "4.1.5"
   },
   "engines": {
     "node": ">= 14.0.0"

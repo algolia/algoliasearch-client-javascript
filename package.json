@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@types/node": "24.12.2",
-    "bundlewatch": "0.4.1",
+    "bundlewatch": "0.4.2",
     "execa": "9.6.1",
     "lerna": "9.0.7",
     "rollup": "4.59.0",
