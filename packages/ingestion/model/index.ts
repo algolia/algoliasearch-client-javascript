@@ -38,6 +38,7 @@ export * from './destinationSearch';
 export * from './destinationSortKeys';
 export * from './destinationType';
 export * from './destinationUpdate';
+export * from './destinationUpdateInput';
 export * from './destinationUpdateResponse';
 export * from './dockerStreams';
 export * from './dockerStreamsInput';
