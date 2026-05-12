@@ -74,6 +74,12 @@ export function createHttpRequester({
             isTimedOut: false,
           });
         });
+
+        response.on('error', (error) => {
+          clearTimeout(connectTimeout as NodeJS.Timeout);
+          clearTimeout(responseTimeout as NodeJS.Timeout);
+          resolve({ status: 0, content: error.message, isTimedOut: false });
+        });
       });
 
       const createTimeout = (timeout: number, content: string): NodeJS.Timeout => {

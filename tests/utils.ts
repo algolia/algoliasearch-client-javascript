@@ -64,6 +64,17 @@ export function createTestServer(): http.Server {
         res.write('{"foo": "bar"}');
         res.end();
       }, 5000);
+    } else if (req.url?.endsWith('/response_stream_error')) {
+      // Send headers + partial body, then destroy the socket.
+      // This triggers response.on('error') on the client side (typically ECONNRESET).
+      res.writeHead(200, {
+        'content-type': 'text/plain',
+        'access-control-allow-origin': '*',
+      });
+      res.write('partial');
+      setTimeout(() => {
+        req.socket.destroy();
+      }, 50);
     } else {
       res.writeHead(200, {
         'content-type': 'text/plain',

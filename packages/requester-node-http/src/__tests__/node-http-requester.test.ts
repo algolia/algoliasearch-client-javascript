@@ -278,4 +278,44 @@ describe('error handling', (): void => {
     expect(response.content).toBe('This is a general error');
     expect(response.isTimedOut).toBe(false);
   });
+
+  test('resolves response stream errors', async () => {
+    nock(testQueryBaseUrl, { reqheaders: headers })
+      .post('/foo')
+      .query(testQueryHeader)
+      .replyWithError('This is a response stream error');
+
+    const response = await requester.send(requestStub);
+
+    expect(response.status).toBe(0);
+    expect(response.content).toBe('This is a response stream error');
+    expect(response.isTimedOut).toBe(false);
+  });
+});
+
+describe('response stream error handling', () => {
+  let server: http.Server;
+
+  beforeAll(() => {
+    server = createTestServer();
+    server.listen('1114');
+  });
+
+  afterAll(
+    () =>
+      new Promise<void>((done) => {
+        done();
+      }),
+  );
+
+  test('resolves response stream errors when connection drops mid-transfer', async () => {
+    const response = await requester.send({
+      ...timeoutRequest,
+      url: 'http://localhost:1114/response_stream_error',
+    });
+
+    expect(response.status).toBe(0);
+    expect(response.content).toBeTruthy();
+    expect(response.isTimedOut).toBe(false);
+  });
 });
