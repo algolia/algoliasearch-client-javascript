@@ -110,6 +110,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
      * @param accountCopyIndex.destinationApiKey - The API Key of the `destinationAppID` to write the index to, must have write ACLs.
      * @param accountCopyIndex.destinationIndexName - The name of the index to write the copied index to.
      * @param accountCopyIndex.batchSize - The size of the chunk of `objects`. Defaults to 1000.
+     * @param accountCopyIndex.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `setSettings`, `saveRules`, `saveSynonyms` and `saveObjects` method and merged with the transporter requestOptions.
      */
     async accountCopyIndex(
@@ -119,6 +120,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
         destinationApiKey,
         destinationIndexName,
         batchSize,
+        maxRetries = 100,
       }: AccountCopyIndexOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<void> {
@@ -201,7 +203,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
       });
 
       for (const response of responses) {
-        await destinationClient.waitForTask({ indexName: destinationIndexName, taskID: response.taskID });
+        await destinationClient.waitForTask({ indexName: destinationIndexName, taskID: response.taskID, maxRetries });
       }
     },
     /**

@@ -28,7 +28,7 @@ import type { SearchForFacetsOptions } from './searchForFacetsOptions';
 import type { SearchForHitsOptions } from './searchForHitsOptions';
 import type { SearchParamsObject } from './searchParamsObject';
 
-import type { CreateIterablePromise } from '@algolia/client-common';
+import type { ChunkedHelperOptions, CreateIterablePromise } from '@algolia/client-common';
 
 /**
  * Properties for the `addOrUpdateObject` method.
@@ -815,24 +815,27 @@ export type SearchClientNodeHelpers = {
   getSecuredApiKeyRemainingValidity: (opts: GetSecuredApiKeyRemainingValidityOptions) => number;
 };
 
-export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'waitForTasks' | 'batchSize'> & {
-  /**
-   * The objectIDs to delete.
-   */
-  objectIDs: string[];
-};
+export type DeleteObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'waitForTasks' | 'batchSize'> &
+  ChunkedHelperOptions & {
+    /**
+     * The objectIDs to delete.
+     */
+    objectIDs: string[];
+  };
 
 export type PartialUpdateObjectsOptions = Pick<
   ChunkedBatchOptions,
   'indexName' | 'objects' | 'waitForTasks' | 'batchSize'
-> & {
-  /**
-   *To be provided if non-existing objects are passed, otherwise, the call will fail.
-   */
-  createIfNotExists?: boolean | undefined;
-};
+> &
+  ChunkedHelperOptions & {
+    /**
+     *To be provided if non-existing objects are passed, otherwise, the call will fail.
+     */
+    createIfNotExists?: boolean | undefined;
+  };
 
-export type SaveObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'objects' | 'waitForTasks' | 'batchSize'>;
+export type SaveObjectsOptions = Pick<ChunkedBatchOptions, 'indexName' | 'objects' | 'waitForTasks' | 'batchSize'> &
+  ChunkedHelperOptions;
 
 export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
   /**
@@ -846,7 +849,7 @@ export type ChunkedBatchOptions = ReplaceAllObjectsOptions & {
   waitForTasks?: boolean | undefined;
 };
 
-export type ReplaceAllObjectsOptions = {
+export type ReplaceAllObjectsOptions = ChunkedHelperOptions & {
   /**
    * The `indexName` to replace `objects` in.
    */
@@ -868,7 +871,7 @@ export type ReplaceAllObjectsOptions = {
   scopes?: Array<ScopeType> | undefined;
 };
 
-export type AccountCopyIndexOptions = {
+export type AccountCopyIndexOptions = ChunkedHelperOptions & {
   /**
    * The name of the index to copy to the `destinationClient`.
    */

@@ -1,4 +1,5 @@
 export * from './cache';
+export * from './chunkedHelperOptions';
 export * from './createClient';
 export * from './createIterablePromise';
 export * from './host';

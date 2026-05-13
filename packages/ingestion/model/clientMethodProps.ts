@@ -32,6 +32,8 @@ import type { TransformationTry } from '../model/transformationTry';
 import type { TransformationType } from '../model/transformationType';
 import type { TriggerType } from '../model/triggerType';
 
+import type { ChunkedHelperOptions } from '@algolia/client-common';
+
 /**
  * Properties for the `customDelete` method.
  */
@@ -761,7 +763,7 @@ export type ValidateSourceBeforeUpdateProps = {
   sourceUpdate: SourceUpdate;
 };
 
-export type ChunkedPushOptions = {
+export type ChunkedPushOptions = ChunkedHelperOptions & {
   /**
    * The `indexName` to replace `objects` in.
    */

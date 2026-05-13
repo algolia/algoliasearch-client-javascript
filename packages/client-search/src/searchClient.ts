@@ -511,10 +511,18 @@ export function createSearchClient({
      * @param chunkedBatch.action - The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
      * @param chunkedBatch.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
      * @param chunkedBatch.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
+     * @param chunkedBatch.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async chunkedBatch(
-      { indexName, objects, action = 'addObject', waitForTasks, batchSize = 1000 }: ChunkedBatchOptions,
+      {
+        indexName,
+        objects,
+        action = 'addObject',
+        waitForTasks,
+        batchSize = 1000,
+        maxRetries = 100,
+      }: ChunkedBatchOptions,
       requestOptions?: RequestOptions,
     ): Promise<Array<BatchResponse>> {
       let requests: Array<BatchRequest> = [];
@@ -531,7 +539,7 @@ export function createSearchClient({
 
       if (waitForTasks) {
         for (const resp of responses) {
-          await this.waitForTask({ indexName, taskID: resp.taskID });
+          await this.waitForTask({ indexName, taskID: resp.taskID, maxRetries });
         }
       }
 
@@ -547,14 +555,15 @@ export function createSearchClient({
      * @param saveObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
      * @param saveObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param saveObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+     * @param saveObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async saveObjects(
-      { indexName, objects, waitForTasks, batchSize }: SaveObjectsOptions,
+      { indexName, objects, waitForTasks, batchSize, maxRetries }: SaveObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
-        { indexName, objects, action: 'addObject', waitForTasks, batchSize },
+        { indexName, objects, action: 'addObject', waitForTasks, batchSize, maxRetries },
         requestOptions,
       );
     },
@@ -568,10 +577,11 @@ export function createSearchClient({
      * @param deleteObjects.objectIDs - The objectIDs to delete.
      * @param deleteObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param deleteObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+     * @param deleteObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch` method and merged with the transporter requestOptions.
      */
     async deleteObjects(
-      { indexName, objectIDs, waitForTasks, batchSize }: DeleteObjectsOptions,
+      { indexName, objectIDs, waitForTasks, batchSize, maxRetries }: DeleteObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -581,6 +591,7 @@ export function createSearchClient({
           action: 'deleteObject',
           waitForTasks,
           batchSize,
+          maxRetries,
         },
         requestOptions,
       );
@@ -596,10 +607,11 @@ export function createSearchClient({
      * @param partialUpdateObjects.createIfNotExists - To be provided if non-existing objects are passed, otherwise, the call will fail.
      * @param partialUpdateObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1000.
      * @param partialUpdateObjects.waitForTasks - Whether or not we should wait until every `batch` tasks has been processed, this operation may slow the total execution time of this method but is more reliable.
+     * @param partialUpdateObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `getTask` method and merged with the transporter requestOptions.
      */
     async partialUpdateObjects(
-      { indexName, objects, createIfNotExists, waitForTasks, batchSize }: PartialUpdateObjectsOptions,
+      { indexName, objects, createIfNotExists, waitForTasks, batchSize, maxRetries }: PartialUpdateObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<BatchResponse[]> {
       return await this.chunkedBatch(
@@ -609,6 +621,7 @@ export function createSearchClient({
           action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
           batchSize,
           waitForTasks,
+          maxRetries,
         },
         requestOptions,
       );
@@ -624,10 +637,11 @@ export function createSearchClient({
      * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
      * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
      * @param replaceAllObjects.scopes - The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
+     * @param replaceAllObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch`, `operationIndex` and `getTask` method and merged with the transporter requestOptions.
      */
     async replaceAllObjects(
-      { indexName, objects, batchSize, scopes }: ReplaceAllObjectsOptions,
+      { indexName, objects, batchSize, scopes, maxRetries = 100 }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsResponse> {
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
@@ -651,13 +665,14 @@ export function createSearchClient({
         );
 
         const batchResponses = await this.chunkedBatch(
-          { indexName: tmpIndexName, objects, waitForTasks: true, batchSize },
+          { indexName: tmpIndexName, objects, waitForTasks: true, batchSize, maxRetries },
           requestOptions,
         );
 
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
+          maxRetries,
         });
 
         copyOperationResponse = await this.operationIndex(
@@ -674,6 +689,7 @@ export function createSearchClient({
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: copyOperationResponse.taskID,
+          maxRetries,
         });
 
         const moveOperationResponse = await this.operationIndex(
@@ -686,6 +702,7 @@ export function createSearchClient({
         await this.waitForTask({
           indexName: tmpIndexName,
           taskID: moveOperationResponse.taskID,
+          maxRetries,
         });
 
         return { copyOperationResponse, batchResponses, moveOperationResponse };
