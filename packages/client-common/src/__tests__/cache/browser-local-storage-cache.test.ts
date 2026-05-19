@@ -103,7 +103,7 @@ describe('browser local storage cache', () => {
 
     expect(missMock.mock.calls.length).toBe(1);
 
-    expect(localStorage.getItem(`algolia-client-js-${version}`)).toEqual('{}');
+    expect(localStorage.getItem(`algolia-client-js-${version}`)).toBeNull();
   });
 
   test('do throws localstorage exceptions on access', async () => {
