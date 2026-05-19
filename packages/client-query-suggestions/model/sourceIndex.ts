@@ -16,8 +16,14 @@ export type SourceIndex = {
    */
   replicas?: boolean | undefined;
 
+  /**
+   * Analytics tags for filtering the popular searches. For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+   */
   analyticsTags?: Array<string> | null | undefined;
 
+  /**
+   * Facets to use as top categories with your suggestions.  If provided, Query Suggestions adds the top facet values to each suggestion.
+   */
   facets?: Array<Facet> | null | undefined;
 
   /**
@@ -30,7 +36,13 @@ export type SourceIndex = {
    */
   minLetters?: number | undefined;
 
+  /**
+   * Facets used for generating query suggestions from facet values.  For example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions, such as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.  You can include nested lists.
+   */
   generate?: Array<Array<string>> | null | undefined;
 
+  /**
+   * Algolia indices with popular searches to use as query suggestions.  Records of these indices must have these attributes:  - `query`: search query which will be added as a suggestion - `count`: measure of popularity of that search query  For example, you can export popular searches from an external analytics provider, such as Google Analytics or Adobe Analytics, and feed this data into an Algolia index. You can use this index to generate query suggestions until your Algolia Analytics has collected enough data.
+   */
   external?: Array<string> | null | undefined;
 };

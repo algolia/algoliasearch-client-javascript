@@ -52,10 +52,10 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
-    "@types/node": "24.12.2",
+    "@types/node": "24.12.4",
     "cross-fetch": "4.1.0",
     "nock": "14.0.15",
-    "publint": "0.3.20",
+    "publint": "0.3.21",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
     "vitest": "4.1.6"

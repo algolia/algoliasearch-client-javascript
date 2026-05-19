@@ -10,14 +10,29 @@ export type ABTest = {
    */
   abTestID: number;
 
+  /**
+   * A/B test significance calculated from click events.  Values of 0.95 or higher can be considered significant, that is, the difference between A and B variants is _not_ due to random variations. Lower values have a.
+   */
   clickSignificance?: number | null | undefined;
 
+  /**
+   * A/B test significance calculated from conversion events.  Values of 0.95 or higher can be considered significant, that is, the difference between A and B variants is _not_ due to random variations.
+   */
   conversionSignificance?: number | null | undefined;
 
+  /**
+   * A/B test significance calculated from add-to-cart events.  Values of 0.95 or higher can be considered significant, that is, the difference between A and B variants is _not_ due to random variations.
+   */
   addToCartSignificance?: number | null | undefined;
 
+  /**
+   * A/B test significance calculated from purchase events.  Values of 0.95 or higher can be considered significant, that is, the difference between A and B variants is _not_ due to random variations.
+   */
   purchaseSignificance?: number | null | undefined;
 
+  /**
+   * A/B test significance calculated from revenue data.  Values of 0.95 or higher can be considered significant, that is, the difference between A and B variants is _not_ due to random variations.
+   */
   revenueSignificance?: { [key: string]: number } | null | undefined;
 
   /**

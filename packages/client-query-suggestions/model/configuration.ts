@@ -14,6 +14,9 @@ export type Configuration = {
 
   languages?: Languages | undefined;
 
+  /**
+   * Words or regular expressions to exclude from the suggestions.
+   */
   exclude?: Array<string> | null | undefined;
 
   /**
