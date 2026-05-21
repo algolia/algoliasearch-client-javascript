@@ -13,11 +13,6 @@ export type FetchedIndexAbTest = {
   id: number;
 
   /**
-   * Whether the A/B test is a dark test (server-side measured, not user-facing). Only present when true.
-   */
-  isDark?: boolean | undefined;
-
-  /**
    * A/B test schema version. Only present for v2 and later tests.
    */
   version?: number | undefined;
