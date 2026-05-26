@@ -2,5 +2,9 @@
 
 import type { SearchForFacetValuesResponse } from './searchForFacetValuesResponse';
 import type { SearchResponse } from './searchResponse';
+import type { SearchResponsePartial } from './searchResponsePartial';
 
-export type SearchResult<T = Record<string, unknown>> = SearchResponse<T> | SearchForFacetValuesResponse;
+export type SearchResult<T = Record<string, unknown>> =
+  | SearchResponse<T>
+  | SearchForFacetValuesResponse
+  | SearchResponsePartial<T>;

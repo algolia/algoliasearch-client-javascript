@@ -163,6 +163,7 @@ export * from './searchParamsQuery';
 export * from './searchParamsString';
 export * from './searchQuery';
 export * from './searchResponse';
+export * from './searchResponsePartial';
 export * from './searchResponses';
 export * from './searchResult';
 export * from './searchRulesParams';
