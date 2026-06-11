@@ -8,7 +8,7 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createTransporter, getAlgoliaAgent } from '@algolia/client-common';
+import { createAuth, createTransporter, getAlgoliaAgent, validateRequired } from '@algolia/client-common';
 
 import type { IncidentsResponse } from '../model/incidentsResponse';
 import type { IndexingTimeResponse } from '../model/indexingTimeResponse';
@@ -30,7 +30,7 @@ import type {
   GetReachabilityProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.53.0';
+export const apiClientVersion = '1.54.0';
 
 function getDefaultHosts(): Host[] {
   return [{ url: 'status.algolia.com', accept: 'readWrite', protocol: 'https' }];
@@ -125,9 +125,7 @@ export function createMonitoringClient({
       { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customDelete`.');
-      }
+      validateRequired('path', 'customDelete', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -151,9 +149,7 @@ export function createMonitoringClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customGet`.');
-      }
+      validateRequired('path', 'customGet', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -181,9 +177,7 @@ export function createMonitoringClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -212,9 +206,7 @@ export function createMonitoringClient({
       { path, parameters, body }: CustomPutProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPut`.');
-      }
+      validateRequired('path', 'customPut', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -241,9 +233,7 @@ export function createMonitoringClient({
       { clusters }: GetClusterIncidentsProps,
       requestOptions?: RequestOptions,
     ): Promise<IncidentsResponse> {
-      if (!clusters) {
-        throw new Error('Parameter `clusters` is required when calling `getClusterIncidents`.');
-      }
+      validateRequired('clusters', 'getClusterIncidents', clusters);
 
       const requestPath = '/1/incidents/{clusters}'.replace('{clusters}', encodeURIComponent(clusters));
       const headers: Headers = {};
@@ -266,9 +256,7 @@ export function createMonitoringClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getClusterStatus({ clusters }: GetClusterStatusProps, requestOptions?: RequestOptions): Promise<StatusResponse> {
-      if (!clusters) {
-        throw new Error('Parameter `clusters` is required when calling `getClusterStatus`.');
-      }
+      validateRequired('clusters', 'getClusterStatus', clusters);
 
       const requestPath = '/1/status/{clusters}'.replace('{clusters}', encodeURIComponent(clusters));
       const headers: Headers = {};
@@ -313,9 +301,7 @@ export function createMonitoringClient({
       { clusters }: GetIndexingTimeProps,
       requestOptions?: RequestOptions,
     ): Promise<IndexingTimeResponse> {
-      if (!clusters) {
-        throw new Error('Parameter `clusters` is required when calling `getIndexingTime`.');
-      }
+      validateRequired('clusters', 'getIndexingTime', clusters);
 
       const requestPath = '/1/indexing/{clusters}'.replace('{clusters}', encodeURIComponent(clusters));
       const headers: Headers = {};
@@ -338,9 +324,7 @@ export function createMonitoringClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getLatency({ clusters }: GetLatencyProps, requestOptions?: RequestOptions): Promise<LatencyResponse> {
-      if (!clusters) {
-        throw new Error('Parameter `clusters` is required when calling `getLatency`.');
-      }
+      validateRequired('clusters', 'getLatency', clusters);
 
       const requestPath = '/1/latency/{clusters}'.replace('{clusters}', encodeURIComponent(clusters));
       const headers: Headers = {};
@@ -364,13 +348,9 @@ export function createMonitoringClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getMetrics({ metric, period }: GetMetricsProps, requestOptions?: RequestOptions): Promise<InfrastructureResponse> {
-      if (!metric) {
-        throw new Error('Parameter `metric` is required when calling `getMetrics`.');
-      }
+      validateRequired('metric', 'getMetrics', metric);
 
-      if (!period) {
-        throw new Error('Parameter `period` is required when calling `getMetrics`.');
-      }
+      validateRequired('period', 'getMetrics', period);
 
       const requestPath = '/1/infrastructure/{metric}/period/{period}'
         .replace('{metric}', encodeURIComponent(metric))
@@ -398,9 +378,7 @@ export function createMonitoringClient({
       { clusters }: GetReachabilityProps,
       requestOptions?: RequestOptions,
     ): Promise<{ [key: string]: { [key: string]: boolean } }> {
-      if (!clusters) {
-        throw new Error('Parameter `clusters` is required when calling `getReachability`.');
-      }
+      validateRequired('clusters', 'getReachability', clusters);
 
       const requestPath = '/1/reachability/{clusters}/probes'.replace('{clusters}', encodeURIComponent(clusters));
       const headers: Headers = {};

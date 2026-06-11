@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "lerna run build --scope '@algolia/requester-testing' --scope '@algolia/logger-console' --scope 'algoliasearch' --scope '@algolia/composition' --scope '@algolia/advanced-personalization' --include-dependencies",
+    "build": "lerna run build --scope '@algolia/requester-testing' --scope '@algolia/logger-console' --scope 'algoliasearch' --scope '@algolia/composition' --scope '@algolia/advanced-personalization' --scope '@algolia/agent-studio' --include-dependencies",
     "clean": "lerna run clean",
     "release:publish": "lerna publish from-package --yes",
     "release:publish:old": "tsc --project scripts/tsconfig.json && node scripts/dist/publish.js",
@@ -27,55 +27,59 @@
     "files": [
       {
         "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-        "maxSize": "14.9KB"
+        "maxSize": "17KB"
       },
       {
         "path": "packages/algoliasearch/dist/lite/builds/browser.umd.js",
-        "maxSize": "4.2KB"
+        "maxSize": "6KB"
       },
       {
         "path": "packages/abtesting/dist/builds/browser.umd.js",
-        "maxSize": "4.5KB"
+        "maxSize": "6KB"
       },
       {
         "path": "packages/client-abtesting/dist/builds/browser.umd.js",
-        "maxSize": "4.4KB"
+        "maxSize": "6KB"
       },
       {
         "path": "packages/client-analytics/dist/builds/browser.umd.js",
-        "maxSize": "5.1KB"
+        "maxSize": "6KB"
       },
       {
         "path": "packages/composition/dist/builds/browser.umd.js",
-        "maxSize": "5.0KB"
+        "maxSize": "6KB"
       },
       {
         "path": "packages/client-insights/dist/builds/browser.umd.js",
-        "maxSize": "4.2KB"
+        "maxSize": "6KB"
       },
       {
         "path": "packages/client-personalization/dist/builds/browser.umd.js",
-        "maxSize": "4.3KB"
+        "maxSize": "6KB"
       },
       {
         "path": "packages/client-query-suggestions/dist/builds/browser.umd.js",
-        "maxSize": "4.3KB"
+        "maxSize": "6KB"
       },
       {
         "path": "packages/client-search/dist/builds/browser.umd.js",
-        "maxSize": "7.7KB"
+        "maxSize": "9KB"
       },
       {
         "path": "packages/ingestion/dist/builds/browser.umd.js",
-        "maxSize": "7.1KB"
+        "maxSize": "8KB"
       },
       {
         "path": "packages/monitoring/dist/builds/browser.umd.js",
-        "maxSize": "4.3KB"
+        "maxSize": "6KB"
       },
       {
         "path": "packages/recommend/dist/builds/browser.umd.js",
-        "maxSize": "4.5KB"
+        "maxSize": "6KB"
+      },
+      {
+        "path": "packages/agent-studio/dist/builds/browser.umd.js",
+        "maxSize": "8KB"
       }
     ]
   },

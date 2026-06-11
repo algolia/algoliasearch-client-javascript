@@ -9,7 +9,13 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createIterablePromise, createTransporter, getAlgoliaAgent } from '@algolia/client-common';
+import {
+  createAuth,
+  createIterablePromise,
+  createTransporter,
+  getAlgoliaAgent,
+  validateRequired,
+} from '@algolia/client-common';
 
 import type { Authentication } from '../model/authentication';
 import type { AuthenticationCreate } from '../model/authenticationCreate';
@@ -111,7 +117,7 @@ import type { SubscriptionTrigger } from '../model/subscriptionTrigger';
 import type { TaskCreateTrigger } from '../model/taskCreateTrigger';
 import type { Trigger } from '../model/trigger';
 
-export const apiClientVersion = '1.53.0';
+export const apiClientVersion = '1.54.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -329,19 +335,11 @@ export function createIngestionClient({
       authenticationCreate: AuthenticationCreate,
       requestOptions?: RequestOptions,
     ): Promise<AuthenticationCreateResponse> {
-      if (!authenticationCreate) {
-        throw new Error('Parameter `authenticationCreate` is required when calling `createAuthentication`.');
-      }
+      validateRequired('authenticationCreate', 'createAuthentication', authenticationCreate);
 
-      if (!authenticationCreate.type) {
-        throw new Error('Parameter `authenticationCreate.type` is required when calling `createAuthentication`.');
-      }
-      if (!authenticationCreate.name) {
-        throw new Error('Parameter `authenticationCreate.name` is required when calling `createAuthentication`.');
-      }
-      if (!authenticationCreate.input) {
-        throw new Error('Parameter `authenticationCreate.input` is required when calling `createAuthentication`.');
-      }
+      validateRequired('authenticationCreate.type', 'createAuthentication', authenticationCreate.type);
+      validateRequired('authenticationCreate.name', 'createAuthentication', authenticationCreate.name);
+      validateRequired('authenticationCreate.input', 'createAuthentication', authenticationCreate.input);
 
       const requestPath = '/1/authentications';
       const headers: Headers = {};
@@ -372,19 +370,11 @@ export function createIngestionClient({
       destinationCreate: DestinationCreate,
       requestOptions?: RequestOptions,
     ): Promise<DestinationCreateResponse> {
-      if (!destinationCreate) {
-        throw new Error('Parameter `destinationCreate` is required when calling `createDestination`.');
-      }
+      validateRequired('destinationCreate', 'createDestination', destinationCreate);
 
-      if (!destinationCreate.type) {
-        throw new Error('Parameter `destinationCreate.type` is required when calling `createDestination`.');
-      }
-      if (!destinationCreate.name) {
-        throw new Error('Parameter `destinationCreate.name` is required when calling `createDestination`.');
-      }
-      if (!destinationCreate.input) {
-        throw new Error('Parameter `destinationCreate.input` is required when calling `createDestination`.');
-      }
+      validateRequired('destinationCreate.type', 'createDestination', destinationCreate.type);
+      validateRequired('destinationCreate.name', 'createDestination', destinationCreate.name);
+      validateRequired('destinationCreate.input', 'createDestination', destinationCreate.input);
 
       const requestPath = '/1/destinations';
       const headers: Headers = {};
@@ -412,16 +402,10 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     createSource(sourceCreate: SourceCreate, requestOptions?: RequestOptions): Promise<SourceCreateResponse> {
-      if (!sourceCreate) {
-        throw new Error('Parameter `sourceCreate` is required when calling `createSource`.');
-      }
+      validateRequired('sourceCreate', 'createSource', sourceCreate);
 
-      if (!sourceCreate.type) {
-        throw new Error('Parameter `sourceCreate.type` is required when calling `createSource`.');
-      }
-      if (!sourceCreate.name) {
-        throw new Error('Parameter `sourceCreate.name` is required when calling `createSource`.');
-      }
+      validateRequired('sourceCreate.type', 'createSource', sourceCreate.type);
+      validateRequired('sourceCreate.name', 'createSource', sourceCreate.name);
 
       const requestPath = '/1/sources';
       const headers: Headers = {};
@@ -449,19 +433,11 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     createTask(taskCreate: TaskCreate, requestOptions?: RequestOptions): Promise<TaskCreateResponse> {
-      if (!taskCreate) {
-        throw new Error('Parameter `taskCreate` is required when calling `createTask`.');
-      }
+      validateRequired('taskCreate', 'createTask', taskCreate);
 
-      if (!taskCreate.sourceID) {
-        throw new Error('Parameter `taskCreate.sourceID` is required when calling `createTask`.');
-      }
-      if (!taskCreate.destinationID) {
-        throw new Error('Parameter `taskCreate.destinationID` is required when calling `createTask`.');
-      }
-      if (!taskCreate.action) {
-        throw new Error('Parameter `taskCreate.action` is required when calling `createTask`.');
-      }
+      validateRequired('taskCreate.sourceID', 'createTask', taskCreate.sourceID);
+      validateRequired('taskCreate.destinationID', 'createTask', taskCreate.destinationID);
+      validateRequired('taskCreate.action', 'createTask', taskCreate.action);
 
       const requestPath = '/2/tasks';
       const headers: Headers = {};
@@ -491,22 +467,12 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     createTaskV1(taskCreate: TaskCreateV1, requestOptions?: RequestOptions): Promise<TaskCreateResponse> {
-      if (!taskCreate) {
-        throw new Error('Parameter `taskCreate` is required when calling `createTaskV1`.');
-      }
+      validateRequired('taskCreate', 'createTaskV1', taskCreate);
 
-      if (!taskCreate.sourceID) {
-        throw new Error('Parameter `taskCreate.sourceID` is required when calling `createTaskV1`.');
-      }
-      if (!taskCreate.destinationID) {
-        throw new Error('Parameter `taskCreate.destinationID` is required when calling `createTaskV1`.');
-      }
-      if (!taskCreate.trigger) {
-        throw new Error('Parameter `taskCreate.trigger` is required when calling `createTaskV1`.');
-      }
-      if (!taskCreate.action) {
-        throw new Error('Parameter `taskCreate.action` is required when calling `createTaskV1`.');
-      }
+      validateRequired('taskCreate.sourceID', 'createTaskV1', taskCreate.sourceID);
+      validateRequired('taskCreate.destinationID', 'createTaskV1', taskCreate.destinationID);
+      validateRequired('taskCreate.trigger', 'createTaskV1', taskCreate.trigger);
+      validateRequired('taskCreate.action', 'createTaskV1', taskCreate.action);
 
       const requestPath = '/1/tasks';
       const headers: Headers = {};
@@ -537,13 +503,9 @@ export function createIngestionClient({
       transformationCreate: TransformationCreate,
       requestOptions?: RequestOptions,
     ): Promise<TransformationCreateResponse> {
-      if (!transformationCreate) {
-        throw new Error('Parameter `transformationCreate` is required when calling `createTransformation`.');
-      }
+      validateRequired('transformationCreate', 'createTransformation', transformationCreate);
 
-      if (!transformationCreate.name) {
-        throw new Error('Parameter `transformationCreate.name` is required when calling `createTransformation`.');
-      }
+      validateRequired('transformationCreate.name', 'createTransformation', transformationCreate.name);
 
       const requestPath = '/1/transformations';
       const headers: Headers = {};
@@ -571,9 +533,7 @@ export function createIngestionClient({
       { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customDelete`.');
-      }
+      validateRequired('path', 'customDelete', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -597,9 +557,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customGet`.');
-      }
+      validateRequired('path', 'customGet', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -627,9 +585,7 @@ export function createIngestionClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -658,9 +614,7 @@ export function createIngestionClient({
       { path, parameters, body }: CustomPutProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPut`.');
-      }
+      validateRequired('path', 'customPut', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -692,9 +646,7 @@ export function createIngestionClient({
       { authenticationID }: DeleteAuthenticationProps,
       requestOptions?: RequestOptions,
     ): Promise<DeleteResponse> {
-      if (!authenticationID) {
-        throw new Error('Parameter `authenticationID` is required when calling `deleteAuthentication`.');
-      }
+      validateRequired('authenticationID', 'deleteAuthentication', authenticationID);
 
       const requestPath = '/1/authentications/{authenticationID}'.replace(
         '{authenticationID}',
@@ -728,9 +680,7 @@ export function createIngestionClient({
       { destinationID }: DeleteDestinationProps,
       requestOptions?: RequestOptions,
     ): Promise<DeleteResponse> {
-      if (!destinationID) {
-        throw new Error('Parameter `destinationID` is required when calling `deleteDestination`.');
-      }
+      validateRequired('destinationID', 'deleteDestination', destinationID);
 
       const requestPath = '/1/destinations/{destinationID}'.replace(
         '{destinationID}',
@@ -761,9 +711,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteSource({ sourceID }: DeleteSourceProps, requestOptions?: RequestOptions): Promise<DeleteResponse> {
-      if (!sourceID) {
-        throw new Error('Parameter `sourceID` is required when calling `deleteSource`.');
-      }
+      validateRequired('sourceID', 'deleteSource', sourceID);
 
       const requestPath = '/1/sources/{sourceID}'.replace('{sourceID}', encodeURIComponent(sourceID));
       const headers: Headers = {};
@@ -791,9 +739,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteTask({ taskID }: DeleteTaskProps, requestOptions?: RequestOptions): Promise<DeleteResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `deleteTask`.');
-      }
+      validateRequired('taskID', 'deleteTask', taskID);
 
       const requestPath = '/2/tasks/{taskID}'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -823,9 +769,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteTaskV1({ taskID }: DeleteTaskV1Props, requestOptions?: RequestOptions): Promise<DeleteResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `deleteTaskV1`.');
-      }
+      validateRequired('taskID', 'deleteTaskV1', taskID);
 
       const requestPath = '/1/tasks/{taskID}'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -856,9 +800,7 @@ export function createIngestionClient({
       { transformationID }: DeleteTransformationProps,
       requestOptions?: RequestOptions,
     ): Promise<DeleteResponse> {
-      if (!transformationID) {
-        throw new Error('Parameter `transformationID` is required when calling `deleteTransformation`.');
-      }
+      validateRequired('transformationID', 'deleteTransformation', transformationID);
 
       const requestPath = '/1/transformations/{transformationID}'.replace(
         '{transformationID}',
@@ -889,9 +831,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     disableTask({ taskID }: DisableTaskProps, requestOptions?: RequestOptions): Promise<TaskUpdateResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `disableTask`.');
-      }
+      validateRequired('taskID', 'disableTask', taskID);
 
       const requestPath = '/2/tasks/{taskID}/disable'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -921,9 +861,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     disableTaskV1({ taskID }: DisableTaskV1Props, requestOptions?: RequestOptions): Promise<TaskUpdateResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `disableTaskV1`.');
-      }
+      validateRequired('taskID', 'disableTaskV1', taskID);
 
       const requestPath = '/1/tasks/{taskID}/disable'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -951,9 +889,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     enableTask({ taskID }: EnableTaskProps, requestOptions?: RequestOptions): Promise<TaskUpdateResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `enableTask`.');
-      }
+      validateRequired('taskID', 'enableTask', taskID);
 
       const requestPath = '/2/tasks/{taskID}/enable'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -983,9 +919,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     enableTaskV1({ taskID }: EnableTaskV1Props, requestOptions?: RequestOptions): Promise<TaskUpdateResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `enableTaskV1`.');
-      }
+      validateRequired('taskID', 'enableTaskV1', taskID);
 
       const requestPath = '/1/tasks/{taskID}/enable'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -1016,9 +950,7 @@ export function createIngestionClient({
       { authenticationID }: GetAuthenticationProps,
       requestOptions?: RequestOptions,
     ): Promise<Authentication> {
-      if (!authenticationID) {
-        throw new Error('Parameter `authenticationID` is required when calling `getAuthentication`.');
-      }
+      validateRequired('authenticationID', 'getAuthentication', authenticationID);
 
       const requestPath = '/1/authentications/{authenticationID}'.replace(
         '{authenticationID}',
@@ -1049,9 +981,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getDestination({ destinationID }: GetDestinationProps, requestOptions?: RequestOptions): Promise<Destination> {
-      if (!destinationID) {
-        throw new Error('Parameter `destinationID` is required when calling `getDestination`.');
-      }
+      validateRequired('destinationID', 'getDestination', destinationID);
 
       const requestPath = '/1/destinations/{destinationID}'.replace(
         '{destinationID}',
@@ -1083,13 +1013,9 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getEvent({ runID, eventID }: GetEventProps, requestOptions?: RequestOptions): Promise<Event> {
-      if (!runID) {
-        throw new Error('Parameter `runID` is required when calling `getEvent`.');
-      }
+      validateRequired('runID', 'getEvent', runID);
 
-      if (!eventID) {
-        throw new Error('Parameter `eventID` is required when calling `getEvent`.');
-      }
+      validateRequired('eventID', 'getEvent', eventID);
 
       const requestPath = '/1/runs/{runID}/events/{eventID}'
         .replace('{runID}', encodeURIComponent(runID))
@@ -1119,9 +1045,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRun({ runID }: GetRunProps, requestOptions?: RequestOptions): Promise<Run> {
-      if (!runID) {
-        throw new Error('Parameter `runID` is required when calling `getRun`.');
-      }
+      validateRequired('runID', 'getRun', runID);
 
       const requestPath = '/1/runs/{runID}'.replace('{runID}', encodeURIComponent(runID));
       const headers: Headers = {};
@@ -1149,9 +1073,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getSource({ sourceID }: GetSourceProps, requestOptions?: RequestOptions): Promise<Source> {
-      if (!sourceID) {
-        throw new Error('Parameter `sourceID` is required when calling `getSource`.');
-      }
+      validateRequired('sourceID', 'getSource', sourceID);
 
       const requestPath = '/1/sources/{sourceID}'.replace('{sourceID}', encodeURIComponent(sourceID));
       const headers: Headers = {};
@@ -1179,9 +1101,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTask({ taskID }: GetTaskProps, requestOptions?: RequestOptions): Promise<Task> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `getTask`.');
-      }
+      validateRequired('taskID', 'getTask', taskID);
 
       const requestPath = '/2/tasks/{taskID}'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -1211,9 +1131,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTaskV1({ taskID }: GetTaskV1Props, requestOptions?: RequestOptions): Promise<TaskV1> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `getTaskV1`.');
-      }
+      validateRequired('taskID', 'getTaskV1', taskID);
 
       const requestPath = '/1/tasks/{taskID}'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -1244,9 +1162,7 @@ export function createIngestionClient({
       { transformationID }: GetTransformationProps,
       requestOptions?: RequestOptions,
     ): Promise<Transformation> {
-      if (!transformationID) {
-        throw new Error('Parameter `transformationID` is required when calling `getTransformation`.');
-      }
+      validateRequired('transformationID', 'getTransformation', transformationID);
 
       const requestPath = '/1/transformations/{transformationID}'.replace(
         '{transformationID}',
@@ -1409,9 +1325,7 @@ export function createIngestionClient({
       { runID, itemsPerPage, page, status, type, sort, order, startDate, endDate }: ListEventsProps,
       requestOptions?: RequestOptions,
     ): Promise<ListEventsResponse> {
-      if (!runID) {
-        throw new Error('Parameter `runID` is required when calling `listEvents`.');
-      }
+      validateRequired('runID', 'listEvents', runID);
 
       const requestPath = '/1/runs/{runID}/events'.replace('{runID}', encodeURIComponent(runID));
       const headers: Headers = {};
@@ -1831,20 +1745,12 @@ export function createIngestionClient({
       { indexName, pushTaskPayload, watch, referenceIndexName }: PushProps,
       requestOptions?: RequestOptions,
     ): Promise<WatchResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `push`.');
-      }
+      validateRequired('indexName', 'push', indexName);
 
-      if (!pushTaskPayload) {
-        throw new Error('Parameter `pushTaskPayload` is required when calling `push`.');
-      }
+      validateRequired('pushTaskPayload', 'push', pushTaskPayload);
 
-      if (!pushTaskPayload.action) {
-        throw new Error('Parameter `pushTaskPayload.action` is required when calling `push`.');
-      }
-      if (!pushTaskPayload.records) {
-        throw new Error('Parameter `pushTaskPayload.records` is required when calling `push`.');
-      }
+      validateRequired('pushTaskPayload.action', 'push', pushTaskPayload.action);
+      validateRequired('pushTaskPayload.records', 'push', pushTaskPayload.records);
 
       const requestPath = '/1/push/{indexName}'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -1895,20 +1801,12 @@ export function createIngestionClient({
       { taskID, pushTaskPayload, watch }: PushTaskProps,
       requestOptions?: RequestOptions,
     ): Promise<WatchResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `pushTask`.');
-      }
+      validateRequired('taskID', 'pushTask', taskID);
 
-      if (!pushTaskPayload) {
-        throw new Error('Parameter `pushTaskPayload` is required when calling `pushTask`.');
-      }
+      validateRequired('pushTaskPayload', 'pushTask', pushTaskPayload);
 
-      if (!pushTaskPayload.action) {
-        throw new Error('Parameter `pushTaskPayload.action` is required when calling `pushTask`.');
-      }
-      if (!pushTaskPayload.records) {
-        throw new Error('Parameter `pushTaskPayload.records` is required when calling `pushTask`.');
-      }
+      validateRequired('pushTaskPayload.action', 'pushTask', pushTaskPayload.action);
+      validateRequired('pushTaskPayload.records', 'pushTask', pushTaskPayload.records);
 
       const requestPath = '/2/tasks/{taskID}/push'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -1954,20 +1852,12 @@ export function createIngestionClient({
       { taskID, taskReplace }: ReplaceTaskProps,
       requestOptions?: RequestOptions,
     ): Promise<TaskUpdateResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `replaceTask`.');
-      }
+      validateRequired('taskID', 'replaceTask', taskID);
 
-      if (!taskReplace) {
-        throw new Error('Parameter `taskReplace` is required when calling `replaceTask`.');
-      }
+      validateRequired('taskReplace', 'replaceTask', taskReplace);
 
-      if (!taskReplace.destinationID) {
-        throw new Error('Parameter `taskReplace.destinationID` is required when calling `replaceTask`.');
-      }
-      if (!taskReplace.action) {
-        throw new Error('Parameter `taskReplace.action` is required when calling `replaceTask`.');
-      }
+      validateRequired('taskReplace.destinationID', 'replaceTask', taskReplace.destinationID);
+      validateRequired('taskReplace.action', 'replaceTask', taskReplace.action);
 
       const requestPath = '/2/tasks/{taskID}'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -2000,9 +1890,7 @@ export function createIngestionClient({
       { sourceID, runSourcePayload }: RunSourceProps,
       requestOptions?: RequestOptions,
     ): Promise<RunSourceResponse> {
-      if (!sourceID) {
-        throw new Error('Parameter `sourceID` is required when calling `runSource`.');
-      }
+      validateRequired('sourceID', 'runSource', sourceID);
 
       const requestPath = '/1/sources/{sourceID}/run'.replace('{sourceID}', encodeURIComponent(sourceID));
       const headers: Headers = {};
@@ -2032,9 +1920,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     runTask({ taskID, runTaskPayload }: RunTaskProps, requestOptions?: RequestOptions): Promise<RunResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `runTask`.');
-      }
+      validateRequired('taskID', 'runTask', taskID);
 
       const requestPath = '/2/tasks/{taskID}/run'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -2066,9 +1952,7 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     runTaskV1({ taskID, runTaskPayload }: RunTaskV1Props, requestOptions?: RequestOptions): Promise<RunResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `runTaskV1`.');
-      }
+      validateRequired('taskID', 'runTaskV1', taskID);
 
       const requestPath = '/1/tasks/{taskID}/run'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -2099,15 +1983,13 @@ export function createIngestionClient({
       authenticationSearch: AuthenticationSearch,
       requestOptions?: RequestOptions,
     ): Promise<Array<Authentication>> {
-      if (!authenticationSearch) {
-        throw new Error('Parameter `authenticationSearch` is required when calling `searchAuthentications`.');
-      }
+      validateRequired('authenticationSearch', 'searchAuthentications', authenticationSearch);
 
-      if (!authenticationSearch.authenticationIDs) {
-        throw new Error(
-          'Parameter `authenticationSearch.authenticationIDs` is required when calling `searchAuthentications`.',
-        );
-      }
+      validateRequired(
+        'authenticationSearch.authenticationIDs',
+        'searchAuthentications',
+        authenticationSearch.authenticationIDs,
+      );
 
       const requestPath = '/1/authentications/search';
       const headers: Headers = {};
@@ -2138,13 +2020,9 @@ export function createIngestionClient({
       destinationSearch: DestinationSearch,
       requestOptions?: RequestOptions,
     ): Promise<Array<Destination>> {
-      if (!destinationSearch) {
-        throw new Error('Parameter `destinationSearch` is required when calling `searchDestinations`.');
-      }
+      validateRequired('destinationSearch', 'searchDestinations', destinationSearch);
 
-      if (!destinationSearch.destinationIDs) {
-        throw new Error('Parameter `destinationSearch.destinationIDs` is required when calling `searchDestinations`.');
-      }
+      validateRequired('destinationSearch.destinationIDs', 'searchDestinations', destinationSearch.destinationIDs);
 
       const requestPath = '/1/destinations/search';
       const headers: Headers = {};
@@ -2172,13 +2050,9 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchSources(sourceSearch: SourceSearch, requestOptions?: RequestOptions): Promise<Array<Source>> {
-      if (!sourceSearch) {
-        throw new Error('Parameter `sourceSearch` is required when calling `searchSources`.');
-      }
+      validateRequired('sourceSearch', 'searchSources', sourceSearch);
 
-      if (!sourceSearch.sourceIDs) {
-        throw new Error('Parameter `sourceSearch.sourceIDs` is required when calling `searchSources`.');
-      }
+      validateRequired('sourceSearch.sourceIDs', 'searchSources', sourceSearch.sourceIDs);
 
       const requestPath = '/1/sources/search';
       const headers: Headers = {};
@@ -2206,13 +2080,9 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchTasks(taskSearch: TaskSearch, requestOptions?: RequestOptions): Promise<Array<Task>> {
-      if (!taskSearch) {
-        throw new Error('Parameter `taskSearch` is required when calling `searchTasks`.');
-      }
+      validateRequired('taskSearch', 'searchTasks', taskSearch);
 
-      if (!taskSearch.taskIDs) {
-        throw new Error('Parameter `taskSearch.taskIDs` is required when calling `searchTasks`.');
-      }
+      validateRequired('taskSearch.taskIDs', 'searchTasks', taskSearch.taskIDs);
 
       const requestPath = '/2/tasks/search';
       const headers: Headers = {};
@@ -2242,13 +2112,9 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     searchTasksV1(taskSearch: TaskSearch, requestOptions?: RequestOptions): Promise<Array<TaskV1>> {
-      if (!taskSearch) {
-        throw new Error('Parameter `taskSearch` is required when calling `searchTasksV1`.');
-      }
+      validateRequired('taskSearch', 'searchTasksV1', taskSearch);
 
-      if (!taskSearch.taskIDs) {
-        throw new Error('Parameter `taskSearch.taskIDs` is required when calling `searchTasksV1`.');
-      }
+      validateRequired('taskSearch.taskIDs', 'searchTasksV1', taskSearch.taskIDs);
 
       const requestPath = '/1/tasks/search';
       const headers: Headers = {};
@@ -2279,15 +2145,13 @@ export function createIngestionClient({
       transformationSearch: TransformationSearch,
       requestOptions?: RequestOptions,
     ): Promise<Array<Transformation>> {
-      if (!transformationSearch) {
-        throw new Error('Parameter `transformationSearch` is required when calling `searchTransformations`.');
-      }
+      validateRequired('transformationSearch', 'searchTransformations', transformationSearch);
 
-      if (!transformationSearch.transformationIDs) {
-        throw new Error(
-          'Parameter `transformationSearch.transformationIDs` is required when calling `searchTransformations`.',
-        );
-      }
+      validateRequired(
+        'transformationSearch.transformationIDs',
+        'searchTransformations',
+        transformationSearch.transformationIDs,
+      );
 
       const requestPath = '/1/transformations/search';
       const headers: Headers = {};
@@ -2319,9 +2183,7 @@ export function createIngestionClient({
       { sourceID }: TriggerDockerSourceDiscoverProps,
       requestOptions?: RequestOptions,
     ): Promise<WatchResponse> {
-      if (!sourceID) {
-        throw new Error('Parameter `sourceID` is required when calling `triggerDockerSourceDiscover`.');
-      }
+      validateRequired('sourceID', 'triggerDockerSourceDiscover', sourceID);
 
       const requestPath = '/1/sources/{sourceID}/discover'.replace('{sourceID}', encodeURIComponent(sourceID));
       const headers: Headers = {};
@@ -2360,13 +2222,9 @@ export function createIngestionClient({
       transformationTry: TransformationTry,
       requestOptions?: RequestOptions,
     ): Promise<TransformationTryResponse> {
-      if (!transformationTry) {
-        throw new Error('Parameter `transformationTry` is required when calling `tryTransformation`.');
-      }
+      validateRequired('transformationTry', 'tryTransformation', transformationTry);
 
-      if (!transformationTry.sampleRecord) {
-        throw new Error('Parameter `transformationTry.sampleRecord` is required when calling `tryTransformation`.');
-      }
+      validateRequired('transformationTry.sampleRecord', 'tryTransformation', transformationTry.sampleRecord);
 
       const requestPath = '/1/transformations/try';
       const headers: Headers = {};
@@ -2399,19 +2257,15 @@ export function createIngestionClient({
       { transformationID, transformationTry }: TryTransformationBeforeUpdateProps,
       requestOptions?: RequestOptions,
     ): Promise<TransformationTryResponse> {
-      if (!transformationID) {
-        throw new Error('Parameter `transformationID` is required when calling `tryTransformationBeforeUpdate`.');
-      }
+      validateRequired('transformationID', 'tryTransformationBeforeUpdate', transformationID);
 
-      if (!transformationTry) {
-        throw new Error('Parameter `transformationTry` is required when calling `tryTransformationBeforeUpdate`.');
-      }
+      validateRequired('transformationTry', 'tryTransformationBeforeUpdate', transformationTry);
 
-      if (!transformationTry.sampleRecord) {
-        throw new Error(
-          'Parameter `transformationTry.sampleRecord` is required when calling `tryTransformationBeforeUpdate`.',
-        );
-      }
+      validateRequired(
+        'transformationTry.sampleRecord',
+        'tryTransformationBeforeUpdate',
+        transformationTry.sampleRecord,
+      );
 
       const requestPath = '/1/transformations/{transformationID}/try'.replace(
         '{transformationID}',
@@ -2447,13 +2301,9 @@ export function createIngestionClient({
       { authenticationID, authenticationUpdate }: UpdateAuthenticationProps,
       requestOptions?: RequestOptions,
     ): Promise<AuthenticationUpdateResponse> {
-      if (!authenticationID) {
-        throw new Error('Parameter `authenticationID` is required when calling `updateAuthentication`.');
-      }
+      validateRequired('authenticationID', 'updateAuthentication', authenticationID);
 
-      if (!authenticationUpdate) {
-        throw new Error('Parameter `authenticationUpdate` is required when calling `updateAuthentication`.');
-      }
+      validateRequired('authenticationUpdate', 'updateAuthentication', authenticationUpdate);
 
       const requestPath = '/1/authentications/{authenticationID}'.replace(
         '{authenticationID}',
@@ -2489,13 +2339,9 @@ export function createIngestionClient({
       { destinationID, destinationUpdate }: UpdateDestinationProps,
       requestOptions?: RequestOptions,
     ): Promise<DestinationUpdateResponse> {
-      if (!destinationID) {
-        throw new Error('Parameter `destinationID` is required when calling `updateDestination`.');
-      }
+      validateRequired('destinationID', 'updateDestination', destinationID);
 
-      if (!destinationUpdate) {
-        throw new Error('Parameter `destinationUpdate` is required when calling `updateDestination`.');
-      }
+      validateRequired('destinationUpdate', 'updateDestination', destinationUpdate);
 
       const requestPath = '/1/destinations/{destinationID}'.replace(
         '{destinationID}',
@@ -2531,13 +2377,9 @@ export function createIngestionClient({
       { sourceID, sourceUpdate }: UpdateSourceProps,
       requestOptions?: RequestOptions,
     ): Promise<SourceUpdateResponse> {
-      if (!sourceID) {
-        throw new Error('Parameter `sourceID` is required when calling `updateSource`.');
-      }
+      validateRequired('sourceID', 'updateSource', sourceID);
 
-      if (!sourceUpdate) {
-        throw new Error('Parameter `sourceUpdate` is required when calling `updateSource`.');
-      }
+      validateRequired('sourceUpdate', 'updateSource', sourceUpdate);
 
       const requestPath = '/1/sources/{sourceID}'.replace('{sourceID}', encodeURIComponent(sourceID));
       const headers: Headers = {};
@@ -2567,13 +2409,9 @@ export function createIngestionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     updateTask({ taskID, taskUpdate }: UpdateTaskProps, requestOptions?: RequestOptions): Promise<TaskUpdateResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `updateTask`.');
-      }
+      validateRequired('taskID', 'updateTask', taskID);
 
-      if (!taskUpdate) {
-        throw new Error('Parameter `taskUpdate` is required when calling `updateTask`.');
-      }
+      validateRequired('taskUpdate', 'updateTask', taskUpdate);
 
       const requestPath = '/2/tasks/{taskID}'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -2608,13 +2446,9 @@ export function createIngestionClient({
       { taskID, taskUpdate }: UpdateTaskV1Props,
       requestOptions?: RequestOptions,
     ): Promise<TaskUpdateResponse> {
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `updateTaskV1`.');
-      }
+      validateRequired('taskID', 'updateTaskV1', taskID);
 
-      if (!taskUpdate) {
-        throw new Error('Parameter `taskUpdate` is required when calling `updateTaskV1`.');
-      }
+      validateRequired('taskUpdate', 'updateTaskV1', taskUpdate);
 
       const requestPath = '/1/tasks/{taskID}'.replace('{taskID}', encodeURIComponent(taskID));
       const headers: Headers = {};
@@ -2647,17 +2481,11 @@ export function createIngestionClient({
       { transformationID, transformationCreate }: UpdateTransformationProps,
       requestOptions?: RequestOptions,
     ): Promise<TransformationUpdateResponse> {
-      if (!transformationID) {
-        throw new Error('Parameter `transformationID` is required when calling `updateTransformation`.');
-      }
+      validateRequired('transformationID', 'updateTransformation', transformationID);
 
-      if (!transformationCreate) {
-        throw new Error('Parameter `transformationCreate` is required when calling `updateTransformation`.');
-      }
+      validateRequired('transformationCreate', 'updateTransformation', transformationCreate);
 
-      if (!transformationCreate.name) {
-        throw new Error('Parameter `transformationCreate.name` is required when calling `updateTransformation`.');
-      }
+      validateRequired('transformationCreate.name', 'updateTransformation', transformationCreate.name);
 
       const requestPath = '/1/transformations/{transformationID}'.replace(
         '{transformationID}',
@@ -2731,13 +2559,9 @@ export function createIngestionClient({
       { sourceID, sourceUpdate }: ValidateSourceBeforeUpdateProps,
       requestOptions?: RequestOptions,
     ): Promise<WatchResponse> {
-      if (!sourceID) {
-        throw new Error('Parameter `sourceID` is required when calling `validateSourceBeforeUpdate`.');
-      }
+      validateRequired('sourceID', 'validateSourceBeforeUpdate', sourceID);
 
-      if (!sourceUpdate) {
-        throw new Error('Parameter `sourceUpdate` is required when calling `validateSourceBeforeUpdate`.');
-      }
+      validateRequired('sourceUpdate', 'validateSourceBeforeUpdate', sourceUpdate);
 
       const requestPath = '/1/sources/{sourceID}/validate'.replace('{sourceID}', encodeURIComponent(sourceID));
       const headers: Headers = {};

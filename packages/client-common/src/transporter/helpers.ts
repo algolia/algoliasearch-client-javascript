@@ -75,6 +75,11 @@ export function serializeHeaders(
 }
 
 export function deserializeSuccess<TObject>(response: Response): TObject {
+  // Handle 204 No Content and other empty responses
+  if (response.status === 204 || response.content.length === 0) {
+    return undefined as unknown as TObject;
+  }
+
   try {
     return JSON.parse(response.content);
   } catch (e) {

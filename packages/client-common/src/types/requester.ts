@@ -64,4 +64,8 @@ export type Requester = {
    * Sends the given `request` to the server.
    */
   send: (request: EndRequest) => Promise<Response>;
+  /**
+   * Sends the given `request` and returns a raw byte stream for streaming responses (e.g. SSE).
+   */
+  sendStream?: (request: EndRequest) => Promise<ReadableStream<Uint8Array>>;
 };

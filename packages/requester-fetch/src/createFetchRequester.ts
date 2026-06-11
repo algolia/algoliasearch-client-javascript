@@ -70,5 +70,29 @@ export function createFetchRequester({ requesterOptions = {} }: FetchRequesterOp
     }
   }
 
-  return { send };
+  async function sendStream(request: EndRequest): Promise<ReadableStream<Uint8Array>> {
+    const fetchRes = await fetch(request.url, {
+      method: request.method,
+      body: (request.data as BodyInit) || null,
+      redirect: 'manual',
+      ...requesterOptions,
+      headers: {
+        ...requesterOptions.headers,
+        ...request.headers,
+      },
+    });
+
+    if (!fetchRes.ok) {
+      const text = await fetchRes.text();
+      throw new Error(`HTTP ${fetchRes.status}: ${text}`);
+    }
+
+    if (fetchRes.body === null) {
+      throw new Error('Response body is null — streaming not supported');
+    }
+
+    return fetchRes.body;
+  }
+
+  return { send, sendStream };
 }

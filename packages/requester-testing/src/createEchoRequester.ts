@@ -77,5 +77,30 @@ export function createEchoRequester({ getURL, status = 200 }: EchoRequesterParam
     });
   }
 
-  return { send };
+  function sendStream(request: EndRequest): Promise<ReadableStream<Uint8Array>> {
+    const { host, searchParams, algoliaAgent, path } = getUrlParams(getURL(request.url));
+
+    const content: EchoResponse = {
+      ...request,
+      data: request.data ? JSON.parse(request.data as string) : undefined,
+      path,
+      host,
+      algoliaAgent,
+      searchParams,
+    };
+
+    const ssePayload = `data: ${JSON.stringify(content)}\n\n`;
+    const encoded = new TextEncoder().encode(ssePayload);
+
+    const stream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(encoded);
+        controller.close();
+      },
+    });
+
+    return Promise.resolve(stream);
+  }
+
+  return { send, sendStream };
 }

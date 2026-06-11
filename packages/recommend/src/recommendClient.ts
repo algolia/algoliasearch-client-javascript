@@ -8,7 +8,7 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createTransporter, getAlgoliaAgent, shuffle } from '@algolia/client-common';
+import { createAuth, createTransporter, getAlgoliaAgent, shuffle, validateRequired } from '@algolia/client-common';
 
 import type { DeletedAtResponse } from '../model/deletedAtResponse';
 import type { GetRecommendTaskResponse } from '../model/getRecommendTaskResponse';
@@ -31,7 +31,7 @@ import type {
   SearchRecommendRulesProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.53.0';
+export const apiClientVersion = '5.54.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -161,13 +161,9 @@ export function createRecommendClient({
       { indexName, model, recommendRule }: BatchRecommendRulesProps,
       requestOptions?: RequestOptions,
     ): Promise<RecommendUpdatedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `batchRecommendRules`.');
-      }
+      validateRequired('indexName', 'batchRecommendRules', indexName);
 
-      if (!model) {
-        throw new Error('Parameter `model` is required when calling `batchRecommendRules`.');
-      }
+      validateRequired('model', 'batchRecommendRules', model);
 
       const requestPath = '/1/indexes/{indexName}/{model}/recommend/rules/batch'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -197,9 +193,7 @@ export function createRecommendClient({
       { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customDelete`.');
-      }
+      validateRequired('path', 'customDelete', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -223,9 +217,7 @@ export function createRecommendClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customGet`.');
-      }
+      validateRequired('path', 'customGet', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -253,9 +245,7 @@ export function createRecommendClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -284,9 +274,7 @@ export function createRecommendClient({
       { path, parameters, body }: CustomPutProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPut`.');
-      }
+      validateRequired('path', 'customPut', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -318,17 +306,11 @@ export function createRecommendClient({
       { indexName, model, objectID }: DeleteRecommendRuleProps,
       requestOptions?: RequestOptions,
     ): Promise<DeletedAtResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `deleteRecommendRule`.');
-      }
+      validateRequired('indexName', 'deleteRecommendRule', indexName);
 
-      if (!model) {
-        throw new Error('Parameter `model` is required when calling `deleteRecommendRule`.');
-      }
+      validateRequired('model', 'deleteRecommendRule', model);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `deleteRecommendRule`.');
-      }
+      validateRequired('objectID', 'deleteRecommendRule', objectID);
 
       const requestPath = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -362,17 +344,11 @@ export function createRecommendClient({
       { indexName, model, objectID }: GetRecommendRuleProps,
       requestOptions?: RequestOptions,
     ): Promise<RecommendRule> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `getRecommendRule`.');
-      }
+      validateRequired('indexName', 'getRecommendRule', indexName);
 
-      if (!model) {
-        throw new Error('Parameter `model` is required when calling `getRecommendRule`.');
-      }
+      validateRequired('model', 'getRecommendRule', model);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `getRecommendRule`.');
-      }
+      validateRequired('objectID', 'getRecommendRule', objectID);
 
       const requestPath = '/1/indexes/{indexName}/{model}/recommend/rules/{objectID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -406,17 +382,11 @@ export function createRecommendClient({
       { indexName, model, taskID }: GetRecommendStatusProps,
       requestOptions?: RequestOptions,
     ): Promise<GetRecommendTaskResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `getRecommendStatus`.');
-      }
+      validateRequired('indexName', 'getRecommendStatus', indexName);
 
-      if (!model) {
-        throw new Error('Parameter `model` is required when calling `getRecommendStatus`.');
-      }
+      validateRequired('model', 'getRecommendStatus', model);
 
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `getRecommendStatus`.');
-      }
+      validateRequired('taskID', 'getRecommendStatus', taskID);
 
       const requestPath = '/1/indexes/{indexName}/{model}/task/{taskID}'
         .replace('{indexName}', encodeURIComponent(indexName))
@@ -455,13 +425,9 @@ export function createRecommendClient({
         getRecommendationsParams = newSignatureRequest;
       }
 
-      if (!getRecommendationsParams) {
-        throw new Error('Parameter `getRecommendationsParams` is required when calling `getRecommendations`.');
-      }
+      validateRequired('getRecommendationsParams', 'getRecommendations', getRecommendationsParams);
 
-      if (!getRecommendationsParams.requests) {
-        throw new Error('Parameter `getRecommendationsParams.requests` is required when calling `getRecommendations`.');
-      }
+      validateRequired('getRecommendationsParams.requests', 'getRecommendations', getRecommendationsParams.requests);
 
       const requestPath = '/1/indexes/*/recommendations';
       const headers: Headers = {};
@@ -495,13 +461,9 @@ export function createRecommendClient({
       { indexName, model, searchRecommendRulesParams }: SearchRecommendRulesProps,
       requestOptions?: RequestOptions,
     ): Promise<SearchRecommendRulesResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `searchRecommendRules`.');
-      }
+      validateRequired('indexName', 'searchRecommendRules', indexName);
 
-      if (!model) {
-        throw new Error('Parameter `model` is required when calling `searchRecommendRules`.');
-      }
+      validateRequired('model', 'searchRecommendRules', model);
 
       const requestPath = '/1/indexes/{indexName}/{model}/recommend/rules/search'
         .replace('{indexName}', encodeURIComponent(indexName))

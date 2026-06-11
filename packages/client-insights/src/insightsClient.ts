@@ -8,7 +8,7 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createTransporter, getAlgoliaAgent } from '@algolia/client-common';
+import { createAuth, createTransporter, getAlgoliaAgent, validateRequired } from '@algolia/client-common';
 
 import type { EventsResponse } from '../model/eventsResponse';
 import type { InsightsEvents } from '../model/insightsEvents';
@@ -21,7 +21,7 @@ import type {
   DeleteUserTokenProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.53.0';
+export const apiClientVersion = '5.54.0';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -123,9 +123,7 @@ export function createInsightsClient({
       { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customDelete`.');
-      }
+      validateRequired('path', 'customDelete', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -149,9 +147,7 @@ export function createInsightsClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customGet`.');
-      }
+      validateRequired('path', 'customGet', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -179,9 +175,7 @@ export function createInsightsClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -210,9 +204,7 @@ export function createInsightsClient({
       { path, parameters, body }: CustomPutProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPut`.');
-      }
+      validateRequired('path', 'customPut', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -239,9 +231,7 @@ export function createInsightsClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteUserToken({ userToken }: DeleteUserTokenProps, requestOptions?: RequestOptions): Promise<void> {
-      if (!userToken) {
-        throw new Error('Parameter `userToken` is required when calling `deleteUserToken`.');
-      }
+      validateRequired('userToken', 'deleteUserToken', userToken);
 
       const requestPath = '/1/usertokens/{userToken}'.replace('{userToken}', encodeURIComponent(userToken));
       const headers: Headers = {};
@@ -266,13 +256,9 @@ export function createInsightsClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     pushEvents(insightsEvents: InsightsEvents, requestOptions?: RequestOptions): Promise<EventsResponse> {
-      if (!insightsEvents) {
-        throw new Error('Parameter `insightsEvents` is required when calling `pushEvents`.');
-      }
+      validateRequired('insightsEvents', 'pushEvents', insightsEvents);
 
-      if (!insightsEvents.events) {
-        throw new Error('Parameter `insightsEvents.events` is required when calling `pushEvents`.');
-      }
+      validateRequired('insightsEvents.events', 'pushEvents', insightsEvents.events);
 
       const requestPath = '/1/events';
       const headers: Headers = {};

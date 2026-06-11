@@ -1,3 +1,5 @@
+import type { ServerSentEvent } from '../sse';
+import { iterSSEEvents } from '../sse';
 import type {
   EndRequest,
   Host,
@@ -311,6 +313,74 @@ export function createTransporter({
     );
   }
 
+  async function* requestStream(
+    request: Request,
+    requestOptions: RequestOptions = {},
+  ): AsyncGenerator<ServerSentEvent> {
+    if (!requester.sendStream) {
+      throw new Error('This requester does not support streaming');
+    }
+
+    const data = serializeData(request, requestOptions);
+    const headers = serializeHeaders(baseHeaders, request.headers, requestOptions.headers);
+    headers['accept'] = 'text/event-stream';
+
+    // On `GET`, the data is proxied to query parameters.
+    const dataQueryParameters: QueryParameters =
+      request.method === 'GET'
+        ? {
+            ...request.data,
+            ...requestOptions.data,
+          }
+        : {};
+
+    const queryParameters: QueryParameters = {
+      ...baseQueryParameters,
+      ...request.queryParameters,
+      ...dataQueryParameters,
+    };
+
+    if (algoliaAgent.value) {
+      queryParameters['x-algolia-agent'] = algoliaAgent.value;
+    }
+
+    if (requestOptions && requestOptions.queryParameters) {
+      for (const key of Object.keys(requestOptions.queryParameters)) {
+        if (
+          !requestOptions.queryParameters[key] ||
+          Object.prototype.toString.call(requestOptions.queryParameters[key]) === '[object Object]'
+        ) {
+          queryParameters[key] = requestOptions.queryParameters[key];
+        } else {
+          queryParameters[key] = requestOptions.queryParameters[key].toString();
+        }
+      }
+    }
+
+    const isRead = request.useReadTransporter || request.method === 'GET';
+    const compatibleHosts = hosts.filter(
+      (host) => host.accept === 'readWrite' || (isRead ? host.accept === 'read' : host.accept === 'write'),
+    );
+    const options = await createRetryableOptions(compatibleHosts);
+    const host = options.hosts[0];
+    if (!host) {
+      throw new RetryError([]);
+    }
+
+    const timeout = { ...timeouts, ...requestOptions.timeouts };
+    const payload: EndRequest = {
+      data,
+      headers,
+      method: request.method,
+      url: serializeUrl(host, request.path, queryParameters),
+      connectTimeout: timeout.connect,
+      responseTimeout: isRead ? timeout.read : timeout.write,
+    };
+
+    const stream = await requester.sendStream(payload);
+    yield* iterSSEEvents(stream);
+  }
+
   return {
     hostsCache,
     requester,
@@ -321,6 +391,7 @@ export function createTransporter({
     baseQueryParameters,
     hosts,
     request: createRequest,
+    requestStream,
     requestsCache,
     responsesCache,
   };

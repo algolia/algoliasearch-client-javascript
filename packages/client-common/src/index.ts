@@ -5,5 +5,7 @@ export * from './createAuth';
 export * from './createIterablePromise';
 export * from './getAlgoliaAgent';
 export * from './logger';
+export * from './sse';
 export * from './transporter';
 export * from './types';
+export * from './validateParam';

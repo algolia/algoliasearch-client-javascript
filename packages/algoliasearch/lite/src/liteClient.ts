@@ -8,7 +8,7 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createTransporter, getAlgoliaAgent, shuffle } from '@algolia/client-common';
+import { createAuth, createTransporter, getAlgoliaAgent, shuffle, validateRequired } from '@algolia/client-common';
 
 import type { GetRecommendationsParams } from '../model/getRecommendationsParams';
 import type { GetRecommendationsResponse } from '../model/getRecommendationsResponse';
@@ -24,7 +24,7 @@ import type {
 import type { SearchForFacetValuesResponse } from '../model/searchForFacetValuesResponse';
 import type { SearchResponse } from '../model/searchResponse';
 
-export const apiClientVersion = '5.53.0';
+export const apiClientVersion = '5.54.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -182,9 +182,7 @@ export function createLiteClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -221,13 +219,9 @@ export function createLiteClient({
         getRecommendationsParams = newSignatureRequest;
       }
 
-      if (!getRecommendationsParams) {
-        throw new Error('Parameter `getRecommendationsParams` is required when calling `getRecommendations`.');
-      }
+      validateRequired('getRecommendationsParams', 'getRecommendations', getRecommendationsParams);
 
-      if (!getRecommendationsParams.requests) {
-        throw new Error('Parameter `getRecommendationsParams.requests` is required when calling `getRecommendations`.');
-      }
+      validateRequired('getRecommendationsParams.requests', 'getRecommendations', getRecommendationsParams.requests);
 
       const requestPath = '/1/indexes/*/recommendations';
       const headers: Headers = {};
@@ -282,13 +276,9 @@ export function createLiteClient({
         searchMethodParams = newSignatureRequest;
       }
 
-      if (!searchMethodParams) {
-        throw new Error('Parameter `searchMethodParams` is required when calling `search`.');
-      }
+      validateRequired('searchMethodParams', 'search', searchMethodParams);
 
-      if (!searchMethodParams.requests) {
-        throw new Error('Parameter `searchMethodParams.requests` is required when calling `search`.');
-      }
+      validateRequired('searchMethodParams.requests', 'search', searchMethodParams.requests);
 
       const requestPath = '/1/indexes/*/queries';
       const headers: Headers = {};

@@ -8,7 +8,7 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createTransporter, getAlgoliaAgent } from '@algolia/client-common';
+import { createAuth, createTransporter, getAlgoliaAgent, validateRequired } from '@algolia/client-common';
 
 import type { ABTest } from '../model/aBTest';
 import type { ABTestResponse } from '../model/aBTestResponse';
@@ -28,7 +28,7 @@ import type {
   StopABTestProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.53.0';
+export const apiClientVersion = '5.54.0';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -128,19 +128,11 @@ export function createAbtestingClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     addABTests(addABTestsRequest: AddABTestsRequest, requestOptions?: RequestOptions): Promise<ABTestResponse> {
-      if (!addABTestsRequest) {
-        throw new Error('Parameter `addABTestsRequest` is required when calling `addABTests`.');
-      }
+      validateRequired('addABTestsRequest', 'addABTests', addABTestsRequest);
 
-      if (!addABTestsRequest.name) {
-        throw new Error('Parameter `addABTestsRequest.name` is required when calling `addABTests`.');
-      }
-      if (!addABTestsRequest.variants) {
-        throw new Error('Parameter `addABTestsRequest.variants` is required when calling `addABTests`.');
-      }
-      if (!addABTestsRequest.endAt) {
-        throw new Error('Parameter `addABTestsRequest.endAt` is required when calling `addABTests`.');
-      }
+      validateRequired('addABTestsRequest.name', 'addABTests', addABTestsRequest.name);
+      validateRequired('addABTestsRequest.variants', 'addABTests', addABTestsRequest.variants);
+      validateRequired('addABTestsRequest.endAt', 'addABTests', addABTestsRequest.endAt);
 
       const requestPath = '/2/abtests';
       const headers: Headers = {};
@@ -168,9 +160,7 @@ export function createAbtestingClient({
       { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customDelete`.');
-      }
+      validateRequired('path', 'customDelete', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -194,9 +184,7 @@ export function createAbtestingClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customGet`.');
-      }
+      validateRequired('path', 'customGet', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -224,9 +212,7 @@ export function createAbtestingClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -255,9 +241,7 @@ export function createAbtestingClient({
       { path, parameters, body }: CustomPutProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPut`.');
-      }
+      validateRequired('path', 'customPut', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -284,9 +268,7 @@ export function createAbtestingClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteABTest({ id }: DeleteABTestProps, requestOptions?: RequestOptions): Promise<ABTestResponse> {
-      if (!id) {
-        throw new Error('Parameter `id` is required when calling `deleteABTest`.');
-      }
+      validateRequired('id', 'deleteABTest', id);
 
       const requestPath = '/2/abtests/{id}'.replace('{id}', encodeURIComponent(id));
       const headers: Headers = {};
@@ -314,16 +296,10 @@ export function createAbtestingClient({
       estimateABTestRequest: EstimateABTestRequest,
       requestOptions?: RequestOptions,
     ): Promise<EstimateABTestResponse> {
-      if (!estimateABTestRequest) {
-        throw new Error('Parameter `estimateABTestRequest` is required when calling `estimateABTest`.');
-      }
+      validateRequired('estimateABTestRequest', 'estimateABTest', estimateABTestRequest);
 
-      if (!estimateABTestRequest.configuration) {
-        throw new Error('Parameter `estimateABTestRequest.configuration` is required when calling `estimateABTest`.');
-      }
-      if (!estimateABTestRequest.variants) {
-        throw new Error('Parameter `estimateABTestRequest.variants` is required when calling `estimateABTest`.');
-      }
+      validateRequired('estimateABTestRequest.configuration', 'estimateABTest', estimateABTestRequest.configuration);
+      validateRequired('estimateABTestRequest.variants', 'estimateABTest', estimateABTestRequest.variants);
 
       const requestPath = '/2/abtests/estimate';
       const headers: Headers = {};
@@ -350,9 +326,7 @@ export function createAbtestingClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getABTest({ id }: GetABTestProps, requestOptions?: RequestOptions): Promise<ABTest> {
-      if (!id) {
-        throw new Error('Parameter `id` is required when calling `getABTest`.');
-      }
+      validateRequired('id', 'getABTest', id);
 
       const requestPath = '/2/abtests/{id}'.replace('{id}', encodeURIComponent(id));
       const headers: Headers = {};
@@ -424,9 +398,7 @@ export function createAbtestingClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     stopABTest({ id }: StopABTestProps, requestOptions?: RequestOptions): Promise<ABTestResponse> {
-      if (!id) {
-        throw new Error('Parameter `id` is required when calling `stopABTest`.');
-      }
+      validateRequired('id', 'stopABTest', id);
 
       const requestPath = '/2/abtests/{id}/stop'.replace('{id}', encodeURIComponent(id));
       const headers: Headers = {};

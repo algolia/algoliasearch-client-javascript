@@ -8,7 +8,7 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createTransporter, getAlgoliaAgent } from '@algolia/client-common';
+import { createAuth, createTransporter, getAlgoliaAgent, validateRequired } from '@algolia/client-common';
 
 import type { BaseResponse } from '../model/baseResponse';
 import type { ConfigStatus } from '../model/configStatus';
@@ -28,7 +28,7 @@ import type {
   UpdateConfigProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.53.0';
+export const apiClientVersion = '5.54.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -131,9 +131,7 @@ export function createQuerySuggestionsClient({
       configurationWithIndex: ConfigurationWithIndex,
       requestOptions?: RequestOptions,
     ): Promise<BaseResponse> {
-      if (!configurationWithIndex) {
-        throw new Error('Parameter `configurationWithIndex` is required when calling `createConfig`.');
-      }
+      validateRequired('configurationWithIndex', 'createConfig', configurationWithIndex);
 
       const requestPath = '/1/configs';
       const headers: Headers = {};
@@ -161,9 +159,7 @@ export function createQuerySuggestionsClient({
       { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customDelete`.');
-      }
+      validateRequired('path', 'customDelete', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -187,9 +183,7 @@ export function createQuerySuggestionsClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customGet`.');
-      }
+      validateRequired('path', 'customGet', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -217,9 +211,7 @@ export function createQuerySuggestionsClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -248,9 +240,7 @@ export function createQuerySuggestionsClient({
       { path, parameters, body }: CustomPutProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPut`.');
-      }
+      validateRequired('path', 'customPut', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -277,9 +267,7 @@ export function createQuerySuggestionsClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteConfig({ indexName }: DeleteConfigProps, requestOptions?: RequestOptions): Promise<BaseResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `deleteConfig`.');
-      }
+      validateRequired('indexName', 'deleteConfig', indexName);
 
       const requestPath = '/1/configs/{indexName}'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -327,9 +315,7 @@ export function createQuerySuggestionsClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getConfig({ indexName }: GetConfigProps, requestOptions?: RequestOptions): Promise<ConfigurationResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `getConfig`.');
-      }
+      validateRequired('indexName', 'getConfig', indexName);
 
       const requestPath = '/1/configs/{indexName}'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -355,9 +341,7 @@ export function createQuerySuggestionsClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getConfigStatus({ indexName }: GetConfigStatusProps, requestOptions?: RequestOptions): Promise<ConfigStatus> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `getConfigStatus`.');
-      }
+      validateRequired('indexName', 'getConfigStatus', indexName);
 
       const requestPath = '/1/configs/{indexName}/status'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -383,9 +367,7 @@ export function createQuerySuggestionsClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getLogFile({ indexName }: GetLogFileProps, requestOptions?: RequestOptions): Promise<LogFile> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `getLogFile`.');
-      }
+      validateRequired('indexName', 'getLogFile', indexName);
 
       const requestPath = '/1/logs/{indexName}'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};
@@ -415,17 +397,11 @@ export function createQuerySuggestionsClient({
       { indexName, configuration }: UpdateConfigProps,
       requestOptions?: RequestOptions,
     ): Promise<BaseResponse> {
-      if (!indexName) {
-        throw new Error('Parameter `indexName` is required when calling `updateConfig`.');
-      }
+      validateRequired('indexName', 'updateConfig', indexName);
 
-      if (!configuration) {
-        throw new Error('Parameter `configuration` is required when calling `updateConfig`.');
-      }
+      validateRequired('configuration', 'updateConfig', configuration);
 
-      if (!configuration.sourceIndices) {
-        throw new Error('Parameter `configuration.sourceIndices` is required when calling `updateConfig`.');
-      }
+      validateRequired('configuration.sourceIndices', 'updateConfig', configuration.sourceIndices);
 
       const requestPath = '/1/configs/{indexName}'.replace('{indexName}', encodeURIComponent(indexName));
       const headers: Headers = {};

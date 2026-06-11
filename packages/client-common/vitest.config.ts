@@ -10,6 +10,7 @@ export default defineConfig({
             'src/__tests__/cache/memory-cache.test.ts',
             'src/__tests__/create-iterable-promise.test.ts',
             'src/__tests__/logger/null-logger.test.ts',
+            'src/__tests__/sse.test.ts',
             'src/__tests__/transporter/cache.test.ts',
             'src/__tests__/transporter/compression.test.ts',
           ],

@@ -8,7 +8,7 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createTransporter, getAlgoliaAgent } from '@algolia/client-common';
+import { createAuth, createTransporter, getAlgoliaAgent, validateRequired } from '@algolia/client-common';
 
 import type { AcceptedResponse } from '../model/acceptedResponse';
 import type { ConfigurationObject } from '../model/configurationObject';
@@ -31,7 +31,7 @@ import type {
   GetUsersProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '0.0.1-alpha.39';
+export const apiClientVersion = '0.0.1-alpha.40';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -137,9 +137,7 @@ export function createAdvancedPersonalizationClient({
       { userToken }: ComputeRealtimeUserProps,
       requestOptions?: RequestOptions,
     ): Promise<AcceptedResponse> {
-      if (!userToken) {
-        throw new Error('Parameter `userToken` is required when calling `computeRealtimeUser`.');
-      }
+      validateRequired('userToken', 'computeRealtimeUser', userToken);
 
       const requestPath = '/2/realtime/users/{userToken}/compute'.replace('{userToken}', encodeURIComponent(userToken));
       const headers: Headers = {};
@@ -166,9 +164,7 @@ export function createAdvancedPersonalizationClient({
       { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customDelete`.');
-      }
+      validateRequired('path', 'customDelete', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -192,9 +188,7 @@ export function createAdvancedPersonalizationClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customGet`.');
-      }
+      validateRequired('path', 'customGet', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -222,9 +216,7 @@ export function createAdvancedPersonalizationClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -253,9 +245,7 @@ export function createAdvancedPersonalizationClient({
       { path, parameters, body }: CustomPutProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPut`.');
-      }
+      validateRequired('path', 'customPut', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -284,9 +274,7 @@ export function createAdvancedPersonalizationClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteUser({ userID }: DeleteUserProps, requestOptions?: RequestOptions): Promise<DeleteUserResponse> {
-      if (!userID) {
-        throw new Error('Parameter `userID` is required when calling `deleteUser`.');
-      }
+      validateRequired('userID', 'deleteUser', userID);
 
       const requestPath = '/2/users/{userID}'.replace('{userID}', encodeURIComponent(userID));
       const headers: Headers = {};
@@ -336,9 +324,7 @@ export function createAdvancedPersonalizationClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRealtimeUser({ userToken }: GetRealtimeUserProps, requestOptions?: RequestOptions): Promise<RealtimeUser> {
-      if (!userToken) {
-        throw new Error('Parameter `userToken` is required when calling `getRealtimeUser`.');
-      }
+      validateRequired('userToken', 'getRealtimeUser', userToken);
 
       const requestPath = '/2/realtime/users/{userToken}'.replace('{userToken}', encodeURIComponent(userToken));
       const headers: Headers = {};
@@ -366,9 +352,7 @@ export function createAdvancedPersonalizationClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getUser({ userID }: GetUserProps, requestOptions?: RequestOptions): Promise<User> {
-      if (!userID) {
-        throw new Error('Parameter `userID` is required when calling `getUser`.');
-      }
+      validateRequired('userID', 'getUser', userID);
 
       const requestPath = '/2/users/{userID}'.replace('{userID}', encodeURIComponent(userID));
       const headers: Headers = {};
@@ -461,24 +445,16 @@ export function createAdvancedPersonalizationClient({
       configurationParameters: ConfigurationParameters,
       requestOptions?: RequestOptions,
     ): Promise<PutConfigResponse> {
-      if (!configurationParameters) {
-        throw new Error('Parameter `configurationParameters` is required when calling `putConfig`.');
-      }
+      validateRequired('configurationParameters', 'putConfig', configurationParameters);
 
-      if (!configurationParameters.indices) {
-        throw new Error('Parameter `configurationParameters.indices` is required when calling `putConfig`.');
-      }
-      if (!configurationParameters.personalizationReRanking) {
-        throw new Error(
-          'Parameter `configurationParameters.personalizationReRanking` is required when calling `putConfig`.',
-        );
-      }
-      if (!configurationParameters.profileType) {
-        throw new Error('Parameter `configurationParameters.profileType` is required when calling `putConfig`.');
-      }
-      if (!configurationParameters.features) {
-        throw new Error('Parameter `configurationParameters.features` is required when calling `putConfig`.');
-      }
+      validateRequired('configurationParameters.indices', 'putConfig', configurationParameters.indices);
+      validateRequired(
+        'configurationParameters.personalizationReRanking',
+        'putConfig',
+        configurationParameters.personalizationReRanking,
+      );
+      validateRequired('configurationParameters.profileType', 'putConfig', configurationParameters.profileType);
+      validateRequired('configurationParameters.features', 'putConfig', configurationParameters.features);
 
       const requestPath = '/2/config';
       const headers: Headers = {};

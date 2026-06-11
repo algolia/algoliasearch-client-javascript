@@ -1,3 +1,4 @@
+import type { ServerSentEvent } from '../sse';
 import type { Cache } from './cache';
 import type { Host } from './host';
 import type { Logger } from './logger';
@@ -168,4 +169,5 @@ export type Transporter = TransporterOptions & {
    * The `baseRequest` and `baseRequestOptions` will be merged accordingly.
    */
   request: <TResponse>(baseRequest: Request, baseRequestOptions?: RequestOptions) => Promise<TResponse>;
+  requestStream: (baseRequest: Request, baseRequestOptions?: RequestOptions) => AsyncGenerator<ServerSentEvent>;
 };

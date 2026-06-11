@@ -8,7 +8,7 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createTransporter, getAlgoliaAgent } from '@algolia/client-common';
+import { createAuth, createTransporter, getAlgoliaAgent, validateRequired } from '@algolia/client-common';
 
 import type { GetAddToCartRateResponse } from '../model/getAddToCartRateResponse';
 import type { GetAverageClickPositionResponse } from '../model/getAverageClickPositionResponse';
@@ -58,7 +58,7 @@ import type {
   GetUsersCountProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.53.0';
+export const apiClientVersion = '5.54.0';
 
 export const REGIONS = ['de', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -160,9 +160,7 @@ export function createAnalyticsClient({
       { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customDelete`.');
-      }
+      validateRequired('path', 'customDelete', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -186,9 +184,7 @@ export function createAnalyticsClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customGet`.');
-      }
+      validateRequired('path', 'customGet', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -216,9 +212,7 @@ export function createAnalyticsClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -247,9 +241,7 @@ export function createAnalyticsClient({
       { path, parameters, body }: CustomPutProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPut`.');
-      }
+      validateRequired('path', 'customPut', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -282,9 +274,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, tags }: GetAddToCartRateProps,
       requestOptions?: RequestOptions,
     ): Promise<GetAddToCartRateResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getAddToCartRate`.');
-      }
+      validateRequired('index', 'getAddToCartRate', index);
 
       const requestPath = '/2/conversions/addToCartRate';
       const headers: Headers = {};
@@ -332,9 +322,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, tags }: GetAverageClickPositionProps,
       requestOptions?: RequestOptions,
     ): Promise<GetAverageClickPositionResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getAverageClickPosition`.');
-      }
+      validateRequired('index', 'getAverageClickPosition', index);
 
       const requestPath = '/2/clicks/averageClickPosition';
       const headers: Headers = {};
@@ -382,9 +370,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, tags }: GetClickPositionsProps,
       requestOptions?: RequestOptions,
     ): Promise<GetClickPositionsResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getClickPositions`.');
-      }
+      validateRequired('index', 'getClickPositions', index);
 
       const requestPath = '/2/clicks/positions';
       const headers: Headers = {};
@@ -432,9 +418,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, tags }: GetClickThroughRateProps,
       requestOptions?: RequestOptions,
     ): Promise<GetClickThroughRateResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getClickThroughRate`.');
-      }
+      validateRequired('index', 'getClickThroughRate', index);
 
       const requestPath = '/2/clicks/clickThroughRate';
       const headers: Headers = {};
@@ -482,9 +466,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, tags }: GetConversionRateProps,
       requestOptions?: RequestOptions,
     ): Promise<GetConversionRateResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getConversionRate`.');
-      }
+      validateRequired('index', 'getConversionRate', index);
 
       const requestPath = '/2/conversions/conversionRate';
       const headers: Headers = {};
@@ -532,9 +514,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, tags }: GetNoClickRateProps,
       requestOptions?: RequestOptions,
     ): Promise<GetNoClickRateResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getNoClickRate`.');
-      }
+      validateRequired('index', 'getNoClickRate', index);
 
       const requestPath = '/2/searches/noClickRate';
       const headers: Headers = {};
@@ -582,9 +562,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, tags }: GetNoResultsRateProps,
       requestOptions?: RequestOptions,
     ): Promise<GetNoResultsRateResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getNoResultsRate`.');
-      }
+      validateRequired('index', 'getNoResultsRate', index);
 
       const requestPath = '/2/searches/noResultRate';
       const headers: Headers = {};
@@ -632,9 +610,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, tags }: GetPurchaseRateProps,
       requestOptions?: RequestOptions,
     ): Promise<GetPurchaseRateResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getPurchaseRate`.');
-      }
+      validateRequired('index', 'getPurchaseRate', index);
 
       const requestPath = '/2/conversions/purchaseRate';
       const headers: Headers = {};
@@ -682,9 +658,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, tags }: GetRevenueProps,
       requestOptions?: RequestOptions,
     ): Promise<GetRevenue> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getRevenue`.');
-      }
+      validateRequired('index', 'getRevenue', index);
 
       const requestPath = '/2/conversions/revenue';
       const headers: Headers = {};
@@ -732,9 +706,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, tags }: GetSearchesCountProps,
       requestOptions?: RequestOptions,
     ): Promise<GetSearchesCountResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getSearchesCount`.');
-      }
+      validateRequired('index', 'getSearchesCount', index);
 
       const requestPath = '/2/searches/count';
       const headers: Headers = {};
@@ -784,9 +756,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, limit, offset, tags }: GetSearchesNoClicksProps,
       requestOptions?: RequestOptions,
     ): Promise<GetSearchesNoClicksResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getSearchesNoClicks`.');
-      }
+      validateRequired('index', 'getSearchesNoClicks', index);
 
       const requestPath = '/2/searches/noClicks';
       const headers: Headers = {};
@@ -844,9 +814,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, limit, offset, tags }: GetSearchesNoResultsProps,
       requestOptions?: RequestOptions,
     ): Promise<GetSearchesNoResultsResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getSearchesNoResults`.');
-      }
+      validateRequired('index', 'getSearchesNoResults', index);
 
       const requestPath = '/2/searches/noResults';
       const headers: Headers = {};
@@ -896,9 +864,7 @@ export function createAnalyticsClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getStatus({ index }: GetStatusProps, requestOptions?: RequestOptions): Promise<GetStatusResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getStatus`.');
-      }
+      validateRequired('index', 'getStatus', index);
 
       const requestPath = '/2/status';
       const headers: Headers = {};
@@ -936,9 +902,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, limit, offset, tags }: GetTopCountriesProps,
       requestOptions?: RequestOptions,
     ): Promise<GetTopCountriesResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getTopCountries`.');
-      }
+      validateRequired('index', 'getTopCountries', index);
 
       const requestPath = '/2/countries';
       const headers: Headers = {};
@@ -997,9 +961,7 @@ export function createAnalyticsClient({
       { index, search, startDate, endDate, limit, offset, tags }: GetTopFilterAttributesProps,
       requestOptions?: RequestOptions,
     ): Promise<GetTopFilterAttributesResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getTopFilterAttributes`.');
-      }
+      validateRequired('index', 'getTopFilterAttributes', index);
 
       const requestPath = '/2/filters';
       const headers: Headers = {};
@@ -1063,13 +1025,9 @@ export function createAnalyticsClient({
       { attribute, index, search, startDate, endDate, limit, offset, tags }: GetTopFilterForAttributeProps,
       requestOptions?: RequestOptions,
     ): Promise<GetTopFilterForAttributeResponse> {
-      if (!attribute) {
-        throw new Error('Parameter `attribute` is required when calling `getTopFilterForAttribute`.');
-      }
+      validateRequired('attribute', 'getTopFilterForAttribute', attribute);
 
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getTopFilterForAttribute`.');
-      }
+      validateRequired('index', 'getTopFilterForAttribute', index);
 
       const requestPath = '/2/filters/{attribute}'.replace('{attribute}', encodeURIComponent(attribute));
       const headers: Headers = {};
@@ -1132,9 +1090,7 @@ export function createAnalyticsClient({
       { index, search, startDate, endDate, limit, offset, tags }: GetTopFiltersNoResultsProps,
       requestOptions?: RequestOptions,
     ): Promise<GetTopFiltersNoResultsResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getTopFiltersNoResults`.');
-      }
+      validateRequired('index', 'getTopFiltersNoResults', index);
 
       const requestPath = '/2/filters/noResults';
       const headers: Headers = {};
@@ -1199,9 +1155,7 @@ export function createAnalyticsClient({
       { index, search, clickAnalytics, revenueAnalytics, startDate, endDate, limit, offset, tags }: GetTopHitsProps,
       requestOptions?: RequestOptions,
     ): Promise<GetTopHitsResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getTopHits`.');
-      }
+      validateRequired('index', 'getTopHits', index);
 
       const requestPath = '/2/hits';
       const headers: Headers = {};
@@ -1286,9 +1240,7 @@ export function createAnalyticsClient({
       }: GetTopSearchesProps,
       requestOptions?: RequestOptions,
     ): Promise<GetTopSearchesResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getTopSearches`.');
-      }
+      validateRequired('index', 'getTopSearches', index);
 
       const requestPath = '/2/searches';
       const headers: Headers = {};
@@ -1360,9 +1312,7 @@ export function createAnalyticsClient({
       { index, startDate, endDate, tags }: GetUsersCountProps,
       requestOptions?: RequestOptions,
     ): Promise<GetUsersCountResponse> {
-      if (!index) {
-        throw new Error('Parameter `index` is required when calling `getUsersCount`.');
-      }
+      validateRequired('index', 'getUsersCount', index);
 
       const requestPath = '/2/users/count';
       const headers: Headers = {};

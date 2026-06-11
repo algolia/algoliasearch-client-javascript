@@ -8,7 +8,7 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createTransporter, getAlgoliaAgent } from '@algolia/client-common';
+import { createAuth, createTransporter, getAlgoliaAgent, validateRequired } from '@algolia/client-common';
 
 import type { DeleteUserProfileResponse } from '../model/deleteUserProfileResponse';
 import type { GetUserTokenResponse } from '../model/getUserTokenResponse';
@@ -24,7 +24,7 @@ import type {
   GetUserTokenProfileProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '5.53.0';
+export const apiClientVersion = '5.54.0';
 
 export const REGIONS = ['eu', 'us'] as const;
 export type Region = (typeof REGIONS)[number];
@@ -126,9 +126,7 @@ export function createPersonalizationClient({
       { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customDelete`.');
-      }
+      validateRequired('path', 'customDelete', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -152,9 +150,7 @@ export function createPersonalizationClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customGet`.');
-      }
+      validateRequired('path', 'customGet', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -182,9 +178,7 @@ export function createPersonalizationClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -213,9 +207,7 @@ export function createPersonalizationClient({
       { path, parameters, body }: CustomPutProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPut`.');
-      }
+      validateRequired('path', 'customPut', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -245,9 +237,7 @@ export function createPersonalizationClient({
       { userToken }: DeleteUserProfileProps,
       requestOptions?: RequestOptions,
     ): Promise<DeleteUserProfileResponse> {
-      if (!userToken) {
-        throw new Error('Parameter `userToken` is required when calling `deleteUserProfile`.');
-      }
+      validateRequired('userToken', 'deleteUserProfile', userToken);
 
       const requestPath = '/1/profiles/{userToken}'.replace('{userToken}', encodeURIComponent(userToken));
       const headers: Headers = {};
@@ -298,9 +288,7 @@ export function createPersonalizationClient({
       { userToken }: GetUserTokenProfileProps,
       requestOptions?: RequestOptions,
     ): Promise<GetUserTokenResponse> {
-      if (!userToken) {
-        throw new Error('Parameter `userToken` is required when calling `getUserTokenProfile`.');
-      }
+      validateRequired('userToken', 'getUserTokenProfile', userToken);
 
       const requestPath = '/1/profiles/personalization/{userToken}'.replace(
         '{userToken}',
@@ -331,27 +319,23 @@ export function createPersonalizationClient({
       personalizationStrategyParams: PersonalizationStrategyParams,
       requestOptions?: RequestOptions,
     ): Promise<SetPersonalizationStrategyResponse> {
-      if (!personalizationStrategyParams) {
-        throw new Error(
-          'Parameter `personalizationStrategyParams` is required when calling `setPersonalizationStrategy`.',
-        );
-      }
+      validateRequired('personalizationStrategyParams', 'setPersonalizationStrategy', personalizationStrategyParams);
 
-      if (!personalizationStrategyParams.eventsScoring) {
-        throw new Error(
-          'Parameter `personalizationStrategyParams.eventsScoring` is required when calling `setPersonalizationStrategy`.',
-        );
-      }
-      if (!personalizationStrategyParams.facetsScoring) {
-        throw new Error(
-          'Parameter `personalizationStrategyParams.facetsScoring` is required when calling `setPersonalizationStrategy`.',
-        );
-      }
-      if (!personalizationStrategyParams.personalizationImpact) {
-        throw new Error(
-          'Parameter `personalizationStrategyParams.personalizationImpact` is required when calling `setPersonalizationStrategy`.',
-        );
-      }
+      validateRequired(
+        'personalizationStrategyParams.eventsScoring',
+        'setPersonalizationStrategy',
+        personalizationStrategyParams.eventsScoring,
+      );
+      validateRequired(
+        'personalizationStrategyParams.facetsScoring',
+        'setPersonalizationStrategy',
+        personalizationStrategyParams.facetsScoring,
+      );
+      validateRequired(
+        'personalizationStrategyParams.personalizationImpact',
+        'setPersonalizationStrategy',
+        personalizationStrategyParams.personalizationImpact,
+      );
 
       const requestPath = '/1/strategies/personalization';
       const headers: Headers = {};

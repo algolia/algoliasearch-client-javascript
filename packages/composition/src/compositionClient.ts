@@ -8,7 +8,14 @@ import type {
   Request,
   RequestOptions,
 } from '@algolia/client-common';
-import { createAuth, createIterablePromise, createTransporter, getAlgoliaAgent, shuffle } from '@algolia/client-common';
+import {
+  createAuth,
+  createIterablePromise,
+  createTransporter,
+  getAlgoliaAgent,
+  shuffle,
+  validateRequired,
+} from '@algolia/client-common';
 
 import type { BatchParams } from '../model/batchParams';
 import type { Composition } from '../model/composition';
@@ -43,7 +50,7 @@ import type {
   WaitForCompositionTaskOptions,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.28.0';
+export const apiClientVersion = '1.29.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
@@ -203,9 +210,7 @@ export function createCompositionClient({
       { path, parameters }: CustomDeleteProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customDelete`.');
-      }
+      validateRequired('path', 'customDelete', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -229,9 +234,7 @@ export function createCompositionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     customGet({ path, parameters }: CustomGetProps, requestOptions?: RequestOptions): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customGet`.');
-      }
+      validateRequired('path', 'customGet', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -259,9 +262,7 @@ export function createCompositionClient({
       { path, parameters, body }: CustomPostProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPost`.');
-      }
+      validateRequired('path', 'customPost', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -290,9 +291,7 @@ export function createCompositionClient({
       { path, parameters, body }: CustomPutProps,
       requestOptions?: RequestOptions,
     ): Promise<Record<string, unknown>> {
-      if (!path) {
-        throw new Error('Parameter `path` is required when calling `customPut`.');
-      }
+      validateRequired('path', 'customPut', path);
 
       const requestPath = '/{path}'.replace('{path}', path);
       const headers: Headers = {};
@@ -322,9 +321,7 @@ export function createCompositionClient({
       { compositionID }: DeleteCompositionProps,
       requestOptions?: RequestOptions,
     ): Promise<TaskIDResponse> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `deleteComposition`.');
-      }
+      validateRequired('compositionID', 'deleteComposition', compositionID);
 
       const requestPath = '/1/compositions/{compositionID}'.replace(
         '{compositionID}',
@@ -357,13 +354,9 @@ export function createCompositionClient({
       { compositionID, objectID }: DeleteCompositionRuleProps,
       requestOptions?: RequestOptions,
     ): Promise<TaskIDResponse> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `deleteCompositionRule`.');
-      }
+      validateRequired('compositionID', 'deleteCompositionRule', compositionID);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `deleteCompositionRule`.');
-      }
+      validateRequired('objectID', 'deleteCompositionRule', objectID);
 
       const requestPath = '/1/compositions/{compositionID}/rules/{objectID}'
         .replace('{compositionID}', encodeURIComponent(compositionID))
@@ -392,9 +385,7 @@ export function createCompositionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getComposition({ compositionID }: GetCompositionProps, requestOptions?: RequestOptions): Promise<Composition> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `getComposition`.');
-      }
+      validateRequired('compositionID', 'getComposition', compositionID);
 
       const requestPath = '/1/compositions/{compositionID}'.replace(
         '{compositionID}',
@@ -425,13 +416,9 @@ export function createCompositionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getRule({ compositionID, objectID }: GetRuleProps, requestOptions?: RequestOptions): Promise<CompositionRule> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `getRule`.');
-      }
+      validateRequired('compositionID', 'getRule', compositionID);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `getRule`.');
-      }
+      validateRequired('objectID', 'getRule', objectID);
 
       const requestPath = '/1/compositions/{compositionID}/rules/{objectID}'
         .replace('{compositionID}', encodeURIComponent(compositionID))
@@ -464,13 +451,9 @@ export function createCompositionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTask({ compositionID, taskID }: GetTaskProps, requestOptions?: RequestOptions): Promise<GetTaskResponse> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `getTask`.');
-      }
+      validateRequired('compositionID', 'getTask', compositionID);
 
-      if (!taskID) {
-        throw new Error('Parameter `taskID` is required when calling `getTask`.');
-      }
+      validateRequired('taskID', 'getTask', taskID);
 
       const requestPath = '/1/compositions/{compositionID}/task/{taskID}'
         .replace('{compositionID}', encodeURIComponent(compositionID))
@@ -534,13 +517,9 @@ export function createCompositionClient({
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     multipleBatch(batchParams: BatchParams, requestOptions?: RequestOptions): Promise<MultipleBatchResponse> {
-      if (!batchParams) {
-        throw new Error('Parameter `batchParams` is required when calling `multipleBatch`.');
-      }
+      validateRequired('batchParams', 'multipleBatch', batchParams);
 
-      if (!batchParams.requests) {
-        throw new Error('Parameter `batchParams.requests` is required when calling `multipleBatch`.');
-      }
+      validateRequired('batchParams.requests', 'multipleBatch', batchParams.requests);
 
       const requestPath = '/1/compositions/*/batch';
       const headers: Headers = {};
@@ -571,23 +550,13 @@ export function createCompositionClient({
       { compositionID, composition }: PutCompositionProps,
       requestOptions?: RequestOptions,
     ): Promise<TaskIDResponse> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `putComposition`.');
-      }
+      validateRequired('compositionID', 'putComposition', compositionID);
 
-      if (!composition) {
-        throw new Error('Parameter `composition` is required when calling `putComposition`.');
-      }
+      validateRequired('composition', 'putComposition', composition);
 
-      if (!composition.objectID) {
-        throw new Error('Parameter `composition.objectID` is required when calling `putComposition`.');
-      }
-      if (!composition.name) {
-        throw new Error('Parameter `composition.name` is required when calling `putComposition`.');
-      }
-      if (!composition.behavior) {
-        throw new Error('Parameter `composition.behavior` is required when calling `putComposition`.');
-      }
+      validateRequired('composition.objectID', 'putComposition', composition.objectID);
+      validateRequired('composition.name', 'putComposition', composition.name);
+      validateRequired('composition.behavior', 'putComposition', composition.behavior);
 
       const requestPath = '/1/compositions/{compositionID}'.replace(
         '{compositionID}',
@@ -622,24 +591,14 @@ export function createCompositionClient({
       { compositionID, objectID, compositionRule }: PutCompositionRuleProps,
       requestOptions?: RequestOptions,
     ): Promise<TaskIDResponse> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `putCompositionRule`.');
-      }
+      validateRequired('compositionID', 'putCompositionRule', compositionID);
 
-      if (!objectID) {
-        throw new Error('Parameter `objectID` is required when calling `putCompositionRule`.');
-      }
+      validateRequired('objectID', 'putCompositionRule', objectID);
 
-      if (!compositionRule) {
-        throw new Error('Parameter `compositionRule` is required when calling `putCompositionRule`.');
-      }
+      validateRequired('compositionRule', 'putCompositionRule', compositionRule);
 
-      if (!compositionRule.objectID) {
-        throw new Error('Parameter `compositionRule.objectID` is required when calling `putCompositionRule`.');
-      }
-      if (!compositionRule.consequence) {
-        throw new Error('Parameter `compositionRule.consequence` is required when calling `putCompositionRule`.');
-      }
+      validateRequired('compositionRule.objectID', 'putCompositionRule', compositionRule.objectID);
+      validateRequired('compositionRule.consequence', 'putCompositionRule', compositionRule.consequence);
 
       const requestPath = '/1/compositions/{compositionID}/rules/{objectID}'
         .replace('{compositionID}', encodeURIComponent(compositionID))
@@ -672,13 +631,9 @@ export function createCompositionClient({
       { compositionID, rules }: SaveRulesProps,
       requestOptions?: RequestOptions,
     ): Promise<RulesMultipleBatchResponse> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `saveRules`.');
-      }
+      validateRequired('compositionID', 'saveRules', compositionID);
 
-      if (!rules) {
-        throw new Error('Parameter `rules` is required when calling `saveRules`.');
-      }
+      validateRequired('rules', 'saveRules', rules);
 
       const requestPath = '/1/compositions/{compositionID}/rules/batch'.replace(
         '{compositionID}',
@@ -712,13 +667,9 @@ export function createCompositionClient({
       { compositionID, requestBody }: SearchProps,
       requestOptions?: RequestOptions,
     ): Promise<SearchResponse<T>> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `search`.');
-      }
+      validateRequired('compositionID', 'search', compositionID);
 
-      if (!requestBody) {
-        throw new Error('Parameter `requestBody` is required when calling `search`.');
-      }
+      validateRequired('requestBody', 'search', requestBody);
 
       const requestPath = '/1/compositions/{compositionID}/run'.replace(
         '{compositionID}',
@@ -754,9 +705,7 @@ export function createCompositionClient({
       { compositionID, searchCompositionRulesParams }: SearchCompositionRulesProps,
       requestOptions?: RequestOptions,
     ): Promise<SearchCompositionRulesResponse> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `searchCompositionRules`.');
-      }
+      validateRequired('compositionID', 'searchCompositionRules', compositionID);
 
       const requestPath = '/1/compositions/{compositionID}/rules/search'.replace(
         '{compositionID}',
@@ -791,13 +740,9 @@ export function createCompositionClient({
       { compositionID, facetName, searchForFacetValuesRequest }: SearchForFacetValuesProps,
       requestOptions?: RequestOptions,
     ): Promise<SearchForFacetValuesResponse> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `searchForFacetValues`.');
-      }
+      validateRequired('compositionID', 'searchForFacetValues', compositionID);
 
-      if (!facetName) {
-        throw new Error('Parameter `facetName` is required when calling `searchForFacetValues`.');
-      }
+      validateRequired('facetName', 'searchForFacetValues', facetName);
 
       const requestPath = '/1/compositions/{compositionID}/facets/{facetName}/query'
         .replace('{compositionID}', encodeURIComponent(compositionID))
@@ -832,13 +777,9 @@ export function createCompositionClient({
       { compositionID, requestBody }: UpdateSortingStrategyCompositionProps,
       requestOptions?: RequestOptions,
     ): Promise<TaskIDResponse> {
-      if (!compositionID) {
-        throw new Error('Parameter `compositionID` is required when calling `updateSortingStrategyComposition`.');
-      }
+      validateRequired('compositionID', 'updateSortingStrategyComposition', compositionID);
 
-      if (!requestBody) {
-        throw new Error('Parameter `requestBody` is required when calling `updateSortingStrategyComposition`.');
-      }
+      validateRequired('requestBody', 'updateSortingStrategyComposition', requestBody);
 
       const requestPath = '/1/compositions/{compositionID}/sortingStrategy'.replace(
         '{compositionID}',
