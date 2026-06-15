@@ -1,5 +1,5 @@
 {
-  "version": "0.0.1-alpha.40",
+  "version": "0.0.1-alpha.41",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/algolia/algoliasearch-client-javascript.git"
@@ -54,10 +54,10 @@
     "index.d.ts"
   ],
   "dependencies": {
-    "@algolia/client-common": "5.54.0",
-    "@algolia/requester-browser-xhr": "5.54.0",
-    "@algolia/requester-fetch": "5.54.0",
-    "@algolia/requester-node-http": "5.54.0"
+    "@algolia/client-common": "5.54.1",
+    "@algolia/requester-browser-xhr": "5.54.1",
+    "@algolia/requester-fetch": "5.54.1",
+    "@algolia/requester-node-http": "5.54.1"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",

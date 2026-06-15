@@ -1,3 +1,7 @@
+## [5.54.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.54.0...5.54.1)
+
+- [3a0bad1d01](https://github.com/algolia/api-clients-automation/commit/3a0bad1d01) fix(javascript): use proper null check instead of truthiness for required params ([#6498](https://github.com/algolia/api-clients-automation/pull/6498)) by [@Fluf22](https://github.com/Fluf22/)
+
 ## [5.54.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.53.0...5.54.0)
 
 - [e6753bc802](https://github.com/algolia/api-clients-automation/commit/e6753bc802) chore(deps): dependencies 2026-06-01 ([#6476](https://github.com/algolia/api-clients-automation/pull/6476)) by [@algolia-bot](https://github.com/algolia-bot/)
