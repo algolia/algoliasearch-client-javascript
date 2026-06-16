@@ -105,11 +105,6 @@ function getDefaultHosts(appId: string): Host[] {
   );
 }
 
-/**
- * @beta
- * The Agent Studio API is not yet stable and may change without notice.
- * See {@link https://www.algolia.com/doc/rest-api/agent-studio | Agent Studio API docs}.
- */
 export function createAgentStudioClient({
   appId: appIdOption,
   apiKey: apiKeyOption,
