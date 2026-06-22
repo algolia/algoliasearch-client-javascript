@@ -11,6 +11,7 @@ import type {
 } from '@algolia/client-common';
 import {
   ApiError,
+  DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES,
   createAuth,
   createIterablePromise,
   createTransporter,
@@ -638,11 +639,17 @@ export function createSearchClient({
      * @param replaceAllObjects.objects - The array of `objects` to store in the given Algolia `indexName`.
      * @param replaceAllObjects.batchSize - The size of the chunk of `objects`. The number of `batch` calls will be equal to `objects.length / batchSize`. Defaults to 1000.
      * @param replaceAllObjects.scopes - The `scopes` to keep from the index. Defaults to ['settings', 'rules', 'synonyms'].
-     * @param replaceAllObjects.maxRetries - The maximum number of retries when polling for task completion. 100 by default.
+     * @param replaceAllObjects.maxRetries - The maximum number of retries when polling for task completion. 800 by default.
      * @param requestOptions - The requestOptions to send along with the query, they will be forwarded to the `batch`, `operationIndex` and `getTask` method and merged with the transporter requestOptions.
      */
     async replaceAllObjects(
-      { indexName, objects, batchSize, scopes, maxRetries = 100 }: ReplaceAllObjectsOptions,
+      {
+        indexName,
+        objects,
+        batchSize,
+        scopes,
+        maxRetries = DEFAULT_REPLACE_ALL_OBJECTS_MAX_RETRIES,
+      }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsResponse> {
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
