@@ -7,4 +7,7 @@ import type { SearchParamsQuery } from './searchParamsQuery';
 /**
  * Search parameters for filtering the recommendations.
  */
-export type RecommendSearchParams = BaseRecommendSearchParams & SearchParamsQuery & RecommendIndexSettings;
+export type RecommendSearchParams = BaseRecommendSearchParams &
+  SearchParamsQuery &
+  RecommendIndexSettings &
+  Record<string, unknown>;
