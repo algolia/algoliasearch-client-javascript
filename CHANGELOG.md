@@ -1,3 +1,9 @@
+## [5.55.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.55.0...5.55.1)
+
+- [a676cd9cef](https://github.com/algolia/api-clients-automation/commit/a676cd9cef) fix(clients): bump replaceAllObjects default maxRetries from 100 to 800 ([#6580](https://github.com/algolia/api-clients-automation/pull/6580)) by [@Fluf22](https://github.com/Fluf22/)
+- [a632f9fb75](https://github.com/algolia/api-clients-automation/commit/a632f9fb75) fix(specs): BREAKING CHANGE – allow null records in getObjects response ([#6582](https://github.com/algolia/api-clients-automation/pull/6582)) by [@Fluf22](https://github.com/Fluf22/)
+  - The `getObjects` operation now returns a list of nullable objects, as the API can send back `null` records. The clients previously only allowed a list of objects, so the response type has been updated to allow `null` values.
+
 ## [5.55.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.54.1...5.55.0)
 
 - [52ebd28f58](https://github.com/algolia/api-clients-automation/commit/52ebd28f58) feat(clients): release Agent Studio package updates ([#6573](https://github.com/algolia/api-clients-automation/pull/6573)) by [@Fluf22](https://github.com/Fluf22/)

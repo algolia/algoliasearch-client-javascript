@@ -131,7 +131,7 @@ import type {
 
 import type { BatchRequest } from '../model/batchRequest';
 
-export const apiClientVersion = '5.55.0';
+export const apiClientVersion = '5.55.1';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
