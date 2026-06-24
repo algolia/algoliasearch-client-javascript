@@ -166,7 +166,7 @@ export function algoliasearch(
     ...client,
 
     async saveObjectsWithTransformation(
-      { indexName, objects, waitForTasks, maxRetries },
+      { indexName, objects, batchSize, waitForTasks, maxRetries },
       requestOptions,
     ): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
@@ -176,13 +176,13 @@ export function algoliasearch(
       }
 
       return ingestionTransporter.chunkedPush(
-        { indexName, objects, action: 'addObject', waitForTasks, maxRetries },
+        { indexName, objects, action: 'addObject', batchSize, waitForTasks, maxRetries },
         requestOptions,
       );
     },
 
     async partialUpdateObjectsWithTransformation(
-      { indexName, objects, createIfNotExists, waitForTasks, maxRetries },
+      { indexName, objects, createIfNotExists, batchSize, waitForTasks, maxRetries },
       requestOptions,
     ): Promise<Array<WatchResponse>> {
       if (!ingestionTransporter) {
@@ -196,6 +196,7 @@ export function algoliasearch(
           indexName,
           objects,
           action: createIfNotExists ? 'partialUpdateObject' : 'partialUpdateObjectNoCreate',
+          batchSize,
           waitForTasks,
           maxRetries,
         },

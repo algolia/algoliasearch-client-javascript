@@ -264,10 +264,49 @@ export function createIngestionClient({
       }: ChunkedPushOptions,
       requestOptions?: RequestOptions,
     ): Promise<Array<WatchResponse>> {
+      if (batchSize < 1) {
+        throw new Error('`batchSize` must be at least 1.');
+      }
+
       let records: Array<PushTaskRecords> = [];
       let offset = 0;
       const responses: Array<WatchResponse> = [];
       const waitBatchSize = Math.floor(batchSize / 10) || batchSize;
+
+      // Polls every task in the `[start, end)` window of `responses` until it completes.
+      const waitForBatch = async (start: number, end: number): Promise<void> => {
+        for (const resp of responses.slice(start, end)) {
+          if (!resp.eventID) {
+            throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
+          }
+
+          let retryCount = 0;
+
+          await createIterablePromise({
+            func: async () => {
+              if (resp.eventID === undefined || !resp.eventID) {
+                throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
+              }
+
+              return this.getEvent({ runID: resp.runID, eventID: resp.eventID }).catch((error: ApiError) => {
+                if (error.status === 404) {
+                  return undefined;
+                }
+
+                throw error;
+              });
+            },
+            validate: (response) => response !== undefined,
+            aggregator: () => (retryCount += 1),
+            error: {
+              validate: () => retryCount >= maxRetries,
+              message: () =>
+                `Stopped waiting for the task after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
+            },
+            timeout: (): number => Math.min(retryCount * 1500, 5000),
+          });
+        }
+      };
 
       const objectEntries = objects.entries();
       for (const [i, obj] of objectEntries) {
@@ -279,44 +318,17 @@ export function createIngestionClient({
           records = [];
         }
 
-        if (
-          waitForTasks &&
-          responses.length > 0 &&
-          (responses.length % waitBatchSize === 0 || i === objects.length - 1)
-        ) {
-          for (const resp of responses.slice(offset, offset + waitBatchSize)) {
-            if (!resp.eventID) {
-              throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
-            }
-
-            let retryCount = 0;
-
-            await createIterablePromise({
-              func: async () => {
-                if (resp.eventID === undefined || !resp.eventID) {
-                  throw new Error('received unexpected response from the push endpoint, eventID must not be undefined');
-                }
-
-                return this.getEvent({ runID: resp.runID, eventID: resp.eventID }).catch((error: ApiError) => {
-                  if (error.status === 404) {
-                    return undefined;
-                  }
-
-                  throw error;
-                });
-              },
-              validate: (response) => response !== undefined,
-              aggregator: () => (retryCount += 1),
-              error: {
-                validate: () => retryCount >= maxRetries,
-                message: () =>
-                  `Stopped waiting for the task after ${maxRetries} retries. This does not mean the operation failed; it may still complete. If you need to keep polling, retry with a higher maxRetries.`,
-              },
-              timeout: (): number => Math.min(retryCount * 1500, 5000),
-            });
-          }
+        // Only wait once at least `waitBatchSize` un-polled responses have accumulated, and advance the
+        // cursor by exactly that many, so every pushed task is polled once and only once.
+        if (waitForTasks && responses.length - offset >= waitBatchSize) {
+          await waitForBatch(offset, offset + waitBatchSize);
           offset += waitBatchSize;
         }
+      }
+
+      // Drain the remaining responses that didn't fill a complete `waitBatchSize` window.
+      if (waitForTasks) {
+        await waitForBatch(offset, responses.length);
       }
 
       return responses;
