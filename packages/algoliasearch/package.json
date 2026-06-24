@@ -101,16 +101,16 @@
   },
   "devDependencies": {
     "@algolia/requester-testing": "5.55.1",
-    "@arethetypeswrong/cli": "0.18.2",
-    "@cloudflare/vitest-pool-workers": "0.16.6",
-    "@cloudflare/workers-types": "4.20260515.1",
-    "@types/node": "25.8.0",
+    "@arethetypeswrong/cli": "0.18.3",
+    "@cloudflare/vitest-pool-workers": "0.16.17",
+    "@cloudflare/workers-types": "4.20260619.1",
+    "@types/node": "25.9.3",
     "jsdom": "29.1.1",
     "publint": "0.3.21",
-    "rollup": "4.60.4",
+    "rollup": "4.62.0",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.1.6"
+    "vitest": "4.1.9"
   },
   "engines": {
     "node": ">= 14.0.0"
