@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
+import type { EndRequest, Requester } from '@algolia/client-common';
 import {
   DEFAULT_CONNECT_TIMEOUT_BROWSER,
   DEFAULT_READ_TIMEOUT_BROWSER,
@@ -281,5 +282,46 @@ describe('init', () => {
       'x-algolia-api-key': 'API_KEY',
       'x-algolia-application-id': 'APP_ID',
     });
+  });
+});
+
+describe('browseSynonyms', () => {
+  test('paginates until a non-full page and never re-fetches page 0 (CR-11727)', async () => {
+    const hitsPerPage = 1000;
+    const pagesRequested: number[] = [];
+
+    const paginatingRequester: Requester = {
+      send(request: EndRequest) {
+        const body = (typeof request.data === 'string' ? JSON.parse(request.data) : {}) as { page?: number };
+        const page = body.page ?? 0;
+        pagesRequested.push(page);
+
+        // Full first page, then a partial page: a correct iterator walks page 0 then page 1 and stops.
+        const count = page === 0 ? hitsPerPage : 3;
+        const hits = Array.from({ length: count }, (_, i) => ({ objectID: `page${page}-hit${i}` }));
+
+        return Promise.resolve({
+          content: JSON.stringify({ hits, nbHits: hitsPerPage + 3 }),
+          isTimedOut: false,
+          status: 200,
+        });
+      },
+    };
+
+    const paginatingClient = algoliasearch('APP_ID', 'API_KEY', { requester: paginatingRequester });
+
+    const objectIDs: string[] = [];
+    await paginatingClient.browseSynonyms({
+      indexName: 'my-index',
+      aggregator: (response) => {
+        for (const hit of response.hits) {
+          objectIDs.push(hit.objectID);
+        }
+      },
+    });
+
+    expect(pagesRequested).toEqual([0, 1]);
+    expect(objectIDs).toHaveLength(hitsPerPage + 3);
+    expect(new Set(objectIDs).size).toEqual(hitsPerPage + 3);
   });
 });
