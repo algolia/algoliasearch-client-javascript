@@ -4,10 +4,4 @@
  * How to change the attribute.
  */
 export type BuiltInOperationType =
-  | 'Increment'
-  | 'Decrement'
-  | 'Add'
-  | 'Remove'
-  | 'AddUnique'
-  | 'IncrementFrom'
-  | 'IncrementSet';
+  'Increment' | 'Decrement' | 'Add' | 'Remove' | 'AddUnique' | 'IncrementFrom' | 'IncrementSet';

@@ -9,10 +9,4 @@ import type { ToolCallPart } from './toolCallPart';
 import type { ToolResultPart } from './toolResultPart';
 
 export type MessagePart =
-  | TextPart
-  | ToolCallPart
-  | ToolResultPart
-  | StartPart
-  | StartStepPart
-  | ReasoningPart
-  | ToolApprovalRequestPart;
+  TextPart | ToolCallPart | ToolResultPart | StartPart | StartStepPart | ReasoningPart | ToolApprovalRequestPart;

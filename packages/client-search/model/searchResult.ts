@@ -5,6 +5,4 @@ import type { SearchResponse } from './searchResponse';
 import type { SearchResponsePartial } from './searchResponsePartial';
 
 export type SearchResult<T = Record<string, unknown>> =
-  | SearchResponse<T>
-  | SearchForFacetValuesResponse
-  | SearchResponsePartial<T>;
+  SearchResponse<T> | SearchForFacetValuesResponse | SearchResponsePartial<T>;

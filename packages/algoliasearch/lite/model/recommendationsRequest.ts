@@ -7,8 +7,4 @@ import type { TrendingFacetsQuery } from './trendingFacetsQuery';
 import type { TrendingItemsQuery } from './trendingItemsQuery';
 
 export type RecommendationsRequest =
-  | BoughtTogetherQuery
-  | RelatedQuery
-  | TrendingItemsQuery
-  | TrendingFacetsQuery
-  | LookingSimilarQuery;
+  BoughtTogetherQuery | RelatedQuery | TrendingItemsQuery | TrendingFacetsQuery | LookingSimilarQuery;

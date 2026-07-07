@@ -5,6 +5,4 @@ import type { TopSearchesResponseWithAnalytics } from './topSearchesResponseWith
 import type { TopSearchesResponseWithRevenueAnalytics } from './topSearchesResponseWithRevenueAnalytics';
 
 export type GetTopSearchesResponse =
-  | TopSearchesResponse
-  | TopSearchesResponseWithAnalytics
-  | TopSearchesResponseWithRevenueAnalytics;
+  TopSearchesResponse | TopSearchesResponseWithAnalytics | TopSearchesResponseWithRevenueAnalytics;
