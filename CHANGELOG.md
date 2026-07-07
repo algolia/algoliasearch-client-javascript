@@ -1,3 +1,13 @@
+## [5.55.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.55.1...5.55.2)
+
+- [035c03ecad](https://github.com/algolia/api-clients-automation/commit/035c03ecad) fix(specs): BREAKING CHANGE – remove recommend query params overridden by the API ([#6604](https://github.com/algolia/api-clients-automation/pull/6604)) by [@raed667](https://github.com/raed667/)
+  - The `ranking`, `facetFilters`, and `enableABTest` parameters have been removed from the Recommend request, and `enableRules` from its fallback parameters, as the Recommend API ignores them. API behavior is unchanged, but code setting these fields must be updated.
+- [d1f8a51b63](https://github.com/algolia/api-clients-automation/commit/d1f8a51b63) fix(javascript): chunked push polling offset and batchSize forwarding ([#6598](https://github.com/algolia/api-clients-automation/pull/6598)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [5031c65633](https://github.com/algolia/api-clients-automation/commit/5031c65633) chore(deps): dependencies 2026-06-15 ([#6508](https://github.com/algolia/api-clients-automation/pull/6508)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [f258a66a9d](https://github.com/algolia/api-clients-automation/commit/f258a66a9d) fix(clients): browseSynonyms pagination (CR-11727) ([#6652](https://github.com/algolia/api-clients-automation/pull/6652)) by [@Fluf22](https://github.com/Fluf22/)
+- [915cb4650b](https://github.com/algolia/api-clients-automation/commit/915cb4650b) fix(clients): add warning in replace_all_objects for empty objects ([#6611](https://github.com/algolia/api-clients-automation/pull/6611)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [3fe90834ec](https://github.com/algolia/api-clients-automation/commit/3fe90834ec) chore(deps): dependencies 2026-06-29 ([#6618](https://github.com/algolia/api-clients-automation/pull/6618)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
 ## [5.55.1](https://github.com/algolia/algoliasearch-client-javascript/compare/5.55.0...5.55.1)
 
 - [a676cd9cef](https://github.com/algolia/api-clients-automation/commit/a676cd9cef) fix(clients): bump replaceAllObjects default maxRetries from 100 to 800 ([#6580](https://github.com/algolia/api-clients-automation/pull/6580)) by [@Fluf22](https://github.com/Fluf22/)
