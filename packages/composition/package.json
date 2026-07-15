@@ -60,8 +60,8 @@
     "@algolia/requester-node-http": "5.55.2"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.4",
-    "@types/node": "26.0.1",
+    "@arethetypeswrong/cli": "0.18.5",
+    "@types/node": "26.1.1",
     "publint": "0.3.21",
     "rollup": "4.62.2",
     "tsup": "8.5.1",
