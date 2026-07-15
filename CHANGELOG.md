@@ -1,3 +1,9 @@
+## [5.56.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.55.2...5.56.0)
+
+- [8a5ab6f7e8](https://github.com/algolia/api-clients-automation/commit/8a5ab6f7e8) feat(javascript): add WithHTTPInfo methods ([#6682](https://github.com/algolia/api-clients-automation/pull/6682)) by [@eric-zaharia](https://github.com/eric-zaharia/)
+- [ac68c1a79c](https://github.com/algolia/api-clients-automation/commit/ac68c1a79c) fix(specs): add facetFilters back to recommend fallbackParameters ([#6727](https://github.com/algolia/api-clients-automation/pull/6727)) by [@raed667](https://github.com/raed667/)
+- [02821a2f9d](https://github.com/algolia/api-clients-automation/commit/02821a2f9d) chore(deps): dependencies 2026-07-13 ([#6692](https://github.com/algolia/api-clients-automation/pull/6692)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+
 ## [5.55.2](https://github.com/algolia/algoliasearch-client-javascript/compare/5.55.1...5.55.2)
 
 - [035c03ecad](https://github.com/algolia/api-clients-automation/commit/035c03ecad) fix(specs): BREAKING CHANGE – remove recommend query params overridden by the API ([#6604](https://github.com/algolia/api-clients-automation/pull/6604)) by [@raed667](https://github.com/raed667/)
