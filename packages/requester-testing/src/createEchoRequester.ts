@@ -72,6 +72,7 @@ export function createEchoRequester({ getURL, status = 200 }: EchoRequesterParam
 
     return Promise.resolve({
       content: JSON.stringify(content),
+      headers: request.headers,
       isTimedOut: false,
       status,
     });

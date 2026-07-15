@@ -1,4 +1,13 @@
-import type { Headers, Host, QueryParameters, Request, RequestOptions, Response, StackFrame } from '../types';
+import type {
+  AlgoliaHttpResponse,
+  Headers,
+  Host,
+  QueryParameters,
+  Request,
+  RequestOptions,
+  Response,
+  StackFrame,
+} from '../types';
 import { ApiError, DeserializationError, DetailedApiError } from './errors';
 
 export function shuffle<TData>(array: TData[]): TData[] {
@@ -85,6 +94,15 @@ export function deserializeSuccess<TObject>(response: Response): TObject {
   } catch (e) {
     throw new DeserializationError((e as Error).message, response);
   }
+}
+
+export function deserializeSuccessWithHttpInfo<TData>(response: Response): AlgoliaHttpResponse<TData> {
+  return {
+    status: response.status,
+    headers: response.headers,
+    content: response.content,
+    data: deserializeSuccess<TData>(response),
+  };
 }
 
 export function deserializeFailure({ content, status }: Response, stackFrame: StackFrame[]): Error {

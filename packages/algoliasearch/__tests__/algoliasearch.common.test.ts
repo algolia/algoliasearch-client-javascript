@@ -122,6 +122,7 @@ describe('api', () => {
       },
       request: expect.any(Function),
       requestStream: expect.any(Function),
+      requestWithHttpInfo: expect.any(Function),
       requester: {
         send: expect.any(Function),
         sendStream: expect.any(Function),
@@ -143,6 +144,20 @@ describe('api', () => {
         read: DEFAULT_READ_TIMEOUT_BROWSER,
         write: DEFAULT_WRITE_TIMEOUT_BROWSER,
       },
+    });
+  });
+
+  describe('withHTTPInfo methods', () => {
+    test('exposes a `searchWithHTTPInfo` variant returning the full HTTP response information', async () => {
+      const response = await client.searchWithHTTPInfo({ requests: [{ indexName: 'theIndexName' }] });
+      const req = response.data as unknown as EchoResponse;
+
+      expect(response.status).toEqual(200);
+      expect(response.headers).toEqual(expect.objectContaining({ 'content-type': 'text/plain' }));
+      expect(JSON.parse(response.content)).toEqual(req);
+      expect(req.path).toEqual('/1/indexes/*/queries');
+      expect(req.method).toEqual('POST');
+      expect(req.data).toEqual({ requests: [{ indexName: 'theIndexName' }] });
     });
   });
 

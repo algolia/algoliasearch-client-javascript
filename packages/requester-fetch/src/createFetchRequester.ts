@@ -55,9 +55,14 @@ export function createFetchRequester({ requesterOptions = {} }: FetchRequesterOp
 
     try {
       const content = await fetchRes.text();
+      const headers: Record<string, string> = {};
+      fetchRes.headers.forEach((value, name) => {
+        headers[name] = value;
+      });
 
       return {
         content,
+        headers,
         isTimedOut: false,
         status: fetchRes.status,
       };

@@ -1,6 +1,7 @@
 import type { ServerSentEvent } from '../sse';
 import { iterSSEEvents } from '../sse';
 import type {
+  AlgoliaHttpResponse,
   EndRequest,
   Host,
   QueryParameters,
@@ -8,13 +9,20 @@ import type {
   RequestOptions,
   Response,
   StackFrame,
-  Transporter,
   TransporterOptions,
+  TransporterWithHttpInfo,
 } from '../types';
 import { COMPRESSION_THRESHOLD } from './compress';
 import { createStatefulHost } from './createStatefulHost';
 import { RetryError } from './errors';
-import { deserializeFailure, deserializeSuccess, serializeData, serializeHeaders, serializeUrl } from './helpers';
+import {
+  deserializeFailure,
+  deserializeSuccess,
+  deserializeSuccessWithHttpInfo,
+  serializeData,
+  serializeHeaders,
+  serializeUrl,
+} from './helpers';
 import { isRetryable, isSuccess } from './responses';
 import { stackFrameWithoutCredentials, stackTraceWithoutCredentials } from './stackTrace';
 
@@ -36,7 +44,7 @@ export function createTransporter({
   responsesCache,
   compress,
   compression,
-}: TransporterOptions): Transporter {
+}: TransporterOptions): TransporterWithHttpInfo {
   async function createRetryableOptions(compatibleHosts: Host[]): Promise<RetryableOptions> {
     const statefulHosts = await Promise.all(
       compatibleHosts.map((compatibleHost) => {
@@ -74,11 +82,11 @@ export function createTransporter({
     };
   }
 
-  async function retryableRequest<TResponse>(
+  async function retryableRequest(
     request: Request,
     requestOptions: RequestOptions,
     isRead: boolean,
-  ): Promise<TResponse> {
+  ): Promise<Response> {
     const stackTrace: StackFrame[] = [];
 
     /**
@@ -143,7 +151,7 @@ export function createTransporter({
     const retry = async (
       retryableHosts: Host[],
       getTimeout: (timeoutsCount: number, timeout: number) => number,
-    ): Promise<TResponse> => {
+    ): Promise<Response> => {
       /**
        * We iterate on each host, until there is no host left.
        */
@@ -208,7 +216,7 @@ export function createTransporter({
       }
 
       if (isSuccess(response)) {
-        return deserializeSuccess(response);
+        return response;
       }
 
       pushToStackTrace(response);
@@ -238,7 +246,9 @@ export function createTransporter({
        * the retryable request. At this point, we may *not* perform the actual
        * request. But we want to have the function factory ready.
        */
-      return retryableRequest<TResponse>(request, requestOptions, isRead);
+      return retryableRequest(request, requestOptions, isRead).then((response) =>
+        deserializeSuccess<TResponse>(response),
+      );
     };
 
     /**
@@ -310,6 +320,26 @@ export function createTransporter({
          */
         miss: (response) => responsesCache.set(key, response),
       },
+    );
+  }
+
+  function createRequestWithHttpInfo<TData>(
+    request: Request,
+    requestOptions: RequestOptions = {},
+  ): Promise<AlgoliaHttpResponse<TData>> {
+    /**
+     * A read request is either a `GET` request, or a request that we make
+     * via the `read` transporter (e.g. `search`).
+     */
+    const isRead = request.useReadTransporter || request.method === 'GET';
+
+    /**
+     * The HTTP info variant always hits the network: both the requests and
+     * the responses caches are bypassed, even for `cacheable` requests, so
+     * that the returned status code and headers reflect an actual API call.
+     */
+    return retryableRequest(request, requestOptions, isRead).then((response) =>
+      deserializeSuccessWithHttpInfo<TData>(response),
     );
   }
 
@@ -391,6 +421,7 @@ export function createTransporter({
     baseQueryParameters,
     hosts,
     request: createRequest,
+    requestWithHttpInfo: createRequestWithHttpInfo,
     requestStream,
     requestsCache,
     responsesCache,

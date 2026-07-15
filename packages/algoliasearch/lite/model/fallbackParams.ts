@@ -7,4 +7,7 @@ import type { SearchParamsQuery } from './searchParamsQuery';
 /**
  * Search parameters to use for a fallback request if there aren\'t enough recommendations.
  */
-export type FallbackParams = BaseRecommendSearchParams & SearchParamsQuery & RecommendIndexSettings;
+export type FallbackParams = BaseRecommendSearchParams &
+  SearchParamsQuery &
+  RecommendIndexSettings &
+  Record<string, unknown>;

@@ -27,7 +27,7 @@
     "files": [
       {
         "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-        "maxSize": "17KB"
+        "maxSize": "21KB"
       },
       {
         "path": "packages/algoliasearch/dist/lite/builds/browser.umd.js",
@@ -43,11 +43,11 @@
       },
       {
         "path": "packages/client-analytics/dist/builds/browser.umd.js",
-        "maxSize": "6KB"
+        "maxSize": "7KB"
       },
       {
         "path": "packages/composition/dist/builds/browser.umd.js",
-        "maxSize": "6KB"
+        "maxSize": "7KB"
       },
       {
         "path": "packages/client-insights/dist/builds/browser.umd.js",
@@ -63,11 +63,11 @@
       },
       {
         "path": "packages/client-search/dist/builds/browser.umd.js",
-        "maxSize": "9KB"
+        "maxSize": "10KB"
       },
       {
         "path": "packages/ingestion/dist/builds/browser.umd.js",
-        "maxSize": "8KB"
+        "maxSize": "10KB"
       },
       {
         "path": "packages/monitoring/dist/builds/browser.umd.js",

@@ -21,6 +21,18 @@ const agentOptions = { keepAlive: true };
 const defaultHttpAgent = new http.Agent(agentOptions);
 const defaultHttpsAgent = new https.Agent(agentOptions);
 
+function toResponseHeaders(incomingHeaders: http.IncomingHttpHeaders): Record<string, string> {
+  const headers: Record<string, string> = {};
+
+  for (const [name, value] of Object.entries(incomingHeaders)) {
+    if (value !== undefined) {
+      headers[name] = Array.isArray(value) ? value.join(', ') : value;
+    }
+  }
+
+  return headers;
+}
+
 export function createHttpRequester({
   agent: userGlobalAgent,
   httpAgent: userHttpAgent,
@@ -82,6 +94,7 @@ export function createHttpRequester({
           resolve({
             status: response.statusCode || 0,
             content: buffer.toString(),
+            headers: toResponseHeaders(response.headers),
             isTimedOut: false,
           });
         });

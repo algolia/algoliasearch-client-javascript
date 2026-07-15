@@ -50,6 +50,11 @@ export type Response = {
    */
   content: string;
   /**
+   * The headers of the response, with lower-cased names. Optional so that custom requesters that
+   * don't capture headers remain valid, in which case the `WithHTTPInfo` methods expose no headers.
+   */
+  headers?: Headers | undefined;
+  /**
    * Whether the API call is timed out or not.
    */
   isTimedOut: boolean;

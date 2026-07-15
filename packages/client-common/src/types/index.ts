@@ -1,3 +1,4 @@
+export * from './algoliaHttpResponse';
 export * from './cache';
 export * from './chunkedHelperOptions';
 export * from './createClient';

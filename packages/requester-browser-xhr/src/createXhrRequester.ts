@@ -2,6 +2,19 @@ import type { EndRequest, Requester, Response } from '@algolia/client-common';
 
 type Timeout = ReturnType<typeof setTimeout>;
 
+function parseResponseHeaders(rawHeaders: string): Record<string, string> {
+  const headers: Record<string, string> = {};
+
+  for (const line of rawHeaders.trim().split(/[\r\n]+/)) {
+    const separatorIndex = line.indexOf(': ');
+    if (separatorIndex > 0) {
+      headers[line.slice(0, separatorIndex).toLowerCase()] = line.slice(separatorIndex + 2);
+    }
+  }
+
+  return headers;
+}
+
 export function createXhrRequester(): Requester {
   function send(request: EndRequest): Promise<Response> {
     return new Promise((resolve) => {
@@ -54,6 +67,7 @@ export function createXhrRequester(): Requester {
 
         resolve({
           content: baseRequester.responseText,
+          headers: parseResponseHeaders(baseRequester.getAllResponseHeaders()),
           status: baseRequester.status,
           isTimedOut: false,
         });

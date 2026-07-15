@@ -25,6 +25,7 @@ export * from './distinct';
 export * from './errorBase';
 export * from './exactOnSingleWordQuery';
 export * from './exhaustive';
+export * from './facetFilters';
 export * from './facetOrdering';
 export * from './facetStats';
 export * from './fallbackParams';
