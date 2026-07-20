@@ -9,6 +9,7 @@ describe('console logger', () => {
     vi.resetAllMocks();
     vi.spyOn(console, 'debug');
     vi.spyOn(console, 'info');
+    vi.spyOn(console, 'warn');
     vi.spyOn(console, 'error');
   });
 
@@ -17,10 +18,12 @@ describe('console logger', () => {
 
     await logger.debug('foo', {});
     await logger.info('foo', {});
+    await logger.warn?.('foo', {});
     await logger.error('foo', {});
 
     expect(console.debug).toHaveBeenCalledTimes(1);
     expect(console.info).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.error).toHaveBeenCalledTimes(1);
   });
 
@@ -29,11 +32,21 @@ describe('console logger', () => {
 
     await logger.debug('foo', {});
     await logger.info('foo', {});
+    await logger.warn?.('foo', {});
     await logger.error('foo', {});
 
     expect(console.debug).toHaveBeenCalledTimes(0);
     expect(console.info).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenCalledTimes(1);
     expect(console.error).toHaveBeenCalledTimes(1);
+  });
+
+  test('omits undefined args from warn output', async () => {
+    const logger = createConsoleLogger(LogLevelEnum.Info);
+
+    await logger.warn?.('foo');
+
+    expect(console.warn).toHaveBeenCalledWith('foo');
   });
 
   test('respects log level type error', async () => {
@@ -41,10 +54,12 @@ describe('console logger', () => {
 
     await logger.debug('foo', {});
     await logger.info('foo', {});
+    await logger.warn?.('foo', {});
     await logger.error('foo', {});
 
     expect(console.debug).toHaveBeenCalledTimes(0);
     expect(console.info).toHaveBeenCalledTimes(0);
+    expect(console.warn).toHaveBeenCalledTimes(0);
     expect(console.error).toHaveBeenCalledTimes(1);
   });
 });

@@ -17,6 +17,7 @@ import {
   createIterablePromise,
   createTransporter,
   getAlgoliaAgent,
+  logWarning,
   shuffle,
   validateRequired,
 } from '@algolia/client-common';
@@ -634,6 +635,8 @@ export function createSearchClient({
      * Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
      * See https://api-clients-automation.netlify.app/docs/custom-helpers/#replaceallobjects for implementation details.
      *
+     * Warning: calling this method with an empty `objects` list replaces the index with an empty one, deleting all existing records.
+     *
      * @summary Helper: Replaces all objects (records) in the given `index_name` with the given `objects`. A temporary index is created during this process in order to backup your data.
      * @param replaceAllObjects - The `replaceAllObjects` object.
      * @param replaceAllObjects.indexName - The `indexName` to replace `objects` in.
@@ -653,6 +656,13 @@ export function createSearchClient({
       }: ReplaceAllObjectsOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<ReplaceAllObjectsResponse> {
+      if (objects.length === 0) {
+        logWarning(
+          transporter.logger,
+          `replaceAllObjects was called with an empty list of objects, which will delete all records currently in the "${indexName}" index.`,
+        );
+      }
+
       const randomSuffix = Math.floor(Math.random() * 1000000) + 100000;
       const tmpIndexName = `${indexName}_tmp_${randomSuffix}`;
 

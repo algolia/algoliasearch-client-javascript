@@ -15,19 +15,18 @@ test('sets the ua', () => {
   });
 });
 
-test('with logger', () => {
-  vi.spyOn(console, 'debug');
-  vi.spyOn(console, 'info');
-  vi.spyOn(console, 'error');
+test('with logger', async () => {
+  const consoleInfo = vi.spyOn(console, 'info').mockImplementation(() => {});
 
   const client = algoliasearch('APP_ID', 'API_KEY', {
     logger: createConsoleLogger(LogLevelEnum.Debug),
+    // every host fails, exercising the retry logging path without a real request that could outlive the test
+    requester: {
+      send: () => Promise.resolve({ content: 'internal error', isTimedOut: false, status: 500 }),
+    },
   });
 
-  expect(async () => {
-    await client.setSettings({ indexName: 'foo', indexSettings: {} });
-    expect(console.debug).toHaveBeenCalledTimes(1);
-    expect(console.info).toHaveBeenCalledTimes(1);
-    expect(console.error).toHaveBeenCalledTimes(1);
-  }).not.toThrow();
+  await expect(client.setSettings({ indexName: 'foo', indexSettings: {} })).rejects.toThrow();
+
+  expect(consoleInfo).toHaveBeenCalledWith('Retryable failure', expect.any(Object));
 });

@@ -18,6 +18,11 @@ export type Logger = {
   info: (message: string, args?: any | undefined) => Promise<void>;
 
   /**
+   * Logs warning messages. When not implemented, warnings fall back to `console.warn` so they stay visible with the default no-op logger.
+   */
+  warn?: (message: string, args?: any | undefined) => Promise<void>;
+
+  /**
    * Logs error messages.
    */
   error: (message: string, args?: any | undefined) => Promise<void>;
