@@ -3,6 +3,7 @@ import { iterSSEEvents } from '../sse';
 import type {
   AlgoliaHttpResponse,
   EndRequest,
+  Headers,
   Host,
   QueryParameters,
   Request,
@@ -19,10 +20,12 @@ import {
   deserializeFailure,
   deserializeSuccess,
   deserializeSuccessWithHttpInfo,
+  getLastCorrelationId,
   serializeData,
   serializeHeaders,
   serializeUrl,
 } from './helpers';
+import { generateRequestId } from './requestId';
 import { isRetryable, isSuccess } from './responses';
 import { stackFrameWithoutCredentials, stackTraceWithoutCredentials } from './stackTrace';
 
@@ -44,7 +47,24 @@ export function createTransporter({
   responsesCache,
   compress,
   compression,
+  requestIdChannel,
 }: TransporterOptions): TransporterWithHttpInfo {
+  function injectRequestId(headers: Headers, queryParameters: QueryParameters): void {
+    if (
+      requestIdChannel === undefined ||
+      headers['request-id'] !== undefined ||
+      Object.keys(queryParameters).some((parameter) => parameter.toLowerCase() === 'x-algolia-request-id')
+    ) {
+      return;
+    }
+
+    if (requestIdChannel === 'headers') {
+      headers['request-id'] = generateRequestId();
+    } else {
+      queryParameters['x-algolia-request-id'] = generateRequestId();
+    }
+  }
+
   async function createRetryableOptions(compatibleHosts: Host[]): Promise<RetryableOptions> {
     const statefulHosts = await Promise.all(
       compatibleHosts.map((compatibleHost) => {
@@ -146,6 +166,8 @@ export function createTransporter({
       }
     }
 
+    injectRequestId(headers, queryParameters);
+
     let timeoutsCount = 0;
 
     const retry = async (
@@ -157,7 +179,7 @@ export function createTransporter({
        */
       const host = retryableHosts.pop();
       if (host === undefined) {
-        throw new RetryError(stackTraceWithoutCredentials(stackTrace));
+        throw new RetryError(stackTraceWithoutCredentials(stackTrace), getLastCorrelationId(stackTrace));
       }
 
       const timeout = { ...timeouts, ...requestOptions.timeouts };
@@ -387,6 +409,8 @@ export function createTransporter({
       }
     }
 
+    injectRequestId(headers, queryParameters);
+
     const isRead = request.useReadTransporter || request.method === 'GET';
     const compatibleHosts = hosts.filter(
       (host) => host.accept === 'readWrite' || (isRead ? host.accept === 'read' : host.accept === 'write'),
@@ -419,6 +443,7 @@ export function createTransporter({
     algoliaAgent,
     baseHeaders,
     baseQueryParameters,
+    requestIdChannel,
     hosts,
     request: createRequest,
     requestWithHttpInfo: createRequestWithHttpInfo,

@@ -39,6 +39,7 @@ export function recommendClient(appId: string, apiKey: string, options?: ClientO
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
+    requestIdChannel: 'queryParameters',
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({

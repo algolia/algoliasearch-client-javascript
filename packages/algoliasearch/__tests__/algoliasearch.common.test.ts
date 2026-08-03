@@ -69,6 +69,7 @@ describe('api', () => {
   test('exposes the search client transporter for the algoliasearch client', () => {
     expect(client.transporter).not.toBeUndefined();
     expect(client.transporter).toEqual({
+      requestIdChannel: 'queryParameters',
       algoliaAgent: {
         add: expect.any(Function),
         value: expect.stringContaining(
@@ -214,6 +215,7 @@ describe('search with legacy signature', () => {
     expect(req.searchParams).toStrictEqual({
       'x-algolia-api-key': 'API_KEY',
       'x-algolia-application-id': 'APP_ID',
+      'x-algolia-request-id': expect.stringMatching(/^[0-9A-Za-z]{11}$/),
     });
   });
 
@@ -234,6 +236,7 @@ describe('search with legacy signature', () => {
     expect(req.searchParams).toStrictEqual({
       'x-algolia-api-key': 'API_KEY',
       'x-algolia-application-id': 'APP_ID',
+      'x-algolia-request-id': expect.stringMatching(/^[0-9A-Za-z]{11}$/),
     });
   });
 
@@ -255,6 +258,7 @@ describe('search with legacy signature', () => {
     expect(req.searchParams).toStrictEqual({
       'x-algolia-api-key': 'API_KEY',
       'x-algolia-application-id': 'APP_ID',
+      'x-algolia-request-id': expect.stringMatching(/^[0-9A-Za-z]{11}$/),
     });
   });
 });
@@ -276,6 +280,7 @@ describe('init', () => {
     expect(qpResult.searchParams).toEqual({
       'x-algolia-api-key': 'bar',
       'x-algolia-application-id': 'foo',
+      'x-algolia-request-id': expect.stringMatching(/^[0-9A-Za-z]{11}$/),
     });
 
     const headerResult = (await headerClient.customGet({
@@ -296,6 +301,7 @@ describe('init', () => {
     expect(res.searchParams).toEqual({
       'x-algolia-api-key': 'API_KEY',
       'x-algolia-application-id': 'APP_ID',
+      'x-algolia-request-id': expect.stringMatching(/^[0-9A-Za-z]{11}$/),
     });
   });
 });

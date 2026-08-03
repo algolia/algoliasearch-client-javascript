@@ -43,6 +43,7 @@ export function compositionClient(
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'WithinHeaders',
+    requestIdChannel: 'queryParameters',
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({

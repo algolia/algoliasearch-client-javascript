@@ -162,6 +162,13 @@ export type TransporterOptions = {
   compress?: (data: string) => Promise<Uint8Array>;
 
   compression?: 'gzip';
+
+  /**
+   * Where the generated Request-ID is sent: as the `Request-ID` header, or as the
+   * `x-algolia-request-id` query parameter. When undefined, no Request-ID is sent.
+   * A caller-supplied Request-ID is never overwritten.
+   */
+  requestIdChannel?: 'headers' | 'queryParameters' | undefined;
 };
 
 export type Transporter = TransporterOptions & {

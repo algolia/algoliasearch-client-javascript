@@ -35,6 +35,7 @@ export function liteClient(appId: string, apiKey: string, options?: ClientOption
     logger: createNullLogger(),
     requester: createHttpRequester(),
     algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
+    requestIdChannel: 'headers',
     responsesCache: createNullCache(),
     requestsCache: createNullCache(),
     hostsCache: createMemoryCache(),

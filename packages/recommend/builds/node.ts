@@ -36,6 +36,7 @@ export function recommendClient(appId: string, apiKey: string, options?: ClientO
       logger: createNullLogger(),
       requester: createHttpRequester(),
       algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
+      requestIdChannel: 'headers',
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),

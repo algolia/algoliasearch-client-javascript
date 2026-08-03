@@ -14,6 +14,7 @@ import {
   createNullCache,
   createNullLogger,
   serializeQueryParameters,
+  withRequestId,
 } from '@algolia/client-common';
 import { createHttpRequester } from '@algolia/requester-node-http';
 
@@ -57,6 +58,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
       logger: createNullLogger(),
       requester: createHttpRequester(),
       algoliaAgents: [{ segment: 'Node.js', version: process.versions.node }],
+      requestIdChannel: 'headers',
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
@@ -124,13 +126,14 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
       }: AccountCopyIndexOptions,
       requestOptions?: RequestOptions | undefined,
     ): Promise<void> {
+      requestOptions = withRequestId(this.transporter, requestOptions);
       const responses: Array<{ taskID: UpdatedAtResponse['taskID'] }> = [];
 
       if (this.appId === destinationAppID) {
         throw new IndicesInSameAppError();
       }
 
-      if (!(await this.indexExists({ indexName: sourceIndexName }))) {
+      if (!(await this.indexExists({ indexName: sourceIndexName }, requestOptions))) {
         throw new IndexNotFoundError(sourceIndexName);
       }
 
@@ -151,7 +154,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
         ...options,
       });
 
-      if (await destinationClient.indexExists({ indexName: destinationIndexName })) {
+      if (await destinationClient.indexExists({ indexName: destinationIndexName }, requestOptions)) {
         throw new IndexAlreadyExistsError(destinationIndexName);
       }
 
@@ -159,51 +162,63 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
         await destinationClient.setSettings(
           {
             indexName: destinationIndexName,
-            indexSettings: await this.getSettings({ indexName: sourceIndexName }),
+            indexSettings: await this.getSettings({ indexName: sourceIndexName }, requestOptions),
           },
           requestOptions,
         ),
       );
 
-      await this.browseRules({
-        indexName: sourceIndexName,
-        async aggregator(response: SearchRulesResponse) {
-          responses.push(
-            await destinationClient.saveRules(
-              { indexName: destinationIndexName, rules: response.hits },
-              requestOptions,
-            ),
-          );
+      await this.browseRules(
+        {
+          indexName: sourceIndexName,
+          async aggregator(response: SearchRulesResponse) {
+            responses.push(
+              await destinationClient.saveRules(
+                { indexName: destinationIndexName, rules: response.hits },
+                requestOptions,
+              ),
+            );
+          },
         },
-      });
+        requestOptions,
+      );
 
-      await this.browseSynonyms({
-        indexName: sourceIndexName,
-        async aggregator(response: SearchSynonymsResponse) {
-          responses.push(
-            await destinationClient.saveSynonyms(
-              { indexName: destinationIndexName, synonymHit: response.hits },
-              requestOptions,
-            ),
-          );
+      await this.browseSynonyms(
+        {
+          indexName: sourceIndexName,
+          async aggregator(response: SearchSynonymsResponse) {
+            responses.push(
+              await destinationClient.saveSynonyms(
+                { indexName: destinationIndexName, synonymHit: response.hits },
+                requestOptions,
+              ),
+            );
+          },
         },
-      });
+        requestOptions,
+      );
 
-      await this.browseObjects({
-        indexName: sourceIndexName,
-        browseParams: batchSize ? { hitsPerPage: batchSize } : undefined,
-        async aggregator(response: BrowseResponse) {
-          responses.push(
-            ...(await destinationClient.saveObjects(
-              { indexName: destinationIndexName, objects: response.hits, batchSize },
-              requestOptions,
-            )),
-          );
+      await this.browseObjects(
+        {
+          indexName: sourceIndexName,
+          browseParams: batchSize ? { hitsPerPage: batchSize } : undefined,
+          async aggregator(response: BrowseResponse) {
+            responses.push(
+              ...(await destinationClient.saveObjects(
+                { indexName: destinationIndexName, objects: response.hits, batchSize },
+                requestOptions,
+              )),
+            );
+          },
         },
-      });
+        requestOptions,
+      );
 
       for (const response of responses) {
-        await destinationClient.waitForTask({ indexName: destinationIndexName, taskID: response.taskID, maxRetries });
+        await destinationClient.waitForTask(
+          { indexName: destinationIndexName, taskID: response.taskID, maxRetries },
+          requestOptions,
+        );
       }
     },
     /**

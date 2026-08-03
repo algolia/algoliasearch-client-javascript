@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { createMemoryCache, createNullCache } from '../../cache';
 import { createNullLogger } from '../../logger';
-import { ApiError, DetailedApiError, createTransporter } from '../../transporter';
+import { DetailedApiError, createTransporter } from '../../transporter';
 import type { AlgoliaAgent, Requester, TransporterWithHttpInfo } from '../../types';
 
 describe('transporter requestWithHttpInfo', () => {
@@ -120,8 +120,16 @@ describe('transporter requestWithHttpInfo', () => {
       headers: {},
     } as const;
 
-    await expect(transporter.requestWithHttpInfo(request)).rejects.toThrow(new ApiError('Invalid API key', 403, []));
-    await expect(transporter.request(request)).rejects.toThrow(new ApiError('Invalid API key', 403, []));
+    await expect(transporter.requestWithHttpInfo(request)).rejects.toMatchObject({
+      name: 'ApiError',
+      message: 'Invalid API key',
+      status: 403,
+    });
+    await expect(transporter.request(request)).rejects.toMatchObject({
+      name: 'ApiError',
+      message: 'Invalid API key',
+      status: 403,
+    });
   });
 
   test('throws detailed errors when the response contains one', async () => {

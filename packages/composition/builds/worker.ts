@@ -40,6 +40,7 @@ export function compositionClient(
       logger: createNullLogger(),
       requester: createFetchRequester(),
       algoliaAgents: [{ segment: 'Worker' }],
+      requestIdChannel: 'queryParameters',
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),

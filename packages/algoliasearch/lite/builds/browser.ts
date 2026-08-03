@@ -39,6 +39,7 @@ export function liteClient(appId: string, apiKey: string, options?: ClientOption
     requester: createXhrRequester(),
     algoliaAgents: [{ segment: 'Browser' }],
     authMode: 'WithinQueryParameters',
+    requestIdChannel: 'queryParameters',
     responsesCache: createMemoryCache(),
     requestsCache: createMemoryCache({ serializable: false }),
     hostsCache: createFallbackableCache({

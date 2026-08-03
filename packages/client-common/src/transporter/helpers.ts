@@ -92,7 +92,7 @@ export function deserializeSuccess<TObject>(response: Response): TObject {
   try {
     return JSON.parse(response.content);
   } catch (e) {
-    throw new DeserializationError((e as Error).message, response);
+    throw new DeserializationError((e as Error).message, response, getCorrelationId(response.headers));
   }
 }
 
@@ -105,15 +105,42 @@ export function deserializeSuccessWithHttpInfo<TData>(response: Response): Algol
   };
 }
 
-export function deserializeFailure({ content, status }: Response, stackFrame: StackFrame[]): Error {
+export function getCorrelationId(headers: Headers | undefined): string | undefined {
+  if (!headers) {
+    return undefined;
+  }
+
+  if (headers['correlation-id'] !== undefined) {
+    return headers['correlation-id'];
+  }
+
+  const header = Object.keys(headers).find((key) => key.toLowerCase() === 'correlation-id');
+
+  return header === undefined ? undefined : headers[header];
+}
+
+export function getLastCorrelationId(stackTrace: StackFrame[]): string | undefined {
+  for (let i = stackTrace.length - 1; i >= 0; i--) {
+    const correlationId = getCorrelationId(stackTrace[i].response.headers);
+    if (correlationId !== undefined) {
+      return correlationId;
+    }
+  }
+
+  return undefined;
+}
+
+export function deserializeFailure(response: Response, stackFrame: StackFrame[]): Error {
+  const { content, status } = response;
+  const correlationId = getCorrelationId(response.headers);
   try {
     const parsed = JSON.parse(content);
     if ('error' in parsed) {
-      return new DetailedApiError(parsed.message, status, parsed.error, stackFrame);
+      return new DetailedApiError(parsed.message, status, parsed.error, stackFrame, correlationId);
     }
-    return new ApiError(parsed.message, status, stackFrame);
+    return new ApiError(parsed.message, status, stackFrame, 'ApiError', correlationId);
   } catch {
     // ..
   }
-  return new ApiError(content, status, stackFrame);
+  return new ApiError(content, status, stackFrame, 'ApiError', correlationId);
 }

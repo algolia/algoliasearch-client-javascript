@@ -33,19 +33,23 @@ export class IndexAlreadyExistsError extends AlgoliaError {
 export class ErrorWithStackTrace extends AlgoliaError {
   stackTrace: StackFrame[];
 
-  constructor(message: string, stackTrace: StackFrame[], name: string) {
-    super(message, name);
+  correlationId?: string | undefined;
+
+  constructor(message: string, stackTrace: StackFrame[], name: string, correlationId?: string | undefined) {
+    super(correlationId ? `${message} (Correlation-ID: ${correlationId})` : message, name);
     // the array and object should be frozen to reflect the stackTrace at the time of the error
     this.stackTrace = stackTrace;
+    this.correlationId = correlationId;
   }
 }
 
 export class RetryError extends ErrorWithStackTrace {
-  constructor(stackTrace: StackFrame[]) {
+  constructor(stackTrace: StackFrame[], correlationId?: string | undefined) {
     super(
       'Unreachable hosts - your application id may be incorrect. If the error persists, please visit our help center https://alg.li/support-unreachable-hosts or reach out to the Algolia Support team: https://alg.li/support',
       stackTrace,
       'RetryError',
+      correlationId,
     );
   }
 }
@@ -53,8 +57,14 @@ export class RetryError extends ErrorWithStackTrace {
 export class ApiError extends ErrorWithStackTrace {
   status: number;
 
-  constructor(message: string, status: number, stackTrace: StackFrame[], name = 'ApiError') {
-    super(message, stackTrace, name);
+  constructor(
+    message: string,
+    status: number,
+    stackTrace: StackFrame[],
+    name = 'ApiError',
+    correlationId?: string | undefined,
+  ) {
+    super(message, stackTrace, name, correlationId);
     this.status = status;
   }
 }
@@ -62,9 +72,12 @@ export class ApiError extends ErrorWithStackTrace {
 export class DeserializationError extends AlgoliaError {
   response: Response;
 
-  constructor(message: string, response: Response) {
-    super(message, 'DeserializationError');
+  correlationId?: string | undefined;
+
+  constructor(message: string, response: Response, correlationId?: string | undefined) {
+    super(correlationId ? `${message} (Correlation-ID: ${correlationId})` : message, 'DeserializationError');
     this.response = response;
+    this.correlationId = correlationId;
   }
 }
 
@@ -88,8 +101,14 @@ export type DetailedError = {
 export class DetailedApiError extends ApiError {
   error: DetailedError;
 
-  constructor(message: string, status: number, error: DetailedError, stackTrace: StackFrame[]) {
-    super(message, status, stackTrace, 'DetailedApiError');
+  constructor(
+    message: string,
+    status: number,
+    error: DetailedError,
+    stackTrace: StackFrame[],
+    correlationId?: string | undefined,
+  ) {
+    super(message, status, stackTrace, 'DetailedApiError', correlationId);
     this.error = error;
   }
 }

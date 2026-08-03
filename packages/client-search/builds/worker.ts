@@ -43,6 +43,7 @@ export function searchClient(appId: string, apiKey: string, options?: ClientOpti
       logger: createNullLogger(),
       requester: createFetchRequester(),
       algoliaAgents: [{ segment: 'Worker' }],
+      requestIdChannel: 'queryParameters',
       responsesCache: createNullCache(),
       requestsCache: createNullCache(),
       hostsCache: createMemoryCache(),
