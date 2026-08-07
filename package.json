@@ -18,9 +18,9 @@
   "devDependencies": {
     "@types/node": "24.13.3",
     "bundlewatch": "0.4.2",
-    "execa": "9.6.1",
+    "execa": "10.0.1",
     "lerna": "9.0.7",
-    "rollup": "4.62.2",
+    "rollup": "4.62.4",
     "typescript": "5.9.3"
   },
   "bundlewatch": {
@@ -84,7 +84,7 @@
     ]
   },
   "resolutions": {
-    "axios": "^1.16.0",
+    "axios": "^1.19.0",
     "follow-redirects": "^1.16.0"
   },
   "engines": {
