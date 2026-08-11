@@ -17,6 +17,8 @@ export * from './errorBase';
 export * from './eventsItems';
 export * from './eventsResponse';
 export * from './insightsEvents';
+export * from './instantsearch';
+export * from './instantsearchEvent';
 export * from './objectData';
 export * from './objectDataAfterSearch';
 export * from './price';

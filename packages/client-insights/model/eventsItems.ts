@@ -8,6 +8,7 @@ import type { ClickedObjectIDsAfterSearch } from './clickedObjectIDsAfterSearch'
 import type { ConvertedFilters } from './convertedFilters';
 import type { ConvertedObjectIDs } from './convertedObjectIDs';
 import type { ConvertedObjectIDsAfterSearch } from './convertedObjectIDsAfterSearch';
+import type { Instantsearch } from './instantsearch';
 import type { PurchasedObjectIDs } from './purchasedObjectIDs';
 import type { PurchasedObjectIDsAfterSearch } from './purchasedObjectIDsAfterSearch';
 import type { ViewedFilters } from './viewedFilters';
@@ -25,4 +26,5 @@ export type EventsItems =
   | ClickedFilters
   | ConvertedFilters
   | ViewedObjectIDs
-  | ViewedFilters;
+  | ViewedFilters
+  | Instantsearch;
