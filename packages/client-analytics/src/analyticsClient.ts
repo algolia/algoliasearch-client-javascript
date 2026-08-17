@@ -11,6 +11,7 @@ import type {
 } from '@algolia/client-common';
 import { createAuth, createTransporter, getAlgoliaAgent, validateRequired } from '@algolia/client-common';
 
+import type { Catalog } from '../model/catalog';
 import type { GetAddToCartRateResponse } from '../model/getAddToCartRateResponse';
 import type { GetAverageClickPositionResponse } from '../model/getAverageClickPositionResponse';
 import type { GetClickPositionsResponse } from '../model/getClickPositionsResponse';
@@ -31,6 +32,8 @@ import type { GetTopFiltersNoResultsResponse } from '../model/getTopFiltersNoRes
 import type { GetTopHitsResponse } from '../model/getTopHitsResponse';
 import type { GetTopSearchesResponse } from '../model/getTopSearchesResponse';
 import type { GetUsersCountResponse } from '../model/getUsersCountResponse';
+import type { TableResponse } from '../model/tableResponse';
+import type { TimeseriesResponse } from '../model/timeseriesResponse';
 
 import type {
   CustomDeleteProps,
@@ -57,6 +60,10 @@ import type {
   GetTopHitsProps,
   GetTopSearchesProps,
   GetUsersCountProps,
+  QueryPatternsDistributionProps,
+  QueryPatternsScalarProps,
+  QueryPatternsTableProps,
+  QueryPatternsTimeseriesProps,
 } from '../model/clientMethodProps';
 
 export const apiClientVersion = '5.56.0';
@@ -1054,6 +1061,46 @@ export function createAnalyticsClient({
       if (tags !== undefined) {
         queryParameters['tags'] = tags.toString();
       }
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
+     * **Beta**: this endpoint is under active development and may change without notice.  Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups, distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are combinable in one query only when their `roots` intersect. Each entry\'s `requires` lists the ACLs needed when that field is actually used in a query.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getPatternsFields(requestOptions?: RequestOptions | undefined): Promise<Catalog> {
+      const requestPath = '/3/patterns/fields';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * **Beta**: this endpoint is under active development and may change without notice.  Returns the static catalog of analytics fields, grouped by domain and usage (metrics, filters, groups, distributions). No authentication is required. Use it to discover valid `(domain, kind)` pairs before building the other `/3/patterns/_*` queries; two fields are combinable in one query only when their `roots` intersect. Each entry\'s `requires` lists the ACLs needed when that field is actually used in a query.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see getPatternsFields for the plain version.
+     */
+    getPatternsFieldsWithHTTPInfo(requestOptions?: RequestOptions | undefined): Promise<AlgoliaHttpResponse<Catalog>> {
+      const requestPath = '/3/patterns/fields';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'GET',
@@ -2589,6 +2636,334 @@ export function createAnalyticsClient({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
+     * **Beta**: this endpoint is under active development and may change without notice.  Buckets one or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     * @param queryPatternsDistribution - The queryPatternsDistribution object.
+     * @param queryPatternsDistribution.distributionPayload - The distributionPayload object.
+     * @param queryPatternsDistribution.index - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body\'s `indices` parameter; optional for unrestricted keys.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    queryPatternsDistribution(
+      { distributionPayload, index }: QueryPatternsDistributionProps,
+      requestOptions?: RequestOptions,
+    ): Promise<{ [key: string]: any }> {
+      validateRequired('distributionPayload', 'queryPatternsDistribution', distributionPayload);
+
+      validateRequired(
+        'distributionPayload.distributions',
+        'queryPatternsDistribution',
+        distributionPayload.distributions,
+      );
+      validateRequired('distributionPayload.parameters', 'queryPatternsDistribution', distributionPayload.parameters);
+
+      const requestPath = '/3/patterns/distribution';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (index !== undefined) {
+        queryParameters['index'] = index.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: distributionPayload,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * **Beta**: this endpoint is under active development and may change without notice.  Buckets one or more numeric fields into histograms and returns an object keyed by `histogram<Field>`, each mapping a bin label to a count. `distributions` and `parameters` are required; `filters` is optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     * @param queryPatternsDistribution - The queryPatternsDistribution object.
+     * @param queryPatternsDistribution.distributionPayload - The distributionPayload object.
+     * @param queryPatternsDistribution.index - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body\'s `indices` parameter; optional for unrestricted keys.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see queryPatternsDistribution for the plain version.
+     */
+    queryPatternsDistributionWithHTTPInfo(
+      { distributionPayload, index }: QueryPatternsDistributionProps,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<{ [key: string]: any }>> {
+      validateRequired('distributionPayload', 'queryPatternsDistributionWithHTTPInfo', distributionPayload);
+
+      validateRequired(
+        'distributionPayload.distributions',
+        'queryPatternsDistributionWithHTTPInfo',
+        distributionPayload.distributions,
+      );
+      validateRequired(
+        'distributionPayload.parameters',
+        'queryPatternsDistributionWithHTTPInfo',
+        distributionPayload.parameters,
+      );
+
+      const requestPath = '/3/patterns/distribution';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (index !== undefined) {
+        queryParameters['index'] = index.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: distributionPayload,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
+     * **Beta**: this endpoint is under active development and may change without notice.  Aggregates the requested `metrics` over the whole period and returns a single object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     * @param queryPatternsScalar - The queryPatternsScalar object.
+     * @param queryPatternsScalar.scalarPayload - The scalarPayload object.
+     * @param queryPatternsScalar.index - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body\'s `indices` parameter; optional for unrestricted keys.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    queryPatternsScalar(
+      { scalarPayload, index }: QueryPatternsScalarProps,
+      requestOptions?: RequestOptions,
+    ): Promise<{ [key: string]: any }> {
+      validateRequired('scalarPayload', 'queryPatternsScalar', scalarPayload);
+
+      validateRequired('scalarPayload.metrics', 'queryPatternsScalar', scalarPayload.metrics);
+      validateRequired('scalarPayload.parameters', 'queryPatternsScalar', scalarPayload.parameters);
+
+      const requestPath = '/3/patterns/scalar';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (index !== undefined) {
+        queryParameters['index'] = index.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: scalarPayload,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * **Beta**: this endpoint is under active development and may change without notice.  Aggregates the requested `metrics` over the whole period and returns a single object keyed by metric kind. `metrics` and `parameters` are required; `filters` is optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     * @param queryPatternsScalar - The queryPatternsScalar object.
+     * @param queryPatternsScalar.scalarPayload - The scalarPayload object.
+     * @param queryPatternsScalar.index - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body\'s `indices` parameter; optional for unrestricted keys.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see queryPatternsScalar for the plain version.
+     */
+    queryPatternsScalarWithHTTPInfo(
+      { scalarPayload, index }: QueryPatternsScalarProps,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<{ [key: string]: any }>> {
+      validateRequired('scalarPayload', 'queryPatternsScalarWithHTTPInfo', scalarPayload);
+
+      validateRequired('scalarPayload.metrics', 'queryPatternsScalarWithHTTPInfo', scalarPayload.metrics);
+      validateRequired('scalarPayload.parameters', 'queryPatternsScalarWithHTTPInfo', scalarPayload.parameters);
+
+      const requestPath = '/3/patterns/scalar';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (index !== undefined) {
+        queryParameters['index'] = index.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: scalarPayload,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
+     * **Beta**: this endpoint is under active development and may change without notice.  Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     * @param queryPatternsTable - The queryPatternsTable object.
+     * @param queryPatternsTable.tablePayload - The tablePayload object.
+     * @param queryPatternsTable.index - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body\'s `indices` parameter; optional for unrestricted keys.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    queryPatternsTable(
+      { tablePayload, index }: QueryPatternsTableProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TableResponse> {
+      validateRequired('tablePayload', 'queryPatternsTable', tablePayload);
+
+      validateRequired('tablePayload.metrics', 'queryPatternsTable', tablePayload.metrics);
+      validateRequired('tablePayload.parameters', 'queryPatternsTable', tablePayload.parameters);
+
+      const requestPath = '/3/patterns/table';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (index !== undefined) {
+        queryParameters['index'] = index.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: tablePayload,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * **Beta**: this endpoint is under active development and may change without notice.  Returns `rows`, each a flat object of the requested fields. `metrics` and `parameters` are required; `groupBy`, `filters`, and `orderBy` are optional, though `orderBy` is required when `groupBy` is set. Discover valid field kinds per domain with `/3/patterns/fields`.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     * @param queryPatternsTable - The queryPatternsTable object.
+     * @param queryPatternsTable.tablePayload - The tablePayload object.
+     * @param queryPatternsTable.index - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body\'s `indices` parameter; optional for unrestricted keys.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see queryPatternsTable for the plain version.
+     */
+    queryPatternsTableWithHTTPInfo(
+      { tablePayload, index }: QueryPatternsTableProps,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<TableResponse>> {
+      validateRequired('tablePayload', 'queryPatternsTableWithHTTPInfo', tablePayload);
+
+      validateRequired('tablePayload.metrics', 'queryPatternsTableWithHTTPInfo', tablePayload.metrics);
+      validateRequired('tablePayload.parameters', 'queryPatternsTableWithHTTPInfo', tablePayload.parameters);
+
+      const requestPath = '/3/patterns/table';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (index !== undefined) {
+        queryParameters['index'] = index.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: tablePayload,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
+     * **Beta**: this endpoint is under active development and may change without notice.  Returns one time series per `groupBy` combination, each with period `totals` and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     * @param queryPatternsTimeseries - The queryPatternsTimeseries object.
+     * @param queryPatternsTimeseries.timeseriesPayload - The timeseriesPayload object.
+     * @param queryPatternsTimeseries.index - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body\'s `indices` parameter; optional for unrestricted keys.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    queryPatternsTimeseries(
+      { timeseriesPayload, index }: QueryPatternsTimeseriesProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TimeseriesResponse> {
+      validateRequired('timeseriesPayload', 'queryPatternsTimeseries', timeseriesPayload);
+
+      validateRequired('timeseriesPayload.metrics', 'queryPatternsTimeseries', timeseriesPayload.metrics);
+      validateRequired('timeseriesPayload.parameters', 'queryPatternsTimeseries', timeseriesPayload.parameters);
+
+      const requestPath = '/3/patterns/timeseries';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (index !== undefined) {
+        queryParameters['index'] = index.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: timeseriesPayload,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * **Beta**: this endpoint is under active development and may change without notice.  Returns one time series per `groupBy` combination, each with period `totals` and a per-day metric breakdown. `metrics` and `parameters` are required; `groupBy` and `filters` are optional. Discover valid field kinds per domain with `/3/patterns/fields`.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     * @param queryPatternsTimeseries - The queryPatternsTimeseries object.
+     * @param queryPatternsTimeseries.timeseriesPayload - The timeseriesPayload object.
+     * @param queryPatternsTimeseries.index - Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body\'s `indices` parameter; optional for unrestricted keys.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see queryPatternsTimeseries for the plain version.
+     */
+    queryPatternsTimeseriesWithHTTPInfo(
+      { timeseriesPayload, index }: QueryPatternsTimeseriesProps,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<TimeseriesResponse>> {
+      validateRequired('timeseriesPayload', 'queryPatternsTimeseriesWithHTTPInfo', timeseriesPayload);
+
+      validateRequired('timeseriesPayload.metrics', 'queryPatternsTimeseriesWithHTTPInfo', timeseriesPayload.metrics);
+      validateRequired(
+        'timeseriesPayload.parameters',
+        'queryPatternsTimeseriesWithHTTPInfo',
+        timeseriesPayload.parameters,
+      );
+
+      const requestPath = '/3/patterns/timeseries';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (index !== undefined) {
+        queryParameters['index'] = index.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: timeseriesPayload,
       };
 
       return transporter.requestWithHttpInfo(request, requestOptions);
