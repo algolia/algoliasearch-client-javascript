@@ -27,7 +27,7 @@ jobs:
 
       - name: Install JavaScript dependencies
         shell: bash
-        run: yarn install
+        run: YARN_ENABLE_HARDENED_MODE=1 yarn install
 
       - name: Build clients
         shell: bash
