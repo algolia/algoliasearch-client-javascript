@@ -3,9 +3,8 @@ on:
   issues:
     types: [opened]
 
-permissions:
-  issues: write
-  contents: read
+# the sync script only reads the event payload and calls the Jira API with its own token
+permissions: {}
 
 jobs:
   sync:
@@ -13,6 +12,9 @@ jobs:
     steps:
       - name: Create ticket
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          # env indirection so the secret is never materialized into the composed script
+          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
         with:
           script: |
             const action = context.payload.action;
@@ -27,7 +29,7 @@ jobs:
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Basic ${{ secrets.JIRA_TOKEN }}`
+                'Authorization': `Basic ${process.env.JIRA_TOKEN}`
               },
               body: JSON.stringify({
                 fields: {
