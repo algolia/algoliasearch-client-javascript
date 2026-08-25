@@ -121,10 +121,12 @@ export function createAbtestingClient({
     },
 
     /**
-     * Creates a new A/B test.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests`.  Creates a new A/B test.
      *
      * Required API Key ACLs:
      *  - editSettings
+     *
+     * @deprecated
      * @param addABTestsRequest - The addABTestsRequest object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -150,12 +152,14 @@ export function createAbtestingClient({
       return transporter.request(request, requestOptions);
     },
     /**
-     * Creates a new A/B test.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests`.  Creates a new A/B test.
      *
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
      *  - editSettings
+     *
+     * @deprecated
      * @param addABTestsRequest - The addABTestsRequest object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see addABTests for the plain version.
@@ -415,10 +419,12 @@ export function createAbtestingClient({
     },
 
     /**
-     * Deletes an A/B test by its ID.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `DELETE /3/abtests/{id}`.  Deletes an A/B test by its ID.
      *
      * Required API Key ACLs:
      *  - editSettings
+     *
+     * @deprecated
      * @param deleteABTest - The deleteABTest object.
      * @param deleteABTest.id - Unique A/B test identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -440,12 +446,14 @@ export function createAbtestingClient({
       return transporter.request(request, requestOptions);
     },
     /**
-     * Deletes an A/B test by its ID.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `DELETE /3/abtests/{id}`.  Deletes an A/B test by its ID.
      *
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
      *  - editSettings
+     *
+     * @deprecated
      * @param deleteABTest - The deleteABTest object.
      * @param deleteABTest.id - Unique A/B test identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -472,10 +480,12 @@ export function createAbtestingClient({
     },
 
     /**
-     * Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests/estimate`.  Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
      *
      * Required API Key ACLs:
      *  - analytics
+     *
+     * @deprecated
      * @param estimateABTestRequest - The estimateABTestRequest object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -503,12 +513,14 @@ export function createAbtestingClient({
       return transporter.request(request, requestOptions);
     },
     /**
-     * Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests/estimate`.  Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
      *
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
      *  - analytics
+     *
+     * @deprecated
      * @param estimateABTestRequest - The estimateABTestRequest object.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see estimateABTest for the plain version.
@@ -542,10 +554,12 @@ export function createAbtestingClient({
     },
 
     /**
-     * Retrieves the details for an A/B test by its ID.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `GET /3/abtests/{id}`.  Retrieves the details for an A/B test by its ID.
      *
      * Required API Key ACLs:
      *  - analytics
+     *
+     * @deprecated
      * @param getABTest - The getABTest object.
      * @param getABTest.id - Unique A/B test identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -567,12 +581,14 @@ export function createAbtestingClient({
       return transporter.request(request, requestOptions);
     },
     /**
-     * Retrieves the details for an A/B test by its ID.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `GET /3/abtests/{id}`.  Retrieves the details for an A/B test by its ID.
      *
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
      *  - analytics
+     *
+     * @deprecated
      * @param getABTest - The getABTest object.
      * @param getABTest.id - Unique A/B test identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -599,10 +615,12 @@ export function createAbtestingClient({
     },
 
     /**
-     * Lists all A/B tests you configured for this application.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `GET /3/abtests`.  Lists all A/B tests you configured for this application.
      *
      * Required API Key ACLs:
      *  - analytics
+     *
+     * @deprecated
      * @param listABTests - The listABTests object.
      * @param listABTests.offset - Position of the first item to return.
      * @param listABTests.limit - Number of items to return.
@@ -644,12 +662,14 @@ export function createAbtestingClient({
       return transporter.request(request, requestOptions);
     },
     /**
-     * Lists all A/B tests you configured for this application.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `GET /3/abtests`.  Lists all A/B tests you configured for this application.
      *
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
      *  - analytics
+     *
+     * @deprecated
      * @param listABTests - The listABTests object.
      * @param listABTests.offset - Position of the first item to return.
      * @param listABTests.limit - Number of items to return.
@@ -693,10 +713,12 @@ export function createAbtestingClient({
     },
 
     /**
-     * Stops an A/B test by its ID.  You can\'t restart stopped A/B tests.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests/{id}/stop`.  Stops an A/B test by its ID.  You can\'t restart stopped A/B tests.
      *
      * Required API Key ACLs:
      *  - editSettings
+     *
+     * @deprecated
      * @param stopABTest - The stopABTest object.
      * @param stopABTest.id - Unique A/B test identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -718,12 +740,14 @@ export function createAbtestingClient({
       return transporter.request(request, requestOptions);
     },
     /**
-     * Stops an A/B test by its ID.  You can\'t restart stopped A/B tests.
+     * This endpoint is deprecated. Use the A/B Testing API v3 instead.  Replaced by `POST /3/abtests/{id}/stop`.  Stops an A/B test by its ID.  You can\'t restart stopped A/B tests.
      *
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
      *  - editSettings
+     *
+     * @deprecated
      * @param stopABTest - The stopABTest object.
      * @param stopABTest.id - Unique A/B test identifier.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
