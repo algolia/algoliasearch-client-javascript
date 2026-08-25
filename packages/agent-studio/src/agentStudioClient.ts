@@ -69,7 +69,7 @@ import type {
   UpdateSecretKeyProps,
 } from '../model/clientMethodProps';
 
-export const apiClientVersion = '1.2.0';
+export const apiClientVersion = '1.3.0';
 
 function getDefaultHosts(appId: string): Host[] {
   return (
