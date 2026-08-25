@@ -494,7 +494,7 @@ export function createSearchClient({
       };
 
       return createIterablePromise<SearchSynonymsResponse>({
-        func: (_) => {
+        func: (__) => {
           const resp = this.searchSynonyms(
             {
               indexName,

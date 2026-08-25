@@ -102,15 +102,15 @@
   "devDependencies": {
     "@algolia/requester-testing": "5.57.0",
     "@arethetypeswrong/cli": "0.18.5",
-    "@cloudflare/vitest-pool-workers": "0.21.3",
-    "@cloudflare/workers-types": "5.20260814.1",
+    "@cloudflare/vitest-pool-workers": "0.22.0",
+    "@cloudflare/workers-types": "5.20260819.1",
     "@types/node": "26.2.0",
     "jsdom": "30.0.1",
-    "publint": "0.3.23",
+    "publint": "0.3.24",
     "rollup": "4.62.4",
     "tsup": "8.5.1",
     "typescript": "5.9.3",
-    "vitest": "4.1.10"
+    "vitest": "4.1.11"
   },
   "engines": {
     "node": ">= 14.0.0"
