@@ -45,10 +45,5 @@ export type ABTest = {
 
   configuration?: ABTestConfiguration | undefined;
 
-  /**
-   * Unique migrated A/B test identifier.
-   */
-  migratedAbTestID?: number | undefined;
-
   decision?: Decision | undefined;
 };

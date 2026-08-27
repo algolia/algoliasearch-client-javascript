@@ -4,6 +4,11 @@ import type { LogQuery } from './logQuery';
 
 export type Log = {
   /**
+   * Correlation ID of the logged API request, also returned in that request\'s `Correlation-ID` response header.
+   */
+  cid?: string | undefined;
+
+  /**
    * Date and time of the API request, in RFC 3339 format.
    */
   timestamp: string;
