@@ -16,6 +16,7 @@ export default defineConfig({
             'src/__tests__/transporter/compression.test.ts',
             'src/__tests__/transporter/correlationId.test.ts',
             'src/__tests__/transporter/requestId.test.ts',
+            'src/__tests__/transporter/rateLimit.test.ts',
             'src/__tests__/transporter/requestIdChannel.test.ts',
             'src/__tests__/transporter/withHttpInfo.test.ts',
           ],

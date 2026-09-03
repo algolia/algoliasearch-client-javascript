@@ -5,6 +5,7 @@ import { URL } from 'url';
 import zlib from 'zlib';
 
 import type { EndRequest, Requester, Response } from '@algolia/client-common';
+import { StreamRequestError } from '@algolia/client-common';
 
 export type CreateHttpRequesterOptions = Partial<{
   agent: http.Agent | https.Agent;
@@ -168,7 +169,7 @@ export function createHttpRequester({
             body += chunk;
           });
           response.on('end', () => {
-            reject(new Error(`HTTP ${statusCode}: ${body}`));
+            reject(new StreamRequestError(statusCode, body, toResponseHeaders(response.headers)));
           });
           return;
         }

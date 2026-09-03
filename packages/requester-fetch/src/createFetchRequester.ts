@@ -1,4 +1,5 @@
 import type { Response as AlgoliaResponse, EndRequest, Requester } from '@algolia/client-common';
+import { StreamRequestError } from '@algolia/client-common';
 
 function isAbortError(error: unknown): boolean {
   return error instanceof Error && error.name === 'AbortError';
@@ -9,6 +10,14 @@ function getErrorMessage(error: unknown, abortContent: string): string {
     return abortContent;
   }
   return error instanceof Error ? error.message : 'Network request failed';
+}
+
+function toResponseHeaders(fetchHeaders: Headers): Record<string, string> {
+  const headers: Record<string, string> = {};
+  fetchHeaders.forEach((value, name) => {
+    headers[name] = value;
+  });
+  return headers;
 }
 
 export type FetchRequesterOptions = {
@@ -55,14 +64,10 @@ export function createFetchRequester({ requesterOptions = {} }: FetchRequesterOp
 
     try {
       const content = await fetchRes.text();
-      const headers: Record<string, string> = {};
-      fetchRes.headers.forEach((value, name) => {
-        headers[name] = value;
-      });
 
       return {
         content,
-        headers,
+        headers: toResponseHeaders(fetchRes.headers),
         isTimedOut: false,
         status: fetchRes.status,
       };
@@ -89,7 +94,7 @@ export function createFetchRequester({ requesterOptions = {} }: FetchRequesterOp
 
     if (!fetchRes.ok) {
       const text = await fetchRes.text();
-      throw new Error(`HTTP ${fetchRes.status}: ${text}`);
+      throw new StreamRequestError(fetchRes.status, text, toResponseHeaders(fetchRes.headers));
     }
 
     if (fetchRes.body === null) {

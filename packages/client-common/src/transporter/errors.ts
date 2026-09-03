@@ -1,4 +1,4 @@
-import type { Response, StackFrame } from '../types';
+import type { Headers, Response, StackFrame } from '../types';
 
 export class AlgoliaError extends Error {
   override name: string = 'AlgoliaError';
@@ -66,6 +66,22 @@ export class ApiError extends ErrorWithStackTrace {
   ) {
     super(message, stackTrace, name, correlationId);
     this.status = status;
+  }
+}
+
+/**
+ * Thrown by `sendStream` when the HTTP status is not 2xx, so `requestStream` can
+ * wait and retry on 429 using `Retry-After` without parsing the error message.
+ */
+export class StreamRequestError extends AlgoliaError {
+  status: number;
+
+  headers?: Headers | undefined;
+
+  constructor(status: number, body: string, headers?: Headers | undefined) {
+    super(`HTTP ${status}: ${body}`, 'StreamRequestError');
+    this.status = status;
+    this.headers = headers;
   }
 }
 

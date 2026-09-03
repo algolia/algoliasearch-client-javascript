@@ -115,6 +115,7 @@ describe('api', () => {
         error: expect.any(Function),
         info: expect.any(Function),
       },
+      maxRateLimitRetries: 3,
       hostsCache: {
         clear: expect.any(Function),
         delete: expect.any(Function),

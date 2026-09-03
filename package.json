@@ -27,59 +27,59 @@
     "files": [
       {
         "path": "packages/algoliasearch/dist/algoliasearch.umd.js",
-        "maxSize": "21.5KB"
+        "maxSize": "22KB"
       },
       {
         "path": "packages/algoliasearch/dist/lite/builds/browser.umd.js",
-        "maxSize": "6KB"
+        "maxSize": "6.25KB"
       },
       {
         "path": "packages/abtesting/dist/builds/browser.umd.js",
-        "maxSize": "6.5KB"
+        "maxSize": "6.75KB"
       },
       {
         "path": "packages/client-abtesting/dist/builds/browser.umd.js",
-        "maxSize": "6.25KB"
+        "maxSize": "6.5KB"
       },
       {
         "path": "packages/client-analytics/dist/builds/browser.umd.js",
-        "maxSize": "7.5KB"
+        "maxSize": "8KB"
       },
       {
         "path": "packages/composition/dist/builds/browser.umd.js",
-        "maxSize": "7KB"
+        "maxSize": "7.5KB"
       },
       {
         "path": "packages/client-insights/dist/builds/browser.umd.js",
-        "maxSize": "6KB"
-      },
-      {
-        "path": "packages/client-personalization/dist/builds/browser.umd.js",
-        "maxSize": "6KB"
-      },
-      {
-        "path": "packages/client-query-suggestions/dist/builds/browser.umd.js",
-        "maxSize": "6KB"
-      },
-      {
-        "path": "packages/client-search/dist/builds/browser.umd.js",
-        "maxSize": "11KB"
-      },
-      {
-        "path": "packages/ingestion/dist/builds/browser.umd.js",
-        "maxSize": "10KB"
-      },
-      {
-        "path": "packages/monitoring/dist/builds/browser.umd.js",
-        "maxSize": "6KB"
-      },
-      {
-        "path": "packages/recommend/dist/builds/browser.umd.js",
         "maxSize": "6.25KB"
       },
       {
+        "path": "packages/client-personalization/dist/builds/browser.umd.js",
+        "maxSize": "6.5KB"
+      },
+      {
+        "path": "packages/client-query-suggestions/dist/builds/browser.umd.js",
+        "maxSize": "6.5KB"
+      },
+      {
+        "path": "packages/client-search/dist/builds/browser.umd.js",
+        "maxSize": "11.25KB"
+      },
+      {
+        "path": "packages/ingestion/dist/builds/browser.umd.js",
+        "maxSize": "10.25KB"
+      },
+      {
+        "path": "packages/monitoring/dist/builds/browser.umd.js",
+        "maxSize": "6.5KB"
+      },
+      {
+        "path": "packages/recommend/dist/builds/browser.umd.js",
+        "maxSize": "6.75KB"
+      },
+      {
         "path": "packages/agent-studio/dist/builds/browser.umd.js",
-        "maxSize": "8KB"
+        "maxSize": "8.5KB"
       }
     ]
   },
