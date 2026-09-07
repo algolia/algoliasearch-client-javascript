@@ -1,8 +1,9 @@
 import http from 'http';
 import https from 'https';
+import type { AddressInfo } from 'net';
 import nock from 'nock';
 import { Readable } from 'stream';
-import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
+import { afterAll, afterEach, beforeAll, describe, expect, test, vi } from 'vitest';
 
 import type { EndRequest } from '@algolia/client-common';
 
@@ -29,6 +30,7 @@ describe('api', () => {
     once: vi.fn(),
     write: vi.fn(),
     end: vi.fn(),
+    removeAllListeners: vi.fn(),
   };
 
   beforeAll(() => {
@@ -317,5 +319,91 @@ describe('response stream error handling', () => {
     expect(response.status).toBe(0);
     expect(response.content).toBeTruthy();
     expect(response.isTimedOut).toBe(false);
+  });
+});
+
+describe('listener cleanup', () => {
+  const originalHttpRequest = http.request;
+
+  afterEach(() => {
+    http.request = originalHttpRequest;
+  });
+
+  function captureHttpRequest(): { req?: http.ClientRequest; res?: http.IncomingMessage } {
+    const captured: { req?: http.ClientRequest; res?: http.IncomingMessage } = {};
+
+    http.request = ((...args: Parameters<typeof originalHttpRequest>) => {
+      const req = originalHttpRequest(...args);
+      captured.req = req;
+      req.prependOnceListener('response', (res) => {
+        captured.res = res;
+      });
+      return req;
+    }) as typeof http.request;
+
+    return captured;
+  }
+
+  test('removes request and response listeners after a successful request', async () => {
+    const captured = captureHttpRequest();
+    const server = http.createServer((_req, res) => {
+      res.writeHead(200, { 'content-type': 'text/plain' });
+      res.end('ok');
+    });
+
+    await new Promise<void>((resolve) => {
+      server.listen(0, '127.0.0.1', resolve);
+    });
+    const { port } = server.address() as AddressInfo;
+
+    try {
+      const response = await requester.send({
+        url: `http://127.0.0.1:${port}/`,
+        method: 'GET',
+        headers: {},
+        data: '',
+        connectTimeout: 1000,
+        responseTimeout: 1000,
+      });
+
+      expect(response.status).toBe(200);
+      expect(response.content).toBe('ok');
+      expect(captured.req).toBeDefined();
+      expect(captured.res).toBeDefined();
+      expect(captured.req!.listenerCount('error')).toBe(0);
+      expect(captured.res!.listenerCount('data')).toBe(0);
+      expect(captured.res!.listenerCount('end')).toBe(0);
+      expect(captured.res!.listenerCount('error')).toBe(0);
+    } finally {
+      await new Promise<void>((resolve, reject) => {
+        server.close((err) => (err ? reject(err) : resolve()));
+      });
+    }
+  });
+
+  test('removes request listeners after a network error', async () => {
+    const captured = captureHttpRequest();
+    const server = http.createServer();
+
+    await new Promise<void>((resolve) => {
+      server.listen(0, '127.0.0.1', resolve);
+    });
+    const { port } = server.address() as AddressInfo;
+    await new Promise<void>((resolve, reject) => {
+      server.close((err) => (err ? reject(err) : resolve()));
+    });
+
+    const response = await requester.send({
+      url: `http://127.0.0.1:${port}/`,
+      method: 'GET',
+      headers: {},
+      data: '',
+      connectTimeout: 1000,
+      responseTimeout: 1000,
+    });
+
+    expect(response.status).toBe(0);
+    expect(captured.req).toBeDefined();
+    expect(captured.req!.listenerCount('error')).toBe(0);
   });
 });

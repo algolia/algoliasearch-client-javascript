@@ -47,6 +47,21 @@ export function createHttpRequester({
     return new Promise((resolve) => {
       let responseTimeout: NodeJS.Timeout | undefined;
       let connectTimeout: NodeJS.Timeout | undefined;
+      let incomingResponse: http.IncomingMessage | undefined;
+      let req: http.ClientRequest;
+      let cleanedUp = false;
+
+      const cleanup = (): void => {
+        if (cleanedUp) {
+          return;
+        }
+        cleanedUp = true;
+        clearTimeout(connectTimeout);
+        clearTimeout(responseTimeout);
+        incomingResponse?.removeAllListeners();
+        req.removeAllListeners();
+      };
+
       const url = new URL(request.url);
       const path = url.search === null ? url.pathname : `${url.pathname}${url.search}`;
       const privateHeaders: Record<string, string> = {
@@ -76,7 +91,8 @@ export function createHttpRequester({
         options.port = url.port;
       }
 
-      const req = (url.protocol === 'https:' ? https : http).request(options, (response) => {
+      req = (url.protocol === 'https:' ? https : http).request(options, (response) => {
+        incomingResponse = response;
         let contentBuffers: Buffer[] = [];
 
         response.on('data', (chunk) => {
@@ -84,31 +100,35 @@ export function createHttpRequester({
         });
 
         response.on('end', () => {
-          clearTimeout(connectTimeout as NodeJS.Timeout);
-          clearTimeout(responseTimeout as NodeJS.Timeout);
-
           let buffer = Buffer.concat(contentBuffers);
           if (response.headers['content-encoding'] === 'gzip') {
             buffer = zlib.gunzipSync(buffer);
           }
 
+          const status = response.statusCode || 0;
+          const headers = toResponseHeaders(response.headers);
+          cleanup();
+
           resolve({
-            status: response.statusCode || 0,
+            status,
             content: buffer.toString(),
-            headers: toResponseHeaders(response.headers),
+            headers,
             isTimedOut: false,
           });
         });
 
         response.on('error', (error) => {
-          clearTimeout(connectTimeout as NodeJS.Timeout);
-          clearTimeout(responseTimeout as NodeJS.Timeout);
+          cleanup();
           resolve({ status: 0, content: error.message, isTimedOut: false });
         });
       });
 
       const createTimeout = (timeout: number, content: string): NodeJS.Timeout => {
         return setTimeout(() => {
+          cleanup();
+          req.on('error', () => {
+            // Swallow errors from destroy() after the request has already settled.
+          });
           req.destroy();
 
           resolve({
@@ -122,8 +142,7 @@ export function createHttpRequester({
       connectTimeout = createTimeout(request.connectTimeout, 'Connection timeout');
 
       req.on('error', (error) => {
-        clearTimeout(connectTimeout as NodeJS.Timeout);
-        clearTimeout(responseTimeout!);
+        cleanup();
         resolve({ status: 0, content: error.message, isTimedOut: false });
       });
 
