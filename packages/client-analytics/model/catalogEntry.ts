@@ -17,7 +17,7 @@ export type CatalogEntry = {
   roots: Array<string>;
 
   /**
-   * Public ACL identifiers required to read the field, for example `clickAnalyticsEnabled`.
+   * Public ACL identifiers required to read the field, for example `revenueAnalyticsEnabled`.
    */
   requires: Array<string>;
 };
