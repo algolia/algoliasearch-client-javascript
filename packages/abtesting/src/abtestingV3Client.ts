@@ -13,6 +13,7 @@ import { createAuth, createTransporter, getAlgoliaAgent, validateRequired } from
 
 import type { ABTest } from '../model/aBTest';
 import type { ABTestResponse } from '../model/aBTestResponse';
+import type { ABTestSettingsResponse } from '../model/aBTestSettingsResponse';
 import type { AddABTestsRequest } from '../model/addABTestsRequest';
 import type { EstimateABTestRequest } from '../model/estimateABTestRequest';
 import type { EstimateABTestResponse } from '../model/estimateABTestResponse';
@@ -20,14 +21,17 @@ import type { ListABTestsResponse } from '../model/listABTestsResponse';
 import type { Timeseries } from '../model/timeseries';
 
 import type {
+  ApplyVariantSettingsProps,
   CustomDeleteProps,
   CustomGetProps,
   CustomPostProps,
   CustomPutProps,
   DeleteABTestProps,
   GetABTestProps,
+  GetABTestSettingsProps,
   GetTimeseriesProps,
   ListABTestsProps,
+  SaveVariantSettingsProps,
   StopABTestProps,
 } from '../model/clientMethodProps';
 
@@ -184,6 +188,75 @@ export function createAbtestingV3Client({
         queryParameters,
         headers,
         data: addABTestsRequest,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
+     * Applies the captured settings of the given variant to the control index.  The settings must first be captured with the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this operation with the control variant (variant 1).  Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days after. Later requests return `400`.  Each set of captured settings can only be applied once, and settings that were reverted can\'t be applied again. Both cases return `400`.  The control index must not be in use by an active A/B test. Otherwise, the request returns `422`.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     *  - editSettings
+     * @param applyVariantSettings - The applyVariantSettings object.
+     * @param applyVariantSettings.id - Unique A/B test identifier.
+     * @param applyVariantSettings.variantId - One-based index of the A/B test variant. The control is variant 1.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    applyVariantSettings({ id, variantId }: ApplyVariantSettingsProps, requestOptions?: RequestOptions): Promise<void> {
+      validateRequired('id', 'applyVariantSettings', id);
+
+      validateRequired('variantId', 'applyVariantSettings', variantId);
+
+      const requestPath = '/3/abtests/{id}/settings/{variantId}/apply'
+        .replace('{id}', encodeURIComponent(id))
+        .replace('{variantId}', encodeURIComponent(variantId));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * Applies the captured settings of the given variant to the control index.  The settings must first be captured with the `saveVariantSettings` operation. To revert previously applied settings on the control index, use this operation with the control variant (variant 1).  Settings can be applied up to 14 days after the A/B test ends, and reverted up to 15 days after. Later requests return `400`.  Each set of captured settings can only be applied once, and settings that were reverted can\'t be applied again. Both cases return `400`.  The control index must not be in use by an active A/B test. Otherwise, the request returns `422`.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     *  - editSettings
+     * @param applyVariantSettings - The applyVariantSettings object.
+     * @param applyVariantSettings.id - Unique A/B test identifier.
+     * @param applyVariantSettings.variantId - One-based index of the A/B test variant. The control is variant 1.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see applyVariantSettings for the plain version.
+     */
+    applyVariantSettingsWithHTTPInfo(
+      { id, variantId }: ApplyVariantSettingsProps,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<void>> {
+      validateRequired('id', 'applyVariantSettingsWithHTTPInfo', id);
+
+      validateRequired('variantId', 'applyVariantSettingsWithHTTPInfo', variantId);
+
+      const requestPath = '/3/abtests/{id}/settings/{variantId}/apply'
+        .replace('{id}', encodeURIComponent(id))
+        .replace('{variantId}', encodeURIComponent(variantId));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
       };
 
       return transporter.requestWithHttpInfo(request, requestOptions);
@@ -603,6 +676,66 @@ export function createAbtestingV3Client({
     },
 
     /**
+     * Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the control index.  Settings are captured by the `saveVariantSettings` operation. The response includes an entry for the control (variant 1) alongside the captured variant, so the control\'s original configuration can be restored later.  Returns `404` if the A/B test doesn\'t exist or no settings have been captured for it.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     * @param getABTestSettings - The getABTestSettings object.
+     * @param getABTestSettings.id - Unique A/B test identifier.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    getABTestSettings(
+      { id }: GetABTestSettingsProps,
+      requestOptions?: RequestOptions,
+    ): Promise<ABTestSettingsResponse> {
+      validateRequired('id', 'getABTestSettings', id);
+
+      const requestPath = '/3/abtests/{id}/settings'.replace('{id}', encodeURIComponent(id));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * Retrieves the settings captured for each variant of an A/B test, and whether another active A/B test is using the control index.  Settings are captured by the `saveVariantSettings` operation. The response includes an entry for the control (variant 1) alongside the captured variant, so the control\'s original configuration can be restored later.  Returns `404` if the A/B test doesn\'t exist or no settings have been captured for it.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     * @param getABTestSettings - The getABTestSettings object.
+     * @param getABTestSettings.id - Unique A/B test identifier.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see getABTestSettings for the plain version.
+     */
+    getABTestSettingsWithHTTPInfo(
+      { id }: GetABTestSettingsProps,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<ABTestSettingsResponse>> {
+      validateRequired('id', 'getABTestSettingsWithHTTPInfo', id);
+
+      const requestPath = '/3/abtests/{id}/settings'.replace('{id}', encodeURIComponent(id));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
      * Retrieves timeseries for an A/B test by its ID.
      *
      * Required API Key ACLs:
@@ -791,6 +924,86 @@ export function createAbtestingV3Client({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
+     * Captures the settings of the given variant and of the control, then stops the A/B test.  The captured settings can later be applied to the control index with the `applyVariantSettings` operation, and read back with the `getABTestSettings` operation.  The A/B test must have reached 80% of its planned duration. Earlier requests return `400`.  Settings can only be captured once per A/B test. A second request returns `409`.  `synonyms` and `enableRules` are not captured, so applying the captured settings never changes them on the control index.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     *  - editSettings
+     * @param saveVariantSettings - The saveVariantSettings object.
+     * @param saveVariantSettings.id - Unique A/B test identifier.
+     * @param saveVariantSettings.variantId - One-based index of the A/B test variant. The control is variant 1.
+     * @param saveVariantSettings.saveSettingsRequest - The saveSettingsRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    saveVariantSettings(
+      { id, variantId, saveSettingsRequest }: SaveVariantSettingsProps,
+      requestOptions?: RequestOptions,
+    ): Promise<void> {
+      validateRequired('id', 'saveVariantSettings', id);
+
+      validateRequired('variantId', 'saveVariantSettings', variantId);
+
+      validateRequired('saveSettingsRequest', 'saveVariantSettings', saveSettingsRequest);
+
+      const requestPath = '/3/abtests/{id}/settings/{variantId}'
+        .replace('{id}', encodeURIComponent(id))
+        .replace('{variantId}', encodeURIComponent(variantId));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: saveSettingsRequest,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * Captures the settings of the given variant and of the control, then stops the A/B test.  The captured settings can later be applied to the control index with the `applyVariantSettings` operation, and read back with the `getABTestSettings` operation.  The A/B test must have reached 80% of its planned duration. Earlier requests return `400`.  Settings can only be captured once per A/B test. A second request returns `409`.  `synonyms` and `enableRules` are not captured, so applying the captured settings never changes them on the control index.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - analytics
+     *  - editSettings
+     * @param saveVariantSettings - The saveVariantSettings object.
+     * @param saveVariantSettings.id - Unique A/B test identifier.
+     * @param saveVariantSettings.variantId - One-based index of the A/B test variant. The control is variant 1.
+     * @param saveVariantSettings.saveSettingsRequest - The saveSettingsRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see saveVariantSettings for the plain version.
+     */
+    saveVariantSettingsWithHTTPInfo(
+      { id, variantId, saveSettingsRequest }: SaveVariantSettingsProps,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<void>> {
+      validateRequired('id', 'saveVariantSettingsWithHTTPInfo', id);
+
+      validateRequired('variantId', 'saveVariantSettingsWithHTTPInfo', variantId);
+
+      validateRequired('saveSettingsRequest', 'saveVariantSettingsWithHTTPInfo', saveSettingsRequest);
+
+      const requestPath = '/3/abtests/{id}/settings/{variantId}'
+        .replace('{id}', encodeURIComponent(id))
+        .replace('{variantId}', encodeURIComponent(variantId));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: saveSettingsRequest,
       };
 
       return transporter.requestWithHttpInfo(request, requestOptions);

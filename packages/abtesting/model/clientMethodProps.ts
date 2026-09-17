@@ -2,6 +2,21 @@
 
 import type { Direction } from '../model/direction';
 import type { MetricName } from '../model/metricName';
+import type { SaveSettingsRequest } from '../model/saveSettingsRequest';
+
+/**
+ * Properties for the `applyVariantSettings` method.
+ */
+export type ApplyVariantSettingsProps = {
+  /**
+   * Unique A/B test identifier.
+   */
+  id: number;
+  /**
+   * One-based index of the A/B test variant. The control is variant 1.
+   */
+  variantId: number;
+};
 
 /**
  * Properties for the `customDelete` method.
@@ -88,6 +103,16 @@ export type GetABTestProps = {
 };
 
 /**
+ * Properties for the `getABTestSettings` method.
+ */
+export type GetABTestSettingsProps = {
+  /**
+   * Unique A/B test identifier.
+   */
+  id: number;
+};
+
+/**
  * Properties for the `getTimeseries` method.
  */
 export type GetTimeseriesProps = {
@@ -133,6 +158,21 @@ export type ListABTestsProps = {
    * Sort order for A/B tests by start date. Use \'asc\' for ascending or \'desc\' for descending. Active A/B tests are always listed first.
    */
   direction?: Direction | undefined;
+};
+
+/**
+ * Properties for the `saveVariantSettings` method.
+ */
+export type SaveVariantSettingsProps = {
+  /**
+   * Unique A/B test identifier.
+   */
+  id: number;
+  /**
+   * One-based index of the A/B test variant. The control is variant 1.
+   */
+  variantId: number;
+  saveSettingsRequest: SaveSettingsRequest;
 };
 
 /**
