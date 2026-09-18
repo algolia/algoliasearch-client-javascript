@@ -17,37 +17,37 @@ import type { TypoTolerance } from './typoTolerance';
 
 export type BaseInjectionQueryParameters = {
   /**
-   * Whether to support phrase matching and excluding words from search queries Use the `advancedSyntaxFeatures` parameter to control which feature is supported.
+   * Whether to support phrase matching and excluding words from search queries. Use the `advancedSyntaxFeatures` parameter to control which feature is supported.
    */
   advancedSyntax?: boolean | undefined;
 
   /**
-   * Advanced search syntax features you want to support - `exactPhrase`.   Phrases in quotes must match exactly.   For example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\" - `excludeWords`.   Query words prefixed with a `-` must not occur in a record.   For example, `search -engine` matches records that contain \"search\" but not \"engine\" This setting only has an effect if `advancedSyntax` is true.
+   * Advanced search syntax features you want to support. - `exactPhrase`.   Phrases in quotes must match exactly.   For example, `sparkly blue \"iPhone case\"` only returns records with the exact string \"iPhone case\". - `excludeWords`.   Query words prefixed with a `-` must not occur in a record.   For example, `search -engine` matches records that contain \"search\" but not \"engine\". This setting only has an effect if `advancedSyntax` is true.
    */
   advancedSyntaxFeatures?: Array<AdvancedSyntaxFeatures> | undefined;
 
   /**
-   * Whether to allow typos on numbers in the search query Turn off this setting to reduce the number of irrelevant matches when searching in large sets of similar numbers.
+   * Whether to allow typos on numbers in the search query. Turn off this setting to reduce the number of irrelevant matches when searching in large sets of similar numbers.
    */
   allowTyposOnNumericTokens?: boolean | undefined;
 
   /**
-   * Determine which plurals and synonyms should be considered an exact matches By default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching. For example - \"swimsuit\" and \"swimsuits\" are treated the same - \"swimsuit\" and \"swimwear\" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)) - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches - `singleWordSynonym`.   Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
+   * Determine which plurals and synonyms should be considered an exact matches. By default, Algolia treats singular and plural forms of a word, and single-word synonyms, as [exact](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#exact) matches when searching. For example: - \"swimsuit\" and \"swimsuits\" are treated the same. - \"swimsuit\" and \"swimwear\" are treated the same (if they are [synonyms](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/adding-synonyms/#regular-synonyms)). - `ignorePlurals`.   Plurals and similar declensions added by the `ignorePlurals` setting are considered exact matches. - `singleWordSynonym`.   Single-word synonyms, such as \"NY\" = \"NYC\", are considered exact matches. - `multiWordsSynonym`.   Multi-word synonyms, such as \"NY\" = \"New York\", are considered exact matches.
    */
   alternativesAsExact?: Array<AlternativesAsExact> | undefined;
 
   /**
-   * Whether the best matching attribute should be determined by minimum proximity This setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting. If true, the best matching attribute is selected based on the minimum proximity of multiple matches. Otherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.
+   * Whether the best matching attribute should be determined by minimum proximity. This setting only affects ranking if the Attribute ranking criterion comes before Proximity in the `ranking` setting. If true, the best matching attribute is selected based on the minimum proximity of multiple matches. Otherwise, the best matching attribute is determined by the order in the `searchableAttributes` setting.  Prefer `attributeCriteriaComputedBy`, which expresses the same two behaviors and adds the `sum` strategy. If you set both, `attributeCriteriaComputedBy` takes precedence.
    */
   attributeCriteriaComputedByMinProximity?: boolean | undefined;
 
   /**
-   * Attributes to highlight By default, all searchable attributes are highlighted. Use `*` to highlight all attributes or use an empty array `[]` to turn off highlighting. Attribute names are case-sensitive With highlighting, strings that match the search query are surrounded by HTML tags defined by `highlightPreTag` and `highlightPostTag`. You can use this to visually highlight matching parts of a search query in your UI For more information, see [Highlighting and snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).
+   * Attributes to highlight. By default, all searchable attributes are highlighted. Use `*` to highlight all attributes or use an empty array `[]` to turn off highlighting. Attribute names are case-sensitive With highlighting, strings that match the search query are surrounded by HTML tags defined by `highlightPreTag` and `highlightPostTag`. You can use this to visually highlight matching parts of a search query in your UI For more information, see [Highlighting and snippeting](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/highlighting-snippeting/js).
    */
   attributesToHighlight?: Array<string> | undefined;
 
   /**
-   * Attributes to include in the API response To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
+   * Attributes to include in the API response. To reduce the size of your response, you can retrieve only some of the attributes. Attribute names are case-sensitive - `*` retrieves all attributes, except attributes included in the `customRanking` and `unretrievableAttributes` settings. - To retrieve all attributes except a specific one, prefix the attribute with a dash and combine it with the `*`: `[\"*\", \"-ATTRIBUTE\"]`. - The `objectID` attribute is always included.
    */
   attributesToRetrieve?: Array<string> | undefined;
 
@@ -57,7 +57,7 @@ export type BaseInjectionQueryParameters = {
   attributesToSnippet?: Array<string> | undefined;
 
   /**
-   * Whether to include a `queryID` attribute in the response The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started).
+   * Whether to include a `queryID` attribute in the response. The query ID is a unique identifier for a search query and is required for tracking [click and conversion events](https://www.algolia.com/doc/guides/sending-events/getting-started).
    */
   clickAnalytics?: boolean | undefined;
 
@@ -67,7 +67,7 @@ export type BaseInjectionQueryParameters = {
   disableExactOnAttributes?: Array<string> | undefined;
 
   /**
-   * Attributes for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance). Attribute names are case-sensitive Returning only exact matches can help when - [Searching in hyphenated attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes). - Reducing the number of matches when you have too many.   This can happen with attributes that are long blocks of text, such as product descriptions Consider alternatives such as `disableTypoToleranceOnWords` or adding synonyms if your attributes have intentional unusual spellings that might look like typos.
+   * Attributes for which you want to turn off [typo tolerance](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance). Attribute names are case-sensitive Returning only exact matches can help when - [Searching in hyphenated attributes](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/typo-tolerance/how-to/how-to-search-in-hyphenated-attributes). - Reducing the number of matches when you have too many.   This can happen with attributes that are long blocks of text, such as product descriptions. Consider alternatives such as `disableTypoToleranceOnWords` or adding synonyms if your attributes have intentional unusual spellings that might look like typos.
    */
   disableTypoToleranceOnAttributes?: Array<string> | undefined;
 
@@ -84,7 +84,7 @@ export type BaseInjectionQueryParameters = {
   enablePersonalization?: boolean | undefined;
 
   /**
-   * Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking) This setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
+   * Whether this search will use [Dynamic Re-Ranking](https://www.algolia.com/doc/guides/algolia-ai/re-ranking). This setting only has an effect if you activated Dynamic Re-Ranking for this index in the Algolia dashboard.
    */
   enableReRanking?: boolean | undefined;
 
@@ -120,7 +120,7 @@ export type BaseInjectionQueryParameters = {
   ignorePlurals?: IgnorePlurals | undefined;
 
   /**
-   * Minimum proximity score for two matching words This adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity) by equally scoring matches that are farther apart For example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.
+   * Minimum proximity score for two matching words. This adjusts the [Proximity ranking criterion](https://www.algolia.com/doc/guides/managing-results/relevance-overview/in-depth/ranking-criteria/#proximity) by equally scoring matches that are farther apart For example, if `minProximity` is 2, neighboring matches and matches with one word between them would have the same score.
    */
   minProximity?: number | undefined;
 
@@ -135,7 +135,7 @@ export type BaseInjectionQueryParameters = {
   minWordSizefor2Typos?: number | undefined;
 
   /**
-   * ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches) - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets `removeWordsIfNoResults` to `allOptional`. - Adds a `natural_language` attribute to `ruleContexts` and `analyticsTags`.
+   * ISO language codes that adjust settings that are useful for processing natural language queries (as opposed to keyword searches). - Sets `removeStopWords` and `ignorePlurals` to the list of provided languages. - Sets `removeWordsIfNoResults` to `allOptional`. - Adds a `natural_language` attribute to `ruleContexts` and `analyticsTags`.
    */
   naturalLanguages?: Array<SupportedLanguage> | undefined;
 
@@ -151,7 +151,7 @@ export type BaseInjectionQueryParameters = {
   percentileComputation?: boolean | undefined;
 
   /**
-   * Impact that Personalization should have on this search The higher this value is, the more Personalization determines the ranking compared to other factors. For more information, see [Understanding Personalization impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
+   * Impact that Personalization should have on this search. The higher this value is, the more Personalization determines the ranking compared to other factors. For more information, see [Understanding Personalization impact](https://www.algolia.com/doc/guides/personalization/personalizing-results/in-depth/configuring-personalization/#understanding-personalization-impact).
    */
   personalizationImpact?: number | undefined;
 
@@ -167,12 +167,12 @@ export type BaseInjectionQueryParameters = {
   removeWordsIfNoResults?: RemoveWordsIfNoResults | undefined;
 
   /**
-   * Whether to replace a highlighted word with the matched synonym By default, the original words are highlighted even if a synonym matches. For example, with `home` as a synonym for `house` and a search for `home`, records matching either \"home\" or \"house\" are included in the search results, and either \"home\" or \"house\" are highlighted With `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records, but all occurrences of \"house\" are replaced by \"home\" in the highlighted response.
+   * Whether to replace a highlighted word with the matched synonym. By default, the original words are highlighted even if a synonym matches. For example, with `home` as a synonym for `house` and a search for `home`, records matching either \"home\" or \"house\" are included in the search results, and either \"home\" or \"house\" are highlighted With `replaceSynonymsInHighlight` set to `true`, a search for `home` still matches the same records, but all occurrences of \"house\" are replaced by \"home\" in the highlighted response.
    */
   replaceSynonymsInHighlight?: boolean | undefined;
 
   /**
-   * Properties to include in the API response of search and browse requests By default, all response properties are included. To reduce the response size, you can select which properties should be included An empty list may lead to an empty API response (except properties you can\'t exclude) You can\'t exclude these properties: `message`, `warning`, `cursor`, `abTestVariantID`, or any property added by setting `getRankingInfo` to true Your search depends on the `hits` field. If you omit this field, searches won\'t return any results. Your UI might also depend on other properties, for example, for pagination. Before restricting the response size, check the impact on your search experience.
+   * Properties to include in the API response of search and browse requests. By default, all response properties are included. To reduce the response size, you can select which properties should be included An empty list may lead to an empty API response (except properties you can\'t exclude) You can\'t exclude these properties: `message`, `warning`, `cursor`, `abTestVariantID`, or any property added by setting `getRankingInfo` to true Your search depends on the `hits` field. If you omit this field, searches won\'t return any results. Your UI might also depend on other properties, for example, for pagination. Before restricting the response size, check the impact on your search experience.
    */
   responseFields?: Array<string> | undefined;
 
@@ -187,7 +187,7 @@ export type BaseInjectionQueryParameters = {
   restrictSearchableAttributes?: Array<string> | undefined;
 
   /**
-   * Assigns a rule context to the search query [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
+   * Assigns a rule context to the search query. [Rule contexts](https://www.algolia.com/doc/guides/managing-results/rules/rules-overview/how-to/customize-search-results-by-platform/#whats-a-context) are strings that you can use to trigger matching rules.
    */
   ruleContexts?: Array<string> | undefined;
 

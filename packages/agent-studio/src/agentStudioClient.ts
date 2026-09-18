@@ -501,7 +501,7 @@ export function createAgentStudioClient({
     },
 
     /**
-     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
+     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
      *
      * Required API Key ACLs:
      *  - search
@@ -577,7 +577,7 @@ export function createAgentStudioClient({
       return transporter.request(request, requestOptions);
     },
     /**
-     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
+     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
      *
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
@@ -656,7 +656,7 @@ export function createAgentStudioClient({
       return transporter.requestWithHttpInfo(request, requestOptions);
     },
     /**
-     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request - Request 2: User approves -> Execute tool -> Agent continues with result. (raw streaming version).
+     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with result. (raw streaming version).
      *
      * Yields raw {@link ServerSentEvent} objects. Each event's `data` field contains a JSON-encoded `{ [key: string]: any; }` string.
      *
@@ -724,7 +724,7 @@ export function createAgentStudioClient({
       return transporter.requestStream(request, requestOptions);
     },
     /**
-     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request - Request 2: User approves -> Execute tool -> Agent continues with result. (streaming version).
+     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with result. (streaming version).
      *
      * Yields {@link StreamEvent} objects wrapping parsed `{ [key: string]: any; }` payloads.
      *

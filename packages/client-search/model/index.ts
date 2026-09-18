@@ -12,6 +12,7 @@ export * from './aroundPrecision';
 export * from './aroundRadius';
 export * from './aroundRadiusAll';
 export * from './assignUserIdParams';
+export * from './attributeCriteriaComputedBy';
 export * from './attributeToUpdate';
 export * from './autoFilteringFilterEntry';
 export * from './autoFilteringResult';

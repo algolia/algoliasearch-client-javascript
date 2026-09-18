@@ -7,6 +7,7 @@ export * from './apiKey';
 export * from './aroundPrecision';
 export * from './aroundRadius';
 export * from './aroundRadiusAll';
+export * from './attributeCriteriaComputedBy';
 export * from './autoFilteringFilterEntry';
 export * from './autoFilteringResult';
 export * from './automaticFacetFilter';
