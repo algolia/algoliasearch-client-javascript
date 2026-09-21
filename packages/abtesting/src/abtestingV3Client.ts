@@ -625,14 +625,19 @@ export function createAbtestingV3Client({
      *  - analytics
      * @param getABTest - The getABTest object.
      * @param getABTest.id - Unique A/B test identifier.
+     * @param getABTest.methods - Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn\'t change the test configuration or compute missing results. Duplicate values aren\'t allowed.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
-    getABTest({ id }: GetABTestProps, requestOptions?: RequestOptions): Promise<ABTest> {
+    getABTest({ id, methods }: GetABTestProps, requestOptions?: RequestOptions): Promise<ABTest> {
       validateRequired('id', 'getABTest', id);
 
       const requestPath = '/3/abtests/{id}'.replace('{id}', encodeURIComponent(id));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
+      if (methods !== undefined) {
+        queryParameters['methods'] = methods.toString();
+      }
 
       const request: Request = {
         method: 'GET',
@@ -652,11 +657,12 @@ export function createAbtestingV3Client({
      *  - analytics
      * @param getABTest - The getABTest object.
      * @param getABTest.id - Unique A/B test identifier.
+     * @param getABTest.methods - Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn\'t change the test configuration or compute missing results. Duplicate values aren\'t allowed.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see getABTest for the plain version.
      */
     getABTestWithHTTPInfo(
-      { id }: GetABTestProps,
+      { id, methods }: GetABTestProps,
       requestOptions?: RequestOptions,
     ): Promise<AlgoliaHttpResponse<ABTest>> {
       validateRequired('id', 'getABTestWithHTTPInfo', id);
@@ -664,6 +670,10 @@ export function createAbtestingV3Client({
       const requestPath = '/3/abtests/{id}'.replace('{id}', encodeURIComponent(id));
       const headers: Headers = {};
       const queryParameters: QueryParameters = {};
+
+      if (methods !== undefined) {
+        queryParameters['methods'] = methods.toString();
+      }
 
       const request: Request = {
         method: 'GET',
@@ -745,10 +755,11 @@ export function createAbtestingV3Client({
      * @param getTimeseries.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTimeseries.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTimeseries.metric - List of metrics to retrieve. If not specified, all metrics are returned.
+     * @param getTimeseries.methods - Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn\'t change the test configuration or compute missing results. Duplicate values aren\'t allowed.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getTimeseries(
-      { id, startDate, endDate, metric }: GetTimeseriesProps,
+      { id, startDate, endDate, metric, methods }: GetTimeseriesProps,
       requestOptions?: RequestOptions,
     ): Promise<Timeseries> {
       validateRequired('id', 'getTimeseries', id);
@@ -767,6 +778,10 @@ export function createAbtestingV3Client({
 
       if (metric !== undefined) {
         queryParameters['metric'] = metric.toString();
+      }
+
+      if (methods !== undefined) {
+        queryParameters['methods'] = methods.toString();
       }
 
       const request: Request = {
@@ -790,11 +805,12 @@ export function createAbtestingV3Client({
      * @param getTimeseries.startDate - Start date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTimeseries.endDate - End date of the period to analyze, in `YYYY-MM-DD` format.
      * @param getTimeseries.metric - List of metrics to retrieve. If not specified, all metrics are returned.
+     * @param getTimeseries.methods - Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn\'t change the test configuration or compute missing results. Duplicate values aren\'t allowed.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see getTimeseries for the plain version.
      */
     getTimeseriesWithHTTPInfo(
-      { id, startDate, endDate, metric }: GetTimeseriesProps,
+      { id, startDate, endDate, metric, methods }: GetTimeseriesProps,
       requestOptions?: RequestOptions,
     ): Promise<AlgoliaHttpResponse<Timeseries>> {
       validateRequired('id', 'getTimeseriesWithHTTPInfo', id);
@@ -813,6 +829,10 @@ export function createAbtestingV3Client({
 
       if (metric !== undefined) {
         queryParameters['metric'] = metric.toString();
+      }
+
+      if (methods !== undefined) {
+        queryParameters['methods'] = methods.toString();
       }
 
       const request: Request = {
@@ -836,10 +856,11 @@ export function createAbtestingV3Client({
      * @param listABTests.indexPrefix - Index name prefix. Only A/B tests for indices starting with this string are included in the response.
      * @param listABTests.indexSuffix - Index name suffix. Only A/B tests for indices ending with this string are included in the response.
      * @param listABTests.direction - Sort order for A/B tests by start date. Use \'asc\' for ascending or \'desc\' for descending. Active A/B tests are always listed first.
+     * @param listABTests.methods - Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn\'t change the test configuration or compute missing results. Duplicate values aren\'t allowed.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listABTests(
-      { offset, limit, indexPrefix, indexSuffix, direction }: ListABTestsProps = {},
+      { offset, limit, indexPrefix, indexSuffix, direction, methods }: ListABTestsProps = {},
       requestOptions: RequestOptions | undefined = undefined,
     ): Promise<ListABTestsResponse> {
       const requestPath = '/3/abtests';
@@ -866,6 +887,10 @@ export function createAbtestingV3Client({
         queryParameters['direction'] = direction.toString();
       }
 
+      if (methods !== undefined) {
+        queryParameters['methods'] = methods.toString();
+      }
+
       const request: Request = {
         method: 'GET',
         path: requestPath,
@@ -888,11 +913,12 @@ export function createAbtestingV3Client({
      * @param listABTests.indexPrefix - Index name prefix. Only A/B tests for indices starting with this string are included in the response.
      * @param listABTests.indexSuffix - Index name suffix. Only A/B tests for indices ending with this string are included in the response.
      * @param listABTests.direction - Sort order for A/B tests by start date. Use \'asc\' for ascending or \'desc\' for descending. Active A/B tests are always listed first.
+     * @param listABTests.methods - Statistical analysis results to include, as a comma-separated list. When omitted, each test uses its configured method, or `frequentist` if no method is configured. Request both methods to include both sets of available results. This doesn\'t change the test configuration or compute missing results. Duplicate values aren\'t allowed.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see listABTests for the plain version.
      */
     listABTestsWithHTTPInfo(
-      { offset, limit, indexPrefix, indexSuffix, direction }: ListABTestsProps = {},
+      { offset, limit, indexPrefix, indexSuffix, direction, methods }: ListABTestsProps = {},
       requestOptions: RequestOptions | undefined = undefined,
     ): Promise<AlgoliaHttpResponse<ListABTestsResponse>> {
       const requestPath = '/3/abtests';
@@ -917,6 +943,10 @@ export function createAbtestingV3Client({
 
       if (direction !== undefined) {
         queryParameters['direction'] = direction.toString();
+      }
+
+      if (methods !== undefined) {
+        queryParameters['methods'] = methods.toString();
       }
 
       const request: Request = {

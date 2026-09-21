@@ -3,7 +3,7 @@
 import type { EffectMetric } from './effectMetric';
 
 /**
- * Configuration for the smallest difference between test variants you want to detect.
+ * Configuration for the smallest difference between test variants you want to detect, used to estimate the required sample size.
  */
 export type MinimumDetectableEffect = {
   /**

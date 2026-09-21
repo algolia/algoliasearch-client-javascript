@@ -6,6 +6,7 @@ export type MetricName =
   | 'user_count'
   | 'tracked_user_count'
   | 'no_result_count'
+  | 'tracked_no_result_count'
   | 'add_to_cart_count'
   | 'purchase_count'
   | 'clicked_search_count'
@@ -15,4 +16,6 @@ export type MetricName =
   | 'add_to_cart_rate'
   | 'purchase_rate'
   | 'average_click_position'
-  | 'revenue';
+  | 'revenue'
+  | 'revenue_per_search'
+  | 'average_order_value';
