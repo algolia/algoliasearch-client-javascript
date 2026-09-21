@@ -36,6 +36,11 @@ export type ABTest = {
    */
   name: string;
 
+  /**
+   * Expected outcome of the A/B test.
+   */
+  hypothesis: string;
+
   status: Status;
 
   /**

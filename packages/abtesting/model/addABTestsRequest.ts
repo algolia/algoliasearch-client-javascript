@@ -11,6 +11,11 @@ export type AddABTestsRequest = {
   name: string;
 
   /**
+   * Expected outcome of the A/B test.
+   */
+  hypothesis?: string | undefined;
+
+  /**
    * A/B test variants.
    */
   variants: Array<AddABTestsVariant>;
