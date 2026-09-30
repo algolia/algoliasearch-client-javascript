@@ -75,6 +75,7 @@ export * from './removeStopWords';
 export * from './removeWordsIfNoResults';
 export * from './renderingContent';
 export * from './reRankingApplyFilter';
+export * from './resultCard';
 export * from './ruleMetadata';
 export * from './searchPagination';
 export * from './searchParamsQuery';

@@ -96,6 +96,7 @@ export * from './removeWordsIfNoResults';
 export * from './renderingContent';
 export * from './reRankingApplyFilter';
 export * from './responseExtensions';
+export * from './resultCard';
 export * from './searchExtensions';
 export * from './searchExtensionsQueryCategorization';
 export * from './searchForFacets';

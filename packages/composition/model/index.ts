@@ -104,6 +104,7 @@ export * from './removeStopWords';
 export * from './removeWordsIfNoResults';
 export * from './renderingContent';
 export * from './requestBody';
+export * from './resultCard';
 export * from './resultsCompositionInfoResponse';
 export * from './resultsCompositionsResponse';
 export * from './resultsInjectedItemAppliedRulesInfoResponse';

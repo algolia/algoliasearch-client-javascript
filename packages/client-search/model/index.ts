@@ -141,6 +141,7 @@ export * from './replaceAllObjectsWithTransformationResponse';
 export * from './replaceSourceResponse';
 export * from './reRankingApplyFilter';
 export * from './responseExtensions';
+export * from './resultCard';
 export * from './rule';
 export * from './saveObjectResponse';
 export * from './saveSynonymResponse';
