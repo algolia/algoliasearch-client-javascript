@@ -2,4 +2,4 @@
 
 import type { BaseExternalProviderSource } from './baseExternalProviderSource';
 
-export type InjectedItemExternalProvider = BaseExternalProviderSource & Record<string, unknown>;
+export type InjectionMainExternalProvider = BaseExternalProviderSource & Record<string, unknown>;
