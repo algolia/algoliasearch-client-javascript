@@ -4,7 +4,7 @@ import type { AssistantPartV4 } from './assistantPartV4';
 import type { ToolInvocationV4 } from './toolInvocationV4';
 
 export type AssistantMessageV4 = {
-  id?: string | undefined;
+  id?: string | null | undefined;
 
   role: string;
 

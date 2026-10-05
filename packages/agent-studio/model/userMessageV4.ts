@@ -3,7 +3,7 @@
 import type { TextPartV4 } from './textPartV4';
 
 export type UserMessageV4 = {
-  id?: string | undefined;
+  id?: string | null | undefined;
 
   role: string;
 
@@ -11,5 +11,5 @@ export type UserMessageV4 = {
 
   parts?: Array<TextPartV4> | undefined;
 
-  annotations?: Array<{ [key: string]: any }> | undefined;
+  annotations?: Array<{ [key: string]: any }> | null | undefined;
 };

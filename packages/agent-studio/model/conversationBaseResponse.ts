@@ -2,6 +2,7 @@
 
 import type { ConversationMetadata } from './conversationMetadata';
 import type { FeedbackResponse } from './feedbackResponse';
+import type { ImpactAnalytics } from './impactAnalytics';
 
 /**
  * Lightweight response model without its messages.
@@ -34,4 +35,6 @@ export type ConversationBaseResponse = {
   conversationMetadata?: ConversationMetadata | null | undefined;
 
   feedback?: Array<FeedbackResponse> | null | undefined;
+
+  impactAnalytics?: ImpactAnalytics | null | undefined;
 };

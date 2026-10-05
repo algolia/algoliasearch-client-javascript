@@ -12,4 +12,12 @@ export type ToolResultPart = {
   output: ToolResultOutput;
 
   providerOptions?: { [key: string]: any } | null | undefined;
+
+  mcpConfigId?: string | null | undefined;
+
+  mcpConfigName?: string | null | undefined;
+
+  isTerminal?: boolean | null | undefined;
+
+  outputMetadata?: { [key: string]: any } | null | undefined;
 };

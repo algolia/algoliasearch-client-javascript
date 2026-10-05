@@ -3,4 +3,4 @@
 /**
  * Support Compatibility modes for the completion API.
  */
-export type CompatibilityMode = 'ai-sdk-4' | 'ai-sdk-5';
+export type CompatibilityMode = 'ai-sdk-4' | 'ai-sdk-5' | 'ag-ui';

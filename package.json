@@ -79,7 +79,7 @@
       },
       {
         "path": "packages/agent-studio/dist/builds/browser.umd.js",
-        "maxSize": "8.5KB"
+        "maxSize": "9.25KB"
       }
     ]
   },

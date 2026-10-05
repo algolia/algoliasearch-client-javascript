@@ -7,4 +7,6 @@ export type PaginatedConversationsResponse = {
   data: Array<ConversationBaseResponse>;
 
   pagination: PaginationMetadata;
+
+  analyticsDegraded?: boolean | undefined;
 };

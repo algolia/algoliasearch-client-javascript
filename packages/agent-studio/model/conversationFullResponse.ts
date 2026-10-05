@@ -2,6 +2,7 @@
 
 import type { ConversationMetadata } from './conversationMetadata';
 import type { FeedbackResponse } from './feedbackResponse';
+import type { ImpactAnalytics } from './impactAnalytics';
 import type { MessageResponse } from './messageResponse';
 
 /**
@@ -36,5 +37,9 @@ export type ConversationFullResponse = {
 
   feedback?: Array<FeedbackResponse> | null | undefined;
 
+  impactAnalytics?: ImpactAnalytics | null | undefined;
+
   messages: Array<MessageResponse>;
+
+  analyticsDegraded?: boolean | undefined;
 };

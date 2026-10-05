@@ -19,9 +19,13 @@ import type { AllowedDomainListResponse } from '../model/allowedDomainListRespon
 import type { AllowedDomainResponse } from '../model/allowedDomainResponse';
 import type { ApplicationConfigPatch } from '../model/applicationConfigPatch';
 import type { ApplicationConfigResponse } from '../model/applicationConfigResponse';
+import type { ContextCompactRequest } from '../model/contextCompactRequest';
+import type { ContextResponse } from '../model/contextResponse';
+import type { ContextTrimRequest } from '../model/contextTrimRequest';
 import type { ConversationFullResponse } from '../model/conversationFullResponse';
 import type { FeedbackCreationRequest } from '../model/feedbackCreationRequest';
 import type { FeedbackResponse } from '../model/feedbackResponse';
+import type { FeedbackUpdateRequest } from '../model/feedbackUpdateRequest';
 import type { PaginatedAgentsResponse } from '../model/paginatedAgentsResponse';
 import type { PaginatedConversationsResponse } from '../model/paginatedConversationsResponse';
 import type { PaginatedProviderAuthenticationsResponse } from '../model/paginatedProviderAuthenticationsResponse';
@@ -30,6 +34,7 @@ import type { ProviderAuthenticationCreate } from '../model/providerAuthenticati
 import type { ProviderAuthenticationResponse } from '../model/providerAuthenticationResponse';
 import type { SecretKeyCreate } from '../model/secretKeyCreate';
 import type { SecretKeyResponse } from '../model/secretKeyResponse';
+import type { TaskResponse } from '../model/taskResponse';
 import type { UserDataResponse } from '../model/userDataResponse';
 
 import type {
@@ -37,6 +42,7 @@ import type {
   BulkDeleteAllowedDomainsProps,
   CreateAgentAllowedDomainProps,
   CreateAgentCompletionProps,
+  CreateAgentTaskProps,
   CustomDeleteProps,
   CustomGetProps,
   CustomPostProps,
@@ -353,6 +359,78 @@ export function createAgentStudioClient({
     },
 
     /**
+     * Summarize the older part of a conversation into a single user message via the caller\'s LLM.  Everything except the trailing `keepLastMessages` messages is summarized; the summary is returned as a user-role message followed by the kept tail verbatim. Your provider runs the summary, so the provider adds the cost to your account.  A conversation too large for the summarizer\'s context window is split into chunks that each fit, summarized concurrently, then merged in a reduce pass - so payload size alone does not fail the request. When the conversation still cannot be summarized (it needs more chunks than the server allows, or the chunk summaries will not converge), the response is a `400`, not a `500`.  Two optional controls shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a desired summary size, translated into word-count guidance.  The `compaction` block reports what happened: `compacted` is `false` when the payload passed through untouched (nothing older than the kept tail), alongside chunk/pass counts and the summarizer\'s own token usage.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param contextCompactRequest - The contextCompactRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    compactContext(
+      contextCompactRequest: ContextCompactRequest,
+      requestOptions?: RequestOptions,
+    ): Promise<ContextResponse> {
+      validateRequired('contextCompactRequest', 'compactContext', contextCompactRequest);
+
+      validateRequired('contextCompactRequest.providerID', 'compactContext', contextCompactRequest.providerID);
+      validateRequired('contextCompactRequest.model', 'compactContext', contextCompactRequest.model);
+      validateRequired('contextCompactRequest.messages', 'compactContext', contextCompactRequest.messages);
+
+      const requestPath = '/agent-studio/1/unstable/context/compact';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: contextCompactRequest,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * Summarize the older part of a conversation into a single user message via the caller\'s LLM.  Everything except the trailing `keepLastMessages` messages is summarized; the summary is returned as a user-role message followed by the kept tail verbatim. Your provider runs the summary, so the provider adds the cost to your account.  A conversation too large for the summarizer\'s context window is split into chunks that each fit, summarized concurrently, then merged in a reduce pass - so payload size alone does not fail the request. When the conversation still cannot be summarized (it needs more chunks than the server allows, or the chunk summaries will not converge), the response is a `400`, not a `500`.  Two optional controls shape the output. `instructions` adds caller guidance inside the server-owned prompt frame, so it steers the summary without the model echoing the wording back. `targetTokensEstimate` sets a desired summary size, translated into word-count guidance.  The `compaction` block reports what happened: `compacted` is `false` when the payload passed through untouched (nothing older than the kept tail), alongside chunk/pass counts and the summarizer\'s own token usage.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param contextCompactRequest - The contextCompactRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see compactContext for the plain version.
+     */
+    compactContextWithHTTPInfo(
+      contextCompactRequest: ContextCompactRequest,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<ContextResponse>> {
+      validateRequired('contextCompactRequest', 'compactContextWithHTTPInfo', contextCompactRequest);
+
+      validateRequired(
+        'contextCompactRequest.providerID',
+        'compactContextWithHTTPInfo',
+        contextCompactRequest.providerID,
+      );
+      validateRequired('contextCompactRequest.model', 'compactContextWithHTTPInfo', contextCompactRequest.model);
+      validateRequired('contextCompactRequest.messages', 'compactContextWithHTTPInfo', contextCompactRequest.messages);
+
+      const requestPath = '/agent-studio/1/unstable/context/compact';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: contextCompactRequest,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
      * Create a new agent.
      *
      * Required API Key ACLs:
@@ -501,7 +579,7 @@ export function createAgentStudioClient({
     },
 
     /**
-     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
      *
      * Required API Key ACLs:
      *  - search
@@ -577,7 +655,7 @@ export function createAgentStudioClient({
       return transporter.request(request, requestOptions);
     },
     /**
-     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with result.
+     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request - Request 2: User approves -> Execute tool -> Agent continues with result.
      *
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
@@ -656,7 +734,7 @@ export function createAgentStudioClient({
       return transporter.requestWithHttpInfo(request, requestOptions);
     },
     /**
-     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with result. (raw streaming version).
+     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request - Request 2: User approves -> Execute tool -> Agent continues with result. (raw streaming version).
      *
      * Yields raw {@link ServerSentEvent} objects. Each event's `data` field contains a JSON-encoded `{ [key: string]: any; }` string.
      *
@@ -724,7 +802,7 @@ export function createAgentStudioClient({
       return transporter.requestStream(request, requestOptions);
     },
     /**
-     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request. - Request 2: User approves -> Execute tool -> Agent continues with result. (streaming version).
+     * Create a completion for the specified agent.  This endpoint handles two types of requests: 1. Normal completion request: User message -> Agent response 2. Tool approval response: User approval -> Execute tool -> Agent response  Tool Approval Flow (for MCP tools with requiresApproval: true): - Request 1: User sends message -> Agent requests tool call -> Return approval request - Request 2: User approves -> Execute tool -> Agent continues with result. (streaming version).
      *
      * Yields {@link StreamEvent} objects wrapping parsed `{ [key: string]: any; }` payloads.
      *
@@ -759,6 +837,176 @@ export function createAgentStudioClient({
       )) {
         try {
           const data = JSON.parse(event.data) as { [key: string]: any };
+          yield { data, raw: event };
+        } catch (e) {
+          yield { data: null, raw: event, error: e as Error };
+        }
+      }
+    },
+
+    /**
+     * Run a configured task and return the generated object as ``{ output }``.  With ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON is the task output itself.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param createAgentTask - The createAgentTask object.
+     * @param createAgentTask.agentId - The agentId.
+     * @param createAgentTask.taskRequest - The taskRequest object.
+     * @param createAgentTask.stream - Whether to stream the response or not.
+     * @param createAgentTask.cache - Use cached responses if available.
+     * @param createAgentTask.analytics - Set to false to skip endpoint-specific analytics for this task call (default: true). Disables the task analytics event; operational metrics and traces are always emitted.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    createAgentTask(
+      { agentId, taskRequest, stream, cache, analytics }: CreateAgentTaskProps,
+      requestOptions?: RequestOptions,
+    ): Promise<TaskResponse> {
+      validateRequired('agentId', 'createAgentTask', agentId);
+
+      validateRequired('taskRequest', 'createAgentTask', taskRequest);
+
+      validateRequired('taskRequest.input', 'createAgentTask', taskRequest.input);
+
+      const requestPath = '/agent-studio/1/agents/{agentId}/tasks'.replace('{agentId}', encodeURIComponent(agentId));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (stream !== undefined) {
+        queryParameters['stream'] = stream.toString();
+      }
+
+      if (cache !== undefined) {
+        queryParameters['cache'] = cache.toString();
+      }
+
+      if (analytics !== undefined) {
+        queryParameters['analytics'] = analytics.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: taskRequest,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * Run a configured task and return the generated object as ``{ output }``.  With ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON is the task output itself.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param createAgentTask - The createAgentTask object.
+     * @param createAgentTask.agentId - The agentId.
+     * @param createAgentTask.taskRequest - The taskRequest object.
+     * @param createAgentTask.stream - Whether to stream the response or not.
+     * @param createAgentTask.cache - Use cached responses if available.
+     * @param createAgentTask.analytics - Set to false to skip endpoint-specific analytics for this task call (default: true). Disables the task analytics event; operational metrics and traces are always emitted.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see createAgentTask for the plain version.
+     */
+    createAgentTaskWithHTTPInfo(
+      { agentId, taskRequest, stream, cache, analytics }: CreateAgentTaskProps,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<TaskResponse>> {
+      validateRequired('agentId', 'createAgentTaskWithHTTPInfo', agentId);
+
+      validateRequired('taskRequest', 'createAgentTaskWithHTTPInfo', taskRequest);
+
+      validateRequired('taskRequest.input', 'createAgentTaskWithHTTPInfo', taskRequest.input);
+
+      const requestPath = '/agent-studio/1/agents/{agentId}/tasks'.replace('{agentId}', encodeURIComponent(agentId));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (stream !== undefined) {
+        queryParameters['stream'] = stream.toString();
+      }
+
+      if (cache !== undefined) {
+        queryParameters['cache'] = cache.toString();
+      }
+
+      if (analytics !== undefined) {
+        queryParameters['analytics'] = analytics.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: taskRequest,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+    /**
+     * Run a configured task and return the generated object as ``{ output }``.  With ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON is the task output itself. (raw streaming version).
+     *
+     * Yields raw {@link ServerSentEvent} objects. Each event's `data` field contains a JSON-encoded `TaskResponse` string.
+     *
+     * @see createAgentTaskStream for the parsed variant.
+     * @see createAgentTask for the non-streaming version.
+     */
+    createAgentTaskStreamRaw(
+      { agentId, taskRequest, stream, cache, analytics }: CreateAgentTaskProps,
+      requestOptions?: RequestOptions,
+    ): AsyncGenerator<ServerSentEvent> {
+      validateRequired('agentId', 'createAgentTaskStreamRaw', agentId);
+
+      validateRequired('taskRequest', 'createAgentTaskStreamRaw', taskRequest);
+
+      validateRequired('taskRequest.input', 'createAgentTaskStreamRaw', taskRequest.input);
+
+      const requestPath = '/agent-studio/1/agents/{agentId}/tasks'.replace('{agentId}', encodeURIComponent(agentId));
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      if (stream !== undefined) {
+        queryParameters['stream'] = stream.toString();
+      }
+
+      if (cache !== undefined) {
+        queryParameters['cache'] = cache.toString();
+      }
+
+      if (analytics !== undefined) {
+        queryParameters['analytics'] = analytics.toString();
+      }
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: taskRequest,
+      };
+
+      return transporter.requestStream(request, requestOptions);
+    },
+    /**
+     * Run a configured task and return the generated object as ``{ output }``.  With ``?stream=true``, returns the raw partial JSON text stream expected by AI SDK v5 ``useObject``. The streamed JSON is the task output itself. (streaming version).
+     *
+     * Yields {@link StreamEvent} objects wrapping parsed `TaskResponse` payloads.
+     *
+     * @see createAgentTaskStreamRaw for the raw variant.
+     * @see createAgentTask for the non-streaming version.
+     */
+    async *createAgentTaskStream(
+      { agentId, taskRequest, stream, cache, analytics }: CreateAgentTaskProps,
+      requestOptions?: RequestOptions,
+    ): AsyncGenerator<StreamEvent<TaskResponse>> {
+      for await (const event of this.createAgentTaskStreamRaw(
+        { agentId, taskRequest, stream, cache, analytics },
+        requestOptions,
+      )) {
+        try {
+          const data = JSON.parse(event.data) as TaskResponse;
           yield { data, raw: event };
         } catch (e) {
           yield { data: null, raw: event, error: e as Error };
@@ -1274,7 +1522,7 @@ export function createAgentStudioClient({
     },
 
     /**
-     * Deletes the conversations matching the given filers.
+     * Deletes the conversations matching the given filters.
      *
      * Required API Key ACLs:
      *  - logs
@@ -1315,7 +1563,7 @@ export function createAgentStudioClient({
       return transporter.request(request, requestOptions);
     },
     /**
-     * Deletes the conversations matching the given filers.
+     * Deletes the conversations matching the given filters.
      *
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
@@ -1952,11 +2200,20 @@ export function createAgentStudioClient({
      * @param getConversation.conversationId - The conversationId.
      * @param getConversation.agentId - The agentId.
      * @param getConversation.includeFeedback - Include feedback for the conversation.
+     * @param getConversation.includeMessageEvents - Include Insights events attributed to each assistant message.
+     * @param getConversation.includeImpactAnalytics - Include outcome signals (hasView, hasClick, hasConversion) for the conversation.
      * @param getConversation.xAlgoliaSecureUserToken - The X-Algolia-Secure-User-Token.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     getConversation(
-      { conversationId, agentId, includeFeedback, xAlgoliaSecureUserToken }: GetConversationProps,
+      {
+        conversationId,
+        agentId,
+        includeFeedback,
+        includeMessageEvents,
+        includeImpactAnalytics,
+        xAlgoliaSecureUserToken,
+      }: GetConversationProps,
       requestOptions?: RequestOptions,
     ): Promise<ConversationFullResponse> {
       validateRequired('conversationId', 'getConversation', conversationId);
@@ -1971,6 +2228,14 @@ export function createAgentStudioClient({
 
       if (includeFeedback !== undefined) {
         queryParameters['includeFeedback'] = includeFeedback.toString();
+      }
+
+      if (includeMessageEvents !== undefined) {
+        queryParameters['includeMessageEvents'] = includeMessageEvents.toString();
+      }
+
+      if (includeImpactAnalytics !== undefined) {
+        queryParameters['includeImpactAnalytics'] = includeImpactAnalytics.toString();
       }
 
       if (xAlgoliaSecureUserToken !== undefined) {
@@ -1997,12 +2262,21 @@ export function createAgentStudioClient({
      * @param getConversation.conversationId - The conversationId.
      * @param getConversation.agentId - The agentId.
      * @param getConversation.includeFeedback - Include feedback for the conversation.
+     * @param getConversation.includeMessageEvents - Include Insights events attributed to each assistant message.
+     * @param getConversation.includeImpactAnalytics - Include outcome signals (hasView, hasClick, hasConversion) for the conversation.
      * @param getConversation.xAlgoliaSecureUserToken - The X-Algolia-Secure-User-Token.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see getConversation for the plain version.
      */
     getConversationWithHTTPInfo(
-      { conversationId, agentId, includeFeedback, xAlgoliaSecureUserToken }: GetConversationProps,
+      {
+        conversationId,
+        agentId,
+        includeFeedback,
+        includeMessageEvents,
+        includeImpactAnalytics,
+        xAlgoliaSecureUserToken,
+      }: GetConversationProps,
       requestOptions?: RequestOptions,
     ): Promise<AlgoliaHttpResponse<ConversationFullResponse>> {
       validateRequired('conversationId', 'getConversationWithHTTPInfo', conversationId);
@@ -2017,6 +2291,14 @@ export function createAgentStudioClient({
 
       if (includeFeedback !== undefined) {
         queryParameters['includeFeedback'] = includeFeedback.toString();
+      }
+
+      if (includeMessageEvents !== undefined) {
+        queryParameters['includeMessageEvents'] = includeMessageEvents.toString();
+      }
+
+      if (includeImpactAnalytics !== undefined) {
+        queryParameters['includeImpactAnalytics'] = includeImpactAnalytics.toString();
       }
 
       if (xAlgoliaSecureUserToken !== undefined) {
@@ -2220,7 +2502,7 @@ export function createAgentStudioClient({
     },
 
     /**
-     * Invalidate cached completions for this agent. Filter with `before` (exclusive).
+     * Invalidate cached completions and task outputs for this agent. Filter with `before` (exclusive).
      *
      * Required API Key ACLs:
      *  - editSettings
@@ -2253,7 +2535,7 @@ export function createAgentStudioClient({
       return transporter.request(request, requestOptions);
     },
     /**
-     * Invalidate cached completions for this agent. Filter with `before` (exclusive).
+     * Invalidate cached completions and task outputs for this agent. Filter with `before` (exclusive).
      *
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
@@ -2368,6 +2650,10 @@ export function createAgentStudioClient({
      * @param listAgentConversations.feedbackVote - Filter by feedback value (requires includeFeedback=true).
      * @param listAgentConversations.page - Page number.
      * @param listAgentConversations.limit - Items per page.
+     * @param listAgentConversations.includeImpactAnalytics - Include impact analytics (hasView, hasClick, hasConversion) per conversation.
+     * @param listAgentConversations.clicked - Filter by conversations with at least one item click.
+     * @param listAgentConversations.converted - Filter by conversations with at least one conversion.
+     * @param listAgentConversations.hasAlgoliaSearch - Filter by conversations where the search tool was used.
      * @param listAgentConversations.xAlgoliaSecureUserToken - The X-Algolia-Secure-User-Token.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
@@ -2380,6 +2666,10 @@ export function createAgentStudioClient({
         feedbackVote,
         page,
         limit,
+        includeImpactAnalytics,
+        clicked,
+        converted,
+        hasAlgoliaSearch,
         xAlgoliaSecureUserToken,
       }: ListAgentConversationsProps,
       requestOptions?: RequestOptions,
@@ -2417,6 +2707,22 @@ export function createAgentStudioClient({
         queryParameters['limit'] = limit.toString();
       }
 
+      if (includeImpactAnalytics !== undefined) {
+        queryParameters['includeImpactAnalytics'] = includeImpactAnalytics.toString();
+      }
+
+      if (clicked !== undefined) {
+        queryParameters['clicked'] = clicked.toString();
+      }
+
+      if (converted !== undefined) {
+        queryParameters['converted'] = converted.toString();
+      }
+
+      if (hasAlgoliaSearch !== undefined) {
+        queryParameters['hasAlgoliaSearch'] = hasAlgoliaSearch.toString();
+      }
+
       if (xAlgoliaSecureUserToken !== undefined) {
         headers['X-Algolia-Secure-User-Token'] = xAlgoliaSecureUserToken.toString();
       }
@@ -2445,6 +2751,10 @@ export function createAgentStudioClient({
      * @param listAgentConversations.feedbackVote - Filter by feedback value (requires includeFeedback=true).
      * @param listAgentConversations.page - Page number.
      * @param listAgentConversations.limit - Items per page.
+     * @param listAgentConversations.includeImpactAnalytics - Include impact analytics (hasView, hasClick, hasConversion) per conversation.
+     * @param listAgentConversations.clicked - Filter by conversations with at least one item click.
+     * @param listAgentConversations.converted - Filter by conversations with at least one conversion.
+     * @param listAgentConversations.hasAlgoliaSearch - Filter by conversations where the search tool was used.
      * @param listAgentConversations.xAlgoliaSecureUserToken - The X-Algolia-Secure-User-Token.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see listAgentConversations for the plain version.
@@ -2458,6 +2768,10 @@ export function createAgentStudioClient({
         feedbackVote,
         page,
         limit,
+        includeImpactAnalytics,
+        clicked,
+        converted,
+        hasAlgoliaSearch,
         xAlgoliaSecureUserToken,
       }: ListAgentConversationsProps,
       requestOptions?: RequestOptions,
@@ -2493,6 +2807,22 @@ export function createAgentStudioClient({
 
       if (limit !== undefined) {
         queryParameters['limit'] = limit.toString();
+      }
+
+      if (includeImpactAnalytics !== undefined) {
+        queryParameters['includeImpactAnalytics'] = includeImpactAnalytics.toString();
+      }
+
+      if (clicked !== undefined) {
+        queryParameters['clicked'] = clicked.toString();
+      }
+
+      if (converted !== undefined) {
+        queryParameters['converted'] = converted.toString();
+      }
+
+      if (hasAlgoliaSearch !== undefined) {
+        queryParameters['hasAlgoliaSearch'] = hasAlgoliaSearch.toString();
       }
 
       if (xAlgoliaSecureUserToken !== undefined) {
@@ -2913,6 +3243,67 @@ export function createAgentStudioClient({
     },
 
     /**
+     * Deterministically trim a conversation payload (no LLM calls).  Keep the last N messages and/or fit a heuristic token budget, optionally dropping tool parts from what is kept (tool parts are stripped before the budget is applied). Returns the trimmed messages plus before/after stats.  With no constraints set, the messages are returned unchanged and only the stats are computed - a deliberate, cheap \"how big is my context?\" probe (no LLM call, no mutation).
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param contextTrimRequest - The contextTrimRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    trimContext(contextTrimRequest: ContextTrimRequest, requestOptions?: RequestOptions): Promise<ContextResponse> {
+      validateRequired('contextTrimRequest', 'trimContext', contextTrimRequest);
+
+      validateRequired('contextTrimRequest.messages', 'trimContext', contextTrimRequest.messages);
+
+      const requestPath = '/agent-studio/1/unstable/context/trim';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: contextTrimRequest,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * Deterministically trim a conversation payload (no LLM calls).  Keep the last N messages and/or fit a heuristic token budget, optionally dropping tool parts from what is kept (tool parts are stripped before the budget is applied). Returns the trimmed messages plus before/after stats.  With no constraints set, the messages are returned unchanged and only the stats are computed - a deliberate, cheap \"how big is my context?\" probe (no LLM call, no mutation).
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param contextTrimRequest - The contextTrimRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see trimContext for the plain version.
+     */
+    trimContextWithHTTPInfo(
+      contextTrimRequest: ContextTrimRequest,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<ContextResponse>> {
+      validateRequired('contextTrimRequest', 'trimContextWithHTTPInfo', contextTrimRequest);
+
+      validateRequired('contextTrimRequest.messages', 'trimContextWithHTTPInfo', contextTrimRequest.messages);
+
+      const requestPath = '/agent-studio/1/unstable/context/trim';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: contextTrimRequest,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
      * Unpublish the specified agent.
      *
      * Required API Key ACLs:
@@ -3101,6 +3492,76 @@ export function createAgentStudioClient({
         queryParameters,
         headers,
         data: applicationConfigPatch,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
+     * Update an existing feedback entry.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param feedbackUpdateRequest - The feedbackUpdateRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    updateFeedback(
+      feedbackUpdateRequest: FeedbackUpdateRequest,
+      requestOptions?: RequestOptions,
+    ): Promise<FeedbackResponse> {
+      validateRequired('feedbackUpdateRequest', 'updateFeedback', feedbackUpdateRequest);
+
+      validateRequired('feedbackUpdateRequest.messageId', 'updateFeedback', feedbackUpdateRequest.messageId);
+      validateRequired('feedbackUpdateRequest.agentId', 'updateFeedback', feedbackUpdateRequest.agentId);
+
+      const requestPath = '/agent-studio/1/feedback';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PATCH',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: feedbackUpdateRequest,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * Update an existing feedback entry.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param feedbackUpdateRequest - The feedbackUpdateRequest object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see updateFeedback for the plain version.
+     */
+    updateFeedbackWithHTTPInfo(
+      feedbackUpdateRequest: FeedbackUpdateRequest,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<FeedbackResponse>> {
+      validateRequired('feedbackUpdateRequest', 'updateFeedbackWithHTTPInfo', feedbackUpdateRequest);
+
+      validateRequired(
+        'feedbackUpdateRequest.messageId',
+        'updateFeedbackWithHTTPInfo',
+        feedbackUpdateRequest.messageId,
+      );
+      validateRequired('feedbackUpdateRequest.agentId', 'updateFeedbackWithHTTPInfo', feedbackUpdateRequest.agentId);
+
+      const requestPath = '/agent-studio/1/feedback';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'PATCH',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: feedbackUpdateRequest,
       };
 
       return transporter.requestWithHttpInfo(request, requestOptions);

@@ -4,11 +4,11 @@ import type { TextPartV5 } from './textPartV5';
 import type { UserMessageMetadataV5 } from './userMessageMetadataV5';
 
 export type UserMessageV5 = {
-  id?: string | undefined;
+  id?: string | null | undefined;
 
   role: string;
 
   parts?: Array<TextPartV5> | undefined;
 
-  metadata?: UserMessageMetadataV5 | undefined;
+  metadata?: UserMessageMetadataV5 | null | undefined;
 };

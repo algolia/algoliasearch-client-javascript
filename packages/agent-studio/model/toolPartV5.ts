@@ -3,7 +3,7 @@
 import type { ToolState } from './toolState';
 
 /**
- * Model for tool invocation in a Message.
+ * A tool invocation in a message.
  */
 export type ToolPartV5 = {
   type: string;
@@ -12,17 +12,21 @@ export type ToolPartV5 = {
 
   state?: ToolState | undefined;
 
-  input?: { [key: string]: any } | undefined;
+  input?: { [key: string]: any } | null | undefined;
 
-  output?: { [key: string]: any } | undefined;
+  rawInput?: { [key: string]: any } | null | undefined;
 
-  errorText?: string | undefined;
+  output?: { [key: string]: any } | null | undefined;
 
-  providerOptions?: { [key: string]: any } | undefined;
+  outputMetadata?: { [key: string]: any } | null | undefined;
 
-  requiresApproval?: boolean | undefined;
+  errorText?: string | null | undefined;
 
-  description?: string | undefined;
+  providerOptions?: { [key: string]: any } | null | undefined;
 
-  argsHash?: string | undefined;
+  requiresApproval?: boolean | null | undefined;
+
+  description?: string | null | undefined;
+
+  argsHash?: string | null | undefined;
 };

@@ -8,8 +8,4 @@ export type ValidationError = {
   msg: string;
 
   type: string;
-
-  input?: any | null | undefined;
-
-  ctx?: Record<string, unknown> | undefined;
 };

@@ -16,4 +16,6 @@ export type ToolApprovalRequestPart = {
   argsHash?: string | null | undefined;
 
   appId?: string | null | undefined;
+
+  conversationId?: string | null | undefined;
 };

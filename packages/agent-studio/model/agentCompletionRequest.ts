@@ -10,7 +10,7 @@ import type { MessagesUnion } from './messagesUnion';
 export type AgentCompletionRequest = {
   configuration?: AgentTestConfiguration | undefined;
 
-  messages?: MessagesUnion | null | undefined;
+  messages?: MessagesUnion | undefined;
 
   /**
    * Optional conversation id.

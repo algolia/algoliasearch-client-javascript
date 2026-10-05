@@ -5,7 +5,7 @@ import type { AlgoliaRecommendToolIndexConfig } from './algoliaRecommendToolInde
 /**
  * Configuration for the Algolia Recommend tool. Allows specifying recommend models and related parameters.
  */
-export type AlgoliaRecommendToolConfigInput = {
+export type AlgoliaRecommendToolConfig = {
   name: string;
 
   type: string;

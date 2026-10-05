@@ -3,7 +3,7 @@
 import type { AssistantPartV5 } from './assistantPartV5';
 
 export type AssistantMessageV5 = {
-  id?: string | undefined;
+  id?: string | null | undefined;
 
   role: string;
 

@@ -9,6 +9,8 @@ export type ToolCallPart = {
 
   args: any | null;
 
+  rawArgs?: { [key: string]: any } | null | undefined;
+
   requiresApproval?: boolean | null | undefined;
 
   providerOptions?: { [key: string]: any } | null | undefined;

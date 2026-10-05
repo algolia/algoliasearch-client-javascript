@@ -5,10 +5,12 @@ import type { AzureOpenAIProviderInput } from './azureOpenAIProviderInput';
 import type { BaseProviderInput } from './baseProviderInput';
 import type { OpenAICompatibleProviderInput } from './openAICompatibleProviderInput';
 import type { OpenAIProviderInput } from './openAIProviderInput';
+import type { XAIProviderInput } from './xAIProviderInput';
 
 export type ProviderInputNullable =
   | OpenAIProviderInput
   | AzureOpenAIProviderInput
   | OpenAICompatibleProviderInput
   | BaseProviderInput
-  | AnthropicProviderInput;
+  | AnthropicProviderInput
+  | XAIProviderInput;

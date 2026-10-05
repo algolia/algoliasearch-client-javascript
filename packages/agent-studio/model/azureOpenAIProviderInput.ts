@@ -9,7 +9,7 @@ export type AzureOpenAIProviderInput = {
   azureEndpoint: string;
 
   /**
-   * Azure model deployment name is required.
+   * Azure model deployment name.
    */
   azureDeployment: string;
 
