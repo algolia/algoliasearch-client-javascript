@@ -10,4 +10,9 @@ export type ClientSideToolConfig = {
   description: string;
 
   inputSchema: ClientToolsArgsSchema;
+
+  /**
+   * Server-side declaration that this tool is display/render-only: a resolved result ends the turn and the model is not re-invoked on it (CR-11753). The client\'s terminal claim on a tool result is honored only when this agrees; leave false for data tools whose result the model must reason about.
+   */
+  isTerminal?: boolean | undefined;
 };

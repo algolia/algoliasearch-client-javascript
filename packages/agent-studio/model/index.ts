@@ -55,6 +55,7 @@ export * from './episode';
 export * from './errorBase';
 export * from './exactOnSingleWordQuery';
 export * from './facetFiltersUnion';
+export * from './facetFiltersUnionSearchParametersOverrides';
 export * from './facets';
 export * from './facetsParam';
 export * from './facetsUnion';

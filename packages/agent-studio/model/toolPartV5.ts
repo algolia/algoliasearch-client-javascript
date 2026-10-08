@@ -22,6 +22,8 @@ export type ToolPartV5 = {
 
   errorText?: string | null | undefined;
 
+  terminal?: boolean | null | undefined;
+
   providerOptions?: { [key: string]: any } | null | undefined;
 
   requiresApproval?: boolean | null | undefined;

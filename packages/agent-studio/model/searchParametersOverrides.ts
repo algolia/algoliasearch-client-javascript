@@ -3,6 +3,7 @@
 import type { AroundPrecisionUnion } from './aroundPrecisionUnion';
 import type { AroundRadiusUnion } from './aroundRadiusUnion';
 import type { DistinctUnion } from './distinctUnion';
+import type { FacetFiltersUnionSearchParametersOverrides } from './facetFiltersUnionSearchParametersOverrides';
 import type { InsideBoundingBoxUnion } from './insideBoundingBoxUnion';
 import type { InsidePolygonUnion } from './insidePolygonUnion';
 import type { OptionalFiltersUnion } from './optionalFiltersUnion';
@@ -26,6 +27,8 @@ export type SearchParametersOverrides = {
   personalizationImpact?: number | undefined;
 
   optionalFilters?: OptionalFiltersUnion | null | undefined;
+
+  facetFilters?: FacetFiltersUnionSearchParametersOverrides | null | undefined;
 
   aroundLatLng?: string | undefined;
 
