@@ -30,5 +30,10 @@ export type SourceUpdateCommercetools = {
    */
   useImagesObjects?: boolean | undefined;
 
+  /**
+   * When set to true, the connector uses the complete category path (e.g. \"Root > Level 1 > Category name\") in `categoriesCustomFields`.
+   */
+  categoriesCustomFieldsFullPath?: boolean | undefined;
+
   customFields?: CommercetoolsCustomFields | undefined;
 };

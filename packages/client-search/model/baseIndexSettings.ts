@@ -49,7 +49,7 @@ export type BaseIndexSettings = {
   indexLanguages?: Array<SupportedLanguage> | undefined;
 
   /**
-   * Searchable attributes for which you want to turn off [prefix matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjusting-prefix-search). Attribute names are case-sensitive.
+   * Searchable attributes for which you want to turn off [prefix matching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/#adjust-prefix-search). Attribute names are case-sensitive.
    */
   disablePrefixOnAttributes?: Array<string> | undefined;
 
