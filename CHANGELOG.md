@@ -1,3 +1,28 @@
+## [5.60.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.59.0...5.60.0)
+
+BREAKING CHANGES: this minor version includes breaking changes (A/B Testing V3 API, Agent Studio API). See below for more details.
+
+- [812a3d1db6](https://github.com/algolia/api-clients-automation/commit/812a3d1db6) chore(deps): dependencies 2026-09-14 ([#7030](https://github.com/algolia/api-clients-automation/pull/7030)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [41ed59956a](https://github.com/algolia/api-clients-automation/commit/41ed59956a) fix(specs): clarify when _extra and _injectedItemKey are present on hits ([#7031](https://github.com/algolia/api-clients-automation/pull/7031)) by [@charlottetaylor-oss](https://github.com/charlottetaylor-oss/)
+- [987444f36d](https://github.com/algolia/api-clients-automation/commit/987444f36d) fix(specs): clarify addItemKey description in injectedItem metadata ([#7029](https://github.com/algolia/api-clients-automation/pull/7029)) by [@charlottetaylor-oss](https://github.com/charlottetaylor-oss/)
+- [f6a0478eec](https://github.com/algolia/api-clients-automation/commit/f6a0478eec) docs(specs): update analytics catalog entitlement example ([#7028](https://github.com/algolia/api-clients-automation/pull/7028)) by [@cdhawke](https://github.com/cdhawke/)
+- [5da059b7ae](https://github.com/algolia/api-clients-automation/commit/5da059b7ae) feat(specs): add A/B test settings endpoints to abtesting-v3 ([#6786](https://github.com/algolia/api-clients-automation/pull/6786)) by [@stevenMevans](https://github.com/stevenMevans/)
+- [f89fe94db5](https://github.com/algolia/api-clients-automation/commit/f89fe94db5) fix(clients): send request bodies with Content-Length instead of chunked encoding ([#7069](https://github.com/algolia/api-clients-automation/pull/7069)) by [@Fluf22](https://github.com/Fluf22/)
+- [461575c4a4](https://github.com/algolia/api-clients-automation/commit/461575c4a4) feat(specs): add A/B testing hypothesis ([#6829](https://github.com/algolia/api-clients-automation/pull/6829)) by [@leonardogavaudan](https://github.com/leonardogavaudan/)
+- [b58c40832b](https://github.com/algolia/api-clients-automation/commit/b58c40832b) fix(specs): BREAKING CHANGE - make AB test pValue optional ([#7066](https://github.com/algolia/api-clients-automation/pull/7066)) by [@stevenMevans](https://github.com/stevenMevans/)
+  - `pValue` is now optional in the A/B test models. Update code that reads it as a required value.
+- [4cab83c8b1](https://github.com/algolia/api-clients-automation/commit/4cab83c8b1) feat(specs): add `externalProvider` source for CompAPI client ([#7073](https://github.com/algolia/api-clients-automation/pull/7073)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [b6cd822bfb](https://github.com/algolia/api-clients-automation/commit/b6cd822bfb) feat(specs): add resultCard to renderingContent widgets ([#7084](https://github.com/algolia/api-clients-automation/pull/7084)) by [@FabienMotte](https://github.com/FabienMotte/)
+- [63c591d078](https://github.com/algolia/api-clients-automation/commit/63c591d078) refactor(specs): extract source object from behaviour object ([#7074](https://github.com/algolia/api-clients-automation/pull/7074)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [07c1b2ea15](https://github.com/algolia/api-clients-automation/commit/07c1b2ea15) fix(specs): BREAKING CHANGE – sync agent-studio OpenAPI from conversational-ai ([#6967](https://github.com/algolia/api-clients-automation/pull/6967)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+  - The Agent Studio specs were updated to match the API behaviour, which may require updating your implementation:
+  - `createAgentCompletion`: the body type changed from `AgentCompletionRequest` to `AgentCompletionRequestUnion`.
+  - `createAgent`, `updateAgent`, `getAgent`: tool config models were renamed or merged (`AlgoliaDisplayResultsToolConfig` is now `AlgoliaGroupedResultsToolConfig`, `AlgoliaRecommendToolConfigInput`/`Output` are now `AlgoliaRecommendToolConfig`, `ToolConfig` is now `ToolConfigOrBooleanUnion`).
+  - The memory request models `MessagesUnionAgentConsolidateRequest`, `MessagesUnionAgentMemorizeRequest` and `MessagesUnionAgentPonderRequest` were removed.
+- [a41727d2e1](https://github.com/algolia/api-clients-automation/commit/a41727d2e1) chore(deps): dependencies 2026-09-21 ([#7068](https://github.com/algolia/api-clients-automation/pull/7068)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [9a6faf38f6](https://github.com/algolia/api-clients-automation/commit/9a6faf38f6) fix(specs): correct links to Algolia docs ([#7134](https://github.com/algolia/api-clients-automation/pull/7134)) by [@kai687](https://github.com/kai687/)
+- [329efbae3b](https://github.com/algolia/api-clients-automation/commit/329efbae3b) fix(specs): update allowed value for externalProvider source ordering field ([#7131](https://github.com/algolia/api-clients-automation/pull/7131)) by [@aiordache](https://github.com/aiordache/)
+
 ## [5.59.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.58.0...5.59.0)
 
 BREAKING CHANGES: this minor version includes breaking changes in the A/B Testing V3 API. See below for more details.
