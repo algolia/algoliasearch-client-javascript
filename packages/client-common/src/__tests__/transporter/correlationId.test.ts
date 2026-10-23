@@ -81,6 +81,29 @@ describe('correlation ID on errors', () => {
     expect(error.message).toBe('Invalid API key');
   });
 
+  test('masks the API key in every stack frame of 4xx errors', async () => {
+    let attempt = 0;
+    const transporter = createTestTransporter(
+      {
+        send: async () => {
+          attempt++;
+          return attempt === 1
+            ? { status: 500, content: '', isTimedOut: false }
+            : { status: 403, content: JSON.stringify({ message: 'Invalid API key', status: 403 }), isTimedOut: false };
+        },
+      },
+      2,
+    );
+
+    const error: ApiError = await transporter.request({ ...request, headers: { 'x-algolia-api-key': 'secret' } }).then(
+      () => Promise.reject(new Error('should have thrown')),
+      (err) => err,
+    );
+
+    expect(error).toBeInstanceOf(ApiError);
+    expect(error.stackTrace.map((frame) => frame.request.headers['x-algolia-api-key'])).toEqual(['*****', '*****']);
+  });
+
   test('reads the header case-insensitively from custom requesters', async () => {
     const transporter = createTestTransporter({
       send: async () => ({

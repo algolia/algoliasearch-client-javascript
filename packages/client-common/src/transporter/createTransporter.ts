@@ -270,7 +270,7 @@ export function createTransporter({
       }
 
       pushToStackTrace(response);
-      throw deserializeFailure(response, stackTrace);
+      throw deserializeFailure(response, stackTraceWithoutCredentials(stackTrace));
     };
 
     /**
