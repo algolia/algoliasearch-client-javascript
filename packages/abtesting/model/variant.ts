@@ -10,7 +10,7 @@ export type Variant = {
   description: string;
 
   /**
-   * Estimated number of searches required to achieve the desired statistical significance.  The A/B test configuration must include a `minimumDetectableEffect` setting for this number to be included in the response.
+   * Estimated number of searches, or users for user-level rates (metrics ending in `UsersRate`), required to achieve the desired statistical significance.  The A/B test configuration must include a `minimumDetectableEffect` setting for this number to be included in the response.
    */
   estimatedSampleSize?: number | undefined;
 

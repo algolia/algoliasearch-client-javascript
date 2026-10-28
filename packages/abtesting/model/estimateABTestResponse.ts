@@ -7,7 +7,7 @@ export type EstimateABTestResponse = {
   durationDays?: number | undefined;
 
   /**
-   * Sample size estimates for each variant. The first element is the control variant. Each element is the estimated number of searches required to achieve the desired statistical significance.
+   * Sample size estimates for each variant. The first element is the control variant. Each element is the estimated number of searches, or users for user-level rates (metrics ending in `UsersRate`), required to achieve the desired statistical significance.
    */
   sampleSizes?: Array<number> | undefined;
 };
