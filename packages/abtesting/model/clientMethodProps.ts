@@ -134,7 +134,7 @@ export type GetTimeseriesProps = {
    */
   endDate?: string | undefined;
   /**
-   * List of metrics to retrieve. If not specified, all metrics are returned.
+   * Metrics to retrieve, as a comma-separated list. If not specified, all metrics are returned.
    */
   metric?: Array<MetricName> | undefined;
   /**
