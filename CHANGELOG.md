@@ -1,3 +1,11 @@
+## [5.61.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.60.0...5.61.0)
+
+- [c2153f09a5](https://github.com/algolia/api-clients-automation/commit/c2153f09a5) fix(specs): remove obsolete index-key copy note ([#7177](https://github.com/algolia/api-clients-automation/pull/7177)) by [@xroche](https://github.com/xroche/)
+- [8b2ad07687](https://github.com/algolia/api-clients-automation/commit/8b2ad07687) chore(deps): dependencies 2026-10-12 ([#7135](https://github.com/algolia/api-clients-automation/pull/7135)) by [@algolia-api-clients-automation-bot[bot]](https://github.com/apps/algolia-api-clients-automation-bot)
+- [479b0cc1c9](https://github.com/algolia/api-clients-automation/commit/479b0cc1c9) fix(javascript): mask API key in ApiError stack trace ([#7182](https://github.com/algolia/api-clients-automation/pull/7182)) by [@bblair31](https://github.com/bblair31/)
+- [75e309924e](https://github.com/algolia/api-clients-automation/commit/75e309924e) clients(clients): cache host state only on change ([#7202](https://github.com/algolia/api-clients-automation/pull/7202)) by [@zigzagdev](https://github.com/zigzagdev/)
+- [e7642ce951](https://github.com/algolia/api-clients-automation/commit/e7642ce951) feat(specs): add user metrics to abtesting-v3 timeseries enum ([#7181](https://github.com/algolia/api-clients-automation/pull/7181)) by [@stevenMevans](https://github.com/stevenMevans/)
+
 ## [5.60.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.59.0...5.60.0)
 
 BREAKING CHANGES: this minor version includes breaking changes (A/B Testing V3 API, Agent Studio API). See below for more details.
