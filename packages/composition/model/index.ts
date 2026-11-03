@@ -53,6 +53,8 @@ export * from './facetHits';
 export * from './facetOrdering';
 export * from './facetStats';
 export * from './feedInjection';
+export * from './feedParams';
+export * from './feedRequest';
 export * from './getTaskResponse';
 export * from './highlightResult';
 export * from './highlightResultOption';

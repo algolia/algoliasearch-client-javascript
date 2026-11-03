@@ -1380,7 +1380,7 @@ export function createCompositionClient({
     },
 
     /**
-     * Updates the \"sortingStrategy\" field of an existing composition. This endpoint lets you create a new sorting strategy mapping or replace the configured one. The provided sorting indices must be associated indices or replicas of the main targeted index.  This endpoint can\'t validate whether the sort index is related to the composition\'s main index. Validation fails at runtime if the index you updated isn\'t related.  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
+     * Updates the \"sortingStrategy\" field of an existing composition. This endpoint lets you create a new sorting strategy mapping or replace the configured one. This endpoint only validates that the sorting indices exist. At runtime, the API ignores a sorting index that is unrelated to the targeted indices. The response reports it in the `errors` field.  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
      *
      * Required API Key ACLs:
      *  - editSettings
@@ -1415,7 +1415,7 @@ export function createCompositionClient({
       return transporter.request(request, requestOptions);
     },
     /**
-     * Updates the \"sortingStrategy\" field of an existing composition. This endpoint lets you create a new sorting strategy mapping or replace the configured one. The provided sorting indices must be associated indices or replicas of the main targeted index.  This endpoint can\'t validate whether the sort index is related to the composition\'s main index. Validation fails at runtime if the index you updated isn\'t related.  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
+     * Updates the \"sortingStrategy\" field of an existing composition. This endpoint lets you create a new sorting strategy mapping or replace the configured one. This endpoint only validates that the sorting indices exist. At runtime, the API ignores a sorting index that is unrelated to the targeted indices. The response reports it in the `errors` field.  The update is applied to the specified composition within the current Algolia application and returns a taskID that can be used to track the operation’s completion.
      *
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
