@@ -4,7 +4,7 @@ import type { DailyNoClickRates } from './dailyNoClickRates';
 
 export type GetNoClickRateResponse = {
   /**
-   * No click rate: calculated as the number of tracked searches without clicks divided by the number of tracked searches.
+   * No click rate: calculated as the number of tracked searches with results whose query didn\'t get any click in the time range, divided by the number of tracked searches with results.
    */
   rate: number;
 
@@ -14,7 +14,7 @@ export type GetNoClickRateResponse = {
   count: number;
 
   /**
-   * Number of times this search was returned as a result without any click.
+   * Number of tracked searches with results whose query didn\'t get any click in the time range.
    */
   noClickCount: number;
 
