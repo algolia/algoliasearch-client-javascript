@@ -40,11 +40,11 @@ All of our clients comes with type definition, and are available for both browse
 ### With a package manager
 
 ```bash
-yarn add @algolia/advanced-personalization@0.0.1-alpha.50
+yarn add @algolia/advanced-personalization@0.0.1-alpha.51
 # or
-npm install @algolia/advanced-personalization@0.0.1-alpha.50
+npm install @algolia/advanced-personalization@0.0.1-alpha.51
 # or
-pnpm add @algolia/advanced-personalization@0.0.1-alpha.50
+pnpm add @algolia/advanced-personalization@0.0.1-alpha.51
 ```
 
 ### Without a package manager
@@ -52,7 +52,7 @@ pnpm add @algolia/advanced-personalization@0.0.1-alpha.50
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/advanced-personalization@0.0.1-alpha.50/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/advanced-personalization@0.0.1-alpha.51/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage
