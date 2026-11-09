@@ -35,7 +35,7 @@ export type MetricResult = {
   pValue?: number | undefined;
 
   /**
-   * Dimension defined during test creation. For revenue metrics, including `revenue_per_search`, this is the currency.
+   * Dimension defined during test creation. For revenue metrics, including `revenue_per_search` and `winsorized_revenue_per_user`, this is the currency.
    */
   dimension?: string | undefined;
 

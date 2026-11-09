@@ -28,6 +28,7 @@ export type MetricName =
   | 'converted_users_rate'
   | 'add_to_cart_users_rate'
   | 'purchase_users_rate'
+  | 'users_with_no_results_rate'
   | 'avg_click_through_rate_per_user'
   | 'avg_conversion_rate_per_user'
   | 'avg_purchase_rate_per_user'
