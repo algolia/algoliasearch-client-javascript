@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "lerna run build --scope '@algolia/requester-testing' --scope '@algolia/logger-console' --scope 'algoliasearch' --scope '@algolia/composition' --scope '@algolia/advanced-personalization' --scope '@algolia/agent-studio' --include-dependencies",
+    "build": "lerna run build --scope '@algolia/requester-testing' --scope '@algolia/logger-console' --scope 'algoliasearch' --scope '@algolia/composition' --scope '@algolia/advanced-personalization' --scope '@algolia/agent-studio' --scope '@algolia/suggested-actions' --include-dependencies",
     "clean": "lerna run clean",
     "release:publish": "lerna publish from-package --yes",
     "release:publish:old": "tsc --project scripts/tsconfig.json && node scripts/dist/publish.js",
@@ -80,6 +80,10 @@
       {
         "path": "packages/agent-studio/dist/builds/browser.umd.js",
         "maxSize": "9.25KB"
+      },
+      {
+        "path": "packages/suggested-actions/dist/builds/browser.umd.js",
+        "maxSize": "6.5KB"
       }
     ]
   },
