@@ -1,3 +1,8 @@
+## [5.64.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.63.0...5.64.0)
+
+- [2d8e1605b3](https://github.com/algolia/api-clients-automation/commit/2d8e1605b3) feat(specs): expose abtesting-v3 user populations and no-results rate ([#7305](https://github.com/algolia/api-clients-automation/pull/7305)) by [@stevenMevans](https://github.com/stevenMevans/)
+- [230877e2a2](https://github.com/algolia/api-clients-automation/commit/230877e2a2) feat(specs): add Suggested Actions API spec ([#7303](https://github.com/algolia/api-clients-automation/pull/7303)) by [@kennyh-alg](https://github.com/kennyh-alg/)
+
 ## [5.63.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.62.0...5.63.0)
 
 - [e6933da012](https://github.com/algolia/api-clients-automation/commit/e6933da012) fix(specs): clarify maxHitsPerQuery is a per-page limit ([#7210](https://github.com/algolia/api-clients-automation/pull/7210)) by [@kai687](https://github.com/kai687/)

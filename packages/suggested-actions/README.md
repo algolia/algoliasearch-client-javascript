@@ -40,11 +40,11 @@ All of our clients comes with type definition, and are available for both browse
 ### With a package manager
 
 ```bash
-yarn add @algolia/suggested-actions@0.0.1-alpha.0
+yarn add @algolia/suggested-actions@0.0.1-alpha.1
 # or
-npm install @algolia/suggested-actions@0.0.1-alpha.0
+npm install @algolia/suggested-actions@0.0.1-alpha.1
 # or
-pnpm add @algolia/suggested-actions@0.0.1-alpha.0
+pnpm add @algolia/suggested-actions@0.0.1-alpha.1
 ```
 
 ### Without a package manager
@@ -52,7 +52,7 @@ pnpm add @algolia/suggested-actions@0.0.1-alpha.0
 Add the following JavaScript snippet to the <head> of your website:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@algolia/suggested-actions@0.0.1-alpha.0/dist/builds/browser.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@algolia/suggested-actions@0.0.1-alpha.1/dist/builds/browser.umd.js"></script>
 ```
 
 ### Usage
