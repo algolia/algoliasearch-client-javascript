@@ -2,6 +2,9 @@
 
 import type { CompositionRunSearchResponse } from './compositionRunSearchResponse';
 
+/**
+ * Information about the compositions processed by the run request. Only present when `getRankingInfo` is `true`.
+ */
 export type CompositionsSearchResponse = Record<string, any> & {
   run: Array<CompositionRunSearchResponse>;
 };
