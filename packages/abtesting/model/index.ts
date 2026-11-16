@@ -33,6 +33,7 @@ export * from './metricMetadata';
 export * from './metricName';
 export * from './metricResult';
 export * from './metricsFilter';
+export * from './metricsFilterParameters';
 export * from './minimumDetectableEffect';
 export * from './outliersFilter';
 export * from './primaryMetric';
