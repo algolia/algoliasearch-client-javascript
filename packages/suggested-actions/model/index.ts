@@ -2,6 +2,7 @@
 
 export * from './clientMethodProps';
 export * from './completion';
+export * from './createSuggestionParams';
 export * from './creation';
 export * from './errorBase';
 export * from './evidenceSource';
@@ -18,3 +19,4 @@ export * from './suggestionOption';
 export * from './suggestionState';
 export * from './suggestionType';
 export * from './target';
+export * from './userParams';

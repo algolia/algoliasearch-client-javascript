@@ -11,6 +11,7 @@ import type {
 } from '@algolia/client-common';
 import { createAuth, createTransporter, getAlgoliaAgent, validateRequired } from '@algolia/client-common';
 
+import type { CreateSuggestionParams } from '../model/createSuggestionParams';
 import type { ListSuggestionsResponse } from '../model/listSuggestionsResponse';
 import type { Suggestion } from '../model/suggestion';
 
@@ -19,8 +20,10 @@ import type {
   CustomGetProps,
   CustomPostProps,
   CustomPutProps,
+  DismissSuggestionProps,
   GetSuggestionProps,
   ListSuggestionsProps,
+  UndoSuggestionDismissalProps,
 } from '../model/clientMethodProps';
 
 export const apiClientVersion = '0.0.1-alpha.1';
@@ -112,6 +115,72 @@ export function createSuggestedActionsClient({
       } else {
         transporter.baseQueryParameters['x-algolia-api-key'] = apiKey;
       }
+    },
+
+    /**
+     * Creates a suggestion of the given type for an application or an index.  With an API key, you can only create the types of suggestion that come from user actions, and the request must say who created it with `creation`. If a matching active suggestion already exists, its lifetime isn\'t changed.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     * @param createSuggestionParams - The createSuggestionParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    createSuggestion(
+      createSuggestionParams: CreateSuggestionParams,
+      requestOptions?: RequestOptions,
+    ): Promise<Suggestion> {
+      validateRequired('createSuggestionParams', 'createSuggestion', createSuggestionParams);
+
+      validateRequired('createSuggestionParams.type', 'createSuggestion', createSuggestionParams.type);
+      validateRequired('createSuggestionParams.target', 'createSuggestion', createSuggestionParams.target);
+
+      const requestPath = '/2/suggested-actions';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: createSuggestionParams,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * Creates a suggestion of the given type for an application or an index.  With an API key, you can only create the types of suggestion that come from user actions, and the request must say who created it with `creation`. If a matching active suggestion already exists, its lifetime isn\'t changed.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - editSettings
+     * @param createSuggestionParams - The createSuggestionParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see createSuggestion for the plain version.
+     */
+    createSuggestionWithHTTPInfo(
+      createSuggestionParams: CreateSuggestionParams,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<Suggestion>> {
+      validateRequired('createSuggestionParams', 'createSuggestionWithHTTPInfo', createSuggestionParams);
+
+      validateRequired('createSuggestionParams.type', 'createSuggestionWithHTTPInfo', createSuggestionParams.type);
+      validateRequired('createSuggestionParams.target', 'createSuggestionWithHTTPInfo', createSuggestionParams.target);
+
+      const requestPath = '/2/suggested-actions';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: createSuggestionParams,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
     },
 
     /**
@@ -344,6 +413,84 @@ export function createSuggestedActionsClient({
     },
 
     /**
+     * Dismisses a suggestion for a user. Until the dismissal cooldown ends, the suggestion includes `dismissedAt` in the list for that user.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param dismissSuggestion - The dismissSuggestion object.
+     * @param dismissSuggestion.suggestionID - Unique identifier of the suggestion.
+     * @param dismissSuggestion.userParams - The userParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    dismissSuggestion(
+      { suggestionID, userParams }: DismissSuggestionProps,
+      requestOptions?: RequestOptions,
+    ): Promise<Record<string, unknown>> {
+      validateRequired('suggestionID', 'dismissSuggestion', suggestionID);
+
+      validateRequired('userParams', 'dismissSuggestion', userParams);
+
+      validateRequired('userParams.userId', 'dismissSuggestion', userParams.userId);
+
+      const requestPath = '/2/suggested-actions/{suggestionID}:dismiss'.replace(
+        '{suggestionID}',
+        encodeURIComponent(suggestionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: userParams,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * Dismisses a suggestion for a user. Until the dismissal cooldown ends, the suggestion includes `dismissedAt` in the list for that user.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param dismissSuggestion - The dismissSuggestion object.
+     * @param dismissSuggestion.suggestionID - Unique identifier of the suggestion.
+     * @param dismissSuggestion.userParams - The userParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see dismissSuggestion for the plain version.
+     */
+    dismissSuggestionWithHTTPInfo(
+      { suggestionID, userParams }: DismissSuggestionProps,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<Record<string, unknown>>> {
+      validateRequired('suggestionID', 'dismissSuggestionWithHTTPInfo', suggestionID);
+
+      validateRequired('userParams', 'dismissSuggestionWithHTTPInfo', userParams);
+
+      validateRequired('userParams.userId', 'dismissSuggestionWithHTTPInfo', userParams.userId);
+
+      const requestPath = '/2/suggested-actions/{suggestionID}:dismiss'.replace(
+        '{suggestionID}',
+        encodeURIComponent(suggestionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: userParams,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
      * Retrieves a suggestion by its ID.
      *
      * Required API Key ACLs:
@@ -415,7 +562,7 @@ export function createSuggestedActionsClient({
      * @param listSuggestions.targetAppId - Algolia application ID to list suggestions for.
      * @param listSuggestions.targetIndex - Only list suggestions that target this index.
      * @param listSuggestions.userId - ID of the user viewing the suggestions. When set, suggestions that this user dismissed within the dismissal cooldown include `dismissedAt`.
-     * @param listSuggestions.excludeDismissed - Whether to leave out the suggestions that `userId` dismissed.
+     * @param listSuggestions.excludeDismissed - Whether to leave out the suggestions that `userId` dismissed. Requires `userId`.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listSuggestions(
@@ -464,7 +611,7 @@ export function createSuggestedActionsClient({
      * @param listSuggestions.targetAppId - Algolia application ID to list suggestions for.
      * @param listSuggestions.targetIndex - Only list suggestions that target this index.
      * @param listSuggestions.userId - ID of the user viewing the suggestions. When set, suggestions that this user dismissed within the dismissal cooldown include `dismissedAt`.
-     * @param listSuggestions.excludeDismissed - Whether to leave out the suggestions that `userId` dismissed.
+     * @param listSuggestions.excludeDismissed - Whether to leave out the suggestions that `userId` dismissed. Requires `userId`.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see listSuggestions for the plain version.
      */
@@ -499,6 +646,84 @@ export function createSuggestedActionsClient({
         path: requestPath,
         queryParameters,
         headers,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
+     * Restores a suggestion that a user dismissed, so it\'s no longer marked as dismissed for that user.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param undoSuggestionDismissal - The undoSuggestionDismissal object.
+     * @param undoSuggestionDismissal.suggestionID - Unique identifier of the suggestion.
+     * @param undoSuggestionDismissal.userParams - The userParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    undoSuggestionDismissal(
+      { suggestionID, userParams }: UndoSuggestionDismissalProps,
+      requestOptions?: RequestOptions,
+    ): Promise<Record<string, unknown>> {
+      validateRequired('suggestionID', 'undoSuggestionDismissal', suggestionID);
+
+      validateRequired('userParams', 'undoSuggestionDismissal', userParams);
+
+      validateRequired('userParams.userId', 'undoSuggestionDismissal', userParams.userId);
+
+      const requestPath = '/2/suggested-actions/{suggestionID}:undoDismiss'.replace(
+        '{suggestionID}',
+        encodeURIComponent(suggestionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: userParams,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * Restores a suggestion that a user dismissed, so it\'s no longer marked as dismissed for that user.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - search
+     * @param undoSuggestionDismissal - The undoSuggestionDismissal object.
+     * @param undoSuggestionDismissal.suggestionID - Unique identifier of the suggestion.
+     * @param undoSuggestionDismissal.userParams - The userParams object.
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see undoSuggestionDismissal for the plain version.
+     */
+    undoSuggestionDismissalWithHTTPInfo(
+      { suggestionID, userParams }: UndoSuggestionDismissalProps,
+      requestOptions?: RequestOptions,
+    ): Promise<AlgoliaHttpResponse<Record<string, unknown>>> {
+      validateRequired('suggestionID', 'undoSuggestionDismissalWithHTTPInfo', suggestionID);
+
+      validateRequired('userParams', 'undoSuggestionDismissalWithHTTPInfo', userParams);
+
+      validateRequired('userParams.userId', 'undoSuggestionDismissalWithHTTPInfo', userParams.userId);
+
+      const requestPath = '/2/suggested-actions/{suggestionID}:undoDismiss'.replace(
+        '{suggestionID}',
+        encodeURIComponent(suggestionID),
+      );
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'POST',
+        path: requestPath,
+        queryParameters,
+        headers,
+        data: userParams,
       };
 
       return transporter.requestWithHttpInfo(request, requestOptions);
