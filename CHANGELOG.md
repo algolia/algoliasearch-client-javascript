@@ -1,3 +1,10 @@
+## [5.65.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.64.0...5.65.0)
+
+- [27351e7432](https://github.com/algolia/api-clients-automation/commit/27351e7432) chore(specs): add description for Composition run response ([#7315](https://github.com/algolia/api-clients-automation/pull/7315)) by [@ClaraMuller](https://github.com/ClaraMuller/)
+- [ebfd070ba0](https://github.com/algolia/api-clients-automation/commit/ebfd070ba0) feat(specs): update Recommend rules to support trending-items [PRED-5025] ([#7188](https://github.com/algolia/api-clients-automation/pull/7188)) by [@raed667](https://github.com/raed667/)
+- [c2160c87c4](https://github.com/algolia/api-clients-automation/commit/c2160c87c4) feat(specs): add create and dismiss operations to the suggested-actions API ([#7316](https://github.com/algolia/api-clients-automation/pull/7316)) by [@kennyh-alg](https://github.com/kennyh-alg/)
+- [83825b5a8f](https://github.com/algolia/api-clients-automation/commit/83825b5a8f) feat(specs): add category scope parameters to abtesting-v3 metrics filters ([#7148](https://github.com/algolia/api-clients-automation/pull/7148)) by [@cdhawke](https://github.com/cdhawke/)
+
 ## [5.64.0](https://github.com/algolia/algoliasearch-client-javascript/compare/5.63.0...5.64.0)
 
 - [2d8e1605b3](https://github.com/algolia/api-clients-automation/commit/2d8e1605b3) feat(specs): expose abtesting-v3 user populations and no-results rate ([#7305](https://github.com/algolia/api-clients-automation/pull/7305)) by [@stevenMevans](https://github.com/stevenMevans/)
