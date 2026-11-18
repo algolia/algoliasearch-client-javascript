@@ -12,6 +12,7 @@ import type {
 import { createAuth, createTransporter, getAlgoliaAgent, validateRequired } from '@algolia/client-common';
 
 import type { CreateSuggestionParams } from '../model/createSuggestionParams';
+import type { EmptyResponse } from '../model/emptyResponse';
 import type { ListSuggestionsResponse } from '../model/listSuggestionsResponse';
 import type { Suggestion } from '../model/suggestion';
 
@@ -425,7 +426,7 @@ export function createSuggestedActionsClient({
     dismissSuggestion(
       { suggestionID, userParams }: DismissSuggestionProps,
       requestOptions?: RequestOptions,
-    ): Promise<Record<string, unknown>> {
+    ): Promise<EmptyResponse> {
       validateRequired('suggestionID', 'dismissSuggestion', suggestionID);
 
       validateRequired('userParams', 'dismissSuggestion', userParams);
@@ -465,7 +466,7 @@ export function createSuggestedActionsClient({
     dismissSuggestionWithHTTPInfo(
       { suggestionID, userParams }: DismissSuggestionProps,
       requestOptions?: RequestOptions,
-    ): Promise<AlgoliaHttpResponse<Record<string, unknown>>> {
+    ): Promise<AlgoliaHttpResponse<EmptyResponse>> {
       validateRequired('suggestionID', 'dismissSuggestionWithHTTPInfo', suggestionID);
 
       validateRequired('userParams', 'dismissSuggestionWithHTTPInfo', userParams);
@@ -664,7 +665,7 @@ export function createSuggestedActionsClient({
     undoSuggestionDismissal(
       { suggestionID, userParams }: UndoSuggestionDismissalProps,
       requestOptions?: RequestOptions,
-    ): Promise<Record<string, unknown>> {
+    ): Promise<EmptyResponse> {
       validateRequired('suggestionID', 'undoSuggestionDismissal', suggestionID);
 
       validateRequired('userParams', 'undoSuggestionDismissal', userParams);
@@ -704,7 +705,7 @@ export function createSuggestedActionsClient({
     undoSuggestionDismissalWithHTTPInfo(
       { suggestionID, userParams }: UndoSuggestionDismissalProps,
       requestOptions?: RequestOptions,
-    ): Promise<AlgoliaHttpResponse<Record<string, unknown>>> {
+    ): Promise<AlgoliaHttpResponse<EmptyResponse>> {
       validateRequired('suggestionID', 'undoSuggestionDismissalWithHTTPInfo', suggestionID);
 
       validateRequired('userParams', 'undoSuggestionDismissalWithHTTPInfo', userParams);

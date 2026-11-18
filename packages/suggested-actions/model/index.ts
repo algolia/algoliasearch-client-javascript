@@ -4,6 +4,7 @@ export * from './clientMethodProps';
 export * from './completion';
 export * from './createSuggestionParams';
 export * from './creation';
+export * from './emptyResponse';
 export * from './errorBase';
 export * from './evidenceSource';
 export * from './evidenceSourceKind';

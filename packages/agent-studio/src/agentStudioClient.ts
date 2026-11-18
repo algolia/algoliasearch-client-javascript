@@ -2020,7 +2020,7 @@ export function createAgentStudioClient({
      * Retrieve details of the specified agent.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param getAgent - The getAgent object.
      * @param getAgent.agentId - The agentId.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2047,7 +2047,7 @@ export function createAgentStudioClient({
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param getAgent - The getAgent object.
      * @param getAgent.agentId - The agentId.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2077,7 +2077,7 @@ export function createAgentStudioClient({
      * Get a single allowed domain by id.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param getAllowedDomain - The getAllowedDomain object.
      * @param getAllowedDomain.domainId - The domainId.
      * @param getAllowedDomain.agentId - The agentId.
@@ -2112,7 +2112,7 @@ export function createAgentStudioClient({
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param getAllowedDomain - The getAllowedDomain object.
      * @param getAllowedDomain.domainId - The domainId.
      * @param getAllowedDomain.agentId - The agentId.
@@ -2319,7 +2319,7 @@ export function createAgentStudioClient({
      * Get Provider.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param getProvider - The getProvider object.
      * @param getProvider.providerId - The providerId.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2352,7 +2352,7 @@ export function createAgentStudioClient({
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param getProvider - The getProvider object.
      * @param getProvider.providerId - The providerId.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2575,7 +2575,7 @@ export function createAgentStudioClient({
      * List all allowed domain patterns for this agent.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param listAgentAllowedDomains - The listAgentAllowedDomains object.
      * @param listAgentAllowedDomains.agentId - The agentId.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2608,7 +2608,7 @@ export function createAgentStudioClient({
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param listAgentAllowedDomains - The listAgentAllowedDomains object.
      * @param listAgentAllowedDomains.agentId - The agentId.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -2843,7 +2843,7 @@ export function createAgentStudioClient({
      * List all agents with pagination and filtering.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param listAgents - The listAgents object.
      * @param listAgents.page - Page number.
      * @param listAgents.limit - Items per page.
@@ -2885,7 +2885,7 @@ export function createAgentStudioClient({
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param listAgents - The listAgents object.
      * @param listAgents.page - Page number.
      * @param listAgents.limit - Items per page.
@@ -2975,7 +2975,7 @@ export function createAgentStudioClient({
      * Get available models for a specific provider.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param listProviderModels - The listProviderModels object.
      * @param listProviderModels.providerId - The providerId.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -3008,7 +3008,7 @@ export function createAgentStudioClient({
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param listProviderModels - The listProviderModels object.
      * @param listProviderModels.providerId - The providerId.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
@@ -3041,7 +3041,7 @@ export function createAgentStudioClient({
      * List Providers.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param listProviders - The listProviders object.
      * @param listProviders.page - Page number.
      * @param listProviders.limit - Items per page.
@@ -3078,7 +3078,7 @@ export function createAgentStudioClient({
      * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
      *
      * Required API Key ACLs:
-     *  - settings
+     *  - editSettings
      * @param listProviders - The listProviders object.
      * @param listProviders.page - Page number.
      * @param listProviders.limit - Items per page.

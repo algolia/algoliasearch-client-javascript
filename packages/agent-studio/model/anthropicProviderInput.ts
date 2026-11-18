@@ -7,4 +7,9 @@ export type AnthropicProviderInput = {
   apiKey: string;
 
   baseUrl?: string | null | undefined;
+
+  /**
+   * Required for API keys not scoped to a single workspace (sk-ant-usr-...). Sent as the anthropic-workspace-id header on every request.
+   */
+  workspaceId?: string | null | undefined;
 };

@@ -40,4 +40,6 @@ export type MessageResponse = {
   events?: Array<MessageEvent> | undefined;
 
   guardrail?: GuardrailOutcome | null | undefined;
+
+  metadata?: { [key: string]: any } | null | undefined;
 };

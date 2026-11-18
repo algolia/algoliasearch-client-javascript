@@ -3,14 +3,20 @@
 import type { AnthropicProviderInput } from './anthropicProviderInput';
 import type { AzureOpenAIProviderInput } from './azureOpenAIProviderInput';
 import type { BaseProviderInput } from './baseProviderInput';
+import type { ManagedProviderResponseInput } from './managedProviderResponseInput';
+import type { MistralProviderInput } from './mistralProviderInput';
 import type { OpenAICompatibleProviderInput } from './openAICompatibleProviderInput';
 import type { OpenAIProviderInput } from './openAIProviderInput';
+import type { VertexAIProviderInput } from './vertexAIProviderInput';
 import type { XAIProviderInput } from './xAIProviderInput';
 
-export type ProviderInput =
+export type InputUnionProviderAuthenticationResponse =
   | OpenAIProviderInput
   | AzureOpenAIProviderInput
   | OpenAICompatibleProviderInput
   | BaseProviderInput
   | AnthropicProviderInput
-  | XAIProviderInput;
+  | XAIProviderInput
+  | MistralProviderInput
+  | VertexAIProviderInput
+  | ManagedProviderResponseInput;

@@ -4,5 +4,5 @@
  * Response input for the Algolia-hosted provider. Limited by design.
  */
 export type ManagedProviderResponseInput = {
-  defaultModel?: string | null | undefined;
+  defaultModel: string;
 };
