@@ -2,8 +2,9 @@
 
 import type { BaseSearchParams } from './baseSearchParams';
 import type { IndexSettingsAsSearchParams } from './indexSettingsAsSearchParams';
+import type { SearchParamsAllowReRanking } from './searchParamsAllowReRanking';
 
 /**
  * Each parameter value, including the `query` must not be larger than 512 bytes.
  */
-export type SearchParamsObject = BaseSearchParams & IndexSettingsAsSearchParams;
+export type SearchParamsObject = BaseSearchParams & IndexSettingsAsSearchParams & SearchParamsAllowReRanking;

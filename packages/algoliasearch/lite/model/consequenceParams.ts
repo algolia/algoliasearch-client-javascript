@@ -3,5 +3,9 @@
 import type { BaseSearchParamsWithoutQuery } from './baseSearchParamsWithoutQuery';
 import type { IndexSettingsAsSearchParams } from './indexSettingsAsSearchParams';
 import type { Params } from './params';
+import type { SearchParamsAllowReRanking } from './searchParamsAllowReRanking';
 
-export type ConsequenceParams = BaseSearchParamsWithoutQuery & IndexSettingsAsSearchParams & Params;
+export type ConsequenceParams = BaseSearchParamsWithoutQuery &
+  IndexSettingsAsSearchParams &
+  Params &
+  SearchParamsAllowReRanking;

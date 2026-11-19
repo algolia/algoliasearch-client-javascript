@@ -160,6 +160,7 @@ export * from './searchHits';
 export * from './searchMethodParams';
 export * from './searchPagination';
 export * from './searchParams';
+export * from './searchParamsAllowReRanking';
 export * from './searchParamsObject';
 export * from './searchParamsQuery';
 export * from './searchParamsString';
