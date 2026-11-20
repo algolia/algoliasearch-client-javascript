@@ -42,4 +42,6 @@ export type ConversationFullResponse = {
   messages: Array<MessageResponse>;
 
   analyticsDegraded?: boolean | undefined;
+
+  isEphemeral?: boolean | undefined;
 };

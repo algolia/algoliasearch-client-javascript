@@ -23,6 +23,7 @@ import type { ContextCompactRequest } from '../model/contextCompactRequest';
 import type { ContextResponse } from '../model/contextResponse';
 import type { ContextTrimRequest } from '../model/contextTrimRequest';
 import type { ConversationFullResponse } from '../model/conversationFullResponse';
+import type { ConversationUsageResponse } from '../model/conversationUsageResponse';
 import type { FeedbackCreationRequest } from '../model/feedbackCreationRequest';
 import type { FeedbackResponse } from '../model/feedbackResponse';
 import type { FeedbackUpdateRequest } from '../model/feedbackUpdateRequest';
@@ -592,6 +593,7 @@ export function createAgentStudioClient({
      * @param createAgentCompletion.memory - Set to false to disable memory (enabled by default).
      * @param createAgentCompletion.analytics - Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.
      * @param createAgentCompletion.xAlgoliaSecureUserToken - The X-Algolia-Secure-User-Token.
+     * @param createAgentCompletion.ephemeral - Set to true to not retain the conversation: it is processed and analyzed like any other, but removed by the next cleanup run instead of being kept in the history. Overrides the agent\'s ephemeralConversations setting; omit to use it.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     createAgentCompletion(
@@ -604,6 +606,7 @@ export function createAgentStudioClient({
         memory,
         analytics,
         xAlgoliaSecureUserToken,
+        ephemeral,
       }: CreateAgentCompletionProps,
       requestOptions?: RequestOptions,
     ): Promise<{ [key: string]: any }> {
@@ -640,6 +643,10 @@ export function createAgentStudioClient({
         queryParameters['analytics'] = analytics.toString();
       }
 
+      if (ephemeral !== undefined) {
+        queryParameters['ephemeral'] = ephemeral.toString();
+      }
+
       if (xAlgoliaSecureUserToken !== undefined) {
         headers['X-Algolia-Secure-User-Token'] = xAlgoliaSecureUserToken.toString();
       }
@@ -670,6 +677,7 @@ export function createAgentStudioClient({
      * @param createAgentCompletion.memory - Set to false to disable memory (enabled by default).
      * @param createAgentCompletion.analytics - Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.
      * @param createAgentCompletion.xAlgoliaSecureUserToken - The X-Algolia-Secure-User-Token.
+     * @param createAgentCompletion.ephemeral - Set to true to not retain the conversation: it is processed and analyzed like any other, but removed by the next cleanup run instead of being kept in the history. Overrides the agent\'s ephemeralConversations setting; omit to use it.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see createAgentCompletion for the plain version.
      */
@@ -683,6 +691,7 @@ export function createAgentStudioClient({
         memory,
         analytics,
         xAlgoliaSecureUserToken,
+        ephemeral,
       }: CreateAgentCompletionProps,
       requestOptions?: RequestOptions,
     ): Promise<AlgoliaHttpResponse<{ [key: string]: any }>> {
@@ -719,6 +728,10 @@ export function createAgentStudioClient({
         queryParameters['analytics'] = analytics.toString();
       }
 
+      if (ephemeral !== undefined) {
+        queryParameters['ephemeral'] = ephemeral.toString();
+      }
+
       if (xAlgoliaSecureUserToken !== undefined) {
         headers['X-Algolia-Secure-User-Token'] = xAlgoliaSecureUserToken.toString();
       }
@@ -751,6 +764,7 @@ export function createAgentStudioClient({
         memory,
         analytics,
         xAlgoliaSecureUserToken,
+        ephemeral,
       }: CreateAgentCompletionProps,
       requestOptions?: RequestOptions,
     ): AsyncGenerator<ServerSentEvent> {
@@ -787,6 +801,10 @@ export function createAgentStudioClient({
         queryParameters['analytics'] = analytics.toString();
       }
 
+      if (ephemeral !== undefined) {
+        queryParameters['ephemeral'] = ephemeral.toString();
+      }
+
       if (xAlgoliaSecureUserToken !== undefined) {
         headers['X-Algolia-Secure-User-Token'] = xAlgoliaSecureUserToken.toString();
       }
@@ -819,6 +837,7 @@ export function createAgentStudioClient({
         memory,
         analytics,
         xAlgoliaSecureUserToken,
+        ephemeral,
       }: CreateAgentCompletionProps,
       requestOptions?: RequestOptions,
     ): AsyncGenerator<StreamEvent<{ [key: string]: any }>> {
@@ -832,6 +851,7 @@ export function createAgentStudioClient({
           memory,
           analytics,
           xAlgoliaSecureUserToken,
+          ephemeral,
         },
         requestOptions,
       )) {
@@ -1530,10 +1550,11 @@ export function createAgentStudioClient({
      * @param deleteAgentConversations.agentId - The agentId.
      * @param deleteAgentConversations.startDate - Filter conversations created after this date (format: YYYY-MM-DD).
      * @param deleteAgentConversations.endDate - Filter conversations created before this date (format: YYYY-MM-DD).
+     * @param deleteAgentConversations.ephemeral - Filter by ephemeral (not retained) conversations; omit to include both.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     deleteAgentConversations(
-      { agentId, startDate, endDate }: DeleteAgentConversationsProps,
+      { agentId, startDate, endDate, ephemeral }: DeleteAgentConversationsProps,
       requestOptions?: RequestOptions,
     ): Promise<void> {
       validateRequired('agentId', 'deleteAgentConversations', agentId);
@@ -1551,6 +1572,10 @@ export function createAgentStudioClient({
 
       if (endDate !== undefined) {
         queryParameters['endDate'] = endDate.toString();
+      }
+
+      if (ephemeral !== undefined) {
+        queryParameters['ephemeral'] = ephemeral.toString();
       }
 
       const request: Request = {
@@ -1573,11 +1598,12 @@ export function createAgentStudioClient({
      * @param deleteAgentConversations.agentId - The agentId.
      * @param deleteAgentConversations.startDate - Filter conversations created after this date (format: YYYY-MM-DD).
      * @param deleteAgentConversations.endDate - Filter conversations created before this date (format: YYYY-MM-DD).
+     * @param deleteAgentConversations.ephemeral - Filter by ephemeral (not retained) conversations; omit to include both.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see deleteAgentConversations for the plain version.
      */
     deleteAgentConversationsWithHTTPInfo(
-      { agentId, startDate, endDate }: DeleteAgentConversationsProps,
+      { agentId, startDate, endDate, ephemeral }: DeleteAgentConversationsProps,
       requestOptions?: RequestOptions,
     ): Promise<AlgoliaHttpResponse<void>> {
       validateRequired('agentId', 'deleteAgentConversationsWithHTTPInfo', agentId);
@@ -1595,6 +1621,10 @@ export function createAgentStudioClient({
 
       if (endDate !== undefined) {
         queryParameters['endDate'] = endDate.toString();
+      }
+
+      if (ephemeral !== undefined) {
+        queryParameters['ephemeral'] = ephemeral.toString();
       }
 
       const request: Request = {
@@ -1939,10 +1969,11 @@ export function createAgentStudioClient({
      * @param exportConversations.agentId - The agentId.
      * @param exportConversations.startDate - Filter conversations created after this date (format: YYYY-MM-DD).
      * @param exportConversations.endDate - Filter conversations created before this date (format: YYYY-MM-DD).
+     * @param exportConversations.ephemeral - Filter by ephemeral (not retained) conversations; omit to include both.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     exportConversations(
-      { agentId, startDate, endDate }: ExportConversationsProps,
+      { agentId, startDate, endDate, ephemeral }: ExportConversationsProps,
       requestOptions?: RequestOptions,
     ): Promise<Array<ConversationFullResponse>> {
       validateRequired('agentId', 'exportConversations', agentId);
@@ -1960,6 +1991,10 @@ export function createAgentStudioClient({
 
       if (endDate !== undefined) {
         queryParameters['endDate'] = endDate.toString();
+      }
+
+      if (ephemeral !== undefined) {
+        queryParameters['ephemeral'] = ephemeral.toString();
       }
 
       const request: Request = {
@@ -1982,11 +2017,12 @@ export function createAgentStudioClient({
      * @param exportConversations.agentId - The agentId.
      * @param exportConversations.startDate - Filter conversations created after this date (format: YYYY-MM-DD).
      * @param exportConversations.endDate - Filter conversations created before this date (format: YYYY-MM-DD).
+     * @param exportConversations.ephemeral - Filter by ephemeral (not retained) conversations; omit to include both.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see exportConversations for the plain version.
      */
     exportConversationsWithHTTPInfo(
-      { agentId, startDate, endDate }: ExportConversationsProps,
+      { agentId, startDate, endDate, ephemeral }: ExportConversationsProps,
       requestOptions?: RequestOptions,
     ): Promise<AlgoliaHttpResponse<Array<ConversationFullResponse>>> {
       validateRequired('agentId', 'exportConversationsWithHTTPInfo', agentId);
@@ -2004,6 +2040,10 @@ export function createAgentStudioClient({
 
       if (endDate !== undefined) {
         queryParameters['endDate'] = endDate.toString();
+      }
+
+      if (ephemeral !== undefined) {
+        queryParameters['ephemeral'] = ephemeral.toString();
       }
 
       const request: Request = {
@@ -2655,6 +2695,7 @@ export function createAgentStudioClient({
      * @param listAgentConversations.converted - Filter by conversations with at least one conversion.
      * @param listAgentConversations.hasAlgoliaSearch - Filter by conversations where the search tool was used.
      * @param listAgentConversations.xAlgoliaSecureUserToken - The X-Algolia-Secure-User-Token.
+     * @param listAgentConversations.ephemeral - Filter by ephemeral (not retained) conversations; omit to include both.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      */
     listAgentConversations(
@@ -2671,6 +2712,7 @@ export function createAgentStudioClient({
         converted,
         hasAlgoliaSearch,
         xAlgoliaSecureUserToken,
+        ephemeral,
       }: ListAgentConversationsProps,
       requestOptions?: RequestOptions,
     ): Promise<PaginatedConversationsResponse> {
@@ -2723,6 +2765,10 @@ export function createAgentStudioClient({
         queryParameters['hasAlgoliaSearch'] = hasAlgoliaSearch.toString();
       }
 
+      if (ephemeral !== undefined) {
+        queryParameters['ephemeral'] = ephemeral.toString();
+      }
+
       if (xAlgoliaSecureUserToken !== undefined) {
         headers['X-Algolia-Secure-User-Token'] = xAlgoliaSecureUserToken.toString();
       }
@@ -2756,6 +2802,7 @@ export function createAgentStudioClient({
      * @param listAgentConversations.converted - Filter by conversations with at least one conversion.
      * @param listAgentConversations.hasAlgoliaSearch - Filter by conversations where the search tool was used.
      * @param listAgentConversations.xAlgoliaSecureUserToken - The X-Algolia-Secure-User-Token.
+     * @param listAgentConversations.ephemeral - Filter by ephemeral (not retained) conversations; omit to include both.
      * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
      * @see listAgentConversations for the plain version.
      */
@@ -2773,6 +2820,7 @@ export function createAgentStudioClient({
         converted,
         hasAlgoliaSearch,
         xAlgoliaSecureUserToken,
+        ephemeral,
       }: ListAgentConversationsProps,
       requestOptions?: RequestOptions,
     ): Promise<AlgoliaHttpResponse<PaginatedConversationsResponse>> {
@@ -2823,6 +2871,10 @@ export function createAgentStudioClient({
 
       if (hasAlgoliaSearch !== undefined) {
         queryParameters['hasAlgoliaSearch'] = hasAlgoliaSearch.toString();
+      }
+
+      if (ephemeral !== undefined) {
+        queryParameters['ephemeral'] = ephemeral.toString();
       }
 
       if (xAlgoliaSecureUserToken !== undefined) {
@@ -2912,6 +2964,54 @@ export function createAgentStudioClient({
       if (providerId !== undefined) {
         queryParameters['providerId'] = providerId.toString();
       }
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.requestWithHttpInfo(request, requestOptions);
+    },
+
+    /**
+     * Live conversations counted against the per-application limit.
+     *
+     * Required API Key ACLs:
+     *  - logs
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     */
+    listConversationUsage(requestOptions?: RequestOptions | undefined): Promise<ConversationUsageResponse> {
+      const requestPath = '/agent-studio/1/configuration/conversation-usage';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
+
+      const request: Request = {
+        method: 'GET',
+        path: requestPath,
+        queryParameters,
+        headers,
+      };
+
+      return transporter.request(request, requestOptions);
+    },
+    /**
+     * Live conversations counted against the per-application limit.
+     *
+     * Resolves with the full HTTP response information: status code, headers (when the requester captures them), raw body and deserialized data. Bypasses the requests and responses caches: always performs the API call.
+     *
+     * Required API Key ACLs:
+     *  - logs
+     * @param requestOptions - The requestOptions to send along with the query, they will be merged with the transporter requestOptions.
+     * @see listConversationUsage for the plain version.
+     */
+    listConversationUsageWithHTTPInfo(
+      requestOptions?: RequestOptions | undefined,
+    ): Promise<AlgoliaHttpResponse<ConversationUsageResponse>> {
+      const requestPath = '/agent-studio/1/configuration/conversation-usage';
+      const headers: Headers = {};
+      const queryParameters: QueryParameters = {};
 
       const request: Request = {
         method: 'GET',

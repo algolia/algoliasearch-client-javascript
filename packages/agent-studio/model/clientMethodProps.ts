@@ -76,6 +76,10 @@ export type CreateAgentCompletionProps = {
    * The X-Algolia-Secure-User-Token.
    */
   xAlgoliaSecureUserToken?: string | undefined;
+  /**
+   * Set to true to not retain the conversation: it is processed and analyzed like any other, but removed by the next cleanup run instead of being kept in the history. Overrides the agent\'s ephemeralConversations setting; omit to use it.
+   */
+  ephemeral?: boolean | undefined;
 };
 
 /**
@@ -191,6 +195,10 @@ export type DeleteAgentConversationsProps = {
    * Filter conversations created before this date (format: YYYY-MM-DD).
    */
   endDate?: string | undefined;
+  /**
+   * Filter by ephemeral (not retained) conversations; omit to include both.
+   */
+  ephemeral?: boolean | undefined;
 };
 
 /**
@@ -267,6 +275,10 @@ export type ExportConversationsProps = {
    * Filter conversations created before this date (format: YYYY-MM-DD).
    */
   endDate?: string | undefined;
+  /**
+   * Filter by ephemeral (not retained) conversations; omit to include both.
+   */
+  ephemeral?: boolean | undefined;
 };
 
 /**
@@ -429,6 +441,10 @@ export type ListAgentConversationsProps = {
    * The X-Algolia-Secure-User-Token.
    */
   xAlgoliaSecureUserToken?: string | undefined;
+  /**
+   * Filter by ephemeral (not retained) conversations; omit to include both.
+   */
+  ephemeral?: boolean | undefined;
 };
 
 /**

@@ -37,4 +37,6 @@ export type ConversationBaseResponse = {
   feedback?: Array<FeedbackResponse> | null | undefined;
 
   impactAnalytics?: ImpactAnalytics | null | undefined;
+
+  isEphemeral?: boolean | undefined;
 };
