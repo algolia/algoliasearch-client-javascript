@@ -4,4 +4,9 @@ import type { TaskStatus } from './taskStatus';
 
 export type GetTaskResponse = {
   status: TaskStatus;
+
+  /**
+   * Indicates whether the index has pending tasks. This value is deprecated and always `false`. Don\'t use it.
+   */
+  pendingTask?: boolean | undefined;
 };
