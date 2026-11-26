@@ -297,7 +297,24 @@ export function createIngestionClient({
                 throw error;
               });
             },
-            validate: (response) => response !== undefined,
+            validate: (response) => {
+              if (
+                response === undefined ||
+                (response.status && ['created', 'started', 'retried'].includes(response.status))
+              ) {
+                return false;
+              }
+
+              if (response.status && response.status !== 'succeeded') {
+                const reason = typeof response.data?.message === 'string' ? `: ${response.data.message}` : '';
+
+                throw new Error(
+                  `ingestion push to index ${indexName} did not succeed: event ${resp.eventID} of run ${resp.runID} has status ${response.status}${reason}`,
+                );
+              }
+
+              return true;
+            },
             aggregator: () => (retryCount += 1),
             error: {
               validate: () => retryCount >= maxRetries,

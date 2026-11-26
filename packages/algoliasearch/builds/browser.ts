@@ -310,7 +310,7 @@ export function algoliasearch(
 
         return { copyOperationResponse, watchResponses, moveOperationResponse };
       } catch (error) {
-        await this.deleteIndex({ indexName: tmpIndexName }, searchRequestOptions);
+        await this.deleteIndex({ indexName: tmpIndexName }, searchRequestOptions).catch(() => {});
 
         throw error;
       }
