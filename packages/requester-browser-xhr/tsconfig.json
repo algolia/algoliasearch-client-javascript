@@ -3,6 +3,7 @@
   "compilerOptions": {
     "types": ["node", "vitest/globals"],
     "outDir": "dist",
+    "rootDir": "../..",
     "skipLibCheck": true
   },
   "include": ["src"],

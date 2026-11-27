@@ -102,15 +102,16 @@
   "devDependencies": {
     "@algolia/requester-testing": "5.65.0",
     "@arethetypeswrong/cli": "0.18.5",
-    "@cloudflare/vitest-pool-workers": "0.22.0",
-    "@cloudflare/workers-types": "5.20260911.1",
-    "@types/node": "26.5.1",
-    "jsdom": "30.0.1",
+    "@cloudflare/vitest-plugin": "1.8.5",
+    "@cloudflare/workers-types": "5.20261120.1",
+    "@types/node": "26.6.6",
+    "jsdom": "31.0.1",
     "publint": "0.3.25",
-    "rollup": "4.63.6",
-    "tsup": "8.5.1",
-    "typescript": "5.9.3",
-    "vitest": "4.1.11"
+    "rollup": "4.68.7",
+    "tsup": "9.0.0",
+    "typescript": "6.0.3",
+    "vite": "8.3.8",
+    "vitest": "5.1.0"
   },
   "engines": {
     "node": ">= 14.0.0"

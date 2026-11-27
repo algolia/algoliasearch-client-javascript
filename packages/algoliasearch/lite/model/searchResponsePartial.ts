@@ -6,5 +6,5 @@ import type { SearchPagination } from './searchPagination';
 /**
  * Partial search response returned when the `responseFields` parameter excludes fields like `hits`. Contains all possible search response properties but none are required, so it acts as an unconditional fallback during oneOf deserialization.
  */
-export type SearchResponsePartial<T = Record<string, unknown>> = BaseSearchResponse &
+export type SearchResponsePartial<_T = Record<string, unknown>> = BaseSearchResponse &
   SearchPagination & { [key: string]: any };

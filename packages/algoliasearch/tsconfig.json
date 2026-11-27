@@ -1,12 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "types": [
-      "node",
-      "@cloudflare/workers-types",
-      "@cloudflare/vitest-pool-workers",
-      "vitest/globals"
-    ],
+    "types": ["node", "@cloudflare/workers-types", "vitest/globals"],
     "outDir": "dist"
   },
   "include": ["src", "model", "builds"],

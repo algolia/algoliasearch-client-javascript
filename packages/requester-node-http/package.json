@@ -39,12 +39,13 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
-    "@types/node": "24.13.4",
-    "nock": "14.0.17",
+    "@types/node": "26.6.6",
+    "nock": "15.0.6",
     "publint": "0.3.25",
-    "tsup": "8.5.1",
-    "typescript": "5.9.3",
-    "vitest": "4.1.11"
+    "tsup": "9.0.0",
+    "typescript": "6.0.3",
+    "vite": "8.3.8",
+    "vitest": "5.1.0"
   },
   "engines": {
     "node": ">= 14.0.0"
