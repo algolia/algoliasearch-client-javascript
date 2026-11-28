@@ -293,6 +293,34 @@ describe('error handling', (): void => {
   });
 });
 
+describe('gzip response handling', () => {
+  test('resolves an empty gzip-encoded body', async () => {
+    nock(testQueryBaseUrl, { reqheaders: headers })
+      .post('/foo')
+      .query(testQueryHeader)
+      .reply(204, '', { 'content-encoding': 'gzip' });
+
+    const response = await requester.send(requestStub);
+
+    expect(response.status).toBe(204);
+    expect(response.content).toBe('');
+    expect(response.isTimedOut).toBe(false);
+  });
+
+  test('resolves a gzip-encoded body that is not gzip as a network error', async () => {
+    nock(testQueryBaseUrl, { reqheaders: headers })
+      .post('/foo')
+      .query(testQueryHeader)
+      .reply(200, Buffer.from(getStringifiedBody()), { 'content-encoding': 'gzip' });
+
+    const response = await requester.send(requestStub);
+
+    expect(response.status).toBe(0);
+    expect(response.content).toBe('incorrect header check');
+    expect(response.isTimedOut).toBe(false);
+  });
+});
+
 describe('response stream error handling', () => {
   let server: http.Server;
 

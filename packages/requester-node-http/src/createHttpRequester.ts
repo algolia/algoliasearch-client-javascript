@@ -88,8 +88,13 @@ export function createHttpRequester({
           clearTimeout(responseTimeout as NodeJS.Timeout);
 
           let buffer = Buffer.concat(contentBuffers);
-          if (response.headers['content-encoding'] === 'gzip') {
-            buffer = zlib.gunzipSync(buffer);
+          if (response.headers['content-encoding'] === 'gzip' && buffer.length > 0) {
+            try {
+              buffer = zlib.gunzipSync(buffer);
+            } catch (error) {
+              resolve({ status: 0, content: (error as Error).message, isTimedOut: false });
+              return;
+            }
           }
 
           resolve({
